@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+/* Strict 4-color palette: #ff0000, #2c2f36, #85888f, #ffffff */
+:root {
+  --background: #ffffff;
+  --foreground: #2c2f36;
+  --accent: #ff0000;
+  --accent-hover: #cc0000;
+  --accent-muted: rgba(255, 0, 0, 0.08);
+  --border: rgba(44, 47, 54, 0.12);
+  --muted: #85888f;
+}
+
+.dark {
+  --background: #2c2f36;
+  --foreground: #ffffff;
+  --accent: #ff0000;
+  --accent-hover: #ff3333;
+  --accent-muted: rgba(255, 0, 0, 0.12);
+  --border: rgba(255, 255, 255, 0.12);
+  --muted: #85888f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hero без агрессивного среза — плавный низ */
+.shape-hero-cut {
+  clip-path: none;
+}
+.shape-card-angle {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), 0 100%);
+}
+.shape-section-slant {
+  clip-path: polygon(0 0, 100% 4%, 100% 100%, 0 96%);
+}
+.shape-accent-bar {
+  width: 4px;
+  min-height: 100%;
+  background: linear-gradient(180deg, var(--accent), var(--muted));
+  border-radius: 0 2px 2px 0;
+}
+.shape-premium-badge {
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+/* Hero: мягкий переход в тон фона, без резкого контраста */
+.gradient-hero {
+  background: linear-gradient(180deg, var(--background) 0%, rgba(44, 47, 54, 0.04) 50%, var(--background) 100%);
+}
+.dark .gradient-hero {
+  background: linear-gradient(180deg, var(--background) 0%, rgba(255, 255, 255, 0.03) 40%, var(--background) 100%);
+}
+/* Тонкая акцентная линия для карточек (1px), не жирная полоса */
+.card-accent-line {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent) 0%, transparent 60%);
+  opacity: 0.6;
+}
+.dark .card-accent-line {
+  opacity: 0.5;
+}
+.gradient-accent-subtle {
+  background: linear-gradient(90deg, transparent 0%, var(--accent-muted) 50%, transparent 100%);
+}
+
+/* RСЯ placeholder */
+.ad-placeholder {
+  min-height: 250px;
+  background: var(--border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+/* Premium tool card: тонкая граница, лёгкая тень при наведении */
+.tool-card {
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.tool-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 12px rgba(44, 47, 54, 0.06);
+}
+.dark .tool-card:hover {
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+}
+

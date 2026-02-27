@@ -1,0 +1,68 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { Play, Pause, RotateCcw } from "lucide-react";
+
+interface StopwatchToolProps {
+  t: (key: string) => string;
+}
+
+export function StopwatchTool({ t }: StopwatchToolProps) {
+  const [ms, setMs] = useState(0);
+  const [running, setRunning] = useState(false);
+  const ref = useRef<number | null>(null);
+  const startRef = useRef(0);
+  const accRef = useRef(0);
+  const lastMsRef = useRef(0);
+
+  useEffect(() => {
+    if (!running) return;
+    startRef.current = performance.now();
+    const tick = () => {
+      ref.current = requestAnimationFrame(tick);
+      lastMsRef.current = accRef.current + (performance.now() - startRef.current);
+      setMs(lastMsRef.current);
+    };
+    ref.current = requestAnimationFrame(tick);
+    return () => {
+      if (ref.current) cancelAnimationFrame(ref.current);
+      accRef.current = lastMsRef.current;
+    };
+  }, [running]);
+
+  const reset = () => {
+    setRunning(false);
+    setMs(0);
+    accRef.current = 0;
+  };
+
+  const m = Math.floor(ms / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  const mil = Math.floor((ms % 1000) / 10);
+
+  return (
+    <div className="space-y-6">
+      <div className="text-center">
+        <div className="text-5xl font-mono font-bold text-[var(--accent)]">
+          {String(m).padStart(2, "0")}:{String(s).padStart(2, "0")}.{String(mil).padStart(2, "0")}
+        </div>
+      </div>
+      <div className="flex justify-center gap-2">
+        <button
+          onClick={() => setRunning(!running)}
+          className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white"
+        >
+          {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+          {running ? t("pause") : t("start")}
+        </button>
+        <button
+          onClick={reset}
+          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2"
+        >
+          <RotateCcw className="h-4 w-4" />
+          {t("reset")}
+        </button>
+      </div>
+    </div>
+  );
+}

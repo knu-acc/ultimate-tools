@@ -1,0 +1,142 @@
+"use client";
+
+import {
+  Percent,
+  Scale,
+  Wallet,
+  Receipt,
+  Binary,
+  Type,
+  CaseSensitive,
+  Languages,
+  Eraser,
+  Sparkles,
+  FileText,
+  Shuffle,
+  CircleDot,
+  Dices,
+  KeyRound,
+  Fingerprint,
+  ListOrdered,
+  Timer,
+  StopCircle,
+  Globe,
+  Clock,
+  Calendar,
+  Hash,
+  Image,
+  Pipette,
+  Palette,
+  FileCode,
+  ImagePlus,
+  Braces,
+  Key,
+  Code,
+  Link2,
+  Tags,
+  MessageSquare,
+  Phone,
+  Ruler,
+  Coins,
+  Lock,
+  Scan,
+  Shield,
+  Radio,
+  MousePointer,
+  Metronome,
+  StickyNote,
+  ArrowLeftRight,
+  QrCode,
+  GitCompare,
+  Droplets,
+  Contrast,
+} from "lucide-react";
+
+const TOOL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  "percent-calc": Percent,
+  bmi: Scale,
+  "loan-calc": Wallet,
+  "vat-calc": Receipt,
+  "tip-calculator": Receipt,
+  "number-systems": Binary,
+  "word-counter": Type,
+  "case-converter": CaseSensitive,
+  translit: Languages,
+  "fonts-social": Sparkles,
+  "space-cleanup": Eraser,
+  zalgo: Sparkles,
+  "lorem-ipsum": FileText,
+  "reverse-text": ArrowLeftRight,
+  "random-number": Shuffle,
+  "random-picker": ListOrdered,
+  "wheel-fortune": CircleDot,
+  dice: Dices,
+  "password-generator": KeyRound,
+  uuid: Fingerprint,
+  "list-shuffler": ListOrdered,
+  pomodoro: Timer,
+  stopwatch: StopCircle,
+  "world-time": Globe,
+  timers: Clock,
+  "unix-converter": Calendar,
+  countdown: Timer,
+  "image-compress": Image,
+  "color-picker": Pipette,
+  "css-gradients": Palette,
+  base64: FileCode,
+  "qr-generator": QrCode,
+  "favicon-gen": ImagePlus,
+  "json-formatter": Braces,
+  "jwt-decoder": Key,
+  "diff-checker": GitCompare,
+  "html-encode": Code,
+  "url-encode": Link2,
+  "regex-tester": Braces,
+  "utm-builder": Link2,
+  "yt-tags": Tags,
+  "char-limits": MessageSquare,
+  "wa-link-generator": Phone,
+  "weight-converter": Scale,
+  "length-converter": Ruler,
+  "volume-converter": Droplets,
+  "currency-converter": Coins,
+  "roman-numerals": Hash,
+  md5: Lock,
+  sha256: Scan,
+  "aes-encrypt": Shield,
+  "morse-code": Radio,
+  "cps-test": MousePointer,
+  metronome: Metronome,
+  notepad: StickyNote,
+  ruler: Ruler,
+  "color-contrast": Contrast,
+};
+
+interface ToolIconProps {
+  toolName: string;
+  className?: string;
+  size?: "sm" | "md" | "lg";
+}
+
+export function ToolIcon({ toolName, className = "", size = "md" }: ToolIconProps) {
+  const Icon = TOOL_ICONS[toolName];
+  const sizeClass = size === "sm" ? "h-5 w-5" : size === "lg" ? "h-10 w-10" : "h-7 w-7";
+
+  if (!Icon) {
+    return (
+      <div
+        className={`flex items-center justify-center rounded-xl bg-[var(--accent)]/15 text-[var(--accent)] ${sizeClass} ${className}`}
+      >
+        <Hash className={sizeClass} />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`flex items-center justify-center rounded-xl bg-[var(--accent)]/15 text-[var(--accent)] ${sizeClass} ${className}`}
+    >
+      <Icon className={size === "sm" ? "h-4 w-4" : size === "lg" ? "h-6 w-6" : "h-5 w-5"} />
+    </div>
+  );
+}

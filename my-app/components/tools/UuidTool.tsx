@@ -1,0 +1,65 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+interface UuidToolProps {
+  t: (key: string) => string;
+}
+
+function generateUUID(): string {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+export function UuidTool({ t }: UuidToolProps) {
+  const [uuids, setUuids] = useState<string[]>([]);
+  const [count, setCount] = useState(1);
+
+  const generate = () => {
+    setUuids(Array.from({ length: count }, () => generateUUID()));
+  };
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <label className="mb-2 block text-sm">{t("count")}</label>
+        <input
+          type="number"
+          min={1}
+          max={50}
+          value={count}
+          onChange={(e) => setCount(Math.min(50, Math.max(1, Number(e.target.value) || 1)))}
+          className="w-24 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
+        />
+      </div>
+      <motion.button
+        onClick={generate}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
+      >
+        {t("generate")}
+      </motion.button>
+      {uuids.length > 0 && (
+        <div className="space-y-2">
+          {uuids.map((id, i) => (
+            <div
+              key={i}
+              className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-3 font-mono text-sm"
+              onClick={() => navigator.clipboard.writeText(id)}
+            >
+              {id}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

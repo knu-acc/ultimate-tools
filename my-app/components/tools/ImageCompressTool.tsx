@@ -1,0 +1,94 @@
+"use client";
+
+import { useState, useRef } from "react";
+
+interface ImageCompressToolProps {
+  t: (key: string) => string;
+}
+
+export function ImageCompressTool({ t }: ImageCompressToolProps) {
+  const [file, setFile] = useState<File | null>(null);
+  const [quality, setQuality] = useState(0.8);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [result, setResult] = useState<string | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    if (!f?.type.startsWith("image/")) return;
+    setFile(f);
+    const reader = new FileReader();
+    reader.onload = () => setPreview(reader.result as string);
+    reader.readAsDataURL(f);
+    setResult(null);
+  };
+
+  const compress = () => {
+    if (!preview || !canvasRef.current) return;
+    const img = new Image();
+    img.onload = () => {
+      const ctx = canvasRef.current!.getContext("2d")!;
+      canvasRef.current!.width = img.width;
+      canvasRef.current!.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      setResult(canvasRef.current!.toDataURL("image/jpeg", quality));
+    };
+    img.src = preview;
+  };
+
+  return (
+    <div className="space-y-6">
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFile}
+        className="block w-full text-sm"
+      />
+      {file && (
+        <>
+          <div>
+            <label className="mb-2 block text-sm">{t("quality")}</label>
+            <input
+              type="range"
+              min={0.1}
+              max={1}
+              step={0.1}
+              value={quality}
+              onChange={(e) => setQuality(Number(e.target.value))}
+              className="w-full"
+            />
+            <span className="text-sm">{Math.round(quality * 100)}%</span>
+          </div>
+          <button
+            onClick={compress}
+            className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
+          >
+            {t("compress")}
+          </button>
+          {preview && (
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <div className="mb-2 text-sm text-[var(--muted)]">{t("original")}</div>
+                <img src={preview} alt="" className="max-h-48 rounded-xl border object-contain" />
+              </div>
+              {result && (
+                <div>
+                  <div className="mb-2 text-sm text-[var(--muted)]">{t("compressed")}</div>
+                  <img src={result} alt="" className="max-h-48 rounded-xl border object-contain" />
+                  <a
+                    href={result}
+                    download="compressed.jpg"
+                    className="mt-2 inline-block rounded-xl border border-[var(--accent)] px-4 py-2 text-sm"
+                  >
+                    {t("download")}
+                  </a>
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      )}
+      <canvas ref={canvasRef} className="hidden" />
+    </div>
+  );
+}

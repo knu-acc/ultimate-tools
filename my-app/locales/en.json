@@ -1,0 +1,87 @@
+{
+  "common": {
+    "siteName": "Ultimate Tools", "homeSlogan": "Over 100 free web tools. All calculations on your device — no signup.",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "language": "Language",
+    "search": "Search tools"
+  },
+  "nav": {
+    "home": "Home",
+    "text": "Text",
+    "random": "Random",
+    "time": "Time",
+    "math": "Math",
+    "graphics": "Graphics",
+    "devTools": "Dev-tools",
+    "social": "Social",
+    "converters": "Converters",
+    "crypto": "Crypto",
+    "misc": "Misc"
+  },
+  "tools": {
+    "percentCalc": {
+      "title": "Percentage Calculator",
+      "description": "Calculate percentages",
+      "value": "Value",
+      "percent": "Percent",
+      "percentOf": "X% of number",
+      "percentFrom": "What % of",
+      "addPercent": "Add X%"
+    },
+    "bmi": {
+      "title": "BMI Calculator",
+      "description": "Body Mass Index",
+      "weight": "Weight",
+      "height": "Height",
+      "calculate": "Calculate",
+      "underweight": "Underweight",
+      "normal": "Normal",
+      "overweight": "Overweight",
+      "obese": "Obese"
+    },
+    "loanCalc": {
+      "title": "Loan Calculator",
+      "description": "Monthly payment calculation",
+      "principal": "Principal",
+      "rate": "Interest rate",
+      "months": "Months",
+      "calculate": "Calculate",
+      "monthlyPayment": "per month"
+    },
+    "vatCalc": {
+      "title": "VAT Calculator",
+      "description": "Value Added Tax calculation",
+      "amount": "Amount",
+      "vatRate": "VAT rate",
+      "includeVat": "Amount includes VAT",
+      "calculate": "Calculate",
+      "vat": "VAT",
+      "total": "Total"
+    },
+    "numberSystems": {
+      "title": "Number Base Converter",
+      "description": "Convert between binary, octal, decimal, hex",
+      "value": "Value",
+      "fromBase": "From",
+      "toBase": "To",
+      "convert": "Convert"
+    }
+  },
+  "toolPage": {
+    "breadcrumbs": "Breadcrumbs",
+    "similarTools": "Similar tools",
+    "faq": "FAQ",
+    "instructions": "Instructions"
+  },
+  "footer": {
+    "aboutTitle": "About",
+    "about": "Ultimate Tools is a free collection of 100+ online tools for text, calculations, conversion and development. All processing runs on your device: no data is sent, no signup required. Handy for work, study and quick tasks.",
+    "categoriesTitle": "Categories",
+    "linksTitle": "Links",
+    "home": "Home",
+    "popularTools": "Popular tools",
+    "copyright": "© Ultimate Tools. Free online tools, no registration."
+  }
+}

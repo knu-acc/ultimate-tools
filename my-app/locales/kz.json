@@ -1,0 +1,84 @@
+{
+  "common": {
+    "siteName": "Ultimate Tools",
+    "homeSlogan": "100-ден астам тегін веб-құрал. Барлық есептеулер сіздің құрылғыңызда — тіркеусіз.",
+    "theme": "Тақырып",
+    "light": "Жарық",
+    "dark": "Қараңғы",
+    "language": "Тіл",
+    "search": "Құралдарды іздеу"
+  },
+  "nav": {
+    "home": "Басты бет",
+    "text": "Мәтін",
+    "random": "Кездейсоқ",
+    "time": "Уақыт",
+    "math": "Математика",
+    "graphics": "Графика",
+    "devTools": "Dev-tools",
+    "social": "Әлеуметтік желілер",
+    "converters": "Түрлендіргіштер",
+    "crypto": "Крипто",
+    "misc": "Басқа"
+  },
+  "home": {
+    "popularTools": "Танымал құралдар",
+    "categories": "Санаттар",
+    "toolsCount": "құрал"
+  },
+  "tools": {
+    "percentCalc": {
+      "title": "Пайыз калькуляторы",
+      "description": "Пайызды есептеу",
+      "value": "Мән",
+      "percent": "Пайыз",
+      "percentOf": "Саннан X%",
+      "percentFrom": "Қанша % құрайды",
+      "addPercent": "X% қосу"
+    },
+    "bmi": {
+      "title": "ИМТ калькуляторы",
+      "description": "Дене салмағы индексі",
+      "weight": "Салмақ",
+      "height": "Бой",
+      "calculate": "Есептеу",
+      "underweight": "Салмақ жетіспеушілігі",
+      "normal": "Қалыпты",
+      "overweight": "Артық салмақ",
+      "obese": "Семіздік"
+    },
+    "loanCalc": {
+      "title": "Несие калькуляторы",
+      "description": "Айлық төлемді есептеу",
+      "principal": "Сома",
+      "rate": "Мөлшерлеме",
+      "months": "Айлар",
+      "calculate": "Есептеу",
+      "monthlyPayment": "айына"
+    },
+    "vatCalc": {
+      "title": "ҚҚС калькуляторы",
+      "description": "Қосымша құн салығын есептеу",
+      "amount": "Сома",
+      "vatRate": "ҚҚС мөлшерлемесі",
+      "includeVat": "ҚҚС қосылған сома",
+      "calculate": "Есептеу",
+      "vat": "ҚҚС",
+      "total": "Барлығы"
+    },
+    "numberSystems": {
+      "title": "Санау жүйелері түрлендіргіші",
+      "description": "2, 8, 10, 16 арасында түрлендіру",
+      "value": "Мән",
+      "fromBase": "Қайдан",
+      "toBase": "Қайда",
+      "convert": "Түрлендіру"
+    }
+  },
+  "toolPage": {
+    "breadcrumbs": "Навигация",
+    "similarTools": "Ұқсас құралдар",
+    "faq": "Жиі қойылатын сұрақтар",
+    "instructions": "Нұсқаулық"
+  }
+}

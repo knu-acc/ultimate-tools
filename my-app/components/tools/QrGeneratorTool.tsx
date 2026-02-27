@@ -1,0 +1,70 @@
+"use client";
+
+import { useState, useMemo } from "react";
+
+interface QrGeneratorToolProps {
+  t: (key: string) => string;
+}
+
+// Minimal QR-like matrix (placeholder: simple 2D pattern for demo; real QR would use a library)
+function simpleQrMatrix(text: string, size: number): boolean[][] {
+  const matrix: boolean[][] = [];
+  const str = text || " ";
+  for (let y = 0; y < size; y++) {
+    const row: boolean[] = [];
+    for (let x = 0; x < size; x++) {
+      const i = (y * size + x) % (str.length * 8);
+      const charCode = str.charCodeAt(Math.floor(i / 8) % str.length) ?? 0;
+      row.push(((charCode >> (i % 8)) & 1) === 1);
+    }
+    matrix.push(row);
+  }
+  return matrix;
+}
+
+export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
+  const [value, setValue] = useState("");
+  const size = 29;
+  const matrix = useMemo(() => simpleQrMatrix(value, size), [value]);
+
+  return (
+    <div className="space-y-4">
+      <textarea
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={t("placeholder")}
+        className="min-h-[80px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
+        rows={3}
+      />
+      {value && (
+        <div className="flex flex-col items-center gap-2">
+          <div
+            className="border border-[var(--border)] p-2"
+            style={{ imageRendering: "pixelated" }}
+          >
+            <svg
+              width={size * 4}
+              height={size * 4}
+              viewBox={`0 0 ${size} ${size}`}
+              className="bg-white"
+            >
+              {matrix.map((row, y) =>
+                row.map((cell, x) => (
+                  <rect
+                    key={`${y}-${x}`}
+                    x={x}
+                    y={y}
+                    width={1}
+                    height={1}
+                    fill={cell ? "#2c2f36" : "#ffffff"}
+                  />
+                ))
+              )}
+            </svg>
+          </div>
+          <p className="text-xs text-[var(--muted)]">{t("hint")}</p>
+        </div>
+      )}
+    </div>
+  );
+}

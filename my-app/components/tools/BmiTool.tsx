@@ -1,0 +1,68 @@
+"use client";
+
+import { useState } from "react";
+
+interface BmiToolProps {
+  t: (key: string) => string;
+}
+
+export function BmiTool({ t }: BmiToolProps) {
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
+  const [bmi, setBmi] = useState<number | null>(null);
+
+  const calc = () => {
+    const w = parseFloat(weight);
+    const h = parseFloat(height) / 100;
+    if (isNaN(w) || isNaN(h) || h <= 0) return;
+    setBmi(w / (h * h));
+  };
+
+  const status =
+    bmi !== null
+      ? bmi < 18.5
+        ? t("underweight")
+        : bmi < 25
+          ? t("normal")
+          : bmi < 30
+            ? t("overweight")
+            : t("obese")
+      : "";
+
+  return (
+    <div className="space-y-6">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-2 block text-sm">{t("weight")} (kg)</label>
+          <input
+            type="number"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
+            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
+          />
+        </div>
+        <div>
+          <label className="mb-2 block text-sm">{t("height")} (cm)</label>
+          <input
+            type="number"
+            value={height}
+            onChange={(e) => setHeight(e.target.value)}
+            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
+          />
+        </div>
+      </div>
+      <button
+        onClick={calc}
+        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
+      >
+        {t("calculate")}
+      </button>
+      {bmi !== null && (
+        <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4">
+          <div className="text-2xl font-bold">{bmi.toFixed(1)}</div>
+          <div className="text-sm text-[var(--muted)]">{status}</div>
+        </div>
+      )}
+    </div>
+  );
+}
