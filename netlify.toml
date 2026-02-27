@@ -7,3 +7,10 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Корень сайта → главная на языке по умолчанию (на случай если Next не обработает /)
+[[redirects]]
+  from = "/"
+  to = "/ru"
+  status = 302
+  force = false
