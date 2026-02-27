@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
 
+export const dynamic = "force-static";
+
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ultimate-tools.example.com";
 const LANGS = ["ru", "kz", "en"] as const;
 

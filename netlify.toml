@@ -1,19 +1,15 @@
-# Netlify: Next.js в подпапке my-app
-# https://docs.netlify.com/configure-builds/file-based-configuration/
+# Netlify: статический экспорт Next.js (output: export) из my-app
+# Без плагина — только npm run build и папка out/
 
 [build]
   base = "my-app"
   command = "npm run build"
-  # Publish НЕ задаём — для Next.js использует плагин
+  publish = "out"
 
 [build.environment]
   NODE_VERSION = "20"
 
-# Явно подключаем адаптер Next.js (OpenNext), иначе маршруты могут отдавать 404
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-# Корень → /ru (fallback, если Next не обработает)
+# Корень → главная на русском
 [[redirects]]
   from = "/"
   to = "/ru"

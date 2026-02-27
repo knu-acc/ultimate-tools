@@ -5,6 +5,18 @@ import type { Lang } from "@/lib/tools-registry";
 import { ToolIcon } from "@/components/ToolIcon";
 import type { Metadata } from "next";
 
+const LANGS = ["ru", "kz", "en"] as const;
+
+export function generateStaticParams() {
+  const params: { lang: string; category: string }[] = [];
+  for (const lang of LANGS) {
+    for (const category of Object.keys(CATEGORIES)) {
+      params.push({ lang, category });
+    }
+  }
+  return params;
+}
+
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ultimate-tools.example.com";
 
 export async function generateMetadata({

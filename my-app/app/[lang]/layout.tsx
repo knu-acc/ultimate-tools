@@ -4,6 +4,12 @@ import { Footer } from "@/components/Footer";
 import { loadTranslations, flattenTranslations } from "@/lib/i18n";
 import type { Lang } from "@/lib/tools-registry";
 
+const LANGS = ["ru", "kz", "en"] as const;
+
+export function generateStaticParams() {
+  return LANGS.map((lang) => ({ lang }));
+}
+
 export default async function LangLayout({
   children,
   params,

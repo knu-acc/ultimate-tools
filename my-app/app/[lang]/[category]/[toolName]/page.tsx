@@ -13,6 +13,18 @@ import {
 import type { Metadata } from "next";
 
 const LANGS = ["ru", "kz", "en"] as const;
+
+export function generateStaticParams() {
+  const params: { lang: string; category: string; toolName: string }[] = [];
+  for (const lang of LANGS) {
+    for (const [category, meta] of Object.entries(CATEGORIES)) {
+      for (const toolName of meta.tools) {
+        if (TOOLS[toolName]) params.push({ lang, category, toolName });
+      }
+    }
+  }
+  return params;
+}
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ultimate-tools.example.com";
 
 export async function generateMetadata({
