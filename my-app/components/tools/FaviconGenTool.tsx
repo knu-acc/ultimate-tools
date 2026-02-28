@@ -33,8 +33,11 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Генерация фавикона: одна буква на цветном фоне. Выберите символ, цвета и размер — скачайте PNG.
+      </p>
       <div>
-        <label className="mb-2 block text-sm">{t("text")}</label>
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("text")}</label>
         <input
           type="text"
           maxLength={1}

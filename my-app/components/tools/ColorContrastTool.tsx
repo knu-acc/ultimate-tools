@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface ColorContrastToolProps {
   t: (key: string) => string;
@@ -43,8 +44,15 @@ export function ColorContrastTool({ t }: ColorContrastToolProps) {
     return { ratio, aa, aaLarge, aaa, aaaLarge };
   }, [fg, bg]);
 
+  const summary = result
+    ? `Контраст: ${result.ratio.toFixed(2)}:1 · AA: ${result.aa ? "✓" : "✗"} · AA Large: ${result.aaLarge ? "✓" : "✗"} · AAA: ${result.aaa ? "✓" : "✗"}`
+    : "";
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Проверка контраста текста и фона по WCAG: коэффициент и соответствие уровням AA/AAA для обычного и крупного текста.
+      </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1 block text-sm font-medium">{t("foreground")}</label>
@@ -88,9 +96,12 @@ export function ColorContrastTool({ t }: ColorContrastToolProps) {
         <p className="font-medium">{t("sample")}</p>
       </div>
       {result && (
-        <div className="space-y-2 rounded-xl border border-[var(--border)] p-4 text-sm">
-          <p><span className="text-[var(--muted)]">{t("ratio")}:</span> {result.ratio.toFixed(2)}:1</p>
-          <p>{t("aa")}: {result.aa ? "✓" : "✗"} | {t("aaLarge")}: {result.aaLarge ? "✓" : "✗"} | {t("aaa")}: {result.aaa ? "✓" : "✗"}</p>
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={summary} label="Копировать отчёт" /></div>
+          <div className="space-y-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-sm">
+            <p><span className="text-[var(--muted)]">{t("ratio")}:</span> <span className="font-medium tabular-nums">{result.ratio.toFixed(2)}:1</span></p>
+            <p>{t("aa")}: {result.aa ? "✓" : "✗"} | {t("aaLarge")}: {result.aaLarge ? "✓" : "✗"} | {t("aaa")}: {result.aaa ? "✓" : "✗"}</p>
+          </div>
         </div>
       )}
     </div>

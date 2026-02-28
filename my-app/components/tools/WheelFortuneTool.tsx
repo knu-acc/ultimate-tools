@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { CopyButton } from "@/components/CopyButton";
 
 interface WheelFortuneToolProps {
   t: (key: string) => string;
@@ -11,22 +12,24 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
   const [items, setItems] = useState("Вариант 1\nВариант 2\nВариант 3");
   const [result, setResult] = useState<string | null>(null);
   const [spinning, setSpinning] = useState(false);
+  const [rotation, setRotation] = useState(0);
+
+  const list = useMemo(() => items.split("\n").filter(Boolean), [items]);
+  const n = list.length;
+  const segmentAngle = n > 0 ? 360 / n : 0;
 
   const spin = () => {
-    const list = items.split("\n").filter(Boolean);
     if (list.length === 0) return;
     setSpinning(true);
     setResult(null);
-    const duration = 2000 + Math.random() * 1000;
-    const endTime = Date.now() + duration;
-    const interval = setInterval(() => {
-      setResult(list[Math.floor(Math.random() * list.length)] ?? null);
-      if (Date.now() >= endTime) {
-        clearInterval(interval);
-        setSpinning(false);
-        setResult(list[Math.floor(Math.random() * list.length)] ?? null);
-      }
-    }, 100);
+    const winnerIndex = Math.floor(Math.random() * list.length);
+    const fullSpins = 4 + Math.random() * 2;
+    const finalAngle = 360 * fullSpins + (360 - winnerIndex * segmentAngle - segmentAngle / 2);
+    setRotation((r) => r + finalAngle);
+    setTimeout(() => {
+      setResult(list[winnerIndex] ?? null);
+      setSpinning(false);
+    }, 4000);
   };
 
   return (
@@ -38,22 +41,54 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
         className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
         rows={5}
       />
-      <motion.button
-        onClick={spin}
-        disabled={spinning}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white disabled:opacity-70"
-      >
-        {spinning ? t("spinning") : t("spin")}
-      </motion.button>
+      <div className="flex flex-col items-center gap-6">
+        {n > 0 && (
+          <div className="relative">
+            <motion.div
+              className="relative w-64 h-64 rounded-full border-4 border-[var(--accent)] shadow-xl overflow-hidden mx-auto"
+              style={{ transformOrigin: "center center" }}
+              animate={{ rotate: rotation }}
+              transition={{ duration: 4, ease: [0.2, 0.8, 0.2, 1] }}
+            >
+              <svg viewBox="0 0 100 100" className="w-full h-full">
+                {list.map((_, i) => {
+                  const startAngle = (i * segmentAngle - 90) * (Math.PI / 180);
+                  const endAngle = ((i + 1) * segmentAngle - 90) * (Math.PI / 180);
+                  const r = 50;
+                  const x1 = 50 + r * Math.cos(startAngle);
+                  const y1 = 50 + r * Math.sin(startAngle);
+                  const x2 = 50 + r * Math.cos(endAngle);
+                  const y2 = 50 + r * Math.sin(endAngle);
+                  const large = segmentAngle > 180 ? 1 : 0;
+                  const d = `M 50 50 L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`;
+                  const hue = (i * 360) / Math.max(n, 1) % 360;
+                  return (
+                    <path key={i} d={d} fill={`hsl(${hue}, 60%, 50%)`} stroke="var(--background)" strokeWidth="1" />
+                  );
+                })}
+              </svg>
+            </motion.div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[20px] border-t-[var(--accent)] z-10 pointer-events-none" aria-hidden />
+          </div>
+        )}
+        <motion.button
+          onClick={spin}
+          disabled={spinning || list.length === 0}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white disabled:opacity-70"
+        >
+          {spinning ? t("spinning") : t("spin")}
+        </motion.button>
+      </div>
       {result && (
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="rounded-xl border-2 border-[var(--accent)] bg-[var(--accent)]/10 p-6 text-center text-xl font-bold"
+          className="rounded-xl border-2 border-[var(--accent)] bg-[var(--accent)]/10 p-6 text-center"
         >
-          {result}
+          <p className="text-xl font-bold mb-2">{result}</p>
+          <CopyButton text={result} />
         </motion.div>
       )}
     </div>

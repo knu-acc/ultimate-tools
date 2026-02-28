@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 const STORAGE_KEY = "ultimate-tools-notepad";
 
@@ -24,7 +25,10 @@ export function NotepadTool({ t }: NotepadToolProps) {
   }, [text]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Блокнот с автосохранением в браузере. Текст сохраняется при вводе; можно скопировать всё одним нажатием.
+      </p>
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -32,7 +36,10 @@ export function NotepadTool({ t }: NotepadToolProps) {
         className="min-h-[300px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
         rows={12}
       />
-      <p className="text-sm text-[var(--muted)]">{t("saved")}</p>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="text-sm text-[var(--muted)]">{t("saved")}</p>
+        {text && <CopyButton text={text} label="Копировать всё" />}
+      </div>
     </div>
   );
 }

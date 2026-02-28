@@ -43,6 +43,9 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Метод Помодоро: рабочий интервал и короткий перерыв. Задайте минуты работы и отдыха, запустите таймер.
+      </p>
       <div className="flex gap-4">
         <div>
           <label className="mb-1 block text-sm">{t("work")}</label>
@@ -53,7 +56,7 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
             value={workMin}
             onChange={(e) => !running && setWorkMin(Number(e.target.value) || 25)}
             disabled={running}
-            className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
+            className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
           />
         </div>
         <div>
@@ -65,7 +68,7 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
             value={breakMin}
             onChange={(e) => !running && setBreakMin(Number(e.target.value) || 5)}
             disabled={running}
-            className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
+            className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
           />
         </div>
       </div>

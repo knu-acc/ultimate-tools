@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface RegexTesterToolProps {
   t: (key: string) => string;
@@ -12,10 +13,12 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
   const [text, setText] = useState("");
   const [matches, setMatches] = useState<string[]>([]);
   const [error, setError] = useState("");
+  const [hasTested, setHasTested] = useState(false);
 
   const test = () => {
     setError("");
     setMatches([]);
+    setHasTested(true);
     try {
       const re = new RegExp(pattern, flags);
       const m = text.match(re);
@@ -24,6 +27,8 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
       setError(t("invalidRegex"));
     }
   };
+
+  const matchesLine = matches.join(", ");
 
   return (
     <div className="space-y-6">
@@ -62,21 +67,30 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
       >
         {t("test")}
       </button>
-      {error && <div className="text-red-500">{error}</div>}
-      {matches.length > 0 && (
-        <div className="rounded-xl border border-[var(--border)] p-4">
-          <div className="mb-2 text-sm text-[var(--muted)]">{t("matches")}</div>
-          <div className="flex flex-wrap gap-2">
-            {matches.map((m, i) => (
-              <span
-                key={i}
-                className="rounded-lg bg-[var(--accent)]/20 px-2 py-1 font-mono"
-              >
-                {m}
-              </span>
-            ))}
+      {error && <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>}
+      {hasTested && !error && (
+        <div className="space-y-2">
+          {matches.length > 0 && <div className="flex justify-end"><CopyButton text={matchesLine} label="Копировать совпадения" /></div>}
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+            <div className="mb-2 text-sm font-medium text-[var(--muted)]">{t("matches")}</div>
+            {matches.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {matches.map((m, i) => (
+                  <span key={i} className="rounded-lg bg-[var(--accent)]/20 px-2 py-1 font-mono">
+                    {m}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-[var(--muted)]">Совпадений не найдено</p>
+            )}
           </div>
         </div>
+      )}
+      {!hasTested && !error && (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите регулярное выражение и текст, нажмите «Тест» — появятся совпадения или сообщение об ошибке.
+        </p>
       )}
     </div>
   );

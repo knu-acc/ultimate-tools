@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface DiffCheckerToolProps {
   t: (key: string) => string;
@@ -25,8 +26,15 @@ export function DiffCheckerTool({ t }: DiffCheckerToolProps) {
   }
   const same = onlyA.length === 0 && onlyB.length === 0 && (linesA.length > 0 || linesB.length > 0);
 
+  const diffSummary = (linesA.length > 0 || linesB.length > 0) && !same
+    ? [onlyA.length > 0 ? `${t("onlyInA")}: ${onlyA.join(", ")}` : "", onlyB.length > 0 ? `${t("onlyInB")}: ${onlyB.join(", ")}` : ""].filter(Boolean).join("\n")
+    : "";
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Сравнение двух текстов по строкам. Показываются номера строк, которые отличаются в первом и во втором блоке.
+      </p>
       <div>
         <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("textA")}</label>
         <textarea
@@ -47,21 +55,28 @@ export function DiffCheckerTool({ t }: DiffCheckerToolProps) {
           rows={5}
         />
       </div>
-      {(linesA.length > 0 || linesB.length > 0) && (
-        <div className="rounded-xl border border-[var(--border)] p-4">
-          {same ? (
-            <p className="text-sm text-[var(--muted)]">{t("identical")}</p>
-          ) : (
-            <div className="space-y-1 text-sm">
-              {onlyA.length > 0 && (
-                <p><span className="text-[var(--muted)]">{t("onlyInA")}:</span> {onlyA.join(", ")}</p>
-              )}
-              {onlyB.length > 0 && (
-                <p><span className="text-[var(--muted)]">{t("onlyInB")}:</span> {onlyB.join(", ")}</p>
-              )}
-            </div>
-          )}
+      {(linesA.length > 0 || linesB.length > 0) ? (
+        <div className="space-y-2">
+          {diffSummary && <div className="flex justify-end"><CopyButton text={diffSummary} label="Копировать отчёт" /></div>}
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+            {same ? (
+              <p className="text-sm text-[var(--muted)]">{t("identical")}</p>
+            ) : (
+              <div className="space-y-1 text-sm">
+                {onlyA.length > 0 && (
+                  <p><span className="text-[var(--muted)]">{t("onlyInA")}:</span> <span className="tabular-nums">{onlyA.join(", ")}</span></p>
+                )}
+                {onlyB.length > 0 && (
+                  <p><span className="text-[var(--muted)]">{t("onlyInB")}:</span> <span className="tabular-nums">{onlyB.join(", ")}</span></p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Вставьте или введите два фрагмента текста — отобразятся номера отличающихся строк.
+        </p>
       )}
     </div>
   );

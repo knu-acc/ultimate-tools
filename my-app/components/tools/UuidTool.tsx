@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { CopyButton } from "@/components/CopyButton";
 
 interface UuidToolProps {
   t: (key: string) => string;
@@ -49,11 +50,13 @@ export function UuidTool({ t }: UuidToolProps) {
       </motion.button>
       {uuids.length > 0 && (
         <div className="space-y-2">
+          <div className="flex justify-end">
+            <CopyButton text={uuids.join("\n")} />
+          </div>
           {uuids.map((id, i) => (
             <div
               key={i}
               className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-3 font-mono text-sm"
-              onClick={() => navigator.clipboard.writeText(id)}
             >
               {id}
             </div>

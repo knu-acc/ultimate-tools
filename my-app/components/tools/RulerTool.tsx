@@ -17,6 +17,9 @@ export function RulerTool({ t }: RulerToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Линейка в пикселях или сантиметрах. Выберите единицу и DPI экрана — длина шкалы отображается в выбранных единицах.
+      </p>
       <div className="flex gap-4">
         <div>
           <label className="mb-2 block text-sm">{t("unit")}</label>

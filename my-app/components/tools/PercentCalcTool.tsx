@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface PercentCalcToolProps {
   t: (key: string) => string;
@@ -22,6 +23,9 @@ export function PercentCalcTool({ t }: PercentCalcToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Процент от числа, какой процент составляет одно от другого или сумма с надбавкой. Введите значение и процент, выберите действие.
+      </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-2 block text-sm">{t("value")}</label>
@@ -57,10 +61,19 @@ export function PercentCalcTool({ t }: PercentCalcToolProps) {
           </button>
         ))}
       </div>
-      {result !== null && (
-        <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 text-xl font-bold">
-          {result.toLocaleString()}
+      {result !== null ? (
+        <div className="space-y-2">
+          <div className="flex items-center justify-end">
+            <CopyButton text={String(result)} label="Копировать результат" />
+          </div>
+          <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 text-xl font-bold tabular-nums">
+            {result.toLocaleString()}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите число и процент, нажмите нужный режим расчёта — результат можно скопировать.
+        </p>
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface UtmBuilderToolProps {
   t: (key: string) => string;
@@ -27,9 +28,12 @@ export function UtmBuilderTool({ t }: UtmBuilderToolProps) {
   const result = build();
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Сборка ссылки с UTM-метками для аналитики: источник, канал, кампания, термин, контент. Результат обновляется при вводе.
+      </p>
       <div>
-        <label className="mb-2 block text-sm">URL</label>
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">URL</label>
         <input
           type="url"
           value={url}
@@ -55,12 +59,12 @@ export function UtmBuilderTool({ t }: UtmBuilderToolProps) {
           />
         </div>
       ))}
-      <div>
-        <div className="mb-2 text-sm text-[var(--muted)]">{t("result")}</div>
-        <div
-          className="cursor-pointer select-all break-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm"
-          onClick={() => navigator.clipboard.writeText(result)}
-        >
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+          <CopyButton text={result} label="Копировать ссылку" />
+        </div>
+        <div className="select-all break-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-sm">
           {result}
         </div>
       </div>

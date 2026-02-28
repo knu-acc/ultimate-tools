@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Play, Pause, RotateCcw } from "lucide-react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface StopwatchToolProps {
   t: (key: string) => string;
@@ -40,14 +41,20 @@ export function StopwatchTool({ t }: StopwatchToolProps) {
   const s = Math.floor((ms % 60000) / 1000);
   const mil = Math.floor((ms % 1000) / 10);
 
+  const timeStr = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}.${String(mil).padStart(2, "0")}`;
+
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Секундомер с десятыми долями. Пауза и сброс — текущее время можно скопировать для отчётов.
+      </p>
       <div className="text-center">
         <div className="text-5xl font-mono font-bold text-[var(--accent)]">
           {String(m).padStart(2, "0")}:{String(s).padStart(2, "0")}.{String(mil).padStart(2, "0")}
         </div>
       </div>
-      <div className="flex justify-center gap-2">
+      <div className="flex flex-wrap justify-center items-center gap-2">
+        <CopyButton text={timeStr} label="Копировать время" />
         <button
           onClick={() => setRunning(!running)}
           className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white"

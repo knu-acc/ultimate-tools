@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface UrlEncodeToolProps {
   t: (key: string) => string;
@@ -21,6 +22,9 @@ export function UrlEncodeTool({ t }: UrlEncodeToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Кодирование и декодирование URL (percent-encoding). Для ссылок и query-параметров.
+      </p>
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -42,13 +46,17 @@ export function UrlEncodeTool({ t }: UrlEncodeToolProps) {
           {t("decode")}
         </button>
       </div>
-      {output && (
-        <div
-          className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm break-all"
-          onClick={() => navigator.clipboard.writeText(output)}
-        >
-          {output}
+      {output ? (
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={output} label="Копировать" /></div>
+          <div className="select-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono text-sm break-all">
+            {output}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите строку и нажмите «Закодировать» или «Декодировать» — результат появится здесь.
+        </p>
       )}
     </div>
   );

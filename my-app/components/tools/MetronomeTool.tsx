@@ -35,8 +35,11 @@ export function MetronomeTool({ t }: MetronomeToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Метроном с настраиваемым темпом (BPM). Задайте удары в минуту и нажмите «Старт» — звуковой щелчок будет повторяться с заданным интервалом.
+      </p>
       <div>
-        <label className="mb-2 block text-sm">{t("bpm")}</label>
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("bpm")}</label>
         <input
           type="range"
           min={40}

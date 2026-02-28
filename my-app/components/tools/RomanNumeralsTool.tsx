@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 const ROMAN: [number, string][] = [
   [1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
@@ -51,6 +52,9 @@ export function RomanNumeralsTool({ t }: RomanNumeralsToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Арабские числа в римские (1–3999) и обратно. Выберите направление, введите значение и нажмите «Конвертировать».
+      </p>
       <div className="flex gap-2">
         <button
           onClick={() => setMode("to")}
@@ -78,10 +82,17 @@ export function RomanNumeralsTool({ t }: RomanNumeralsToolProps) {
       >
         {t("convert")}
       </button>
-      {result && (
-        <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 font-mono text-xl">
-          {result}
+      {result ? (
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>
+          <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 font-mono text-xl">
+            {result}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Выберите «В римские» или «Из римских», введите число (например 2024 или MMXXIV) и нажмите «Конвертировать».
+        </p>
       )}
     </div>
   );

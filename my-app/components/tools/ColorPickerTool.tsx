@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface ColorPickerToolProps {
   t: (key: string) => string;
@@ -29,10 +30,16 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
     return { h: Math.round(h), s: Math.round(s * 100), l: Math.round(l * 100) };
   })();
 
+  const rgbStr = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+  const hslStr = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Выберите цвет — отображаются HEX, RGB и HSL. Любое значение можно скопировать для CSS или дизайна.
+      </p>
       <div>
-        <label className="mb-2 block text-sm">{t("color")}</label>
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("color")}</label>
         <div className="flex items-center gap-4">
           <input
             type="color"
@@ -49,19 +56,24 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
         </div>
       </div>
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-[var(--border)] p-4">
-          <div className="text-sm text-[var(--muted)]">RGB</div>
-          <div className="font-mono">rgb({rgb.r}, {rgb.g}, {rgb.b})</div>
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="mb-1 flex items-center justify-between">
+            <span className="text-sm text-[var(--muted)]">RGB</span>
+            <CopyButton text={rgbStr} label="Копировать RGB" />
+          </div>
+          <div className="font-mono text-sm">{rgbStr}</div>
         </div>
-        <div className="rounded-xl border border-[var(--border)] p-4">
-          <div className="text-sm text-[var(--muted)]">HSL</div>
-          <div className="font-mono">hsl({hsl.h}, {hsl.s}%, {hsl.l}%)</div>
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="mb-1 flex items-center justify-between">
+            <span className="text-sm text-[var(--muted)]">HSL</span>
+            <CopyButton text={hslStr} label="Копировать HSL" />
+          </div>
+          <div className="font-mono text-sm">{hslStr}</div>
         </div>
-        <div
-          className="cursor-pointer rounded-xl border-2 p-4"
-          style={{ backgroundColor: color }}
-          onClick={() => navigator.clipboard.writeText(color)}
-        />
+        <div className="flex flex-col items-center gap-2 rounded-xl border border-[var(--border)] p-4">
+          <div className="h-16 w-full rounded border-2" style={{ backgroundColor: color }} />
+          <CopyButton text={color} label="Копировать HEX" />
+        </div>
       </div>
     </div>
   );

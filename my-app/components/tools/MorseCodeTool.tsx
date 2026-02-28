@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 const MORSE: Record<string, string> = {
   A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.", G: "--.",
@@ -46,6 +47,9 @@ export function MorseCodeTool({ t }: MorseCodeToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Код Морзе: латиница и цифры в точки/тире и обратно. Выберите «Закодировать» или «Декодировать», введите текст и нажмите кнопку.
+      </p>
       <div className="flex gap-2">
         <button
           onClick={() => setMode("encode")}
@@ -73,13 +77,17 @@ export function MorseCodeTool({ t }: MorseCodeToolProps) {
       >
         {mode === "encode" ? t("encode") : t("decode")}
       </button>
-      {result && (
-        <div
-          className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono"
-          onClick={() => navigator.clipboard.writeText(result)}
-        >
-          {result}
+      {result ? (
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>
+          <div className="select-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono">
+            {result}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите текст или код Морзе (буквы через пробел) и нажмите кнопку — результат появится ниже.
+        </p>
       )}
     </div>
   );

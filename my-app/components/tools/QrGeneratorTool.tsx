@@ -28,7 +28,10 @@ export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
   const matrix = useMemo(() => simpleQrMatrix(value, size), [value]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Визуализация данных в виде QR-подобного паттерна. Введите текст — паттерн обновляется. Для настоящего QR-кода используйте специализированные сервисы или библиотеки.
+      </p>
       <textarea
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -36,7 +39,7 @@ export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
         className="min-h-[80px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
         rows={3}
       />
-      {value && (
+      {value ? (
         <div className="flex flex-col items-center gap-2">
           <div
             className="border border-[var(--border)] p-2"
@@ -64,6 +67,10 @@ export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
           </div>
           <p className="text-xs text-[var(--muted)]">{t("hint")}</p>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите текст или ссылку — визуальный паттерн появится ниже.
+        </p>
       )}
     </div>
   );

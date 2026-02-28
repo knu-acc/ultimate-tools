@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface JwtDecoderToolProps {
   t: (key: string) => string;
@@ -43,6 +44,9 @@ export function JwtDecoderTool({ t }: JwtDecoderToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Декодирование JWT без проверки подписи: вставьте токен и нажмите «Декодировать» — отобразятся Header и Payload в JSON.
+      </p>
       <textarea
         value={token}
         onChange={(e) => setToken(e.target.value)}
@@ -56,18 +60,29 @@ export function JwtDecoderTool({ t }: JwtDecoderToolProps) {
       >
         {t("decode")}
       </button>
-      {error && <div className="text-red-500">{error}</div>}
+      {error && <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>}
       {header && (
         <div className="space-y-4">
-          <div>
-            <div className="mb-2 text-sm text-[var(--muted)]">Header</div>
-            <pre className="overflow-auto rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm">{header}</pre>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-[var(--muted)]">Header</span>
+              <CopyButton text={header} label="Копировать Header" />
+            </div>
+            <pre className="overflow-auto rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-sm">{header}</pre>
           </div>
-          <div>
-            <div className="mb-2 text-sm text-[var(--muted)]">Payload</div>
-            <pre className="overflow-auto rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm">{payload}</pre>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-[var(--muted)]">Payload</span>
+              <CopyButton text={payload} label="Копировать Payload" />
+            </div>
+            <pre className="overflow-auto rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-sm">{payload}</pre>
           </div>
         </div>
+      )}
+      {!header && !error && token.trim() && (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Нажмите «Декодировать» — появятся блоки Header и Payload.
+        </p>
       )}
     </div>
   );

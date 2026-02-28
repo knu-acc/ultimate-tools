@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 const RU_TO_EN: Record<string, string> = {
   а: "a", б: "b", в: "v", г: "g", д: "d", е: "e", ё: "yo", ж: "zh", з: "z",
@@ -39,16 +40,19 @@ export function TranslitTool({ t }: TranslitToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Перевод по правилам ГОСТ: кириллица в латиницу для загранпаспорта и URL или обратно.
+      </p>
       <div className="flex gap-2">
         <button
           onClick={() => setDirection("ru-en")}
-          className={`rounded-xl px-4 py-2 text-sm ${direction === "ru-en" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)]"}`}
+          className={`rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${direction === "ru-en" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
         >
           {t("ruToEn")}
         </button>
         <button
           onClick={() => setDirection("en-ru")}
-          className={`rounded-xl px-4 py-2 text-sm ${direction === "en-ru" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)]"}`}
+          className={`rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${direction === "en-ru" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
         >
           {t("enToRu")}
         </button>
@@ -57,13 +61,18 @@ export function TranslitTool({ t }: TranslitToolProps) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={t("placeholder")}
-        className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
+        className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
         rows={5}
       />
-      <div>
-        <div className="mb-2 text-sm text-[var(--muted)]">{t("result")}</div>
-        <div className="min-h-[80px] rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono">
-          {result || "—"}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+          {result ? <CopyButton text={result} label="Скопировать" /> : null}
+        </div>
+        <div className="min-h-[80px] rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono text-[var(--foreground)]">
+          {result || (
+            <span className="text-[var(--muted)]">Результат транслитерации появится здесь</span>
+          )}
         </div>
       </div>
     </div>

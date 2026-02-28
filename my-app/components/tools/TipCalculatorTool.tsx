@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface TipCalculatorToolProps {
   t: (key: string) => string;
@@ -16,10 +17,19 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
   const total = amount + tip;
   const perPerson = people > 0 ? total / people : 0;
 
+  const summary = amount > 0
+    ? people > 1
+      ? `${t("tip")}: ${tip.toFixed(2)}\n${t("total")}: ${total.toFixed(2)}\n${t("perPerson")}: ${perPerson.toFixed(2)}`
+      : `${t("tip")}: ${tip.toFixed(2)}\n${t("total")}: ${total.toFixed(2)}`
+    : "";
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Чаевые от суммы счёта: укажите сумму, процент чаевых и количество человек — итог и доля с человека обновляются автоматически.
+      </p>
       <div>
-        <label className="mb-1 block text-sm font-medium">{t("bill")}</label>
+        <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("bill")}</label>
         <input
           type="number"
           min="0"
@@ -50,23 +60,30 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
           className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none"
         />
       </div>
-      {amount > 0 && (
-        <div className="space-y-2 rounded-xl border border-[var(--border)] p-4">
-          <div className="flex justify-between text-sm">
-            <span className="text-[var(--muted)]">{t("tip")}</span>
-            <span className="font-medium">{tip.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-[var(--muted)]">{t("total")}</span>
-            <span className="font-medium">{total.toFixed(2)}</span>
-          </div>
-          {people > 1 && (
-            <div className="flex justify-between border-t border-[var(--border)] pt-2 text-sm">
-              <span className="text-[var(--muted)]">{t("perPerson")}</span>
-              <span className="font-medium">{perPerson.toFixed(2)}</span>
+      {amount > 0 ? (
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={summary} label="Копировать расчёт" /></div>
+          <div className="space-y-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+            <div className="flex justify-between text-sm">
+              <span className="text-[var(--muted)]">{t("tip")}</span>
+              <span className="font-medium tabular-nums">{tip.toFixed(2)}</span>
             </div>
-          )}
+            <div className="flex justify-between text-sm">
+              <span className="text-[var(--muted)]">{t("total")}</span>
+              <span className="font-medium tabular-nums">{total.toFixed(2)}</span>
+            </div>
+            {people > 1 && (
+              <div className="flex justify-between border-t border-[var(--border)] pt-2 text-sm">
+                <span className="text-[var(--muted)]">{t("perPerson")}</span>
+                <span className="font-medium tabular-nums">{perPerson.toFixed(2)}</span>
+              </div>
+            )}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите сумму счёта — чаевые и итог появятся ниже. Можно указать число гостей для расчёта с человека.
+        </p>
       )}
     </div>
   );

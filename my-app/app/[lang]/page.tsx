@@ -1,10 +1,23 @@
 import Link from "next/link";
+import { Type, Shuffle, Clock, Calculator, Image, Code, Share2, ArrowLeftRight, Key, MoreHorizontal } from "lucide-react";
 import { loadTranslations, getNested } from "@/lib/i18n";
 import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
 import type { Lang } from "@/lib/tools-registry";
-import { ToolIcon } from "@/components/ToolIcon";
-import { FavoriteStar } from "@/components/FavoriteStar";
+import { PopularToolsSlider } from "@/components/PopularToolsSlider";
 import type { Metadata } from "next";
+
+const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  text: Type,
+  random: Shuffle,
+  time: Clock,
+  math: Calculator,
+  graphics: Image,
+  "dev-tools": Code,
+  social: Share2,
+  converters: ArrowLeftRight,
+  crypto: Key,
+  misc: MoreHorizontal,
+};
 
 const FEATURED_TOOLS: { slug: string; category: string }[] = [
   { slug: "random-number", category: "random" },
@@ -56,7 +69,7 @@ export default async function HomePage({
         <div className="bg-noise" />
         <div className="gradient-hero px-6 py-20 lg:px-8 lg:py-28 relative z-10">
           <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-purple-500 pb-2">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] pb-2">
               {t("common.siteName")}
             </h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-[var(--muted)] leading-relaxed">
@@ -84,50 +97,37 @@ export default async function HomePage({
         {/* Popular tools */}
         <section id="popular" className="mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-[var(--accent)] to-purple-500" />
+            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-[var(--accent)] to-[var(--accent-hover)]" />
             <h2 className="text-2xl font-bold text-[var(--foreground)] tracking-tight">
               {t("home.popularTools")}
             </h2>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURED_TOOLS.map(({ slug, category }) => {
+          <PopularToolsSlider
+            items={FEATURED_TOOLS.map(({ slug, category }) => {
               const tool = TOOLS[slug];
-              if (!tool) return null;
-              return (
-                <div key={slug} className="relative">
-                  <Link
-                    href={`/${validLang}/${category}/${slug}`}
-                    className="tool-card group flex flex-col p-5"
-                  >
-                    <div className="flex items-center gap-4 mb-3">
-                      <div className="shrink-0 p-2.5 rounded-xl bg-[var(--accent-muted)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-300">
-                        <ToolIcon toolName={slug} size="md" />
-                      </div>
-                      <span className="font-semibold text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors duration-300">
-                        {t(tool.nameKey)}
-                      </span>
-                    </div>
-                    <p className="text-sm text-[var(--muted)] leading-relaxed flex-1">
-                      {getNested(tData as Record<string, unknown>, tool.descriptionKey.replace(".description", ".cardDescription")) ?? t(tool.descriptionKey)}
-                    </p>
-                  </Link>
-                  <FavoriteStar slug={slug} className="absolute top-3 right-3" />
-                </div>
-              );
+              if (!tool) return { slug, category, title: slug, description: "" };
+              const camelSlug = slug.split("-").map((s, i) => (i === 0 ? s : s.charAt(0).toUpperCase() + s.slice(1))).join("");
+              const cardDesc = getNested(tData as Record<string, unknown>, `tools.${camelSlug}.cardDescription`);
+              const description = (typeof cardDesc === "string" ? cardDesc : null) ?? t(tool.descriptionKey);
+              return { slug, category, title: t(tool.nameKey), description };
             })}
-          </div>
+            lang={validLang}
+          />
         </section>
 
         {/* Categories */}
         <section>
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-purple-500 to-pink-500" />
+            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-[var(--accent)] to-[#E74504]" />
             <h2 className="text-2xl font-bold text-[var(--foreground)] tracking-tight">
               {t("home.categories")}
             </h2>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
             {Object.entries(CATEGORIES).map(([catSlug, { key, tools }]) => {
+              const Icon = CATEGORY_ICONS[catSlug] ?? MoreHorizontal;
+              const descKey = catSlug === "dev-tools" ? "devTools" : catSlug;
+              const catDescription = getNested(tData as Record<string, unknown>, `categories.${descKey}.description`);
               const exampleSlugs = tools.slice(0, 3);
               const exampleNames = exampleSlugs
                 .map((s) => TOOLS[s]?.nameKey)
@@ -137,24 +137,31 @@ export default async function HomePage({
                 <Link
                   key={catSlug}
                   href={`/${validLang}/${catSlug}`}
-                  className="tool-card block overflow-hidden group"
+                  className="block overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-5 transition-colors hover:border-[var(--accent)]/50 group"
                 >
-                  <div className="card-accent-line" aria-hidden />
-                  <div className="p-5 flex flex-col h-full">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-semibold text-lg text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="shrink-0 p-2 rounded-lg bg-[var(--accent-muted)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="font-semibold text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors block truncate">
                         {t(key)}
                       </span>
-                      <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-[var(--accent-muted)] text-[var(--accent)]">
-                        {tools.length}
+                      <span className="text-xs font-medium text-[var(--muted)]">
+                        {tools.length} {t("home.toolsCount")}
                       </span>
                     </div>
-                    {exampleNames.length > 0 && (
-                      <p className="mt-auto pt-4 text-sm text-[var(--muted)] leading-relaxed">
-                        {exampleNames.join(" · ")}
-                      </p>
-                    )}
                   </div>
+                  {typeof catDescription === "string" && (
+                    <p className="text-sm text-[var(--muted)] leading-relaxed line-clamp-2 mb-3">
+                      {catDescription}
+                    </p>
+                  )}
+                  {exampleNames.length > 0 && (
+                    <p className="text-xs text-[var(--muted)] leading-relaxed truncate">
+                      {exampleNames.join(", ")}
+                    </p>
+                  )}
                 </Link>
               );
             })}

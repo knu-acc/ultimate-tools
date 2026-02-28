@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface WaLinkGeneratorToolProps {
   t: (key: string) => string;
@@ -15,8 +16,11 @@ export function WaLinkGeneratorTool({ t }: WaLinkGeneratorToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Ссылка для открытия чата WhatsApp с номером и опциональным предзаполненным сообщением. Номер — только цифры, с кодом страны.
+      </p>
       <div>
-        <label className="mb-2 block text-sm">{t("phone")}</label>
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("phone")}</label>
         <input
           type="tel"
           value={phone}
@@ -35,24 +39,28 @@ export function WaLinkGeneratorTool({ t }: WaLinkGeneratorToolProps) {
           rows={3}
         />
       </div>
-      {cleanPhone && (
-        <div>
-          <div className="mb-2 text-sm text-[var(--muted)]">{t("result")}</div>
-          <div
-            className="cursor-pointer select-all break-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-sm"
-            onClick={() => navigator.clipboard.writeText(link)}
-          >
+      {cleanPhone ? (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+            <CopyButton text={link} label="Копировать ссылку" />
+          </div>
+          <div className="select-all break-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-sm">
             {link}
           </div>
           <a
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-block rounded-xl bg-[#25D366] px-4 py-2 text-white"
+            className="inline-block rounded-lg bg-[#25D366] px-4 py-2 text-white hover:opacity-90"
           >
             {t("open")}
           </a>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите номер телефона (например 79001234567) — ссылка и кнопка «Открыть» появятся ниже.
+        </p>
       )}
     </div>
   );

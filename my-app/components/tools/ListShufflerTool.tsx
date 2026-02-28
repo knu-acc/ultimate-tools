@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { CopyButton } from "@/components/CopyButton";
 
 interface ListShufflerToolProps {
   t: (key: string) => string;
@@ -43,12 +44,28 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
         {t("shuffle")}
       </motion.button>
       {result.length > 0 && (
-        <div className="space-y-2">
-          <div className="text-sm text-[var(--muted)]">{t("result")}</div>
-          <div className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm">
-            {result.join("\n")}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="space-y-2"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-[var(--muted)]">{t("result")}</span>
+            <CopyButton text={result.join("\n")} />
           </div>
-        </div>
+          <div className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm space-y-1">
+            {result.map((line, i) => (
+              <motion.div
+                key={`${i}-${line}`}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.03 }}
+              >
+                {line}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       )}
     </div>
   );

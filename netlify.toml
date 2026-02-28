@@ -1,5 +1,5 @@
 # Netlify: статический экспорт Next.js (output: export) из my-app
-# Без плагина — только npm run build и папка out/
+# После сборки публикуется папка my-app/out
 
 [build]
   base = "my-app"
@@ -14,4 +14,6 @@
   from = "/"
   to = "/ru"
   status = 302
-  force = false
+
+# Next.js при output: export создаёт out/404.html — Netlify отдаст его при отсутствии страницы.
+# Если 404 сохраняется: проверьте, что base = "my-app", publish = "out", сборка без ошибок.

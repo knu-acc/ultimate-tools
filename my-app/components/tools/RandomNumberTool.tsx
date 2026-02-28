@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Shuffle } from "lucide-react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface RandomNumberToolProps {
   t: (key: string) => string;
@@ -19,6 +20,8 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
   const [max, setMax] = useState(100);
   const [quantity, setQuantity] = useState(1);
   const [result, setResult] = useState<number[] | null>(null);
+  const [scrolling, setScrolling] = useState(false);
+  const [displayNums, setDisplayNums] = useState<number[]>([]);
 
   const handleGenerate = () => {
     const mn = Math.min(min, max);
@@ -27,20 +30,29 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
     const nums: number[] = [];
     const range = mx - mn + 1;
     if (qty > range) {
-      for (let i = 0; i < qty; i++) {
-        nums.push(getRandomInt(mn, mx));
-      }
+      for (let i = 0; i < qty; i++) nums.push(getRandomInt(mn, mx));
     } else {
       const used = new Set<number>();
       while (nums.length < qty) {
         const n = getRandomInt(mn, mx);
-        if (!used.has(n)) {
-          used.add(n);
-          nums.push(n);
-        }
+        if (!used.has(n)) { used.add(n); nums.push(n); }
       }
     }
-    setResult(nums);
+    setScrolling(true);
+    setResult(null);
+    setDisplayNums(nums.map(() => mn));
+    let step = 0;
+    const steps = 8;
+    const iv = setInterval(() => {
+      step++;
+      setDisplayNums(nums.map(() => getRandomInt(mn, mx)));
+      if (step >= steps) {
+        clearInterval(iv);
+        setDisplayNums(nums);
+        setResult(nums);
+        setScrolling(false);
+      }
+    }, 60);
   };
 
   return (
@@ -79,29 +91,35 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
 
       <motion.button
         onClick={handleGenerate}
+        disabled={scrolling}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white transition-colors hover:bg-[var(--accent-hover)]"
+        className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white transition-colors hover:bg-[var(--accent-hover)] disabled:opacity-70"
       >
         <Shuffle className="h-5 w-5" />
-        {t("generate")}
+        {scrolling ? "..." : t("generate")}
       </motion.button>
 
-      {result !== null && (
+      {((scrolling ? displayNums : result) ?? []).length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4"
         >
-          <div className="mb-2 text-sm font-medium text-[var(--muted)]">{t("result")}</div>
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+            <CopyButton text={((scrolling ? displayNums : result) ?? []).join(", ")} />
+          </div>
           <div className="flex flex-wrap gap-2 font-mono text-lg">
-            {result.map((n, i) => (
-              <span
-                key={i}
+            {((scrolling ? displayNums : result) ?? []).map((n, i) => (
+              <motion.span
+                key={`${scrolling}-${i}-${n}`}
+                initial={{ opacity: 0.5 }}
+                animate={{ opacity: 1 }}
                 className="rounded-lg bg-[var(--accent)]/20 px-3 py-1 text-[var(--accent)]"
               >
                 {n}
-              </span>
+              </motion.span>
             ))}
           </div>
         </motion.div>

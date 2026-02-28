@@ -257,7 +257,7 @@ export default async function ToolPage({
         <main className="mx-auto max-w-4xl" id="main-content">
           <Breadcrumbs lang={validLang} items={breadcrumbItems} translations={translations} />
           <header className="mt-6 mb-8 relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)] to-purple-500 rounded-2xl -z-10 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] rounded-2xl -z-10 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-500"></div>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-6 sm:p-8 border border-[var(--border)] rounded-2xl bg-[var(--background)]/80 backdrop-blur-xl shadow-sm">
               <div className="p-4 bg-gradient-to-br from-[var(--accent-muted)] to-[var(--background)] border border-[var(--border)] rounded-xl text-[var(--accent)] shrink-0 shadow-inner">
                 <ToolIcon toolName={toolName} size="lg" />
@@ -290,7 +290,7 @@ export default async function ToolPage({
             <h2 id="tool-heading" className="sr-only">
               {validLang === "ru" ? "Как пользоваться инструментом" : validLang === "kz" ? "Құралды қалай пайдалану керек" : "How to use the tool"}
             </h2>
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)] to-purple-500 rounded-[24px] blur opacity-10"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] rounded-[24px] blur opacity-10"></div>
             <div className="relative rounded-[22px] border border-[var(--border)] bg-[var(--card-bg)] shadow-2xl p-6 sm:p-8 lg:p-10">
               <ToolRenderer
                 toolName={toolName}
@@ -417,7 +417,7 @@ export default async function ToolPage({
                       itemType="https://schema.org/Answer"
                       className="mt-3 relative"
                     >
-                      <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-[var(--accent)] to-purple-500 opacity-20 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-[var(--accent)] to-[var(--accent-hover)] opacity-20 group-hover:opacity-100 transition-opacity"></div>
                       <p className="pl-4 text-[15px] text-[var(--muted)] leading-relaxed" itemProp="text">
                         {item.a}
                       </p>

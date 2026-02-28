@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 const HTML_ENTITIES: Record<string, string> = {
   "&": "&amp;",
@@ -53,13 +54,17 @@ export function HtmlEncodeTool({ t }: HtmlEncodeToolProps) {
           {t("decode")}
         </button>
       </div>
-      {output && (
-        <div
-          className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm break-all"
-          onClick={() => navigator.clipboard.writeText(output)}
-        >
-          {output}
+      {output ? (
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={output} label="Копировать" /></div>
+          <div className="select-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono text-sm break-all">
+            {output}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите текст и нажмите «Закодировать» или «Декодировать» — результат появится здесь.
+        </p>
       )}
     </div>
   );

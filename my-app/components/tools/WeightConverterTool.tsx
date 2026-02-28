@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 const KG = 1;
 const UNITS: Record<string, number> = {
@@ -24,8 +25,13 @@ export function WeightConverterTool({ t }: WeightConverterToolProps) {
     ? ((v * UNITS[from]) / UNITS[to]).toFixed(4)
     : "";
 
+  const resultLine = result ? `${value} ${from} = ${result} ${to}` : "";
+
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Конвертер массы: кг, г, фунты (lb), унции (oz). Результат обновляется при вводе.
+      </p>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
           <label className="mb-2 block text-sm">{t("value")}</label>
@@ -61,10 +67,17 @@ export function WeightConverterTool({ t }: WeightConverterToolProps) {
           </select>
         </div>
       </div>
-      {result && (
-        <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 text-xl font-bold">
-          {result} {to}
+      {result ? (
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={resultLine} label="Копировать" /></div>
+          <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 text-xl font-bold tabular-nums">
+            {result} {to}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите число и выберите единицы «из» и «в» — результат появится ниже.
+        </p>
       )}
     </div>
   );

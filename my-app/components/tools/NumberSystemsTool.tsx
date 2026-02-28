@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface NumberSystemsToolProps {
   t: (key: string) => string;
@@ -20,8 +21,11 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Перевод числа между системами: двоичная (2), восьмеричная (8), десятичная (10), шестнадцатеричная (16). Введите число в исходной системе и нажмите «Конвертировать».
+      </p>
       <div>
-        <label className="mb-2 block text-sm">{t("value")}</label>
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("value")}</label>
         <input
           type="text"
           value={value}
@@ -61,10 +65,17 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
       >
         {t("convert")}
       </button>
-      {result && (
-        <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 font-mono text-xl">
-          {result}
+      {result ? (
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>
+          <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 font-mono text-xl">
+            {result}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите число (например 255 в десятичной), выберите исходную и целевую систему счисления — нажмите «Конвертировать».
+        </p>
       )}
     </div>
   );

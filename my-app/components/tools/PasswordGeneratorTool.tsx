@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { KeyRound } from "lucide-react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface PasswordGeneratorToolProps {
   t: (key: string) => string;
@@ -78,11 +79,11 @@ export function PasswordGeneratorTool({ t }: PasswordGeneratorToolProps) {
         {t("generate")}
       </motion.button>
       {password && (
-        <div
-          className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono"
-          onClick={() => navigator.clipboard.writeText(password)}
-        >
-          {password}
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono relative">
+          <div className="pr-20 break-all select-all">{password}</div>
+          <div className="absolute top-2 right-2">
+            <CopyButton text={password} />
+          </div>
         </div>
       )}
     </div>

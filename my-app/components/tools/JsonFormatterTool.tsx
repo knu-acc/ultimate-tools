@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface JsonFormatterToolProps {
   t: (key: string) => string;
@@ -33,6 +34,9 @@ export function JsonFormatterTool({ t }: JsonFormatterToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Форматирование и минификация JSON. Вставьте валидный JSON и нажмите «Форматировать» или «Минифицировать» — результат можно скопировать.
+      </p>
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -54,14 +58,22 @@ export function JsonFormatterTool({ t }: JsonFormatterToolProps) {
           {t("minify")}
         </button>
       </div>
-      {error && <div className="text-red-500">{error}</div>}
+      {error && <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>}
       {output && !error && (
-        <textarea
-          readOnly
-          value={output}
-          className="min-h-[150px] w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 font-mono text-sm"
-          rows={6}
-        />
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={output} label="Копировать JSON" /></div>
+          <textarea
+            readOnly
+            value={output}
+            className="min-h-[150px] w-full rounded-xl border border-[var(--border)] bg-[var(--card-bg)] px-4 py-3 font-mono text-sm"
+            rows={6}
+          />
+        </div>
+      )}
+      {!output && !error && input.trim() && (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Нажмите «Форматировать» или «Минифицировать» для результата.
+        </p>
       )}
     </div>
   );

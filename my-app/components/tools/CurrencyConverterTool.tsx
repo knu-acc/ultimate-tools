@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 const RATES: Record<string, number> = {
   USD: 1,
@@ -23,6 +24,7 @@ export function CurrencyConverterTool({ t }: CurrencyConverterToolProps) {
   const result = !isNaN(v)
     ? ((v * RATES[from]) / RATES[to]).toFixed(2)
     : "";
+  const resultLine = result ? `${value} ${from} = ${result} ${to}` : "";
 
   return (
     <div className="space-y-6">
@@ -62,10 +64,17 @@ export function CurrencyConverterTool({ t }: CurrencyConverterToolProps) {
           </select>
         </div>
       </div>
-      {result && (
-        <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 text-xl font-bold">
-          {result} {to}
+      {result ? (
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={resultLine} label="Копировать" /></div>
+          <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 text-xl font-bold tabular-nums">
+            {result} {to}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите сумму и выберите валюты — курс фиксированный, для актуальных данных используйте обменник.
+        </p>
       )}
     </div>
   );

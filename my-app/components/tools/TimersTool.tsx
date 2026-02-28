@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Play, Pause, Plus } from "lucide-react";
+import { Play, Pause, RotateCcw } from "lucide-react";
 
 interface TimersToolProps {
   t: (key: string) => string;
@@ -40,6 +40,9 @@ export function TimersTool({ t }: TimersToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Обратный отсчёт по минутам и секундам. Задайте время, нажмите «Старт»; по окончании таймер остановится.
+      </p>
       <div className="flex gap-4">
         <div>
           <label className="mb-1 block text-sm">{t("minutes")}</label>
@@ -74,12 +77,24 @@ export function TimersTool({ t }: TimersToolProps) {
       <div className="flex justify-center gap-2">
         <button
           onClick={() => (running ? setRunning(false) : start())}
-          className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white"
+          className="flex items-center gap-2 rounded-lg bg-[var(--accent)] px-4 py-2 text-white"
         >
           {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           {running ? t("pause") : t("start")}
         </button>
+        <button
+          onClick={() => { setRunning(false); setTotalSec(minutes * 60 + seconds); }}
+          className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2"
+        >
+          <RotateCcw className="h-4 w-4" />
+          {t("reset")}
+        </button>
       </div>
+      {totalSec === 0 && running === false && (
+        <p className="rounded-lg border border-[var(--accent)] bg-[var(--accent-muted)]/30 px-4 py-2 text-center text-sm text-[var(--accent)]">
+          Готово
+        </p>
+      )}
     </div>
   );
 }

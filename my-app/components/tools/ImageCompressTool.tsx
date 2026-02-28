@@ -38,12 +38,20 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Сжатие изображения в JPEG с настраиваемым качеством. Загрузите файл, выберите качество и нажмите «Сжать» — затем скачайте результат.
+      </p>
       <input
         type="file"
         accept="image/*"
         onChange={handleFile}
         className="block w-full text-sm"
       />
+      {!file && (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Выберите изображение (JPG, PNG и др.) — после загрузки станут доступны ползунок качества и кнопка сжатия.
+        </p>
+      )}
       {file && (
         <>
           <div>

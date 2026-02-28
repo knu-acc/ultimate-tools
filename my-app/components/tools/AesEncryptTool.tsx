@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CryptoJS from "crypto-js";
+import { CopyButton } from "@/components/CopyButton";
 
 interface AesEncryptToolProps {
   t: (key: string) => string;
@@ -28,6 +29,9 @@ export function AesEncryptTool({ t }: AesEncryptToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Шифрование и расшифровка AES. Введите ключ и текст — сохраните ключ: без него расшифровка невозможна.
+      </p>
       <div className="flex gap-2">
         <button
           onClick={() => setMode("encrypt")}
@@ -64,13 +68,17 @@ export function AesEncryptTool({ t }: AesEncryptToolProps) {
       >
         {mode === "encrypt" ? t("encrypt") : t("decrypt")}
       </button>
-      {result && (
-        <div
-          className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm break-all"
-          onClick={() => navigator.clipboard.writeText(result)}
-        >
-          {result}
+      {result ? (
+        <div className="space-y-2">
+          <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>
+          <div className="select-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono text-sm break-all">
+            {result}
+          </div>
         </div>
+      ) : (
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Выберите «Шифровать» или «Расшифровать», введите ключ и текст — нажмите кнопку действия.
+        </p>
       )}
     </div>
   );

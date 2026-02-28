@@ -69,7 +69,7 @@ export default async function CategoryPage({
       <div className="bg-[var(--background)] border-b border-[var(--border)] relative overflow-hidden">
         <div className="bg-noise" />
         <div className="mx-auto max-w-5xl px-6 py-12 lg:px-8 lg:py-16 relative z-10 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-purple-500 pb-2">
+          <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] pb-2">
             {t(cat.key)}
           </h1>
           {catDescription && (

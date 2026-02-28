@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface CssGradientsToolProps {
   t: (key: string) => string;
@@ -12,9 +13,13 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
   const [angle, setAngle] = useState(90);
 
   const css = `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+  const fullCss = `background: ${css};`;
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Линейный градиент из двух цветов и угла. Результат в виде CSS — можно скопировать и вставить в стили.
+      </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-2 block text-sm">{t("color1")}</label>
@@ -63,15 +68,12 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
         />
         <span className="text-sm">{angle}°</span>
       </div>
-      <div
-        className="h-32 rounded-xl"
-        style={{ background: css }}
-      />
-      <div
-        className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm"
-        onClick={() => navigator.clipboard.writeText(`background: ${css};`)}
-      >
-        background: {css};
+      <div className="h-32 rounded-xl border border-[var(--border)]" style={{ background: css }} />
+      <div className="space-y-2">
+        <div className="flex justify-end"><CopyButton text={fullCss} label="Копировать CSS" /></div>
+        <div className="select-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono text-sm">
+          {fullCss}
+        </div>
       </div>
     </div>
   );

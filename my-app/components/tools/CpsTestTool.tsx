@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { CopyButton } from "@/components/CopyButton";
 
 interface CpsTestToolProps {
   t: (key: string) => string;
@@ -55,6 +56,9 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Тест кликов в секунду (CPS): нажмите «Старт» и кликайте по блоку 5 секунд. В конце показывается CPS за последнюю секунду.
+      </p>
       <div className="text-center">
         <div className="text-4xl font-bold text-[var(--accent)]">{timeLeft > 0 ? timeLeft : "0"}</div>
         <div className="text-sm text-[var(--muted)]">{t("secondsLeft")}</div>
@@ -69,12 +73,20 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
         <div className="text-sm text-[var(--muted)]">{t("clicks")}</div>
         <div className="mt-2 text-lg font-medium">{t("cps")}: {cps}</div>
       </motion.div>
-      <button
-        onClick={reset}
-        className="rounded-xl border border-[var(--border)] px-4 py-2"
-      >
-        {t("reset")}
-      </button>
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          onClick={reset}
+          className="rounded-lg border border-[var(--border)] px-4 py-2"
+        >
+          {t("reset")}
+        </button>
+        {!running && timeLeft === 0 && clicks > 0 && (
+          <CopyButton
+            text={`CPS: ${cps}, ${t("clicks")}: ${clicks}`}
+            label="Копировать результат"
+          />
+        )}
+      </div>
     </div>
   );
 }

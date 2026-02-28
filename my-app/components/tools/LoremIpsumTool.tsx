@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
+import { CopyButton } from "@/components/CopyButton";
 
 const LOREM =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
@@ -14,7 +15,7 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
   const [count, setCount] = useState(3);
   const [mode, setMode] = useState<"paragraphs" | "sentences" | "words">("paragraphs");
 
-  const generate = () => {
+  const generate = useCallback(() => {
     const words = LOREM.split(" ");
     const sentences = LOREM.split(". ");
     if (mode === "words") return words.slice(0, count).join(" ");
@@ -23,42 +24,56 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
       .fill(null)
       .map(() => LOREM)
       .join("\n\n");
-  };
+  }, [count, mode]);
+
+  const [result, setResult] = useState("");
 
   return (
     <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Классический плейсхолдер для макетов: задайте количество и единицу (абзацы, предложения, слова), нажмите «Сгенерировать».
+      </p>
       <div className="flex flex-wrap gap-4">
         <div>
-          <label className="mb-1 block text-sm">{t("count")}</label>
+          <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("count")}</label>
           <input
             type="number"
             min={1}
             max={50}
             value={count}
             onChange={(e) => setCount(Number(e.target.value) || 1)}
-            className="w-24 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
+            className="w-24 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm">{t("mode")}</label>
+          <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("mode")}</label>
           <select
             value={mode}
             onChange={(e) => setMode(e.target.value as typeof mode)}
-            className="rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
+            className="rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
           >
             <option value="paragraphs">{t("paragraphs")}</option>
             <option value="sentences">{t("sentences")}</option>
             <option value="words">{t("words")}</option>
           </select>
         </div>
-      </div>
-      <div>
-        <div className="mb-2 text-sm text-[var(--muted)]">{t("result")}</div>
-        <div
-          className="min-h-[120px] cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4"
-          onClick={() => navigator.clipboard.writeText(generate())}
+        <motion.button
+          type="button"
+          onClick={() => setResult(generate())}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="self-end rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white"
         >
-          {generate()}
+          Сгенерировать
+        </motion.button>
+      </div>
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+          {result ? <CopyButton text={result} label="Копировать текст" /> : null}
+        </div>
+        <div className="min-h-[120px] select-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-[var(--foreground)]">
+          {result || <span className="text-[var(--muted)]">Нажмите «Сгенерировать», чтобы получить текст</span>}
         </div>
       </div>
     </div>
