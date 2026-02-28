@@ -16,14 +16,14 @@ export function WaLinkGeneratorTool({ t }: WaLinkGeneratorToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Ссылка для открытия чата WhatsApp с номером и опциональным предзаполненным сообщением. Номер — только цифры, с кодом страны.
       </p>
       <div>
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("phone")}</label>
+        <label className="field-label">{t("phone")}</label>
         <div className="flex flex-wrap gap-2 mb-2">
           {["+7", "+1", "+44", "+49", "+77", "+998", "+996"].map((code) => (
-            <button key={code} type="button" onClick={() => setPhone(code.replace("+", ""))} className="rounded-lg border border-[var(--border)] px-2 py-1 text-sm hover:bg-[var(--border)]/20">{code}</button>
+            <button key={code} type="button" onClick={() => setPhone(code.replace("+", ""))} className="btn-ghost">{code}</button>
           ))}
         </div>
         <input
@@ -31,7 +31,7 @@ export function WaLinkGeneratorTool({ t }: WaLinkGeneratorToolProps) {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="79001234567"
-          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
+          className="input-base"
         />
       </div>
       <div>
@@ -40,14 +40,14 @@ export function WaLinkGeneratorTool({ t }: WaLinkGeneratorToolProps) {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder={t("messagePlaceholder")}
-          className="min-h-[80px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
+          className="input-base min-h-[80px]"
           rows={3}
         />
       </div>
       {cleanPhone ? (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+            <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
             <CopyButton text={link} label="Копировать ссылку" />
           </div>
           <div className="select-all break-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-sm">
@@ -63,7 +63,7 @@ export function WaLinkGeneratorTool({ t }: WaLinkGeneratorToolProps) {
           </a>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Введите номер телефона (например 79001234567) — ссылка и кнопка «Открыть» появятся ниже.
         </p>
       )}

@@ -72,17 +72,17 @@ export function CaseConverterTool({ t }: CaseConverterToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Введите текст и нажмите нужную кнопку — текст в поле заменится. Регистр: для заголовков и предложений. Для кода: camelCase, kebab-case, snake_case. Поддерживаются латиница и кириллица.
       </p>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Исходный текст</label>
+      <div className="result-card">
+        <label className="field-label">Исходный текст</label>
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={t("placeholder")}
-          className="min-h-[150px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base min-h-[150px] resize-y"
           rows={6}
         />
       </div>
@@ -133,7 +133,7 @@ export function CaseConverterTool({ t }: CaseConverterToolProps) {
                 <button
                   type="button"
                   onClick={undo}
-                  className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20"
+                  className="btn-ghost"
                 >
                   Отменить
                 </button>
@@ -145,7 +145,7 @@ export function CaseConverterTool({ t }: CaseConverterToolProps) {
       </div>
 
       {!text && (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Введите текст выше и выберите вариант регистра — результат можно скопировать или отменить последнее действие.
         </p>
       )}

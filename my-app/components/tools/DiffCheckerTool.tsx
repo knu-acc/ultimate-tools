@@ -37,42 +37,42 @@ export function DiffCheckerTool({ t }: DiffCheckerToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Сравнение двух текстов по строкам. Показываются номера строк, которые отличаются. Всё в браузере, данные не отправляются.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-3 flex items-center justify-between">
-          <span className="text-sm font-medium text-[var(--muted)]">Текст A и Текст B</span>
+          <span className="text-sm font-medium text-[var(--foreground)]/70">Текст A и Текст B</span>
           {(textA || textB) ? (
             <div className="flex gap-2">
-              <button type="button" onClick={swap} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Поменять местами</button>
-              <button type="button" onClick={clearBoth} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Очистить оба</button>
+              <button type="button" onClick={swap} className="btn-ghost">Поменять местами</button>
+              <button type="button" onClick={clearBoth} className="btn-ghost">Очистить оба</button>
             </div>
           ) : null}
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <div className="mb-1 flex items-center justify-between">
-              <label className="text-sm font-medium text-[var(--muted)]">Текст A</label>
+              <label className="text-sm font-medium text-[var(--foreground)]/70">Текст A</label>
               <span className="text-xs text-[var(--muted)]">{lineCountA} {t("lines") || "стр."}</span>
             </div>
-            <textarea value={textA} onChange={(e) => setTextA(e.target.value)} placeholder={t("placeholder")} className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono text-sm focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]" rows={5} />
+            <textarea value={textA} onChange={(e) => setTextA(e.target.value)} placeholder={t("placeholder")} className="input-base font-mono text-sm min-h-[120px]" rows={5} />
           </div>
           <div>
             <div className="mb-1 flex items-center justify-between">
-              <label className="text-sm font-medium text-[var(--muted)]">Текст B</label>
+              <label className="text-sm font-medium text-[var(--foreground)]/70">Текст B</label>
               <span className="text-xs text-[var(--muted)]">{lineCountB} {t("lines") || "стр."}</span>
             </div>
-            <textarea value={textB} onChange={(e) => setTextB(e.target.value)} placeholder={t("placeholder")} className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono text-sm focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]" rows={5} />
+            <textarea value={textB} onChange={(e) => setTextB(e.target.value)} placeholder={t("placeholder")} className="input-base font-mono text-sm min-h-[120px]" rows={5} />
           </div>
         </div>
       </div>
       {(linesA.length > 0 || linesB.length > 0) ? (
         <div className="space-y-2">
           {diffSummary && <div className="flex justify-end"><CopyButton text={diffSummary} label="Копировать отчёт" /></div>}
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="result-card">
             {same ? (
-              <p className="text-sm text-[var(--muted)]">{t("identical")}</p>
+              <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">{t("identical")}</p>
             ) : (
               <div className="space-y-1 text-sm">
                 {onlyA.length > 0 && (
@@ -86,7 +86,7 @@ export function DiffCheckerTool({ t }: DiffCheckerToolProps) {
           </div>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Вставьте или введите два фрагмента текста — отобразятся номера отличающихся строк.
         </p>
       )}

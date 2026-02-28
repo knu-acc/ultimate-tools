@@ -63,12 +63,12 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Тест кликов в секунду (CPS): нажмите «Старт» и кликайте по блоку 5 секунд. В конце показывается CPS за последнюю секунду.
       </p>
       <div className="flex flex-wrap gap-2">
         {[5, 10].map((d) => (
-          <button key={d} type="button" disabled={running} onClick={() => setDuration(d)} className={`rounded-lg px-3 py-1.5 text-sm ${duration === d ? "bg-[var(--accent)] text-white" : "border border-[var(--border)]"} disabled:opacity-50`}>{d} сек</button>
+          <button key={d} type="button" disabled={running} onClick={() => setDuration(d)} className={`chip ${duration === d ? "chip-active" : ""} disabled:opacity-50`}>{d} сек</button>
         ))}
       </div>
       <div className="text-center">
@@ -89,7 +89,7 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
       <div className="flex flex-wrap items-center gap-2">
         <button
           onClick={reset}
-          className="rounded-lg border border-[var(--border)] px-4 py-2"
+          className="btn-secondary"
         >
           {t("reset")}
         </button>

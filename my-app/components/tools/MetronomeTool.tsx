@@ -58,11 +58,11 @@ export function MetronomeTool({ t }: MetronomeToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Задайте темп (BPM) и размер — визуальный индикатор показывает долю, первый удар в такте выделен звуком и подсветкой.
       </p>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-3 text-sm font-medium text-[var(--muted)]">{t("bpm")} — темп</div>
         <div className="flex flex-wrap gap-2">
           {BPM_PRESETS.map((n) => (
@@ -85,11 +85,11 @@ export function MetronomeTool({ t }: MetronomeToolProps) {
             onChange={(e) => setBpm(Number(e.target.value))}
             className="h-2 flex-1 accent-[var(--accent)]"
           />
-          <span className="w-14 text-right text-2xl font-bold tabular-nums">{bpm}</span>
+          <span className="w-14 text-right text-4xl font-extrabold tracking-tight pt-2 pb-1 tabular-nums">{bpm}</span>
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 text-sm font-medium text-[var(--muted)]">Размер такта</div>
         <div className="flex flex-wrap gap-2">
           {TIME_SIGS.map((s, i) => (
@@ -97,7 +97,7 @@ export function MetronomeTool({ t }: MetronomeToolProps) {
               key={s.label}
               type="button"
               onClick={() => setTimeSig(i)}
-              className={`rounded-lg px-4 py-2 text-sm font-medium ${timeSig === i ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+              className={`chip ${timeSig === i ? "chip-active" : ""}`}
             >
               {s.label}
             </button>

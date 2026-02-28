@@ -88,16 +88,16 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Иконка из одной буквы на цветном фоне. Все размеры для браузера, Apple Touch, PWA и Android генерируются в браузере. Скачайте PNG/SVG или скопируйте код.
       </p>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Символ и цвета</span>
+      <div className="result-card">
+        <span className="section-label">Символ и цвета</span>
         <div className="flex flex-wrap items-end gap-4 mb-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("text")}</label>
-            <input type="text" maxLength={1} value={text} onChange={(e) => setText(e.target.value)} className="w-16 rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 text-center text-2xl font-bold focus:border-[var(--accent)]" />
+            <label className="field-label">{t("text")}</label>
+            <input type="text" maxLength={1} value={text} onChange={(e) => setText(e.target.value)} className="input-base w-16 text-center text-4xl font-extrabold tracking-tight pt-2 pb-1" />
           </div>
           <div className="flex flex-wrap gap-2">
             {colorPresets.map(({ bg, fg, label }) => (
@@ -110,7 +110,7 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
         </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("bgColor")}</label>
+          <label className="field-label">{t("bgColor")}</label>
           <div className="flex gap-2">
             <input
               type="color"
@@ -122,7 +122,7 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
               type="text"
               value={bgColor}
               onChange={(e) => setBgColor(e.target.value)}
-              className="min-w-0 flex-1 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-sm"
+              className="input-base font-mono text-sm flex-1"
             />
           </div>
         </div>
@@ -139,14 +139,14 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
               type="text"
               value={fgColor}
               onChange={(e) => setFgColor(e.target.value)}
-              className="min-w-0 flex-1 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-sm"
+              className="input-base font-mono text-sm flex-1"
             />
           </div>
         </div>
       </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-3 text-sm font-medium text-[var(--muted)]">Размеры и скачивание</div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SIZES.map(({ size, label, desc }) => {
@@ -167,7 +167,7 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
                   <a
                     href={dataUrl}
                     download={`icon-${size}.png`}
-                    className="rounded-lg bg-[var(--accent)] px-3 py-1.5 text-sm font-medium text-white hover:opacity-90"
+                    className="btn-primary w-full sm:w-auto mt-2"
                   >
                     {t("download")}
                   </a>
@@ -178,7 +178,7 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 text-sm font-medium text-[var(--muted)]">SVG (масштабируемая иконка)</div>
         <div className="flex flex-wrap items-center gap-2">
           <CopyButton text={svgContent} label="Копировать SVG" />
@@ -192,7 +192,7 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 text-sm font-medium text-[var(--muted)]">Web App Manifest (иконки для PWA и Android)</div>
         <p className="mb-2 text-xs text-[var(--muted)]">
           Вставьте этот фрагмент в manifest.json или скопируйте массив icons.

@@ -41,17 +41,17 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Классический плейсхолдер для макетов. Выберите режим (абзацы, предложения, слова), укажите количество или пресет — нажмите «Сгенерировать».
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-3 flex flex-wrap items-end gap-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("mode")}</label>
+            <label className="field-label">{t("mode")}</label>
             <select
               value={mode}
               onChange={(e) => setMode(e.target.value as typeof mode)}
-              className="rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+              className="input-base"
             >
               <option value="paragraphs">{t("paragraphs")}</option>
               <option value="sentences">{t("sentences")}</option>
@@ -59,7 +59,7 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
             </select>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("count")}</label>
+            <label className="field-label">{t("count")}</label>
             <div className="flex flex-wrap items-center gap-2">
               <input
                 type="number"
@@ -67,7 +67,7 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
                 max={50}
                 value={count}
                 onChange={(e) => setCount(Number(e.target.value) || 1)}
-                className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+                className="input-base"
               />
               {countPresets.map((n) => (
                 <button
@@ -90,15 +90,15 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
             onClick={() => setResult(generate())}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white"
+            className="btn-primary w-full sm:w-auto mt-2"
           >
             Сгенерировать
           </motion.button>
         </div>
       </div>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-          <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+          <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
           <div className="flex items-center gap-3">
             {result && <span className="text-xs text-[var(--muted)]">Слов: {wordCount}</span>}
             {result ? <CopyButton text={result} label="Копировать текст" /> : null}

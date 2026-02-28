@@ -22,7 +22,7 @@ export function Sha256Tool({ t }: Sha256ToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         SHA-256 хеш в одну сторону. Надёжнее MD5, подходит для подписей и проверки целостности данных.
       </p>
       <label className="flex items-center gap-2 text-sm text-[var(--muted)]">
@@ -33,10 +33,10 @@ export function Sha256Tool({ t }: Sha256ToolProps) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder={t("placeholder")}
-        className="min-h-[100px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
+        className="input-base min-h-[100px]"
         rows={4}
       />
-      <button onClick={hash} className="rounded-lg bg-[var(--accent)] px-6 py-3 font-medium text-white">
+      <button onClick={hash} className="btn-primary w-full sm:w-auto mt-2">
         {t("hash")}
       </button>
       {input && <button type="button" onClick={() => { setInput(""); setResult(""); }} className="ml-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm hover:bg-[var(--border)]/20">{t("clear") || "Очистить"}</button>}
@@ -48,7 +48,7 @@ export function Sha256Tool({ t }: Sha256ToolProps) {
           </div>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Введите текст и нажмите «Хешировать» — SHA-256 хеш появится ниже.
         </p>
       )}

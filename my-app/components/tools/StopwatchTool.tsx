@@ -58,7 +58,7 @@ export function StopwatchTool({ t }: StopwatchToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Секундомер с десятыми долями секунды. Старт, пауза, сброс и фиксация кругов. Время можно скопировать. Работает только при открытой вкладке.
       </p>
       <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-6 text-center">
@@ -66,19 +66,19 @@ export function StopwatchTool({ t }: StopwatchToolProps) {
           {String(m).padStart(2, "0")}:{String(s).padStart(2, "0")}.{String(mil).padStart(2, "0")}
         </div>
       </div>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="flex flex-wrap justify-center items-center gap-2">
           <CopyButton text={timeStr} label="Копировать время" />
         <button
           onClick={() => setRunning(!running)}
-          className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white"
+          className="btn-primary w-full sm:w-auto mt-2"
         >
           {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           {running ? t("pause") : t("start")}
         </button>
         <button
           onClick={reset}
-          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20"
+          className="btn-secondary"
         >
           <RotateCcw className="h-4 w-4" />
           {t("reset")}
@@ -86,16 +86,16 @@ export function StopwatchTool({ t }: StopwatchToolProps) {
         <button
           onClick={addLap}
           disabled={!running}
-          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20 disabled:opacity-50"
+          className="btn-secondary"
         >
           {t("lap") || "Круг"}
         </button>
         </div>
       </div>
       {laps.length > 0 && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="result-card">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--muted)]">{t("laps") || "Круги"}</span>
+            <span className="text-sm font-medium text-[var(--foreground)]/70">{t("laps") || "Круги"}</span>
             <CopyButton text={laps.map((lap, i) => `${i + 1}. ${formatLap(lap)}`).join("\n")} label="Копировать круги" />
           </div>
           <ul className="space-y-1 font-mono text-sm">

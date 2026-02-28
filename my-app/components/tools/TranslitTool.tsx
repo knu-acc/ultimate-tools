@@ -49,11 +49,11 @@ export function TranslitTool({ t }: TranslitToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Транслитерация по ГОСТ: кириллица ↔ латиница. Выберите направление и при необходимости «Для URL» — результат в нижнем регистре, пробелы в дефисы, без спецсимволов.
       </p>
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-sm font-medium text-[var(--muted)]">Направление:</span>
+        <span className="text-sm font-medium text-[var(--foreground)]/70">Направление:</span>
         <button
           onClick={() => setDirection("ru-en")}
           className={`rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${direction === "ru-en" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
@@ -80,19 +80,19 @@ export function TranslitTool({ t }: TranslitToolProps) {
           </button>
         )}
       </div>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Исходный текст</label>
+      <div className="result-card">
+        <label className="field-label">Исходный текст</label>
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={direction === "ru-en" ? "Введите русский текст..." : "Введите латиницу..."}
-          className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base min-h-[120px] resize-y"
           rows={5}
         />
       </div>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+          <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
           {result ? <CopyButton text={result} label="Скопировать" /> : null}
         </div>
         <div className="min-h-[80px] rounded-lg border border-[var(--border)] bg-transparent p-4 font-mono text-[var(--foreground)]">

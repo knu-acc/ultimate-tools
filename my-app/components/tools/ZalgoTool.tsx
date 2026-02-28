@@ -44,21 +44,21 @@ export function ZalgoTool({ t }: ZalgoToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         «Залго-текст»: добавляет диакритику к буквам. Регулируйте интенсивность (слайдер или пресеты), нажимайте «Ещё раз» для нового варианта, «Подставить результат» — вставить в поле ввода.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Исходный текст</label>
+      <div className="result-card">
+        <label className="field-label">Исходный текст</label>
         <input
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={t("placeholder")}
-          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base"
         />
       </div>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">
+      <div className="result-card">
+        <label className="field-label">
           {t("intensity")} — чем выше, тем больше «шума» на символ
         </label>
         <div className="flex flex-wrap items-center gap-3">
@@ -72,7 +72,7 @@ export function ZalgoTool({ t }: ZalgoToolProps) {
               key={value}
               type="button"
               onClick={() => setIntensity(value)}
-              className={`rounded-lg border px-3 py-2 text-sm font-medium ${intensity === value ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+              className={`chip ${intensity === value ? "chip-active" : ""}`}
             >
               {label} ({value})
             </button>
@@ -90,7 +90,7 @@ export function ZalgoTool({ t }: ZalgoToolProps) {
       </div>
       <div className="space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+          <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
           <div className="flex flex-wrap gap-2">
             {result && (
               <button

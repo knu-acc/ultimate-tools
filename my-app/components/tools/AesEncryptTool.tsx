@@ -29,7 +29,7 @@ export function AesEncryptTool({ t }: AesEncryptToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Шифрование и расшифровка AES. Введите ключ и текст — сохраните ключ: без него расшифровка невозможна.
       </p>
       <div className="flex gap-2">
@@ -52,7 +52,7 @@ export function AesEncryptTool({ t }: AesEncryptToolProps) {
           type="password"
           value={key}
           onChange={(e) => setKey(e.target.value)}
-          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
+          className="input-base"
         />
         {key.length > 0 && key.length < 8 && (
           <p className="mt-1 text-xs text-amber-600 dark:text-amber-400">{t("shortKey") || "Ключ менее 8 символов — рекомендуется длиннее."}</p>
@@ -62,12 +62,12 @@ export function AesEncryptTool({ t }: AesEncryptToolProps) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={mode === "encrypt" ? t("textPlaceholder") : t("cipherPlaceholder")}
-        className="min-h-[100px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
+        className="input-base min-h-[100px]"
         rows={4}
       />
       <button
         onClick={process}
-        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
+        className="btn-primary w-full sm:w-auto mt-2"
       >
         {mode === "encrypt" ? t("encrypt") : t("decrypt")}
       </button>
@@ -80,7 +80,7 @@ export function AesEncryptTool({ t }: AesEncryptToolProps) {
           </div>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Выберите «Шифровать» или «Расшифровать», введите ключ и текст — нажмите кнопку действия.
         </p>
       )}

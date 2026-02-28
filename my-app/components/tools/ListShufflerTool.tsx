@@ -30,16 +30,16 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Перемешайте список случайным образом или разверните порядок. Элементы — каждый с новой строки или через запятую/точку с запятой. Всё выполняется в браузере.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Список элементов</label>
+      <div className="result-card">
+        <label className="field-label">Список элементов</label>
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={t("placeholder")}
-          className="min-h-[150px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base min-h-[150px] resize-y"
           rows={6}
         />
         {lines.length > 0 && <p className="mt-2 text-xs text-[var(--muted)]">Элементов: {lines.length}</p>}
@@ -50,7 +50,7 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
           disabled={lines.length === 0}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white disabled:opacity-50"
+          className="btn-primary w-full sm:w-auto mt-2"
         >
           {t("shuffle")}
         </motion.button>
@@ -71,7 +71,7 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
           className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 space-y-3"
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+            <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
             <div className="flex gap-2">
               <button
                 type="button"

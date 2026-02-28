@@ -60,11 +60,11 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Метод Помодоро: рабочий интервал и короткий перерыв. Задайте минуты (или выберите пресет), запустите таймер. Таймер работает только при открытой вкладке.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Интервалы (мин)</span>
+      <div className="result-card">
+        <span className="section-label">Интервалы (мин)</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {presets.map(({ work, break: b, label }) => (
             <button
@@ -80,7 +80,7 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
         </div>
         <div className="flex gap-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("work")}</label>
+            <label className="field-label">{t("work")}</label>
           <input
             type="number"
             min={1}
@@ -88,11 +88,11 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
             value={workMin}
             onChange={(e) => !running && setWorkMin(Number(e.target.value) || 25)}
             disabled={running}
-            className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+            className="input-base"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("break")}</label>
+          <label className="field-label">{t("break")}</label>
           <input
             type="number"
             min={1}
@@ -100,7 +100,7 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
             value={breakMin}
             onChange={(e) => !running && setBreakMin(Number(e.target.value) || 5)}
             disabled={running}
-            className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+            className="input-base"
           />
         </div>
         </div>
@@ -119,14 +119,14 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
       <div className="flex flex-wrap justify-center gap-2">
         <button
           onClick={() => setRunning(!running)}
-          className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white hover:opacity-90"
+          className="btn-primary w-full sm:w-auto mt-2"
         >
           {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           {running ? t("pause") : t("start")}
         </button>
         <button
           onClick={reset}
-          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20"
+          className="btn-secondary"
         >
           <RotateCcw className="h-4 w-4" />
           {t("reset")}

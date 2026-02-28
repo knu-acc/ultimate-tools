@@ -40,16 +40,16 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Колесо фортуны для честного случайного выбора. Введите минимум 2 варианта (каждый с новой строки или через запятую). Результат генерируется в браузере.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Варианты на колесе</label>
+      <div className="result-card">
+        <label className="field-label">Варианты на колесе</label>
         <textarea
           value={items}
           onChange={(e) => setItems(e.target.value)}
           placeholder={t("placeholder")}
-          className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base min-h-[120px] resize-y"
           rows={5}
         />
         {n > 0 && n < 2 && (
@@ -92,7 +92,7 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
           disabled={spinning || list.length < 2}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white disabled:opacity-70"
+          className="btn-primary w-full sm:w-auto mt-2"
         >
           {spinning ? t("spinning") : t("spin")}
         </motion.button>
@@ -109,8 +109,8 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
         </motion.div>
       )}
       {lastResult && !result && !spinning && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-          <p className="text-sm font-medium text-[var(--muted)]">{t("lastResult") || "Предыдущий результат"}: {lastResult}</p>
+        <div className="result-card">
+          <p className="text-sm font-medium text-[var(--foreground)]/70">{t("lastResult") || "Предыдущий результат"}: {lastResult}</p>
         </div>
       )}
     </div>

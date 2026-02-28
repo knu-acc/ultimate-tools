@@ -37,23 +37,23 @@ export function UtmBuilderTool({ t }: UtmBuilderToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Сборка ссылки с UTM-метками для аналитики: источник, канал, кампания, термин, контент. Результат обновляется при вводе.
       </p>
       <div>
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">URL</label>
+        <label className="field-label">URL</label>
         <input
           type="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://example.com"
-          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
+          className="input-base"
         />
       </div>
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={clearUtm} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{t("clearUtm") || "Очистить UTM"}</button>
-        <button type="button" onClick={() => { setSource("google"); setMedium("cpc"); }} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Google Ads</button>
-        <button type="button" onClick={() => { setSource("newsletter"); setMedium("email"); }} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Email</button>
+        <button type="button" onClick={clearUtm} className="btn-ghost">{t("clearUtm") || "Очистить UTM"}</button>
+        <button type="button" onClick={() => { setSource("google"); setMedium("cpc"); }} className="btn-ghost">Google Ads</button>
+        <button type="button" onClick={() => { setSource("newsletter"); setMedium("email"); }} className="btn-ghost">Email</button>
       </div>
       {[
         { key: "source", val: source, set: setSource },
@@ -68,13 +68,13 @@ export function UtmBuilderTool({ t }: UtmBuilderToolProps) {
             type="text"
             value={val}
             onChange={(e) => set(e.target.value)}
-            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2"
+            className="input-base"
           />
         </div>
       ))}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+          <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
           <CopyButton text={result} label="Копировать ссылку" />
         </div>
         <div className="select-all break-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-sm">

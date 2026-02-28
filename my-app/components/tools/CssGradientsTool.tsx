@@ -46,11 +46,11 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Готовые градиенты или свои цвета и угол. Линейный или радиальный. Копируйте CSS для background. Всё в браузере.
       </p>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-3 text-sm font-medium text-[var(--muted)]">Готовые градиенты</div>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
           {PRESET_GRADIENTS.map((p) => (
@@ -72,7 +72,7 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("color1")}</label>
+          <label className="field-label">{t("color1")}</label>
           <div className="flex gap-2">
             <input
               type="color"
@@ -84,7 +84,7 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
               type="text"
               value={color1}
               onChange={(e) => setColor1(e.target.value)}
-              className="min-w-0 flex-1 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-sm"
+              className="input-base font-mono text-sm flex-1"
             />
           </div>
         </div>
@@ -101,7 +101,7 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
               type="text"
               value={color2}
               onChange={(e) => setColor2(e.target.value)}
-              className="min-w-0 flex-1 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-sm"
+              className="input-base font-mono text-sm flex-1"
             />
           </div>
         </div>
@@ -119,14 +119,14 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
               value={color3}
               onChange={(e) => setColor3(e.target.value)}
               placeholder="#hex или пусто"
-              className="min-w-0 flex-1 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 font-mono text-sm"
+              className="input-base font-mono text-sm flex-1"
             />
           </div>
         </div>
       </div>
 
       {type === "linear" && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="result-card">
           <div className="mb-2 text-sm font-medium text-[var(--muted)]">Угол (градусы)</div>
           <div className="flex flex-wrap gap-2">
             {ANGLE_PRESETS.map((a) => (
@@ -154,14 +154,14 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
         </div>
       )}
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 text-sm font-medium text-[var(--muted)]">Предпросмотр</div>
         <div className="h-36 rounded-xl border-2 border-[var(--border)] shadow-inner" style={{ background: css }} />
       </div>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm font-medium text-[var(--muted)]">CSS</span>
+          <span className="text-sm font-medium text-[var(--foreground)]/70">CSS</span>
           <CopyButton text={fullCss} label="Копировать CSS" />
         </div>
         <pre className="select-all overflow-x-auto rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm">

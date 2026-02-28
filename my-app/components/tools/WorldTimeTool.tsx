@@ -37,12 +37,12 @@ export function WorldTimeTool({ t }: WorldTimeToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Текущее время в разных городах (смещение от UTC). Обновляется каждую секунду. Можно скопировать одну зону или все сразу. Учёт летнего времени зависит от браузера.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-sm font-medium text-[var(--muted)]">Часовые пояса</span>
+          <span className="text-sm font-medium text-[var(--foreground)]/70">Часовые пояса</span>
           <CopyButton text={allLines} label="Копировать все зоны" />
         </div>
       </div>

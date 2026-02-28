@@ -44,13 +44,13 @@ export function UnixConverterTool({ t }: UnixConverterToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Конвертация Unix timestamp (секунды с 01.01.1970 UTC) в дату/время и обратно. Миллисекунды (13 цифр) распознаются автоматически. Для логов и API.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 flex items-center justify-between">
-          <label className="text-sm font-medium text-[var(--muted)]">{t("unix")}</label>
-          <button type="button" onClick={setNow} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">
+          <label className="text-sm font-medium text-[var(--foreground)]/70">{t("unix")}</label>
+          <button type="button" onClick={setNow} className="btn-ghost">
             {t("now")}
           </button>
         </div>
@@ -60,11 +60,11 @@ export function UnixConverterTool({ t }: UnixConverterToolProps) {
             value={unix}
             onChange={(e) => setUnix(e.target.value)}
             placeholder="1699999999 или 1699999999999"
-            className="flex-1 rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+            className="input-base flex-1"
           />
           <button
             onClick={unixToDate}
-            className="rounded-lg bg-[var(--accent)] px-4 py-2 text-white hover:opacity-90"
+            className="btn-primary w-full sm:w-auto mt-2"
           >
             →
           </button>
@@ -88,19 +88,19 @@ export function UnixConverterTool({ t }: UnixConverterToolProps) {
           </div>
         )}
       </div>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("date")}</label>
+      <div className="result-card">
+        <label className="field-label">{t("date")}</label>
         <div className="flex gap-2">
           <input
             type="text"
             value={dateStr}
             onChange={(e) => setDateStr(e.target.value)}
             placeholder="2024-01-01 12:00:00 или локальный формат"
-            className="flex-1 rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+            className="input-base flex-1"
           />
           <button
             onClick={dateToUnix}
-            className="rounded-lg bg-[var(--accent)] px-4 py-2 text-white hover:opacity-90"
+            className="btn-primary w-full sm:w-auto mt-2"
           >
             →
           </button>

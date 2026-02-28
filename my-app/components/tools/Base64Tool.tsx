@@ -64,17 +64,17 @@ export function Base64Tool({ t }: Base64ToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Кодирование и декодирование Base64 в браузере. Текст и результат не отправляются на сервер. Опция URL Safe — для использования в URL (без +, /, =).
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Режим</span>
+      <div className="result-card">
+        <span className="section-label">Режим</span>
         <div className="flex flex-wrap gap-4 items-center">
           <div className="flex gap-2">
-            <button onClick={() => setMode("encode")} className={`rounded-xl px-4 py-2 font-medium ${mode === "encode" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)]"}`}>
+            <button onClick={() => setMode("encode")} className={`chip ${mode === "encode" ? "chip-active" : ""}`}>
               {t("encode")}
             </button>
-            <button onClick={() => setMode("decode")} className={`rounded-xl px-4 py-2 font-medium ${mode === "decode" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)]"}`}>
+            <button onClick={() => setMode("decode")} className={`chip ${mode === "decode" ? "chip-active" : ""}`}>
               {t("decode")}
             </button>
           </div>
@@ -85,12 +85,12 @@ export function Base64Tool({ t }: Base64ToolProps) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 flex items-center justify-between">
-          <label className="text-sm font-medium text-[var(--muted)]">{mode === "encode" ? t("encode") : t("decode")}</label>
+          <label className="text-sm font-medium text-[var(--foreground)]/70">{mode === "encode" ? t("encode") : t("decode")}</label>
           <div className="flex gap-2">
-            {input && <button onClick={handleClear} className="rounded-lg border border-[var(--border)] px-2 py-1 text-sm hover:bg-[var(--border)]/20">Очистить</button>}
-            <button onClick={handlePaste} className="rounded-lg border border-[var(--border)] px-2 py-1 text-sm hover:bg-[var(--border)]/20">Вставить</button>
+            {input && <button onClick={handleClear} className="btn-ghost">Очистить</button>}
+            <button onClick={handlePaste} className="btn-ghost">Вставить</button>
           </div>
         </div>
       <div className="relative">
@@ -98,16 +98,16 @@ export function Base64Tool({ t }: Base64ToolProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={mode === "encode" ? t("textPlaceholder") || "Enter text to encode..." : t("base64Placeholder") || "Enter Base64 to decode..."}
-          className="min-h-[160px] w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 font-mono text-sm focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all outline-none resize-y"
+          className="min-h-[160px] w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-5 py-4 text-base font-mono text-sm focus:border-[var(--accent)] focus:ring-[3px] focus:ring-[var(--accent)]/30 ring-offset-2 ring-offset-[var(--card-bg)] dark:ring-offset-[var(--card-bg)] transition-all outline-none resize-y"
           rows={5}
         />
       </div>
       </div>
 
-      {error && <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>}
+      {error && <div className="badge-danger px-4 py-2.5 rounded-xl text-sm">{error}</div>}
 
       {result && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="result-card">
           <div className="mb-2 flex items-center justify-between text-xs text-[var(--muted)]">
             <span>{t("inputLength") || "Ввод"}: {input.length} · {t("resultLength") || "Результат"}: {result.length}</span>
             <CopyButton text={result} label="Копировать" />

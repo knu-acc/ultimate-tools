@@ -42,11 +42,11 @@ export function TimersTool({ t }: TimersToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Таймер обратного отсчёта: укажите минуты и секунды (или пресет), нажмите «Старт». По окончании таймер остановится. Работает только при открытой вкладке.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Пресеты и ввод</span>
+      <div className="result-card">
+        <span className="section-label">Пресеты и ввод</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {presetMins.map((mm) => (
             <button
@@ -62,7 +62,7 @@ export function TimersTool({ t }: TimersToolProps) {
         </div>
         <div className="flex flex-wrap gap-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("minutes")}</label>
+            <label className="field-label">{t("minutes")}</label>
             <input
               type="number"
               min={0}
@@ -70,11 +70,11 @@ export function TimersTool({ t }: TimersToolProps) {
               value={minutes}
               onChange={(e) => !running && setMinutes(Number(e.target.value) || 0)}
               disabled={running}
-              className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+              className="input-base w-20"
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("seconds")}</label>
+            <label className="field-label">{t("seconds")}</label>
             <input
               type="number"
               min={0}
@@ -82,7 +82,7 @@ export function TimersTool({ t }: TimersToolProps) {
               value={seconds}
               onChange={(e) => !running && setSeconds(Number(e.target.value) || 0)}
               disabled={running}
-              className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+              className="input-base w-20"
             />
           </div>
         </div>
@@ -95,21 +95,21 @@ export function TimersTool({ t }: TimersToolProps) {
       <div className="flex flex-wrap justify-center gap-2">
         <button
           onClick={() => (running ? setRunning(false) : start())}
-          className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white hover:opacity-90"
+          className="btn-primary w-full sm:w-auto mt-2"
         >
           {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           {running ? t("pause") : t("start")}
         </button>
         <button
           onClick={() => { setRunning(false); setTotalSec(minutes * 60 + seconds); }}
-          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20"
+          className="btn-secondary"
         >
           <RotateCcw className="h-4 w-4" />
           {t("reset")}
         </button>
       </div>
       {totalSec === 0 && running === false && (
-        <p className="rounded-xl border border-[var(--accent)] bg-[var(--accent-muted)]/30 px-4 py-3 text-center text-sm font-medium text-[var(--accent)]">
+        <p className="rounded-xl border border-[var(--accent)] bg-[var(--accent-muted)]/30 px-5 py-4 text-base text-center text-sm font-medium text-[var(--accent)]">
           Готово
         </p>
       )}

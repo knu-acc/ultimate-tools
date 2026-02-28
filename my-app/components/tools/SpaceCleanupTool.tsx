@@ -38,11 +38,11 @@ export function SpaceCleanupTool({ t }: SpaceCleanupToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Удаление лишних пробелов и переносов. Выберите режим — результат подставится в поле. Показано количество символов до и после.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Текст для очистки</label>
+      <div className="result-card">
+        <label className="field-label">Текст для очистки</label>
         <textarea
           value={text}
           onChange={(e) => {
@@ -50,7 +50,7 @@ export function SpaceCleanupTool({ t }: SpaceCleanupToolProps) {
             setBeforeLen(null);
           }}
           placeholder={t("placeholder")}
-          className="min-h-[200px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base min-h-[200px] resize-y"
           rows={8}
         />
         <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
@@ -63,7 +63,7 @@ export function SpaceCleanupTool({ t }: SpaceCleanupToolProps) {
         </div>
       </div>
       <div className="space-y-2">
-        <span className="text-sm font-medium text-[var(--muted)]">Режим очистки</span>
+        <span className="text-sm font-medium text-[var(--foreground)]/70">Режим очистки</span>
         <div className="flex flex-wrap gap-2">
           {modes.map(({ key, label, hint }) => (
             <motion.button
@@ -84,7 +84,7 @@ export function SpaceCleanupTool({ t }: SpaceCleanupToolProps) {
         </p>
       </div>
       {!text && (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Вставьте текст с лишними пробелами или переносами — нажмите нужный режим очистки, затем скопируйте результат.
         </p>
       )}

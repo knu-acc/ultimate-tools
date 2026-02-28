@@ -40,18 +40,18 @@ export function UuidTool({ t }: UuidToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Генерация UUID v4 в браузере. Идентификаторы криптографически случайные. Данные никуда не отправляются.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">{t("count")}</span>
+      <div className="result-card">
+        <span className="section-label">{t("count")}</span>
         <div className="flex flex-wrap items-center gap-2 mb-4">
           {countPresets.map((n) => (
             <button
               key={n}
               type="button"
               onClick={() => setCount(n)}
-              className={`rounded-lg border px-3 py-2 text-sm font-medium ${count === n ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+              className={`chip ${count === n ? "chip-active" : ""}`}
             >
               {n}
             </button>
@@ -62,7 +62,7 @@ export function UuidTool({ t }: UuidToolProps) {
             max={50}
             value={count}
             onChange={(e) => setCount(Math.min(50, Math.max(1, Number(e.target.value) || 1)))}
-            className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 text-center focus:border-[var(--accent)]"
+            className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 text-center focus:border-[var(--accent)] transition-all"
           />
         </div>
         <div className="flex flex-wrap gap-4">
@@ -80,12 +80,12 @@ export function UuidTool({ t }: UuidToolProps) {
         onClick={generate}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
+        className="btn-primary w-full sm:w-auto mt-2"
       >
         {t("generate")}
       </motion.button>
       {uuids.length > 0 && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="result-card">
           <div className="mb-2 flex justify-end">
             <CopyButton text={uuids.join("\n")} label="Копировать все" />
           </div>

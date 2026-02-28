@@ -76,20 +76,20 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Сжатие изображений в браузере. Загрузите файл (JPG, PNG, WebP), выберите качество — результат обновляется автоматически. Файлы никуда не отправляются.
       </p>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 flex items-center justify-between">
-          <label className="text-sm font-medium text-[var(--muted)]">{t("upload") || "Загрузить изображение"}</label>
-          {file && <button type="button" onClick={clearAll} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Очистить</button>}
+          <label className="text-sm font-medium text-[var(--foreground)]/70">{t("upload") || "Загрузить изображение"}</label>
+          {file && <button type="button" onClick={clearAll} className="btn-ghost">Очистить</button>}
         </div>
         <input
           type="file"
           accept="image/*"
           onChange={handleFile}
-          className="block w-full text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--accent)] file:px-4 file:py-2 file:text-white file:text-sm"
+          className="btn-primary w-full sm:w-auto mt-2"
         />
       </div>
 
@@ -101,7 +101,7 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
 
       {file && (
         <>
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="result-card">
             <div className="mb-3 text-sm font-medium text-[var(--muted)]">{t("preset") || "Цель сжатия"}</div>
             <div className="flex flex-wrap gap-2">
               {PRESETS.map((p) => (
@@ -118,7 +118,7 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
             </div>
           </div>
 
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="result-card">
             <div className="mb-2 flex items-center justify-between">
               <label className="text-sm font-medium">{t("quality")}</label>
               <span className="text-lg font-bold tabular-nums">{Math.round(quality * 100)}%</span>
@@ -135,7 +135,7 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
           </div>
 
           {originalSize != null && (
-            <p className="text-sm text-[var(--muted)]">
+            <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
               {t("original")}: <strong className="text-[var(--foreground)]">{(originalSize / 1024).toFixed(1)} KB</strong>
               {dimensions && (
                 <span className="ml-2">
@@ -165,7 +165,7 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
                   <a
                     href={result}
                     download={file.name.replace(/\.[^.]+$/, "_compressed.jpg")}
-                    className="mt-3 inline-block rounded-xl bg-[var(--accent)] px-5 py-2.5 font-medium text-white hover:opacity-90"
+                    className="btn-primary w-full sm:w-auto mt-2"
                   >
                     {t("download")}
                   </a>

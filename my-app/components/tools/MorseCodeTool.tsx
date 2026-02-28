@@ -55,7 +55,7 @@ export function MorseCodeTool({ t }: MorseCodeToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Код Морзе: латиница и цифры в точки/тире и обратно. Выберите «Закодировать» или «Декодировать», введите текст и нажмите кнопку.
       </p>
       <div className="flex flex-wrap gap-2">
@@ -80,12 +80,12 @@ export function MorseCodeTool({ t }: MorseCodeToolProps) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder={mode === "encode" ? t("textPlaceholder") : t("morsePlaceholder")}
-        className="min-h-[100px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
+        className="input-base min-h-[100px]"
         rows={4}
       />
       <button
         onClick={process}
-        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
+        className="btn-primary w-full sm:w-auto mt-2"
       >
         {mode === "encode" ? t("encode") : t("decode")}
       </button>
@@ -97,7 +97,7 @@ export function MorseCodeTool({ t }: MorseCodeToolProps) {
           </div>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Введите текст или код Морзе (буквы через пробел) и нажмите кнопку — результат появится ниже.
         </p>
       )}

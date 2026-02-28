@@ -40,16 +40,16 @@ export function WordCounterTool({ t }: WordCounterToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Вставьте текст — счётчик обновляется автоматически. Задайте лимит символов (например 280) — под полем покажется «осталось» или «превышение».
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Текст для подсчёта</label>
+      <div className="result-card">
+        <label className="field-label">Текст для подсчёта</label>
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={t("placeholder")}
-          className="min-h-[200px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base min-h-[200px] resize-y"
           rows={8}
         />
         <div className="mt-3 flex flex-wrap items-center gap-4">
@@ -78,7 +78,7 @@ export function WordCounterTool({ t }: WordCounterToolProps) {
       </div>
       <motion.div layout className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-sm font-medium text-[var(--muted)]">Статистика</span>
+          <span className="text-sm font-medium text-[var(--foreground)]/70">Статистика</span>
           {text.length > 0 && <CopyButton text={report} label="Копировать отчёт" />}
         </div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
@@ -88,16 +88,16 @@ export function WordCounterTool({ t }: WordCounterToolProps) {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-center shadow-sm"
+              className="stat-card"
             >
-              <div className="text-2xl font-bold tabular-nums text-[var(--accent)]">{value}{suffix}</div>
+              <div className="stat-value">{value}{suffix}</div>
               <div className="text-sm text-[var(--muted)]">{t(key)}</div>
             </motion.div>
           ))}
         </div>
       </motion.div>
       {!text && (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Поле пусто — введите или вставьте текст, чтобы увидеть подсчёт слов и символов.
         </p>
       )}

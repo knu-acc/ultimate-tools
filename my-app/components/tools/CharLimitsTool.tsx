@@ -29,15 +29,15 @@ export function CharLimitsTool({ t }: CharLimitsToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Лимиты символов для соцсетей и мессенджеров. Выберите платформу — счётчик покажет, сколько осталось до лимита.
       </p>
       <div>
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("platform")}</label>
+        <label className="field-label">{t("platform")}</label>
         <select
           value={platform}
           onChange={(e) => setPlatform(e.target.value)}
-          className="rounded-lg border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)]"
+          className="rounded-lg border border-[var(--border)] bg-transparent px-5 py-4 text-base focus:border-[var(--accent)] transition-all"
         >
           {Object.keys(LIMITS).map((p) => (
             <option key={p} value={p}>{p.replace("_", " ")}</option>
@@ -59,7 +59,7 @@ export function CharLimitsTool({ t }: CharLimitsToolProps) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={t("placeholder")}
-        className="min-h-[150px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
+        className="input-base min-h-[150px]"
         rows={6}
       />
       <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--border)]">

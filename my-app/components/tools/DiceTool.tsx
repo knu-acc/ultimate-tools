@@ -51,18 +51,18 @@ export function DiceTool({ t }: DiceToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Виртуальные кубики для настольных игр и решений. Выберите тип (d4–d20) и количество костей. Бросок выполняется в браузере.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Пресеты и настройки</span>
+      <div className="result-card">
+        <span className="section-label">Пресеты и настройки</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {DICE_PRESETS.map(({ label, count: c, sides: s }) => (
             <button
               key={label}
               type="button"
               onClick={() => { setCount(c); setSides(s); }}
-              className={`rounded-lg border px-3 py-2 text-sm font-medium ${count === c && sides === s ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+              className={`chip ${count === c && sides === s ? "chip-active" : ""}`}
             >
               {label}
             </button>
@@ -70,22 +70,22 @@ export function DiceTool({ t }: DiceToolProps) {
         </div>
         <div className="flex flex-wrap gap-6">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("count")}</label>
+            <label className="field-label">{t("count")}</label>
             <input
               type="number"
               min={1}
               max={20}
               value={count}
               onChange={(e) => setCount(Math.min(20, Math.max(1, Number(e.target.value) || 1)))}
-              className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+              className="input-base w-20"
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("sides")}</label>
+            <label className="field-label">{t("sides")}</label>
             <select
               value={sides}
               onChange={(e) => setSides(Number(e.target.value))}
-              className="rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+              className="input-base"
             >
               {[4, 6, 8, 10, 12, 20].map((n) => (
                 <option key={n} value={n}>D{n}</option>
@@ -99,7 +99,7 @@ export function DiceTool({ t }: DiceToolProps) {
         disabled={rolling}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white disabled:opacity-70"
+        className="btn-primary w-full sm:w-auto mt-2"
       >
         {rolling ? "..." : t("roll")}
       </motion.button>
@@ -108,10 +108,10 @@ export function DiceTool({ t }: DiceToolProps) {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4"
+            className="result-card"
           >
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+              <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
               {!rolling && results.length > 0 && (
                 <CopyButton text={results.join(", ") + (results.length > 1 ? " (сумма: " + sum + ")" : "")} />
               )}

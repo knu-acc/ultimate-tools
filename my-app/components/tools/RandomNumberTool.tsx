@@ -88,18 +88,18 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Случайные числа в заданном диапазоне. Генерация выполняется в браузере, данные никуда не отправляются. Можно исключить часть чисел и выбрать «только уникальные».
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Диапазон</span>
+      <div className="result-card">
+        <span className="section-label">Диапазон</span>
         <div className="flex flex-wrap items-center gap-2 mb-3">
           {RANGE_PRESETS.map(({ label, min: pMin, max: pMax }) => (
             <button
               key={label}
               type="button"
               onClick={() => { setMin(pMin); setMax(pMax); }}
-              className={`rounded-lg border px-3 py-2 text-sm font-medium ${min === pMin && max === pMax ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+              className={`chip ${min === pMin && max === pMax ? "chip-active" : ""}`}
             >
               {label}
             </button>
@@ -107,36 +107,36 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
         </div>
         <div className="grid gap-4 sm:grid-cols-3">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("min")}</label>
+            <label className="field-label">{t("min")}</label>
             <input
               type="number"
               value={min}
               onChange={(e) => setMin(Number(e.target.value) ?? 0)}
               min={MIN_SAFE}
               max={MAX_SAFE}
-              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+              className="input-base"
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("max")}</label>
+            <label className="field-label">{t("max")}</label>
             <input
               type="number"
               value={max}
               onChange={(e) => setMax(Number(e.target.value) ?? 0)}
               min={MIN_SAFE}
               max={MAX_SAFE}
-              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+              className="input-base"
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("quantity")} (макс. {MAX_QUANTITY})</label>
+            <label className="field-label">{t("quantity")} (макс. {MAX_QUANTITY})</label>
             <input
               type="number"
               min={1}
               max={MAX_QUANTITY}
               value={quantity}
               onChange={(e) => setQuantity(Math.min(MAX_QUANTITY, Math.max(1, Number(e.target.value) || 1)))}
-              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+              className="input-base"
             />
           </div>
         </div>
@@ -145,13 +145,13 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
           <span className="text-sm text-[var(--muted)]">Только уникальные числа (без повторов)</span>
         </label>
         <div className="mt-3">
-          <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("exclude") || "Исключить (через запятую)"}</label>
+          <label className="field-label">{t("exclude") || "Исключить (через запятую)"}</label>
           <input
             type="text"
             value={exclude}
             onChange={(e) => setExclude(e.target.value)}
             placeholder="5, 10, 15"
-            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none"
+            className="input-base"
           />
         </div>
       </div>
@@ -161,14 +161,14 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
         disabled={scrolling || pool.length === 0}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white transition-colors hover:bg-[var(--accent-hover)] disabled:opacity-70 disabled:pointer-events-none"
+        className="btn-primary w-full sm:w-auto mt-2"
       >
         <Shuffle className="h-5 w-5" />
         {scrolling ? "..." : t("generate")}
       </motion.button>
 
       {pool.length === 0 && (
-        <p className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-700 dark:text-amber-400">
+        <p className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-5 py-4 text-base text-sm text-amber-700 dark:text-amber-400">
           Нет доступных чисел: весь диапазон исключён. Уберите значения из поля «Исключить» или измените минимум/максимум.
         </p>
       )}
@@ -177,10 +177,10 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4"
+          className="result-card"
         >
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+            <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
             <CopyButton text={display.join(", ")} />
           </div>
           <div className="flex flex-wrap gap-2 font-mono text-lg">

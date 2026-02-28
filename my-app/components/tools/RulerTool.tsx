@@ -43,23 +43,23 @@ export function RulerTool({ t }: RulerToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Экранная линейка для ориентира. Единицы: см, мм или дюймы. Соответствие пикселей при 96 DPI. Цифры подстраиваются под длину.
       </p>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">{t("unit") || "Единица"}</span>
+      <div className="result-card">
+        <span className="section-label">{t("unit") || "Единица"}</span>
         <div className="flex flex-wrap gap-2">
           {(["cm", "mm", "in"] as const).map((u) => (
-            <button key={u} type="button" onClick={() => setUnit(u)} className={`rounded-lg px-4 py-2 text-sm font-medium ${unit === u ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}>
+            <button key={u} type="button" onClick={() => setUnit(u)} className={`chip ${unit === u ? "chip-active" : ""}`}>
               {u === "cm" ? (t("unitCm") || "См") : u === "mm" ? (t("unitMm") || "Мм") : (t("unitIn") || "Дюймы")}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("length") || "Длина линейки"}</span>
+      <div className="result-card">
+        <span className="field-label">{t("length") || "Длина линейки"}</span>
         <div className="flex flex-wrap items-center gap-2 mb-3">
           {lengthPresets.map((px) => (
             <button key={px} type="button" onClick={() => setLengthPx(px)} className={`rounded-lg border px-3 py-2 text-sm font-medium tabular-nums ${lengthPx === px ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}>

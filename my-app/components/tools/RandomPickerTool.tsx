@@ -59,30 +59,30 @@ export function RandomPickerTool({ t }: RandomPickerToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Введите варианты (каждый с новой строки или через запятую/точку с запятой). Укажите, сколько вытянуть — один или несколько. Всё выполняется в браузере.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Варианты для выбора</label>
+      <div className="result-card">
+        <label className="field-label">Варианты для выбора</label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={t("placeholder")}
-          className="min-h-[140px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base min-h-[140px] resize-y"
           rows={5}
         />
         {items.length > 0 && <p className="mt-2 text-xs text-[var(--muted)]">Элементов: {items.length}</p>}
       </div>
       {items.length > 0 && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-          <span className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("pickCount") || "Сколько выбрать"}</span>
+        <div className="result-card">
+          <span className="field-label">{t("pickCount") || "Сколько выбрать"}</span>
           <div className="flex flex-wrap items-center gap-2">
             {[1, 2, 3, 5].filter((n) => n <= items.length).map((n) => (
               <button
                 key={n}
                 type="button"
                 onClick={() => setPickCount(n)}
-                className={`rounded-lg border px-3 py-2 text-sm font-medium ${pickCount === n ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+                className={`chip ${pickCount === n ? "chip-active" : ""}`}
               >
                 {n}
               </button>
@@ -102,7 +102,7 @@ export function RandomPickerTool({ t }: RandomPickerToolProps) {
               type="button"
               onClick={pick}
               disabled={spinning}
-              className="rounded-xl bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-white hover:bg-[var(--accent-hover)] disabled:opacity-70"
+              className="btn-primary w-full sm:w-auto mt-2"
             >
               {spinning ? "..." : t("pick")}
             </button>
@@ -115,7 +115,7 @@ export function RandomPickerTool({ t }: RandomPickerToolProps) {
         </div>
       )}
       {items.length === 0 && (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Введите варианты выше, затем нажмите «Выбрать».
         </p>
       )}
@@ -128,7 +128,7 @@ export function RandomPickerTool({ t }: RandomPickerToolProps) {
             exit={{ opacity: 0 }}
             className="rounded-xl border-2 border-[var(--accent)] bg-[var(--accent-muted)]/30 p-6 text-center"
           >
-            <span className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+            <span className="field-label">{t("result")}</span>
             <motion.span
               key={displayValue ?? ""}
               initial={{ opacity: 0.6 }}
@@ -148,7 +148,7 @@ export function RandomPickerTool({ t }: RandomPickerToolProps) {
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4"
+            className="result-card"
           >
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm text-[var(--muted)]">{t("result")} ({pickedMultiple.length})</span>

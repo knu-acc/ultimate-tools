@@ -42,14 +42,14 @@ export function NotepadTool({ t }: NotepadToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Блокнот с автосохранением в браузере. Текст сохраняется при вводе; можно скопировать всё или экспортировать в файл.
       </p>
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={t("placeholder")}
-        className="min-h-[300px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
+        className="input-base min-h-[300px]"
         rows={12}
       />
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -68,7 +68,7 @@ export function NotepadTool({ t }: NotepadToolProps) {
             <button
               type="button"
               onClick={downloadTxt}
-              className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20"
+              className="btn-ghost"
             >
               {t("exportTxt") || "Скачать .txt"}
             </button>

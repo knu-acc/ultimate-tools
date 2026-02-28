@@ -37,20 +37,20 @@ export function VatCalcTool({ t }: VatCalcToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Выделение НДС из суммы с НДС или начисление НДС на сумму без НДС. Ставка 0, 10 или 20%. Отметьте, включён ли НДС в введённую сумму. Расчёт в браузере.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Сумма и ставка</span>
+      <div className="result-card">
+        <span className="section-label">Сумма и ставка</span>
         <div className="mb-4">
-          <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("amount")}</label>
-          <input type="number" min="0" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Сумма" className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]" />
+          <label className="field-label">{t("amount")}</label>
+          <input type="number" min="0" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Сумма" className="input-base" />
         </div>
         <div className="mb-4">
-          <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("vatRate")}</label>
+          <label className="field-label">{t("vatRate")}</label>
           <div className="flex gap-2">
             {[0, 10, 20].map((n) => (
-              <button key={n} type="button" onClick={() => setVatRate(n)} className={`rounded-lg px-4 py-2 text-sm font-medium ${vatRate === n ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}>{n}%</button>
+              <button key={n} type="button" onClick={() => setVatRate(n)} className={`chip ${vatRate === n ? "chip-active" : ""}`}>{n}%</button>
             ))}
           </div>
         </div>
@@ -58,12 +58,12 @@ export function VatCalcTool({ t }: VatCalcToolProps) {
           <input type="checkbox" checked={includeVat} onChange={(e) => setIncludeVat(e.target.checked)} className="rounded" />
           <span className="text-sm">{t("includeVat")}</span>
         </label>
-        <button onClick={calc} className="mt-4 rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white hover:opacity-90">{t("calculate")}</button>
+        <button onClick={calc} className="btn-primary w-full sm:w-auto mt-2">{t("calculate")}</button>
       </div>
       {vat !== null && total !== null ? (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="result-card">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--muted)]">Результат</span>
+            <span className="text-sm font-medium text-[var(--foreground)]/70">Результат</span>
             <CopyButton text={summary} label="Копировать расчёт" />
           </div>
           <div className="space-y-2 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
@@ -73,7 +73,7 @@ export function VatCalcTool({ t }: VatCalcToolProps) {
           </div>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Введите сумму, выберите ставку и отметьте «Включён ли НДС», нажмите «Рассчитать».
         </p>
       )}

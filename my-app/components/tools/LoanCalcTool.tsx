@@ -1,71 +1,76 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
 interface LoanCalcToolProps {
   t: (key: string) => string;
 }
 
+const fmt = (n: number) => n.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
 export function LoanCalcTool({ t }: LoanCalcToolProps) {
   const [principal, setPrincipal] = useState("");
   const [rate, setRate] = useState("");
   const [months, setMonths] = useState("");
-  const [payment, setPayment] = useState<number | null>(null);
 
-  const [overpayment, setOverpayment] = useState<number | null>(null);
+  const termPresets = [12, 24, 36, 60, 120, 240];
 
-  const calc = () => {
+  const result = useMemo(() => {
     const P = parseFloat(principal);
-    const r = parseFloat(rate) / 100 / 12;
+    const annualRate = parseFloat(rate);
     const n = parseInt(months, 10);
-    if (isNaN(P) || isNaN(r) || isNaN(n) || n <= 0) return;
-    const m = r ? (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1) : P / n;
-    setPayment(m);
-    setOverpayment(m * n - P);
-  };
+    if (isNaN(P) || P <= 0 || isNaN(annualRate) || isNaN(n) || n <= 0) return null;
+    const r = annualRate / 100 / 12;
+    const payment = r > 0
+      ? (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1)
+      : P / n;
+    const totalRepay = payment * n;
+    const overpayment = totalRepay - P;
+    return { payment, totalRepay, overpayment };
+  }, [principal, rate, months]);
 
-  const setTerm = (m: number) => {
-    setMonths(String(m));
-  };
-
-  const termPresets = [12, 24, 36, 60, 120];
-  const monthsNum = parseInt(months, 10);
-  const totalRepay = payment !== null && !isNaN(monthsNum) ? payment * monthsNum : null;
+  const summary = result
+    ? `Ежемесячно: ${fmt(result.payment)}\nИтого: ${fmt(result.totalRepay)}\nПереплата: ${fmt(result.overpayment)}`
+    : "";
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
-        Аннуитетный платёж по кредиту: сумма, годовая ставка (%) и срок в месяцах. Результат — ежемесячный платёж и переплата. Расчёт ориентировочный, без учёта комиссий и страховок.
+      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">
+        Аннуитетный кредитный калькулятор. Введите сумму, ставку и срок — расчёт обновляется мгновенно.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">{t("months")} — быстрый выбор</span>
+
+      <div className="result-card">
+        <span className="section-label">Параметры кредита</span>
+
         <div className="flex flex-wrap gap-2 mb-4">
           {termPresets.map((m) => (
             <button
               key={m}
               type="button"
-              onClick={() => setTerm(m)}
-              className={`rounded-lg border px-3 py-2 text-sm font-medium ${months === String(m) ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+              onClick={() => setMonths(String(m))}
+              className={`chip ${months === String(m) ? "chip-active" : ""}`}
             >
-              {m} мес
+              {m >= 12 ? `${m / 12} ${m === 12 ? "год" : m <= 48 ? "года" : "лет"}` : `${m} мес`}
             </button>
           ))}
         </div>
+
         <div className="grid gap-4 sm:grid-cols-3">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("principal")}</label>
+            <label className="field-label">Сумма</label>
             <input
               type="number"
               min="0"
               value={principal}
               onChange={(e) => setPrincipal(e.target.value)}
-              placeholder="Сумма"
-              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+              placeholder="1 000 000"
+              className="input-base text-lg font-semibold"
+              autoFocus
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("rate")} (%)</label>
+            <label className="field-label">Ставка (% год.)</label>
             <input
               type="number"
               min="0"
@@ -73,51 +78,67 @@ export function LoanCalcTool({ t }: LoanCalcToolProps) {
               step="0.1"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
-              placeholder="Ставка"
-              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+              placeholder="12"
+              className="input-base text-lg font-semibold"
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("months")}</label>
+            <label className="field-label">Срок (мес.)</label>
             <input
               type="number"
               min="1"
               max="600"
               value={months}
               onChange={(e) => setMonths(e.target.value)}
-              placeholder="Срок"
-              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+              placeholder="36"
+              className="input-base text-lg font-semibold"
             />
           </div>
         </div>
-        <button
-          onClick={calc}
-          className="mt-4 rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white hover:opacity-90"
-        >
-          {t("calculate")}
-        </button>
       </div>
-      {payment !== null ? (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--muted)]">Результат</span>
-            <CopyButton text={`${t("monthlyPayment")}: ${payment.toFixed(2)}${overpayment != null && overpayment > 0 ? `\n${t("overpayment") || "Переплата"}: ${overpayment.toFixed(2)}` : ""}`} label="Копировать расчёт" />
+
+      {result ? (
+        <div className="result-card">
+          <div className="flex items-center justify-between mb-4">
+            <span className="section-label mb-0">Результат</span>
+            <CopyButton text={summary} label="Копировать" />
           </div>
-          <div className="rounded-lg border border-[var(--accent)] bg-[var(--accent)]/10 p-4 space-y-1">
-            <div className="text-2xl font-bold tabular-nums">{payment.toFixed(2)}</div>
-            <div className="text-sm text-[var(--muted)]">{t("monthlyPayment")}</div>
-            {overpayment !== null && overpayment > 0 && (
-              <p className="text-sm text-[var(--muted)]">{t("overpayment") || "Переплата"}: <span className="font-medium tabular-nums">{overpayment.toFixed(2)}</span></p>
-            )}
-            {totalRepay !== null && (
-              <p className="text-sm text-[var(--muted)]">Итого к возврату: <span className="font-medium tabular-nums">{totalRepay.toFixed(2)}</span></p>
-            )}
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="stat-card">
+              <div className="stat-value text-[var(--accent)]">{fmt(result.payment)}</div>
+              <div className="stat-label">Ежемесячный платёж</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value">{fmt(result.totalRepay)}</div>
+              <div className="stat-label">Итого к возврату</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value text-red-500">{fmt(result.overpayment)}</div>
+              <div className="stat-label">Переплата</div>
+            </div>
           </div>
+
+          {/* Visual bar showing principal vs overpayment */}
+          {result.overpayment > 0 && (
+            <div className="mt-4">
+              <div className="flex rounded-full overflow-hidden h-3">
+                <div
+                  className="bg-[var(--accent)] transition-all"
+                  style={{ width: `${(parseFloat(principal) / result.totalRepay) * 100}%` }}
+                />
+                <div className="bg-red-400/60 flex-1" />
+              </div>
+              <div className="flex justify-between text-xs text-[var(--muted)] mt-1">
+                <span>Тело: {((parseFloat(principal) / result.totalRepay) * 100).toFixed(1)}%</span>
+                <span>Проценты: {((result.overpayment / result.totalRepay) * 100).toFixed(1)}%</span>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Введите сумму, ставку и срок (или выберите пресет срока), нажмите «Рассчитать».
-        </p>
+        <div className="empty-state">
+          Введите сумму, ставку и срок — расчёт появится автоматически
+        </div>
       )}
     </div>
   );

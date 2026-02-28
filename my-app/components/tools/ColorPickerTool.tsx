@@ -96,11 +96,11 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
   const hexValid = !color || parseHex(color);
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Выберите цвет из палитры, ползунка или введите HEX. Копируйте форматы для CSS (HEX, RGB, HSL). Недавние цвета сохраняются в браузере локально.
       </p>
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-3 text-sm font-medium text-[var(--muted)]">Палитра</div>
         <div className="space-y-2">
           {PRESET_PALETTE.map((row, i) => (
@@ -121,7 +121,7 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
       </div>
 
       {recent.length > 0 && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="result-card">
           <div className="mb-2 text-sm font-medium text-[var(--muted)]">Недавние</div>
           <div className="flex flex-wrap gap-2">
             {recent.map((c) => (
@@ -138,7 +138,7 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
         </div>
       )}
 
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+      <div className="result-card">
         <div className="mb-2 text-sm font-medium text-[var(--muted)]">{t("color")}</div>
         <div className="flex flex-wrap items-center gap-4">
           <input
@@ -153,7 +153,7 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
               value={color}
               onChange={(e) => setColor(e.target.value)}
               placeholder="#000000 или #RGB или #RRGGBBAA"
-              className={`w-full max-w-[220px] rounded-xl border px-4 py-3 font-mono text-sm bg-transparent ${hexValid ? "border-[var(--border)]" : "border-amber-500"}`}
+              className={`input-base font-mono max-w-[220px] ${hexValid ? "" : "border-amber-500"}`}
             />
             {!hexValid && color.trim() && (
               <p className="mt-1 text-xs text-amber-600 dark:text-amber-400">Недопустимый HEX (используйте #RGB, #RRGGBB или #RRGGBBAA)</p>
@@ -190,8 +190,8 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
           { name: "HSL", value: hslStr },
           { name: "HSLA", value: hslaStr },
         ].map(({ name, value }) => (
-          <div key={name} className="flex items-center justify-between gap-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] px-4 py-3">
-            <span className="text-sm font-medium text-[var(--muted)]">{name}</span>
+          <div key={name} className="stat-card flex-row items-center justify-between gap-2">
+            <span className="text-sm font-medium text-[var(--foreground)]/70">{name}</span>
             <div className="flex min-w-0 items-center gap-2">
               <code className="truncate font-mono text-sm">{value}</code>
               <CopyButton text={value} label={`Копировать ${name}`} />

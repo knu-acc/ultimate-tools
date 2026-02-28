@@ -1,90 +1,147 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
 function toKelvin(val: number, from: string): number {
   if (from === "K") return val;
   if (from === "C") return val + 273.15;
   if (from === "F") return (val - 32) * (5 / 9) + 273.15;
+  if (from === "R") return val * (5 / 9);
   return val;
 }
+
 function fromKelvin(k: number, to: string): number {
   if (to === "K") return k;
   if (to === "C") return k - 273.15;
   if (to === "F") return (k - 273.15) * (9 / 5) + 32;
+  if (to === "R") return k * (9 / 5);
   return k;
 }
 
-interface TemperatureConverterToolProps {
-  t: (key: string) => string;
-}
+const TEMP_UNITS: { key: string; label: string; symbol: string }[] = [
+  { key: "C", label: "Цельсий (°C)", symbol: "°C" },
+  { key: "F", label: "Фаренгейт (°F)", symbol: "°F" },
+  { key: "K", label: "Кельвин (K)", symbol: "K" },
+  { key: "R", label: "Ранкин (°R)", symbol: "°R" },
+];
+
+interface TemperatureConverterToolProps { t: (key: string) => string; }
 
 export function TemperatureConverterTool({ t }: TemperatureConverterToolProps) {
   const [value, setValue] = useState("");
   const [from, setFrom] = useState("C");
-  const [to, setTo] = useState("F");
 
   const v = parseFloat(value);
-  const k = !isNaN(v) ? toKelvin(v, from) : NaN;
-  const result = !isNaN(k) ? fromKelvin(k, to).toFixed(4) : "";
-  const resultLine = result ? `${value} °${from} = ${result} °${to}` : "";
 
-  const swap = () => {
-    setFrom(to);
-    setTo(from);
+  const allResults = useMemo(() => {
+    if (isNaN(v)) return null;
+    const k = toKelvin(v, from);
+    return TEMP_UNITS
+      .filter((u) => u.key !== from)
+      .map((u) => ({
+        unit: u.key,
+        label: u.label,
+        symbol: u.symbol,
+        value: fromKelvin(k, u.key),
+      }));
+  }, [v, from]);
+
+  const swap = (toUnit: string) => {
+    if (allResults) {
+      const res = allResults.find((r) => r.unit === toUnit);
+      if (res) {
+        setValue(String(parseFloat(res.value.toPrecision(6))));
+        setFrom(toUnit);
+      }
+    }
   };
+
+  const copyAll = () => {
+    if (!allResults) return "";
+    return allResults.map((r) => `${r.value.toFixed(2)} ${r.symbol}`).join("\n");
+  };
+
+  const presets = [
+    { label: "0°C (замерзание)", val: "0", unit: "C" },
+    { label: "100°C (кипение)", val: "100", unit: "C" },
+    { label: "36.6°C (тело)", val: "36.6", unit: "C" },
+    { label: "−40° (одинаково)", val: "-40", unit: "C" },
+  ];
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">{t("description")}</p>
-      <button type="button" onClick={swap} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{t("swap") || "↔ Поменять"}</button>
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div>
-          <label className="mb-2 block text-sm">{t("value")}</label>
-          <input
-            type="number"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
-          />
+      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">{t("description")}</p>
+
+      <div className="result-card">
+        <span className="section-label">Значение</span>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {presets.map(({ label, val, unit }) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => { setValue(val); setFrom(unit); }}
+              className={`chip ${value === val && from === unit ? "chip-active" : ""}`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
-        <div>
-          <label className="mb-2 block text-sm">{t("from")}</label>
-          <select
-            value={from}
-            onChange={(e) => setFrom(e.target.value)}
-            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
-          >
-            <option value="C">{t("unit_C")}</option>
-            <option value="F">{t("unit_F")}</option>
-            <option value="K">{t("unit_K")}</option>
-          </select>
-        </div>
-        <div>
-          <label className="mb-2 block text-sm">{t("to")}</label>
-          <select
-            value={to}
-            onChange={(e) => setTo(e.target.value)}
-            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
-          >
-            <option value="C">{t("unit_C")}</option>
-            <option value="F">{t("unit_F")}</option>
-            <option value="K">{t("unit_K")}</option>
-          </select>
+        <div className="flex flex-wrap items-end gap-3">
+          <div className="flex-1 min-w-[140px]">
+            <input
+              type="number"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Введите температуру"
+              className="input-base text-lg font-semibold"
+              autoFocus
+            />
+          </div>
+          <div className="min-w-[160px]">
+            <select
+              value={from}
+              onChange={(e) => setFrom(e.target.value)}
+              className="input-base"
+            >
+              {TEMP_UNITS.map((u) => (
+                <option key={u.key} value={u.key}>{u.label}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
-      {result ? (
-        <div className="space-y-2">
-          <div className="flex justify-end"><CopyButton text={resultLine} label="Копировать" /></div>
-          <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 text-xl font-bold tabular-nums">
-            {result} °{to}
+
+      {allResults && allResults.length > 0 ? (
+        <div className="result-card">
+          <div className="flex items-center justify-between mb-4">
+            <span className="section-label mb-0">Результаты</span>
+            <CopyButton text={copyAll()} label="Копировать всё" />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {allResults.map(({ unit, label, symbol, value: val }) => (
+              <button
+                key={unit}
+                type="button"
+                onClick={() => swap(unit)}
+                className="group flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-left transition-all hover:border-[var(--accent)] hover:shadow-md"
+                title={`Переключить на ${label}`}
+              >
+                <div className="min-w-0">
+                  <div className="text-lg font-bold tabular-nums truncate text-[var(--foreground)]">
+                    {val.toFixed(2)} {symbol}
+                  </div>
+                  <div className="text-xs text-[var(--muted)] mt-0.5">{label}</div>
+                </div>
+                <span className="text-xs text-[var(--muted)] opacity-0 group-hover:opacity-100 transition-opacity ml-2">↔</span>
+              </button>
+            ))}
           </div>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Введите значение и выберите единицы «из» и «в».
-        </p>
+        <div className="empty-state">
+          Введите температуру — результаты во всех шкалах появятся мгновенно
+        </div>
       )}
     </div>
   );

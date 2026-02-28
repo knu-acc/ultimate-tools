@@ -58,11 +58,11 @@ export function FontsSocialTool({ t }: FontsSocialToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Стилизованный текст для соцсетей и никнеймов. Введите латиницу (A–Z, a–z) — ниже появятся варианты. Цифры и знаки копируются как есть.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">
+      <div className="result-card">
+        <label className="field-label">
           Введите латиницу — ниже появятся стили
         </label>
         <div className="flex flex-wrap items-center gap-2">
@@ -71,7 +71,7 @@ export function FontsSocialTool({ t }: FontsSocialToolProps) {
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder={t("placeholder")}
-            className="min-w-[200px] flex-1 rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+            className="input-base flex-1 min-w-[200px]"
           />
           {PRESETS.map((preset) => (
             <button
@@ -94,9 +94,9 @@ export function FontsSocialTool({ t }: FontsSocialToolProps) {
         {FONTS.map((font) => {
           const result = convert(text, font);
           return (
-            <div key={font.name} className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+            <div key={font.name} className="result-card">
               <div className="mb-2 flex items-center justify-between gap-2">
-                <span className="text-sm font-medium text-[var(--muted)]">{font.name}</span>
+                <span className="text-sm font-medium text-[var(--foreground)]/70">{font.name}</span>
                 {result ? <CopyButton text={result} label={`Копировать ${font.name}`} /> : null}
               </div>
               <div className="select-all text-xl leading-relaxed text-[var(--foreground)]">

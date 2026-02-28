@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
 interface TipCalculatorToolProps {
   t: (key: string) => string;
 }
+
+const fmt = (n: number) => n.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
   const [bill, setBill] = useState("");
@@ -14,56 +16,84 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
   const [roundTo, setRoundTo] = useState(0);
 
   const amount = parseFloat(bill) || 0;
-  const tip = (amount * percent) / 100;
-  let total = amount + tip;
-  if (roundTo > 0) total = Math.ceil(total / roundTo) * roundTo;
-  const perPerson = people > 0 ? total / people : 0;
+
+  const { tip, total, perPerson } = useMemo(() => {
+    const tip = (amount * percent) / 100;
+    let total = amount + tip;
+    if (roundTo > 0) total = Math.ceil(total / roundTo) * roundTo;
+    const perPerson = people > 0 ? total / people : 0;
+    return { tip, total, perPerson };
+  }, [amount, percent, people, roundTo]);
 
   const summary = amount > 0
-    ? people > 1
-      ? `${t("tip")}: ${tip.toFixed(2)}\n${t("total")}: ${total.toFixed(2)}\n${t("perPerson")}: ${perPerson.toFixed(2)}`
-      : `${t("tip")}: ${tip.toFixed(2)}\n${t("total")}: ${total.toFixed(2)}`
+    ? `Чаевые: ${fmt(tip)}\nИтого: ${fmt(total)}${people > 1 ? `\nС человека: ${fmt(perPerson)}` : ""}`
     : "";
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
-        Чаевые от суммы счёта: укажите сумму, процент (или пресет) и число гостей — итог и доля с человека обновляются автоматически. Можно округлить итог. Всё считается в браузере.
+      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">
+        Укажите сумму и процент чаевых — итог обновляется мгновенно.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Счёт и настройки</span>
+
+      <div className="result-card">
+        <span className="section-label">Счёт и настройки</span>
         <div className="grid gap-4 sm:grid-cols-2 mb-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("bill")}</label>
+            <label className="field-label">Сумма счёта</label>
             <input
               type="number"
               min="0"
               step="0.01"
               value={bill}
               onChange={(e) => setBill(e.target.value)}
-              placeholder="Сумма счёта"
-              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+              placeholder="Например, 2500"
+              className="input-base text-lg font-semibold"
+              autoFocus
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("tipPercent")} (%)</label>
+            <label className="field-label">Процент чаевых</label>
             <div className="flex flex-wrap items-center gap-2">
-              <input type="number" min="0" max="100" value={percent} onChange={(e) => setPercent(Number(e.target.value) || 0)} className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]" />
+              <input
+                type="number"
+                min="0"
+                max="100"
+                value={percent}
+                onChange={(e) => setPercent(Number(e.target.value) || 0)}
+                className="input-base w-24"
+              />
               {[5, 10, 15, 20].map((p) => (
-                <button key={p} type="button" onClick={() => setPercent(p)} className={`rounded-lg px-3 py-2 text-sm font-medium ${percent === p ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}>{p}%</button>
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => setPercent(p)}
+                  className={`chip ${percent === p ? "chip-active" : ""}`}
+                >
+                  {p}%
+                </button>
               ))}
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap gap-4 mb-4">
+        <div className="flex flex-wrap gap-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("people")}</label>
-            <input type="number" min="1" value={people} onChange={(e) => setPeople(Math.max(1, Number(e.target.value) || 1))} className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]" />
+            <label className="field-label">Гостей</label>
+            <input
+              type="number"
+              min="1"
+              value={people}
+              onChange={(e) => setPeople(Math.max(1, Number(e.target.value) || 1))}
+              className="input-base w-24"
+            />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("roundTotal") || "Округлить итог до"}</label>
-            <select value={roundTo} onChange={(e) => setRoundTo(Number(e.target.value))} className="rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]">
-              <option value={0}>{t("noRound") || "Не округлять"}</option>
+            <label className="field-label">Округлить до</label>
+            <select
+              value={roundTo}
+              onChange={(e) => setRoundTo(Number(e.target.value))}
+              className="input-base"
+            >
+              <option value={0}>Не округлять</option>
               <option value={5}>5</option>
               <option value={10}>10</option>
               <option value={50}>50</option>
@@ -72,33 +102,34 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
           </div>
         </div>
       </div>
+
       {amount > 0 ? (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--muted)]">Результат</span>
-            <CopyButton text={summary} label="Копировать расчёт" />
+        <div className="result-card">
+          <div className="flex items-center justify-between mb-4">
+            <span className="section-label mb-0">Результат</span>
+            <CopyButton text={summary} label="Копировать" />
           </div>
-          <div className="space-y-2 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
-            <div className="flex justify-between text-sm">
-              <span className="text-[var(--muted)]">{t("tip")}</span>
-              <span className="font-medium tabular-nums">{tip.toFixed(2)}</span>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="stat-card">
+              <div className="stat-value text-[var(--accent)]">{fmt(tip)}</div>
+              <div className="stat-label">Чаевые</div>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-[var(--muted)]">{t("total")}</span>
-              <span className="font-medium tabular-nums">{total.toFixed(2)}</span>
+            <div className="stat-card">
+              <div className="stat-value">{fmt(total)}</div>
+              <div className="stat-label">Итого</div>
             </div>
             {people > 1 && (
-              <div className="flex justify-between border-t border-[var(--border)] pt-2 text-sm">
-                <span className="text-[var(--muted)]">{t("perPerson")}</span>
-                <span className="font-medium tabular-nums">{perPerson.toFixed(2)}</span>
+              <div className="stat-card">
+                <div className="stat-value">{fmt(perPerson)}</div>
+                <div className="stat-label">С человека</div>
               </div>
             )}
           </div>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Введите сумму счёта — чаевые и итог появятся ниже.
-        </p>
+        <div className="empty-state">
+          Введите сумму счёта — чаевые и итог появятся автоматически
+        </div>
       )}
     </div>
   );

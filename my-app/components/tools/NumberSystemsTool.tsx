@@ -41,11 +41,11 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Перевод числа между системами счисления: 2 (двоичная), 8 (восьмеричная), 10 (десятичная), 16 (шестнадцатеричная). Введите число в исходной системе, выберите целевую — нажмите «Конвертировать». Цифры должны соответствовать выбранной системе.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <span className="mb-2 block text-sm font-medium text-[var(--muted)]">Быстрые примеры</span>
+      <div className="result-card">
+        <span className="field-label">Быстрые примеры</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {basePresets.map(({ label, from, to, val }) => (
             <button key={label} type="button" onClick={() => { setFromBase(from); setToBase(to); setValue(val); setResult(""); }} className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium hover:bg-[var(--border)]/20">
@@ -53,46 +53,46 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
             </button>
           ))}
         </div>
-        <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("value")}</label>
+        <label className="field-label">{t("value")}</label>
         <input
           type="text"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Число в выбранной системе"
-          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base font-mono"
         />
         {value.trim() && !isValidForBase(value.trim(), fromBase) && (
           <p className="mt-1 text-xs text-amber-600 dark:text-amber-400">Недопустимые символы для системы с основанием {fromBase}</p>
         )}
         <div className="grid gap-4 sm:grid-cols-2 mt-4">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("fromBase")}</label>
-            <select value={fromBase} onChange={(e) => setFromBase(Number(e.target.value))} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)]">
+            <label className="field-label">{t("fromBase")}</label>
+            <select value={fromBase} onChange={(e) => setFromBase(Number(e.target.value))} className="input-base">
               {[2, 8, 10, 16].map((n) => (
                 <option key={n} value={n}>{n}</option>
               ))}
             </select>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("toBase")}</label>
-            <select value={toBase} onChange={(e) => setToBase(Number(e.target.value))} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)]">
+            <label className="field-label">{t("toBase")}</label>
+            <select value={toBase} onChange={(e) => setToBase(Number(e.target.value))} className="input-base">
               {[2, 8, 10, 16].map((n) => (
                 <option key={n} value={n}>{n}</option>
               ))}
             </select>
           </div>
         </div>
-        <button onClick={convert} className="mt-4 rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white hover:opacity-90">
+        <button onClick={convert} className="btn-primary w-full sm:w-auto mt-2">
           {t("convert")}
         </button>
       </div>
       {decimalValue !== null && value.trim() && (
-        <p className="text-sm text-[var(--muted)]">{t("decimalValue") || "В десятичной"}: <span className="font-mono font-medium">{decimalValue}</span></p>
+        <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">{t("decimalValue") || "В десятичной"}: <span className="font-mono font-medium">{decimalValue}</span></p>
       )}
       {result ? (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="result-card">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--muted)]">Результат</span>
+            <span className="text-sm font-medium text-[var(--foreground)]/70">Результат</span>
             <CopyButton text={result} label="Копировать" />
           </div>
           <div className="rounded-lg border border-[var(--accent)] bg-[var(--accent)]/10 p-4 font-mono text-xl">
@@ -100,7 +100,7 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
           </div>
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Введите число, выберите исходную и целевую систему, нажмите «Конвертировать».
         </p>
       )}

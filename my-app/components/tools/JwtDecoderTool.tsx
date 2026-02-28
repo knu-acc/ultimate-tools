@@ -55,36 +55,36 @@ export function JwtDecoderTool({ t }: JwtDecoderToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
+      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
         Декодирование JWT в браузере: вставьте токен и нажмите «Декодировать» — отобразятся Header и Payload в JSON. Подпись не проверяется; данные не отправляются на сервер. Не вставляйте токены на сторонних сайтах.
       </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">JWT токен</label>
+      <div className="result-card">
+        <label className="field-label">JWT токен</label>
         <textarea
           value={token}
           onChange={(e) => setToken(e.target.value)}
           placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-          className="min-h-[80px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono text-sm focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          className="input-base min-h-[80px] font-mono text-sm"
           rows={3}
         />
-        <button onClick={decode} className="mt-3 rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white hover:opacity-90">
+        <button onClick={decode} className="btn-primary w-full sm:w-auto mt-2">
           {t("decode")}
         </button>
       </div>
-      {error && <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>}
-      {expInfo && <p className="text-sm text-[var(--muted)]">{expInfo}</p>}
+      {error && <div className="badge-danger px-4 py-2.5 rounded-xl text-sm">{error}</div>}
+      {expInfo && <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">{expInfo}</p>}
       {header && (
         <div className="space-y-4">
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="result-card">
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-sm font-medium text-[var(--muted)]">Header</span>
+              <span className="text-sm font-medium text-[var(--foreground)]/70">Header</span>
               <CopyButton text={header} label="Копировать Header" />
             </div>
             <pre className="overflow-auto rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 text-sm">{header}</pre>
           </div>
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="result-card">
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-sm font-medium text-[var(--muted)]">Payload</span>
+              <span className="text-sm font-medium text-[var(--foreground)]/70">Payload</span>
               <CopyButton text={payload} label="Копировать Payload" />
             </div>
             <pre className="overflow-auto rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 text-sm">{payload}</pre>
@@ -92,7 +92,7 @@ export function JwtDecoderTool({ t }: JwtDecoderToolProps) {
         </div>
       )}
       {!header && !error && token.trim() && (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+        <p className="empty-state">
           Нажмите «Декодировать» — появятся блоки Header и Payload.
         </p>
       )}
