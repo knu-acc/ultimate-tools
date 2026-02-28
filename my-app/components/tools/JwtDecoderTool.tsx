@@ -55,10 +55,8 @@ export function JwtDecoderTool({ t }: JwtDecoderToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Декодирование JWT в браузере: вставьте токен и нажмите «Декодировать» — отобразятся Header и Payload в JSON. Подпись не проверяется; данные не отправляются на сервер. Не вставляйте токены на сторонних сайтах.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">JWT токен</label>
         <textarea
           value={token}
@@ -67,22 +65,21 @@ export function JwtDecoderTool({ t }: JwtDecoderToolProps) {
           className="input-base min-h-[80px] font-mono text-sm"
           rows={3}
         />
-        <button onClick={decode} className="btn-primary w-full sm:w-auto mt-2">
+        <div className="tool-action-bar"><button onClick={decode} className="btn-primary w-full sm:w-auto mt-2">
           {t("decode")}
-        </button>
+        </button></div>
       </div>
       {error && <div className="badge-danger px-4 py-2.5 rounded-xl text-sm">{error}</div>}
-      {expInfo && <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">{expInfo}</p>}
       {header && (
         <div className="space-y-4">
-          <div className="result-card">
+          <div className="tool-output-zone">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm font-medium text-[var(--foreground)]/70">Header</span>
               <CopyButton text={header} label="Копировать Header" />
             </div>
             <pre className="overflow-auto rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 text-sm">{header}</pre>
           </div>
-          <div className="result-card">
+          <div className="tool-output-zone">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm font-medium text-[var(--foreground)]/70">Payload</span>
               <CopyButton text={payload} label="Копировать Payload" />

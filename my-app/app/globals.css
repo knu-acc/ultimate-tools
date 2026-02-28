@@ -344,15 +344,204 @@ body {
   box-shadow: var(--card-shadow);
 }
 
+/* ── Tool Zone Layout ── */
+
+/* Input zone — accent left border, subtle tinted bg */
+.tool-input-zone {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  background: var(--card-bg);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  position: relative;
+}
+.tool-input-zone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--accent);
+  opacity: 0.02;
+  pointer-events: none;
+}
+.dark .tool-input-zone::before {
+  opacity: 0.04;
+}
+
+/* Output zone — success/green left border, subtle tinted bg */
+.tool-output-zone {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--success);
+  background: var(--card-bg);
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  position: relative;
+}
+.tool-output-zone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--success);
+  opacity: 0.02;
+  pointer-events: none;
+}
+.dark .tool-output-zone::before {
+  opacity: 0.04;
+}
+
+/* Zone header — small icon + label row */
+.tool-zone-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  user-select: none;
+}
+.tool-input-zone .tool-zone-header {
+  color: var(--accent);
+}
+.tool-output-zone .tool-zone-header {
+  color: var(--success);
+}
+.tool-zone-header .tool-zone-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Action bar — prominent button row between zones */
+.tool-action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+/* Hero input — extra-large primary input for main field */
+.tool-hero-input {
+  width: 100%;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: transparent;
+  padding: 1rem 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  outline: none;
+  color: var(--foreground);
+}
+.tool-hero-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-muted);
+}
+.tool-hero-input::placeholder {
+  color: var(--muted);
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+/* Input size variant — large */
+.input-base-lg {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  padding: 1rem 1.25rem;
+  font-size: 1.125rem;
+  transition: all 0.2s ease;
+  outline: none;
+  color: var(--foreground);
+}
+.input-base-lg:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-muted);
+}
+
+/* Secure output block — for crypto/password tools */
+.secure-output {
+  border-radius: 12px;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.9375rem;
+  padding: 1rem 1.25rem;
+  word-break: break-all;
+  position: relative;
+}
+.dark .secure-output {
+  background: #0d0d1a;
+}
+
+/* Split pane — side-by-side on desktop */
+@media (min-width: 1024px) {
+  .tool-split-pane {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+/* About tool collapsible */
+.tool-about-section summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.tool-about-section summary:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.tool-about-section summary::-webkit-details-marker {
+  display: none;
+}
+.tool-about-section summary::before {
+  content: '▶';
+  font-size: 0.625rem;
+  transition: transform 0.2s ease;
+  color: var(--muted);
+}
+.tool-about-section[open] summary::before {
+  transform: rotate(90deg);
+}
+.tool-about-section .tool-about-content {
+  margin-top: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+}
+
 /* Empty State */
 .empty-state {
   border-radius: 12px;
   border: 1px dashed var(--border);
   background: var(--accent-soft);
-  padding: 1.25rem 1.5rem;
+  padding: 2rem 1.5rem;
   font-size: 0.875rem;
   color: var(--muted);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Status badges */
@@ -388,11 +577,13 @@ body {
   padding: 1rem;
   text-align: center;
   box-shadow: var(--card-shadow);
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .stat-card:hover {
   border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .stat-card .stat-value {

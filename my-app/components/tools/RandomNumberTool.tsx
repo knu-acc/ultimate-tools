@@ -88,10 +88,8 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Случайные числа в заданном диапазоне. Генерация выполняется в браузере, данные никуда не отправляются. Можно исключить часть чисел и выбрать «только уникальные».
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Диапазон</span>
         <div className="flex flex-wrap items-center gap-2 mb-3">
           {RANGE_PRESETS.map(({ label, min: pMin, max: pMax }) => (
@@ -156,7 +154,7 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
         </div>
       </div>
 
-      <motion.button
+      <div className="tool-action-bar"><motion.button
         onClick={handleGenerate}
         disabled={scrolling || pool.length === 0}
         whileHover={{ scale: 1.02 }}
@@ -165,7 +163,7 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
       >
         <Shuffle className="h-5 w-5" />
         {scrolling ? "..." : t("generate")}
-      </motion.button>
+      </motion.button></div>
 
       {pool.length === 0 && (
         <p className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-5 py-4 text-base text-sm text-amber-700 dark:text-amber-400">
@@ -177,7 +175,7 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="result-card"
+          className="tool-output-zone"
         >
           <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>

@@ -58,15 +58,12 @@ export function StopwatchTool({ t }: StopwatchToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Секундомер с десятыми долями секунды. Старт, пауза, сброс и фиксация кругов. Время можно скопировать. Работает только при открытой вкладке.
-      </p>
-      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-6 text-center">
+<div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-6 text-center">
         <div className="text-5xl font-mono font-bold text-[var(--accent)]">
           {String(m).padStart(2, "0")}:{String(s).padStart(2, "0")}.{String(mil).padStart(2, "0")}
         </div>
       </div>
-      <div className="result-card">
+      <div className="tool-input-zone">
         <div className="flex flex-wrap justify-center items-center gap-2">
           <CopyButton text={timeStr} label="Копировать время" />
         <button
@@ -93,7 +90,7 @@ export function StopwatchTool({ t }: StopwatchToolProps) {
         </div>
       </div>
       {laps.length > 0 && (
-        <div className="result-card">
+        <div className="tool-output-zone">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-medium text-[var(--foreground)]/70">{t("laps") || "Круги"}</span>
             <CopyButton text={laps.map((lap, i) => `${i + 1}. ${formatLap(lap)}`).join("\n")} label="Копировать круги" />

@@ -40,10 +40,8 @@ export function UuidTool({ t }: UuidToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Генерация UUID v4 в браузере. Идентификаторы криптографически случайные. Данные никуда не отправляются.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">{t("count")}</span>
         <div className="flex flex-wrap items-center gap-2 mb-4">
           {countPresets.map((n) => (
@@ -76,16 +74,16 @@ export function UuidTool({ t }: UuidToolProps) {
           </label>
         </div>
       </div>
-      <motion.button
+      <div className="tool-action-bar"><motion.button
         onClick={generate}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className="btn-primary w-full sm:w-auto mt-2"
       >
         {t("generate")}
-      </motion.button>
+      </motion.button></div>
       {uuids.length > 0 && (
-        <div className="result-card">
+        <div className="tool-output-zone">
           <div className="mb-2 flex justify-end">
             <CopyButton text={uuids.join("\n")} label="Копировать все" />
           </div>

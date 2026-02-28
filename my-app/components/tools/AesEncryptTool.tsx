@@ -28,56 +28,52 @@ export function AesEncryptTool({ t }: AesEncryptToolProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Шифрование и расшифровка AES. Введите ключ и текст — сохраните ключ: без него расшифровка невозможна.
-      </p>
+    <div className="space-y-5">
       <div className="flex gap-2">
         <button
           onClick={() => setMode("encrypt")}
-          className={`rounded-xl px-4 py-2 ${mode === "encrypt" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)]"}`}
+          className={`chip ${mode === "encrypt" ? "chip-active" : ""}`}
         >
-          {t("encrypt")}
+          🔒 {t("encrypt")}
         </button>
         <button
           onClick={() => setMode("decrypt")}
-          className={`rounded-xl px-4 py-2 ${mode === "decrypt" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)]"}`}
+          className={`chip ${mode === "decrypt" ? "chip-active" : ""}`}
         >
-          {t("decrypt")}
+          🔓 {t("decrypt")}
         </button>
       </div>
-      <div>
-        <label className="mb-2 block text-sm">{t("key")}</label>
-        <input
-          type="password"
-          value={key}
-          onChange={(e) => setKey(e.target.value)}
-          className="input-base"
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">🔑</span><span>Ключ и данные</span></div>
+        <div className="mb-4">
+          <label className="field-label">{t("key")}</label>
+          <input
+            type="password"
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
+            className="input-base"
+          />
+          {key.length > 0 && key.length < 8 && (
+            <p className="mt-1 text-xs text-amber-600 dark:text-amber-400">{t("shortKey") || "Ключ менее 8 символов — рекомендуется длиннее."}</p>
+          )}
+        </div>
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={mode === "encrypt" ? t("textPlaceholder") : t("cipherPlaceholder")}
+          className="input-base min-h-[120px] resize-y font-mono text-sm"
+          rows={4}
         />
-        {key.length > 0 && key.length < 8 && (
-          <p className="mt-1 text-xs text-amber-600 dark:text-amber-400">{t("shortKey") || "Ключ менее 8 символов — рекомендуется длиннее."}</p>
-        )}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <button onClick={process} className="btn-primary">{mode === "encrypt" ? t("encrypt") : t("decrypt")}</button>
+          <button type="button" onClick={() => { setText(""); setResult(""); }} className="btn-ghost">{t("clear") || "Очистить"}</button>
+        </div>
       </div>
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder={mode === "encrypt" ? t("textPlaceholder") : t("cipherPlaceholder")}
-        className="input-base min-h-[100px]"
-        rows={4}
-      />
-      <button
-        onClick={process}
-        className="btn-primary w-full sm:w-auto mt-2"
-      >
-        {mode === "encrypt" ? t("encrypt") : t("decrypt")}
-      </button>
-      <button type="button" onClick={() => { setText(""); setResult(""); }} className="ml-2 rounded-xl border border-[var(--border)] px-4 py-2 text-sm hover:bg-[var(--border)]/20">{t("clear") || "Очистить"}</button>
       {result ? (
-        <div className="space-y-2">
-          <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>
-          <div className="select-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono text-sm break-all">
-            {result}
-          </div>
+        <div className="tool-output-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">🔐</span><span>{mode === "encrypt" ? "Шифротекст" : "Расшифровано"}</span></div>
+          <div className="flex justify-end mb-2"><CopyButton text={result} label="Копировать" /></div>
+          <div className="secure-output select-all">{result}</div>
         </div>
       ) : (
         <p className="empty-state">

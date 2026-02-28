@@ -46,11 +46,7 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Готовые градиенты или свои цвета и угол. Линейный или радиальный. Копируйте CSS для background. Всё в браузере.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
         <div className="mb-3 text-sm font-medium text-[var(--muted)]">Готовые градиенты</div>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
           {PRESET_GRADIENTS.map((p) => (
@@ -159,7 +155,7 @@ export function CssGradientsTool({ t }: CssGradientsToolProps) {
         <div className="h-36 rounded-xl border-2 border-[var(--border)] shadow-inner" style={{ background: css }} />
       </div>
 
-      <div className="result-card">
+      <div className="tool-output-zone">
         <div className="mb-2 flex items-center justify-between">
           <span className="text-sm font-medium text-[var(--foreground)]/70">CSS</span>
           <CopyButton text={fullCss} label="Копировать CSS" />

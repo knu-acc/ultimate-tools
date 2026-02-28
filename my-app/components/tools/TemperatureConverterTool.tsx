@@ -71,9 +71,8 @@ export function TemperatureConverterTool({ t }: TemperatureConverterToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">{t("description")}</p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Значение</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {presets.map(({ label, val, unit }) => (
@@ -113,7 +112,8 @@ export function TemperatureConverterTool({ t }: TemperatureConverterToolProps) {
       </div>
 
       {allResults && allResults.length > 0 ? (
-        <div className="result-card">
+        <div className="tool-output-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">📊</span><span>Результат</span></div>
           <div className="flex items-center justify-between mb-4">
             <span className="section-label mb-0">Результаты</span>
             <CopyButton text={copyAll()} label="Копировать всё" />

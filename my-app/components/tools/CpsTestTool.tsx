@@ -62,44 +62,38 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Тест кликов в секунду (CPS): нажмите «Старт» и кликайте по блоку 5 секунд. В конце показывается CPS за последнюю секунду.
-      </p>
-      <div className="flex flex-wrap gap-2">
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-center gap-3">
         {[5, 10].map((d) => (
           <button key={d} type="button" disabled={running} onClick={() => setDuration(d)} className={`chip ${duration === d ? "chip-active" : ""} disabled:opacity-50`}>{d} сек</button>
         ))}
+        <div className="ml-auto flex items-center gap-2">
+          <button onClick={reset} className="btn-secondary">{t("reset")}</button>
+          {!running && timeLeft === 0 && clicks > 0 && (
+            <CopyButton text={`CPS: ${cps}, ${t("clicks")}: ${clicks}`} label="Копировать" />
+          )}
+        </div>
       </div>
+
+      {/* Timer display */}
       <div className="text-center">
-        <div className="text-4xl font-bold text-[var(--accent)]">{timeLeft > 0 ? timeLeft : "0"}</div>
-        <div className="text-sm text-[var(--muted)]">{t("secondsLeft")}</div>
-        {bestCps > 0 && !running && <p className="mt-1 text-sm text-[var(--muted)]">{t("bestCps") || "Лучший CPS"}: {bestCps}</p>}
+        <div className="text-6xl font-black text-[var(--accent)] tabular-nums">{timeLeft > 0 ? timeLeft : "0"}</div>
+        <div className="text-sm text-[var(--muted)] mt-1">{t("secondsLeft")}</div>
+        {bestCps > 0 && !running && <p className="mt-1 text-sm font-medium text-[var(--accent)]">🏆 {t("bestCps") || "Лучший CPS"}: {bestCps}</p>}
       </div>
+
+      {/* Dominant click area */}
       <motion.div
         onClick={handleClick}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="cursor-pointer select-none rounded-2xl border-2 border-[var(--accent)] bg-[var(--accent)]/10 p-12 text-center"
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.97 }}
+        className="cursor-pointer select-none rounded-3xl border-3 border-[var(--accent)] bg-gradient-to-b from-[var(--accent)]/10 to-[var(--accent)]/5 min-h-[280px] flex flex-col items-center justify-center text-center transition-all active:bg-[var(--accent)]/20"
       >
-        <div className="text-3xl font-bold">{clicks}</div>
-        <div className="text-sm text-[var(--muted)]">{t("clicks")}</div>
-        <div className="mt-2 text-lg font-medium">{t("cps")}: {cps}</div>
+        <div className="text-6xl font-black tabular-nums text-[var(--foreground)]">{clicks}</div>
+        <div className="text-sm text-[var(--muted)] mt-2">{t("clicks")}</div>
+        <div className="mt-4 text-2xl font-bold text-[var(--accent)]">{t("cps")}: {cps}</div>
+        {!running && timeLeft === duration && <div className="mt-4 text-sm text-[var(--muted)] animate-pulse">Нажмите, чтобы начать!</div>}
       </motion.div>
-      <div className="flex flex-wrap items-center gap-2">
-        <button
-          onClick={reset}
-          className="btn-secondary"
-        >
-          {t("reset")}
-        </button>
-        {!running && timeLeft === 0 && clicks > 0 && (
-          <CopyButton
-            text={`CPS: ${cps}, ${t("clicks")}: ${clicks}`}
-            label="Копировать результат"
-          />
-        )}
-      </div>
     </div>
   );
 }

@@ -54,10 +54,7 @@ export function CountdownTool({ t }: CountdownToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Обратный отсчёт до выбранной даты и времени. Формат: дни : часы : минуты : секунды. Обновляется каждую секунду. Работает только при открытой вкладке.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
         <span className="field-label">Быстрый выбор</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {quickPresets.map(({ hours, label }) => (

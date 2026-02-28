@@ -56,42 +56,39 @@ export function CurrencyConverterTool({ t }: CurrencyConverterToolProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">
-        Конвертер валют с ориентировочными курсами. Для точных курсов используйте биржевые данные. Результаты обновляются мгновенно.
-      </p>
-
-      <div className="result-card">
-        <span className="section-label">Сумма</span>
-        <div className="flex flex-wrap items-end gap-3">
-          <div className="flex-1 min-w-[140px]">
-            <input
-              type="number"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              placeholder="Введите сумму"
-              className="input-base text-lg font-semibold"
-              autoFocus
-            />
-          </div>
-          <div className="min-w-[180px]">
-            <select
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
-              className="input-base"
+    <div className="space-y-5">
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">💱</span><span>Ввод</span></div>
+        <div className="relative mb-4">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-bold text-[var(--muted)]">{CURRENCIES[from]?.symbol}</span>
+          <input
+            type="number"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="Введите сумму"
+            className="tool-hero-input pl-12"
+            autoFocus
+          />
+        </div>
+        <span className="section-label">Валюта</span>
+        <div className="flex flex-wrap gap-2">
+          {Object.entries(CURRENCIES).map(([key, { label, symbol }]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setFrom(key)}
+              className={`chip ${from === key ? "chip-active" : ""}`}
             >
-              {Object.entries(CURRENCIES).map(([key, { label, symbol }]) => (
-                <option key={key} value={key}>{symbol} {label} ({key})</option>
-              ))}
-            </select>
-          </div>
+              {symbol} {key}
+            </button>
+          ))}
         </div>
       </div>
 
       {allResults && allResults.length > 0 ? (
-        <div className="result-card">
+        <div className="tool-output-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">📊</span><span>Результат</span></div>
           <div className="flex items-center justify-between mb-4">
-            <span className="section-label mb-0">Результаты</span>
             <CopyButton text={copyAll()} label="Копировать всё" />
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

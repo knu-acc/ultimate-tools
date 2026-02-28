@@ -37,10 +37,8 @@ export function VatCalcTool({ t }: VatCalcToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Выделение НДС из суммы с НДС или начисление НДС на сумму без НДС. Ставка 0, 10 или 20%. Отметьте, включён ли НДС в введённую сумму. Расчёт в браузере.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Сумма и ставка</span>
         <div className="mb-4">
           <label className="field-label">{t("amount")}</label>
@@ -58,10 +56,10 @@ export function VatCalcTool({ t }: VatCalcToolProps) {
           <input type="checkbox" checked={includeVat} onChange={(e) => setIncludeVat(e.target.checked)} className="rounded" />
           <span className="text-sm">{t("includeVat")}</span>
         </label>
-        <button onClick={calc} className="btn-primary w-full sm:w-auto mt-2">{t("calculate")}</button>
+        <div className="tool-action-bar"><button onClick={calc} className="btn-primary w-full sm:w-auto mt-2">{t("calculate")}</button></div>
       </div>
       {vat !== null && total !== null ? (
-        <div className="result-card">
+        <div className="tool-output-zone">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-medium text-[var(--foreground)]/70">Результат</span>
             <CopyButton text={summary} label="Копировать расчёт" />

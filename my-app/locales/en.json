@@ -82,7 +82,11 @@
     "faq": "FAQ",
     "instructions": "Instructions",
     "share": "Share",
-    "copyLink": "Copy link"
+    "copyLink": "Copy link",
+    "inputZone": "Input",
+    "outputZone": "Result",
+    "settingsZone": "Settings",
+    "aboutTool": "About this tool"
   },
   "footer": {
     "aboutTitle": "About",

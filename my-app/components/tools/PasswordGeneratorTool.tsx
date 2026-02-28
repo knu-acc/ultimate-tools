@@ -69,10 +69,7 @@ export function PasswordGeneratorTool({ t }: PasswordGeneratorToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Пароль создаётся в вашем браузере и никуда не передаётся. Рекомендуется длина от 12 символов, буквы разных регистров, цифры и символы.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -147,7 +144,7 @@ export function PasswordGeneratorTool({ t }: PasswordGeneratorToolProps) {
           </>
         )}
       </div>
-      <motion.button
+      <div className="tool-action-bar"><motion.button
         onClick={generate}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -155,24 +152,25 @@ export function PasswordGeneratorTool({ t }: PasswordGeneratorToolProps) {
       >
         <KeyRound className="h-5 w-5" />
         {t("generate")}
-      </motion.button>
+      </motion.button></div>
       {password && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 space-y-3">
+        <div className="tool-output-zone space-y-3">
+          <div className="tool-zone-header"><span className="tool-zone-icon">🔐</span><span>Результат</span></div>
           <div className="flex items-center justify-between gap-2">
             <span className="text-sm font-medium text-[var(--foreground)]/70">{t("strength") || "Надёжность"}: {strengthLabel}</span>
-            <div className="flex gap-0.5">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div
-                  key={i}
-                  className="h-1.5 w-6 rounded-full"
-                  style={{ backgroundColor: i <= strength ? (strength <= 2 ? "var(--accent)" : "green") : "var(--border)" }}
-                />
-              ))}
-            </div>
           </div>
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono relative">
-            <div className="pr-12 break-all select-all text-sm">{password}</div>
-            <div className="absolute top-2 right-2">
+          <div className="w-full h-2 rounded-full overflow-hidden bg-[var(--border)]">
+            <div
+              className="h-full rounded-full transition-all duration-300"
+              style={{
+                width: `${(strength / 5) * 100}%`,
+                background: strength <= 1 ? 'var(--danger)' : strength <= 2 ? 'var(--accent)' : strength <= 3 ? '#eab308' : 'var(--success)',
+              }}
+            />
+          </div>
+          <div className="secure-output relative">
+            <div className="pr-12 break-all select-all">{password}</div>
+            <div className="absolute top-3 right-3">
               <CopyButton text={password} />
             </div>
           </div>

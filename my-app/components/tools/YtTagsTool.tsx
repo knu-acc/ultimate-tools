@@ -27,10 +27,7 @@ export function YtTagsTool({ t }: YtTagsToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Теги для YouTube: лимит 500 символов без пробелов. Вводите через запятую — счётчик обновляется автоматически.
-      </p>
-      <textarea
+<textarea
         value={tags}
         onChange={(e) => setTags(e.target.value)}
         placeholder={t("placeholder")}

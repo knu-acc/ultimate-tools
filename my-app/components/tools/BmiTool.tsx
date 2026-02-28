@@ -48,11 +48,8 @@ export function BmiTool({ t }: BmiToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">
-        Индекс массы тела — быстрая оценка. Результат обновляется мгновенно.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Параметры</span>
         <div className="grid gap-4 sm:grid-cols-2 mb-4">
           <div>
@@ -97,7 +94,8 @@ export function BmiTool({ t }: BmiToolProps) {
       </div>
 
       {result ? (
-        <div className="result-card">
+        <div className="tool-output-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">📊</span><span>Результат</span></div>
           <div className="flex items-center justify-between mb-4">
             <span className="section-label mb-0">Результат</span>
             <CopyButton text={summary} label="Копировать" />
@@ -124,21 +122,41 @@ export function BmiTool({ t }: BmiToolProps) {
             </div>
           </div>
 
-          {/* BMI visual scale */}
-          <div className="relative">
-            <div className="flex rounded-full overflow-hidden h-4">
-              <div className="bg-blue-400 flex-[2.5]" />
-              <div className="bg-blue-300 flex-[2]" />
-              <div className="bg-green-500 flex-[6.5]" />
-              <div className="bg-yellow-400 flex-[5]" />
-              <div className="bg-orange-400 flex-[5]" />
-              <div className="bg-red-400 flex-[5]" />
-              <div className="bg-red-600 flex-[4]" />
+          {/* BMI visual scale with labeled zones */}
+          <div className="relative mt-2">
+            <div className="flex rounded-full overflow-hidden h-5 gap-px">
+              <div className="bg-blue-400 flex-[2.5] relative group">
+                <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white opacity-80">&lt;16</span>
+              </div>
+              <div className="bg-blue-300 flex-[2] relative">
+                <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white opacity-80">16-18.5</span>
+              </div>
+              <div className="bg-green-500 flex-[6.5] relative">
+                <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white opacity-90">Норма</span>
+              </div>
+              <div className="bg-yellow-400 flex-[5] relative">
+                <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white opacity-80">25-30</span>
+              </div>
+              <div className="bg-orange-400 flex-[5] relative">
+                <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white opacity-80">30-35</span>
+              </div>
+              <div className="bg-red-400 flex-[5] relative">
+                <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white opacity-80">35-40</span>
+              </div>
+              <div className="bg-red-600 flex-[4] relative">
+                <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold text-white opacity-80">&gt;40</span>
+              </div>
             </div>
+            {/* Position indicator with tooltip */}
             <div
-              className="absolute top-[-6px] w-3 h-7 bg-[var(--foreground)] rounded-sm transition-all shadow-md"
-              style={{ left: `calc(${scalePos}% - 6px)` }}
-            />
+              className="absolute -top-1 transition-all duration-300"
+              style={{ left: `calc(${scalePos}% - 8px)` }}
+            >
+              <div className="w-4 h-7 bg-[var(--foreground)] rounded-sm shadow-lg border-2 border-white dark:border-gray-800" />
+              <div className="absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-[var(--foreground)] text-[var(--background)] px-2 py-0.5 text-xs font-bold whitespace-nowrap shadow">
+                {result.bmi.toFixed(1)}
+              </div>
+            </div>
             <div className="flex justify-between text-xs text-[var(--muted)] mt-2">
               <span>15</span>
               <span>18.5</span>

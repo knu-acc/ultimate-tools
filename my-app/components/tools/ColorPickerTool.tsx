@@ -96,11 +96,7 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
   const hexValid = !color || parseHex(color);
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Выберите цвет из палитры, ползунка или введите HEX. Копируйте форматы для CSS (HEX, RGB, HSL). Недавние цвета сохраняются в браузере локально.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
         <div className="mb-3 text-sm font-medium text-[var(--muted)]">Палитра</div>
         <div className="space-y-2">
           {PRESET_PALETTE.map((row, i) => (
@@ -121,8 +117,8 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
       </div>
 
       {recent.length > 0 && (
-        <div className="result-card">
-          <div className="mb-2 text-sm font-medium text-[var(--muted)]">Недавние</div>
+        <div className="tool-input-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">🕘</span><span>Недавние</span></div>
           <div className="flex flex-wrap gap-2">
             {recent.map((c) => (
               <button
@@ -138,8 +134,8 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
         </div>
       )}
 
-      <div className="result-card">
-        <div className="mb-2 text-sm font-medium text-[var(--muted)]">{t("color")}</div>
+      <div className="tool-output-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">📊</span><span>Цвет</span></div>
         <div className="flex flex-wrap items-center gap-4">
           <input
             type="color"
@@ -191,7 +187,10 @@ export function ColorPickerTool({ t }: ColorPickerToolProps) {
           { name: "HSLA", value: hslaStr },
         ].map(({ name, value }) => (
           <div key={name} className="stat-card flex-row items-center justify-between gap-2">
-            <span className="text-sm font-medium text-[var(--foreground)]/70">{name}</span>
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-4 rounded-full border border-[var(--border)] shrink-0" style={{ backgroundColor: hex6, opacity: alpha / 100 }} />
+              <span className="text-sm font-medium text-[var(--foreground)]/70">{name}</span>
+            </div>
             <div className="flex min-w-0 items-center gap-2">
               <code className="truncate font-mono text-sm">{value}</code>
               <CopyButton text={value} label={`Копировать ${name}`} />

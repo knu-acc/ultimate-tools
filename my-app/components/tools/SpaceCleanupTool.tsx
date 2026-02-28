@@ -38,10 +38,8 @@ export function SpaceCleanupTool({ t }: SpaceCleanupToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Удаление лишних пробелов и переносов. Выберите режим — результат подставится в поле. Показано количество символов до и после.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">Текст для очистки</label>
         <textarea
           value={text}

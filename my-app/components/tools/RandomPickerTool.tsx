@@ -59,10 +59,8 @@ export function RandomPickerTool({ t }: RandomPickerToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Введите варианты (каждый с новой строки или через запятую/точку с запятой). Укажите, сколько вытянуть — один или несколько. Всё выполняется в браузере.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">Варианты для выбора</label>
         <textarea
           value={input}
@@ -98,14 +96,14 @@ export function RandomPickerTool({ t }: RandomPickerToolProps) {
             <span className="text-sm text-[var(--muted)]">из {items.length}</span>
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
-            <button
+            <div className="tool-action-bar"><button
               type="button"
               onClick={pick}
               disabled={spinning}
               className="btn-primary w-full sm:w-auto mt-2"
             >
               {spinning ? "..." : t("pick")}
-            </button>
+            </button></div>
             {hasResult && (
               <button type="button" onClick={clearResult} className="rounded-xl border border-[var(--border)] px-5 py-2.5 text-sm font-medium hover:bg-[var(--border)]/20">
                 Очистить результат
@@ -148,7 +146,7 @@ export function RandomPickerTool({ t }: RandomPickerToolProps) {
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="result-card"
+            className="tool-output-zone"
           >
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm text-[var(--muted)]">{t("result")} ({pickedMultiple.length})</span>

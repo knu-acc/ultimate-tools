@@ -66,10 +66,7 @@ export function RomanNumeralsTool({ t }: RomanNumeralsToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Арабские числа в римские (1–3999) и обратно. Выберите направление, введите значение и нажмите «Конвертировать».
-      </p>
-      <div className="flex flex-wrap gap-2">
+<div className="flex flex-wrap gap-2">
         <button
           onClick={() => setMode("to")}
           className={`rounded-xl px-4 py-2 ${mode === "to" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)]"}`}
@@ -94,12 +91,12 @@ export function RomanNumeralsTool({ t }: RomanNumeralsToolProps) {
         placeholder={mode === "to" ? "2024" : "MMXXIV"}
         className="input-base font-mono"
       />
-      <button
+      <div className="tool-action-bar"><button
         onClick={convert}
         className="btn-primary w-full sm:w-auto mt-2"
       >
         {t("convert")}
-      </button>
+      </button></div>
       {(liveResult || result) ? (
         <div className="space-y-2">
           <div className="flex justify-end"><CopyButton text={liveResult || result} label="Копировать" /></div>

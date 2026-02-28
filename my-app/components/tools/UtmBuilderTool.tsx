@@ -37,10 +37,7 @@ export function UtmBuilderTool({ t }: UtmBuilderToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Сборка ссылки с UTM-метками для аналитики: источник, канал, кампания, термин, контент. Результат обновляется при вводе.
-      </p>
-      <div>
+<div>
         <label className="field-label">URL</label>
         <input
           type="url"

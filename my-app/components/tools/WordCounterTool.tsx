@@ -39,19 +39,31 @@ export function WordCounterTool({ t }: WordCounterToolProps) {
   ];
 
   return (
-    <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Вставьте текст — счётчик обновляется автоматически. Задайте лимит символов (например 280) — под полем покажется «осталось» или «превышение».
-      </p>
-      <div className="result-card">
-        <label className="field-label">Текст для подсчёта</label>
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder={t("placeholder")}
-          className="input-base min-h-[200px] resize-y"
-          rows={8}
-        />
+    <div className="space-y-5">
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
+        <div className="relative">
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder={t("placeholder")}
+            className="input-base-lg min-h-[250px] resize-y"
+            rows={10}
+          />
+          {/* Sticky stats bar at bottom of textarea */}
+          <div className="mt-2 flex flex-wrap items-center gap-3 rounded-lg bg-[var(--background)] border border-[var(--border)] px-3 py-2 text-xs text-[var(--muted)] tabular-nums">
+            <span>{t("words")}: <strong className="text-[var(--foreground)]">{stats.words}</strong></span>
+            <span>·</span>
+            <span>{t("chars")}: <strong className="text-[var(--foreground)]">{stats.chars}</strong></span>
+            <span>·</span>
+            <span>{t("lines")}: <strong className="text-[var(--foreground)]">{stats.lines}</strong></span>
+            {remaining !== null && (
+              <span className={`ml-auto font-medium ${remaining < 0 ? "text-red-500" : "text-[var(--muted)]"}`}>
+                {remaining >= 0 ? `Осталось: ${remaining}` : `Превышение: ${-remaining}`}
+              </span>
+            )}
+          </div>
+        </div>
         <div className="mt-3 flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
             <label className="text-sm text-[var(--muted)]">Лимит символов</label>
@@ -64,24 +76,21 @@ export function WordCounterTool({ t }: WordCounterToolProps) {
               className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-2 py-1 text-sm"
             />
           </div>
-          {remaining !== null && (
-            <span className={`text-sm font-medium tabular-nums ${remaining < 0 ? "text-red-500" : "text-[var(--muted)]"}`}>
-              {remaining >= 0 ? `Осталось: ${remaining}` : `Превышение: ${-remaining}`}
-            </span>
-          )}
           {text.length > 0 && (
-            <button type="button" onClick={() => setText("")} className="text-sm text-[var(--muted)] underline hover:text-[var(--foreground)]">
-              Очистить поле
+            <button type="button" onClick={() => setText("")} className="btn-ghost text-sm">
+              Очистить
             </button>
           )}
         </div>
       </div>
-      <motion.div layout className="space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-sm font-medium text-[var(--foreground)]/70">Статистика</span>
-          {text.length > 0 && <CopyButton text={report} label="Копировать отчёт" />}
+
+      <div className="tool-output-zone">
+        <div className="tool-zone-header">
+          <span className="tool-zone-icon">📊</span>
+          <span>Статистика</span>
+          {text.length > 0 && <div className="ml-auto"><CopyButton text={report} label="Копировать отчёт" /></div>}
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        <motion.div layout className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {cards.map(({ key, value, suffix = "" }, i) => (
             <motion.div
               key={key}
@@ -94,8 +103,9 @@ export function WordCounterTool({ t }: WordCounterToolProps) {
               <div className="text-sm text-[var(--muted)]">{t(key)}</div>
             </motion.div>
           ))}
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
+
       {!text && (
         <p className="empty-state">
           Поле пусто — введите или вставьте текст, чтобы увидеть подсчёт слов и символов.

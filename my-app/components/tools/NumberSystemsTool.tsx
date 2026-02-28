@@ -41,10 +41,7 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Перевод числа между системами счисления: 2 (двоичная), 8 (восьмеричная), 10 (десятичная), 16 (шестнадцатеричная). Введите число в исходной системе, выберите целевую — нажмите «Конвертировать». Цифры должны соответствовать выбранной системе.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
         <span className="field-label">Быстрые примеры</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {basePresets.map(({ label, from, to, val }) => (
@@ -82,15 +79,12 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
             </select>
           </div>
         </div>
-        <button onClick={convert} className="btn-primary w-full sm:w-auto mt-2">
+        <div className="tool-action-bar"><button onClick={convert} className="btn-primary w-full sm:w-auto mt-2">
           {t("convert")}
-        </button>
+        </button></div>
       </div>
-      {decimalValue !== null && value.trim() && (
-        <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">{t("decimalValue") || "В десятичной"}: <span className="font-mono font-medium">{decimalValue}</span></p>
-      )}
       {result ? (
-        <div className="result-card">
+        <div className="tool-output-zone">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-medium text-[var(--foreground)]/70">Результат</span>
             <CopyButton text={result} label="Копировать" />

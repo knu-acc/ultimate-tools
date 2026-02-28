@@ -36,50 +36,39 @@ export function DiffCheckerTool({ t }: DiffCheckerToolProps) {
   const swap = () => { setTextA(textB); setTextB(textA); };
 
   return (
-    <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Сравнение двух текстов по строкам. Показываются номера строк, которые отличаются. Всё в браузере, данные не отправляются.
-      </p>
-      <div className="result-card">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="text-sm font-medium text-[var(--foreground)]/70">Текст A и Текст B</span>
-          {(textA || textB) ? (
-            <div className="flex gap-2">
-              <button type="button" onClick={swap} className="btn-ghost">Поменять местами</button>
-              <button type="button" onClick={clearBoth} className="btn-ghost">Очистить оба</button>
-            </div>
-          ) : null}
+    <div className="space-y-5">
+      <div className="tool-action-bar">
+        {(textA || textB) && (
+          <>
+            <button type="button" onClick={swap} className="btn-secondary">⇄ Поменять</button>
+            <button type="button" onClick={clearBoth} className="btn-ghost">Очистить</button>
+          </>
+        )}
+      </div>
+      <div className="tool-split-pane">
+        <div className="tool-input-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">📝</span><span>Текст A</span><span className="ml-auto text-[var(--muted)] text-xs font-normal normal-case tracking-normal">{lineCountA} стр.</span></div>
+          <textarea value={textA} onChange={(e) => setTextA(e.target.value)} placeholder={t("placeholder")} className="input-base font-mono text-sm min-h-[200px] resize-y" rows={8} />
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <div className="mb-1 flex items-center justify-between">
-              <label className="text-sm font-medium text-[var(--foreground)]/70">Текст A</label>
-              <span className="text-xs text-[var(--muted)]">{lineCountA} {t("lines") || "стр."}</span>
-            </div>
-            <textarea value={textA} onChange={(e) => setTextA(e.target.value)} placeholder={t("placeholder")} className="input-base font-mono text-sm min-h-[120px]" rows={5} />
-          </div>
-          <div>
-            <div className="mb-1 flex items-center justify-between">
-              <label className="text-sm font-medium text-[var(--foreground)]/70">Текст B</label>
-              <span className="text-xs text-[var(--muted)]">{lineCountB} {t("lines") || "стр."}</span>
-            </div>
-            <textarea value={textB} onChange={(e) => setTextB(e.target.value)} placeholder={t("placeholder")} className="input-base font-mono text-sm min-h-[120px]" rows={5} />
-          </div>
+        <div className="tool-input-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">📝</span><span>Текст B</span><span className="ml-auto text-[var(--muted)] text-xs font-normal normal-case tracking-normal">{lineCountB} стр.</span></div>
+          <textarea value={textB} onChange={(e) => setTextB(e.target.value)} placeholder={t("placeholder")} className="input-base font-mono text-sm min-h-[200px] resize-y" rows={8} />
         </div>
       </div>
       {(linesA.length > 0 || linesB.length > 0) ? (
         <div className="space-y-2">
           {diffSummary && <div className="flex justify-end"><CopyButton text={diffSummary} label="Копировать отчёт" /></div>}
-          <div className="result-card">
+          <div className="tool-output-zone">
+            <div className="tool-zone-header"><span className="tool-zone-icon">📊</span><span>Результат</span></div>
             {same ? (
-              <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">{t("identical")}</p>
+              <div className="badge-success px-4 py-2.5 rounded-xl text-sm">✅ Тексты идентичны</div>
             ) : (
               <div className="space-y-1 text-sm">
                 {onlyA.length > 0 && (
-                  <p><span className="text-[var(--muted)]">{t("onlyInA")}:</span> <span className="tabular-nums">{onlyA.join(", ")}</span></p>
+                  <p className="rounded-lg bg-[var(--danger-muted)] px-3 py-2"><span className="font-medium text-[var(--danger)]">{t("onlyInA")}:</span> <span className="tabular-nums">{onlyA.join(", ")}</span></p>
                 )}
                 {onlyB.length > 0 && (
-                  <p><span className="text-[var(--muted)]">{t("onlyInB")}:</span> <span className="tabular-nums">{onlyB.join(", ")}</span></p>
+                  <p className="rounded-lg bg-[var(--success-muted)] px-3 py-2"><span className="font-medium text-[var(--success)]">{t("onlyInB")}:</span> <span className="tabular-nums">{onlyB.join(", ")}</span></p>
                 )}
               </div>
             )}

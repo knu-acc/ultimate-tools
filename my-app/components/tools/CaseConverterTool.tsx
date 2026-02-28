@@ -72,11 +72,8 @@ export function CaseConverterTool({ t }: CaseConverterToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Введите текст и нажмите нужную кнопку — текст в поле заменится. Регистр: для заголовков и предложений. Для кода: camelCase, kebab-case, snake_case. Поддерживаются латиница и кириллица.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">Исходный текст</label>
         <textarea
           value={text}

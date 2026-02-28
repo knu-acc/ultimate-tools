@@ -58,11 +58,7 @@ export function MetronomeTool({ t }: MetronomeToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Задайте темп (BPM) и размер — визуальный индикатор показывает долю, первый удар в такте выделен звуком и подсветкой.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
         <div className="mb-3 text-sm font-medium text-[var(--muted)]">{t("bpm")} — темп</div>
         <div className="flex flex-wrap gap-2">
           {BPM_PRESETS.map((n) => (
@@ -89,7 +85,7 @@ export function MetronomeTool({ t }: MetronomeToolProps) {
         </div>
       </div>
 
-      <div className="result-card">
+      <div className="tool-output-zone">
         <div className="mb-2 text-sm font-medium text-[var(--muted)]">Размер такта</div>
         <div className="flex flex-wrap gap-2">
           {TIME_SIGS.map((s, i) => (

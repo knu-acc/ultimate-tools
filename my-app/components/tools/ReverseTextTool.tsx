@@ -19,10 +19,7 @@ export function ReverseTextTool({ t }: ReverseTextToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Разворот текста: по символам, по словам или по строкам. Удобно для эффектов и проверки палиндромов.
-      </p>
-      <div className="space-y-2">
+<div className="space-y-2">
         <span className="text-sm font-medium text-[var(--foreground)]/70">Режим:</span>
         <div className="flex flex-wrap gap-2">
           <button
@@ -53,7 +50,8 @@ export function ReverseTextTool({ t }: ReverseTextToolProps) {
           {mode === "lines" && "Порядок строк сверху вниз меняется на снизу вверх."}
         </p>
       </div>
-      <div className="result-card">
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">Исходный текст</label>
         <textarea
           value={text}
@@ -63,7 +61,7 @@ export function ReverseTextTool({ t }: ReverseTextToolProps) {
           rows={4}
         />
       </div>
-      <div className="result-card">
+      <div className="tool-output-zone">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
           <div className="flex gap-2">

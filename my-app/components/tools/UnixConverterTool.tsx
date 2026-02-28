@@ -44,10 +44,7 @@ export function UnixConverterTool({ t }: UnixConverterToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Конвертация Unix timestamp (секунды с 01.01.1970 UTC) в дату/время и обратно. Миллисекунды (13 цифр) распознаются автоматически. Для логов и API.
-      </p>
-      <div className="result-card">
+<div className="tool-output-zone">
         <div className="mb-2 flex items-center justify-between">
           <label className="text-sm font-medium text-[var(--foreground)]/70">{t("unix")}</label>
           <button type="button" onClick={setNow} className="btn-ghost">
@@ -62,12 +59,12 @@ export function UnixConverterTool({ t }: UnixConverterToolProps) {
             placeholder="1699999999 или 1699999999999"
             className="input-base flex-1"
           />
-          <button
+          <div className="tool-action-bar"><button
             onClick={unixToDate}
             className="btn-primary w-full sm:w-auto mt-2"
           >
             →
-          </button>
+          </button></div>
         </div>
         {resolvedDate && (
           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -88,7 +85,8 @@ export function UnixConverterTool({ t }: UnixConverterToolProps) {
           </div>
         )}
       </div>
-      <div className="result-card">
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">{t("date")}</label>
         <div className="flex gap-2">
           <input
@@ -98,12 +96,12 @@ export function UnixConverterTool({ t }: UnixConverterToolProps) {
             placeholder="2024-01-01 12:00:00 или локальный формат"
             className="input-base flex-1"
           />
-          <button
+          <div className="tool-action-bar"><button
             onClick={dateToUnix}
             className="btn-primary w-full sm:w-auto mt-2"
           >
             →
-          </button>
+          </button></div>
         </div>
         {resolvedUnix && (
           <div className="mt-2 flex items-center gap-2">

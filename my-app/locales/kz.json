@@ -79,6 +79,10 @@
     "breadcrumbs": "Навигация",
     "similarTools": "Ұқсас құралдар",
     "faq": "Жиі қойылатын сұрақтар",
-    "instructions": "Нұсқаулық"
+    "instructions": "Нұсқаулық",
+    "inputZone": "Енгізу",
+    "outputZone": "Нәтиже",
+    "settingsZone": "Параметрлер",
+    "aboutTool": "Құрал туралы"
   }
 }

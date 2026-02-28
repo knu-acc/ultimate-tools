@@ -88,11 +88,8 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Иконка из одной буквы на цветном фоне. Все размеры для браузера, Apple Touch, PWA и Android генерируются в браузере. Скачайте PNG/SVG или скопируйте код.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Символ и цвета</span>
         <div className="flex flex-wrap items-end gap-4 mb-4">
           <div>
@@ -192,7 +189,7 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
         </div>
       </div>
 
-      <div className="result-card">
+      <div className="tool-output-zone">
         <div className="mb-2 text-sm font-medium text-[var(--muted)]">Web App Manifest (иконки для PWA и Android)</div>
         <p className="mb-2 text-xs text-[var(--muted)]">
           Вставьте этот фрагмент в manifest.json или скопируйте массив icons.

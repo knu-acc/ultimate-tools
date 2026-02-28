@@ -42,10 +42,7 @@ export function NotepadTool({ t }: NotepadToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Блокнот с автосохранением в браузере. Текст сохраняется при вводе; можно скопировать всё или экспортировать в файл.
-      </p>
-      <textarea
+<textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder={t("placeholder")}

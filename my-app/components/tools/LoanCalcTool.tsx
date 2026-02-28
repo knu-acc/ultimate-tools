@@ -36,11 +36,8 @@ export function LoanCalcTool({ t }: LoanCalcToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">
-        Аннуитетный кредитный калькулятор. Введите сумму, ставку и срок — расчёт обновляется мгновенно.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Параметры кредита</span>
 
         <div className="flex flex-wrap gap-2 mb-4">
@@ -59,46 +56,56 @@ export function LoanCalcTool({ t }: LoanCalcToolProps) {
         <div className="grid gap-4 sm:grid-cols-3">
           <div>
             <label className="field-label">Сумма</label>
-            <input
-              type="number"
-              min="0"
-              value={principal}
-              onChange={(e) => setPrincipal(e.target.value)}
-              placeholder="1 000 000"
-              className="input-base text-lg font-semibold"
-              autoFocus
-            />
+            <div className="relative">
+              <input
+                type="number"
+                min="0"
+                value={principal}
+                onChange={(e) => setPrincipal(e.target.value)}
+                placeholder="1 000 000"
+                className="input-base text-lg font-semibold pr-10"
+                autoFocus
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-[var(--muted)]">₸</span>
+            </div>
           </div>
           <div>
-            <label className="field-label">Ставка (% год.)</label>
-            <input
-              type="number"
-              min="0"
-              max="100"
-              step="0.1"
-              value={rate}
-              onChange={(e) => setRate(e.target.value)}
-              placeholder="12"
-              className="input-base text-lg font-semibold"
-            />
+            <label className="field-label">Ставка (год.)</label>
+            <div className="relative">
+              <input
+                type="number"
+                min="0"
+                max="100"
+                step="0.1"
+                value={rate}
+                onChange={(e) => setRate(e.target.value)}
+                placeholder="12"
+                className="input-base text-lg font-semibold pr-10"
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-[var(--muted)]">%</span>
+            </div>
           </div>
           <div>
-            <label className="field-label">Срок (мес.)</label>
-            <input
-              type="number"
-              min="1"
-              max="600"
-              value={months}
-              onChange={(e) => setMonths(e.target.value)}
-              placeholder="36"
-              className="input-base text-lg font-semibold"
-            />
+            <label className="field-label">Срок</label>
+            <div className="relative">
+              <input
+                type="number"
+                min="1"
+                max="600"
+                value={months}
+                onChange={(e) => setMonths(e.target.value)}
+                placeholder="36"
+                className="input-base text-lg font-semibold pr-14"
+              />
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-[var(--muted)]">мес.</span>
+            </div>
           </div>
         </div>
       </div>
 
       {result ? (
-        <div className="result-card">
+        <div className="tool-output-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">📊</span><span>Результат</span></div>
           <div className="flex items-center justify-between mb-4">
             <span className="section-label mb-0">Результат</span>
             <CopyButton text={summary} label="Копировать" />

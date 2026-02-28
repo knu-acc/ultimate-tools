@@ -64,10 +64,8 @@ export function Base64Tool({ t }: Base64ToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Кодирование и декодирование Base64 в браузере. Текст и результат не отправляются на сервер. Опция URL Safe — для использования в URL (без +, /, =).
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Режим</span>
         <div className="flex flex-wrap gap-4 items-center">
           <div className="flex gap-2">
@@ -85,7 +83,7 @@ export function Base64Tool({ t }: Base64ToolProps) {
         </div>
       </div>
 
-      <div className="result-card">
+      <div className="tool-output-zone">
         <div className="mb-2 flex items-center justify-between">
           <label className="text-sm font-medium text-[var(--foreground)]/70">{mode === "encode" ? t("encode") : t("decode")}</label>
           <div className="flex gap-2">
@@ -107,7 +105,7 @@ export function Base64Tool({ t }: Base64ToolProps) {
       {error && <div className="badge-danger px-4 py-2.5 rounded-xl text-sm">{error}</div>}
 
       {result && (
-        <div className="result-card">
+        <div className="tool-output-zone">
           <div className="mb-2 flex items-center justify-between text-xs text-[var(--muted)]">
             <span>{t("inputLength") || "Ввод"}: {input.length} · {t("resultLength") || "Результат"}: {result.length}</span>
             <CopyButton text={result} label="Копировать" />

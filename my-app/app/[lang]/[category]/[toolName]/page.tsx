@@ -256,15 +256,17 @@ export default async function ToolPage({
         />
         <main className="mx-auto max-w-4xl" id="main-content">
           <Breadcrumbs lang={validLang} items={breadcrumbItems} translations={translations} />
-          <header className="mt-6 mb-8 relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] rounded-2xl -z-10 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-500"></div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-6 sm:p-8 border border-[var(--border)] rounded-2xl bg-[var(--background)]/80 backdrop-blur-xl shadow-sm">
-              <div className="p-4 bg-gradient-to-br from-[var(--accent-muted)] to-[var(--background)] border border-[var(--border)] rounded-xl text-[var(--accent)] shrink-0 shadow-inner">
-                <ToolIcon toolName={toolName} size="lg" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--foreground)]">{t(tool.nameKey)}</h1>
-                <p className="mt-2 text-lg text-[var(--muted)] leading-relaxed">{t(tool.descriptionKey)}</p>
+
+          {/* ── Tool-first: interactive tool at the very top ── */}
+          <article className="mt-4 relative" aria-labelledby="tool-heading">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] rounded-[24px] blur opacity-10"></div>
+            <div className="relative rounded-[22px] border border-[var(--border)] bg-[var(--card-bg)] shadow-2xl p-6 sm:p-8 lg:p-10">
+              {/* Compact inline header inside the tool card */}
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[var(--border)]">
+                <div className="p-2.5 bg-gradient-to-br from-[var(--accent-muted)] to-[var(--background)] border border-[var(--border)] rounded-xl text-[var(--accent)] shrink-0">
+                  <ToolIcon toolName={toolName} size="md" />
+                </div>
+                <h1 id="tool-heading" className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--foreground)] flex-1 min-w-0">{t(tool.nameKey)}</h1>
                 <ShareButton
                   url={`${BASE_URL}/${validLang}/${category}/${toolName}`}
                   title={toolNameFormatted}
@@ -272,26 +274,8 @@ export default async function ToolPage({
                   shareLabel={t("toolPage.share")}
                   copyToast={validLang === "ru" ? "Ссылка скопирована" : validLang === "kz" ? "Сілтеме көшірілді" : "Link copied"}
                   shareToast={validLang === "ru" ? "Поделено" : validLang === "kz" ? "Бөлінді" : "Shared"}
-                  className="mt-4"
                 />
               </div>
-            </div>
-          </header>
-
-          {(TOOL_SEO[toolName]?.seoIntro ?? getToolSeoFallback(toolName).seoIntro) && (
-            <div className="mt-6 rounded-xl border border-[var(--border)] bg-[var(--accent-muted)]/50 p-5 text-[15px] leading-relaxed text-[var(--foreground)]">
-              {(TOOL_SEO[toolName] ?? getToolSeoFallback(toolName)).seoIntro?.[validLang]}
-            </div>
-          )}
-
-          <TopBannerAd />
-
-          <article className="mt-8 relative" aria-labelledby="tool-heading">
-            <h2 id="tool-heading" className="sr-only">
-              {validLang === "ru" ? "Как пользоваться инструментом" : validLang === "kz" ? "Құралды қалай пайдалану керек" : "How to use the tool"}
-            </h2>
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] rounded-[24px] blur opacity-10"></div>
-            <div className="relative rounded-[22px] border border-[var(--border)] bg-[var(--card-bg)] shadow-2xl p-6 sm:p-8 lg:p-10">
               <ToolRenderer
                 toolName={toolName}
                 translations={translations}
@@ -300,27 +284,30 @@ export default async function ToolPage({
             </div>
           </article>
 
-          <MidContentAd />
+          <TopBannerAd />
 
-          <section className="mt-10" aria-labelledby="seo-content-heading">
-            <h2 id="seo-content-heading" className="mb-4 text-xl font-semibold text-[var(--foreground)]">
-              {validLang === "ru" ? "Подробнее об инструменте" : validLang === "kz" ? "Құрал туралы толығырақ" : "More about this tool"}
-            </h2>
-            <div className="space-y-8 rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
-              {hasSeoContent ? (
-                seoContentSections!.map((sec, i) => (
-                  <div key={i}>
-                    <h3 className="text-lg font-semibold text-[var(--foreground)]">{sec.h2}</h3>
-                    <p className="mt-2 text-[15px] leading-relaxed text-[var(--muted)]">{sec.body}</p>
-                  </div>
-                ))
-              ) : (
-                <p className="text-[15px] leading-relaxed text-[var(--muted)]">
+          {/* ── Collapsible About section (description + seoIntro + seoContent) ── */}
+          <details className="tool-about-section mt-8">
+            <summary>
+              {validLang === "ru" ? "Подробнее об инструменте" : validLang === "kz" ? "Құрал туралы толығырақ" : "About this tool"}
+            </summary>
+            <div className="tool-about-content space-y-6">
+              <p className="text-[15px] leading-relaxed text-[var(--muted)]">{toolDesc}</p>
+              {(TOOL_SEO[toolName]?.seoIntro ?? getToolSeoFallback(toolName).seoIntro)?.[validLang] && (
+                <p className="text-[15px] leading-relaxed text-[var(--foreground)]">
                   {(TOOL_SEO[toolName] ?? getToolSeoFallback(toolName)).seoIntro?.[validLang]}
                 </p>
               )}
+              {hasSeoContent && seoContentSections!.map((sec, i) => (
+                <div key={i}>
+                  <h3 className="text-lg font-semibold text-[var(--foreground)]">{sec.h2}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-[var(--muted)]">{sec.body}</p>
+                </div>
+              ))}
             </div>
-          </section>
+          </details>
+
+          <MidContentAd />
 
           {instructions && (
             <section className="mt-10" aria-labelledby="instructions-heading">

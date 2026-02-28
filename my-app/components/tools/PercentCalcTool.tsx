@@ -31,11 +31,8 @@ export function PercentCalcTool({ t }: PercentCalcToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">
-        Введите число и процент — все 4 операции рассчитываются мгновенно.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Исходные данные</span>
         <div className="grid gap-4 sm:grid-cols-2 mb-4">
           <div>

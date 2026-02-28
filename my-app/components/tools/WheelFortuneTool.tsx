@@ -40,10 +40,8 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Колесо фортуны для честного случайного выбора. Введите минимум 2 варианта (каждый с новой строки или через запятую). Результат генерируется в браузере.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">Варианты на колесе</label>
         <textarea
           value={items}
@@ -87,7 +85,7 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[20px] border-t-[var(--accent)] z-10 pointer-events-none" aria-hidden />
           </div>
         )}
-        <motion.button
+        <div className="tool-action-bar"><motion.button
           onClick={spin}
           disabled={spinning || list.length < 2}
           whileHover={{ scale: 1.02 }}
@@ -95,7 +93,7 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
           className="btn-primary w-full sm:w-auto mt-2"
         >
           {spinning ? t("spinning") : t("spin")}
-        </motion.button>
+        </motion.button></div>
       </div>
       {result && (
         <motion.div
@@ -109,7 +107,7 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
         </motion.div>
       )}
       {lastResult && !result && !spinning && (
-        <div className="result-card">
+        <div className="tool-output-zone">
           <p className="text-sm font-medium text-[var(--foreground)]/70">{t("lastResult") || "Предыдущий результат"}: {lastResult}</p>
         </div>
       )}

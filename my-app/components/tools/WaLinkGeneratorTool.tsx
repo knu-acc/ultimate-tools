@@ -16,10 +16,7 @@ export function WaLinkGeneratorTool({ t }: WaLinkGeneratorToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Ссылка для открытия чата WhatsApp с номером и опциональным предзаполненным сообщением. Номер — только цифры, с кодом страны.
-      </p>
-      <div>
+<div>
         <label className="field-label">{t("phone")}</label>
         <div className="flex flex-wrap gap-2 mb-2">
           {["+7", "+1", "+44", "+49", "+77", "+998", "+996"].map((code) => (

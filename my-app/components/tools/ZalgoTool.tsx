@@ -44,10 +44,8 @@ export function ZalgoTool({ t }: ZalgoToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        «Залго-текст»: добавляет диакритику к буквам. Регулируйте интенсивность (слайдер или пресеты), нажимайте «Ещё раз» для нового варианта, «Подставить результат» — вставить в поле ввода.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">Исходный текст</label>
         <input
           type="text"
@@ -57,7 +55,7 @@ export function ZalgoTool({ t }: ZalgoToolProps) {
           className="input-base"
         />
       </div>
-      <div className="result-card">
+      <div className="tool-output-zone">
         <label className="field-label">
           {t("intensity")} — чем выше, тем больше «шума» на символ
         </label>

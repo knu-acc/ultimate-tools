@@ -76,11 +76,7 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Сжатие изображений в браузере. Загрузите файл (JPG, PNG, WebP), выберите качество — результат обновляется автоматически. Файлы никуда не отправляются.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
         <div className="mb-2 flex items-center justify-between">
           <label className="text-sm font-medium text-[var(--foreground)]/70">{t("upload") || "Загрузить изображение"}</label>
           {file && <button type="button" onClick={clearAll} className="btn-ghost">Очистить</button>}
@@ -118,7 +114,7 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
             </div>
           </div>
 
-          <div className="result-card">
+          <div className="tool-output-zone">
             <div className="mb-2 flex items-center justify-between">
               <label className="text-sm font-medium">{t("quality")}</label>
               <span className="text-lg font-bold tabular-nums">{Math.round(quality * 100)}%</span>
@@ -133,17 +129,6 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
               className="h-3 w-full accent-[var(--accent)]"
             />
           </div>
-
-          {originalSize != null && (
-            <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-              {t("original")}: <strong className="text-[var(--foreground)]">{(originalSize / 1024).toFixed(1)} KB</strong>
-              {dimensions && (
-                <span className="ml-2">
-                  · {dimensions.w}×{dimensions.h} px
-                </span>
-              )}
-            </p>
-          )}
 
           <div className="grid gap-6 sm:grid-cols-2">
             <div>

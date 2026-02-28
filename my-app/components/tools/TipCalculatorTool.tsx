@@ -31,11 +31,8 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">
-        Укажите сумму и процент чаевых — итог обновляется мгновенно.
-      </p>
-
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Счёт и настройки</span>
         <div className="grid gap-4 sm:grid-cols-2 mb-4">
           <div>
@@ -104,7 +101,8 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
       </div>
 
       {amount > 0 ? (
-        <div className="result-card">
+        <div className="tool-output-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">📊</span><span>Результат</span></div>
           <div className="flex items-center justify-between mb-4">
             <span className="section-label mb-0">Результат</span>
             <CopyButton text={summary} label="Копировать" />

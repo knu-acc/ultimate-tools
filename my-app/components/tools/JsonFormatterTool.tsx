@@ -66,50 +66,42 @@ export function JsonFormatterTool({ t }: JsonFormatterToolProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Форматирование, минификация и проверка JSON в браузере. Данные никуда не отправляются. Вставьте JSON и нажмите нужную кнопку.
-      </p>
-      <div className="result-card">
-        <div className="mb-2 flex items-center justify-between">
-          <label className="text-sm font-medium text-[var(--foreground)]/70">JSON</label>
-          {input ? <button type="button" onClick={clearAll} className="btn-ghost">Очистить</button> : null}
-        </div>
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder='{"key": "value"}'
-          className="input-base font-mono text-sm min-h-[150px]"
-          rows={6}
-        />
-        <div className="mt-3 flex flex-wrap gap-2">
-          <button onClick={format} className="btn-primary w-full sm:w-auto mt-2">
-            {t("format")}
-          </button>
-          <button onClick={minify} className="btn-secondary">
-            {t("minify")}
-          </button>
-          <button onClick={validate} className="btn-secondary">
-            {t("validate") || "Проверить"}
-          </button>
-        </div>
+    <div className="space-y-5">
+      <div className="tool-action-bar">
+        <button onClick={format} className="btn-primary">{t("format")}</button>
+        <button onClick={minify} className="btn-secondary">{t("minify")}</button>
+        <button onClick={validate} className="btn-secondary">{t("validate") || "Проверить"}</button>
+        {input ? <button type="button" onClick={clearAll} className="btn-ghost ml-auto">Очистить</button> : null}
       </div>
       {valid === true && !output && <p className="text-sm text-green-600 dark:text-green-400">{t("validJson") || "JSON корректен."}</p>}
       {error && <div className="badge-danger px-4 py-2.5 rounded-xl text-sm">{error}</div>}
-      {output && !error && (
-        <div className="result-card">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="text-sm font-medium text-[var(--foreground)]/70">Результат</span>
-            <CopyButton text={output} label="Копировать JSON" />
-          </div>
-          <textarea readOnly value={output} className="input-base font-mono text-sm min-h-[150px] bg-[var(--background)]" rows={6} />
+      <div className="tool-split-pane">
+        <div className="tool-input-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder='{"key": "value"}'
+            className="input-base font-mono text-sm min-h-[250px] resize-y"
+            rows={10}
+          />
         </div>
-      )}
-      {!output && !error && input.trim() && (
-        <p className="empty-state">
-          Нажмите «Форматировать» или «Минифицировать» для результата.
-        </p>
-      )}
+        <div className="tool-output-zone">
+          <div className="tool-zone-header"><span className="tool-zone-icon">📊</span><span>Результат</span></div>
+          {output && !error ? (
+            <>
+              <div className="mb-2 flex justify-end">
+                <CopyButton text={output} label="Копировать JSON" />
+              </div>
+              <textarea readOnly value={output} className="input-base font-mono text-sm min-h-[250px] bg-[var(--background)] resize-y" rows={10} />
+            </>
+          ) : (
+            <div className="empty-state min-h-[250px] flex items-center justify-center">
+              Нажмите «Форматировать» или «Минифицировать» для результата.
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

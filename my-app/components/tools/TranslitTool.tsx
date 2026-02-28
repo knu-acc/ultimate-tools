@@ -49,10 +49,7 @@ export function TranslitTool({ t }: TranslitToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Транслитерация по ГОСТ: кириллица ↔ латиница. Выберите направление и при необходимости «Для URL» — результат в нижнем регистре, пробелы в дефисы, без спецсимволов.
-      </p>
-      <div className="flex flex-wrap items-center gap-3">
+<div className="flex flex-wrap items-center gap-3">
         <span className="text-sm font-medium text-[var(--foreground)]/70">Направление:</span>
         <button
           onClick={() => setDirection("ru-en")}
@@ -80,7 +77,8 @@ export function TranslitTool({ t }: TranslitToolProps) {
           </button>
         )}
       </div>
-      <div className="result-card">
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">Исходный текст</label>
         <textarea
           value={text}
@@ -90,7 +88,7 @@ export function TranslitTool({ t }: TranslitToolProps) {
           rows={5}
         />
       </div>
-      <div className="result-card">
+      <div className="tool-output-zone">
         <div className="mb-2 flex items-center justify-between">
           <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
           {result ? <CopyButton text={result} label="Скопировать" /> : null}

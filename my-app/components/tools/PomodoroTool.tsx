@@ -60,10 +60,8 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Метод Помодоро: рабочий интервал и короткий перерыв. Задайте минуты (или выберите пресет), запустите таймер. Таймер работает только при открытой вкладке.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Интервалы (мин)</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {presets.map(({ work, break: b, label }) => (

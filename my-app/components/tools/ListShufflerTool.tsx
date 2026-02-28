@@ -30,10 +30,8 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Перемешайте список случайным образом или разверните порядок. Элементы — каждый с новой строки или через запятую/точку с запятой. Всё выполняется в браузере.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">Список элементов</label>
         <textarea
           value={text}
@@ -45,7 +43,7 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
         {lines.length > 0 && <p className="mt-2 text-xs text-[var(--muted)]">Элементов: {lines.length}</p>}
       </div>
       <div className="flex flex-wrap gap-2">
-        <motion.button
+        <div className="tool-action-bar"><motion.button
           onClick={doShuffle}
           disabled={lines.length === 0}
           whileHover={{ scale: 1.02 }}
@@ -53,7 +51,7 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
           className="btn-primary w-full sm:w-auto mt-2"
         >
           {t("shuffle")}
-        </motion.button>
+        </motion.button></div>
         <motion.button
           onClick={doReverse}
           disabled={lines.length === 0}

@@ -58,10 +58,8 @@ export function FontsSocialTool({ t }: FontsSocialToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Стилизованный текст для соцсетей и никнеймов. Введите латиницу (A–Z, a–z) — ниже появятся варианты. Цифры и знаки копируются как есть.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">
           Введите латиницу — ниже появятся стили
         </label>
@@ -94,7 +92,7 @@ export function FontsSocialTool({ t }: FontsSocialToolProps) {
         {FONTS.map((font) => {
           const result = convert(text, font);
           return (
-            <div key={font.name} className="result-card">
+            <div key={font.name} className="tool-output-zone">
               <div className="mb-2 flex items-center justify-between gap-2">
                 <span className="text-sm font-medium text-[var(--foreground)]/70">{font.name}</span>
                 {result ? <CopyButton text={result} label={`Копировать ${font.name}`} /> : null}

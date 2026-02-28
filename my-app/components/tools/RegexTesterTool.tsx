@@ -42,10 +42,8 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Проверка регулярных выражений в браузере. Введите паттерн и флаги (g, i, m и др.), текст — появятся совпадения и подсветка. Данные не отправляются.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">{t("pattern")}</label>
         <div className="flex flex-wrap items-center gap-2">
           <input
@@ -70,18 +68,22 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
           </div>
         </div>
       </div>
-      <div className="result-card">
-        <label className="field-label">{t("text")}</label>
-        <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder={t("textPlaceholder")} className="input-base min-h-[100px] resize-y" rows={4} />
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">📝</span><span>Текст</span></div>
+        <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder={t("textPlaceholder")} className="input-base font-mono text-sm min-h-[150px] resize-y" rows={6} />
       </div>
       {error && <div className="badge-danger px-4 py-2.5 rounded-xl text-sm">{error}</div>}
       {pattern && text && !error && (
-        <div className="space-y-3">
-          <div className="result-card">
-            <div className="mb-2 flex items-center justify-between gap-2">
-              <span className="section-label mb-0">{t("matches")} {matchCount > 0 && `(${matchCount})`}</span>
-              {matches.length > 0 && <CopyButton text={matchesLine} label="Копировать совпадения" />}
-            </div>
+        <div className="tool-output-zone">
+          <div className="tool-zone-header">
+            <span className="tool-zone-icon">📊</span>
+            <span>Результат</span>
+            {matchCount > 0 && <span className="ml-auto rounded-full bg-[var(--accent)] text-white text-xs font-bold px-2 py-0.5">{matchCount}</span>}
+          </div>
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <span className="section-label mb-0">{t("matches")}</span>
+            {matches.length > 0 && <CopyButton text={matchesLine} label="Копировать совпадения" />}
+          </div>
           {text && highlightRanges.length > 0 && (
             <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm whitespace-pre-wrap break-words">
               {highlightRanges.reduce<React.ReactNode[]>((acc, [start, end], i) => {
@@ -110,7 +112,6 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
           {pattern && text && matches.length === 0 && !highlightRanges.length && (
             <p className="mt-2 text-sm text-[var(--muted)]">Совпадений не найдено</p>
           )}
-          </div>
         </div>
       )}
       {(!pattern || !text) && !error && (

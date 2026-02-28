@@ -42,10 +42,8 @@ export function TimersTool({ t }: TimersToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Таймер обратного отсчёта: укажите минуты и секунды (или пресет), нажмите «Старт». По окончании таймер остановится. Работает только при открытой вкладке.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Пресеты и ввод</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {presetMins.map((mm) => (

@@ -41,10 +41,7 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Классический плейсхолдер для макетов. Выберите режим (абзацы, предложения, слова), укажите количество или пресет — нажмите «Сгенерировать».
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
         <div className="mb-3 flex flex-wrap items-end gap-4">
           <div>
             <label className="field-label">{t("mode")}</label>
@@ -96,7 +93,7 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
           </motion.button>
         </div>
       </div>
-      <div className="result-card">
+      <div className="tool-output-zone">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
           <div className="flex items-center gap-3">

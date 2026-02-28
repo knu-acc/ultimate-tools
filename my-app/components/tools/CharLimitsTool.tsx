@@ -29,10 +29,7 @@ export function CharLimitsTool({ t }: CharLimitsToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Лимиты символов для соцсетей и мессенджеров. Выберите платформу — счётчик покажет, сколько осталось до лимита.
-      </p>
-      <div>
+<div>
         <label className="field-label">{t("platform")}</label>
         <select
           value={platform}

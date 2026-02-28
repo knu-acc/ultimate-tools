@@ -50,20 +50,18 @@ export function HtmlEncodeTool({ t }: HtmlEncodeToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Кодирование и декодирование HTML-сущностей в браузере. «Закодировать» — только &amp; &lt; &gt; &quot; &#39;. «Все символы» — не-ASCII в &#NNN;. Данные не отправляются.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <label className="field-label">Исходный текст</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder={t("placeholder")} className="input-base min-h-[120px] resize-y" rows={5} />
         <div className="mt-3 flex flex-wrap gap-2">
-          <button onClick={encode} className="btn-primary w-full sm:w-auto mt-2">{t("encode")}</button>
+          <div className="tool-action-bar"><button onClick={encode} className="btn-primary w-full sm:w-auto mt-2">{t("encode")}</button></div>
           <button onClick={decode} className="btn-secondary">{t("decode")}</button>
           <button onClick={encodeAll} className="btn-secondary" title="Все не-ASCII в &#NNN;">{t("encodeAll") || "Все символы → entities"}</button>
         </div>
       </div>
       {output ? (
-        <div className="result-card">
+        <div className="tool-output-zone">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-sm font-medium text-[var(--foreground)]/70">Результат</span>
             <CopyButton text={output} label="Копировать" />

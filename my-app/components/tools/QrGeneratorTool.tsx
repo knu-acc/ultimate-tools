@@ -104,14 +104,10 @@ export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
   ];
 
   return (
-    <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] leading-relaxed">
-        Генератор настоящих QR-кодов. Введите текст, ссылку, данные Wi-Fi или контакт — QR-код создаётся мгновенно. Скачайте в PNG или SVG.
-      </p>
-
+    <div className="space-y-5">
       {/* Mode selector */}
-      <div className="result-card">
-        <span className="section-label">Тип QR-кода</span>
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Тип QR-кода</span></div>
         <div className="flex flex-wrap gap-2">
           {modes.map(({ key, label, icon }) => (
             <button
@@ -127,8 +123,8 @@ export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
       </div>
 
       {/* Input based on mode */}
-      <div className="result-card">
-        <span className="section-label">Данные</span>
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">📝</span><span>Данные</span></div>
 
         {mode === "wifi" ? (
           <div className="space-y-4">
@@ -201,8 +197,8 @@ export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
       </div>
 
       {/* Customization */}
-      <div className="result-card">
-        <span className="section-label">Настройки</span>
+      <div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">⚙️</span><span>Настройки</span></div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <label className="field-label">Размер</label>
@@ -257,7 +253,8 @@ export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
       )}
 
       {dataUrl && hasInput ? (
-        <div className="result-card flex flex-col items-center gap-4">
+        <div className="tool-output-zone flex flex-col items-center gap-4">
+          <div className="tool-zone-header w-full"><span className="tool-zone-icon">📊</span><span>QR-код</span></div>
           <div className="rounded-xl border-2 border-[var(--border)] p-4" style={{ backgroundColor: bgColor }}>
             <img src={dataUrl} alt="QR Code" width={qrSize > 400 ? 300 : qrSize} height={qrSize > 400 ? 300 : qrSize} className="mx-auto" />
           </div>

@@ -51,10 +51,8 @@ export function DiceTool({ t }: DiceToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm md:text-base text-[var(--muted)] mb-6 leading-relaxed">
-        Виртуальные кубики для настольных игр и решений. Выберите тип (d4–d20) и количество костей. Бросок выполняется в браузере.
-      </p>
-      <div className="result-card">
+<div className="tool-input-zone">
+        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
         <span className="section-label">Пресеты и настройки</span>
         <div className="flex flex-wrap gap-2 mb-4">
           {DICE_PRESETS.map(({ label, count: c, sides: s }) => (
@@ -94,7 +92,7 @@ export function DiceTool({ t }: DiceToolProps) {
           </div>
         </div>
       </div>
-      <motion.button
+      <div className="tool-action-bar"><motion.button
         onClick={roll}
         disabled={rolling}
         whileHover={{ scale: 1.02 }}
@@ -102,13 +100,13 @@ export function DiceTool({ t }: DiceToolProps) {
         className="btn-primary w-full sm:w-auto mt-2"
       >
         {rolling ? "..." : t("roll")}
-      </motion.button>
+      </motion.button></div>
       <AnimatePresence mode="wait">
         {showing.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="result-card"
+            className="tool-output-zone"
           >
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
