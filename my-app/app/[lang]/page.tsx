@@ -118,7 +118,7 @@ export default async function HomePage({
         {/* Categories */}
         <section>
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-[var(--accent)] to-[#E74504]" />
+            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-[var(--accent)] to-[var(--accent-hover)]" />
             <h2 className="text-2xl font-bold text-[var(--foreground)] tracking-tight">
               {t("home.categories")}
             </h2>
