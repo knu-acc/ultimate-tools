@@ -101,7 +101,7 @@ export function getFaqSchema(faq: { q: string; a: string }[]) {
   };
 }
 
-export function getWebSiteSchema(baseUrl: string, name: string, description: string) {
+export function getWebSiteSchema(baseUrl: string, name: string, description: string, lang: string = "ru") {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -111,9 +111,31 @@ export function getWebSiteSchema(baseUrl: string, name: string, description: str
     inLanguage: ["ru", "en", "kk"],
     potentialAction: {
       "@type": "SearchAction",
-      target: `${baseUrl}/ru?q={search_term_string}`,
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${baseUrl}/{lang}?q={search_term_string}`,
+      },
       "query-input": "required name=search_term_string",
     },
+  };
+}
+
+export function getHowToSchema(
+  name: string,
+  description: string,
+  steps: { name: string; text: string }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    step: steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+    })),
   };
 }
 

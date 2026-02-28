@@ -10,17 +10,35 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/"],
+        disallow: [
+          "/api/",
+          "/*?input=",
+          "/*?text=",
+          "/*?q=",
+          "/*?config=",
+          "/*?data=",
+          "/*?value=",
+        ],
       },
       {
         userAgent: "Yandex",
         allow: "/",
-        disallow: ["/api/"],
+        disallow: [
+          "/api/",
+          "/*?input=",
+          "/*?text=",
+          "/*?q=",
+        ],
       },
       {
         userAgent: "Googlebot",
         allow: "/",
-        disallow: ["/api/"],
+        disallow: [
+          "/api/",
+          "/*?input=",
+          "/*?text=",
+          "/*?q=",
+        ],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
