@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AdsConsentProvider } from "@/contexts/AdsConsentContext";
 import { getWebSiteSchema, getOrganizationSchema } from "@/lib/seo-metadata";
 import { StickyBottomAd } from "@/components/ads/StickyBottomAd";
 import { AdBlockDetector } from "@/components/ads/AdBlockDetector";
+import { CookieConsent } from "@/components/ads/CookieConsent";
+import { Analytics } from "@/components/Analytics";
+import { ToastProvider } from "@/contexts/ToastContext";
+import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -62,6 +67,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BASE_URL,
   },
+  manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 const SITE_NAME = "Ultimate Tools";
@@ -86,9 +100,17 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         <ThemeProvider>
-          {children}
-          <StickyBottomAd />
-          <AdBlockDetector />
+          <AdsConsentProvider>
+            <Analytics />
+            <ToastProvider>
+              <FavoritesProvider>
+                {children}
+              <StickyBottomAd />
+              <AdBlockDetector />
+              <CookieConsent />
+              </FavoritesProvider>
+            </ToastProvider>
+          </AdsConsentProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -6,6 +6,7 @@ import type { Lang } from "@/lib/tools-registry";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ToolRenderer } from "@/components/tools/ToolRenderer";
 import { ToolIcon } from "@/components/ToolIcon";
+import { ShareButton } from "@/components/ShareButton";
 import { TopBannerAd } from "@/components/ads/TopBannerAd";
 import { MidContentAd } from "@/components/ads/MidContentAd";
 import {
@@ -261,9 +262,18 @@ export default async function ToolPage({
               <div className="p-4 bg-gradient-to-br from-[var(--accent-muted)] to-[var(--background)] border border-[var(--border)] rounded-xl text-[var(--accent)] shrink-0 shadow-inner">
                 <ToolIcon toolName={toolName} size="lg" />
               </div>
-              <div>
+              <div className="flex-1 min-w-0">
                 <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--foreground)]">{t(tool.nameKey)}</h1>
                 <p className="mt-2 text-lg text-[var(--muted)] leading-relaxed">{t(tool.descriptionKey)}</p>
+                <ShareButton
+                  url={`${BASE_URL}/${validLang}/${category}/${toolName}`}
+                  title={toolNameFormatted}
+                  text={toolDesc}
+                  shareLabel={t("toolPage.share")}
+                  copyToast={validLang === "ru" ? "Ссылка скопирована" : validLang === "kz" ? "Сілтеме көшірілді" : "Link copied"}
+                  shareToast={validLang === "ru" ? "Поделено" : validLang === "kz" ? "Бөлінді" : "Shared"}
+                  className="mt-4"
+                />
               </div>
             </div>
           </header>

@@ -7,6 +7,13 @@
     "language": "Language",
     "search": "Search tools"
   },
+  "home": {
+    "popularTools": "Popular tools",
+    "categories": "Categories",
+    "toolsCount": "tools",
+    "ctaTry": "Try for free",
+    "ctaChoose": "Choose a tool"
+  },
   "nav": {
     "home": "Home",
     "text": "Text",
@@ -73,7 +80,9 @@
     "breadcrumbs": "Breadcrumbs",
     "similarTools": "Similar tools",
     "faq": "FAQ",
-    "instructions": "Instructions"
+    "instructions": "Instructions",
+    "share": "Share",
+    "copyLink": "Copy link"
   },
   "footer": {
     "aboutTitle": "About",
@@ -82,6 +91,31 @@
     "linksTitle": "Links",
     "home": "Home",
     "popularTools": "Popular tools",
-    "copyright": "© Ultimate Tools. Free online tools, no registration."
+    "aboutLink": "About",
+    "privacyLink": "Privacy Policy",
+    "termsLink": "Terms of Use",
+    "copyright": "© Ultimate Tools. Free online tools, no registration.",
+    "socialTitle": "Follow us"
+  },
+  "pages": {
+    "about": {
+      "title": "About Ultimate Tools",
+      "p1": "Ultimate Tools is a free collection of 100+ online tools for text, calculations, conversion and development. All processing runs on your device: no data is sent, no signup required.",
+      "p2": "We build tools for everyday tasks: percentage and BMI calculators, password and QR generators, currency and number-base converters, word counter, JSON formatter, Base64 encoding and more. Handy for work, study and quick tasks.",
+      "p3": "If you have suggestions or found a bug — contact us via the feedback page."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "p1": "Ultimate Tools respects your privacy. Most tools run entirely in your browser: your input is not sent to our servers.",
+      "p2": "We may use cookies to show ads (e.g. Google AdSense or similar) and analyze traffic (Google Analytics, Yandex Metrika). You can disable cookies in your browser or decline advertising cookies via the consent banner.",
+      "p3": "We do not sell or share personal data with third parties for advertising without your consent. Server logs (IP, User-Agent) may be kept for security and for a limited time.",
+      "p4": "By using the site after accepting cookies, you agree to this policy. Updates are posted on this page."
+    },
+    "terms": {
+      "title": "Terms of Use",
+      "p1": "Ultimate Tools provides free online tools \"as is\". You use them at your own risk.",
+      "p2": "We do not guarantee that calculations and results are error-free. For important decisions (finance, health) we recommend verifying with professionals. These tools do not replace professional services.",
+      "p3": "You may not use the site to distribute malware, scrape data without permission, or in violation of applicable law. Linking to Ultimate Tools when using our materials is appreciated."
+    }
   }
 }

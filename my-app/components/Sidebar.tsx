@@ -13,9 +13,11 @@ import {
   ArrowLeftRight,
   Key,
   MoreHorizontal,
+  Star,
 } from "lucide-react";
 import type { Lang } from "@/lib/tools-registry";
 import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
 const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   text: Type,
@@ -41,9 +43,34 @@ export function Sidebar({ lang, translations }: SidebarProps) {
   const segments = pathname.split("/").filter(Boolean);
   const currentCategory = segments[1];
   const currentTool = segments[2];
+  const { favorites } = useFavorites();
+
   return (
     <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-60 shrink-0 overflow-y-auto border-r border-[var(--border)] bg-[var(--background)]/50 backdrop-blur-xl p-5 lg:block transition-all duration-300">
       <nav className="space-y-1.5">
+        {favorites.length > 0 && (
+          <div className="mb-3">
+            <p className="px-3 py-1.5 text-xs font-medium text-[var(--muted)] flex items-center gap-1.5">
+              <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+              Избранное
+            </p>
+            <div className="space-y-0.5">
+              {favorites.slice(0, 10).map((slug) => {
+                const meta = TOOLS[slug];
+                const category = meta?.category ?? "misc";
+                return (
+                  <Link
+                    key={slug}
+                    href={`/${lang}/${category}/${slug}`}
+                    className={`block rounded-lg px-3 py-1.5 text-xs transition-colors ${currentTool === slug ? "font-medium text-[var(--accent)]" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}
+                  >
+                    {meta ? t(meta.nameKey) : slug}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
         <Link
           href={`/${lang}`}
           className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors ${!currentCategory

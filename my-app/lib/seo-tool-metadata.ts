@@ -190,6 +190,78 @@ export const TOOL_SEO: Record<string, ToolSeoMeta> = {
     seoIntro: { ru: "Генератор QR-кодов превращает ссылку или произвольный текст в изображение QR-кода, которое можно сканировать камерой смартфона. Введите URL сайта, контакта или любой текст — изображение формируется мгновенно. Можно сохранить картинку и использовать в печати или на экране. Обработка только на вашем устройстве.", kz: "QR код генераторы сілтемені немесе мәтінді смартфон камерасымен сканерлеуге болатын QR код суретіне айналдырады.", en: "The QR code generator turns a link or any text into a QR code image that you can scan with your phone. Enter a URL or text — the image is generated instantly. Save and use in print or on screen. All processing on your device." },
     keywords: { ru: ["генератор qr кода", "создать qr код", "qr код по ссылке", "qr код онлайн бесплатно"], kz: ["qr код генераторы", "qr код жасау"], en: ["qr code generator", "create qr code", "qr code from url", "free qr generator"] },
   },
+  translit: {
+    title: { ru: "Транслитерация онлайн — кириллица в латиницу и обратно", kz: "Транслитерация онлайн — кириллицаны латынға және кері", en: "Transliteration Online — Cyrillic to Latin and Back" },
+    description: { ru: "Переведите русский текст в латиницу (ГОСТ, ISO) или латиницу в кириллицу. Транслит для имён, загранпаспортов, URL. Бесплатно в браузере.", kz: "Орыс мәтінін латынға немесе кері аударыңыз. Тегін браузерде.", en: "Convert Russian text to Latin (translit) or Latin to Cyrillic. For names, URLs, passports. Free in browser." },
+    seoIntro: { ru: "Транслитерация переводит буквы кириллицы в латинские по правилам ГОСТ или ISO. Удобно для заполнения форм, имён в загранпаспорте, URL и никнеймов. Поддержка обратного перевода.", kz: "Транслитерация кириллица әріптерін латын әріптеріне аударады.", en: "Transliteration converts Cyrillic letters to Latin by GOST or ISO rules. Handy for forms, passports, URLs." },
+    keywords: { ru: ["транслитерация", "транслит", "кириллица в латиницу", "онлайн транслит"], kz: ["транслитерация", "латынға аудару"], en: ["transliteration", "cyrillic to latin", "translit online"] },
+  },
+  "wheel-fortune": {
+    title: { ru: "Колесо фортуны онлайн — случайный выбор из списка", kz: "Тағдыр дөңгелегі онлайн — тізімнен кездейсоқ таңдау", en: "Wheel of Fortune Online — Random Pick from List" },
+    description: { ru: "Крутите колесо фортуны: введите варианты, нажмите «Крутить» — случайный выбор. Для розыгрышей, игр, принятия решений. Бесплатно.", kz: "Тағдыр дөңгелегін айналдырыңыз: нұсқаларды енгізіңіз.", en: "Spin the wheel: enter options, get random pick. For giveaways, games, decisions. Free." },
+    seoIntro: { ru: "Колесо фортуны выбирает один вариант из списка случайным образом. Добавьте варианты (каждый с новой строки), крутите — результат показывается анимацией. Идеально для розыгрышей и игр.", kz: "Тағдыр дөңгелегі тізімнен бір нұсқаны кездейсоқ таңдайды.", en: "Wheel of fortune picks one option from your list at random. Add options, spin, get result." },
+    keywords: { ru: ["колесо фортуны", "случайный выбор", "розыгрыш онлайн", "крутить колесо"], kz: ["тағдыр дөңгелегі"], en: ["wheel of fortune", "random pick", "spin the wheel"] },
+  },
+  uuid: {
+    title: { ru: "UUID генератор — создать уникальный идентификатор онлайн", kz: "UUID генераторы — бірегей идентификатор жасау", en: "UUID Generator — Create Unique ID Online" },
+    description: { ru: "Сгенерируйте UUID v4 (уникальный идентификатор) для баз данных, API, тестов. Один или несколько. Бесплатно, в браузере.", kz: "UUID v4 жасаңыз: деректер базасы, API үшін. Тегін.", en: "Generate UUID v4 for databases, API, tests. One or many. Free in browser." },
+    seoIntro: { ru: "UUID (Universally Unique Identifier) — 128-битный идентификатор. Генератор создаёт UUID версии 4, подходящие для баз данных и API. Можно сгенерировать несколько за раз.", kz: "UUID — бірегей идентификатор. Генератор UUID v4 жасайды.", en: "UUID is a 128-bit unique identifier. Generator creates UUID v4 for databases and API." },
+    keywords: { ru: ["uuid генератор", "уникальный идентификатор", "uuid v4", "сгенерировать uuid"], kz: ["uuid генераторы"], en: ["uuid generator", "unique identifier", "uuid v4"] },
+  },
+  "image-compress": {
+    title: { ru: "Сжатие изображений онлайн — уменьшить размер JPEG/PNG", kz: "Суреттерді сығу онлайн — JPEG/PNG өлшемін кішірейту", en: "Image Compress Online — Reduce JPEG/PNG Size" },
+    description: { ru: "Сожмите фото без потери качества: загрузите изображение, выберите качество, скачайте результат. Работает в браузере, файлы не отправляются.", kz: "Фотоны сығыңыз: суретті жүктеңіз, сапаны таңдаңыз. Браузерде жұмыс істейді.", en: "Compress images in browser: upload, set quality, download. Files stay on your device." },
+    seoIntro: { ru: "Инструмент сжимает JPEG-изображения для веб-страниц и соцсетей. Загрузите файл, настройте качество (1–100%), скачайте уменьшенную копию. Обработка локальная.", kz: "Суреттерді веб және әлеуметтік желілер үшін сығады.", en: "Compress JPEG/PNG for web and social. Upload, set quality, download. Local processing." },
+    keywords: { ru: ["сжатие изображений", "уменьшить фото", "оптимизация картинок", "jpeg сжатие онлайн"], kz: ["суретті сығу"], en: ["image compress", "reduce image size", "jpeg compressor"] },
+  },
+  "weight-converter": {
+    title: { ru: "Конвертер веса онлайн — кг, граммы, фунты, унции", kz: "Салмақ түрлендіргіш онлайн — кг, грамм, фунт", en: "Weight Converter Online — kg, g, lb, oz" },
+    description: { ru: "Переведите вес между килограммами, граммами, фунтами и унциями. Удобно для кулинарии и бытовых расчётов. Бесплатно.", kz: "Салмақты кг, грамм, фунт арасында түрлендіріңіз. Тегін.", en: "Convert between kg, g, lb, oz. For cooking and daily use. Free." },
+    seoIntro: { ru: "Конвертер переводит единицы массы: килограммы, граммы, фунты (lb), унции (oz). Введите значение и выберите единицы «из» и «в» — результат мгновенно.", kz: "Салмақ бірліктерін түрлендіреді: кг, г, фунт, унция.", en: "Convert mass units: kg, g, lb, oz. Enter value and units — result instantly." },
+    keywords: { ru: ["конвертер веса", "кг в фунты", "граммы в унции", "перевод веса онлайн"], kz: ["салмақ түрлендіргіш"], en: ["weight converter", "kg to lb", "grams to ounces"] },
+  },
+  "roman-numerals": {
+    title: { ru: "Римские цифры онлайн — конвертер в римские и обратно", kz: "Рим сандары онлайн — римге және кері түрлендіргіш", en: "Roman Numerals Online — Convert to and from Roman" },
+    description: { ru: "Переведите число в римские цифры (I, V, X, L, C, D, M) или римские в арабские. Для нумерации глав, циферблатов. Бесплатно.", kz: "Санды рим сандарына немесе кері аударыңыз. Тегін.", en: "Convert numbers to Roman numerals or Roman to Arabic. For chapters, clock faces. Free." },
+    seoIntro: { ru: "Конвертер переводит арабские числа в римскую запись и обратно. Удобно для оформления текстов, нумерации разделов и обучения.", kz: "Рим сандарына және кері түрлендіреді.", en: "Convert Arabic to Roman numerals and back. For text formatting and learning." },
+    keywords: { ru: ["римские цифры", "конвертер римских цифр", "число в римские", "римские цифры онлайн"], kz: ["рим сандары"], en: ["roman numerals", "roman numeral converter", "number to roman"] },
+  },
+  "morse-code": {
+    title: { ru: "Азбука Морзе онлайн — кодировать и декодировать", kz: "Морзе әліпбиі онлайн — кодтау және декодтау", en: "Morse Code Online — Encode and Decode" },
+    description: { ru: "Переведите текст в азбуку Морзе (точки и тире) или расшифруйте код. Для радиолюбителей и обучения. Бесплатно в браузере.", kz: "Мәтінді Морзе әліпбиіне аударыңыз немесе кодты шешіңіз. Тегін.", en: "Convert text to Morse code (dots and dashes) or decode. For radio and learning. Free." },
+    seoIntro: { ru: "Инструмент кодирует текст в азбуку Морзе и декодирует обратно. Поддержка латиницы, цифр и основных знаков. Удобно для изучения и радиосвязи.", kz: "Мәтінді Морзеге кодтайды және декодтайды.", en: "Encode text to Morse and decode back. Supports letters, numbers, basic symbols." },
+    keywords: { ru: ["азбука морзе", "морзе онлайн", "кодировать морзе", "расшифровать морзе"], kz: ["морзе әліпбиі"], en: ["morse code", "morse encoder", "morse decoder"] },
+  },
+  "reverse-text": {
+    title: { ru: "Переворот текста онлайн — написать текст задом наперёд", kz: "Мәтінді аудару онлайн — мәтінді кері жазу", en: "Reverse Text Online — Write Text Backwards" },
+    description: { ru: "Переверните текст задом наперёд: посимвольно или по словам. Для соцсетей, ников, оформления. Бесплатно.", kz: "Мәтінді кері аударыңыз. Тегін.", en: "Reverse text character-by-character or by words. For social, nicknames. Free." },
+    seoIntro: { ru: "Инструмент переворачивает порядок символов или слов в тексте. Результат можно копировать для постов и подписей.", kz: "Мәтінді таңбалар немесе сөздер бойынша кері аударады.", en: "Reverses character or word order. Copy result for posts and captions." },
+    keywords: { ru: ["переворот текста", "текст задом наперёд", "зеркальный текст", "перевернуть слова"], kz: ["мәтінді кері аудару"], en: ["reverse text", "text backwards", "mirror text"] },
+  },
+  "random-picker": {
+    title: { ru: "Случайный выбор онлайн — выбрать один вариант из списка", kz: "Кездейсоқ таңдау онлайн — тізімнен бір нұсқаны таңдау", en: "Random Picker Online — Pick One Option from List" },
+    description: { ru: "Введите варианты (каждый с новой строки) — инструмент случайно выберет один. Для розыгрышей, решений, игр. Бесплатно.", kz: "Нұсқаларды енгізіңіз — кездейсоқ бірін таңдайды. Тегін.", en: "Enter options (one per line) — tool picks one at random. For giveaways, decisions. Free." },
+    seoIntro: { ru: "Случайный выбор помогает выбрать один вариант из списка без предвзятости. Введите варианты через новую строку или запятую.", kz: "Тізімнен кездейсоқ бір нұсқаны таңдайды.", en: "Picks one option from your list at random. Enter options per line or comma." },
+    keywords: { ru: ["случайный выбор", "выбрать из списка", "рандом выбор", "онлайн выбор"], kz: ["кездейсоқ таңдау"], en: ["random picker", "pick from list", "random choice"] },
+  },
+  countdown: {
+    title: { ru: "Обратный отсчёт онлайн — таймер до даты и времени", kz: "Кері санау онлайн — күн мен уақытқа дейін", en: "Countdown Online — Timer to Date and Time" },
+    description: { ru: "Узнайте, сколько осталось до события: укажите дату и время — увидите дни, часы, минуты, секунды. Бесплатно.", kz: "Оқиғаға дейін қанша қалғанын біліңіз. Тегін.", en: "See time left until your event: set date and time — get days, hours, minutes, seconds. Free." },
+    seoIntro: { ru: "Обратный отсчёт показывает время до указанной даты и времени в формате дни:часы:минуты:секунды. Удобно для событий и дедлайнов.", kz: "Көрсетілген күн мен уақытқа дейінгі уақытты көрсетеді.", en: "Shows time until your date and time. Handy for events and deadlines." },
+    keywords: { ru: ["обратный отсчёт", "таймер до даты", "сколько осталось", "countdown онлайн"], kz: ["кері санау"], en: ["countdown", "countdown timer", "time until date"] },
+  },
+  "diff-checker": {
+    title: { ru: "Сравнение текстов онлайн — найти отличия между двумя текстами", kz: "Мәтіндерді салыстыру онлайн — екі мәтін арасындағы айырмашылықтар", en: "Text Diff Checker Online — Find Differences Between Two Texts" },
+    description: { ru: "Вставьте два текста — инструмент покажет, какие строки только в первом, какие во втором. Удобно для сравнения версий. Бесплатно.", kz: "Екі мәтінді салыстырыңыз. Тегін.", en: "Paste two texts — see lines only in A or only in B. For comparing versions. Free." },
+    seoIntro: { ru: "Сравнение текстов по строкам: показываются номера строк, которые есть только в первом или только во втором тексте. Данные не отправляются.", kz: "Мәтіндерді жолдар бойынша салыстырады.", en: "Compares texts by lines. Shows lines only in A or B. Data stays local." },
+    keywords: { ru: ["сравнение текстов", "diff онлайн", "отличия двух текстов", "сравнить текст"], kz: ["мәтіндерді салыстыру"], en: ["text diff", "compare texts", "diff checker"] },
+  },
+  "color-contrast": {
+    title: { ru: "Проверка контраста цветов онлайн — WCAG контрастность", kz: "Түстер контрастын тексеру онлайн — WCAG", en: "Color Contrast Checker Online — WCAG Contrast" },
+    description: { ru: "Проверьте контраст текста и фона по WCAG. Узнайте соотношение и соответствие AA/AAA. Для доступности и дизайна. Бесплатно.", kz: "Мәтін мен фон контрастын WCAG бойынша тексеріңіз. Тегін.", en: "Check text and background contrast per WCAG. Get ratio and AA/AAA compliance. Free." },
+    seoIntro: { ru: "Инструмент вычисляет контрастность пары цветов (текст и фон) и показывает соответствие критериям WCAG (AA, AAA для обычного и крупного текста).", kz: "Түс контрастын есептейді және WCAG сәйкестілігін көрсетеді.", en: "Calculates contrast ratio and WCAG AA/AAA compliance for text and background." },
+    keywords: { ru: ["контраст цветов", "wcag контраст", "проверка контрастности", "доступность цветов"], kz: ["түстер контрасты"], en: ["color contrast", "wcag contrast", "contrast checker"] },
+  },
 };
 
 /** Fallback SEO for tools without explicit TOOL_SEO. Descriptions are full 2–3 sentence paragraphs. */

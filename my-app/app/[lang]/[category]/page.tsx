@@ -3,6 +3,7 @@ import { loadTranslations, getNested } from "@/lib/i18n";
 import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
 import type { Lang } from "@/lib/tools-registry";
 import { ToolIcon } from "@/components/ToolIcon";
+import { FavoriteStar } from "@/components/FavoriteStar";
 import type { Metadata } from "next";
 
 const LANGS = ["ru", "kz", "en"] as const;
@@ -85,23 +86,25 @@ export default async function CategoryPage({
             const tool = TOOLS[toolSlug];
             if (!tool) return null;
             return (
-              <Link
-                key={toolSlug}
-                href={`/${validLang}/${category}/${toolSlug}`}
-                className="tool-card group flex flex-col p-5 h-full"
-              >
-                <div className="flex items-center gap-4 mb-3">
-                  <div className="shrink-0 p-2.5 rounded-xl bg-[var(--accent-muted)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-300">
-                    <ToolIcon toolName={toolSlug} size="md" />
+              <div key={toolSlug} className="relative">
+                <Link
+                  href={`/${validLang}/${category}/${toolSlug}`}
+                  className="tool-card group flex flex-col p-5 h-full"
+                >
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="shrink-0 p-2.5 rounded-xl bg-[var(--accent-muted)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-300">
+                      <ToolIcon toolName={toolSlug} size="md" />
+                    </div>
+                    <span className="font-semibold text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors duration-300">
+                      {t(tool.nameKey)}
+                    </span>
                   </div>
-                  <span className="font-semibold text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors duration-300">
-                    {t(tool.nameKey)}
-                  </span>
-                </div>
-                <p className="text-sm text-[var(--muted)] leading-relaxed flex-1">
-                  {getNested(tData as Record<string, unknown>, tool.descriptionKey.replace(".description", ".cardDescription")) ?? t(tool.descriptionKey)}
-                </p>
-              </Link>
+                  <p className="text-sm text-[var(--muted)] leading-relaxed flex-1">
+                    {getNested(tData as Record<string, unknown>, tool.descriptionKey.replace(".description", ".cardDescription")) ?? t(tool.descriptionKey)}
+                  </p>
+                </Link>
+                <FavoriteStar slug={toolSlug} className="absolute top-3 right-3" />
+              </div>
             );
           })}
         </div>

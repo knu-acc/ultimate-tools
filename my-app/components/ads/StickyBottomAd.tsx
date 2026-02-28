@@ -2,17 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
+import { useAdsConsent } from "@/contexts/AdsConsentContext";
 
 export function StickyBottomAd() {
   const [show, setShow] = useState(false);
+  const { consent } = useAdsConsent();
 
   useEffect(() => {
-    // Only show on client, you can also check viewport width here if only mobile
-    const timer = setTimeout(() => setShow(true), 3000); // Delay showing
+    const timer = setTimeout(() => setShow(true), 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  if (!show) return null;
+  if (!show || consent !== true) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-2 px-2 lg:hidden pointer-events-none">

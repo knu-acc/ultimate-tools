@@ -42,6 +42,33 @@ export function Footer({ lang, translations }: FooterProps) {
           </div>
           <div>
             <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--foreground)]">
+              {t("footer.socialTitle")}
+            </h2>
+            <ul className="mt-3 flex flex-wrap gap-3">
+              <li>
+                <a
+                  href="https://t.me/ultimate_tools"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
+                  aria-label="Telegram"
+                >
+                  Telegram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://vk.com/ultimate_tools"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
+                  aria-label="ВКонтакте"
+                >
+                  ВКонтакте
+                </a>
+              </li>
+            </ul>
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--foreground)] mt-6">
               {t("footer.linksTitle")}
             </h2>
             <ul className="mt-3 space-y-2">
@@ -60,6 +87,30 @@ export function Footer({ lang, translations }: FooterProps) {
                 >
                   {t("footer.popularTools")}
                 </a>
+              </li>
+              <li>
+                <Link
+                  href={`/${lang}/about`}
+                  className="text-sm text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
+                >
+                  {t("footer.aboutLink")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/${lang}/privacy`}
+                  className="text-sm text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
+                >
+                  {t("footer.privacyLink")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/${lang}/terms`}
+                  className="text-sm text-[var(--muted)] transition-colors hover:text-[var(--accent)]"
+                >
+                  {t("footer.termsLink")}
+                </Link>
               </li>
             </ul>
           </div>
