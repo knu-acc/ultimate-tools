@@ -32,36 +32,40 @@ export function DiffCheckerTool({ t }: DiffCheckerToolProps) {
     ? [onlyA.length > 0 ? `${t("onlyInA")}: ${onlyA.join(", ")}` : "", onlyB.length > 0 ? `${t("onlyInB")}: ${onlyB.join(", ")}` : ""].filter(Boolean).join("\n")
     : "";
 
+  const clearBoth = () => { setTextA(""); setTextB(""); };
+  const swap = () => { setTextA(textB); setTextB(textA); };
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Сравнение двух текстов по строкам. Показываются номера строк, которые отличаются в первом и во втором блоке.
+        Сравнение двух текстов по строкам. Показываются номера строк, которые отличаются. Всё в браузере, данные не отправляются.
       </p>
-      <div>
-        <div className="mb-1 flex items-center justify-between">
-          <label className="text-sm font-medium text-[var(--muted)]">{t("textA")}</label>
-          <span className="text-xs text-[var(--muted)]">{lineCountA} {t("lines") || "стр."}</span>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-sm font-medium text-[var(--muted)]">Текст A и Текст B</span>
+          {(textA || textB) ? (
+            <div className="flex gap-2">
+              <button type="button" onClick={swap} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Поменять местами</button>
+              <button type="button" onClick={clearBoth} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Очистить оба</button>
+            </div>
+          ) : null}
         </div>
-        <textarea
-          value={textA}
-          onChange={(e) => setTextA(e.target.value)}
-          placeholder={t("placeholder")}
-          className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono text-sm focus:border-[var(--accent)] focus:outline-none"
-          rows={5}
-        />
-      </div>
-      <div>
-        <div className="mb-1 flex items-center justify-between">
-          <label className="text-sm font-medium text-[var(--muted)]">{t("textB")}</label>
-          <span className="text-xs text-[var(--muted)]">{lineCountB} {t("lines") || "стр."}</span>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <div className="mb-1 flex items-center justify-between">
+              <label className="text-sm font-medium text-[var(--muted)]">Текст A</label>
+              <span className="text-xs text-[var(--muted)]">{lineCountA} {t("lines") || "стр."}</span>
+            </div>
+            <textarea value={textA} onChange={(e) => setTextA(e.target.value)} placeholder={t("placeholder")} className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono text-sm focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]" rows={5} />
+          </div>
+          <div>
+            <div className="mb-1 flex items-center justify-between">
+              <label className="text-sm font-medium text-[var(--muted)]">Текст B</label>
+              <span className="text-xs text-[var(--muted)]">{lineCountB} {t("lines") || "стр."}</span>
+            </div>
+            <textarea value={textB} onChange={(e) => setTextB(e.target.value)} placeholder={t("placeholder")} className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono text-sm focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]" rows={5} />
+          </div>
         </div>
-        <textarea
-          value={textB}
-          onChange={(e) => setTextB(e.target.value)}
-          placeholder={t("placeholder")}
-          className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono text-sm focus:border-[var(--accent)] focus:outline-none"
-          rows={5}
-        />
       </div>
       {(linesA.length > 0 || linesB.length > 0) ? (
         <div className="space-y-2">

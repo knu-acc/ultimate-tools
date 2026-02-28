@@ -15,13 +15,12 @@ type AdsConsentContextValue = {
 const AdsConsentContext = createContext<AdsConsentContextValue | null>(null);
 
 function getStoredConsent(): ConsentState {
-  if (typeof window === "undefined") return null;
+  if (typeof window === "undefined") return true;
   try {
     const v = localStorage.getItem(STORAGE_KEY);
-    if (v === "1" || v === "true") return true;
     if (v === "0" || v === "false") return false;
   } catch {}
-  return null;
+  return true;
 }
 
 export function AdsConsentProvider({ children }: { children: React.ReactNode }) {

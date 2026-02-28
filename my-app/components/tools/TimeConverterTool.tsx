@@ -4,26 +4,21 @@ import { useState } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
 const UNITS: Record<string, number> = {
-  m: 1,
-  km: 1000,
-  cm: 0.01,
-  mm: 0.001,
-  um: 0.000001,
-  nm: 0.000000001,
-  mi: 1609.34,
-  yd: 0.9144,
-  ft: 0.3048,
-  in: 0.0254,
+  sec: 1,
+  min: 60,
+  hr: 3600,
+  day: 86400,
+  week: 604800,
 };
 
-interface LengthConverterToolProps {
+interface TimeConverterToolProps {
   t: (key: string) => string;
 }
 
-export function LengthConverterTool({ t }: LengthConverterToolProps) {
+export function TimeConverterTool({ t }: TimeConverterToolProps) {
   const [value, setValue] = useState("");
-  const [from, setFrom] = useState("m");
-  const [to, setTo] = useState("ft");
+  const [from, setFrom] = useState("min");
+  const [to, setTo] = useState("sec");
 
   const v = parseFloat(value);
   const result = !isNaN(v)
@@ -40,7 +35,9 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">{t("description")}</p>
-      <button type="button" onClick={swap} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{t("swap") || "↔ Поменять"}</button>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={swap} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{t("swap") || "↔ Поменять"}</button>
+      </div>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
           <label className="mb-2 block text-sm">{t("value")}</label>
@@ -85,7 +82,7 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
         </div>
       ) : (
         <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Введите число и выберите единицы «из» и «в» — результат появится ниже.
+          Введите длительность и выберите единицы времени (сек, мин, ч, день, неделя).
         </p>
       )}
     </div>

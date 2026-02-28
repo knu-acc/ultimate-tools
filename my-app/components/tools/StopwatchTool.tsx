@@ -59,15 +59,16 @@ export function StopwatchTool({ t }: StopwatchToolProps) {
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Секундомер с десятыми долями. Пауза и сброс — текущее время можно скопировать для отчётов.
+        Секундомер с десятыми долями секунды. Старт, пауза, сброс и фиксация кругов. Время можно скопировать. Работает только при открытой вкладке.
       </p>
-      <div className="text-center">
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-6 text-center">
         <div className="text-5xl font-mono font-bold text-[var(--accent)]">
           {String(m).padStart(2, "0")}:{String(s).padStart(2, "0")}.{String(mil).padStart(2, "0")}
         </div>
       </div>
-      <div className="flex flex-wrap justify-center items-center gap-2">
-        <CopyButton text={timeStr} label="Копировать время" />
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="flex flex-wrap justify-center items-center gap-2">
+          <CopyButton text={timeStr} label="Копировать время" />
         <button
           onClick={() => setRunning(!running)}
           className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white"
@@ -77,21 +78,26 @@ export function StopwatchTool({ t }: StopwatchToolProps) {
         </button>
         <button
           onClick={reset}
-          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2"
+          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20"
         >
           <RotateCcw className="h-4 w-4" />
           {t("reset")}
         </button>
         <button
           onClick={addLap}
-          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2"
+          disabled={!running}
+          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20 disabled:opacity-50"
         >
           {t("lap") || "Круг"}
         </button>
+        </div>
       </div>
       {laps.length > 0 && (
         <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
-          <div className="text-sm font-medium text-[var(--muted)] mb-2">{t("laps") || "Круги"}</div>
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm font-medium text-[var(--muted)]">{t("laps") || "Круги"}</span>
+            <CopyButton text={laps.map((lap, i) => `${i + 1}. ${formatLap(lap)}`).join("\n")} label="Копировать круги" />
+          </div>
           <ul className="space-y-1 font-mono text-sm">
             {laps.map((lap, i) => (
               <li key={i}>{i + 1}. {formatLap(lap)}</li>

@@ -31,55 +31,80 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
 
   const [result, setResult] = useState("");
 
+  const wordCount = result ? result.trim().split(/\s+/).filter(Boolean).length : 0;
+  const countPresets =
+    mode === "paragraphs"
+      ? [1, 3, 5, 10]
+      : mode === "sentences"
+        ? [1, 3, 5, 10]
+        : [5, 10, 25, 50];
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Классический плейсхолдер для макетов: задайте количество и единицу (абзацы, предложения, слова), нажмите «Сгенерировать».
+        Классический плейсхолдер для макетов. Выберите режим (абзацы, предложения, слова), укажите количество или пресет — нажмите «Сгенерировать».
       </p>
-      <div className="flex flex-wrap gap-4">
-        <div>
-          <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("count")}</label>
-          <input
-            type="number"
-            min={1}
-            max={50}
-            value={count}
-            onChange={(e) => setCount(Number(e.target.value) || 1)}
-            className="w-24 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
-          />
-        </div>
-        <div>
-          <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("mode")}</label>
-          <select
-            value={mode}
-            onChange={(e) => setMode(e.target.value as typeof mode)}
-            className="rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="mb-3 flex flex-wrap items-end gap-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("mode")}</label>
+            <select
+              value={mode}
+              onChange={(e) => setMode(e.target.value as typeof mode)}
+              className="rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+            >
+              <option value="paragraphs">{t("paragraphs")}</option>
+              <option value="sentences">{t("sentences")}</option>
+              <option value="words">{t("words")}</option>
+            </select>
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("count")}</label>
+            <div className="flex flex-wrap items-center gap-2">
+              <input
+                type="number"
+                min={1}
+                max={50}
+                value={count}
+                onChange={(e) => setCount(Number(e.target.value) || 1)}
+                className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+              />
+              {countPresets.map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => setCount(n)}
+                  className={`rounded-lg border px-3 py-2 text-sm font-medium ${count === n ? "border-[var(--accent)] bg-[var(--accent)]/20" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+          </div>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={startWithLorem} onChange={(e) => setStartWithLorem(e.target.checked)} className="rounded" />
+            <span className="text-sm text-[var(--muted)]">{t("startWithLorem") || "Начать с Lorem ipsum"}</span>
+          </label>
+          <motion.button
+            type="button"
+            onClick={() => setResult(generate())}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white"
           >
-            <option value="paragraphs">{t("paragraphs")}</option>
-            <option value="sentences">{t("sentences")}</option>
-            <option value="words">{t("words")}</option>
-          </select>
+            Сгенерировать
+          </motion.button>
         </div>
-        <label className="flex items-center gap-2 self-end">
-          <input type="checkbox" checked={startWithLorem} onChange={(e) => setStartWithLorem(e.target.checked)} className="rounded" />
-          <span className="text-sm text-[var(--muted)]">{t("startWithLorem") || "Начать с Lorem ipsum"}</span>
-        </label>
-        <motion.button
-          type="button"
-          onClick={() => setResult(generate())}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="self-end rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white"
-        >
-          Сгенерировать
-        </motion.button>
       </div>
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
-          {result ? <CopyButton text={result} label="Копировать текст" /> : null}
+          <div className="flex items-center gap-3">
+            {result && <span className="text-xs text-[var(--muted)]">Слов: {wordCount}</span>}
+            {result ? <CopyButton text={result} label="Копировать текст" /> : null}
+          </div>
         </div>
-        <div className="min-h-[120px] select-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-[var(--foreground)]">
+        <div className="min-h-[120px] select-all rounded-lg border border-[var(--border)] bg-transparent p-4 text-[var(--foreground)]">
           {result || <span className="text-[var(--muted)]">Нажмите «Сгенерировать», чтобы получить текст</span>}
         </div>
       </div>

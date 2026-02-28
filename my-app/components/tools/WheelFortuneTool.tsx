@@ -40,14 +40,23 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-xs text-[var(--muted)]">Варианты — по одному на строку или через запятую.</p>
-      <textarea
-        value={items}
-        onChange={(e) => setItems(e.target.value)}
-        placeholder={t("placeholder")}
-        className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
-        rows={5}
-      />
+      <p className="text-sm text-[var(--muted)]">
+        Колесо фортуны для честного случайного выбора. Введите минимум 2 варианта (каждый с новой строки или через запятую). Результат генерируется в браузере.
+      </p>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Варианты на колесе</label>
+        <textarea
+          value={items}
+          onChange={(e) => setItems(e.target.value)}
+          placeholder={t("placeholder")}
+          className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          rows={5}
+        />
+        {n > 0 && n < 2 && (
+          <p className="mt-2 text-sm text-amber-600 dark:text-amber-400">Добавьте минимум 2 варианта для вращения.</p>
+        )}
+        {n >= 2 && <p className="mt-2 text-xs text-[var(--muted)]">Вариантов: {n}</p>}
+      </div>
       <div className="flex flex-col items-center gap-6">
         {n > 0 && (
           <div className="relative">
@@ -80,7 +89,7 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
         )}
         <motion.button
           onClick={spin}
-          disabled={spinning || list.length === 0}
+          disabled={spinning || list.length < 2}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white disabled:opacity-70"
@@ -92,14 +101,17 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="rounded-xl border-2 border-[var(--accent)] bg-[var(--accent)]/10 p-6 text-center"
+          className="rounded-xl border-2 border-[var(--accent)] bg-[var(--accent-muted)]/30 p-6 text-center"
         >
-          <p className="text-xl font-bold mb-2">{result}</p>
+          <p className="mb-1 text-sm font-medium text-[var(--muted)]">{t("result")}</p>
+          <p className="text-xl font-bold mb-3">{result}</p>
           <CopyButton text={result} />
         </motion.div>
       )}
       {lastResult && !result && !spinning && (
-        <p className="text-sm text-[var(--muted)]">{t("lastResult") || "Предыдущий результат"}: {lastResult}</p>
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <p className="text-sm font-medium text-[var(--muted)]">{t("lastResult") || "Предыдущий результат"}: {lastResult}</p>
+        </div>
       )}
     </div>
   );

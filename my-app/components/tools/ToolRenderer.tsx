@@ -25,6 +25,7 @@ import { VatCalcTool } from "./VatCalcTool";
 import { NumberSystemsTool } from "./NumberSystemsTool";
 import { ColorPickerTool } from "./ColorPickerTool";
 import { CssGradientsTool } from "./CssGradientsTool";
+import { RulerTool } from "./RulerTool";
 import { Base64Tool } from "./Base64Tool";
 import { ImageCompressTool } from "./ImageCompressTool";
 import { FaviconGenTool } from "./FaviconGenTool";
@@ -39,7 +40,16 @@ import { CharLimitsTool } from "./CharLimitsTool";
 import { WaLinkGeneratorTool } from "./WaLinkGeneratorTool";
 import { WeightConverterTool } from "./WeightConverterTool";
 import { LengthConverterTool } from "./LengthConverterTool";
+import { VolumeConverterTool } from "./VolumeConverterTool";
 import { CurrencyConverterTool } from "./CurrencyConverterTool";
+import { TemperatureConverterTool } from "./TemperatureConverterTool";
+import { AreaConverterTool } from "./AreaConverterTool";
+import { SpeedConverterTool } from "./SpeedConverterTool";
+import { DataConverterTool } from "./DataConverterTool";
+import { TimeConverterTool } from "./TimeConverterTool";
+import { PressureConverterTool } from "./PressureConverterTool";
+import { EnergyConverterTool } from "./EnergyConverterTool";
+import { AngleConverterTool } from "./AngleConverterTool";
 import { RomanNumeralsTool } from "./RomanNumeralsTool";
 import { Md5Tool } from "./Md5Tool";
 import { Sha256Tool } from "./Sha256Tool";
@@ -54,7 +64,6 @@ import { CountdownTool } from "./CountdownTool";
 import { TipCalculatorTool } from "./TipCalculatorTool";
 import { QrGeneratorTool } from "./QrGeneratorTool";
 import { DiffCheckerTool } from "./DiffCheckerTool";
-import { VolumeConverterTool } from "./VolumeConverterTool";
 const TOOL_COMPONENTS: Record<string, React.ComponentType<{ t: (k: string) => string }>> = {
   "random-number": RandomNumberTool,
   "word-counter": WordCounterTool,
@@ -85,6 +94,7 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType<{ t: (k: string) => st
   "number-systems": NumberSystemsTool,
   "color-picker": ColorPickerTool,
   "css-gradients": CssGradientsTool,
+  ruler: RulerTool,
   base64: Base64Tool,
   "qr-generator": QrGeneratorTool,
   "image-compress": ImageCompressTool,
@@ -103,6 +113,14 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType<{ t: (k: string) => st
   "length-converter": LengthConverterTool,
   "volume-converter": VolumeConverterTool,
   "currency-converter": CurrencyConverterTool,
+  "temperature-converter": TemperatureConverterTool,
+  "area-converter": AreaConverterTool,
+  "speed-converter": SpeedConverterTool,
+  "data-converter": DataConverterTool,
+  "time-converter": TimeConverterTool,
+  "pressure-converter": PressureConverterTool,
+  "energy-converter": EnergyConverterTool,
+  "angle-converter": AngleConverterTool,
   "roman-numerals": RomanNumeralsTool,
   md5: Md5Tool,
   sha256: Sha256Tool,

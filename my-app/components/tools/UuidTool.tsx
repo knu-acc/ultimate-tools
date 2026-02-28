@@ -36,28 +36,45 @@ export function UuidTool({ t }: UuidToolProps) {
     setUuids(Array.from({ length: count }, () => format(generateUUID())));
   };
 
+  const countPresets = [1, 5, 10, 20];
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-4 items-center">
-        <div>
-          <label className="mb-2 block text-sm">{t("count")}</label>
+      <p className="text-sm text-[var(--muted)]">
+        Генерация UUID v4 в браузере. Идентификаторы криптографически случайные. Данные никуда не отправляются.
+      </p>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">{t("count")}</span>
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          {countPresets.map((n) => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => setCount(n)}
+              className={`rounded-lg border px-3 py-2 text-sm font-medium ${count === n ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+            >
+              {n}
+            </button>
+          ))}
           <input
             type="number"
             min={1}
             max={50}
             value={count}
             onChange={(e) => setCount(Math.min(50, Math.max(1, Number(e.target.value) || 1)))}
-            className="w-24 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
+            className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 text-center focus:border-[var(--accent)]"
           />
         </div>
-        <label className="flex items-center gap-2">
-          <input type="checkbox" checked={uppercase} onChange={(e) => setUppercase(e.target.checked)} />
-          <span className="text-sm">{t("uppercase") || "ЗАГЛАВНЫЕ"}</span>
-        </label>
-        <label className="flex items-center gap-2">
-          <input type="checkbox" checked={noDashes} onChange={(e) => setNoDashes(e.target.checked)} />
-          <span className="text-sm">{t("noDashes") || "Без дефисов"}</span>
-        </label>
+        <div className="flex flex-wrap gap-4">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={uppercase} onChange={(e) => setUppercase(e.target.checked)} className="rounded" />
+            <span className="text-sm">{t("uppercase") || "ЗАГЛАВНЫЕ"}</span>
+          </label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" checked={noDashes} onChange={(e) => setNoDashes(e.target.checked)} className="rounded" />
+            <span className="text-sm">{t("noDashes") || "Без дефисов"}</span>
+          </label>
+        </div>
       </div>
       <motion.button
         onClick={generate}
@@ -68,18 +85,20 @@ export function UuidTool({ t }: UuidToolProps) {
         {t("generate")}
       </motion.button>
       {uuids.length > 0 && (
-        <div className="space-y-2">
-          <div className="flex justify-end">
-            <CopyButton text={uuids.join("\n")} />
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="mb-2 flex justify-end">
+            <CopyButton text={uuids.join("\n")} label="Копировать все" />
           </div>
-          {uuids.map((id, i) => (
-            <div
-              key={i}
-              className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-3 font-mono text-sm"
-            >
-              {id}
-            </div>
-          ))}
+          <div className="space-y-2">
+            {uuids.map((id, i) => (
+              <div
+                key={i}
+                className="cursor-pointer select-all rounded-lg border border-[var(--border)] bg-[var(--background)] p-3 font-mono text-sm"
+              >
+                {id}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

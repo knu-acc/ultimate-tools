@@ -13,76 +13,95 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
   const [toBase, setToBase] = useState(16);
   const [result, setResult] = useState("");
 
+  const isValidForBase = (str: string, base: number): boolean => {
+    if (!str.trim()) return false;
+    const digits = "0123456789ABCDEF".slice(0, base);
+    return str.toUpperCase().split("").every((c) => digits.includes(c));
+  };
+
   const convert = () => {
-    const num = parseInt(value, fromBase);
+    const trimmed = value.trim();
+    if (!trimmed || !isValidForBase(trimmed, fromBase)) return;
+    const num = parseInt(trimmed, fromBase);
     if (isNaN(num)) return;
     setResult(num.toString(toBase).toUpperCase());
   };
 
   const decimalValue = (() => {
-    const num = parseInt(value, fromBase);
+    if (!value.trim() || !isValidForBase(value.trim(), fromBase)) return null;
+    const num = parseInt(value.trim(), fromBase);
     return isNaN(num) ? null : num;
   })();
+
+  const basePresets = [
+    { label: "255 → hex", from: 10, to: 16, val: "255" },
+    { label: "FF → dec", from: 16, to: 10, val: "FF" },
+    { label: "1010 → dec", from: 2, to: 10, val: "1010" },
+  ];
 
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Перевод числа между системами: двоичная (2), восьмеричная (8), десятичная (10), шестнадцатеричная (16). Введите число в исходной системе и нажмите «Конвертировать».
+        Перевод числа между системами счисления: 2 (двоичная), 8 (восьмеричная), 10 (десятичная), 16 (шестнадцатеричная). Введите число в исходной системе, выберите целевую — нажмите «Конвертировать». Цифры должны соответствовать выбранной системе.
       </p>
-      <div>
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("value")}</label>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <span className="mb-2 block text-sm font-medium text-[var(--muted)]">Быстрые примеры</span>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {basePresets.map(({ label, from, to, val }) => (
+            <button key={label} type="button" onClick={() => { setFromBase(from); setToBase(to); setValue(val); setResult(""); }} className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium hover:bg-[var(--border)]/20">
+              {label}
+            </button>
+          ))}
+        </div>
+        <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("value")}</label>
         <input
           type="text"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono"
+          placeholder="Число в выбранной системе"
+          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
         />
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="mb-2 block text-sm">{t("fromBase")}</label>
-          <select
-            value={fromBase}
-            onChange={(e) => setFromBase(Number(e.target.value))}
-            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
-          >
-            {[2, 8, 10, 16].map((n) => (
-              <option key={n} value={n}>{n}</option>
-            ))}
-          </select>
+        {value.trim() && !isValidForBase(value.trim(), fromBase) && (
+          <p className="mt-1 text-xs text-amber-600 dark:text-amber-400">Недопустимые символы для системы с основанием {fromBase}</p>
+        )}
+        <div className="grid gap-4 sm:grid-cols-2 mt-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("fromBase")}</label>
+            <select value={fromBase} onChange={(e) => setFromBase(Number(e.target.value))} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)]">
+              {[2, 8, 10, 16].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("toBase")}</label>
+            <select value={toBase} onChange={(e) => setToBase(Number(e.target.value))} className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)]">
+              {[2, 8, 10, 16].map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div>
-          <label className="mb-2 block text-sm">{t("toBase")}</label>
-          <select
-            value={toBase}
-            onChange={(e) => setToBase(Number(e.target.value))}
-            className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
-          >
-            {[2, 8, 10, 16].map((n) => (
-              <option key={n} value={n}>{n}</option>
-            ))}
-          </select>
-        </div>
+        <button onClick={convert} className="mt-4 rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white hover:opacity-90">
+          {t("convert")}
+        </button>
       </div>
-      <button
-        onClick={convert}
-        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
-      >
-        {t("convert")}
-      </button>
-      {decimalValue !== null && value && (
-        <p className="text-sm text-[var(--muted)]">{t("decimalValue") || "В десятичной"}: {decimalValue}</p>
+      {decimalValue !== null && value.trim() && (
+        <p className="text-sm text-[var(--muted)]">{t("decimalValue") || "В десятичной"}: <span className="font-mono font-medium">{decimalValue}</span></p>
       )}
       {result ? (
-        <div className="space-y-2">
-          <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>
-          <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 font-mono text-xl">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm font-medium text-[var(--muted)]">Результат</span>
+            <CopyButton text={result} label="Копировать" />
+          </div>
+          <div className="rounded-lg border border-[var(--accent)] bg-[var(--accent)]/10 p-4 font-mono text-xl">
             {result}
           </div>
         </div>
       ) : (
         <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Введите число (например 255 в десятичной), выберите исходную и целевую систему счисления — нажмите «Конвертировать».
+          Введите число, выберите исходную и целевую систему, нажмите «Конвертировать».
         </p>
       )}
     </div>

@@ -65,73 +65,88 @@ export function PasswordGeneratorTool({ t }: PasswordGeneratorToolProps) {
     );
   };
 
+  const lengthPresets = [12, 16, 20, 24];
+
   return (
     <div className="space-y-6">
-      <label className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          checked={passphraseMode}
-          onChange={(e) => setPassphraseMode(e.target.checked)}
-        />
-        {t("passphraseMode") || "Режим парольной фразы (слова)"}
-      </label>
-      {passphraseMode ? (
-        <div className="flex flex-wrap gap-4 items-center">
-          <div>
-            <label className="block text-sm text-[var(--muted)]">{t("wordCount") || "Слов"}</label>
-            <input
-              type="number"
-              min={3}
-              max={10}
-              value={wordCount}
-              onChange={(e) => setWordCount(Number(e.target.value) || 3)}
-              className="w-20 rounded-lg border border-[var(--border)] px-2 py-1"
-            />
+      <p className="text-sm text-[var(--muted)]">
+        Пароль создаётся в вашем браузере и никуда не передаётся. Рекомендуется длина от 12 символов, буквы разных регистров, цифры и символы.
+      </p>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={passphraseMode}
+            onChange={(e) => setPassphraseMode(e.target.checked)}
+          />
+          <span className="text-sm">{t("passphraseMode") || "Режим парольной фразы (слова)"}</span>
+        </label>
+        {passphraseMode ? (
+          <div className="mt-4 flex flex-wrap gap-4 items-center">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("wordCount") || "Слов"}</label>
+              <input
+                type="number"
+                min={3}
+                max={10}
+                value={wordCount}
+                onChange={(e) => setWordCount(Number(e.target.value) || 3)}
+                className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-2 py-2 focus:border-[var(--accent)]"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("separator") || "Разделитель"}</label>
+              <input
+                type="text"
+                maxLength={2}
+                value={separator}
+                onChange={(e) => setSeparator(e.target.value || "-")}
+                className="w-16 rounded-lg border border-[var(--border)] bg-transparent px-2 py-2 text-center focus:border-[var(--accent)]"
+              />
+            </div>
           </div>
-          <div>
-            <label className="block text-sm text-[var(--muted)]">{t("separator") || "Разделитель"}</label>
-            <input
-              type="text"
-              maxLength={2}
-              value={separator}
-              onChange={(e) => setSeparator(e.target.value || "-")}
-              className="w-16 rounded-lg border border-[var(--border)] px-2 py-1 text-center"
-            />
-          </div>
-        </div>
-      ) : (
-        <>
-          <div>
-            <label className="mb-2 block text-sm">{t("length")}</label>
-            <input
-              type="range"
-              min={6}
-              max={64}
-              value={length}
-              onChange={(e) => setLength(Number(e.target.value))}
-              className="w-full"
-            />
-            <span className="ml-2 text-sm">{length}</span>
-          </div>
-          <div className="flex flex-wrap gap-4">
-            {[
-              { key: "lower", val: useLower, set: setUseLower },
-              { key: "upper", val: useUpper, set: setUseUpper },
-              { key: "digits", val: useDigits, set: setUseDigits },
-              { key: "symbols", val: useSymbols, set: setUseSymbols },
-            ].map(({ key, val, set }) => (
-              <label key={key} className="flex items-center gap-2">
+        ) : (
+          <>
+            <div className="mt-4">
+              <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("length")}</label>
+              <div className="flex flex-wrap items-center gap-2">
+                {lengthPresets.map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    onClick={() => setLength(n)}
+                    className={`rounded-lg border px-3 py-2 text-sm font-medium ${length === n ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+                  >
+                    {n}
+                  </button>
+                ))}
                 <input
-                  type="checkbox"
-                  checked={val}
-                  onChange={(e) => set(e.target.checked)}
+                  type="range"
+                  min={6}
+                  max={64}
+                  value={length}
+                  onChange={(e) => setLength(Number(e.target.value))}
+                  className="h-2 flex-1 min-w-[100px] accent-[var(--accent)]"
                 />
-                {t(key)}
-              </label>
-            ))}
-          </div>
-        </>
-      )}
+                <span className="tabular-nums text-sm text-[var(--muted)]">{length}</span>
+              </div>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-4">
+              {[
+                { key: "lower", val: useLower, set: setUseLower },
+                { key: "upper", val: useUpper, set: setUseUpper },
+                { key: "digits", val: useDigits, set: setUseDigits },
+                { key: "symbols", val: useSymbols, set: setUseSymbols },
+              ].map(({ key, val, set }) => (
+                <label key={key} className="flex items-center gap-2">
+                  <input type="checkbox" checked={val} onChange={(e) => set(e.target.checked)} className="rounded" />
+                  <span className="text-sm">{t(key)}</span>
+                </label>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
       <motion.button
         onClick={generate}
         whileHover={{ scale: 1.02 }}
@@ -142,9 +157,9 @@ export function PasswordGeneratorTool({ t }: PasswordGeneratorToolProps) {
         {t("generate")}
       </motion.button>
       {password && (
-        <div className="space-y-2">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 space-y-3">
           <div className="flex items-center justify-between gap-2">
-            <span className="text-sm text-[var(--muted)]">{t("strength") || "Надёжность"}: {strengthLabel}</span>
+            <span className="text-sm font-medium text-[var(--muted)]">{t("strength") || "Надёжность"}: {strengthLabel}</span>
             <div className="flex gap-0.5">
               {[1, 2, 3, 4, 5].map((i) => (
                 <div
@@ -155,8 +170,8 @@ export function PasswordGeneratorTool({ t }: PasswordGeneratorToolProps) {
               ))}
             </div>
           </div>
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono relative">
-            <div className="pr-20 break-all select-all">{password}</div>
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono relative">
+            <div className="pr-12 break-all select-all text-sm">{password}</div>
             <div className="absolute top-2 right-2">
               <CopyButton text={password} />
             </div>

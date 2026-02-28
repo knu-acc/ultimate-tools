@@ -3,33 +3,26 @@
 import { useState } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
+const RAD = 1;
 const UNITS: Record<string, number> = {
-  m: 1,
-  km: 1000,
-  cm: 0.01,
-  mm: 0.001,
-  um: 0.000001,
-  nm: 0.000000001,
-  mi: 1609.34,
-  yd: 0.9144,
-  ft: 0.3048,
-  in: 0.0254,
+  deg: Math.PI / 180,
+  rad: 1,
+  grad: Math.PI / 200,
 };
 
-interface LengthConverterToolProps {
+interface AngleConverterToolProps {
   t: (key: string) => string;
 }
 
-export function LengthConverterTool({ t }: LengthConverterToolProps) {
+export function AngleConverterTool({ t }: AngleConverterToolProps) {
   const [value, setValue] = useState("");
-  const [from, setFrom] = useState("m");
-  const [to, setTo] = useState("ft");
+  const [from, setFrom] = useState("deg");
+  const [to, setTo] = useState("rad");
 
   const v = parseFloat(value);
   const result = !isNaN(v)
-    ? ((v * UNITS[from]) / UNITS[to]).toFixed(4)
+    ? ((v * UNITS[from]) / UNITS[to]).toFixed(6)
     : "";
-
   const resultLine = result ? `${value} ${from} = ${result} ${to}` : "";
 
   const swap = () => {
@@ -85,7 +78,7 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
         </div>
       ) : (
         <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Введите число и выберите единицы «из» и «в» — результат появится ниже.
+          Введите угол и выберите единицы: градусы (°), радианы (rad), грады (grad).
         </p>
       )}
     </div>

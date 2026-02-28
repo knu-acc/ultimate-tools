@@ -32,11 +32,15 @@ function transliterate(text: string, map: Record<string, string>): string {
 export function TranslitTool({ t }: TranslitToolProps) {
   const [text, setText] = useState("");
   const [direction, setDirection] = useState<"ru-en" | "en-ru">("ru-en");
+  const [forUrl, setForUrl] = useState(false);
 
-  const result =
+  let result =
     direction === "ru-en"
       ? transliterate(text, RU_TO_EN)
       : transliterate(text, EN_TO_RU);
+  if (forUrl && result) {
+    result = result.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+  }
 
   const swap = () => {
     setText(result);
@@ -46,21 +50,26 @@ export function TranslitTool({ t }: TranslitToolProps) {
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Перевод по правилам ГОСТ: кириллица в латиницу для загранпаспорта и URL или обратно.
+        Транслитерация по ГОСТ: кириллица ↔ латиница. Выберите направление и при необходимости «Для URL» — результат в нижнем регистре, пробелы в дефисы, без спецсимволов.
       </p>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-3">
+        <span className="text-sm font-medium text-[var(--muted)]">Направление:</span>
         <button
           onClick={() => setDirection("ru-en")}
           className={`rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${direction === "ru-en" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
         >
-          {t("ruToEn")}
+          {t("ruToEn")} (рус → латиница)
         </button>
         <button
           onClick={() => setDirection("en-ru")}
           className={`rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${direction === "en-ru" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
         >
-          {t("enToRu")}
+          {t("enToRu")} (латиница → рус)
         </button>
+        <label className="flex items-center gap-2">
+          <input type="checkbox" checked={forUrl} onChange={(e) => setForUrl(e.target.checked)} className="rounded" />
+          <span className="text-sm text-[var(--muted)]">Для URL (нижний регистр, дефисы)</span>
+        </label>
         {result && (
           <button
             type="button"
@@ -71,22 +80,23 @@ export function TranslitTool({ t }: TranslitToolProps) {
           </button>
         )}
       </div>
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder={t("placeholder")}
-        className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
-        rows={5}
-      />
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Исходный текст</label>
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={direction === "ru-en" ? "Введите русский текст..." : "Введите латиницу..."}
+          className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          rows={5}
+        />
+      </div>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="mb-2 flex items-center justify-between">
           <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
           {result ? <CopyButton text={result} label="Скопировать" /> : null}
         </div>
-        <div className="min-h-[80px] rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono text-[var(--foreground)]">
-          {result || (
-            <span className="text-[var(--muted)]">Результат транслитерации появится здесь</span>
-          )}
+        <div className="min-h-[80px] rounded-lg border border-[var(--border)] bg-transparent p-4 font-mono text-[var(--foreground)]">
+          {result || <span className="text-[var(--muted)]">Результат появится здесь</span>}
         </div>
       </div>
     </div>

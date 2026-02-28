@@ -36,12 +36,15 @@ export function WorldTimeTool({ t }: WorldTimeToolProps) {
   }).join("\n");
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Текущее время в разных часовых поясах. Обновляется каждую секунду; можно скопировать одну строку или всё.
+        Текущее время в разных городах (смещение от UTC). Обновляется каждую секунду. Можно скопировать одну зону или все сразу. Учёт летнего времени зависит от браузера.
       </p>
-      <div className="mb-2 flex justify-end">
-        <CopyButton text={allLines} label="Копировать все зоны" />
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-sm font-medium text-[var(--muted)]">Часовые пояса</span>
+          <CopyButton text={allLines} label="Копировать все зоны" />
+        </div>
       </div>
       {ZONES.map(({ name, offset }) => {
         const d = new Date(now.getTime() + offset * 60 * 60 * 1000);

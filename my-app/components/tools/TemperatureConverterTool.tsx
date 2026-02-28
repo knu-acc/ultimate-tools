@@ -3,34 +3,32 @@
 import { useState } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
-const UNITS: Record<string, number> = {
-  m: 1,
-  km: 1000,
-  cm: 0.01,
-  mm: 0.001,
-  um: 0.000001,
-  nm: 0.000000001,
-  mi: 1609.34,
-  yd: 0.9144,
-  ft: 0.3048,
-  in: 0.0254,
-};
+function toKelvin(val: number, from: string): number {
+  if (from === "K") return val;
+  if (from === "C") return val + 273.15;
+  if (from === "F") return (val - 32) * (5 / 9) + 273.15;
+  return val;
+}
+function fromKelvin(k: number, to: string): number {
+  if (to === "K") return k;
+  if (to === "C") return k - 273.15;
+  if (to === "F") return (k - 273.15) * (9 / 5) + 32;
+  return k;
+}
 
-interface LengthConverterToolProps {
+interface TemperatureConverterToolProps {
   t: (key: string) => string;
 }
 
-export function LengthConverterTool({ t }: LengthConverterToolProps) {
+export function TemperatureConverterTool({ t }: TemperatureConverterToolProps) {
   const [value, setValue] = useState("");
-  const [from, setFrom] = useState("m");
-  const [to, setTo] = useState("ft");
+  const [from, setFrom] = useState("C");
+  const [to, setTo] = useState("F");
 
   const v = parseFloat(value);
-  const result = !isNaN(v)
-    ? ((v * UNITS[from]) / UNITS[to]).toFixed(4)
-    : "";
-
-  const resultLine = result ? `${value} ${from} = ${result} ${to}` : "";
+  const k = !isNaN(v) ? toKelvin(v, from) : NaN;
+  const result = !isNaN(k) ? fromKelvin(k, to).toFixed(4) : "";
+  const resultLine = result ? `${value} °${from} = ${result} °${to}` : "";
 
   const swap = () => {
     setFrom(to);
@@ -58,9 +56,9 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
             onChange={(e) => setFrom(e.target.value)}
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
           >
-            {Object.keys(UNITS).map((u) => (
-              <option key={u} value={u}>{t(`unit_${u}`) || u}</option>
-            ))}
+            <option value="C">{t("unit_C")}</option>
+            <option value="F">{t("unit_F")}</option>
+            <option value="K">{t("unit_K")}</option>
           </select>
         </div>
         <div>
@@ -70,9 +68,9 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
             onChange={(e) => setTo(e.target.value)}
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
           >
-            {Object.keys(UNITS).map((u) => (
-              <option key={u} value={u}>{t(`unit_${u}`) || u}</option>
-            ))}
+            <option value="C">{t("unit_C")}</option>
+            <option value="F">{t("unit_F")}</option>
+            <option value="K">{t("unit_K")}</option>
           </select>
         </div>
       </div>
@@ -80,12 +78,12 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
         <div className="space-y-2">
           <div className="flex justify-end"><CopyButton text={resultLine} label="Копировать" /></div>
           <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 text-xl font-bold tabular-nums">
-            {result} {to}
+            {result} °{to}
           </div>
         </div>
       ) : (
         <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Введите число и выберите единицы «из» и «в» — результат появится ниже.
+          Введите значение и выберите единицы «из» и «в».
         </p>
       )}
     </div>

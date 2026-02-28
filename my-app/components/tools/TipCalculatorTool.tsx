@@ -28,60 +28,57 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Чаевые от суммы счёта: укажите сумму, процент чаевых и количество человек — итог и доля с человека обновляются автоматически.
+        Чаевые от суммы счёта: укажите сумму, процент (или пресет) и число гостей — итог и доля с человека обновляются автоматически. Можно округлить итог. Всё считается в браузере.
       </p>
-      <div>
-        <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("bill")}</label>
-        <input
-          type="number"
-          min="0"
-          step="0.01"
-          value={bill}
-          onChange={(e) => setBill(e.target.value)}
-          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none"
-        />
-      </div>
-      <div>
-        <label className="mb-1 block text-sm font-medium">{t("tipPercent")} (%)</label>
-        <input
-          type="number"
-          min="0"
-          max="100"
-          value={percent}
-          onChange={(e) => setPercent(Number(e.target.value) || 0)}
-          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none"
-        />
-      </div>
-      <div>
-        <label className="mb-1 block text-sm font-medium">{t("people")}</label>
-        <input
-          type="number"
-          min="1"
-          value={people}
-          onChange={(e) => setPeople(Math.max(1, Number(e.target.value) || 1))}
-          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none"
-        />
-      </div>
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-sm text-[var(--muted)]">{t("tipPresets") || "Чаевые %"}:</span>
-        {[5, 10, 15, 20].map((p) => (
-          <button key={p} type="button" onClick={() => setPercent(p)} className={`rounded-lg px-3 py-1.5 text-sm ${percent === p ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}>{p}%</button>
-        ))}
-      </div>
-      <div>
-        <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("roundTotal") || "Округлить итог до"}</label>
-        <select value={roundTo} onChange={(e) => setRoundTo(Number(e.target.value))} className="rounded-lg border border-[var(--border)] bg-transparent px-3 py-2">
-          <option value={0}>{t("noRound") || "Не округлять"}</option>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={50}>50</option>
-          <option value={100}>100</option>
-        </select>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Счёт и настройки</span>
+        <div className="grid gap-4 sm:grid-cols-2 mb-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("bill")}</label>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              value={bill}
+              onChange={(e) => setBill(e.target.value)}
+              placeholder="Сумма счёта"
+              className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("tipPercent")} (%)</label>
+            <div className="flex flex-wrap items-center gap-2">
+              <input type="number" min="0" max="100" value={percent} onChange={(e) => setPercent(Number(e.target.value) || 0)} className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]" />
+              {[5, 10, 15, 20].map((p) => (
+                <button key={p} type="button" onClick={() => setPercent(p)} className={`rounded-lg px-3 py-2 text-sm font-medium ${percent === p ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}>{p}%</button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-4 mb-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("people")}</label>
+            <input type="number" min="1" value={people} onChange={(e) => setPeople(Math.max(1, Number(e.target.value) || 1))} className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]" />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("roundTotal") || "Округлить итог до"}</label>
+            <select value={roundTo} onChange={(e) => setRoundTo(Number(e.target.value))} className="rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]">
+              <option value={0}>{t("noRound") || "Не округлять"}</option>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </select>
+          </div>
+        </div>
       </div>
       {amount > 0 ? (
-        <div className="space-y-2">
-          <div className="flex justify-end"><CopyButton text={summary} label="Копировать расчёт" /></div>
-          <div className="space-y-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-sm font-medium text-[var(--muted)]">Результат</span>
+            <CopyButton text={summary} label="Копировать расчёт" />
+          </div>
+          <div className="space-y-2 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
             <div className="flex justify-between text-sm">
               <span className="text-[var(--muted)]">{t("tip")}</span>
               <span className="font-medium tabular-nums">{tip.toFixed(2)}</span>
@@ -100,7 +97,7 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
         </div>
       ) : (
         <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Введите сумму счёта — чаевые и итог появятся ниже. Можно указать число гостей для расчёта с человека.
+          Введите сумму счёта — чаевые и итог появятся ниже.
         </p>
       )}
     </div>

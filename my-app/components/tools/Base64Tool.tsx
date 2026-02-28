@@ -64,32 +64,35 @@ export function Base64Tool({ t }: Base64ToolProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-4 items-center justify-between">
-        <div className="flex gap-2">
-          <button
-            onClick={() => setMode("encode")}
-            className={`rounded-xl px-4 py-2 font-medium transition-all ${mode === "encode" ? "bg-[var(--accent)] text-white shadow-md shadow-[var(--accent)]/20" : "border border-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)]"}`}
-          >
-            {t("encode")}
-          </button>
-          <button
-            onClick={() => setMode("decode")}
-            className={`rounded-xl px-4 py-2 font-medium transition-all ${mode === "decode" ? "bg-[var(--accent)] text-white shadow-md shadow-[var(--accent)]/20" : "border border-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)]"}`}
-          >
-            {t("decode")}
-          </button>
+      <p className="text-sm text-[var(--muted)]">
+        Кодирование и декодирование Base64 в браузере. Текст и результат не отправляются на сервер. Опция URL Safe — для использования в URL (без +, /, =).
+      </p>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Режим</span>
+        <div className="flex flex-wrap gap-4 items-center">
+          <div className="flex gap-2">
+            <button onClick={() => setMode("encode")} className={`rounded-xl px-4 py-2 font-medium ${mode === "encode" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)]"}`}>
+              {t("encode")}
+            </button>
+            <button onClick={() => setMode("decode")} className={`rounded-xl px-4 py-2 font-medium ${mode === "decode" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)]"}`}>
+              {t("decode")}
+            </button>
+          </div>
+          <label className="flex items-center gap-2 text-sm cursor-pointer">
+            <input type="checkbox" checked={urlSafe} onChange={(e) => setUrlSafe(e.target.checked)} className="rounded" />
+            URL Safe
+          </label>
         </div>
-        <label className="flex items-center gap-2 text-sm text-[var(--foreground)] cursor-pointer">
-          <input 
-            type="checkbox" 
-            checked={urlSafe} 
-            onChange={(e) => setUrlSafe(e.target.checked)}
-            className="w-4 h-4 rounded border-[var(--border)] text-[var(--accent)] focus:ring-[var(--accent)]" 
-          />
-          URL Safe
-        </label>
       </div>
 
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="mb-2 flex items-center justify-between">
+          <label className="text-sm font-medium text-[var(--muted)]">{mode === "encode" ? t("encode") : t("decode")}</label>
+          <div className="flex gap-2">
+            {input && <button onClick={handleClear} className="rounded-lg border border-[var(--border)] px-2 py-1 text-sm hover:bg-[var(--border)]/20">Очистить</button>}
+            <button onClick={handlePaste} className="rounded-lg border border-[var(--border)] px-2 py-1 text-sm hover:bg-[var(--border)]/20">Вставить</button>
+          </div>
+        </div>
       <div className="relative">
         <textarea
           value={input}
@@ -98,33 +101,19 @@ export function Base64Tool({ t }: Base64ToolProps) {
           className="min-h-[160px] w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-4 py-3 font-mono text-sm focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all outline-none resize-y"
           rows={5}
         />
-        <div className="absolute top-3 right-3 flex gap-2">
-          {input && (
-            <button onClick={handleClear} className="text-xs px-2 py-1 rounded bg-[var(--border)]/50 hover:bg-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-              Clear
-            </button>
-          )}
-          <button onClick={handlePaste} className="text-xs px-2 py-1 rounded bg-[var(--border)]/50 hover:bg-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-            Paste
-          </button>
-        </div>
+      </div>
       </div>
 
-      {error && <div className="text-red-500 text-sm font-medium animate-in fade-in">{error}</div>}
-      
+      {error && <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>}
+
       {result && (
-        <div className="space-y-2">
-          <div className="flex items-center gap-4 text-xs text-[var(--muted)]">
-            <span>{t("inputLength") || "Ввод"}: {input.length} {t("chars") || "симв."}</span>
-            <span>{t("resultLength") || "Результат"}: {result.length} {t("chars") || "симв."}</span>
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <div className="mb-2 flex items-center justify-between text-xs text-[var(--muted)]">
+            <span>{t("inputLength") || "Ввод"}: {input.length} · {t("resultLength") || "Результат"}: {result.length}</span>
+            <CopyButton text={result} label="Копировать" />
           </div>
-          <div className="relative group">
-            <div className="rounded-xl border border-[var(--border)] bg-[var(--accent-muted)]/10 p-5 font-mono text-sm break-all text-[var(--foreground)] min-h-[100px]">
-              {result}
-            </div>
-            <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-              <CopyButton text={result} />
-            </div>
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm break-all min-h-[80px]">
+            {result}
           </div>
         </div>
       )}

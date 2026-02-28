@@ -53,7 +53,7 @@ export function CurrencyConverterTool({ t }: CurrencyConverterToolProps) {
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
           >
             {Object.keys(RATES).map((c) => (
-              <option key={c} value={c}>{c}</option>
+              <option key={c} value={c}>{t(`unit_${c}`) || c}</option>
             ))}
           </select>
         </div>
@@ -65,7 +65,7 @@ export function CurrencyConverterTool({ t }: CurrencyConverterToolProps) {
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
           >
             {Object.keys(RATES).map((c) => (
-              <option key={c} value={c}>{c}</option>
+              <option key={c} value={c}>{t(`unit_${c}`) || c}</option>
             ))}
           </select>
         </div>

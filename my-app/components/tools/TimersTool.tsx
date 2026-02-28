@@ -38,73 +38,78 @@ export function TimersTool({ t }: TimersToolProps) {
   const m = Math.floor(totalSec / 60);
   const s = totalSec % 60;
 
+  const presetMins = [1, 5, 10, 15, 30];
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Обратный отсчёт по минутам и секундам. Задайте время, нажмите «Старт»; по окончании таймер остановится.
+        Таймер обратного отсчёта: укажите минуты и секунды (или пресет), нажмите «Старт». По окончании таймер остановится. Работает только при открытой вкладке.
       </p>
-      <div className="flex flex-wrap gap-2">
-        {[1, 5, 10, 15, 30].map((m) => (
-          <button
-            key={m}
-            type="button"
-            disabled={running}
-            onClick={() => { setMinutes(m); setSeconds(0); setTotalSec(m * 60); }}
-            className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20 disabled:opacity-50"
-          >
-            {m} мин
-          </button>
-        ))}
-      </div>
-      <div className="flex gap-4">
-        <div>
-          <label className="mb-1 block text-sm">{t("minutes")}</label>
-          <input
-            type="number"
-            min={0}
-            max={99}
-            value={minutes}
-            onChange={(e) => !running && setMinutes(Number(e.target.value) || 0)}
-            disabled={running}
-            className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
-          />
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Пресеты и ввод</span>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {presetMins.map((mm) => (
+            <button
+              key={mm}
+              type="button"
+              disabled={running}
+              onClick={() => { setMinutes(mm); setSeconds(0); setTotalSec(mm * 60); }}
+              className={`rounded-lg border px-3 py-2 text-sm font-medium disabled:opacity-50 ${minutes === mm && seconds === 0 ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+            >
+              {mm} мин
+            </button>
+          ))}
         </div>
-        <div>
-          <label className="mb-1 block text-sm">{t("seconds")}</label>
-          <input
-            type="number"
-            min={0}
-            max={59}
-            value={seconds}
-            onChange={(e) => !running && setSeconds(Number(e.target.value) || 0)}
-            disabled={running}
-            className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2"
-          />
+        <div className="flex flex-wrap gap-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("minutes")}</label>
+            <input
+              type="number"
+              min={0}
+              max={99}
+              value={minutes}
+              onChange={(e) => !running && setMinutes(Number(e.target.value) || 0)}
+              disabled={running}
+              className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("seconds")}</label>
+            <input
+              type="number"
+              min={0}
+              max={59}
+              value={seconds}
+              onChange={(e) => !running && setSeconds(Number(e.target.value) || 0)}
+              disabled={running}
+              className="w-20 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
+            />
+          </div>
         </div>
       </div>
-      <div className="text-center">
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-6 text-center">
         <div className="text-5xl font-mono font-bold text-[var(--accent)]">
           {String(m).padStart(2, "0")}:{String(s).padStart(2, "0")}
         </div>
       </div>
-      <div className="flex justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         <button
           onClick={() => (running ? setRunning(false) : start())}
-          className="flex items-center gap-2 rounded-lg bg-[var(--accent)] px-4 py-2 text-white"
+          className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white hover:opacity-90"
         >
           {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           {running ? t("pause") : t("start")}
         </button>
         <button
           onClick={() => { setRunning(false); setTotalSec(minutes * 60 + seconds); }}
-          className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2"
+          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20"
         >
           <RotateCcw className="h-4 w-4" />
           {t("reset")}
         </button>
       </div>
       {totalSec === 0 && running === false && (
-        <p className="rounded-lg border border-[var(--accent)] bg-[var(--accent-muted)]/30 px-4 py-2 text-center text-sm text-[var(--accent)]">
+        <p className="rounded-xl border border-[var(--accent)] bg-[var(--accent-muted)]/30 px-4 py-3 text-center text-sm font-medium text-[var(--accent)]">
           Готово
         </p>
       )}

@@ -1,18 +1,27 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 interface ImageCompressToolProps {
   t: (key: string) => string;
 }
 
+const PRESETS = [
+  { label: "Макс. качество", quality: 0.95, desc: "Почти без потерь" },
+  { label: "Для сайта", quality: 0.85, desc: "Баланс размер/качество" },
+  { label: "Для соцсетей", quality: 0.78, desc: "Оптимально для постов" },
+  { label: "Малый размер", quality: 0.6, desc: "Сильное сжатие" },
+  { label: "Минимум", quality: 0.4, desc: "Минимальный вес" },
+];
+
 export function ImageCompressTool({ t }: ImageCompressToolProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [quality, setQuality] = useState(0.8);
+  const [quality, setQuality] = useState(0.85);
   const [preview, setPreview] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
   const [originalSize, setOriginalSize] = useState<number | null>(null);
   const [resultSize, setResultSize] = useState<number | null>(null);
+  const [dimensions, setDimensions] = useState<{ w: number; h: number } | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,13 +30,22 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
     setFile(f);
     setOriginalSize(f.size);
     setResultSize(null);
+    setDimensions(null);
     const reader = new FileReader();
-    reader.onload = () => setPreview(reader.result as string);
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      setPreview(dataUrl);
+      const img = new Image();
+      img.onload = () => {
+        setDimensions({ w: img.width, h: img.height });
+      };
+      img.src = dataUrl;
+    };
     reader.readAsDataURL(f);
     setResult(null);
   };
 
-  const compress = () => {
+  const compress = useCallback(() => {
     if (!preview || !canvasRef.current) return;
     const img = new Image();
     img.onload = () => {
@@ -41,69 +59,124 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
       setResultSize(Math.ceil((base64Length * 3) / 4));
     };
     img.src = preview;
+  }, [preview, quality]);
+
+  useEffect(() => {
+    if (preview && canvasRef.current) compress();
+  }, [preview, compress]);
+
+  const clearAll = () => {
+    setFile(null);
+    setPreview(null);
+    setResult(null);
+    setOriginalSize(null);
+    setResultSize(null);
+    setDimensions(null);
   };
 
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Сжатие изображения в JPEG с настраиваемым качеством. Загрузите файл, выберите качество и нажмите «Сжать» — затем скачайте результат.
+        Сжатие изображений в браузере. Загрузите файл (JPG, PNG, WebP), выберите качество — результат обновляется автоматически. Файлы никуда не отправляются.
       </p>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleFile}
-        className="block w-full text-sm"
-      />
+
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <div className="mb-2 flex items-center justify-between">
+          <label className="text-sm font-medium text-[var(--muted)]">{t("upload") || "Загрузить изображение"}</label>
+          {file && <button type="button" onClick={clearAll} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Очистить</button>}
+        </div>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+          className="block w-full text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-[var(--accent)] file:px-4 file:py-2 file:text-white file:text-sm"
+        />
+      </div>
+
       {!file && (
-        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Выберите изображение (JPG, PNG и др.) — после загрузки станут доступны ползунок качества и кнопка сжатия.
-        </p>
+        <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/10 px-6 py-8 text-center text-sm text-[var(--muted)]">
+          Выберите файл (JPG, PNG, WebP и др.). После загрузки появятся пресеты качества, ползунок и кнопка «Скачать».
+        </div>
       )}
+
       {file && (
         <>
-          <div>
-            <label className="mb-2 block text-sm">{t("quality")}</label>
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+            <div className="mb-3 text-sm font-medium text-[var(--muted)]">{t("preset") || "Цель сжатия"}</div>
+            <div className="flex flex-wrap gap-2">
+              {PRESETS.map((p) => (
+                <button
+                  key={p.label}
+                  type="button"
+                  onClick={() => setQuality(p.quality)}
+                  className={`rounded-lg px-3 py-2 text-left text-sm ${quality === p.quality ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+                >
+                  <span className="font-medium">{p.label}</span>
+                  <span className="ml-1 opacity-80">({p.desc})</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <label className="text-sm font-medium">{t("quality")}</label>
+              <span className="text-lg font-bold tabular-nums">{Math.round(quality * 100)}%</span>
+            </div>
             <input
               type="range"
-              min={0.1}
+              min={0.2}
               max={1}
-              step={0.1}
+              step={0.05}
               value={quality}
               onChange={(e) => setQuality(Number(e.target.value))}
-              className="w-full"
+              className="h-3 w-full accent-[var(--accent)]"
             />
-            <span className="text-sm">{Math.round(quality * 100)}%</span>
           </div>
-          <button
-            onClick={compress}
-            className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
-          >
-            {t("compress")}
-          </button>
+
           {originalSize != null && (
-            <p className="text-sm text-[var(--muted)]">{t("original")}: {(originalSize / 1024).toFixed(1)} KB</p>
+            <p className="text-sm text-[var(--muted)]">
+              {t("original")}: <strong className="text-[var(--foreground)]">{(originalSize / 1024).toFixed(1)} KB</strong>
+              {dimensions && (
+                <span className="ml-2">
+                  · {dimensions.w}×{dimensions.h} px
+                </span>
+              )}
+            </p>
           )}
-          {preview && (
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <div className="mb-2 text-sm text-[var(--muted)]">{t("original")}</div>
-                <img src={preview} alt="" className="max-h-48 rounded-xl border object-contain" />
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div>
+              <div className="mb-2 text-sm font-medium text-[var(--muted)]">{t("original")}</div>
+              <img src={preview!} alt="" className="max-h-56 w-full rounded-xl border border-[var(--border)] object-contain bg-[var(--card-bg)]" />
+            </div>
+            <div>
+              <div className="mb-2 text-sm font-medium text-[var(--muted)]">
+                {t("compressed")}
+                {resultSize != null && (
+                  <span className="ml-1 font-bold text-[var(--foreground)]">
+                    ({(resultSize / 1024).toFixed(1)} KB)
+                  </span>
+                )}
               </div>
-              {result && (
-                <div>
-                  <div className="mb-2 text-sm text-[var(--muted)]">{t("compressed")}{resultSize != null ? ` (${(resultSize / 1024).toFixed(1)} KB)` : ""}</div>
-                  <img src={result} alt="" className="max-h-48 rounded-xl border object-contain" />
+              {result ? (
+                <>
+                  <img src={result} alt="" className="max-h-56 w-full rounded-xl border border-[var(--border)] object-contain bg-[var(--card-bg)]" />
                   <a
                     href={result}
-                    download="compressed.jpg"
-                    className="mt-2 inline-block rounded-xl border border-[var(--accent)] px-4 py-2 text-sm"
+                    download={file.name.replace(/\.[^.]+$/, "_compressed.jpg")}
+                    className="mt-3 inline-block rounded-xl bg-[var(--accent)] px-5 py-2.5 font-medium text-white hover:opacity-90"
                   >
                     {t("download")}
                   </a>
+                </>
+              ) : (
+                <div className="flex h-40 items-center justify-center rounded-xl border border-dashed border-[var(--border)] text-sm text-[var(--muted)]">
+                  Результат обновляется…
                 </div>
               )}
             </div>
-          )}
+          </div>
         </>
       )}
       <canvas ref={canvasRef} className="hidden" />

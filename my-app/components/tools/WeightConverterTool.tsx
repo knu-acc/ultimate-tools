@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
-const KG = 1;
 const UNITS: Record<string, number> = {
   kg: 1,
   g: 0.001,
+  mg: 0.000001,
+  t: 1000,
   lb: 0.453592,
   oz: 0.0283495,
+  ct: 0.0002,
 };
 
 interface WeightConverterToolProps {
@@ -34,9 +36,7 @@ export function WeightConverterTool({ t }: WeightConverterToolProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-[var(--muted)]">
-        Конвертер массы: кг, г, фунты (lb), унции (oz). Результат обновляется при вводе.
-      </p>
+      <p className="text-sm text-[var(--muted)]">{t("description")}</p>
       <div className="flex flex-wrap gap-2">
         <button type="button" onClick={swap} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{t("swap") || "↔ Поменять"}</button>
       </div>
@@ -58,7 +58,7 @@ export function WeightConverterTool({ t }: WeightConverterToolProps) {
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
           >
             {Object.keys(UNITS).map((u) => (
-              <option key={u} value={u}>{u}</option>
+              <option key={u} value={u}>{t(`unit_${u}`) || u}</option>
             ))}
           </select>
         </div>
@@ -70,7 +70,7 @@ export function WeightConverterTool({ t }: WeightConverterToolProps) {
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
           >
             {Object.keys(UNITS).map((u) => (
-              <option key={u} value={u}>{u}</option>
+              <option key={u} value={u}>{t(`unit_${u}`) || u}</option>
             ))}
           </select>
         </div>

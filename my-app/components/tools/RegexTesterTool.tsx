@@ -28,7 +28,6 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
       const list = m ? (Array.isArray(m) ? m : [m]) : [];
       setMatches(list.filter(Boolean));
       const ranges: [number, number][] = [];
-      let idx = 0;
       let match;
       const re2 = new RegExp(pattern, flags);
       while ((match = re2.exec(text)) !== null) {
@@ -43,53 +42,60 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
 
   const matchesLine = matches.join(", ");
   const matchCount = matches.length;
+  const flagPresets = [
+    { label: "g", value: "g" },
+    { label: "gi", value: "gi" },
+    { label: "gm", value: "gm" },
+    { label: "gim", value: "gim" },
+  ];
 
   return (
     <div className="space-y-6">
-      <div>
-        <label className="mb-2 block text-sm">{t("pattern")}</label>
-        <div className="flex gap-2">
+      <p className="text-sm text-[var(--muted)]">
+        Проверка регулярных выражений в браузере. Введите паттерн и флаги (g, i, m и др.), текст — появятся совпадения и подсветка. Данные не отправляются.
+      </p>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("pattern")}</label>
+        <div className="flex flex-wrap items-center gap-2">
           <input
             type="text"
             value={pattern}
             onChange={(e) => setPattern(e.target.value)}
             placeholder="\d+"
-            className="flex-1 rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono"
+            className="min-w-0 flex-1 rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 font-mono focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
           />
           <input
             type="text"
             value={flags}
             onChange={(e) => setFlags(e.target.value)}
             placeholder="g"
-            className="w-16 rounded-xl border border-[var(--border)] bg-transparent px-2 py-3 font-mono text-center"
+            className="w-14 rounded-xl border border-[var(--border)] bg-transparent px-2 py-3 font-mono text-center focus:border-[var(--accent)] focus:outline-none"
+            title="Флаги: g, i, m, s, u, y"
           />
+          <div className="flex gap-1">
+            {flagPresets.map(({ label, value }) => (
+              <button key={label} type="button" onClick={() => setFlags(value)} className="rounded-lg border border-[var(--border)] px-2 py-1.5 text-xs font-mono hover:bg-[var(--border)]/20" title={`Флаги: ${value}`}>{label}</button>
+            ))}
+          </div>
         </div>
       </div>
-      <div>
-        <label className="mb-2 block text-sm">{t("text")}</label>
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder={t("textPlaceholder")}
-          className="min-h-[100px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
-          rows={4}
-        />
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("text")}</label>
+        <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder={t("textPlaceholder")} className="min-h-[100px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]" rows={4} />
       </div>
-      <button
-        onClick={test}
-        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
-      >
+      <button onClick={test} className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white hover:opacity-90">
         {t("test")}
       </button>
       {error && <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>}
       {hasTested && !error && (
         <div className="space-y-3">
-          <div className="flex items-center justify-between gap-2">
-            <span className="text-sm font-medium text-[var(--muted)]">{t("matches")} {matchCount > 0 && `(${matchCount})`}</span>
-            {matches.length > 0 && <CopyButton text={matchesLine} label="Копировать совпадения" />}
-          </div>
+          <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <span className="text-sm font-medium text-[var(--muted)]">{t("matches")} {matchCount > 0 && `(${matchCount})`}</span>
+              {matches.length > 0 && <CopyButton text={matchesLine} label="Копировать совпадения" />}
+            </div>
           {text && highlightRanges.length > 0 && (
-            <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono text-sm whitespace-pre-wrap break-words">
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm whitespace-pre-wrap break-words">
               {highlightRanges.reduce<React.ReactNode[]>((acc, [start, end], i) => {
                 const prev = i === 0 ? 0 : highlightRanges[i - 1][1];
                 if (prev < start) acc.push(<span key={`t-${i}`}>{text.slice(prev, start)}</span>);
@@ -102,7 +108,7 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
             </div>
           )}
           {matches.length > 0 && (
-            <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+            <div className="mt-3">
               <div className="mb-2 text-sm font-medium text-[var(--muted)]">Список совпадений</div>
               <div className="flex flex-wrap gap-2">
                 {matches.map((m, i) => (
@@ -114,8 +120,9 @@ export function RegexTesterTool({ t }: RegexTesterToolProps) {
             </div>
           )}
           {hasTested && matches.length === 0 && !highlightRanges.length && text && (
-            <p className="text-sm text-[var(--muted)]">Совпадений не найдено</p>
+            <p className="mt-2 text-sm text-[var(--muted)]">Совпадений не найдено</p>
           )}
+          </div>
         </div>
       )}
       {!hasTested && !error && (

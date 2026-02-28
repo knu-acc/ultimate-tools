@@ -49,58 +49,99 @@ export function RandomPickerTool({ t }: RandomPickerToolProps) {
     }, 80);
   };
 
+  const clearResult = () => {
+    setPicked(null);
+    setPickedMultiple([]);
+    setDisplayValue(null);
+  };
+  const hasResult = (picked !== null || pickedMultiple.length > 0) && !spinning;
+  const showSingle = spinning ? displayValue : picked;
+
   return (
-    <div className="space-y-4">
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t("placeholder")}
-        className="min-h-[140px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
-        rows={5}
-      />
+    <div className="space-y-6">
+      <p className="text-sm text-[var(--muted)]">
+        Введите варианты (каждый с новой строки или через запятую/точку с запятой). Укажите, сколько вытянуть — один или несколько. Всё выполняется в браузере.
+      </p>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Варианты для выбора</label>
+        <textarea
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={t("placeholder")}
+          className="min-h-[140px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          rows={5}
+        />
+        {items.length > 0 && <p className="mt-2 text-xs text-[var(--muted)]">Элементов: {items.length}</p>}
+      </div>
       {items.length > 0 && (
-        <div className="flex items-center gap-2">
-          <label className="text-sm text-[var(--muted)]">{t("pickCount") || "Выбрать"}</label>
-          <input
-            type="number"
-            min={1}
-            max={Math.max(1, items.length)}
-            value={pickCount}
-            onChange={(e) => setPickCount(Number(e.target.value) || 1)}
-            className="w-16 rounded-lg border border-[var(--border)] bg-transparent px-2 py-1 text-center"
-          />
-          <span className="text-sm text-[var(--muted)]">из {items.length}</span>
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+          <span className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("pickCount") || "Сколько выбрать"}</span>
+          <div className="flex flex-wrap items-center gap-2">
+            {[1, 2, 3, 5].filter((n) => n <= items.length).map((n) => (
+              <button
+                key={n}
+                type="button"
+                onClick={() => setPickCount(n)}
+                className={`rounded-lg border px-3 py-2 text-sm font-medium ${pickCount === n ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+              >
+                {n}
+              </button>
+            ))}
+            <input
+              type="number"
+              min={1}
+              max={Math.max(1, items.length)}
+              value={pickCount}
+              onChange={(e) => setPickCount(Math.min(items.length, Math.max(1, Number(e.target.value) || 1)))}
+              className="w-16 rounded-lg border border-[var(--border)] bg-transparent px-2 py-2 text-center text-sm"
+            />
+            <span className="text-sm text-[var(--muted)]">из {items.length}</span>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={pick}
+              disabled={spinning}
+              className="rounded-xl bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-white hover:bg-[var(--accent-hover)] disabled:opacity-70"
+            >
+              {spinning ? "..." : t("pick")}
+            </button>
+            {hasResult && (
+              <button type="button" onClick={clearResult} className="rounded-xl border border-[var(--border)] px-5 py-2.5 text-sm font-medium hover:bg-[var(--border)]/20">
+                Очистить результат
+              </button>
+            )}
+          </div>
         </div>
       )}
       {items.length === 0 && (
-        <p className="text-sm text-[var(--muted)]">Введите варианты (каждый с новой строки или через запятую) и нажмите «Выбрать».</p>
+        <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
+          Введите варианты выше, затем нажмите «Выбрать».
+        </p>
       )}
-      <button
-        type="button"
-        onClick={pick}
-        disabled={items.length === 0 || spinning}
-        className="rounded-lg border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--accent-hover)] disabled:opacity-50"
-      >
-        {spinning ? "..." : t("pick")}
-      </button>
       <AnimatePresence mode="wait">
-        {(spinning ? displayValue : picked) !== null && (
+        {showSingle !== null && (
           <motion.div
             key={spinning ? "spin" : "result"}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="rounded-xl border-2 border-[var(--accent)] bg-[var(--accent-muted)] p-6 text-center"
+            className="rounded-xl border-2 border-[var(--accent)] bg-[var(--accent-muted)]/30 p-6 text-center"
           >
-            <span className="text-sm text-[var(--muted)] block mb-1">{t("result")}</span>
+            <span className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("result")}</span>
             <motion.span
               key={displayValue ?? ""}
               initial={{ opacity: 0.6 }}
               animate={{ opacity: 1 }}
               className="text-xl font-bold text-[var(--foreground)]"
             >
-              {spinning ? displayValue : picked}
+              {showSingle}
             </motion.span>
+            {!spinning && showSingle && (
+              <div className="mt-3 flex justify-center">
+                <CopyButton text={showSingle} />
+              </div>
+            )}
           </motion.div>
         )}
         {!spinning && pickedMultiple.length > 0 && (

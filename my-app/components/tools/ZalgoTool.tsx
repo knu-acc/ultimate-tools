@@ -45,25 +45,45 @@ export function ZalgoTool({ t }: ZalgoToolProps) {
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        «Залго-текст»: добавляет диакритику к буквам. Регулируйте интенсивность и нажимайте «Ещё раз» для нового варианта.
+        «Залго-текст»: добавляет диакритику к буквам. Регулируйте интенсивность (слайдер или пресеты), нажимайте «Ещё раз» для нового варианта, «Подставить результат» — вставить в поле ввода.
       </p>
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder={t("placeholder")}
-        className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
-      />
-      <div>
-        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("intensity")}</label>
-        <div className="flex items-center gap-3">
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Исходный текст</label>
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={t("placeholder")}
+          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+        />
+      </div>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">
+          {t("intensity")} — чем выше, тем больше «шума» на символ
+        </label>
+        <div className="flex flex-wrap items-center gap-3">
+          {[
+            { label: "Слабый", value: 2 },
+            { label: "Средний", value: 5 },
+            { label: "Сильный", value: 10 },
+            { label: "Макс", value: 15 },
+          ].map(({ label, value }) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => setIntensity(value)}
+              className={`rounded-lg border px-3 py-2 text-sm font-medium ${intensity === value ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+            >
+              {label} ({value})
+            </button>
+          ))}
           <input
             type="range"
             min={1}
             max={15}
             value={intensity}
             onChange={(e) => setIntensity(Number(e.target.value))}
-            className="h-2 w-full max-w-[200px] accent-[var(--accent)]"
+            className="h-2 w-full max-w-[180px] accent-[var(--accent)]"
           />
           <span className="tabular-nums text-sm text-[var(--muted)]">{intensity}</span>
         </div>
@@ -71,7 +91,16 @@ export function ZalgoTool({ t }: ZalgoToolProps) {
       <div className="space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
+            {result && (
+              <button
+                type="button"
+                onClick={() => setText(result)}
+                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--accent)]/10"
+              >
+                Подставить результат
+              </button>
+            )}
             {result && <CopyButton text={result} label="Скопировать" />}
             {text && (
               <button

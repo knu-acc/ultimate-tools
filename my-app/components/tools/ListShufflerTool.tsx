@@ -26,22 +26,31 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
   const doShuffle = () => setResult(shuffle(lines));
   const doReverse = () => setResult([...lines].reverse());
 
+  const applyResult = () => setText(result.join("\n"));
+
   return (
     <div className="space-y-6">
-      <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder={t("placeholder")}
-        className="min-h-[150px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
-        rows={6}
-      />
-      <p className="text-xs text-[var(--muted)]">Элементы — по одному на строку или через запятую/точку с запятой.</p>
+      <p className="text-sm text-[var(--muted)]">
+        Перемешайте список случайным образом или разверните порядок. Элементы — каждый с новой строки или через запятую/точку с запятой. Всё выполняется в браузере.
+      </p>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <label className="mb-2 block text-sm font-medium text-[var(--muted)]">Список элементов</label>
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={t("placeholder")}
+          className="min-h-[150px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          rows={6}
+        />
+        {lines.length > 0 && <p className="mt-2 text-xs text-[var(--muted)]">Элементов: {lines.length}</p>}
+      </div>
       <div className="flex flex-wrap gap-2">
         <motion.button
           onClick={doShuffle}
+          disabled={lines.length === 0}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
+          className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white disabled:opacity-50"
         >
           {t("shuffle")}
         </motion.button>
@@ -59,13 +68,22 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="space-y-2"
+          className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 space-y-3"
         >
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-[var(--muted)]">{t("result")}</span>
-            <CopyButton text={result.join("\n")} />
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="text-sm font-medium text-[var(--muted)]">{t("result")}</span>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={applyResult}
+                className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium hover:bg-[var(--accent)]/10"
+              >
+                Подставить в поле
+              </button>
+              <CopyButton text={result.join("\n")} />
+            </div>
           </div>
-          <div className="cursor-pointer select-all rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm space-y-1">
+          <div className="cursor-pointer select-all rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm space-y-1">
             {result.map((line, i) => (
               <motion.div
                 key={`${i}-${line}`}

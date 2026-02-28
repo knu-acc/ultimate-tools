@@ -4,38 +4,33 @@ import { useState } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
 const UNITS: Record<string, number> = {
-  m: 1,
-  km: 1000,
-  cm: 0.01,
-  mm: 0.001,
-  um: 0.000001,
-  nm: 0.000000001,
-  mi: 1609.34,
-  yd: 0.9144,
-  ft: 0.3048,
-  in: 0.0254,
+  "m/s": 1,
+  "km/h": 1 / 3.6,
+  "mph": 0.44704,
+  "knots": 0.514444,
+  "ft/s": 0.3048,
 };
 
-interface LengthConverterToolProps {
+interface SpeedConverterToolProps {
   t: (key: string) => string;
 }
 
-export function LengthConverterTool({ t }: LengthConverterToolProps) {
+export function SpeedConverterTool({ t }: SpeedConverterToolProps) {
   const [value, setValue] = useState("");
-  const [from, setFrom] = useState("m");
-  const [to, setTo] = useState("ft");
+  const [from, setFrom] = useState("km/h");
+  const [to, setTo] = useState("m/s");
 
   const v = parseFloat(value);
   const result = !isNaN(v)
     ? ((v * UNITS[from]) / UNITS[to]).toFixed(4)
     : "";
-
   const resultLine = result ? `${value} ${from} = ${result} ${to}` : "";
 
   const swap = () => {
     setFrom(to);
     setTo(from);
   };
+  const unitKey = (u: string) => "unit_" + u.replace("/", "_");
 
   return (
     <div className="space-y-6">
@@ -59,7 +54,7 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
           >
             {Object.keys(UNITS).map((u) => (
-              <option key={u} value={u}>{t(`unit_${u}`) || u}</option>
+              <option key={u} value={u}>{t(unitKey(u)) || u}</option>
             ))}
           </select>
         </div>
@@ -71,7 +66,7 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
           >
             {Object.keys(UNITS).map((u) => (
-              <option key={u} value={u}>{t(`unit_${u}`) || u}</option>
+              <option key={u} value={u}>{t(unitKey(u)) || u}</option>
             ))}
           </select>
         </div>
@@ -85,7 +80,7 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
         </div>
       ) : (
         <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">
-          Введите число и выберите единицы «из» и «в» — результат появится ниже.
+          Введите значение скорости и выберите единицы.
         </p>
       )}
     </div>

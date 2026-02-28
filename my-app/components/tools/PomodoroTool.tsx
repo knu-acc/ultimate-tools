@@ -52,19 +52,35 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
 
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
+  const presets = [
+    { work: 25, break: 5, label: "25 / 5" },
+    { work: 50, break: 10, label: "50 / 10" },
+    { work: 15, break: 3, label: "15 / 3" },
+  ];
 
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Метод Помодоро: рабочий интервал и короткий перерыв. Задайте минуты работы и отдыха, запустите таймер.
+        Метод Помодоро: рабочий интервал и короткий перерыв. Задайте минуты (или выберите пресет), запустите таймер. Таймер работает только при открытой вкладке.
       </p>
-      <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={() => setPreset(25, 5)} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">25 / 5</button>
-        <button type="button" onClick={() => setPreset(50, 10)} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">50 / 10</button>
-      </div>
-      <div className="flex gap-4">
-        <div>
-          <label className="mb-1 block text-sm">{t("work")}</label>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+        <span className="mb-3 block text-sm font-medium text-[var(--muted)]">Интервалы (мин)</span>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {presets.map(({ work, break: b, label }) => (
+            <button
+              key={label}
+              type="button"
+              disabled={running}
+              onClick={() => setPreset(work, b)}
+              className={`rounded-lg border px-3 py-2 text-sm font-medium disabled:opacity-50 ${workMin === work && breakMin === b ? "border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]" : "border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="flex gap-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("work")}</label>
           <input
             type="number"
             min={1}
@@ -76,7 +92,7 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm">{t("break")}</label>
+          <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("break")}</label>
           <input
             type="number"
             min={1}
@@ -88,7 +104,7 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
           />
         </div>
       </div>
-      <div className="text-center">
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-6 text-center">
         <div className="text-5xl font-mono font-bold text-[var(--accent)]">
           {String(m).padStart(2, "0")}:{String(s).padStart(2, "0")}
         </div>
@@ -99,17 +115,17 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
           <p className="mt-1 text-xs text-[var(--muted)]">{t("completed") || "Завершено помодоро"}: {completedSessions}</p>
         )}
       </div>
-      <div className="flex justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         <button
           onClick={() => setRunning(!running)}
-          className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white"
+          className="flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-white hover:opacity-90"
         >
           {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           {running ? t("pause") : t("start")}
         </button>
         <button
           onClick={reset}
-          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2"
+          className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20"
         >
           <RotateCcw className="h-4 w-4" />
           {t("reset")}
