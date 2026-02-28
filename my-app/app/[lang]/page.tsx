@@ -72,7 +72,7 @@ export default async function HomePage({
         <div className="bg-noise" />
         <div className="gradient-hero px-6 py-20 lg:px-8 lg:py-28 relative z-10">
           <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent text-[var(--accent)] pb-2">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] pb-2">
               {t("common.siteName")}
             </h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-[var(--muted)] leading-relaxed">
@@ -81,13 +81,13 @@ export default async function HomePage({
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="#popular"
-                className="inline-flex items-center justify-center rounded-md bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white shadow-lg hover:opacity-90 transition-opacity"
+                className="inline-flex items-center justify-center rounded-xl bg-[var(--accent)] px-6 py-3 text-base font-semibold text-white shadow-lg hover:opacity-90 transition-opacity"
               >
                 {t("home.ctaTry")}
               </a>
               <a
                 href="#popular"
-                className="inline-flex items-center justify-center rounded-md border-2 border-[var(--accent)] px-6 py-3 text-base font-semibold text-[var(--accent)] hover:bg-[var(--accent)]/10 transition-colors"
+                className="inline-flex items-center justify-center rounded-xl border-2 border-[var(--accent)] px-6 py-3 text-base font-semibold text-[var(--accent)] hover:bg-[var(--accent)]/10 transition-colors"
               >
                 {t("home.ctaChoose")}
               </a>
@@ -100,7 +100,7 @@ export default async function HomePage({
         {/* Popular tools */}
         <section id="popular" className="mb-16">
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-6 w-1.5 rounded-full bg-[var(--accent)]" />
+            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-[var(--accent)] to-[var(--accent-hover)]" />
             <h2 className="text-2xl font-bold text-[var(--foreground)] tracking-tight">
               {t("home.popularTools")}
             </h2>
@@ -125,12 +125,12 @@ export default async function HomePage({
         {/* Categories */}
         <section>
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-6 w-1.5 rounded-full bg-[var(--accent)]" />
+            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-[var(--accent)] to-[var(--accent-hover)]" />
             <h2 className="text-2xl font-bold text-[var(--foreground)] tracking-tight">
               {t("home.categories")}
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
             {Object.entries(CATEGORIES).map(([catSlug, { key, tools }], index) => {
               const Icon = CATEGORY_ICONS[catSlug] ?? MoreHorizontal;
               const descKey = catSlug === "dev-tools" ? "devTools" : catSlug;
@@ -145,10 +145,10 @@ export default async function HomePage({
                 <Link
                   key={catSlug}
                   href={`/${validLang}/${catSlug}`}
-                  className="block overflow-hidden rounded-md border border-[var(--border)] bg-[var(--card-bg)] p-5 transition-colors hover:border-[var(--accent)]/50 group flex flex-col h-full h-min-[160px]"
+                  className="block overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-5 transition-colors hover:border-[var(--accent)]/50 group flex flex-col h-full h-min-[160px]"
                 >
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="shrink-0 p-2 rounded-md bg-[var(--accent-muted)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
+                    <div className="shrink-0 p-2 rounded-lg bg-[var(--accent-muted)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="min-w-0 flex-1">
@@ -177,7 +177,7 @@ export default async function HomePage({
                 return (
                   <Fragment key={`fragment-${catSlug}`}>
                     {CategoryCard}
-                    <div key="home-category-ad" className="flex items-center justify-center rounded-md p-0 col-span-1 min-h-[160px]">
+                    <div key="home-category-ad" className="flex items-center justify-center rounded-xl p-0 col-span-1 min-h-[160px]">
                        <InGridAd />
                     </div>
                   </Fragment>
