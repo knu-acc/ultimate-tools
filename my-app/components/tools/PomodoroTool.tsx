@@ -103,6 +103,7 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
             className="w-20 rounded-lg border border-[var(--border)] bg-transparent px-3 py-2 focus:border-[var(--accent)]"
           />
         </div>
+        </div>
       </div>
       <div className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-6 text-center">
         <div className="text-5xl font-mono font-bold text-[var(--accent)]">
