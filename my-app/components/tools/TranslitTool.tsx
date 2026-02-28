@@ -38,12 +38,17 @@ export function TranslitTool({ t }: TranslitToolProps) {
       ? transliterate(text, RU_TO_EN)
       : transliterate(text, EN_TO_RU);
 
+  const swap = () => {
+    setText(result);
+    setDirection((d) => (d === "ru-en" ? "en-ru" : "ru-en"));
+  };
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
         Перевод по правилам ГОСТ: кириллица в латиницу для загранпаспорта и URL или обратно.
       </p>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button
           onClick={() => setDirection("ru-en")}
           className={`rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${direction === "ru-en" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
@@ -56,6 +61,15 @@ export function TranslitTool({ t }: TranslitToolProps) {
         >
           {t("enToRu")}
         </button>
+        {result && (
+          <button
+            type="button"
+            onClick={swap}
+            className="rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-medium hover:bg-[var(--accent)]/10"
+          >
+            {t("swap") || "↔ Подставить результат"}
+          </button>
+        )}
       </div>
       <textarea
         value={text}

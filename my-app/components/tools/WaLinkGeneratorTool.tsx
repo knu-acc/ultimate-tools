@@ -21,6 +21,11 @@ export function WaLinkGeneratorTool({ t }: WaLinkGeneratorToolProps) {
       </p>
       <div>
         <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("phone")}</label>
+        <div className="flex flex-wrap gap-2 mb-2">
+          {["+7", "+1", "+44", "+49", "+77", "+998", "+996"].map((code) => (
+            <button key={code} type="button" onClick={() => setPhone(code.replace("+", ""))} className="rounded-lg border border-[var(--border)] px-2 py-1 text-sm hover:bg-[var(--border)]/20">{code}</button>
+          ))}
+        </div>
         <input
           type="tel"
           value={phone}

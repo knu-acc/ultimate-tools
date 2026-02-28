@@ -12,13 +12,14 @@ export function PercentCalcTool({ t }: PercentCalcToolProps) {
   const [percent, setPercent] = useState("");
   const [result, setResult] = useState<number | null>(null);
 
-  const calc = (mode: "of" | "from" | "diff") => {
+  const calc = (mode: "of" | "from" | "diff" | "subtract") => {
     const v = parseFloat(value);
     const p = parseFloat(percent);
     if (isNaN(v) || isNaN(p)) return;
     if (mode === "of") setResult((v * p) / 100);
     else if (mode === "from") setResult(v ? (p / v) * 100 : 0);
-    else setResult(v + (v * p) / 100);
+    else if (mode === "diff") setResult(v + (v * p) / 100);
+    else setResult(v - (v * p) / 100);
   };
 
   return (
@@ -51,6 +52,7 @@ export function PercentCalcTool({ t }: PercentCalcToolProps) {
           { key: "percentOf", mode: "of" as const },
           { key: "percentFrom", mode: "from" as const },
           { key: "addPercent", mode: "diff" as const },
+          { key: "subtractPercent", mode: "subtract" as const },
         ].map(({ key, mode }) => (
           <button
             key={key}

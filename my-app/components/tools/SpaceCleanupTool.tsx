@@ -16,6 +16,8 @@ export function SpaceCleanupTool({ t }: SpaceCleanupToolProps) {
     if (mode === "all") result = text.replace(/\s+/g, " ").trim();
     else if (mode === "lines") result = text.replace(/[ \t]+/g, " ").replace(/\n\s*\n/g, "\n\n").trim();
     else if (mode === "trim") result = text.split("\n").map((l) => l.trim()).join("\n");
+    else if (mode === "join") result = text.replace(/\s*\n\s*/g, " ").replace(/\s+/g, " ").trim();
+    else if (mode === "singleBlank") result = text.replace(/(\n\s*){3,}/g, "\n\n").trim();
     setText(result);
   };
 
@@ -33,9 +35,11 @@ export function SpaceCleanupTool({ t }: SpaceCleanupToolProps) {
       />
       <div className="flex flex-wrap items-center gap-2">
         {[
-          { key: "all", desc: "Убрать лишние пробелы" },
-          { key: "lines", desc: "Очистить строки" },
-          { key: "trim", desc: "Trim каждой строки" },
+          { key: "all" },
+          { key: "lines" },
+          { key: "trim" },
+          { key: "join" },
+          { key: "singleBlank" },
         ].map(({ key }) => (
           <motion.button
             key={key}

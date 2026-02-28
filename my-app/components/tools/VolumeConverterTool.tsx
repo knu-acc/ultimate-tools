@@ -33,11 +33,18 @@ export function VolumeConverterTool({ t }: VolumeConverterToolProps) {
       ].map((item) => `${item.label}: ${item.value}`).join("\n")
     : "";
 
+  const presets = [0.5, 1, 2, 5];
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
         Конвертер объёма из литров в мл, галлоны (US/UK), чашки, жидкие унции. Введите литры — все эквиваленты показываются ниже.
       </p>
+      <div className="flex flex-wrap gap-2 mb-2">
+        {presets.map((p) => (
+          <button key={p} type="button" onClick={() => setLiters(String(p))} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{p} L</button>
+        ))}
+      </div>
       <div>
         <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("liters")}</label>
         <input

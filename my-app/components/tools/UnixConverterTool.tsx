@@ -12,8 +12,9 @@ export function UnixConverterTool({ t }: UnixConverterToolProps) {
   const [dateStr, setDateStr] = useState("");
 
   const unixToDate = () => {
-    const ts = parseInt(unix, 10);
+    let ts = parseInt(unix, 10);
     if (isNaN(ts)) return;
+    if (ts > 1e12) ts = Math.floor(ts / 1000);
     const d = new Date(ts * 1000);
     setDateStr(d.toLocaleString());
   };
@@ -58,10 +59,21 @@ export function UnixConverterTool({ t }: UnixConverterToolProps) {
           </button>
         </div>
         {resolvedDate && (
-          <div className="mt-2 flex items-center gap-2">
+          <div className="mt-2 flex flex-wrap items-center gap-2">
             <span className="text-sm text-[var(--muted)]">Дата:</span>
             <span className="font-mono">{resolvedDate}</span>
             <CopyButton text={resolvedDate} label="Копировать дату" />
+            {(() => {
+              const ts = parseInt(unix, 10);
+              if (isNaN(ts)) return null;
+              const t = (ts > 1e12 ? ts / 1000 : ts) * 1000;
+              const diff = t - Date.now();
+              if (diff > 0 && diff < 365 * 24 * 3600 * 1000) {
+                const days = Math.floor(diff / (24 * 3600 * 1000));
+                return <span className="text-xs text-[var(--muted)]">через {days} д.</span>;
+              }
+              return null;
+            })()}
           </div>
         )}
       </div>

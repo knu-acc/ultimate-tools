@@ -14,6 +14,7 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
   const [seconds, setSeconds] = useState(25 * 60);
   const [isWork, setIsWork] = useState(true);
   const [running, setRunning] = useState(false);
+  const [completedSessions, setCompletedSessions] = useState(0);
   const ref = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -21,8 +22,11 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
     ref.current = setInterval(() => {
       setSeconds((s) => {
         if (s <= 1) {
-          setIsWork((w) => !w);
-          return !isWork ? breakMin * 60 : workMin * 60;
+          setIsWork((w) => {
+            if (w) setCompletedSessions((n) => n + 1);
+            return !w;
+          });
+          return isWork ? breakMin * 60 : workMin * 60;
         }
         return s - 1;
       });
@@ -38,6 +42,14 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
     setSeconds(workMin * 60);
   };
 
+  const setPreset = (work: number, breakM: number) => {
+    if (!running) {
+      setWorkMin(work);
+      setBreakMin(breakM);
+      setSeconds(work * 60);
+    }
+  };
+
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
 
@@ -46,6 +58,10 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
       <p className="text-sm text-[var(--muted)]">
         Метод Помодоро: рабочий интервал и короткий перерыв. Задайте минуты работы и отдыха, запустите таймер.
       </p>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={() => setPreset(25, 5)} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">25 / 5</button>
+        <button type="button" onClick={() => setPreset(50, 10)} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">50 / 10</button>
+      </div>
       <div className="flex gap-4">
         <div>
           <label className="mb-1 block text-sm">{t("work")}</label>
@@ -79,6 +95,9 @@ export function PomodoroTool({ t }: PomodoroToolProps) {
         <div className="mt-2 text-sm text-[var(--muted)]">
           {isWork ? t("workPhase") : t("breakPhase")}
         </div>
+        {completedSessions > 0 && (
+          <p className="mt-1 text-xs text-[var(--muted)]">{t("completed") || "Завершено помодоро"}: {completedSessions}</p>
+        )}
       </div>
       <div className="flex justify-center gap-2">
         <button

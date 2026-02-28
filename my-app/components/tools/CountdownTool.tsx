@@ -38,11 +38,22 @@ export function CountdownTool({ t }: CountdownToolProps) {
   const diffStr = diff !== null ? formatDiff(diff) : "";
   const copyLine = diff !== null ? `${t("remaining")}: ${diffStr}` : "";
 
+  const setQuick = (hours: number) => {
+    const d = new Date();
+    d.setTime(d.getTime() + hours * 60 * 60 * 1000);
+    setTarget(d.toISOString().slice(0, 16));
+  };
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
         Обратный отсчёт до выбранной даты и времени. Укажите момент — отображается оставшееся время в днях, часах, минутах и секундах.
       </p>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={() => setQuick(1)} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Через 1 ч</button>
+        <button type="button" onClick={() => setQuick(24)} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Через 24 ч</button>
+        <button type="button" onClick={() => setQuick(24 * 7)} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Через 7 д</button>
+      </div>
       <div>
         <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("target")}</label>
         <input

@@ -49,7 +49,6 @@ import {
   QrCode,
   GitCompare,
   Droplets,
-  Contrast,
 } from "lucide-react";
 
 const TOOL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -108,8 +107,6 @@ const TOOL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = 
   "cps-test": MousePointer,
   metronome: Metronome,
   notepad: StickyNote,
-  ruler: Ruler,
-  "color-contrast": Contrast,
 };
 
 interface ToolIconProps {

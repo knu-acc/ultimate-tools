@@ -14,8 +14,12 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
 
-  const list = useMemo(() => items.split("\n").filter(Boolean), [items]);
+  const list = useMemo(
+    () => items.split(/[\n,;]+/).map((s) => s.trim()).filter(Boolean),
+    [items]
+  );
   const n = list.length;
+  const [lastResult, setLastResult] = useState<string | null>(null);
   const segmentAngle = n > 0 ? 360 / n : 0;
 
   const spin = () => {
@@ -27,13 +31,16 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
     const finalAngle = 360 * fullSpins + (360 - winnerIndex * segmentAngle - segmentAngle / 2);
     setRotation((r) => r + finalAngle);
     setTimeout(() => {
-      setResult(list[winnerIndex] ?? null);
+      const winner = list[winnerIndex] ?? null;
+      setResult(winner);
+      if (winner) setLastResult(winner);
       setSpinning(false);
     }, 4000);
   };
 
   return (
     <div className="space-y-6">
+      <p className="text-xs text-[var(--muted)]">Варианты — по одному на строку или через запятую.</p>
       <textarea
         value={items}
         onChange={(e) => setItems(e.target.value)}
@@ -90,6 +97,9 @@ export function WheelFortuneTool({ t }: WheelFortuneToolProps) {
           <p className="text-xl font-bold mb-2">{result}</p>
           <CopyButton text={result} />
         </motion.div>
+      )}
+      {lastResult && !result && !spinning && (
+        <p className="text-sm text-[var(--muted)]">{t("lastResult") || "Предыдущий результат"}: {lastResult}</p>
       )}
     </div>
   );

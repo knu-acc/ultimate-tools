@@ -11,10 +11,15 @@ export function UrlEncodeTool({ t }: UrlEncodeToolProps) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
 
-  const encode = () => setOutput(encodeURIComponent(input));
+  const [spaceAsPlus, setSpaceAsPlus] = useState(false);
+  const encode = () => {
+    const encoded = encodeURIComponent(input);
+    setOutput(spaceAsPlus ? encoded.replace(/%20/g, "+") : encoded);
+  };
   const decode = () => {
     try {
-      setOutput(decodeURIComponent(input));
+      const normalized = spaceAsPlus ? input.replace(/\+/g, " ") : input;
+      setOutput(decodeURIComponent(normalized));
     } catch {
       setOutput(t("invalidUrl"));
     }
@@ -25,6 +30,10 @@ export function UrlEncodeTool({ t }: UrlEncodeToolProps) {
       <p className="text-sm text-[var(--muted)]">
         Кодирование и декодирование URL (percent-encoding). Для ссылок и query-параметров.
       </p>
+      <label className="flex items-center gap-2 text-sm text-[var(--muted)]">
+        <input type="checkbox" checked={spaceAsPlus} onChange={(e) => setSpaceAsPlus(e.target.checked)} />
+        {t("spaceAsPlus") || "Пробел как + (form-urlencoded)"}
+      </label>
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}

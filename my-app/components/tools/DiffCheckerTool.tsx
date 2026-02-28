@@ -25,6 +25,8 @@ export function DiffCheckerTool({ t }: DiffCheckerToolProps) {
     }
   }
   const same = onlyA.length === 0 && onlyB.length === 0 && (linesA.length > 0 || linesB.length > 0);
+  const lineCountA = linesA.length;
+  const lineCountB = linesB.length;
 
   const diffSummary = (linesA.length > 0 || linesB.length > 0) && !same
     ? [onlyA.length > 0 ? `${t("onlyInA")}: ${onlyA.join(", ")}` : "", onlyB.length > 0 ? `${t("onlyInB")}: ${onlyB.join(", ")}` : ""].filter(Boolean).join("\n")
@@ -36,7 +38,10 @@ export function DiffCheckerTool({ t }: DiffCheckerToolProps) {
         Сравнение двух текстов по строкам. Показываются номера строк, которые отличаются в первом и во втором блоке.
       </p>
       <div>
-        <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("textA")}</label>
+        <div className="mb-1 flex items-center justify-between">
+          <label className="text-sm font-medium text-[var(--muted)]">{t("textA")}</label>
+          <span className="text-xs text-[var(--muted)]">{lineCountA} {t("lines") || "стр."}</span>
+        </div>
         <textarea
           value={textA}
           onChange={(e) => setTextA(e.target.value)}
@@ -46,7 +51,10 @@ export function DiffCheckerTool({ t }: DiffCheckerToolProps) {
         />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("textB")}</label>
+        <div className="mb-1 flex items-center justify-between">
+          <label className="text-sm font-medium text-[var(--muted)]">{t("textB")}</label>
+          <span className="text-xs text-[var(--muted)]">{lineCountB} {t("lines") || "стр."}</span>
+        </div>
         <textarea
           value={textB}
           onChange={(e) => setTextB(e.target.value)}

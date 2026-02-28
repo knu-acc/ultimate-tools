@@ -68,15 +68,11 @@ export function FaviconGenTool({ t }: FaviconGenToolProps) {
       </div>
       <div>
         <label className="mb-2 block text-sm">{t("size")}</label>
-        <select
-          value={size}
-          onChange={(e) => setSize(Number(e.target.value))}
-          className="rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
-        >
+        <div className="flex flex-wrap gap-2">
           {[16, 32, 48, 64].map((n) => (
-            <option key={n} value={n}>{n}×{n}</option>
+            <button key={n} type="button" onClick={() => setSize(n)} className={`rounded-lg px-3 py-2 text-sm ${size === n ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}>{n}×{n}</button>
           ))}
-        </select>
+        </div>
       </div>
       {dataUrl && (
         <div className="space-y-2">

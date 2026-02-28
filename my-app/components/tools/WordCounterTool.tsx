@@ -17,10 +17,13 @@ export function WordCounterTool({ t }: WordCounterToolProps) {
     const charsNoSpaces = text.replace(/\s/g, "").length;
     const words = trimmed ? trimmed.split(/\s+/).length : 0;
     const lines = text ? text.split(/\n/).length : 0;
-    return { chars, charsNoSpaces, words, lines };
+    const paragraphs = text ? text.split(/\n\s*\n/).filter((p) => p.trim()).length : 0;
+    const wpm = 200;
+    const readingTimeMin = words > 0 ? Math.max(1, Math.ceil(words / wpm)) : 0;
+    return { chars, charsNoSpaces, words, lines, paragraphs, readingTimeMin };
   }, [text]);
 
-  const report = `${t("words")}: ${stats.words} · ${t("chars")}: ${stats.chars} · ${t("charsNoSpaces")}: ${stats.charsNoSpaces} · ${t("lines")}: ${stats.lines}`;
+  const report = `${t("words")}: ${stats.words} · ${t("chars")}: ${stats.chars} · ${t("charsNoSpaces")}: ${stats.charsNoSpaces} · ${t("lines")}: ${stats.lines} · ${t("paragraphs")}: ${stats.paragraphs} · ${t("readingTime")}: ${stats.readingTimeMin} мин`;
 
   return (
     <div className="space-y-6">
@@ -39,13 +42,15 @@ export function WordCounterTool({ t }: WordCounterToolProps) {
           <span className="text-sm font-medium text-[var(--muted)]">Статистика</span>
           {text.length > 0 && <CopyButton text={report} label="Копировать отчёт" />}
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
           {[
             { key: "chars", value: stats.chars },
             { key: "charsNoSpaces", value: stats.charsNoSpaces },
             { key: "words", value: stats.words },
             { key: "lines", value: stats.lines },
-          ].map(({ key, value }, i) => (
+            { key: "paragraphs", value: stats.paragraphs },
+            { key: "readingTime", value: stats.readingTimeMin, suffix: " мин" },
+          ].map(({ key, value, suffix = "" }, i) => (
             <motion.div
               key={key}
               initial={{ opacity: 0, y: 6 }}
@@ -53,7 +58,7 @@ export function WordCounterTool({ t }: WordCounterToolProps) {
               transition={{ delay: i * 0.05 }}
               className="rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-center shadow-sm"
             >
-              <div className="text-2xl font-bold tabular-nums text-[var(--accent)]">{value}</div>
+              <div className="text-2xl font-bold tabular-nums text-[var(--accent)]">{value}{suffix}</div>
               <div className="text-sm text-[var(--muted)]">{t(key)}</div>
             </motion.div>
           ))}

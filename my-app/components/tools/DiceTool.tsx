@@ -41,6 +41,11 @@ export function DiceTool({ t }: DiceToolProps) {
 
   return (
     <div className="space-y-6">
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={() => { setCount(2); setSides(6); }} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">2d6</button>
+        <button type="button" onClick={() => { setCount(1); setSides(20); }} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">1d20</button>
+        <button type="button" onClick={() => { setCount(4); setSides(6); }} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">4d6</button>
+      </div>
       <div className="flex gap-6">
         <div>
           <label className="mb-1 block text-sm">{t("count")}</label>

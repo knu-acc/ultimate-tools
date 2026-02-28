@@ -27,11 +27,19 @@ export function WeightConverterTool({ t }: WeightConverterToolProps) {
 
   const resultLine = result ? `${value} ${from} = ${result} ${to}` : "";
 
+  const swap = () => {
+    setFrom(to);
+    setTo(from);
+  };
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
         Конвертер массы: кг, г, фунты (lb), унции (oz). Результат обновляется при вводе.
       </p>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={swap} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{t("swap") || "↔ Поменять"}</button>
+      </div>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
           <label className="mb-2 block text-sm">{t("value")}</label>

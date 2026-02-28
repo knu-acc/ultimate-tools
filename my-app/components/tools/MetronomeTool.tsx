@@ -40,6 +40,11 @@ export function MetronomeTool({ t }: MetronomeToolProps) {
       </p>
       <div>
         <label className="mb-2 block text-sm font-medium text-[var(--muted)]">{t("bpm")}</label>
+        <div className="flex flex-wrap gap-2 mb-2">
+          {[60, 90, 120, 140].map((n) => (
+            <button key={n} type="button" onClick={() => setBpm(n)} className={`rounded-lg px-3 py-1.5 text-sm font-medium ${bpm === n ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}>{n} BPM</button>
+          ))}
+        </div>
         <input
           type="range"
           min={40}

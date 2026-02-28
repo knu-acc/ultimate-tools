@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CryptoJS from "crypto-js";
 import { CopyButton } from "@/components/CopyButton";
 
@@ -11,9 +11,15 @@ interface Md5ToolProps {
 export function Md5Tool({ t }: Md5ToolProps) {
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
+  const [live, setLive] = useState(true);
+
+  useEffect(() => {
+    if (!live) return;
+    setResult(input ? CryptoJS.MD5(input).toString() : "");
+  }, [input, live]);
 
   const hash = () => {
-    setResult(CryptoJS.MD5(input).toString());
+    setResult(input ? CryptoJS.MD5(input).toString() : "");
   };
 
   return (
@@ -21,6 +27,10 @@ export function Md5Tool({ t }: Md5ToolProps) {
       <p className="text-sm text-[var(--muted)]">
         MD5-хеш в одну сторону. Подходит для контрольных сумм и проверки целостности; для паролей предпочтительнее SHA-256 или bcrypt.
       </p>
+      <label className="flex items-center gap-2 text-sm text-[var(--muted)]">
+        <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} />
+        {t("liveUpdate") || "Обновлять при вводе"}
+      </label>
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -34,6 +44,7 @@ export function Md5Tool({ t }: Md5ToolProps) {
       >
         {t("hash")}
       </button>
+      {input && <button type="button" onClick={() => { setInput(""); setResult(""); }} className="ml-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm hover:bg-[var(--border)]/20">{t("clear") || "Очистить"}</button>}
       {result ? (
         <div className="space-y-2">
           <div className="flex justify-end"><CopyButton text={result} label="Копировать хеш" /></div>

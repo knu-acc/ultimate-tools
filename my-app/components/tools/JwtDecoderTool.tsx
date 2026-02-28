@@ -27,8 +27,11 @@ export function JwtDecoderTool({ t }: JwtDecoderToolProps) {
   const [payload, setPayload] = useState("");
   const [error, setError] = useState("");
 
+  const [expInfo, setExpInfo] = useState<string | null>(null);
+
   const decode = () => {
     setError("");
+    setExpInfo(null);
     const parts = token.trim().split(".");
     if (parts.length !== 3) {
       setError(t("invalidJwt"));
@@ -36,7 +39,15 @@ export function JwtDecoderTool({ t }: JwtDecoderToolProps) {
     }
     try {
       setHeader(JSON.stringify(JSON.parse(base64UrlDecode(parts[0])), null, 2));
-      setPayload(JSON.stringify(JSON.parse(base64UrlDecode(parts[1])), null, 2));
+      const payloadObj = JSON.parse(base64UrlDecode(parts[1]));
+      setPayload(JSON.stringify(payloadObj, null, 2));
+      if (typeof payloadObj.exp === "number") {
+        const d = new Date(payloadObj.exp * 1000);
+        const now = Date.now() / 1000;
+        setExpInfo(payloadObj.exp < now
+          ? `${t("expired") || "Истёк"}: ${d.toLocaleString()}`
+          : `${t("expires") || "Истекает"}: ${d.toLocaleString()}`);
+      }
     } catch {
       setError(t("invalidJwt"));
     }
@@ -61,6 +72,7 @@ export function JwtDecoderTool({ t }: JwtDecoderToolProps) {
         {t("decode")}
       </button>
       {error && <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>}
+      {expInfo && <p className="text-sm text-[var(--muted)]">{expInfo}</p>}
       {header && (
         <div className="space-y-4">
           <div className="space-y-2">

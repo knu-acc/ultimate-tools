@@ -19,6 +19,11 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
     setResult(num.toString(toBase).toUpperCase());
   };
 
+  const decimalValue = (() => {
+    const num = parseInt(value, fromBase);
+    return isNaN(num) ? null : num;
+  })();
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
@@ -65,6 +70,9 @@ export function NumberSystemsTool({ t }: NumberSystemsToolProps) {
       >
         {t("convert")}
       </button>
+      {decimalValue !== null && value && (
+        <p className="text-sm text-[var(--muted)]">{t("decimalValue") || "В десятичной"}: {decimalValue}</p>
+      )}
       {result ? (
         <div className="space-y-2">
           <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>

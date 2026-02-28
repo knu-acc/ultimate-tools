@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { CopyButton } from "@/components/CopyButton";
 
 interface QrGeneratorToolProps {
   t: (key: string) => string;
@@ -24,6 +25,7 @@ function simpleQrMatrix(text: string, size: number): boolean[][] {
 
 export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
   const [value, setValue] = useState("");
+  const [cellSize, setCellSize] = useState(4);
   const size = 29;
   const matrix = useMemo(() => simpleQrMatrix(value, size), [value]);
 
@@ -41,15 +43,23 @@ export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
       />
       {value ? (
         <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center gap-2">
+            <label className="text-sm text-[var(--muted)]">{t("size") || "Размер"}</label>
+            <select value={cellSize} onChange={(e) => setCellSize(Number(e.target.value))} className="rounded-lg border border-[var(--border)] bg-transparent px-2 py-1">
+              {[2, 4, 6, 8].map((n) => (
+                <option key={n} value={n}>{n}px</option>
+              ))}
+            </select>
+          </div>
           <div
             className="border border-[var(--border)] p-2"
             style={{ imageRendering: "pixelated" }}
           >
             <svg
-              width={size * 4}
-              height={size * 4}
+              width={size * cellSize}
+              height={size * cellSize}
               viewBox={`0 0 ${size} ${size}`}
-              className="bg-white"
+              className="bg-white dark:bg-[var(--card-bg)]"
             >
               {matrix.map((row, y) =>
                 row.map((cell, x) => (
@@ -66,6 +76,7 @@ export function QrGeneratorTool({ t }: QrGeneratorToolProps) {
             </svg>
           </div>
           <p className="text-xs text-[var(--muted)]">{t("hint")}</p>
+          <CopyButton text={value} label="Копировать текст" />
         </div>
       ) : (
         <p className="rounded-lg border border-dashed border-[var(--border)] bg-[var(--accent-muted)]/20 px-4 py-3 text-sm text-[var(--muted)]">

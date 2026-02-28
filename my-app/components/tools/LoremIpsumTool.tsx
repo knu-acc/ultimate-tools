@@ -14,17 +14,20 @@ interface LoremIpsumToolProps {
 export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
   const [count, setCount] = useState(3);
   const [mode, setMode] = useState<"paragraphs" | "sentences" | "words">("paragraphs");
+  const [startWithLorem, setStartWithLorem] = useState(true);
 
   const generate = useCallback(() => {
     const words = LOREM.split(" ");
     const sentences = LOREM.split(". ");
     if (mode === "words") return words.slice(0, count).join(" ");
-    if (mode === "sentences") return sentences.slice(0, count).join(". ") + ".";
-    return Array(count)
-      .fill(null)
-      .map(() => LOREM)
-      .join("\n\n");
-  }, [count, mode]);
+    if (mode === "sentences") {
+      const s = sentences.slice(0, count).join(". ") + ".";
+      return startWithLorem ? s : s.replace(/^Lorem ipsum dolor sit amet,?\s*/i, "");
+    }
+    const paras = Array(count).fill(null).map(() => LOREM);
+    if (startWithLorem) return paras.join("\n\n");
+    return paras.map((p, i) => (i === 0 ? p.replace(/^Lorem ipsum dolor sit amet,?\s*/i, "") : p)).join("\n\n");
+  }, [count, mode, startWithLorem]);
 
   const [result, setResult] = useState("");
 
@@ -57,6 +60,10 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
             <option value="words">{t("words")}</option>
           </select>
         </div>
+        <label className="flex items-center gap-2 self-end">
+          <input type="checkbox" checked={startWithLorem} onChange={(e) => setStartWithLorem(e.target.checked)} className="rounded" />
+          <span className="text-sm text-[var(--muted)]">{t("startWithLorem") || "Начать с Lorem ipsum"}</span>
+        </label>
         <motion.button
           type="button"
           onClick={() => setResult(generate())}

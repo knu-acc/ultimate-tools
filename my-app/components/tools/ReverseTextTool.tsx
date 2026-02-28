@@ -9,13 +9,33 @@ interface ReverseTextToolProps {
 
 export function ReverseTextTool({ t }: ReverseTextToolProps) {
   const [text, setText] = useState("");
-  const reversed = text.split("").reverse().join("");
+  const [mode, setMode] = useState<"chars" | "words">("chars");
+  const reversed =
+    mode === "chars"
+      ? text.split("").reverse().join("")
+      : text.trim().split(/\s+/).reverse().join(" ");
 
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Разворот текста посимвольно: подходит для эффектов и проверки палиндромов.
+        Разворот текста посимвольно или по словам. Подходит для эффектов и проверки палиндромов.
       </p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={() => setMode("chars")}
+          className={`rounded-lg px-3 py-2 text-sm font-medium ${mode === "chars" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+        >
+          {t("byChars") || "По символам"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setMode("words")}
+          className={`rounded-lg px-3 py-2 text-sm font-medium ${mode === "words" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
+        >
+          {t("byWords") || "По словам"}
+        </button>
+      </div>
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}

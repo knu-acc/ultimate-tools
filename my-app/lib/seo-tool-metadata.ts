@@ -256,12 +256,6 @@ export const TOOL_SEO: Record<string, ToolSeoMeta> = {
     seoIntro: { ru: "Сравнение текстов по строкам: показываются номера строк, которые есть только в первом или только во втором тексте. Данные не отправляются.", kz: "Мәтіндерді жолдар бойынша салыстырады.", en: "Compares texts by lines. Shows lines only in A or B. Data stays local." },
     keywords: { ru: ["сравнение текстов", "diff онлайн", "отличия двух текстов", "сравнить текст"], kz: ["мәтіндерді салыстыру"], en: ["text diff", "compare texts", "diff checker"] },
   },
-  "color-contrast": {
-    title: { ru: "Проверка контраста цветов онлайн — WCAG контрастность", kz: "Түстер контрастын тексеру онлайн — WCAG", en: "Color Contrast Checker Online — WCAG Contrast" },
-    description: { ru: "Проверьте контраст текста и фона по WCAG. Узнайте соотношение и соответствие AA/AAA. Для доступности и дизайна. Бесплатно.", kz: "Мәтін мен фон контрастын WCAG бойынша тексеріңіз. Тегін.", en: "Check text and background contrast per WCAG. Get ratio and AA/AAA compliance. Free." },
-    seoIntro: { ru: "Инструмент вычисляет контрастность пары цветов (текст и фон) и показывает соответствие критериям WCAG (AA, AAA для обычного и крупного текста).", kz: "Түс контрастын есептейді және WCAG сәйкестілігін көрсетеді.", en: "Calculates contrast ratio and WCAG AA/AAA compliance for text and background." },
-    keywords: { ru: ["контраст цветов", "wcag контраст", "проверка контрастности", "доступность цветов"], kz: ["түстер контрасты"], en: ["color contrast", "wcag contrast", "contrast checker"] },
-  },
   "fonts-social": {
     title: { ru: "Шрифты для соцсетей онлайн — жирный, курсив, рукописный текст", kz: "Әлеуметтік желілер қаріптері онлайн", en: "Social Media Fonts Online — Bold, Italic, Script" },
     description: { ru: "Стилизованный текст для соцсетей: жирный, курсив, рукописный. Копируйте в Instagram, ВК, никнеймы. Бесплатно.", kz: "Әлеуметтік желілер үшін мәтін: қалың, курсив. Тегін.", en: "Styled text for social: bold, italic, script. Copy to Instagram, nicknames. Free." },
@@ -424,12 +418,6 @@ export const TOOL_SEO: Record<string, ToolSeoMeta> = {
     seoIntro: { ru: "Блокнот сохраняет введённый текст в localStorage при каждом изменении. Удобно для черновиков и быстрых заметок. Можно скопировать всё одним нажатием.", kz: "Блокнот мәтінді әр өзгертуде localStorage-та сақтайды.", en: "Notepad saves text to localStorage on each change. For drafts and quick notes. Copy all with one click." },
     keywords: { ru: ["блокнот онлайн", "заметки онлайн", "автосохранение заметок"], kz: ["жадыға алма онлайн"], en: ["online notepad", "notes online", "auto save notepad"] },
   },
-  ruler: {
-    title: { ru: "Линейка онлайн — пиксели и сантиметры на экране", kz: "Сызғыш онлайн — экранда пиксель мен см", en: "Ruler Online — Pixels and Centimeters on Screen" },
-    description: { ru: "Виртуальная линейка в пикселях или сантиметрах. Настройка DPI. Для дизайна и вёрстки. Бесплатно.", kz: "Пиксель немесе см-де виртуалды сызғыш. Тегін.", en: "Virtual ruler in pixels or centimeters. DPI setting. For design. Free." },
-    seoIntro: { ru: "Линейка отображает шкалу в выбранных единицах (px или см). Укажите DPI экрана для корректных сантиметров. Длина шкалы фиксирована.", kz: "Таңдалған бірліктерде (px немесе см) шкаланы көрсетеді.", en: "Shows scale in chosen units (px or cm). Set DPI for accurate cm. Fixed scale length." },
-    keywords: { ru: ["линейка онлайн", "пиксели в см", "виртуальная линейка"], kz: ["сызғыш онлайн"], en: ["ruler online", "pixels to cm", "screen ruler"] },
-  },
 };
 
 /** Fallback SEO for tools without explicit TOOL_SEO. Descriptions are full 2–3 sentence paragraphs. */
@@ -478,7 +466,6 @@ export function getToolSeoFallback(toolName: string): Partial<ToolSeoMeta> {
     "cps-test": { ru: "Тест кликов CPS", kz: "CPS басу тесті", en: "CPS Test" },
     metronome: { ru: "Метроном", kz: "Метроном", en: "Metronome" },
     notepad: { ru: "Блокнот", kz: "Жадыға алма", en: "Notepad" },
-    ruler: { ru: "Линейка", kz: "Сызғыш", en: "Ruler" },
     "reverse-text": { ru: "Переворот текста", kz: "Мәтінді аудару", en: "Reverse Text" },
     "random-picker": { ru: "Случайный выбор", kz: "Кездейсоқ таңдау", en: "Random Picker" },
     countdown: { ru: "Обратный отсчёт", kz: "Кері санау", en: "Countdown" },
@@ -486,7 +473,6 @@ export function getToolSeoFallback(toolName: string): Partial<ToolSeoMeta> {
     "qr-generator": { ru: "Генератор QR-кода", kz: "QR код генераторы", en: "QR Code Generator" },
     "diff-checker": { ru: "Сравнение текстов", kz: "Мәтіндерді салыстыру", en: "Diff Checker" },
     "volume-converter": { ru: "Конвертер объёма", kz: "Көлем түрлендіргіші", en: "Volume Converter" },
-    "color-contrast": { ru: "Контраст цветов", kz: "Түстер контрасты", en: "Color Contrast" },
   };
   const l = labels[toolName] ?? { ru: toolName, kz: toolName, en: toolName };
   return {

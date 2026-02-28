@@ -23,6 +23,30 @@ export function CaseConverterTool({ t }: CaseConverterToolProps) {
         c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()
       )
     );
+  const toCamel = () =>
+    setText((prev) =>
+      prev
+        .trim()
+        .split(/\s+/)
+        .map((w, i) => (i === 0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()))
+        .join("")
+    );
+  const toKebab = () =>
+    setText((prev) =>
+      prev
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/([A-ZА-Я])/g, (c) => c.toLowerCase())
+        .replace(/[^a-zа-яё0-9-]/gi, "")
+    );
+  const toSnake = () =>
+    setText((prev) =>
+      prev
+        .trim()
+        .replace(/\s+/g, "_")
+        .replace(/([A-ZА-Я])/g, (c) => c.toLowerCase())
+        .replace(/[^a-zа-яё0-9_]/gi, "")
+    );
 
   const actions = [
     { fn: toUpper, key: "upper" },
@@ -30,6 +54,9 @@ export function CaseConverterTool({ t }: CaseConverterToolProps) {
     { fn: toTitle, key: "titleCase" },
     { fn: toSentence, key: "sentence" },
     { fn: invertCase, key: "invert" },
+    { fn: toCamel, key: "camelCase" },
+    { fn: toKebab, key: "kebabCase" },
+    { fn: toSnake, key: "snakeCase" },
   ];
 
   return (
@@ -58,7 +85,8 @@ export function CaseConverterTool({ t }: CaseConverterToolProps) {
         ))}
       </div>
       {text.length > 0 && (
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-sm text-[var(--muted)]">{text.length} {t("chars") || "симв."}</span>
           <CopyButton text={text} label="Скопировать текст" />
         </div>
       )}

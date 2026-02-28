@@ -43,6 +43,19 @@ export function TimersTool({ t }: TimersToolProps) {
       <p className="text-sm text-[var(--muted)]">
         Обратный отсчёт по минутам и секундам. Задайте время, нажмите «Старт»; по окончании таймер остановится.
       </p>
+      <div className="flex flex-wrap gap-2">
+        {[1, 5, 10, 15, 30].map((m) => (
+          <button
+            key={m}
+            type="button"
+            disabled={running}
+            onClick={() => { setMinutes(m); setSeconds(0); setTotalSec(m * 60); }}
+            className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20 disabled:opacity-50"
+          >
+            {m} мин
+          </button>
+        ))}
+      </div>
       <div className="flex gap-4">
         <div>
           <label className="mb-1 block text-sm">{t("minutes")}</label>

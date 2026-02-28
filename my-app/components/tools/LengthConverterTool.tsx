@@ -31,11 +31,17 @@ export function LengthConverterTool({ t }: LengthConverterToolProps) {
 
   const resultLine = result ? `${value} ${from} = ${result} ${to}` : "";
 
+  const swap = () => {
+    setFrom(to);
+    setTo(from);
+  };
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
         Конвертер длины: метры, км, см, мм, мили, ярды, футы, дюймы. Результат обновляется при вводе.
       </p>
+      <button type="button" onClick={swap} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{t("swap") || "↔ Поменять"}</button>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
           <label className="mb-2 block text-sm">{t("value")}</label>

@@ -13,16 +13,19 @@ export function VatCalcTool({ t }: VatCalcToolProps) {
   const [includeVat, setIncludeVat] = useState(true);
   const [vat, setVat] = useState<number | null>(null);
   const [total, setTotal] = useState<number | null>(null);
+  const [net, setNet] = useState<number | null>(null);
 
   const calc = () => {
     const a = parseFloat(amount);
     if (isNaN(a)) return;
     const rate = vatRate / 100;
     if (includeVat) {
-      const net = a / (1 + rate);
-      setVat(a - net);
+      const netVal = a / (1 + rate);
+      setNet(netVal);
+      setVat(a - netVal);
       setTotal(a);
     } else {
+      setNet(a);
       setVat(a * rate);
       setTotal(a + a * rate);
     }
@@ -48,15 +51,11 @@ export function VatCalcTool({ t }: VatCalcToolProps) {
       </div>
       <div>
         <label className="mb-2 block text-sm">{t("vatRate")}</label>
-        <select
-          value={vatRate}
-          onChange={(e) => setVatRate(Number(e.target.value))}
-          className="rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
-        >
+        <div className="flex gap-2">
           {[0, 10, 20].map((n) => (
-            <option key={n} value={n}>{n}%</option>
+            <button key={n} type="button" onClick={() => setVatRate(n)} className={`rounded-lg px-4 py-2 text-sm font-medium ${vatRate === n ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}>{n}%</button>
           ))}
-        </select>
+        </div>
       </div>
       <label className="flex items-center gap-2">
         <input
@@ -76,6 +75,7 @@ export function VatCalcTool({ t }: VatCalcToolProps) {
         <div className="space-y-2">
           <div className="flex justify-end"><CopyButton text={summary} label="Копировать расчёт" /></div>
           <div className="space-y-2 rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4">
+            {includeVat && net !== null && <div><span className="text-[var(--muted)]">{t("withoutVat") || "Без НДС"}:</span> <span className="tabular-nums font-medium">{net.toFixed(2)}</span></div>}
             <div><span className="text-[var(--muted)]">{t("vat")}:</span> <span className="tabular-nums font-medium">{vat.toFixed(2)}</span></div>
             <div><span className="text-[var(--muted)]">{t("total")}:</span> <span className="tabular-nums font-medium">{total.toFixed(2)}</span></div>
           </div>

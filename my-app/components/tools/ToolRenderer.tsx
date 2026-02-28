@@ -48,7 +48,6 @@ import { MorseCodeTool } from "./MorseCodeTool";
 import { CpsTestTool } from "./CpsTestTool";
 import { MetronomeTool } from "./MetronomeTool";
 import { NotepadTool } from "./NotepadTool";
-import { RulerTool } from "./RulerTool";
 import { ReverseTextTool } from "./ReverseTextTool";
 import { RandomPickerTool } from "./RandomPickerTool";
 import { CountdownTool } from "./CountdownTool";
@@ -56,8 +55,6 @@ import { TipCalculatorTool } from "./TipCalculatorTool";
 import { QrGeneratorTool } from "./QrGeneratorTool";
 import { DiffCheckerTool } from "./DiffCheckerTool";
 import { VolumeConverterTool } from "./VolumeConverterTool";
-import { ColorContrastTool } from "./ColorContrastTool";
-
 const TOOL_COMPONENTS: Record<string, React.ComponentType<{ t: (k: string) => string }>> = {
   "random-number": RandomNumberTool,
   "word-counter": WordCounterTool,
@@ -114,8 +111,6 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType<{ t: (k: string) => st
   "cps-test": CpsTestTool,
   metronome: MetronomeTool,
   notepad: NotepadTool,
-  ruler: RulerTool,
-  "color-contrast": ColorContrastTool,
 };
 
 interface ToolRendererProps {

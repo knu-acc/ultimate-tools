@@ -97,7 +97,7 @@ export const CATEGORIES: Record<string, { key: string; tools: string[] }> = {
   },
   misc: {
     key: "nav.misc",
-    tools: ["cps-test", "metronome", "notepad", "ruler", "color-contrast"],
+    tools: ["cps-test", "metronome", "notepad"],
   },
 };
 
@@ -541,21 +541,5 @@ export const TOOLS: Record<string, ToolMeta> = {
     nameKey: "tools.notepad.title",
     descriptionKey: "tools.notepad.description",
     similarTools: ["word-counter", "case-converter"],
-  },
-  ruler: {
-    id: "ruler",
-    category: "misc",
-    slug: "ruler",
-    nameKey: "tools.ruler.title",
-    descriptionKey: "tools.ruler.description",
-    similarTools: ["length-converter", "color-picker"],
-  },
-  "color-contrast": {
-    id: "color-contrast",
-    category: "misc",
-    slug: "color-contrast",
-    nameKey: "tools.colorContrast.title",
-    descriptionKey: "tools.colorContrast.description",
-    similarTools: ["color-picker", "css-gradients", "ruler"],
   },
 };

@@ -11,10 +11,12 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
   const [bill, setBill] = useState("");
   const [percent, setPercent] = useState(10);
   const [people, setPeople] = useState(1);
+  const [roundTo, setRoundTo] = useState(0);
 
   const amount = parseFloat(bill) || 0;
   const tip = (amount * percent) / 100;
-  const total = amount + tip;
+  let total = amount + tip;
+  if (roundTo > 0) total = Math.ceil(total / roundTo) * roundTo;
   const perPerson = people > 0 ? total / people : 0;
 
   const summary = amount > 0
@@ -59,6 +61,22 @@ export function TipCalculatorTool({ t }: TipCalculatorToolProps) {
           onChange={(e) => setPeople(Math.max(1, Number(e.target.value) || 1))}
           className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none"
         />
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-sm text-[var(--muted)]">{t("tipPresets") || "Чаевые %"}:</span>
+        {[5, 10, 15, 20].map((p) => (
+          <button key={p} type="button" onClick={() => setPercent(p)} className={`rounded-lg px-3 py-1.5 text-sm ${percent === p ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}>{p}%</button>
+        ))}
+      </div>
+      <div>
+        <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("roundTotal") || "Округлить итог до"}</label>
+        <select value={roundTo} onChange={(e) => setRoundTo(Number(e.target.value))} className="rounded-lg border border-[var(--border)] bg-transparent px-3 py-2">
+          <option value={0}>{t("noRound") || "Не округлять"}</option>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={50}>50</option>
+          <option value={100}>100</option>
+        </select>
       </div>
       {amount > 0 ? (
         <div className="space-y-2">

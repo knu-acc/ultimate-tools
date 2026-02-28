@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
 const STORAGE_KEY = "ultimate-tools-notepad";
@@ -11,6 +11,12 @@ interface NotepadToolProps {
 
 export function NotepadTool({ t }: NotepadToolProps) {
   const [text, setText] = useState("");
+
+  const stats = useMemo(() => {
+    const trimmed = text.trim();
+    const words = trimmed ? trimmed.split(/\s+/).length : 0;
+    return { chars: text.length, charsNoSpaces: text.replace(/\s/g, "").length, words, lines: text ? text.split(/\n/).length : 0 };
+  }, [text]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -24,10 +30,20 @@ export function NotepadTool({ t }: NotepadToolProps) {
     }
   }, [text]);
 
+  const downloadTxt = () => {
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "notes.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
-        Блокнот с автосохранением в браузере. Текст сохраняется при вводе; можно скопировать всё одним нажатием.
+        Блокнот с автосохранением в браузере. Текст сохраняется при вводе; можно скопировать всё или экспортировать в файл.
       </p>
       <textarea
         value={text}
@@ -37,8 +53,28 @@ export function NotepadTool({ t }: NotepadToolProps) {
         rows={12}
       />
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm text-[var(--muted)]">{t("saved")}</p>
-        {text && <CopyButton text={text} label="Копировать всё" />}
+        <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
+          <span>{t("saved")}</span>
+          {text && (
+            <>
+              <span>{stats.words} {t("words") || "слов"}</span>
+              <span>{stats.chars} {t("chars") || "симв."}</span>
+              <span>{stats.lines} {t("lines") || "стр."}</span>
+            </>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          {text && (
+            <button
+              type="button"
+              onClick={downloadTxt}
+              className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20"
+            >
+              {t("exportTxt") || "Скачать .txt"}
+            </button>
+          )}
+          {text && <CopyButton text={text} label="Копировать всё" />}
+        </div>
       </div>
     </div>
   );

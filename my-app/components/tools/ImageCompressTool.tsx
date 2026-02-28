@@ -11,12 +11,16 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
   const [quality, setQuality] = useState(0.8);
   const [preview, setPreview] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
+  const [originalSize, setOriginalSize] = useState<number | null>(null);
+  const [resultSize, setResultSize] = useState<number | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f?.type.startsWith("image/")) return;
     setFile(f);
+    setOriginalSize(f.size);
+    setResultSize(null);
     const reader = new FileReader();
     reader.onload = () => setPreview(reader.result as string);
     reader.readAsDataURL(f);
@@ -31,7 +35,10 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
       canvasRef.current!.width = img.width;
       canvasRef.current!.height = img.height;
       ctx.drawImage(img, 0, 0);
-      setResult(canvasRef.current!.toDataURL("image/jpeg", quality));
+      const dataUrl = canvasRef.current!.toDataURL("image/jpeg", quality);
+      setResult(dataUrl);
+      const base64Length = dataUrl.split(",")[1]?.length ?? 0;
+      setResultSize(Math.ceil((base64Length * 3) / 4));
     };
     img.src = preview;
   };
@@ -73,6 +80,9 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
           >
             {t("compress")}
           </button>
+          {originalSize != null && (
+            <p className="text-sm text-[var(--muted)]">{t("original")}: {(originalSize / 1024).toFixed(1)} KB</p>
+          )}
           {preview && (
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -81,7 +91,7 @@ export function ImageCompressTool({ t }: ImageCompressToolProps) {
               </div>
               {result && (
                 <div>
-                  <div className="mb-2 text-sm text-[var(--muted)]">{t("compressed")}</div>
+                  <div className="mb-2 text-sm text-[var(--muted)]">{t("compressed")}{resultSize != null ? ` (${(resultSize / 1024).toFixed(1)} KB)` : ""}</div>
                   <img src={result} alt="" className="max-h-48 rounded-xl border object-contain" />
                   <a
                     href={result}

@@ -13,6 +13,8 @@ export function LoanCalcTool({ t }: LoanCalcToolProps) {
   const [months, setMonths] = useState("");
   const [payment, setPayment] = useState<number | null>(null);
 
+  const [overpayment, setOverpayment] = useState<number | null>(null);
+
   const calc = () => {
     const P = parseFloat(principal);
     const r = parseFloat(rate) / 100 / 12;
@@ -20,6 +22,11 @@ export function LoanCalcTool({ t }: LoanCalcToolProps) {
     if (isNaN(P) || isNaN(r) || isNaN(n) || n <= 0) return;
     const m = r ? (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1) : P / n;
     setPayment(m);
+    setOverpayment(m * n - P);
+  };
+
+  const setTerm = (m: number) => {
+    setMonths(String(m));
   };
 
   return (
@@ -27,6 +34,11 @@ export function LoanCalcTool({ t }: LoanCalcToolProps) {
       <p className="text-sm text-[var(--muted)]">
         Аннуитетный платёж: сумма кредита, годовая ставка в % и срок в месяцах. Результат — ежемесячный платёж.
       </p>
+      <div className="flex flex-wrap gap-2">
+        {[12, 24, 36, 60].map((m) => (
+          <button key={m} type="button" onClick={() => setTerm(m)} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{m} мес</button>
+        ))}
+      </div>
       <div className="grid gap-4 sm:grid-cols-3">
         <div>
           <label className="mb-2 block text-sm">{t("principal")}</label>
@@ -71,6 +83,9 @@ export function LoanCalcTool({ t }: LoanCalcToolProps) {
           <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4">
             <div className="text-2xl font-bold tabular-nums">{payment.toFixed(2)}</div>
             <div className="text-sm text-[var(--muted)]">{t("monthlyPayment")}</div>
+            {overpayment !== null && overpayment > 0 && (
+              <p className="mt-2 text-xs text-[var(--muted)]">{t("overpayment") || "Переплата"}: {overpayment.toFixed(2)}</p>
+            )}
           </div>
         </div>
       ) : (

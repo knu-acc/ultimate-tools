@@ -21,10 +21,10 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
   const [text, setText] = useState("");
   const [result, setResult] = useState<string[]>([]);
 
-  const doShuffle = () => {
-    const list = text.split("\n").filter(Boolean);
-    setResult(shuffle(list));
-  };
+  const lines = text.split(/[\n,;]+/).map((s) => s.trim()).filter(Boolean);
+
+  const doShuffle = () => setResult(shuffle(lines));
+  const doReverse = () => setResult([...lines].reverse());
 
   return (
     <div className="space-y-6">
@@ -35,14 +35,26 @@ export function ListShufflerTool({ t }: ListShufflerToolProps) {
         className="min-h-[150px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none"
         rows={6}
       />
-      <motion.button
-        onClick={doShuffle}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
-      >
-        {t("shuffle")}
-      </motion.button>
+      <p className="text-xs text-[var(--muted)]">Элементы — по одному на строку или через запятую/точку с запятой.</p>
+      <div className="flex flex-wrap gap-2">
+        <motion.button
+          onClick={doShuffle}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="rounded-xl bg-[var(--accent)] px-6 py-3 font-medium text-white"
+        >
+          {t("shuffle")}
+        </motion.button>
+        <motion.button
+          onClick={doReverse}
+          disabled={lines.length === 0}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="rounded-xl border border-[var(--border)] px-6 py-3 font-medium hover:bg-[var(--border)]/20 disabled:opacity-50"
+        >
+          {t("reverse") || "Обратный порядок"}
+        </motion.button>
+      </div>
       {result.length > 0 && (
         <motion.div
           initial={{ opacity: 0 }}

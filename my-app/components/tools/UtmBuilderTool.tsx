@@ -15,6 +15,14 @@ export function UtmBuilderTool({ t }: UtmBuilderToolProps) {
   const [term, setTerm] = useState("");
   const [content, setContent] = useState("");
 
+  const clearUtm = () => {
+    setSource("");
+    setMedium("");
+    setCampaign("");
+    setTerm("");
+    setContent("");
+  };
+
   const build = () => {
     const u = new URL(url || "https://example.com");
     if (source) u.searchParams.set("utm_source", source);
@@ -41,6 +49,11 @@ export function UtmBuilderTool({ t }: UtmBuilderToolProps) {
           placeholder="https://example.com"
           className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
         />
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={clearUtm} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">{t("clearUtm") || "Очистить UTM"}</button>
+        <button type="button" onClick={() => { setSource("google"); setMedium("cpc"); }} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Google Ads</button>
+        <button type="button" onClick={() => { setSource("newsletter"); setMedium("email"); }} className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--border)]/20">Email</button>
       </div>
       {[
         { key: "source", val: source, set: setSource },

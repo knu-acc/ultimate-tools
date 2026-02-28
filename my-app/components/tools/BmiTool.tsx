@@ -31,6 +31,9 @@ export function BmiTool({ t }: BmiToolProps) {
       : "";
 
   const summary = bmi !== null ? `ИМТ: ${bmi.toFixed(1)} — ${status}` : "";
+  const h = parseFloat(height) / 100;
+  const idealMin = h > 0 ? (18.5 * h * h).toFixed(1) : "";
+  const idealMax = h > 0 ? (25 * h * h).toFixed(1) : "";
 
   return (
     <div className="space-y-6">
@@ -69,6 +72,9 @@ export function BmiTool({ t }: BmiToolProps) {
           <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4">
             <div className="text-2xl font-bold tabular-nums">{bmi.toFixed(1)}</div>
             <div className="text-sm text-[var(--muted)]">{status}</div>
+            {idealMin && idealMax && (
+              <p className="mt-2 text-xs text-[var(--muted)]">{t("idealRange") || "Норма ИМТ 18.5–25 ≈ вес (кг)"}: {idealMin} – {idealMax}</p>
+            )}
           </div>
         </div>
       ) : (

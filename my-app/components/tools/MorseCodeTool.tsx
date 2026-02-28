@@ -25,6 +25,7 @@ export function MorseCodeTool({ t }: MorseCodeToolProps) {
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
   const [mode, setMode] = useState<"encode" | "decode">("encode");
+  const [live, setLive] = useState(false);
 
   const process = () => {
     if (mode === "encode") {
@@ -38,19 +39,26 @@ export function MorseCodeTool({ t }: MorseCodeToolProps) {
     } else {
       setResult(
         input
-          .split(" ")
+          .split(/[\s/]+/)
           .map((s) => REVERSE[s] ?? s)
           .join("")
       );
     }
   };
 
+  const liveResult =
+    live && input
+      ? mode === "encode"
+        ? input.toUpperCase().split("").map((c) => MORSE[c] ?? c).join(" ")
+        : input.split(/[\s/]+/).map((s) => REVERSE[s] ?? s).join("")
+      : result;
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
         Код Морзе: латиница и цифры в точки/тире и обратно. Выберите «Закодировать» или «Декодировать», введите текст и нажмите кнопку.
       </p>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button
           onClick={() => setMode("encode")}
           className={`rounded-xl px-4 py-2 ${mode === "encode" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)]"}`}
@@ -63,6 +71,10 @@ export function MorseCodeTool({ t }: MorseCodeToolProps) {
         >
           {t("decode")}
         </button>
+        <label className="flex items-center gap-2 text-sm text-[var(--muted)]">
+          <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} />
+          {t("liveUpdate") || "Обновлять при вводе"}
+        </label>
       </div>
       <textarea
         value={input}
@@ -77,11 +89,11 @@ export function MorseCodeTool({ t }: MorseCodeToolProps) {
       >
         {mode === "encode" ? t("encode") : t("decode")}
       </button>
-      {result ? (
+      {(liveResult || result) ? (
         <div className="space-y-2">
-          <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>
+          <div className="flex justify-end"><CopyButton text={liveResult || result} label="Копировать" /></div>
           <div className="select-all rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 font-mono">
-            {result}
+            {liveResult || result}
           </div>
         </div>
       ) : (

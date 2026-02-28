@@ -43,6 +43,8 @@ interface FontsSocialToolProps {
 
 export function FontsSocialTool({ t }: FontsSocialToolProps) {
   const [text, setText] = useState("Hello World");
+  const allResults = FONTS.map((f) => ({ name: f.name, text: convert(text, f) }));
+  const copyAllText = allResults.map((r) => r.text).join("\n");
 
   return (
     <div className="space-y-6">
@@ -56,6 +58,11 @@ export function FontsSocialTool({ t }: FontsSocialToolProps) {
         placeholder={t("placeholder")}
         className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
       />
+      {text && (
+        <div className="flex justify-end">
+          <CopyButton text={copyAllText} label={t("copyAll") || "Копировать все варианты"} />
+        </div>
+      )}
       <div className="space-y-4">
         {FONTS.map((font) => {
           const result = convert(text, font);

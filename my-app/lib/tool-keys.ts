@@ -54,6 +54,4 @@ export const TOOL_TRANSLATION_KEYS: Record<string, string> = {
   "cps-test": "tools.cpsTest",
   metronome: "tools.metronome",
   notepad: "tools.notepad",
-  ruler: "tools.ruler",
-  "color-contrast": "tools.colorContrast",
 };

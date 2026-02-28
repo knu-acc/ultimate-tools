@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { CopyButton } from "@/components/CopyButton";
@@ -113,12 +113,18 @@ export function Base64Tool({ t }: Base64ToolProps) {
       {error && <div className="text-red-500 text-sm font-medium animate-in fade-in">{error}</div>}
       
       {result && (
-        <div className="relative group">
-          <div className="rounded-xl border border-[var(--border)] bg-[var(--accent-muted)]/10 p-5 font-mono text-sm break-all text-[var(--foreground)] min-h-[100px]">
-            {result}
+        <div className="space-y-2">
+          <div className="flex items-center gap-4 text-xs text-[var(--muted)]">
+            <span>{t("inputLength") || "Ввод"}: {input.length} {t("chars") || "симв."}</span>
+            <span>{t("resultLength") || "Результат"}: {result.length} {t("chars") || "симв."}</span>
           </div>
-          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-            <CopyButton text={result} />
+          <div className="relative group">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--accent-muted)]/10 p-5 font-mono text-sm break-all text-[var(--foreground)] min-h-[100px]">
+              {result}
+            </div>
+            <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+              <CopyButton text={result} />
+            </div>
           </div>
         </div>
       )}

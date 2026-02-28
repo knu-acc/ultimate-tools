@@ -39,6 +39,7 @@ export function RomanNumeralsTool({ t }: RomanNumeralsToolProps) {
   const [input, setInput] = useState("");
   const [mode, setMode] = useState<"to" | "from">("to");
   const [result, setResult] = useState("");
+  const [live, setLive] = useState(false);
 
   const convert = () => {
     if (mode === "to") {
@@ -50,12 +51,25 @@ export function RomanNumeralsTool({ t }: RomanNumeralsToolProps) {
     }
   };
 
+  const liveResult =
+    live && input
+      ? mode === "to"
+        ? (() => {
+            const n = parseInt(input, 10);
+            return !isNaN(n) && n > 0 && n < 4000 ? toRoman(n) : "";
+          })()
+        : (() => {
+            const n = fromRoman(input.toUpperCase());
+            return n ? String(n) : "";
+          })()
+      : result;
+
   return (
     <div className="space-y-6">
       <p className="text-sm text-[var(--muted)]">
         Арабские числа в римские (1–3999) и обратно. Выберите направление, введите значение и нажмите «Конвертировать».
       </p>
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <button
           onClick={() => setMode("to")}
           className={`rounded-xl px-4 py-2 ${mode === "to" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)]"}`}
@@ -68,6 +82,10 @@ export function RomanNumeralsTool({ t }: RomanNumeralsToolProps) {
         >
           {t("fromRoman")}
         </button>
+        <label className="flex items-center gap-2 text-sm text-[var(--muted)]">
+          <input type="checkbox" checked={live} onChange={(e) => setLive(e.target.checked)} />
+          {t("liveUpdate") || "При вводе"}
+        </label>
       </div>
       <input
         type="text"
@@ -82,11 +100,11 @@ export function RomanNumeralsTool({ t }: RomanNumeralsToolProps) {
       >
         {t("convert")}
       </button>
-      {result ? (
+      {(liveResult || result) ? (
         <div className="space-y-2">
-          <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>
+          <div className="flex justify-end"><CopyButton text={liveResult || result} label="Копировать" /></div>
           <div className="rounded-xl border border-[var(--accent)] bg-[var(--accent)]/10 p-4 font-mono text-xl">
-            {result}
+            {liveResult || result}
           </div>
         </div>
       ) : (

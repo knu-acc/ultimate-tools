@@ -54,6 +54,9 @@ export function AesEncryptTool({ t }: AesEncryptToolProps) {
           onChange={(e) => setKey(e.target.value)}
           className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
         />
+        {key.length > 0 && key.length < 8 && (
+          <p className="mt-1 text-xs text-amber-600 dark:text-amber-400">{t("shortKey") || "Ключ менее 8 символов — рекомендуется длиннее."}</p>
+        )}
       </div>
       <textarea
         value={text}
@@ -68,6 +71,7 @@ export function AesEncryptTool({ t }: AesEncryptToolProps) {
       >
         {mode === "encrypt" ? t("encrypt") : t("decrypt")}
       </button>
+      <button type="button" onClick={() => { setText(""); setResult(""); }} className="ml-2 rounded-xl border border-[var(--border)] px-4 py-2 text-sm hover:bg-[var(--border)]/20">{t("clear") || "Очистить"}</button>
       {result ? (
         <div className="space-y-2">
           <div className="flex justify-end"><CopyButton text={result} label="Копировать" /></div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Shuffle } from "lucide-react";
 import { CopyButton } from "@/components/CopyButton";
@@ -19,16 +19,29 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(100);
   const [quantity, setQuantity] = useState(1);
+  const [exclude, setExclude] = useState("");
   const [result, setResult] = useState<number[] | null>(null);
   const [scrolling, setScrolling] = useState(false);
   const [displayNums, setDisplayNums] = useState<number[]>([]);
+
+  const excludeSet = useMemo(() => {
+    const s = new Set<number>();
+    exclude.split(/[\s,;]+/).forEach((part) => {
+      const n = Number(part.trim());
+      if (!Number.isNaN(n)) s.add(n);
+    });
+    return s;
+  }, [exclude]);
 
   const handleGenerate = () => {
     const mn = Math.min(min, max);
     const mx = Math.max(min, max);
     const qty = Math.min(Math.max(1, quantity), 100);
     const nums: number[] = [];
-    const range = mx - mn + 1;
+    const pool: number[] = [];
+    for (let i = mn; i <= mx; i++) if (!excludeSet.has(i)) pool.push(i);
+    const range = pool.length;
+    if (range === 0) return;
     if (qty > range) {
       for (let i = 0; i < qty; i++) nums.push(getRandomInt(mn, mx));
     } else {
@@ -40,12 +53,12 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
     }
     setScrolling(true);
     setResult(null);
-    setDisplayNums(nums.map(() => mn));
+    setDisplayNums(nums.map(() => pool[0] ?? mn));
     let step = 0;
     const steps = 8;
     const iv = setInterval(() => {
       step++;
-      setDisplayNums(nums.map(() => getRandomInt(mn, mx)));
+      setDisplayNums(nums.map(() => pool[Math.floor(Math.random() * pool.length)] ?? mn));
       if (step >= steps) {
         clearInterval(iv);
         setDisplayNums(nums);
@@ -87,6 +100,16 @@ export function RandomNumberTool({ t }: RandomNumberToolProps) {
             className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
           />
         </div>
+      </div>
+      <div>
+        <label className="mb-1 block text-sm font-medium text-[var(--muted)]">{t("exclude") || "Исключить (через запятую)"}</label>
+        <input
+          type="text"
+          value={exclude}
+          onChange={(e) => setExclude(e.target.value)}
+          placeholder="5, 10, 15"
+          className="w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-2 focus:border-[var(--accent)] focus:outline-none"
+        />
       </div>
 
       <motion.button

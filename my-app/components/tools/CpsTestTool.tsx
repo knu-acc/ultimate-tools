@@ -13,8 +13,14 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
   const [cps, setCps] = useState(0);
   const [running, setRunning] = useState(false);
   const [timeLeft, setTimeLeft] = useState(5);
+  const [duration, setDuration] = useState(5);
+  const [bestCps, setBestCps] = useState(0);
   const startTime = useRef(0);
   const clickTimes = useRef<number[]>([]);
+
+  useEffect(() => {
+    if (!running) setTimeLeft(duration);
+  }, [duration, running]);
 
   useEffect(() => {
     if (!running || timeLeft <= 0) return;
@@ -22,9 +28,10 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
       setTimeLeft((t) => {
         if (t <= 1) {
           setRunning(false);
-          const elapsed = (Date.now() - startTime.current) / 1000;
           const recent = clickTimes.current.filter((ts) => ts > Date.now() - 1000);
-          setCps(recent.length);
+          const finalCps = recent.length;
+          setCps(finalCps);
+          setBestCps((b) => Math.max(b, finalCps));
           return 0;
         }
         return t - 1;
@@ -37,7 +44,7 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
     if (!running) {
       setRunning(true);
       setClicks(0);
-      setTimeLeft(5);
+      setTimeLeft(duration);
       clickTimes.current = [];
       startTime.current = Date.now();
     }
@@ -51,7 +58,7 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
     setRunning(false);
     setClicks(0);
     setCps(0);
-    setTimeLeft(5);
+    setTimeLeft(duration);
   };
 
   return (
@@ -59,9 +66,15 @@ export function CpsTestTool({ t }: CpsTestToolProps) {
       <p className="text-sm text-[var(--muted)]">
         Тест кликов в секунду (CPS): нажмите «Старт» и кликайте по блоку 5 секунд. В конце показывается CPS за последнюю секунду.
       </p>
+      <div className="flex flex-wrap gap-2">
+        {[5, 10].map((d) => (
+          <button key={d} type="button" disabled={running} onClick={() => setDuration(d)} className={`rounded-lg px-3 py-1.5 text-sm ${duration === d ? "bg-[var(--accent)] text-white" : "border border-[var(--border)]"} disabled:opacity-50`}>{d} сек</button>
+        ))}
+      </div>
       <div className="text-center">
         <div className="text-4xl font-bold text-[var(--accent)]">{timeLeft > 0 ? timeLeft : "0"}</div>
         <div className="text-sm text-[var(--muted)]">{t("secondsLeft")}</div>
+        {bestCps > 0 && !running && <p className="mt-1 text-sm text-[var(--muted)]">{t("bestCps") || "Лучший CPS"}: {bestCps}</p>}
       </div>
       <motion.div
         onClick={handleClick}

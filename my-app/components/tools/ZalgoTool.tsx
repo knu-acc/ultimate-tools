@@ -28,6 +28,10 @@ function zalgo(text: string, intensity: number): string {
     .join("");
 }
 
+function removeZalgo(str: string): string {
+  return str.normalize("NFD").replace(/\p{M}/gu, "");
+}
+
 interface ZalgoToolProps {
   t: (key: string) => string;
 }
@@ -76,6 +80,15 @@ export function ZalgoTool({ t }: ZalgoToolProps) {
                 className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--accent)]/10"
               >
                 Ещё раз
+              </button>
+            )}
+            {(result || text) && (
+              <button
+                type="button"
+                onClick={() => setText((prev) => removeZalgo(prev || result))}
+                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--accent)]/10"
+              >
+                {t("removeZalgo") || "Убрать залго"}
               </button>
             )}
           </div>

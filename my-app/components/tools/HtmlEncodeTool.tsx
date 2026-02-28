@@ -26,9 +26,26 @@ export function HtmlEncodeTool({ t }: HtmlEncodeToolProps) {
   };
 
   const decode = () => {
-    const textarea = document.createElement("textarea");
-    textarea.innerHTML = input;
-    setOutput(textarea.value);
+    try {
+      const textarea = document.createElement("textarea");
+      textarea.innerHTML = input;
+      setOutput(textarea.value);
+    } catch {
+      setOutput(t("decodeError") || "Ошибка декодирования");
+    }
+  };
+
+  const encodeAll = () => {
+    setOutput(
+      input
+        .split("")
+        .map((c) => {
+          const code = c.charCodeAt(0);
+          if (code > 127) return `&#${code};`;
+          return HTML_ENTITIES[c] ?? c;
+        })
+        .join("")
+    );
   };
 
   return (
@@ -40,18 +57,15 @@ export function HtmlEncodeTool({ t }: HtmlEncodeToolProps) {
         className="min-h-[120px] w-full rounded-xl border border-[var(--border)] bg-transparent px-4 py-3"
         rows={5}
       />
-      <div className="flex gap-2">
-        <button
-          onClick={encode}
-          className="rounded-xl bg-[var(--accent)] px-4 py-2 text-white"
-        >
+      <div className="flex flex-wrap gap-2">
+        <button onClick={encode} className="rounded-xl bg-[var(--accent)] px-4 py-2 text-white">
           {t("encode")}
         </button>
-        <button
-          onClick={decode}
-          className="rounded-xl border border-[var(--border)] px-4 py-2"
-        >
+        <button onClick={decode} className="rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20">
           {t("decode")}
+        </button>
+        <button onClick={encodeAll} className="rounded-xl border border-[var(--border)] px-4 py-2 hover:bg-[var(--border)]/20">
+          {t("encodeAll") || "Все символы → entities"}
         </button>
       </div>
       {output ? (
