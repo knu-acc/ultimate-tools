@@ -1,4 +1,6 @@
-"use client";
+const fs = require('fs');
+
+const newSlider = `"use client";
 
 import { useRef } from "react";
 import Link from "next/link";
@@ -45,7 +47,7 @@ export function PopularToolsSlider({ items, lang }: PopularToolsSliderProps) {
             style={{ scrollSnapAlign: "start" }}
           >
             <Link
-              href={`/${lang}/${category}/${slug}`}
+              href={\`/\${lang}/\${category}/\${slug}\`}
               className="tool-card group flex flex-col p-5 h-full"
             >
               <div className="flex items-center gap-3 mb-3">
@@ -69,7 +71,7 @@ export function PopularToolsSlider({ items, lang }: PopularToolsSliderProps) {
       <button
         type="button"
         onClick={() => scroll("left")}
-        className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-sm text-[var(--text-muted)] hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-colors"
+        className="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-sm text-[var(--text-muted)] hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-colors"
         aria-label="Назад"
       >
         <ChevronLeft className="w-5 h-5" />
@@ -77,7 +79,7 @@ export function PopularToolsSlider({ items, lang }: PopularToolsSliderProps) {
       <button
         type="button"
         onClick={() => scroll("right")}
-        className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-sm text-[var(--text-muted)] hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-colors"
+        className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-[var(--surface)] border border-[var(--border)] shadow-sm text-[var(--text-muted)] hover:bg-[var(--accent)] hover:text-white hover:border-[var(--accent)] transition-colors"
         aria-label="Вперёд"
       >
         <ChevronRight className="w-5 h-5" />
@@ -85,3 +87,7 @@ export function PopularToolsSlider({ items, lang }: PopularToolsSliderProps) {
     </div>
   );
 }
+`;
+
+fs.writeFileSync('c:/Users/Овсянка/Desktop/pil-cpy-app/my-app/components/PopularToolsSlider.tsx', newSlider, 'utf8');
+console.log('Slider rewritten.');

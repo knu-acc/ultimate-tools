@@ -1,71 +1,10 @@
-import Link from "next/link";
-import { Type, Shuffle, Clock, Calculator, Image, Code, Share2, ArrowLeftRight, Key, MoreHorizontal } from "lucide-react";
-import { loadTranslations, getNested } from "@/lib/i18n";
-import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
-import type { Lang } from "@/lib/tools-registry";
-import { PopularToolsSlider } from "@/components/PopularToolsSlider";
-import { MidContentAd } from "@/components/ads/MidContentAd";
-import { InGridAd } from "@/components/ads/InGridAd";
-import { Fragment } from "react";
-import type { Metadata } from "next";
+const fs = require('fs');
+let page = fs.readFileSync('c:/Users/Овсянка/Desktop/pil-cpy-app/my-app/app/[lang]/page.tsx', 'utf8');
 
-const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  text: Type,
-  random: Shuffle,
-  time: Clock,
-  math: Calculator,
-  graphics: Image,
-  "dev-tools": Code,
-  social: Share2,
-  converters: ArrowLeftRight,
-  crypto: Key,
-  misc: MoreHorizontal,
-};
+const retStart = page.indexOf('  return (');
+const prefix = page.substring(0, retStart);
 
-const FEATURED_TOOLS: { slug: string; category: string }[] = [
-  { slug: "random-number", category: "random" },
-  { slug: "password-generator", category: "random" },
-  { slug: "word-counter", category: "text" },
-  { slug: "bmi", category: "math" },
-  { slug: "json-formatter", category: "dev-tools" },
-  { slug: "base64", category: "graphics" },
-];
-
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ultimate-tools.example.com";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ lang: string }>;
-}): Promise<Metadata> {
-  const { lang } = await params;
-  const validLang = ["ru", "kz", "en"].includes(lang) ? (lang as Lang) : "ru";
-  const titles = { ru: "Ultimate Tools — 100+ бесплатных веб-инструментов онлайн", kz: "Ultimate Tools — 100+ тегін веб-құралдар", en: "Ultimate Tools — 100+ Free Web Tools Online" };
-  const descriptions = {
-    ru: "Более 100 бесплатных онлайн-инструментов: калькуляторы процентов и ИМТ, генераторы паролей и QR-кодов, конвертеры, счётчик слов, JSON, Base64. Всё в браузере — без регистрации, данные не передаются.",
-    kz: "100+ тегін онлайн құралдар: калькуляторлар, генераторлар, түрлендіргіштер. Тіркеусіз, барлығы браузерде.",
-    en: "100+ free online tools: percentage and BMI calculators, password and QR generators, converters, word counter, JSON, Base64. All in browser — no signup, no data sent.",
-  };
-  const canonical = `${BASE_URL}/${validLang}`;
-  return {
-    title: titles[validLang],
-    description: descriptions[validLang],
-    alternates: { canonical },
-    openGraph: { title: titles[validLang], description: descriptions[validLang], url: canonical },
-  };
-}
-
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ lang: string }>;
-}) {
-  const { lang } = await params;
-  const validLang = ["ru", "kz", "en"].includes(lang) ? (lang as Lang) : "ru";
-  const tData = await loadTranslations(validLang);
-  const t = (key: string) => getNested(tData as Record<string, unknown>, key) ?? key;
-
-  return (
+const newReturn = `  return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="border-b border-[var(--border)] bg-[var(--bg-subtle)]">
@@ -101,7 +40,7 @@ export default async function HomePage({
               const tool = TOOLS[slug];
               if (!tool) return { slug, category, title: slug, description: "" };
               const camelSlug = slug.split("-").map((s, i) => (i === 0 ? s : s.charAt(0).toUpperCase() + s.slice(1))).join("");
-              const cardDesc = getNested(tData as Record<string, unknown>, `tools.${camelSlug}.cardDescription`);
+              const cardDesc = getNested(tData as Record<string, unknown>, \`tools.\${camelSlug}.cardDescription\`);
               const description = (typeof cardDesc === "string" ? cardDesc : null) ?? t(tool.descriptionKey);
               return { slug, category, title: t(tool.nameKey), description };
             })}
@@ -125,7 +64,7 @@ export default async function HomePage({
             {Object.entries(CATEGORIES).map(([catSlug, { key, tools }], index) => {
               const Icon = CATEGORY_ICONS[catSlug] ?? MoreHorizontal;
               const descKey = catSlug === "dev-tools" ? "devTools" : catSlug;
-              const catDescription = getNested(tData as Record<string, unknown>, `categories.${descKey}.description`);
+              const catDescription = getNested(tData as Record<string, unknown>, \`categories.\${descKey}.description\`);
               const exampleSlugs = tools.slice(0, 3);
               const exampleNames = exampleSlugs
                 .map((s) => TOOLS[s]?.nameKey)
@@ -135,7 +74,7 @@ export default async function HomePage({
               const CategoryCard = (
                 <Link
                   key={catSlug}
-                  href={`/${validLang}/${catSlug}`}
+                  href={\`/\${validLang}/\${catSlug}\`}
                   className="tool-card group flex flex-col p-5"
                 >
                   <div className="flex items-start gap-3 mb-3">
@@ -166,7 +105,7 @@ export default async function HomePage({
 
               if (index === 4) {
                 return (
-                  <Fragment key={`fragment-${catSlug}`}>
+                  <Fragment key={\`fragment-\${catSlug}\`}>
                     {CategoryCard}
                     <div key="home-category-ad" className="flex items-center justify-center p-0 min-h-[160px]">
                       <InGridAd />
@@ -182,3 +121,8 @@ export default async function HomePage({
     </div>
   );
 }
+`;
+
+const newPage = prefix + newReturn;
+fs.writeFileSync('c:/Users/Овсянка/Desktop/pil-cpy-app/my-app/app/[lang]/page.tsx', newPage, 'utf8');
+console.log('Homepage rewritten. size:', newPage.length);
