@@ -20,8 +20,8 @@ export function Header({ lang, translations }: HeaderProps) {
   const [themeOpen, setThemeOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur-xl shadow-sm">
-      <div className="flex h-14 items-center justify-between px-4 lg:px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[var(--background)]/70 backdrop-blur-2xl transition-all duration-300">
+      <div className="flex h-16 items-center justify-between px-4 lg:px-8 mx-auto max-w-[1400px]">
         <Link
           href={`/${lang}`}
           className="flex items-center gap-2 font-semibold text-[var(--foreground)] hover:text-[var(--accent)] transition-colors"
@@ -56,9 +56,8 @@ export function Header({ lang, translations }: HeaderProps) {
                     <Link
                       key={l.code}
                       href={`/${l.code}`}
-                      className={`block rounded-lg px-3 py-2 text-sm hover:bg-[var(--accent)]/20 ${
-                        l.code === lang ? "font-semibold text-[var(--accent)]" : ""
-                      }`}
+                      className={`block rounded-lg px-3 py-2 text-sm hover:bg-[var(--accent)]/20 ${l.code === lang ? "font-semibold text-[var(--accent)]" : ""
+                        }`}
                       onClick={() => setLangOpen(false)}
                     >
                       {l.label}
@@ -98,9 +97,8 @@ export function Header({ lang, translations }: HeaderProps) {
                       setTheme("light");
                       setThemeOpen(false);
                     }}
-                    className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[var(--accent)]/20 ${
-                      theme === "light" ? "font-semibold text-[var(--accent)]" : ""
-                    }`}
+                    className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[var(--accent)]/20 ${theme === "light" ? "font-semibold text-[var(--accent)]" : ""
+                      }`}
                   >
                     <Sun className="h-4 w-4" />
                     {t("common.light")}
@@ -110,9 +108,8 @@ export function Header({ lang, translations }: HeaderProps) {
                       setTheme("dark");
                       setThemeOpen(false);
                     }}
-                    className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[var(--accent)]/20 ${
-                      theme === "dark" ? "font-semibold text-[var(--accent)]" : ""
-                    }`}
+                    className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-[var(--accent)]/20 ${theme === "dark" ? "font-semibold text-[var(--accent)]" : ""
+                      }`}
                   >
                     <Moon className="h-4 w-4" />
                     {t("common.dark")}

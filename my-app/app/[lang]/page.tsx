@@ -50,27 +50,31 @@ export default async function HomePage({
 
   return (
     <div className="min-h-screen">
-      {/* Hero — мягкий градиент в тон страницы, без резкого перехода */}
-      <section className="relative overflow-hidden border-b border-[var(--border)]">
-        <div className="gradient-hero px-6 pt-14 pb-16 lg:px-8 lg:pt-20 lg:pb-20">
-          <div className="mx-auto max-w-4xl">
-            <h1 className="text-4xl font-bold tracking-tight text-[var(--foreground)] lg:text-5xl">
+      {/* Premium Hero with Subtle Noise and Gradients */}
+      <section className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--background)]">
+        <div className="bg-noise" />
+        <div className="gradient-hero px-6 py-20 lg:px-8 lg:py-28 relative z-10">
+          <div className="mx-auto max-w-4xl text-center">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-purple-500 pb-2">
               {t("common.siteName")}
             </h1>
-            <p className="mt-4 max-w-2xl text-lg text-[var(--muted)]">
+            <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-[var(--muted)] leading-relaxed">
               {t("common.homeSlogan")}
             </p>
           </div>
         </div>
       </section>
 
-      <div className="mx-auto max-w-4xl px-6 pb-12 lg:px-8">
-        {/* Popular tools — 4–6 cards */}
-        <section id="popular" className="-mt-6 mb-12">
-          <h2 className="mb-4 text-xl font-semibold text-[var(--foreground)]">
-            {t("home.popularTools")}
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto max-w-5xl px-6 py-12 lg:px-8 lg:py-16">
+        {/* Popular tools */}
+        <section id="popular" className="mb-16">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-[var(--accent)] to-purple-500" />
+            <h2 className="text-2xl font-bold text-[var(--foreground)] tracking-tight">
+              {t("home.popularTools")}
+            </h2>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURED_TOOLS.map(({ slug, category }) => {
               const tool = TOOLS[slug];
               if (!tool) return null;
@@ -78,31 +82,34 @@ export default async function HomePage({
                 <Link
                   key={slug}
                   href={`/${validLang}/${category}/${slug}`}
-                  className="tool-card flex items-start gap-4 p-4"
+                  className="tool-card group flex flex-col p-5"
                 >
-                  <div className="shrink-0">
-                    <ToolIcon toolName={slug} size="md" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="font-medium text-[var(--foreground)]">
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="shrink-0 p-2.5 rounded-xl bg-[var(--accent-muted)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-300">
+                      <ToolIcon toolName={slug} size="md" />
+                    </div>
+                    <span className="font-semibold text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors duration-300">
                       {t(tool.nameKey)}
                     </span>
-                    <p className="mt-0.5 text-sm text-[var(--muted)] line-clamp-2">
-                      {getNested(tData as Record<string, unknown>, tool.descriptionKey.replace(".description", ".cardDescription")) ?? t(tool.descriptionKey)}
-                    </p>
                   </div>
+                  <p className="text-sm text-[var(--muted)] leading-relaxed flex-1">
+                    {getNested(tData as Record<string, unknown>, tool.descriptionKey.replace(".description", ".cardDescription")) ?? t(tool.descriptionKey)}
+                  </p>
                 </Link>
               );
             })}
           </div>
         </section>
 
-        {/* Categories — gradient strip, 2–3 tool name examples */}
+        {/* Categories */}
         <section>
-          <h2 className="mb-4 text-xl font-semibold text-[var(--foreground)]">
-            {t("home.categories")}
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-6 w-1.5 rounded-full bg-gradient-to-b from-purple-500 to-pink-500" />
+            <h2 className="text-2xl font-bold text-[var(--foreground)] tracking-tight">
+              {t("home.categories")}
+            </h2>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {Object.entries(CATEGORIES).map(([catSlug, { key, tools }]) => {
               const exampleSlugs = tools.slice(0, 3);
               const exampleNames = exampleSlugs
@@ -113,18 +120,20 @@ export default async function HomePage({
                 <Link
                   key={catSlug}
                   href={`/${validLang}/${catSlug}`}
-                  className="tool-card block overflow-hidden"
+                  className="tool-card block overflow-hidden group"
                 >
                   <div className="card-accent-line" aria-hidden />
-                  <div className="p-4">
-                    <span className="font-medium text-[var(--foreground)]">
-                      {t(key)}
-                    </span>
-                    <p className="mt-1 text-sm text-[var(--muted)]">
-                      {tools.length} {t("home.toolsCount")}
-                    </p>
+                  <div className="p-5 flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-semibold text-lg text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
+                        {t(key)}
+                      </span>
+                      <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-[var(--accent-muted)] text-[var(--accent)]">
+                        {tools.length}
+                      </span>
+                    </div>
                     {exampleNames.length > 0 && (
-                      <p className="mt-2 text-xs text-[var(--muted)]">
+                      <p className="mt-auto pt-4 text-sm text-[var(--muted)] leading-relaxed">
                         {exampleNames.join(" · ")}
                       </p>
                     )}

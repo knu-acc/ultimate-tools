@@ -11,14 +11,15 @@ export function Footer({ lang, translations }: FooterProps) {
   const t = (key: string) => translations[key] ?? key;
 
   return (
-    <footer className="mt-auto border-t border-[var(--border)] bg-[var(--surface)]">
-      <div className="mx-auto max-w-5xl px-6 py-10 lg:px-8">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="sm:col-span-2">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--foreground)]">
+    <footer className="mt-auto border-t border-[var(--border)] bg-[var(--background)] relative overflow-hidden">
+      <div className="absolute inset-0 bg-noise opacity-50" />
+      <div className="mx-auto max-w-5xl px-6 py-12 lg:px-8 relative z-10">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="sm:col-span-2 pr-0 lg:pr-8">
+            <h2 className="text-sm font-bold uppercase tracking-widest text-[var(--foreground)]">
               {t("footer.aboutTitle")}
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+            <p className="mt-4 text-[15px] leading-relaxed text-[var(--muted)]">
               {t("footer.about")}
             </p>
           </div>

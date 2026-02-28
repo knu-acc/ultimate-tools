@@ -42,15 +42,14 @@ export function Sidebar({ lang, translations }: SidebarProps) {
   const currentCategory = segments[1];
   const currentTool = segments[2];
   return (
-    <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-56 shrink-0 overflow-y-auto border-r border-[var(--border)] bg-[var(--background)]/80 p-4 lg:block">
-      <nav className="space-y-1">
+    <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-60 shrink-0 overflow-y-auto border-r border-[var(--border)] bg-[var(--background)]/50 backdrop-blur-xl p-5 lg:block transition-all duration-300">
+      <nav className="space-y-1.5">
         <Link
           href={`/${lang}`}
-          className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors ${
-            !currentCategory
+          className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors ${!currentCategory
               ? "bg-[var(--accent)]/20 font-medium text-[var(--accent)]"
               : "hover:bg-[var(--border)]/30"
-          }`}
+            }`}
         >
           {t("nav.home")}
         </Link>
@@ -61,9 +60,8 @@ export function Sidebar({ lang, translations }: SidebarProps) {
             <div key={slug}>
               <Link
                 href={`/${lang}/${slug}`}
-                className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors ${
-                  isActive ? "bg-[var(--accent)]/20 font-medium text-[var(--accent)]" : "hover:bg-[var(--border)]/30"
-                }`}
+                className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors ${isActive ? "bg-[var(--accent)]/20 font-medium text-[var(--accent)]" : "hover:bg-[var(--border)]/30"
+                  }`}
               >
                 <Icon className="h-4 w-4" />
                 {t(key)}
@@ -74,11 +72,10 @@ export function Sidebar({ lang, translations }: SidebarProps) {
                     <Link
                       key={toolSlug}
                       href={`/${lang}/${slug}/${toolSlug}`}
-                      className={`block rounded-lg px-2 py-1.5 text-xs transition-colors ${
-                        currentTool === toolSlug
+                      className={`block rounded-lg px-2 py-1.5 text-xs transition-colors ${currentTool === toolSlug
                           ? "font-medium text-[var(--accent)]"
                           : "text-[var(--muted)] hover:text-[var(--foreground)]"
-                      }`}
+                        }`}
                     >
                       {TOOLS[toolSlug] ? t(TOOLS[toolSlug].nameKey) : toolSlug}
                     </Link>

@@ -65,16 +65,22 @@ export default async function CategoryPage({
 
   return (
     <div className="min-h-screen">
-      <div className="mx-auto max-w-4xl px-6 py-8 lg:px-8">
-        <h1 className="mb-2 text-3xl font-bold text-[var(--foreground)]">
-          {t(cat.key)}
-        </h1>
-        {catDescription && (
-          <p className="mb-8 text-[var(--muted)]">
-            {catDescription}
-          </p>
-        )}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="bg-[var(--background)] border-b border-[var(--border)] relative overflow-hidden">
+        <div className="bg-noise" />
+        <div className="mx-auto max-w-5xl px-6 py-12 lg:px-8 lg:py-16 relative z-10 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-purple-500 pb-2">
+            {t(cat.key)}
+          </h1>
+          {catDescription && (
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-[var(--muted)] leading-relaxed">
+              {catDescription}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-5xl px-6 py-12 lg:px-8 lg:py-16">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {cat.tools.map((toolSlug) => {
             const tool = TOOLS[toolSlug];
             if (!tool) return null;
@@ -82,22 +88,19 @@ export default async function CategoryPage({
               <Link
                 key={toolSlug}
                 href={`/${validLang}/${category}/${toolSlug}`}
-                className="tool-card block overflow-hidden"
+                className="tool-card group flex flex-col p-5 h-full"
               >
-                <div className="card-accent-line" aria-hidden />
-                <div className="flex items-start gap-4 p-4">
-                  <div className="shrink-0">
-                    <ToolIcon toolName={toolSlug} size="sm" />
+                <div className="flex items-center gap-4 mb-3">
+                  <div className="shrink-0 p-2.5 rounded-xl bg-[var(--accent-muted)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors duration-300">
+                    <ToolIcon toolName={toolSlug} size="md" />
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="font-medium text-[var(--foreground)]">
-                      {t(tool.nameKey)}
-                    </span>
-                    <p className="mt-0.5 text-sm text-[var(--muted)] line-clamp-2">
-                      {getNested(tData as Record<string, unknown>, tool.descriptionKey.replace(".description", ".cardDescription")) ?? t(tool.descriptionKey)}
-                    </p>
-                  </div>
+                  <span className="font-semibold text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors duration-300">
+                    {t(tool.nameKey)}
+                  </span>
                 </div>
+                <p className="text-sm text-[var(--muted)] leading-relaxed flex-1">
+                  {getNested(tData as Record<string, unknown>, tool.descriptionKey.replace(".description", ".cardDescription")) ?? t(tool.descriptionKey)}
+                </p>
               </Link>
             );
           })}

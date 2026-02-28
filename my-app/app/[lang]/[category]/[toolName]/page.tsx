@@ -136,12 +136,12 @@ export default async function ToolPage({
   const faqData = getNested(tData as Record<string, unknown>, `faq.${faqSlug}`);
   const faqItems = faqData && typeof faqData === "object"
     ? Object.entries(faqData as Record<string, string>)
-        .filter(([k]) => k.startsWith("q"))
-        .map((_, i) => ({
-          q: getNested(tData as Record<string, unknown>, `faq.${faqSlug}.q${i + 1}`) ?? "",
-          a: getNested(tData as Record<string, unknown>, `faq.${faqSlug}.a${i + 1}`) ?? "",
-        }))
-        .filter((item) => item.q && item.a)
+      .filter(([k]) => k.startsWith("q"))
+      .map((_, i) => ({
+        q: getNested(tData as Record<string, unknown>, `faq.${faqSlug}.q${i + 1}`) ?? "",
+        a: getNested(tData as Record<string, unknown>, `faq.${faqSlug}.a${i + 1}`) ?? "",
+      }))
+      .filter((item) => item.q && item.a)
     : [];
 
   const instructions = getNested(tData as Record<string, unknown>, `instructions.${faqSlug}`) as string | undefined;
@@ -255,12 +255,15 @@ export default async function ToolPage({
         />
         <main className="mx-auto max-w-4xl" id="main-content">
           <Breadcrumbs lang={validLang} items={breadcrumbItems} translations={translations} />
-          <header className="mt-6">
-            <div className="flex items-start gap-4">
-              <ToolIcon toolName={toolName} size="lg" className="shrink-0" />
+          <header className="mt-6 mb-8 relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)] to-purple-500 rounded-2xl -z-10 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-500"></div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 p-6 sm:p-8 border border-[var(--border)] rounded-2xl bg-[var(--background)]/80 backdrop-blur-xl shadow-sm">
+              <div className="p-4 bg-gradient-to-br from-[var(--accent-muted)] to-[var(--background)] border border-[var(--border)] rounded-xl text-[var(--accent)] shrink-0 shadow-inner">
+                <ToolIcon toolName={toolName} size="lg" />
+              </div>
               <div>
-                <h1 className="text-2xl font-bold tracking-tight text-[var(--foreground)]">{t(tool.nameKey)}</h1>
-                <p className="mt-1 text-[var(--muted)]">{t(tool.descriptionKey)}</p>
+                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--foreground)]">{t(tool.nameKey)}</h1>
+                <p className="mt-2 text-lg text-[var(--muted)] leading-relaxed">{t(tool.descriptionKey)}</p>
               </div>
             </div>
           </header>
@@ -273,11 +276,12 @@ export default async function ToolPage({
 
           <TopBannerAd />
 
-          <article className="mt-6" aria-labelledby="tool-heading">
+          <article className="mt-8 relative" aria-labelledby="tool-heading">
             <h2 id="tool-heading" className="sr-only">
               {validLang === "ru" ? "Как пользоваться инструментом" : validLang === "kz" ? "Құралды қалай пайдалану керек" : "How to use the tool"}
             </h2>
-            <div className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)] to-purple-500 rounded-[24px] blur opacity-10"></div>
+            <div className="relative rounded-[22px] border border-[var(--border)] bg-[var(--card-bg)] shadow-2xl p-6 sm:p-8 lg:p-10">
               <ToolRenderer
                 toolName={toolName}
                 translations={translations}
@@ -285,7 +289,7 @@ export default async function ToolPage({
               />
             </div>
           </article>
-          
+
           <MidContentAd />
 
           <section className="mt-10" aria-labelledby="seo-content-heading">
@@ -390,19 +394,21 @@ export default async function ToolPage({
                 {faqItems.map((item, i) => (
                   <li
                     key={i}
-                    className="rounded-xl border border-[var(--border)] p-4"
+                    className="group rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] p-6 transition-all hover:border-[var(--border-focus)] hover:shadow-lg"
                     itemScope
                     itemType="https://schema.org/Question"
                   >
-                    <h3 className="font-medium text-[var(--foreground)]" itemProp="name">
+                    <h3 className="text-lg font-semibold text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors" itemProp="name">
                       {item.q}
                     </h3>
                     <div
                       itemScope
                       itemProp="acceptedAnswer"
                       itemType="https://schema.org/Answer"
+                      className="mt-3 relative"
                     >
-                      <p className="mt-2 text-sm text-[var(--muted)] leading-relaxed" itemProp="text">
+                      <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-[var(--accent)] to-purple-500 opacity-20 group-hover:opacity-100 transition-opacity"></div>
+                      <p className="pl-4 text-[15px] text-[var(--muted)] leading-relaxed" itemProp="text">
                         {item.a}
                       </p>
                     </div>

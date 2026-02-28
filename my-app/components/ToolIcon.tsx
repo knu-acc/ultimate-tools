@@ -119,24 +119,8 @@ interface ToolIconProps {
 }
 
 export function ToolIcon({ toolName, className = "", size = "md" }: ToolIconProps) {
-  const Icon = TOOL_ICONS[toolName];
-  const sizeClass = size === "sm" ? "h-5 w-5" : size === "lg" ? "h-10 w-10" : "h-7 w-7";
+  const Icon = TOOL_ICONS[toolName] || Hash;
+  const sizeClass = size === "sm" ? "h-4 w-4" : size === "lg" ? "h-6 w-6" : "h-6 w-6";
 
-  if (!Icon) {
-    return (
-      <div
-        className={`flex items-center justify-center rounded-xl bg-[var(--accent)]/15 text-[var(--accent)] ${sizeClass} ${className}`}
-      >
-        <Hash className={sizeClass} />
-      </div>
-    );
-  }
-
-  return (
-    <div
-      className={`flex items-center justify-center rounded-xl bg-[var(--accent)]/15 text-[var(--accent)] ${sizeClass} ${className}`}
-    >
-      <Icon className={size === "sm" ? "h-4 w-4" : size === "lg" ? "h-6 w-6" : "h-5 w-5"} />
-    </div>
-  );
+  return <Icon className={`${sizeClass} ${className}`} />;
 }
