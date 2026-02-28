@@ -41,14 +41,14 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
 
   return (
     <div className="space-y-6">
-<div className="tool-input-zone">
-        <div className="mb-3 flex flex-wrap items-end gap-4">
+      <div className="tool-input-zone">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="field-label">{t("mode")}</label>
             <select
               value={mode}
               onChange={(e) => setMode(e.target.value as typeof mode)}
-              className="input-base"
+              className="input-base w-full"
             >
               <option value="paragraphs">{t("paragraphs")}</option>
               <option value="sentences">{t("sentences")}</option>
@@ -64,7 +64,7 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
                 max={50}
                 value={count}
                 onChange={(e) => setCount(Number(e.target.value) || 1)}
-                className="input-base"
+                className="input-base w-24"
               />
               {countPresets.map((n) => (
                 <button
@@ -78,21 +78,27 @@ export function LoremIpsumTool({ t }: LoremIpsumToolProps) {
               ))}
             </div>
           </div>
-          <label className="flex items-center gap-2">
-            <input type="checkbox" checked={startWithLorem} onChange={(e) => setStartWithLorem(e.target.checked)} className="rounded" />
-            <span className="text-sm text-[var(--muted)]">{t("startWithLorem") || "Начать с Lorem ipsum"}</span>
-          </label>
-          <motion.button
-            type="button"
-            onClick={() => setResult(generate())}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="btn-primary w-full sm:w-auto mt-2"
-          >
-            Сгенерировать
-          </motion.button>
+          <div className="md:col-span-2">
+            <label className="flex items-center gap-2 w-fit cursor-pointer">
+              <input type="checkbox" checked={startWithLorem} onChange={(e) => setStartWithLorem(e.target.checked)} className="rounded" />
+              <span className="text-sm text-[var(--muted)]">{t("startWithLorem") || "Начать с Lorem ipsum"}</span>
+            </label>
+          </div>
         </div>
       </div>
+
+      <div className="tool-action-bar">
+        <motion.button
+          type="button"
+          onClick={() => setResult(generate())}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="btn-primary w-full sm:w-auto"
+        >
+          Сгенерировать
+        </motion.button>
+      </div>
+
       <div className="tool-output-zone">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>

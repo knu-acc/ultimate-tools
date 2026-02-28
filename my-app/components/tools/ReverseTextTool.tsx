@@ -9,49 +9,30 @@ interface ReverseTextToolProps {
 
 export function ReverseTextTool({ t }: ReverseTextToolProps) {
   const [text, setText] = useState("");
-  const [mode, setMode] = useState<"chars" | "words" | "lines">("chars");
-  const reversed =
-    mode === "chars"
-      ? text.split("").reverse().join("")
-      : mode === "words"
-        ? text.trim().split(/\s+/).reverse().join(" ")
-        : text.split(/\r?\n/).reverse().join("\n");
+  const [result, setResult] = useState("");
+
+  const handleReverseChars = () => {
+    if (!text) return;
+    setResult(text.split("").reverse().join(""));
+  };
+
+  const handleReverseWords = () => {
+    if (!text) return;
+    setResult(text.trim().split(/\s+/).reverse().join(" "));
+  };
+
+  const handleReverseLines = () => {
+    if (!text) return;
+    setResult(text.split(/\r?\n/).reverse().join("\n"));
+  };
 
   return (
     <div className="space-y-6">
-<div className="space-y-2">
-        <span className="text-sm font-medium text-[var(--foreground)]/70">Режим:</span>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => setMode("chars")}
-            className={`chip ${mode === "chars" ? "chip-active" : ""}`}
-          >
-            {t("byChars") || "По символам"}
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("words")}
-            className={`chip ${mode === "words" ? "chip-active" : ""}`}
-          >
-            {t("byWords") || "По словам"}
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("lines")}
-            className={`chip ${mode === "lines" ? "chip-active" : ""}`}
-          >
-            {t("byLines") || "По строкам"}
-          </button>
-        </div>
-        <p className="text-xs text-[var(--muted)]">
-          {mode === "chars" && "Порядок символов в обратную сторону (например: привет → тевирп)."}
-          {mode === "words" && "Порядок слов в обратную сторону (например: один два три → три два один)."}
-          {mode === "lines" && "Порядок строк сверху вниз меняется на снизу вверх."}
-        </p>
-      </div>
       <div className="tool-input-zone">
-        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
+        <div className="tool-zone-header">
+          <span className="tool-zone-icon">✏️</span>
+          <span>Ввод</span>
+        </div>
         <label className="field-label">Исходный текст</label>
         <textarea
           value={text}
@@ -61,25 +42,57 @@ export function ReverseTextTool({ t }: ReverseTextToolProps) {
           rows={4}
         />
       </div>
+
+      <div className="tool-action-bar flex flex-wrap gap-2 justify-center sm:justify-start">
+        <button
+          onClick={handleReverseChars}
+          className="rounded-lg border border-[var(--border)] px-4 py-2.5 text-center text-sm font-medium transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent)]/10"
+        >
+          {t("byChars") || "По символам"}
+        </button>
+        <button
+          onClick={handleReverseWords}
+          className="rounded-lg border border-[var(--border)] px-4 py-2.5 text-center text-sm font-medium transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent)]/10"
+        >
+          {t("byWords") || "По словам"}
+        </button>
+        <button
+          onClick={handleReverseLines}
+          className="rounded-lg border border-[var(--border)] px-4 py-2.5 text-center text-sm font-medium transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent)]/10"
+        >
+          {t("byLines") || "По строкам"}
+        </button>
+      </div>
+
       <div className="tool-output-zone">
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-          <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
-          <div className="flex gap-2">
-            {reversed && (
+          <div className="flex items-center gap-2">
+            <span className="tool-zone-icon">✨</span>
+            <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
+          </div>
+          {result && (
+            <div className="flex gap-2">
               <button
                 type="button"
-                onClick={() => setText(reversed)}
-                className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium hover:bg-[var(--accent)]/10"
+                onClick={() => {
+                  setText(result);
+                  setResult("");
+                }}
+                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm font-medium hover:bg-[var(--accent)]/10"
               >
                 Подставить результат
               </button>
-            )}
-            {reversed ? <CopyButton text={reversed} label="Скопировать" /> : null}
-          </div>
+              <CopyButton text={result} label="Скопировать" />
+            </div>
+          )}
         </div>
-        <div className="min-h-[80px] w-full rounded-lg border border-[var(--border)] bg-transparent px-5 py-4 text-base font-mono text-[var(--foreground)]">
-          {reversed || <span className="text-[var(--muted)]">Введите текст — развёрнутый вариант появится здесь</span>}
-        </div>
+        <textarea
+          value={result}
+          readOnly
+          placeholder="Развёрнутый вариант появится здесь"
+          className="input-base min-h-[120px] resize-y bg-[var(--muted)]/10"
+          rows={4}
+        />
       </div>
     </div>
   );

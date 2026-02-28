@@ -51,56 +51,82 @@ export function DiceTool({ t }: DiceToolProps) {
 
   return (
     <div className="space-y-6">
-<div className="tool-input-zone">
-        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
-        <span className="section-label">Пресеты и настройки</span>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {DICE_PRESETS.map(({ label, count: c, sides: s }) => (
-            <button
-              key={label}
-              type="button"
-              onClick={() => { setCount(c); setSides(s); }}
-              className={`chip ${count === c && sides === s ? "chip-active" : ""}`}
-            >
-              {label}
-            </button>
-          ))}
+      <div className="tool-input-zone">
+        <div className="tool-zone-header">
+          <span className="tool-zone-icon">🎲</span>
+          <span>{t("settings") || "Настройки броска"}</span>
         </div>
-        <div className="flex flex-wrap gap-6">
-          <div>
-            <label className="field-label">{t("count")}</label>
-            <input
-              type="number"
-              min={1}
-              max={20}
-              value={count}
-              onChange={(e) => setCount(Math.min(20, Math.max(1, Number(e.target.value) || 1)))}
-              className="input-base w-20"
-            />
-          </div>
-          <div>
-            <label className="field-label">{t("sides")}</label>
-            <select
-              value={sides}
-              onChange={(e) => setSides(Number(e.target.value))}
-              className="input-base"
-            >
-              {[4, 6, 8, 10, 12, 20].map((n) => (
-                <option key={n} value={n}>D{n}</option>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <label className="field-label">{t("count")}: {count}</label>
+            <div className="flex items-center gap-4">
+              <input
+                type="range"
+                min={1}
+                max={20}
+                value={count}
+                onChange={(e) => setCount(Number(e.target.value))}
+                className="w-full accent-[var(--primary)]"
+              />
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={count}
+                onChange={(e) => setCount(Math.min(20, Math.max(1, Number(e.target.value) || 1)))}
+                className="input-base w-20"
+              />
+            </div>
+            
+            <div className="pt-2 flex flex-wrap gap-2">
+              <span className="text-xs font-semibold text-[var(--muted)] w-full block mb-1">
+                {t("presets") || "Пресеты"}:
+              </span>
+              {DICE_PRESETS.map(({ label, count: c, sides: s }) => (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => { setCount(c); setSides(s); }}
+                  className={`chip ${count === c && sides === s ? "chip-active" : ""}`}
+                >
+                  {label}
+                </button>
               ))}
-            </select>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <label className="field-label">{t("sides")}</label>
+            <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-3 gap-2">
+              {[4, 6, 8, 10, 12, 20].map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setSides(n)}
+                  className={`py-2 rounded-xl border-2 font-medium transition-colors flex items-center justify-center ${
+                    sides === n 
+                      ? "border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]" 
+                      : "border-[var(--border)] bg-[var(--background)] hover:border-[var(--muted)]"
+                  }`}
+                >
+                  D{n}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      <div className="tool-action-bar"><motion.button
-        onClick={roll}
-        disabled={rolling}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className="btn-primary w-full sm:w-auto mt-2"
-      >
-        {rolling ? "..." : t("roll")}
-      </motion.button></div>
+
+      <div className="tool-action-bar">
+        <button
+          onClick={roll}
+          disabled={rolling}
+          className="btn-primary"
+        >
+          {rolling ? "..." : t("roll")}
+        </button>
+      </div>
+
       <AnimatePresence mode="wait">
         {showing.length > 0 && (
           <motion.div
@@ -108,10 +134,10 @@ export function DiceTool({ t }: DiceToolProps) {
             animate={{ opacity: 1, y: 0 }}
             className="tool-output-zone"
           >
-            <div className="mb-2 flex items-center justify-between">
+            <div className="mb-4 flex items-center justify-between">
               <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
               {!rolling && results.length > 0 && (
-                <CopyButton text={results.join(", ") + (results.length > 1 ? " (сумма: " + sum + ")" : "")} />
+                <CopyButton text={results.join(", ") + (results.length > 1 ? ` (${t("sum") || "Сумма"}: ${sum})` : "")} />
               )}
             </div>
             <div className="flex flex-wrap items-center gap-4">
@@ -121,13 +147,16 @@ export function DiceTool({ t }: DiceToolProps) {
                   initial={{ scale: 0.6 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 200, delay: i * 0.04 }}
-                  className="flex h-16 w-16 items-center justify-center rounded-xl border-2 border-[var(--accent)] bg-[var(--accent)]/10 text-3xl shadow-lg"
+                  className="stat-card flex h-20 w-20 items-center justify-center text-4xl font-bold shadow-lg"
                 >
-                  {sides === 6 ? DICE_FACES[r] ?? r : r}
+                  {sides === 6 && DICE_FACES[r] ? DICE_FACES[r] : r}
                 </motion.div>
               ))}
               {!rolling && results.length > 1 && (
-                <span className="text-lg font-medium text-[var(--muted)]">= {sum}</span>
+                <span className="text-2xl font-bold text-[var(--primary)] ml-2">
+                  <span className="text-[var(--muted)] text-xl mr-2">=</span>
+                  {sum}
+                </span>
               )}
             </div>
           </motion.div>

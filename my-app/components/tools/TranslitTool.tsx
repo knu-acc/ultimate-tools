@@ -49,19 +49,34 @@ export function TranslitTool({ t }: TranslitToolProps) {
 
   return (
     <div className="space-y-6">
-<div className="flex flex-wrap items-center gap-3">
+      <div className="tool-input-zone">
+        <div className="tool-zone-header">
+          <span className="tool-zone-icon">✏️</span>
+          <span>Ввод</span>
+        </div>
+        <label className="field-label">Исходный текст</label>
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={direction === "ru-en" ? "Введите русский текст..." : "Введите латиницу..."}
+          className="input-base min-h-[120px] resize-y"
+          rows={5}
+        />
+      </div>
+
+      <div className="tool-action-bar">
         <span className="text-sm font-medium text-[var(--foreground)]/70">Направление:</span>
         <button
           onClick={() => setDirection("ru-en")}
           className={`rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${direction === "ru-en" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
         >
-          {t("ruToEn")} (рус → латиница)
+          {t("ruToEn") || "рус → латиница"}
         </button>
         <button
           onClick={() => setDirection("en-ru")}
           className={`rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${direction === "en-ru" ? "bg-[var(--accent)] text-white" : "border border-[var(--border)] hover:bg-[var(--border)]/20"}`}
         >
-          {t("enToRu")} (латиница → рус)
+          {t("enToRu") || "латиница → рус"}
         </button>
         <label className="flex items-center gap-2">
           <input type="checkbox" checked={forUrl} onChange={(e) => setForUrl(e.target.checked)} className="rounded" />
@@ -77,25 +92,22 @@ export function TranslitTool({ t }: TranslitToolProps) {
           </button>
         )}
       </div>
-      <div className="tool-input-zone">
-        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
-        <label className="field-label">Исходный текст</label>
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder={direction === "ru-en" ? "Введите русский текст..." : "Введите латиницу..."}
-          className="input-base min-h-[120px] resize-y"
-          rows={5}
-        />
-      </div>
+
       <div className="tool-output-zone">
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
+          <div className="tool-zone-header">
+            <span className="tool-zone-icon">✓</span>
+            <span>{t("result")}</span>
+          </div>
           {result ? <CopyButton text={result} label="Скопировать" /> : null}
         </div>
-        <div className="min-h-[80px] rounded-lg border border-[var(--border)] bg-transparent p-4 font-mono text-[var(--foreground)]">
-          {result || <span className="text-[var(--muted)]">Результат появится здесь</span>}
-        </div>
+        <textarea
+          readOnly
+          value={result}
+          placeholder="Результат появится здесь..."
+          className="input-base min-h-[120px] resize-y bg-[var(--background)]"
+          rows={5}
+        />
       </div>
     </div>
   );

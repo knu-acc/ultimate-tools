@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AdsConsentProvider } from "@/contexts/AdsConsentContext";
@@ -89,6 +90,12 @@ export default function RootLayout({
   const organizationSchema = getOrganizationSchema(BASE_URL, SITE_NAME, SITE_DESC);
   return (
     <html lang="ru" suppressHydrationWarning>
+      <head>
+        <Script id="yandex-rtb-init" strategy="beforeInteractive">
+          {`window.yaContextCb=window.yaContextCb||[]`}
+        </Script>
+        <Script src="https://yandex.ru/ads/system/context.js" strategy="beforeInteractive" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <script
           type="application/ld+json"

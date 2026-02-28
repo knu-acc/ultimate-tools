@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { CopyButton } from "@/components/CopyButton";
 
 interface SpaceCleanupToolProps {
@@ -10,20 +9,18 @@ interface SpaceCleanupToolProps {
 
 export function SpaceCleanupTool({ t }: SpaceCleanupToolProps) {
   const [text, setText] = useState("");
-
-  const [beforeLen, setBeforeLen] = useState<number | null>(null);
+  const [result, setResult] = useState("");
 
   const cleanup = (mode: string) => {
-    setBeforeLen(text.length);
-    let result = text;
-    if (mode === "all") result = text.replace(/\s+/g, " ").trim();
-    else if (mode === "lines") result = text.replace(/[ \t]+/g, " ").replace(/\n\s*\n/g, "\n\n").trim();
-    else if (mode === "trim") result = text.split("\n").map((l) => l.trim()).join("\n");
-    else if (mode === "join") result = text.replace(/\s*\n\s*/g, " ").replace(/\s+/g, " ").trim();
-    else if (mode === "singleBlank") result = text.replace(/(\n\s*){3,}/g, "\n\n").trim();
-    else if (mode === "noBreaks") result = text.replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
-    else if (mode === "noSpaces") result = text.replace(/\s/g, "");
-    setText(result);
+    let res = text;
+    if (mode === "all") res = text.replace(/\s+/g, " ").trim();
+    else if (mode === "lines") res = text.replace(/[ \t]+/g, " ").replace(/\n\s*\n/g, "\n\n").trim();
+    else if (mode === "trim") res = text.split("\n").map((l) => l.trim()).join("\n");
+    else if (mode === "join") res = text.replace(/\s*\n\s*/g, " ").replace(/\s+/g, " ").trim();
+    else if (mode === "singleBlank") res = text.replace(/(\n\s*){3,}/g, "\n\n").trim();
+    else if (mode === "noBreaks") res = text.replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
+    else if (mode === "noSpaces") res = text.replace(/\s/g, "");
+    setResult(res);
   };
 
   const modes: { key: string; label: string; hint: string }[] = [
@@ -38,50 +35,55 @@ export function SpaceCleanupTool({ t }: SpaceCleanupToolProps) {
 
   return (
     <div className="space-y-6">
-<div className="tool-input-zone">
-        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
+      <div className="tool-input-zone">
         <label className="field-label">Текст для очистки</label>
         <textarea
           value={text}
           onChange={(e) => {
             setText(e.target.value);
-            setBeforeLen(null);
+            if (result) setResult("");
           }}
-          placeholder={t("placeholder")}
-          className="input-base min-h-[200px] resize-y"
-          rows={8}
+          placeholder={t("placeholder") || "Введите текст..."}
+          className="input-base min-h-[150px] resize-y"
+          rows={6}
         />
         <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
           <span>Символов: {text.length}</span>
-          {beforeLen !== null && (
-            <span>
-              Было: {beforeLen} → стало: {text.length}
+        </div>
+      </div>
+
+      <div className="tool-action-bar flex flex-wrap gap-2">
+        {modes.map(({ key, label, hint }) => (
+          <button
+            key={key}
+            onClick={() => cleanup(key)}
+            title={hint}
+            className="btn btn-primary"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {result && (
+        <div className="tool-output-zone">
+          <label className="field-label">Результат</label>
+          <textarea
+            value={result}
+            readOnly
+            className="input-base min-h-[150px] resize-y bg-[var(--muted)]/5"
+            rows={6}
+          />
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+            <span className="text-sm text-[var(--muted)]">
+              Символов: {result.length} (убрано: {text.length - result.length})
             </span>
-          )}
+            <CopyButton text={result} />
+          </div>
         </div>
-      </div>
-      <div className="space-y-2">
-        <span className="text-sm font-medium text-[var(--foreground)]/70">Режим очистки</span>
-        <div className="flex flex-wrap gap-2">
-          {modes.map(({ key, label, hint }) => (
-            <motion.button
-              key={key}
-              onClick={() => cleanup(key)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              title={hint}
-              className="rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-medium hover:border-[var(--accent)] hover:bg-[var(--accent)]/10 transition-colors"
-            >
-              {label}
-            </motion.button>
-          ))}
-          {text.length > 0 && <CopyButton text={text} label="Скопировать текст" />}
-        </div>
-        <p className="text-xs text-[var(--muted)]">
-          Наведите на кнопку — подсказка по режиму.
-        </p>
-      </div>
-      {!text && (
+      )}
+
+      {!result && (
         <p className="empty-state">
           Вставьте текст с лишними пробелами или переносами — нажмите нужный режим очистки, затем скопируйте результат.
         </p>

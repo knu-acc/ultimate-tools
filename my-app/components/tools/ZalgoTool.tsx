@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { CopyButton } from "@/components/CopyButton";
 
 const COMBINING = [
@@ -37,92 +37,101 @@ interface ZalgoToolProps {
 }
 
 export function ZalgoTool({ t }: ZalgoToolProps) {
-  const [text, setText] = useState("Hello");
+  const [text, setText] = useState("");
   const [intensity, setIntensity] = useState(5);
-  const [seed, setSeed] = useState(0);
-  const result = useMemo(() => (text ? zalgo(text, intensity) : ""), [text, intensity, seed]);
+  const [result, setResult] = useState("");
+
+  const handleGenerate = () => {
+    if (!text) {
+      setResult("");
+      return;
+    }
+    setResult(zalgo(text, intensity));
+  };
+
+  const handleRemove = () => {
+    if (!text) {
+      setResult("");
+      return;
+    }
+    setResult(removeZalgo(text));
+  };
 
   return (
     <div className="space-y-6">
-<div className="tool-input-zone">
-        <div className="tool-zone-header"><span className="tool-zone-icon">✏️</span><span>Ввод</span></div>
+      <div className="tool-input-zone">
         <label className="field-label">Исходный текст</label>
-        <input
-          type="text"
+        <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={t("placeholder")}
-          className="input-base"
+          placeholder={t("placeholder") || "Введите текст..."}
+          className="input-base h-32 resize-y"
         />
-      </div>
-      <div className="tool-output-zone">
-        <label className="field-label">
-          {t("intensity")} — чем выше, тем больше «шума» на символ
-        </label>
-        <div className="flex flex-wrap items-center gap-3">
-          {[
-            { label: "Слабый", value: 2 },
-            { label: "Средний", value: 5 },
-            { label: "Сильный", value: 10 },
-            { label: "Макс", value: 15 },
-          ].map(({ label, value }) => (
-            <button
-              key={value}
-              type="button"
-              onClick={() => setIntensity(value)}
-              className={`chip ${intensity === value ? "chip-active" : ""}`}
-            >
-              {label} ({value})
-            </button>
-          ))}
-          <input
-            type="range"
-            min={1}
-            max={15}
-            value={intensity}
-            onChange={(e) => setIntensity(Number(e.target.value))}
-            className="h-2 w-full max-w-[180px] accent-[var(--accent)]"
-          />
-          <span className="tabular-nums text-sm text-[var(--muted)]">{intensity}</span>
+
+        <div className="mt-4">
+          <label className="field-label">
+            {t("intensity") || "Интенсивность"} — чем выше, тем больше «шума» на символ
+          </label>
+          <div className="flex flex-wrap items-center gap-3 mt-2">
+            {[
+              { label: "Слабый", value: 2 },
+              { label: "Средний", value: 5 },
+              { label: "Сильный", value: 10 },
+              { label: "Макс", value: 15 },
+            ].map(({ label, value }) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setIntensity(value)}
+                className={`chip ${intensity === value ? "chip-active" : ""}`}
+              >
+                {label} ({value})
+              </button>
+            ))}
+            <input
+              type="range"
+              min={1}
+              max={15}
+              value={intensity}
+              onChange={(e) => setIntensity(Number(e.target.value))}
+              className="h-2 w-full max-w-[180px] accent-[var(--accent)]"
+            />
+            <span className="tabular-nums text-sm text-[var(--muted)]">{intensity}</span>
+          </div>
         </div>
       </div>
-      <div className="space-y-2">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-sm font-medium text-[var(--foreground)]/70">{t("result")}</span>
-          <div className="flex flex-wrap gap-2">
+
+      <div className="tool-action-bar">
+        <button onClick={handleGenerate} className="action-btn-primary">
+          Сгенерировать
+        </button>
+        <button onClick={handleRemove} className="action-btn-secondary">
+          {t("removeZalgo") || "Убрать залго"}
+        </button>
+      </div>
+
+      <div className="tool-output-zone">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <label className="field-label mb-0">{t("result") || "Результат"}</label>
+          <div className="flex gap-2">
             {result && (
               <button
                 type="button"
                 onClick={() => setText(result)}
-                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--accent)]/10"
+                className="action-btn-secondary py-1 px-3 text-sm h-auto"
               >
-                Подставить результат
+                Подставить
               </button>
             )}
-            {result && <CopyButton text={result} label="Скопировать" />}
-            {text && (
-              <button
-                type="button"
-                onClick={() => setSeed((s) => s + 1)}
-                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--accent)]/10"
-              >
-                Ещё раз
-              </button>
-            )}
-            {(result || text) && (
-              <button
-                type="button"
-                onClick={() => setText((prev) => removeZalgo(prev || result))}
-                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-sm hover:bg-[var(--accent)]/10"
-              >
-                {t("removeZalgo") || "Убрать залго"}
-              </button>
-            )}
+            {result && <CopyButton text={result} />}
           </div>
         </div>
-        <div className="min-h-[60px] rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-4 text-2xl leading-relaxed">
-          {result || <span className="text-[var(--muted)]">Введите текст для залго-эффекта</span>}
-        </div>
+        <textarea
+          value={result}
+          readOnly
+          className="input-base h-40 resize-y bg-[var(--card-bg)]"
+          placeholder="Здесь появится результат..."
+        />
       </div>
     </div>
   );
