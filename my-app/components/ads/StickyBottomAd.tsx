@@ -18,8 +18,8 @@ export function StickyBottomAd() {
   if (!show || consent !== true || !ADFOX_CONFIG.enabled) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-2 px-2 lg:hidden pointer-events-none">
-      <div className="pointer-events-auto bg-background/95 backdrop-blur shadow-lg border border-[var(--border)] rounded-t-xl p-2 pb-1 relative transition-all duration-300 w-full max-w-[400px]">
+    <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-2 px-2 pointer-events-none">
+      <div className="pointer-events-auto bg-background/95 backdrop-blur shadow-lg border border-[var(--border)] rounded-t-xl p-2 pb-1 relative transition-all duration-300 w-full max-w-[728px]">
         {/* Кнопка закрытия (опционально) */}
         <button
           onClick={() => setShow(false)}

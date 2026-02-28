@@ -4,6 +4,9 @@ import { loadTranslations, getNested } from "@/lib/i18n";
 import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
 import type { Lang } from "@/lib/tools-registry";
 import { PopularToolsSlider } from "@/components/PopularToolsSlider";
+import { MidContentAd } from "@/components/ads/MidContentAd";
+import { InGridAd } from "@/components/ads/InGridAd";
+import { Fragment } from "react";
 import type { Metadata } from "next";
 
 const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -115,6 +118,10 @@ export default async function HomePage({
           />
         </section>
 
+        <div className="mb-12">
+          <MidContentAd />
+        </div>
+
         {/* Categories */}
         <section>
           <div className="flex items-center gap-3 mb-6">
@@ -124,7 +131,7 @@ export default async function HomePage({
             </h2>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
-            {Object.entries(CATEGORIES).map(([catSlug, { key, tools }]) => {
+            {Object.entries(CATEGORIES).map(([catSlug, { key, tools }], index) => {
               const Icon = CATEGORY_ICONS[catSlug] ?? MoreHorizontal;
               const descKey = catSlug === "dev-tools" ? "devTools" : catSlug;
               const catDescription = getNested(tData as Record<string, unknown>, `categories.${descKey}.description`);
@@ -133,11 +140,12 @@ export default async function HomePage({
                 .map((s) => TOOLS[s]?.nameKey)
                 .filter(Boolean)
                 .map((k) => t(k));
-              return (
+              
+              const CategoryCard = (
                 <Link
                   key={catSlug}
                   href={`/${validLang}/${catSlug}`}
-                  className="block overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-5 transition-colors hover:border-[var(--accent)]/50 group"
+                  className="block overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card-bg)] p-5 transition-colors hover:border-[var(--accent)]/50 group flex flex-col h-full h-min-[160px]"
                 >
                   <div className="flex items-start gap-3 mb-3">
                     <div className="shrink-0 p-2 rounded-lg bg-[var(--accent-muted)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
@@ -153,17 +161,29 @@ export default async function HomePage({
                     </div>
                   </div>
                   {typeof catDescription === "string" && (
-                    <p className="text-sm text-[var(--muted)] leading-relaxed line-clamp-2 mb-3">
+                    <p className="text-sm text-[var(--muted)] leading-relaxed line-clamp-2 mb-3 flex-1">
                       {catDescription}
                     </p>
                   )}
                   {exampleNames.length > 0 && (
-                    <p className="text-xs text-[var(--muted)] leading-relaxed truncate">
+                    <p className="text-xs text-[var(--muted)] leading-relaxed truncate mt-auto">
                       {exampleNames.join(", ")}
                     </p>
                   )}
                 </Link>
               );
+
+              if (index === 4) {
+                return (
+                  <Fragment key={`fragment-${catSlug}`}>
+                    {CategoryCard}
+                    <div key="home-category-ad" className="flex items-center justify-center rounded-xl p-0 col-span-1 min-h-[160px]">
+                       <InGridAd />
+                    </div>
+                  </Fragment>
+                );
+              }
+              return CategoryCard;
             })}
           </div>
         </section>

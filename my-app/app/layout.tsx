@@ -6,6 +6,7 @@ import { AdsConsentProvider } from "@/contexts/AdsConsentContext";
 import { getWebSiteSchema, getOrganizationSchema } from "@/lib/seo-metadata";
 import { StickyBottomAd } from "@/components/ads/StickyBottomAd";
 import { AdBlockDetector } from "@/components/ads/AdBlockDetector";
+import { FullscreenAd } from "@/components/ads/FullscreenAd";
 import { Analytics } from "@/components/Analytics";
 import { ToastProvider } from "@/contexts/ToastContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
@@ -112,6 +113,7 @@ export default function RootLayout({
               <FavoritesProvider>
                 {children}
               <StickyBottomAd />
+              <FullscreenAd />
               <AdBlockDetector />
               </FavoritesProvider>
             </ToastProvider>

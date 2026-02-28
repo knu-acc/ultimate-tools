@@ -18,6 +18,7 @@ import {
 import type { Lang } from "@/lib/tools-registry";
 import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { SidebarAd } from "@/components/ads/SidebarAd";
 
 const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   text: Type,
@@ -114,13 +115,8 @@ export function Sidebar({ lang, translations }: SidebarProps) {
         })}
       </nav>
 
-      {/* Ad placeholder */}
-      <div className="mt-8">
-        <div className="w-full min-h-[200px] bg-[var(--accent-muted)]/10 border border-[var(--border)] rounded-xl flex items-center justify-center text-xs text-[var(--muted)] relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
-          [Sidebar Ad]
-        </div>
-      </div>
+      {/* Sidebar Ad (Adfox) */}
+      <SidebarAd />
     </aside>
   );
 }

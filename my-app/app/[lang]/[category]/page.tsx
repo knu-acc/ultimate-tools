@@ -4,6 +4,10 @@ import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
 import type { Lang } from "@/lib/tools-registry";
 import { ToolIcon } from "@/components/ToolIcon";
 import { FavoriteStar } from "@/components/FavoriteStar";
+import { TopBannerAd } from "@/components/ads/TopBannerAd";
+import { MidContentAd } from "@/components/ads/MidContentAd";
+import { InGridAd } from "@/components/ads/InGridAd";
+import { Fragment } from "react";
 import type { Metadata } from "next";
 
 const LANGS = ["ru", "kz", "en"] as const;
@@ -80,13 +84,19 @@ export default async function CategoryPage({
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-6 py-12 lg:px-8 lg:py-16">
+      {/* Top Banner specific to category page */}
+      <div className="mx-auto max-w-5xl px-6 pt-6 lg:px-8">
+        <TopBannerAd />
+      </div>
+
+      <div className="mx-auto max-w-5xl px-6 py-6 lg:px-8 lg:py-10">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {cat.tools.map((toolSlug) => {
+          {cat.tools.map((toolSlug, i) => {
             const tool = TOOLS[toolSlug];
             if (!tool) return null;
-            return (
-              <div key={toolSlug} className="relative">
+            
+            const ToolCard = (
+              <div key={toolSlug} className="relative h-full h-min-[160px]">
                 <Link
                   href={`/${validLang}/${category}/${toolSlug}`}
                   className="tool-card group flex flex-col p-5 h-full"
@@ -106,8 +116,25 @@ export default async function CategoryPage({
                 <FavoriteStar slug={toolSlug} className="absolute top-3 right-3" />
               </div>
             );
+
+            // Вставляем рекламу в сетку после 3-го и 8-го инструмента
+            if (i === 2 || i === 7) {
+              return (
+                <Fragment key={`fragment-${toolSlug}`}>
+                  {ToolCard}
+                  <div key={`cat-grid-ad-${i}`} className="col-span-1 border border-[var(--border)] rounded-xl overflow-hidden min-h-[160px]">
+                    <InGridAd />
+                  </div>
+                </Fragment>
+              );
+            }
+            return ToolCard;
           })}
         </div>
+      </div>
+
+      <div className="mx-auto max-w-5xl px-6 pb-12 lg:px-8">
+        <MidContentAd />
       </div>
     </div>
   );
