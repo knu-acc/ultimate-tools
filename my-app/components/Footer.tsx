@@ -11,9 +11,9 @@ export function Footer({ lang, translations }: FooterProps) {
   const t = (key: string) => translations[key] ?? key;
 
   return (
-    <footer className="mt-auto border-t border-[var(--border)] bg-[var(--background)] relative overflow-hidden">
+    <footer className="mt-auto border-t border-[var(--border)] bg-[var(--bg-subtle)]/70 relative overflow-hidden backdrop-blur-xl">
       <div className="absolute inset-0 bg-noise opacity-50" />
-      <div className="mx-auto max-w-5xl px-6 py-12 lg:px-8 relative z-10">
+      <div className="mx-auto max-w-5xl rounded-t-[28px] border border-[var(--border)] bg-[var(--surface)]/82 px-6 py-12 lg:px-8 relative z-10">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="sm:col-span-2 pr-0 lg:pr-8">
             <h2 className="text-sm font-bold uppercase tracking-widest text-[var(--foreground)]">

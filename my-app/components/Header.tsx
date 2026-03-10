@@ -36,13 +36,13 @@ export function Header({ lang, translations }: HeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[var(--background)]/70 backdrop-blur-2xl transition-all duration-300">
+      <header className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[var(--background)]/82 backdrop-blur-2xl transition-all duration-300">
         <div className="flex h-16 items-center justify-between px-4 lg:px-8 mx-auto max-w-[1400px]">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setMobileNavOpen(true)}
-              className="lg:hidden p-2 rounded-lg border border-[var(--border)] hover:bg-[var(--border)]/30"
+              className="lg:hidden p-2 rounded-xl border border-[var(--border)] bg-[var(--surface)]/75 hover:bg-[var(--accent-muted)]"
               aria-label="Меню"
             >
               <Menu className="h-5 w-5" />
@@ -60,7 +60,7 @@ export function Header({ lang, translations }: HeaderProps) {
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
-              className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 text-sm text-[var(--muted)] hover:bg-[var(--border)]/30 transition-colors"
+              className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--muted)] hover:bg-[var(--accent-muted)] transition-colors"
             >
               <Search className="h-4 w-4" />
               <span className="hidden sm:inline">{t("common.search")}</span>
@@ -73,7 +73,7 @@ export function Header({ lang, translations }: HeaderProps) {
                 setLangOpen(!langOpen);
                 setThemeOpen(false);
               }}
-              className="flex items-center gap-1 rounded-xl border border-[var(--border)] bg-transparent px-3 py-2 text-sm hover:bg-[var(--border)]/30 transition-colors"
+              className="flex items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm hover:bg-[var(--accent-muted)] transition-colors"
               aria-label={t("common.language")}
             >
               {lang.toUpperCase()}
@@ -85,7 +85,7 @@ export function Header({ lang, translations }: HeaderProps) {
                   initial={{ opacity: 0, y: -8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
-                  className="absolute right-0 top-full mt-1 rounded-xl border border-[var(--border)] bg-[var(--background)] p-1 shadow-lg backdrop-blur-xl"
+                  className="absolute right-0 top-full mt-1 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow)] backdrop-blur-xl"
                 >
                   {LANGUAGES.map((l) => (
                     <Link
@@ -110,7 +110,7 @@ export function Header({ lang, translations }: HeaderProps) {
                 setThemeOpen(!themeOpen);
                 setLangOpen(false);
               }}
-              className="rounded-xl border border-[var(--border)] bg-transparent p-2 hover:bg-[var(--border)]/30 transition-colors"
+              className="rounded-full border border-[var(--border)] bg-[var(--surface)] p-2.5 hover:bg-[var(--accent-muted)] transition-colors"
               aria-label={t("common.theme")}
             >
               {theme === "dark" ? (
@@ -125,7 +125,7 @@ export function Header({ lang, translations }: HeaderProps) {
                   initial={{ opacity: 0, y: -8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
-                  className="absolute right-0 top-full mt-1 rounded-xl border border-[var(--border)] bg-[var(--background)] p-1 shadow-lg backdrop-blur-xl"
+                  className="absolute right-0 top-full mt-1 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-1.5 shadow-[var(--shadow)] backdrop-blur-xl"
                 >
                   <button
                     onClick={() => {

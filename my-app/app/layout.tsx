@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { AdsConsentProvider } from "@/contexts/AdsConsentContext";
 import { getWebSiteSchema, getOrganizationSchema } from "@/lib/seo-metadata";
-import { StickyBottomAd } from "@/components/ads/StickyBottomAd";
-import { AdBlockDetector } from "@/components/ads/AdBlockDetector";
-import { FullscreenAd } from "@/components/ads/FullscreenAd";
-import { Analytics } from "@/components/Analytics";
 import { ToastProvider } from "@/contexts/ToastContext";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
 import "./globals.css";
@@ -91,12 +85,7 @@ export default function RootLayout({
   const organizationSchema = getOrganizationSchema(BASE_URL, SITE_NAME, SITE_DESC);
   return (
     <html lang="ru" suppressHydrationWarning>
-      <head>
-        <Script id="yandex-rtb-init" strategy="beforeInteractive">
-          {`window.yaContextCb=window.yaContextCb||[]`}
-        </Script>
-        <Script src="https://yandex.ru/ads/system/context.js" strategy="beforeInteractive" />
-      </head>
+      <head />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <script
           type="application/ld+json"
@@ -107,17 +96,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         <ThemeProvider>
-          <AdsConsentProvider>
-            <Analytics />
-            <ToastProvider>
-              <FavoritesProvider>
-                {children}
-              <StickyBottomAd />
-              <FullscreenAd />
-              <AdBlockDetector />
-              </FavoritesProvider>
-            </ToastProvider>
-          </AdsConsentProvider>
+          <ToastProvider>
+            <FavoritesProvider>{children}</FavoritesProvider>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>
