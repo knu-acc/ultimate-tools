@@ -7,8 +7,6 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ToolRenderer } from "@/components/tools/ToolRenderer";
 import { ToolIcon } from "@/components/ToolIcon";
 import { ShareButton } from "@/components/ShareButton";
-import { TopBannerAd } from "@/components/ads/TopBannerAd";
-import { MidContentAd } from "@/components/ads/MidContentAd";
 import {
   getBreadcrumbSchema,
   getFaqSchema,
@@ -284,7 +282,6 @@ export default async function ToolPage({
             </div>
           </article>
 
-          <TopBannerAd />
 
           {/* ── Collapsible About section (description + seoIntro + seoContent) ── */}
           <details className="tool-about-section mt-8">
@@ -307,7 +304,6 @@ export default async function ToolPage({
             </div>
           </details>
 
-          <MidContentAd />
 
           {instructions && (
             <section className="mt-10" aria-labelledby="instructions-heading">

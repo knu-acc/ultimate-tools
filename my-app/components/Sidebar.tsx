@@ -18,7 +18,6 @@ import {
 import type { Lang } from "@/lib/tools-registry";
 import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
 import { useFavorites } from "@/contexts/FavoritesContext";
-import { SidebarAd } from "@/components/ads/SidebarAd";
 
 const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   text: Type,
@@ -47,7 +46,7 @@ export function Sidebar({ lang, translations }: SidebarProps) {
   const { favorites } = useFavorites();
 
   return (
-    <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-60 shrink-0 overflow-y-auto border-r border-[var(--border)] bg-[var(--background)]/50 backdrop-blur-xl p-5 lg:block transition-all duration-300">
+    <aside className="sticky top-16 hidden h-[calc(100vh-4rem)] w-60 shrink-0 overflow-y-auto border-r border-[var(--border)] bg-[var(--surface)]/75 backdrop-blur-2xl p-5 lg:block transition-all duration-300">
       <nav className="space-y-1.5">
         {favorites.length > 0 && (
           <div className="mb-3">
@@ -76,7 +75,7 @@ export function Sidebar({ lang, translations }: SidebarProps) {
           href={`/${lang}`}
           className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors ${!currentCategory
               ? "bg-[var(--accent)]/20 font-medium text-[var(--accent)]"
-              : "hover:bg-[var(--border)]/30"
+              : "hover:bg-[var(--accent-muted)]"
             }`}
         >
           {t("nav.home")}
@@ -88,7 +87,7 @@ export function Sidebar({ lang, translations }: SidebarProps) {
             <div key={slug}>
               <Link
                 href={`/${lang}/${slug}`}
-                className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors ${isActive ? "bg-[var(--accent)]/20 font-medium text-[var(--accent)]" : "hover:bg-[var(--border)]/30"
+                className={`flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition-colors ${isActive ? "bg-[var(--accent)]/20 font-medium text-[var(--accent)]" : "hover:bg-[var(--accent-muted)]"
                   }`}
               >
                 <Icon className="h-4 w-4" />
@@ -115,8 +114,6 @@ export function Sidebar({ lang, translations }: SidebarProps) {
         })}
       </nav>
 
-      {/* Sidebar Ad (Adfox) */}
-      <SidebarAd />
     </aside>
   );
 }
