@@ -399,7 +399,6 @@ input[type="range"] {
   accent-color: var(--accent);
 }
 
-
 .tool-global-toolbar {
   display: flex;
   gap: 8px;
@@ -440,3 +439,4 @@ input[type="range"] {
     padding: 14px;
   }
 }
+
