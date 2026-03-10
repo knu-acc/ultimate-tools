@@ -4,9 +4,6 @@ import { loadTranslations, getNested } from "@/lib/i18n";
 import { CATEGORIES, TOOLS } from "@/lib/tools-registry";
 import type { Lang } from "@/lib/tools-registry";
 import { PopularToolsSlider } from "@/components/PopularToolsSlider";
-import { MidContentAd } from "@/components/ads/MidContentAd";
-import { InGridAd } from "@/components/ads/InGridAd";
-import { Fragment } from "react";
 import type { Metadata } from "next";
 
 const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -109,10 +106,6 @@ export default async function HomePage({
           />
         </section>
 
-        <div className="mb-10">
-          <MidContentAd />
-        </div>
-
         {/* Categories */}
         <section>
           <div className="flex items-center gap-3 mb-5">
@@ -122,7 +115,7 @@ export default async function HomePage({
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Object.entries(CATEGORIES).map(([catSlug, { key, tools }], index) => {
+            {Object.entries(CATEGORIES).map(([catSlug, { key, tools }]) => {
               const Icon = CATEGORY_ICONS[catSlug] ?? MoreHorizontal;
               const descKey = catSlug === "dev-tools" ? "devTools" : catSlug;
               const catDescription = getNested(tData as Record<string, unknown>, `categories.${descKey}.description`);
@@ -163,17 +156,6 @@ export default async function HomePage({
                   )}
                 </Link>
               );
-
-              if (index === 4) {
-                return (
-                  <Fragment key={`fragment-${catSlug}`}>
-                    {CategoryCard}
-                    <div key="home-category-ad" className="flex items-center justify-center p-0 min-h-[160px]">
-                      <InGridAd />
-                    </div>
-                  </Fragment>
-                );
-              }
               return CategoryCard;
             })}
           </div>

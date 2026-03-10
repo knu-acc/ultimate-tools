@@ -149,3 +149,50 @@ export function getOrganizationSchema(baseUrl: string, name: string, description
     logo: `${baseUrl}/window.svg`,
   };
 }
+
+
+export function getSoftwareApplicationSchema({
+  baseUrl,
+  lang,
+  category,
+  toolName,
+  toolTitle,
+  toolDescription,
+}: {
+  baseUrl: string;
+  lang: string;
+  category: string;
+  toolName: string;
+  toolTitle: string;
+  toolDescription: string;
+}) {
+  const url = `${baseUrl}/${lang}/${category}/${toolName}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: toolTitle,
+    applicationCategory: "UtilitiesApplication",
+    applicationSubCategory: category,
+    operatingSystem: "Any",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    isAccessibleForFree: true,
+    description: toolDescription,
+    inLanguage: lang === "kz" ? "kk" : lang,
+    url,
+    publisher: {
+      "@type": "Organization",
+      name: "Ultimate Tools",
+      url: baseUrl,
+    },
+    featureList: [
+      "Client-side processing",
+      "No registration required",
+      "No API keys required",
+      "Fast browser-based workflow",
+    ],
+  };
+}

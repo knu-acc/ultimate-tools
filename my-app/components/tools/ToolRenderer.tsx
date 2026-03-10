@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { RandomNumberTool } from "./RandomNumberTool";
 import { WordCounterTool } from "./WordCounterTool";
 import { CaseConverterTool } from "./CaseConverterTool";
@@ -64,6 +65,7 @@ import { CountdownTool } from "./CountdownTool";
 import { TipCalculatorTool } from "./TipCalculatorTool";
 import { QrGeneratorTool } from "./QrGeneratorTool";
 import { DiffCheckerTool } from "./DiffCheckerTool";
+
 const TOOL_COMPONENTS: Record<string, React.ComponentType<{ t: (k: string) => string }>> = {
   "random-number": RandomNumberTool,
   "word-counter": WordCounterTool,
@@ -140,6 +142,8 @@ interface ToolRendererProps {
 export function ToolRenderer({ toolName, translations, toolKey }: ToolRendererProps) {
   const Component = TOOL_COMPONENTS[toolName];
   const t = (k: string) => translations[`${toolKey}.${k}`] ?? k;
+  const containerRef = useRef<HTMLDivElement>(null);
+
   if (!Component) {
     return (
       <div className="rounded-xl border border-[var(--border)] bg-[var(--accent-muted)] p-6 text-[var(--muted)]">
@@ -147,5 +151,44 @@ export function ToolRenderer({ toolName, translations, toolKey }: ToolRendererPr
       </div>
     );
   }
-  return <Component t={t} />;
+
+  const focusFirstField = () => {
+    const root = containerRef.current;
+    if (!root) return;
+    const first = root.querySelector<HTMLElement>("input:not([type='hidden']), textarea, select, button");
+    first?.focus();
+  };
+
+  const clearAllFields = () => {
+    const root = containerRef.current;
+    if (!root) return;
+    root.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>("input, textarea, select").forEach((el) => {
+      if (el instanceof HTMLInputElement) {
+        if (["button", "submit", "reset", "hidden", "file"].includes(el.type)) return;
+        if (el.type === "checkbox" || el.type === "radio") {
+          el.checked = false;
+        } else if (el.type === "range" || el.type === "number" || el.type === "text" || el.type === "search") {
+          el.value = "";
+        }
+      } else {
+        el.value = "";
+      }
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  };
+
+  return (
+    <div ref={containerRef} className="space-y-4">
+      <div className="tool-global-toolbar">
+        <button type="button" className="btn-ghost" onClick={focusFirstField}>
+          {translations["toolPage.inputZone"] ?? "Input"}
+        </button>
+        <button type="button" className="btn-ghost" onClick={clearAllFields}>
+          {translations["common.clear"] ?? "Clear"}
+        </button>
+      </div>
+      <Component t={t} />
+    </div>
+  );
 }

@@ -7,12 +7,11 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ToolRenderer } from "@/components/tools/ToolRenderer";
 import { ToolIcon } from "@/components/ToolIcon";
 import { ShareButton } from "@/components/ShareButton";
-import { TopBannerAd } from "@/components/ads/TopBannerAd";
-import { MidContentAd } from "@/components/ads/MidContentAd";
 import {
   getBreadcrumbSchema,
   getFaqSchema,
   getHowToSchema,
+  getSoftwareApplicationSchema,
 } from "@/lib/seo-metadata";
 import type { Metadata } from "next";
 
@@ -86,6 +85,17 @@ export async function generateMetadata({
     title,
     description,
     keywords,
+    applicationName: "Ultimate Tools",
+    category: "technology",
+    creator: "Ultimate Tools",
+    publisher: "Ultimate Tools",
+    formatDetection: { email: false, address: false, telephone: false },
+    other: {
+      "geo.region": lang === "ru" ? "RU" : lang === "kz" ? "KZ" : "US",
+      "geo.placename": lang === "ru" ? "Russia" : lang === "kz" ? "Kazakhstan" : "Global",
+      "article:section": category,
+      "aeo:answer-ready": "true",
+    },
     alternates: {
       canonical: canonicalUrl,
       languages: hreflangAlternates,
@@ -189,6 +199,14 @@ export default async function ToolPage({
     ],
     BASE_URL
   );
+  const softwareApplicationSchema = getSoftwareApplicationSchema({
+    baseUrl: BASE_URL,
+    lang: validLang,
+    category,
+    toolName,
+    toolTitle: t(tool.nameKey),
+    toolDescription: toolDesc,
+  });
 
   const faqSchema = faqItems.length > 0 ? getFaqSchema(faqItems) : null;
 
@@ -254,8 +272,21 @@ export default async function ToolPage({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
+        />
         <main className="mx-auto max-w-4xl" id="main-content">
           <Breadcrumbs lang={validLang} items={breadcrumbItems} translations={translations} />
+
+
+          <section className="mt-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 sm:p-5" aria-labelledby="quick-answer-heading">
+            <h2 id="quick-answer-heading" className="text-base font-semibold text-[var(--foreground)]">
+              {validLang === "ru" ? "Быстрый ответ" : validLang === "kz" ? "Жылдам жауап" : "Quick answer"}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{toolDesc}</p>
+            {instructions && <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{instructions}</p>}
+          </section>
 
           {/* ── Tool-first: interactive tool at the very top ── */}
           <article className="mt-4 relative" aria-labelledby="tool-heading">
@@ -284,7 +315,6 @@ export default async function ToolPage({
             </div>
           </article>
 
-          <TopBannerAd />
 
           {/* ── Collapsible About section (description + seoIntro + seoContent) ── */}
           <details className="tool-about-section mt-8">
@@ -307,7 +337,6 @@ export default async function ToolPage({
             </div>
           </details>
 
-          <MidContentAd />
 
           {instructions && (
             <section className="mt-10" aria-labelledby="instructions-heading">

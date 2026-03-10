@@ -1,6 +1,7 @@
 {
   "common": {
-    "siteName": "Ultimate Tools", "homeSlogan": "Over 100 free web tools. All calculations on your device — no signup.",
+    "siteName": "Ultimate Tools",
+    "homeSlogan": "Over 100 free web tools. All calculations on your device — no signup.",
     "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
@@ -111,7 +112,7 @@
     "privacy": {
       "title": "Privacy Policy",
       "p1": "Ultimate Tools respects your privacy. Most tools run entirely in your browser: your input is not sent to our servers.",
-      "p2": "We may use cookies to show ads (e.g. Google AdSense or similar) and analyze traffic (Google Analytics, Yandex Metrika). You can disable cookies in your browser or decline advertising cookies via the consent banner.",
+      "p2": "We use only essential cookies for theme/language and anonymous aggregate metrics for performance. Most tools run fully in your browser; you can clear local data anytime.",
       "p3": "We do not sell or share personal data with third parties for advertising without your consent. Server logs (IP, User-Agent) may be kept for security and for a limited time.",
       "p4": "By using the site after accepting cookies, you agree to this policy. Updates are posted on this page."
     },
