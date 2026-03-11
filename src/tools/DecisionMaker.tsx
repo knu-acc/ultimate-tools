@@ -1,0 +1,70 @@
+'use client';
+
+import { useState } from 'react';
+import {
+  Box, Typography, Paper, TextField, Button, Grid, Chip, alpha, useTheme, IconButton,
+} from '@mui/material';
+import { Delete, Add, Casino } from '@mui/icons-material';
+
+export default function DecisionMaker() {
+  const theme = useTheme();
+  const [options, setOptions] = useState<string[]>(['', '']);
+  const [result, setResult] = useState<string | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const addOption = () => setOptions([...options, '']);
+  const removeOption = (i: number) => { if (options.length > 2) setOptions(options.filter((_, idx) => idx !== i)); };
+  const updateOption = (i: number, val: string) => { const n = [...options]; n[i] = val; setOptions(n); };
+
+  const validOptions = options.filter(o => o.trim());
+
+  const decide = () => {
+    if (validOptions.length < 2) return;
+    setIsAnimating(true);
+    setResult(null);
+
+    let count = 0;
+    const interval = setInterval(() => {
+      setResult(validOptions[Math.floor(Math.random() * validOptions.length)]);
+      count++;
+      if (count > 15) {
+        clearInterval(interval);
+        setResult(validOptions[Math.floor(Math.random() * validOptions.length)]);
+        setIsAnimating(false);
+      }
+    }, 100);
+  };
+
+  return (
+    <Box>
+      <Paper elevation={0} sx={{ p: 3, borderRadius: 3, border: `1px solid ${theme.palette.divider}`, mb: 2 }}>
+        <Typography variant="subtitle2" fontWeight={600} gutterBottom>Варианты выбора</Typography>
+        {options.map((opt, i) => (
+          <Box key={i} sx={{ display: 'flex', gap: 1, mb: 1, alignItems: 'center' }}>
+            <Chip label={i + 1} size="small" sx={{ minWidth: 32 }} />
+            <TextField fullWidth size="small" value={opt} onChange={e => updateOption(i, e.target.value)} placeholder={`Вариант ${i + 1}`} />
+            {options.length > 2 && (
+              <IconButton size="small" onClick={() => removeOption(i)} color="error"><Delete fontSize="small" /></IconButton>
+            )}
+          </Box>
+        ))}
+        <Button startIcon={<Add />} onClick={addOption} size="small" sx={{ mt: 1 }}>Добавить вариант</Button>
+      </Paper>
+
+      <Box sx={{ textAlign: 'center', mb: 2 }}>
+        <Button variant="contained" size="large" startIcon={<Casino />} onClick={decide} disabled={validOptions.length < 2 || isAnimating} sx={{ borderRadius: '28px', px: 4 }}>
+          Выбрать!
+        </Button>
+      </Box>
+
+      {result && (
+        <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: alpha(theme.palette.primary.main, 0.08), textAlign: 'center', border: `2px solid ${theme.palette.primary.main}`, transition: 'all 300ms' }}>
+          <Typography variant="caption" color="text.secondary">{isAnimating ? 'Выбираю...' : 'Результат:'}</Typography>
+          <Typography variant="h3" fontWeight={700} color="primary" sx={{ mt: 1, transition: 'all 100ms' }}>
+            {result}
+          </Typography>
+        </Paper>
+      )}
+    </Box>
+  );
+}

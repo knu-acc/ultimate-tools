@@ -1,0 +1,323 @@
+'use client';
+
+import { useState, useMemo } from 'react';
+import {
+  Box,
+  Typography,
+  Paper,
+  TextField,
+  Grid,
+  Button,
+  ToggleButton,
+  ToggleButtonGroup,
+  Divider,
+  useTheme,
+  alpha,
+} from '@mui/material';
+
+export default function MortgageCalc() {
+  const theme = useTheme();
+
+  const [amount, setAmount] = useState('');
+  const [rate, setRate] = useState('');
+  const [term, setTerm] = useState('');
+  const [termUnit, setTermUnit] = useState<'years' | 'months'>('years');
+
+  const results = useMemo(() => {
+    const principal = parseFloat(amount);
+    const annualRate = parseFloat(rate);
+    const rawTerm = parseFloat(term);
+
+    if (
+      isNaN(principal) || isNaN(annualRate) || isNaN(rawTerm) ||
+      principal <= 0 || annualRate <= 0 || rawTerm <= 0
+    ) {
+      return null;
+    }
+
+    const months = termUnit === 'years' ? Math.round(rawTerm * 12) : Math.round(rawTerm);
+    if (months <= 0) return null;
+
+    const monthlyRate = annualRate / 100 / 12;
+
+    // Standard annuity formula: M = P * [r(1+r)^n] / [(1+r)^n - 1]
+    const pow = Math.pow(1 + monthlyRate, months);
+    const monthlyPayment = principal * (monthlyRate * pow) / (pow - 1);
+
+    const totalPayment = monthlyPayment * months;
+    const totalInterest = totalPayment - principal;
+    const overpaymentPct = (totalInterest / principal) * 100;
+
+    // First payment breakdown
+    const firstInterest = principal * monthlyRate;
+    const firstPrincipal = monthlyPayment - firstInterest;
+
+    // Last payment breakdown
+    const remainingBeforeLast = principal * (Math.pow(1 + monthlyRate, months - 1)) - monthlyPayment * ((Math.pow(1 + monthlyRate, months - 1) - 1) / monthlyRate);
+    const lastInterest = Math.max(0, remainingBeforeLast * monthlyRate);
+    const lastPrincipal = monthlyPayment - lastInterest;
+
+    return {
+      monthlyPayment,
+      totalPayment,
+      totalInterest,
+      overpaymentPct,
+      months,
+      firstInterest,
+      firstPrincipal,
+      lastInterest,
+      lastPrincipal,
+    };
+  }, [amount, rate, term, termUnit]);
+
+  const fmt = (n: number) =>
+    n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  const fmtPct = (n: number) =>
+    n.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+  const handleReset = () => {
+    setAmount('');
+    setRate('');
+    setTerm('');
+  };
+
+  interface StatCardProps {
+    label: string;
+    value: string;
+    color: string;
+  }
+
+  const StatCard = ({ label, value, color }: StatCardProps) => (
+    <Paper
+      elevation={0}
+      sx={{
+        p: 2.5,
+        textAlign: 'center',
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius: 3,
+        background: alpha(color, 0.06),
+      }}
+    >
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+        {label}
+      </Typography>
+      <Typography variant="h5" sx={{ fontWeight: 700, color }}>
+        {value}
+      </Typography>
+    </Paper>
+  );
+
+  return (
+    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+      <Paper
+        elevation={0}
+        sx={{
+          p: 3,
+          border: `1px solid ${theme.palette.divider}`,
+          background: alpha(theme.palette.primary.main, 0.04),
+          borderRadius: 3,
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 12 }}>
+            <TextField
+              fullWidth
+              label="Сумма кредита (₽)"
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="Например: 3000000"
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <Typography variant="body2" color="text.disabled">
+                      ₽
+                    </Typography>
+                  ),
+                },
+              }}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              fullWidth
+              label="Процентная ставка"
+              type="number"
+              value={rate}
+              onChange={(e) => setRate(e.target.value)}
+              placeholder="Например: 12"
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <Typography variant="body2" color="text.disabled">
+                      %
+                    </Typography>
+                  ),
+                },
+              }}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
+              <TextField
+                fullWidth
+                label={termUnit === 'years' ? 'Срок (лет)' : 'Срок (месяцев)'}
+                type="number"
+                value={term}
+                onChange={(e) => setTerm(e.target.value)}
+                placeholder={termUnit === 'years' ? 'Например: 15' : 'Например: 180'}
+              />
+              <ToggleButtonGroup
+                value={termUnit}
+                exclusive
+                onChange={(_, val) => { if (val) setTermUnit(val); }}
+                size="small"
+                sx={{ mt: 0.5, flexShrink: 0 }}
+              >
+                <ToggleButton value="years" sx={{ textTransform: 'none', px: 1.5 }}>
+                  Лет
+                </ToggleButton>
+                <ToggleButton value="months" sx={{ textTransform: 'none', px: 1.5 }}>
+                  Мес
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
+          </Grid>
+
+          <Grid size={{ xs: 12 }}>
+            <Button
+              variant="outlined"
+              onClick={handleReset}
+              size="small"
+              sx={{ textTransform: 'none' }}
+            >
+              Сбросить
+            </Button>
+          </Grid>
+        </Grid>
+
+        {results && (
+          <>
+            <Divider sx={{ my: 3 }} />
+
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+              Результаты расчёта
+            </Typography>
+
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <StatCard
+                  label="Ежемесячный платёж"
+                  value={`${fmt(results.monthlyPayment)} ₽`}
+                  color={theme.palette.primary.main}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <StatCard
+                  label="Общая сумма выплат"
+                  value={`${fmt(results.totalPayment)} ₽`}
+                  color="#1565c0"
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <StatCard
+                  label="Переплата (проценты)"
+                  value={`${fmt(results.totalInterest)} ₽`}
+                  color="#c62828"
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <StatCard
+                  label="Процент переплаты"
+                  value={`${fmtPct(results.overpaymentPct)}%`}
+                  color="#e65100"
+                />
+              </Grid>
+            </Grid>
+
+            <Divider sx={{ my: 3 }} />
+
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+              Структура платежей
+            </Typography>
+
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 2,
+                    border: `1px solid ${theme.palette.divider}`,
+                    borderRadius: 3,
+                    background: alpha('#2e7d32', 0.04),
+                  }}
+                >
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
+                    Первый платёж
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      Основной долг:
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
+                      {fmt(results.firstPrincipal)} ₽
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body2" color="text.secondary">
+                      Проценты:
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 600, color: '#c62828' }}>
+                      {fmt(results.firstInterest)} ₽
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 2,
+                    border: `1px solid ${theme.palette.divider}`,
+                    borderRadius: 3,
+                    background: alpha('#1565c0', 0.04),
+                  }}
+                >
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
+                    Последний платёж
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Typography variant="body2" color="text.secondary">
+                      Основной долг:
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
+                      {fmt(results.lastPrincipal)} ₽
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="body2" color="text.secondary">
+                      Проценты:
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 600, color: '#c62828' }}>
+                      {fmt(results.lastInterest)} ₽
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
+            </Grid>
+
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="body2" color="text.secondary">
+                Срок кредита: {results.months} мес. ({(results.months / 12).toFixed(1)} лет)
+              </Typography>
+            </Box>
+          </>
+        )}
+      </Paper>
+    </Box>
+  );
+}

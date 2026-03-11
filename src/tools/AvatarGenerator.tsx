@@ -1,0 +1,369 @@
+'use client';
+
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import {
+  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider,
+} from '@mui/material';
+import { Download, Face, Refresh } from '@mui/icons-material';
+
+type AvatarStyle = 'geometric' | 'pixel' | 'gradient';
+
+function hashString(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return Math.abs(hash);
+}
+
+function hashToColor(hash: number): string {
+  const h = hash % 360;
+  const s = 55 + (hash % 30);
+  const l = 45 + (hash % 20);
+  return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
+function hashToSecondaryColor(hash: number): string {
+  const h = (hash + 120) % 360;
+  const s = 50 + (hash % 25);
+  const l = 50 + (hash % 20);
+  return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
+function drawGeometric(ctx: CanvasRenderingContext2D, size: number, seed: string, bgWhite: boolean) {
+  const hash = hashString(seed);
+  const color = hashToColor(hash);
+
+  if (bgWhite) {
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+  } else {
+    ctx.clearRect(0, 0, size, size);
+  }
+
+  const gridSize = 5;
+  const cellSize = size / gridSize;
+  const cells: boolean[][] = [];
+
+  // Generate 5x5 symmetric pattern (only need left half + center)
+  for (let row = 0; row < gridSize; row++) {
+    cells[row] = [];
+    for (let col = 0; col < gridSize; col++) {
+      if (col <= 2) {
+        const bitIndex = row * 3 + col;
+        const pseudoRandom = hashString(seed + String(bitIndex));
+        cells[row][col] = pseudoRandom % 3 !== 0;
+      } else {
+        // Mirror
+        cells[row][col] = cells[row][gridSize - 1 - col];
+      }
+    }
+  }
+
+  ctx.fillStyle = color;
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
+      if (cells[row][col]) {
+        const x = col * cellSize;
+        const y = row * cellSize;
+        ctx.beginPath();
+        ctx.roundRect(x + 1, y + 1, cellSize - 2, cellSize - 2, cellSize * 0.15);
+        ctx.fill();
+      }
+    }
+  }
+}
+
+function drawPixel(ctx: CanvasRenderingContext2D, size: number, seed: string, bgWhite: boolean) {
+  const hash = hashString(seed);
+  const color = hashToColor(hash);
+
+  if (bgWhite) {
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+  } else {
+    ctx.clearRect(0, 0, size, size);
+  }
+
+  const gridSize = 5;
+  const cellSize = size / gridSize;
+
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col <= 2; col++) {
+      const bitIndex = row * 3 + col;
+      const pseudoRandom = hashString(seed + String(bitIndex));
+      if (pseudoRandom % 3 !== 0) {
+        ctx.fillStyle = color;
+        // Left side
+        ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+        // Mirror right side
+        ctx.fillRect((gridSize - 1 - col) * cellSize, row * cellSize, cellSize, cellSize);
+      }
+    }
+  }
+}
+
+function drawGradient(ctx: CanvasRenderingContext2D, size: number, seed: string, bgWhite: boolean) {
+  const hash = hashString(seed);
+  const color1 = hashToColor(hash);
+  const color2 = hashToSecondaryColor(hash);
+
+  if (bgWhite) {
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+  } else {
+    ctx.clearRect(0, 0, size, size);
+  }
+
+  // Draw gradient background circle
+  const cx = size / 2;
+  const cy = size / 2;
+  const radius = size * 0.42;
+
+  const gradient = ctx.createRadialGradient(cx - radius * 0.3, cy - radius * 0.3, 0, cx, cy, radius);
+  gradient.addColorStop(0, color1);
+  gradient.addColorStop(1, color2);
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+  ctx.fillStyle = gradient;
+  ctx.fill();
+
+  // Draw 5x5 symmetric pattern on top in white/transparent
+  const gridSize = 5;
+  const patternSize = size * 0.6;
+  const cellSize = patternSize / gridSize;
+  const offsetX = (size - patternSize) / 2;
+  const offsetY = (size - patternSize) / 2;
+
+  ctx.fillStyle = 'rgba(255,255,255,0.85)';
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col <= 2; col++) {
+      const bitIndex = row * 3 + col;
+      const pseudoRandom = hashString(seed + String(bitIndex));
+      if (pseudoRandom % 3 !== 0) {
+        const x = offsetX + col * cellSize;
+        const y = offsetY + row * cellSize;
+        ctx.beginPath();
+        ctx.roundRect(x + 1, y + 1, cellSize - 2, cellSize - 2, cellSize * 0.2);
+        ctx.fill();
+        // Mirror
+        const mx = offsetX + (gridSize - 1 - col) * cellSize;
+        ctx.beginPath();
+        ctx.roundRect(mx + 1, y + 1, cellSize - 2, cellSize - 2, cellSize * 0.2);
+        ctx.fill();
+      }
+    }
+  }
+}
+
+export default function AvatarGenerator() {
+  const theme = useTheme();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [seed, setSeed] = useState('Привет мир');
+  const [size, setSize] = useState(256);
+  const [style, setStyle] = useState<AvatarStyle>('geometric');
+  const [bgWhite, setBgWhite] = useState(true);
+
+  const render = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = size;
+    canvas.height = size;
+
+    const input = seed.trim() || 'default';
+
+    switch (style) {
+      case 'geometric':
+        drawGeometric(ctx, size, input, bgWhite);
+        break;
+      case 'pixel':
+        drawPixel(ctx, size, input, bgWhite);
+        break;
+      case 'gradient':
+        drawGradient(ctx, size, input, bgWhite);
+        break;
+    }
+  }, [seed, size, style, bgWhite]);
+
+  useEffect(() => {
+    render();
+  }, [render]);
+
+  const handleDownload = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const link = document.createElement('a');
+    link.download = `avatar-${seed.trim().replace(/\s+/g, '-') || 'identicon'}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  };
+
+  const handleRandomSeed = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 8; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setSeed(result);
+  };
+
+  const sizeOptions = [64, 128, 256, 512];
+  const styleOptions: { value: AvatarStyle; label: string }[] = [
+    { value: 'geometric', label: 'Геометрический' },
+    { value: 'pixel', label: 'Пиксельный' },
+    { value: 'gradient', label: 'Градиент' },
+  ];
+
+  return (
+    <Box>
+      <Grid container spacing={3}>
+        <Grid size={{ xs: 12, md: 5 }}>
+          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+            Текст (seed)
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+            <TextField
+              fullWidth
+              value={seed}
+              onChange={(e) => setSeed(e.target.value)}
+              placeholder="Введите текст..."
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <Button size="small" onClick={handleRandomSeed} sx={{ minWidth: 36 }}>
+                      <Refresh fontSize="small" />
+                    </Button>
+                  ),
+                },
+              }}
+            />
+          </Box>
+
+          {/* Style */}
+          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+            Стиль
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+            {styleOptions.map(opt => (
+              <Chip
+                key={opt.value}
+                label={opt.label}
+                onClick={() => setStyle(opt.value)}
+                sx={{
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  bgcolor: style === opt.value
+                    ? alpha(theme.palette.primary.main, 0.15)
+                    : alpha(theme.palette.primary.main, 0.04),
+                  color: style === opt.value ? theme.palette.primary.main : theme.palette.text.primary,
+                }}
+              />
+            ))}
+          </Box>
+
+          {/* Size */}
+          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+            Размер
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+            {sizeOptions.map(s => (
+              <Chip
+                key={s}
+                label={`${s}px`}
+                onClick={() => setSize(s)}
+                sx={{
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  bgcolor: size === s
+                    ? alpha(theme.palette.primary.main, 0.15)
+                    : alpha(theme.palette.primary.main, 0.04),
+                  color: size === s ? theme.palette.primary.main : theme.palette.text.primary,
+                }}
+              />
+            ))}
+          </Box>
+
+          {/* Background */}
+          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+            Фон
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
+            <Chip
+              label="Белый"
+              onClick={() => setBgWhite(true)}
+              sx={{
+                fontWeight: 600,
+                cursor: 'pointer',
+                bgcolor: bgWhite
+                  ? alpha(theme.palette.primary.main, 0.15)
+                  : alpha(theme.palette.primary.main, 0.04),
+                color: bgWhite ? theme.palette.primary.main : theme.palette.text.primary,
+              }}
+            />
+            <Chip
+              label="Прозрачный"
+              onClick={() => setBgWhite(false)}
+              sx={{
+                fontWeight: 600,
+                cursor: 'pointer',
+                bgcolor: !bgWhite
+                  ? alpha(theme.palette.primary.main, 0.15)
+                  : alpha(theme.palette.primary.main, 0.04),
+                color: !bgWhite ? theme.palette.primary.main : theme.palette.text.primary,
+              }}
+            />
+          </Box>
+
+          <Button
+            variant="contained"
+            fullWidth
+            size="large"
+            startIcon={<Download />}
+            onClick={handleDownload}
+            sx={{ borderRadius: '24px', py: 1.2 }}
+          >
+            Скачать PNG
+          </Button>
+        </Grid>
+
+        <Grid size={{ xs: 12, md: 7 }}>
+          <Paper
+            elevation={0}
+            sx={{
+              p: 3,
+              borderRadius: 3,
+              bgcolor: alpha(theme.palette.primary.main, 0.03),
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <canvas
+              ref={canvasRef}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                borderRadius: 12,
+                border: `1px solid ${theme.palette.divider}`,
+                background: !bgWhite
+                  ? `repeating-conic-gradient(${alpha(theme.palette.text.primary, 0.08)} 0% 25%, transparent 0% 50%) 50% / 16px 16px`
+                  : undefined,
+              }}
+            />
+            <Typography variant="caption" color="text.secondary" sx={{ mt: 2 }}>
+              {size} x {size} px | Стиль: {styleOptions.find(s => s.value === style)?.label}
+            </Typography>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}

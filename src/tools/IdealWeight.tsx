@@ -1,0 +1,330 @@
+'use client';
+
+import { useState, useMemo } from 'react';
+import {
+  Box,
+  Typography,
+  Paper,
+  TextField,
+  Grid,
+  Chip,
+  ToggleButton,
+  ToggleButtonGroup,
+  useTheme,
+  alpha,
+} from '@mui/material';
+
+type Gender = 'male' | 'female';
+
+interface FormulaResult {
+  name: string;
+  description: string;
+  weight: number;
+  color: string;
+}
+
+function calcDevine(heightCm: number, gender: Gender): number {
+  const heightInches = heightCm / 2.54;
+  const over60 = heightInches - 60;
+  if (gender === 'male') {
+    return 50 + 2.3 * over60;
+  }
+  return 45.5 + 2.3 * over60;
+}
+
+function calcRobinson(heightCm: number, gender: Gender): number {
+  const heightInches = heightCm / 2.54;
+  const over60 = heightInches - 60;
+  if (gender === 'male') {
+    return 52 + 1.9 * over60;
+  }
+  return 49 + 1.7 * over60;
+}
+
+function calcMiller(heightCm: number, gender: Gender): number {
+  const heightInches = heightCm / 2.54;
+  const over60 = heightInches - 60;
+  if (gender === 'male') {
+    return 56.2 + 1.41 * over60;
+  }
+  return 53.1 + 1.36 * over60;
+}
+
+function calcHamwi(heightCm: number, gender: Gender): number {
+  const heightInches = heightCm / 2.54;
+  const over60 = heightInches - 60;
+  if (gender === 'male') {
+    return 48 + 2.7 * over60;
+  }
+  return 45.5 + 2.2 * over60;
+}
+
+export default function IdealWeight() {
+  const theme = useTheme();
+  const [height, setHeight] = useState('');
+  const [gender, setGender] = useState<Gender>('male');
+
+  const results = useMemo((): FormulaResult[] | null => {
+    const h = parseFloat(height);
+    if (isNaN(h) || h < 100 || h > 250) return null;
+
+    return [
+      {
+        name: 'Девайн',
+        description: 'Наиболее распространённая формула, часто используется в медицине и фармакологии',
+        weight: calcDevine(h, gender),
+        color: '#1976d2',
+      },
+      {
+        name: 'Робинсон',
+        description: 'Модификация формулы Девайна 1983 года, считается более точной',
+        weight: calcRobinson(h, gender),
+        color: '#2e7d32',
+      },
+      {
+        name: 'Миллер',
+        description: 'Формула 1983 года, даёт несколько более высокие значения',
+        weight: calcMiller(h, gender),
+        color: '#7b1fa2',
+      },
+      {
+        name: 'Хамви',
+        description: 'Одна из первых формул (1964), основа для многих последующих',
+        weight: calcHamwi(h, gender),
+        color: '#e65100',
+      },
+    ];
+  }, [height, gender]);
+
+  const average = useMemo(() => {
+    if (!results) return null;
+    const sum = results.reduce((acc, r) => acc + r.weight, 0);
+    return sum / results.length;
+  }, [results]);
+
+  const fmt = (n: number) =>
+    n.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+  return (
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      {/* Ввод данных */}
+      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
+          Введите ваши параметры
+        </Typography>
+        <Grid container spacing={2} alignItems="center">
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <TextField
+              fullWidth
+              label="Рост (см)"
+              type="number"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              placeholder="170"
+              slotProps={{
+                input: {
+                  inputProps: { min: 100, max: 250, step: 1 },
+                },
+              }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <ToggleButtonGroup
+              value={gender}
+              exclusive
+              onChange={(_, val) => { if (val) setGender(val); }}
+              fullWidth
+            >
+              <ToggleButton value="male" sx={{ textTransform: 'none', py: 1.5 }}>
+                Мужчина
+              </ToggleButton>
+              <ToggleButton value="female" sx={{ textTransform: 'none', py: 1.5 }}>
+                Женщина
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Grid>
+        </Grid>
+      </Paper>
+
+      {/* Средний результат */}
+      {results && average && (
+        <>
+          <Paper
+            elevation={0}
+            sx={{
+              p: 3,
+              mb: 3,
+              textAlign: 'center',
+              border: `1px solid ${theme.palette.divider}`,
+              background: alpha(theme.palette.primary.main, 0.05),
+            }}
+          >
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+              Среднее значение по всем формулам
+            </Typography>
+            <Typography
+              variant="h3"
+              sx={{ fontWeight: 700, color: theme.palette.primary.main, mb: 1 }}
+            >
+              {fmt(average)} кг
+            </Typography>
+            <Chip
+              label={`Диапазон: ${fmt(Math.min(...results.map((r) => r.weight)))} — ${fmt(Math.max(...results.map((r) => r.weight)))} кг`}
+              variant="outlined"
+              sx={{ fontWeight: 500 }}
+            />
+          </Paper>
+
+          {/* Визуальная шкала сравнения */}
+          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Сравнение формул
+            </Typography>
+
+            {(() => {
+              const weights = results.map((r) => r.weight);
+              const minW = Math.min(...weights) - 2;
+              const maxW = Math.max(...weights) + 2;
+              const range = maxW - minW;
+
+              return (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  {results.map((r) => {
+                    const pos = ((r.weight - minW) / range) * 100;
+                    return (
+                      <Box key={r.name}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                            {r.name}
+                          </Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 700, color: r.color }}>
+                            {fmt(r.weight)} кг
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            position: 'relative',
+                            height: 12,
+                            borderRadius: 6,
+                            backgroundColor: alpha(r.color, 0.1),
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              position: 'absolute',
+                              left: 0,
+                              top: 0,
+                              height: '100%',
+                              width: `${pos}%`,
+                              borderRadius: 6,
+                              backgroundColor: alpha(r.color, 0.6),
+                              transition: 'width 0.4s ease',
+                            }}
+                          />
+                          <Box
+                            sx={{
+                              position: 'absolute',
+                              top: -2,
+                              left: `${pos}%`,
+                              transform: 'translateX(-50%)',
+                              width: 16,
+                              height: 16,
+                              borderRadius: '50%',
+                              backgroundColor: r.color,
+                              border: `2px solid ${theme.palette.background.paper}`,
+                              boxShadow: `0 1px 4px ${alpha(r.color, 0.4)}`,
+                              transition: 'left 0.4s ease',
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    );
+                  })}
+
+                  {/* Средняя линия */}
+                  <Box sx={{ mt: 1, pt: 2, borderTop: `1px dashed ${theme.palette.divider}` }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
+                        Среднее
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 700, color: theme.palette.primary.main }}>
+                        {fmt(average)} кг
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              );
+            })()}
+          </Paper>
+
+          {/* Подробные карточки */}
+          <Grid container spacing={2}>
+            {results.map((r) => (
+              <Grid size={{ xs: 12, sm: 6 }} key={r.name}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 2.5,
+                    height: '100%',
+                    border: `1px solid ${theme.palette.divider}`,
+                    borderTop: `3px solid ${r.color}`,
+                    borderRadius: 2,
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 0.5, color: r.color }}>
+                    Формула {r.name}
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: 700, mb: 1 }}
+                  >
+                    {fmt(r.weight)} кг
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                    {r.description}
+                  </Typography>
+                  {average && (
+                    <Chip
+                      label={
+                        r.weight > average
+                          ? `+${fmt(r.weight - average)} кг от среднего`
+                          : r.weight < average
+                            ? `${fmt(r.weight - average)} кг от среднего`
+                            : 'Совпадает со средним'
+                      }
+                      size="small"
+                      sx={{
+                        mt: 1.5,
+                        fontWeight: 500,
+                        color: r.color,
+                        backgroundColor: alpha(r.color, 0.1),
+                      }}
+                    />
+                  )}
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+
+          {/* Примечание */}
+          <Paper
+            elevation={0}
+            sx={{
+              p: 2,
+              mt: 3,
+              border: `1px solid ${theme.palette.divider}`,
+              background: alpha(theme.palette.warning.main, 0.05),
+              borderRadius: 2,
+            }}
+          >
+            <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+              Формулы идеального веса дают приблизительные значения и не учитывают
+              индивидуальные особенности: телосложение, мышечную массу, возраст.
+              Для точной оценки рекомендуется обратиться к специалисту.
+            </Typography>
+          </Paper>
+        </>
+      )}
+    </Box>
+  );
+}

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Read",
+      "NotebookEdit",
+      "mcp__Claude_Preview__*"
+    ]
+  }
+}
