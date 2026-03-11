@@ -15,7 +15,7 @@ import {
   FormControl,
   InputLabel,
   useTheme } from '@mui/material';
-import { Download, ContentCopy } from '@mui/icons-material';
+import { Download } from '@mui/icons-material';
 
 
 type QrMode = 'url' | 'text' | 'wifi' | 'vcard';
@@ -309,7 +309,6 @@ export default function QrCodeGen() {
               </Button>
               <Button
                 variant="outlined"
-                startIcon={<ContentCopy />}
                 onClick={handleCopy}
                 sx={{ borderRadius: 5 }}
               >
