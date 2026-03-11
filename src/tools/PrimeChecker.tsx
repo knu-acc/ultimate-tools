@@ -121,7 +121,7 @@ export default function PrimeChecker() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -168,7 +168,7 @@ export default function PrimeChecker() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               textAlign: 'center',
               borderRadius: 3,
               background: alpha(
@@ -193,7 +193,7 @@ export default function PrimeChecker() {
               elevation={0}
               sx={{
                 p: 3,
-                mb: 3,
+                mb: 2,
                 borderRadius: 3
               }}
             >
@@ -242,7 +242,7 @@ export default function PrimeChecker() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               borderRadius: 3
             }}
           >

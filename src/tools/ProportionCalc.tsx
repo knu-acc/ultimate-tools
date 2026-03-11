@@ -129,7 +129,7 @@ export default function ProportionCalc() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -264,7 +264,7 @@ export default function ProportionCalc() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >

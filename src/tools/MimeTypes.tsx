@@ -10,8 +10,7 @@ import {
   Chip,
   useTheme
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type MimeCategory = 'all' | 'text' | 'image' | 'audio' | 'video' | 'application' | 'font';
@@ -113,7 +112,6 @@ export default function MimeTypes() {
   const theme = useTheme();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<MimeCategory>('all');
-  const [copied, setCopied] = useState('');
 
   const filtered = useMemo(() => {
     return MIME_DATA.filter((m) => {
@@ -130,12 +128,6 @@ export default function MimeTypes() {
     });
   }, [search, category]);
 
-  const copyMime = (mime: string) => {
-    navigator.clipboard.writeText(mime);
-    setCopied(mime);
-    setTimeout(() => setCopied(''), 1500);
-  };
-
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const m of MIME_DATA) {
@@ -145,11 +137,11 @@ export default function MimeTypes() {
   }, []);
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Search & filter */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, borderRadius: 3 }}
+        sx={{ p: 2, mb: 2, borderRadius: 3 }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 5 }}>
@@ -206,10 +198,8 @@ export default function MimeTypes() {
                 <Box
                   component="tr"
                   key={m.ext + m.mime}
-                  onClick={() => copyMime(m.mime)}
                   sx={{
                     borderBottom: `1px solid ${theme.palette.divider}`,
-                    cursor: 'pointer',
                     '&:hover': { backgroundColor: theme.palette.surfaceContainerLow }
                   }}
                 >
@@ -221,12 +211,10 @@ export default function MimeTypes() {
                       variant="body2"
                       sx={{
                         fontFamily: 'monospace',
-                        fontSize: 12,
-                        color: copied === m.mime ? 'success.main' : 'text.primary',
-                        fontWeight: copied === m.mime ? 600 : 400
+                        fontSize: 12
                       }}
                     >
-                      {copied === m.mime ? 'Скопировано!' : m.mime}
+                      {m.mime}
                     </Typography>
                   </Box>
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
@@ -236,7 +224,7 @@ export default function MimeTypes() {
                     <Chip label={CATEGORY_LABELS[m.category]} size="small" variant="outlined" />
                   </Box>
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
-                    <ContentCopyIcon sx={{ fontSize: 16, color: 'text.secondary', opacity: 0.5 }} />
+                    <CopyButton text={m.mime} />
                   </Box>
                 </Box>
               ))}

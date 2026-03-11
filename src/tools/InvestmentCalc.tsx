@@ -108,9 +108,9 @@ export default function InvestmentCalc() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -187,7 +187,7 @@ export default function InvestmentCalc() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               textAlign: 'center',
               borderRadius: 3,
               background: alpha('#2e7d32', 0.04)
@@ -202,7 +202,7 @@ export default function InvestmentCalc() {
           </Paper>
 
           {/* Breakdown cards */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Paper
                 elevation={0}
@@ -268,7 +268,7 @@ export default function InvestmentCalc() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               borderRadius: 3
             }}
           >

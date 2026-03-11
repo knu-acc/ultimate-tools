@@ -263,7 +263,7 @@ export default function Metronome() {
       </Box>
 
       {/* Quick Tempo Chips */}
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 2 }}>
         {QUICK_TEMPOS.map((t) => (
           <Chip
             key={t}
@@ -280,7 +280,7 @@ export default function Metronome() {
       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1, textAlign: 'center' }}>
         Размер
       </Typography>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 2 }}>
         {TIME_SIGNATURES.map((ts) => (
           <Chip
             key={ts}

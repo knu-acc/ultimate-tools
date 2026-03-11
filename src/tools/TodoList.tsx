@@ -122,7 +122,7 @@ export default function TodoList() {
       <Paper elevation={0} sx={{ }}>
         <Box sx={{ p: 3 }}>
           {/* Input */}
-          <Box sx={{ display: 'flex', gap: 1.5, mb: 3 }}>
+          <Box sx={{ display: 'flex', gap: 1.5, mb: 2 }}>
             <TextField
               fullWidth
               placeholder="Добавить новую задачу..."

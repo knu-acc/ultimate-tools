@@ -5,8 +5,8 @@ import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider,
   IconButton, Tooltip
 } from '@mui/material';
-import { Shuffle, Groups, Replay, ContentCopy, Delete } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Shuffle, Groups, Replay, Delete } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const TEAM_COLORS = [
@@ -112,11 +112,10 @@ export default function TeamGenerator() {
     handleSplit();
   };
 
-  const copyTeams = (teamsData: Team[]) => {
-    const text = teamsData.map(t =>
+  const getTeamsText = (teamsData: Team[]) => {
+    return teamsData.map(t =>
       `${t.name}:\n${t.members.map(m => `  - ${m}`).join('\n')}`
     ).join('\n\n');
-    navigator.clipboard.writeText(text).catch(() => {});
   };
 
   const participants = getParticipants();
@@ -241,11 +240,7 @@ export default function TeamGenerator() {
                   Результат: {teams.length} {teams.length === 1 ? 'команда' : teams.length < 5 ? 'команды' : 'команд'}
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 1 }}>
-                  <Tooltip title="Копировать">
-                    <IconButton size="small" onClick={() => copyTeams(teams)}>
-                      <ContentCopy fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
+                  <CopyButton text={getTeamsText(teams)} />
                   <Tooltip title="Перемешать заново">
                     <IconButton size="small" onClick={handleReshuffle} disabled={animating}>
                       <Replay fontSize="small" />

@@ -13,8 +13,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function minifyCss(css: string): string {
@@ -132,13 +131,13 @@ export default function CssMinifier() {
   }, [input, output]);
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input */}

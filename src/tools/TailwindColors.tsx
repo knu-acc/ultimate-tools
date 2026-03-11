@@ -68,7 +68,7 @@ export default function TailwindColors() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -78,11 +78,11 @@ export default function TailwindColors() {
           label="Поиск по названию цвета"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          sx={{ mb: 3 }}
+          sx={{ mb: 2 }}
         />
 
         {filteredColors.map(([colorName, colorShades]) => (
-          <Box key={colorName} sx={{ mb: 3 }}>
+          <Box key={colorName} sx={{ mb: 2 }}>
             <Typography
               variant="subtitle2"
               sx={{

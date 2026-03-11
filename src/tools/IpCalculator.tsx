@@ -111,13 +111,13 @@ export default function IpCalculator() {
     : [];
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Ввод */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
@@ -165,7 +165,7 @@ export default function IpCalculator() {
       {/* Результаты */}
       {result && (
         <>
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             {resultCards.map((card) => (
               <Grid size={{ xs: 12, sm: 6, md: 4 }} key={card.label}>
                 <Paper

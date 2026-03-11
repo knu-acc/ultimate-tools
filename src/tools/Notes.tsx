@@ -139,7 +139,7 @@ export default function Notes() {
   );
 
   return (
-    <Box sx={{ maxWidth: 1100, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Grid container spacing={2}>
         {/* Список заметок */}
         <Grid size={{ xs: 12, md: 4 }}>

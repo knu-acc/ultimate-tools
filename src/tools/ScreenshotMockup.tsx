@@ -256,7 +256,7 @@ export default function ScreenshotMockup() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <input
         ref={fileInputRef}
         type="file"
@@ -300,7 +300,7 @@ export default function ScreenshotMockup() {
 
       {originalFile && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <DevicesIcon /> Настройки мокапа
             </Typography>
@@ -308,7 +308,7 @@ export default function ScreenshotMockup() {
             <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
               Устройство
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1, mb: 3, flexWrap: 'wrap' }}>
+            <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
               {devices.map((d) => (
                 <Chip
                   key={d.value}

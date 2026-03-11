@@ -1,21 +1,19 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Box,
   Typography,
   Paper,
   Grid,
   TextField,
-  Button,
   Chip,
   alpha,
   useTheme
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import PlaceIcon from '@mui/icons-material/Place';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface Coordinate {
@@ -83,8 +81,6 @@ export default function CoordinateConverter() {
   const theme = useTheme();
   const [latInput, setLatInput] = useState('55.7558');
   const [lonInput, setLonInput] = useState('37.6173');
-  const [copied, setCopied] = useState('');
-
   const lat = parseFloat(latInput);
   const lon = parseFloat(lonInput);
 
@@ -102,12 +98,6 @@ export default function CoordinateConverter() {
   const dmsString = latDms && lonDms ? `${dmsToString(latDms)}, ${dmsToString(lonDms)}` : '';
   const ddmString = latDdm && lonDdm ? `${ddmToString(latDdm)}, ${ddmToString(lonDdm)}` : '';
 
-  const copy = useCallback((text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(label);
-    setTimeout(() => setCopied(''), 1500);
-  }, []);
-
   const applyPreset = (preset: Preset) => {
     setLatInput(preset.lat.toString());
     setLonInput(preset.lon.toString());
@@ -121,7 +111,7 @@ export default function CoordinateConverter() {
       {/* Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, borderRadius: 3 }}
+        sx={{ p: 3, mb: 2, borderRadius: 3 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <MyLocationIcon color="primary" fontSize="small" />
@@ -170,7 +160,7 @@ export default function CoordinateConverter() {
       {/* Quick presets */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, borderRadius: 3 }}
+        sx={{ p: 2, mb: 2, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
           Быстрый выбор
@@ -202,14 +192,7 @@ export default function CoordinateConverter() {
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                   DD (Десятичные градусы)
                 </Typography>
-                <Button
-                  size="small"
-                  startIcon={<ContentCopyIcon />}
-                  onClick={() => copy(ddString, 'dd')}
-                  color={copied === 'dd' ? 'success' : 'primary'}
-                >
-                  {copied === 'dd' ? 'Скопировано' : 'Копировать'}
-                </Button>
+                <CopyButton text={ddString} />
               </Box>
               <Typography
                 variant="body1"
@@ -236,14 +219,7 @@ export default function CoordinateConverter() {
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                   DMS (Градусы, минуты, секунды)
                 </Typography>
-                <Button
-                  size="small"
-                  startIcon={<ContentCopyIcon />}
-                  onClick={() => copy(dmsString, 'dms')}
-                  color={copied === 'dms' ? 'success' : 'primary'}
-                >
-                  {copied === 'dms' ? 'Скопировано' : 'Копировать'}
-                </Button>
+                <CopyButton text={dmsString} />
               </Box>
               <Typography
                 variant="body1"
@@ -270,14 +246,7 @@ export default function CoordinateConverter() {
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                   DDM (Градусы, десятичные минуты)
                 </Typography>
-                <Button
-                  size="small"
-                  startIcon={<ContentCopyIcon />}
-                  onClick={() => copy(ddmString, 'ddm')}
-                  color={copied === 'ddm' ? 'success' : 'primary'}
-                >
-                  {copied === 'ddm' ? 'Скопировано' : 'Копировать'}
-                </Button>
+                <CopyButton text={ddmString} />
               </Box>
               <Typography
                 variant="body1"

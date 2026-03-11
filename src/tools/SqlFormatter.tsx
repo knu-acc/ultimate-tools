@@ -13,8 +13,7 @@ import {
   alpha,
   useTheme
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const SQL_KEYWORDS = [
@@ -153,13 +152,13 @@ export default function SqlFormatter() {
     : null;
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input */}

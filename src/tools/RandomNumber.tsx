@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import {
   Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, Divider
 } from '@mui/material';
-import { Casino, ContentCopy, Refresh } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Casino, Refresh } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 export default function RandomNumber() {
@@ -187,14 +187,9 @@ export default function RandomNumber() {
                 </Paper>
               )}
 
-              <Button
-                size="small"
-                startIcon={<ContentCopy />}
-                onClick={() => navigator.clipboard.writeText(results.join(', '))}
-                sx={{ mt: 1, borderRadius: 4 }}
-              >
-                Копировать
-              </Button>
+              <Box sx={{ mt: 1 }}>
+                <CopyButton text={results.join(', ')} />
+              </Box>
             </>
           ) : (
             <Paper

@@ -135,7 +135,7 @@ export default function RomanNumerals() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
             Введите число
@@ -181,7 +181,7 @@ export default function RomanNumerals() {
           elevation={0}
           sx={{
             p: 3,
-            mb: 3,
+            mb: 2,
             border: `1px solid ${modeColor}`,
             backgroundColor: alpha(modeColor, 0.04),
             borderRadius: 3
@@ -208,7 +208,7 @@ export default function RomanNumerals() {
       )}
 
       {/* Reference Table */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
           Справочная таблица
         </Typography>

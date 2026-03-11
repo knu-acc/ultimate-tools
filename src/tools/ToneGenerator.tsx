@@ -227,7 +227,7 @@ export default function ToneGenerator() {
       </Box>
 
       {/* Quick Frequency Chips */}
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 2 }}>
         {QUICK_FREQUENCIES.map((f) => (
           <Chip
             key={f.freq}
@@ -244,7 +244,7 @@ export default function ToneGenerator() {
       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
         Форма волны
       </Typography>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 2 }}>
         {WAVEFORMS.map((w) => (
           <Chip
             key={w.type}
@@ -261,7 +261,7 @@ export default function ToneGenerator() {
       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
         Громкость: {volume}%
       </Typography>
-      <Box sx={{ px: 1, mb: 3 }}>
+      <Box sx={{ px: 1, mb: 2 }}>
         <Slider
           value={volume}
           onChange={(_, v) => setVolume(v as number)}

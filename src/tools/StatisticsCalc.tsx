@@ -107,7 +107,7 @@ export default function StatisticsCalc() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3
+          mb: 2
         }}
       >
         <TextField

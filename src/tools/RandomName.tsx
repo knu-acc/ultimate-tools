@@ -2,11 +2,10 @@
 
 import React, { useState, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider,
-  IconButton, Tooltip
+  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider
 } from '@mui/material';
-import { ContentCopy, Casino, Person } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Casino, Person } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const RUSSIAN_MALE_FIRST = [
@@ -76,7 +75,6 @@ export default function RandomName() {
   const [nationality, setNationality] = useState<Nationality>('russian');
   const [count, setCount] = useState(5);
   const [results, setResults] = useState<string[]>([]);
-  const [copied, setCopied] = useState<number | null>(null);
 
   const generateName = useCallback((): string => {
     const isMale = gender === 'any' ? Math.random() > 0.5 : gender === 'male';
@@ -111,19 +109,6 @@ export default function RandomName() {
       attempts++;
     }
     setResults(names);
-    setCopied(null);
-  };
-
-  const copyName = (name: string, index: number) => {
-    navigator.clipboard.writeText(name).catch(() => {});
-    setCopied(index);
-    setTimeout(() => setCopied(null), 1500);
-  };
-
-  const copyAll = () => {
-    navigator.clipboard.writeText(results.join('\n')).catch(() => {});
-    setCopied(-1);
-    setTimeout(() => setCopied(null), 1500);
   };
 
   const genderOptions: { value: Gender; label: string }[] = [
@@ -230,7 +215,7 @@ export default function RandomName() {
               { value: 15, label: '15' },
               { value: 20, label: '20' },
             ]}
-            sx={{ mb: 3, mx: 1 }}
+            sx={{ mb: 2, mx: 1 }}
           />
 
           <Button
@@ -252,14 +237,7 @@ export default function RandomName() {
                 <Typography variant="subtitle2" fontWeight={600}>
                   Результат ({results.length})
                 </Typography>
-                <Button
-                  size="small"
-                  startIcon={<ContentCopy />}
-                  onClick={copyAll}
-                  sx={{ borderRadius: 4 }}
-                >
-                  {copied === -1 ? 'Скопировано!' : 'Копировать все'}
-                </Button>
+                <CopyButton text={results.join('\n')} />
               </Box>
 
               {results.map((name, i) => (
@@ -283,13 +261,7 @@ export default function RandomName() {
                       {name}
                     </Typography>
                   </Box>
-                  <Tooltip title={copied === i ? 'Скопировано!' : 'Копировать'}>
-                    <IconButton size="small" onClick={() => copyName(name, i)}>
-                      <ContentCopy fontSize="small" sx={{
-                        color: copied === i ? theme.palette.success.main : theme.palette.text.secondary
-                      }} />
-                    </IconButton>
-                  </Tooltip>
+                  <CopyButton text={name} size="small" />
                 </Paper>
               ))}
             </Box>

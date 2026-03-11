@@ -217,7 +217,7 @@ export default function TextToSpeech() {
             onChange={(e) => setText(e.target.value)}
             disabled={isPlaying || isPaused}
             sx={{
-              mb: 3,
+              mb: 2,
               '& .MuiOutlinedInput-root': { borderRadius: 3 }
             }}
           />
@@ -228,7 +228,7 @@ export default function TextToSpeech() {
               elevation={0}
               sx={{
                 p: 2,
-                mb: 3,
+                mb: 2,
                 borderRadius: 3,
                 border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
                 backgroundColor: theme.palette.surfaceContainerLow,
@@ -252,7 +252,7 @@ export default function TextToSpeech() {
           )}
 
           {/* Controls */}
-          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, mb: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, mb: 2 }}>
             {!isPlaying ? (
               <Button
                 variant="contained"
@@ -290,7 +290,7 @@ export default function TextToSpeech() {
           </Box>
 
           {/* Voice Selector */}
-          <Box sx={{ mb: 3 }}>
+          <Box sx={{ mb: 2 }}>
             <Typography
               variant="body2"
               sx={{ mb: 1, fontWeight: 600, color: theme.palette.text.secondary }}

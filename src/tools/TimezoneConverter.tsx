@@ -268,7 +268,7 @@ export default function TimezoneConverter() {
                 borderRadius: 3,
                 p: 2,
                 mb: 2,
-                backgroundColor: theme.palette.surfaceContainerLowest
+                backgroundColor: theme.palette.surfaceContainerLow
               }}
             >
               <Grid container spacing={2} sx={{ alignItems: 'center' }}>

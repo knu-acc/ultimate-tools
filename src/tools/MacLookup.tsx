@@ -11,11 +11,9 @@ import {
   IconButton,
   Tooltip,
   useTheme } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
 import CasinoIcon from '@mui/icons-material/Casino';
 import SearchIcon from '@mui/icons-material/Search';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const ouiDatabase: Record<string, string> = {
@@ -337,7 +335,7 @@ export default function MacLookup() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -374,7 +372,7 @@ export default function MacLookup() {
           variant="outlined"
           onClick={handleRandom}
           startIcon={<CasinoIcon />}
-          sx={{ mb: 3, borderRadius: 2 }}
+          sx={{ mb: 2, borderRadius: 2 }}
         >
           Случайный MAC
         </Button>

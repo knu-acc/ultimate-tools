@@ -13,13 +13,11 @@ import {
   MenuItem,
   Slider,
   IconButton,
-  Snackbar,
   Tooltip,
   useTheme } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const fieldTypes = [
@@ -167,13 +165,6 @@ export default function JsonDataGen() {
   const [count, setCount] = useState(5);
   const [format, setFormat] = useState<'json' | 'csv'>('json');
   const [output, setOutput] = useState('');
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
-
-  const showSnack = (msg: string) => {
-    setSnackMsg(msg);
-    setSnackOpen(true);
-  };
 
   const addField = () => {
     nextFieldId++;
@@ -217,18 +208,8 @@ export default function JsonDataGen() {
     }
   };
 
-  const copyOutput = async () => {
-    if (!output) return;
-    try {
-      await navigator.clipboard.writeText(output);
-      showSnack('Скопировано в буфер обмена');
-    } catch {
-      showSnack('Не удалось скопировать');
-    }
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
@@ -241,7 +222,7 @@ export default function JsonDataGen() {
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, color: 'text.secondary' }}>
           Шаблоны
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1, mb: 3, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
           <Chip label="Пользователи" size="small" onClick={() => loadPreset('users')} variant="outlined" sx={{ cursor: 'pointer' }} />
           <Chip label="Товары" size="small" onClick={() => loadPreset('products')} variant="outlined" sx={{ cursor: 'pointer' }} />
           <Chip label="Заказы" size="small" onClick={() => loadPreset('orders')} variant="outlined" sx={{ cursor: 'pointer' }} />
@@ -290,7 +271,7 @@ export default function JsonDataGen() {
           size="small"
           startIcon={<AddIcon />}
           onClick={addField}
-          sx={{ textTransform: 'none', mb: 3 }}
+          sx={{ textTransform: 'none', mb: 2 }}
         >
           Добавить поле
         </Button>
@@ -351,14 +332,7 @@ export default function JsonDataGen() {
             Сгенерировать
           </Button>
           {output && (
-            <Button
-              variant="outlined"
-              startIcon={<ContentCopyIcon />}
-              onClick={copyOutput}
-              sx={{ textTransform: 'none' }}
-            >
-              Копировать
-            </Button>
+            <CopyButton text={output} />
           )}
         </Box>
 
@@ -401,13 +375,6 @@ export default function JsonDataGen() {
         )}
       </Paper>
 
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

@@ -171,7 +171,7 @@ export default function IdealWeight() {
           </Paper>
 
           {/* Визуальная шкала сравнения */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               Сравнение формул
             </Typography>

@@ -8,15 +8,13 @@ import {
   Grid,
   TextField,
   Chip,
-  Button,
   alpha,
   useTheme
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ListIcon from '@mui/icons-material/List';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface IpAnalysis {
@@ -198,14 +196,10 @@ export default function IpValidator() {
       .map(analyzeIP);
   }, [batchInput]);
 
-  const copyBinary = (binary: string) => {
-    navigator.clipboard.writeText(binary);
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Mode toggle */}
-      <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
+      <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
         <Chip
           label="Одиночный IP"
           onClick={() => setBatchMode(false)}
@@ -228,7 +222,7 @@ export default function IpValidator() {
           {/* Single IP */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 3, borderRadius: 3 }}
+            sx={{ p: 3, mb: 2, borderRadius: 3 }}
           >
             <TextField
               label="IP-адрес (IPv4 или IPv6)"
@@ -305,13 +299,7 @@ export default function IpValidator() {
                     <Paper elevation={0} sx={{ p: 2, borderRadius: 3 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>Двоичное представление</Typography>
-                        <Button
-                          size="small"
-                          startIcon={<ContentCopyIcon />}
-                          onClick={() => copyBinary(singleResult.binary)}
-                        >
-                          Копировать
-                        </Button>
+                        <CopyButton text={singleResult.binary} />
                       </Box>
                       <Typography
                         variant="body2"
@@ -337,7 +325,7 @@ export default function IpValidator() {
           {/* Batch mode */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 3, borderRadius: 3 }}
+            sx={{ p: 3, mb: 2, borderRadius: 3 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
               Введите IP-адреса (по одному на строку)

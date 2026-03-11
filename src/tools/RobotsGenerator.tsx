@@ -15,12 +15,10 @@ import {
   alpha,
   useTheme
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface Rule {
@@ -35,7 +33,6 @@ export default function RobotsGenerator() {
   const [rules, setRules] = useState<Rule[]>([{ id: 1, type: 'Disallow', path: '' }]);
   const [sitemapUrl, setSitemapUrl] = useState('');
   const [crawlDelay, setCrawlDelay] = useState('');
-  const [copied, setCopied] = useState(false);
   const [nextId, setNextId] = useState(2);
 
   const addRule = () => {
@@ -98,12 +95,6 @@ export default function RobotsGenerator() {
 
   const content = generateContent();
 
-  const copyContent = async () => {
-    await navigator.clipboard.writeText(content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const downloadFile = () => {
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -115,13 +106,13 @@ export default function RobotsGenerator() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Presets */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -285,14 +276,7 @@ export default function RobotsGenerator() {
             </Paper>
 
             <Box sx={{ display: 'flex', gap: 1, mt: 1.5 }}>
-              <Button
-                size="small"
-                startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
-                onClick={copyContent}
-                sx={{ borderRadius: 4 }}
-              >
-                {copied ? 'Скопировано!' : 'Копировать'}
-              </Button>
+              <CopyButton text={content} />
               <Button
                 size="small"
                 startIcon={<DownloadIcon />}

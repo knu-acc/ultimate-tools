@@ -15,12 +15,10 @@ import {
   alpha
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ImageIcon from '@mui/icons-material/Image';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CheckIcon from '@mui/icons-material/Check';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function formatFileSize(bytes: number): string {
@@ -38,17 +36,10 @@ export default function ImageToBase64() {
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number; type: string; width: number; height: number } | null>(null);
   const [previewUrl, setPreviewUrl] = useState('');
   const [dragging, setDragging] = useState(false);
-  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [reverseBase64, setReverseBase64] = useState('');
   const [reversePreview, setReversePreview] = useState('');
   const [reverseError, setReverseError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const copyToClipboard = useCallback((text: string, field: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 2000);
-  }, []);
 
   const processImage = useCallback((file: File) => {
     const reader = new FileReader();
@@ -131,7 +122,7 @@ export default function ImageToBase64() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <input
         ref={fileInputRef}
         type="file"
@@ -142,7 +133,7 @@ export default function ImageToBase64() {
 
       <Paper
         elevation={0}
-        sx={{ mb: 3, borderRadius: 3 }}
+        sx={{ mb: 2, borderRadius: 3 }}
       >
         <Tabs
           value={mode}
@@ -199,7 +190,7 @@ export default function ImageToBase64() {
               {/* File info & preview */}
               <Paper
                 elevation={0}
-                sx={{ p: 3, mb: 3, borderRadius: 3 }}
+                sx={{ p: 3, mb: 2, borderRadius: 3 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="h6">Информация о файле</Typography>
@@ -267,15 +258,7 @@ export default function ImageToBase64() {
                     <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                       {fmt.label}
                     </Typography>
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      startIcon={copiedField === fmt.key ? <CheckIcon /> : <ContentCopyIcon />}
-                      onClick={() => copyToClipboard(fmt.getValue(), fmt.key)}
-                      color={copiedField === fmt.key ? 'success' : 'primary'}
-                    >
-                      {copiedField === fmt.key ? 'Скопировано' : 'Копировать'}
-                    </Button>
+                    <CopyButton text={fmt.getValue()} />
                   </Box>
                   <TextField
                     fullWidth
@@ -301,7 +284,7 @@ export default function ImageToBase64() {
         <>
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 3, borderRadius: 3 }}
+            sx={{ p: 3, mb: 2, borderRadius: 3 }}
           >
             <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
               Вставьте строку Base64 или Data URI

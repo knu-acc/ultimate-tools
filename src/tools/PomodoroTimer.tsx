@@ -129,7 +129,7 @@ export default function PomodoroTimer() {
   return (
     <Box sx={{ textAlign: 'center' }}>
       {/* Phase chips */}
-      <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mb: 2 }}>
         {(['work', 'break', 'longBreak'] as Phase[]).map(p => (
           <Chip
             key={p}
@@ -150,7 +150,7 @@ export default function PomodoroTimer() {
       </Box>
 
       {/* Circular timer */}
-      <Box sx={{ position: 'relative', width: 280, height: 280, mx: 'auto', mb: 3 }}>
+      <Box sx={{ position: 'relative', width: 280, height: 280, mx: 'auto', mb: 2 }}>
         <svg width="280" height="280" style={{ transform: 'rotate(-90deg)' }}>
           <circle
             cx="140" cy="140" r="120"
@@ -180,7 +180,7 @@ export default function PomodoroTimer() {
       </Box>
 
       {/* Controls */}
-      <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center', mb: 2 }}>
         <Button
           variant="contained"
           size="large"
@@ -207,7 +207,7 @@ export default function PomodoroTimer() {
       </Box>
 
       {/* Pomodoro counter */}
-      <Box sx={{ display: 'flex', gap: 0.5, justifyContent: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', gap: 0.5, justifyContent: 'center', mb: 2 }}>
         {Array.from({ length: longBreakInterval }).map((_, i) => (
           <Box
             key={i}

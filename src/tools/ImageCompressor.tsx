@@ -161,7 +161,7 @@ export default function ImageCompressor() {
   const compressionRatio = originalSize > 0 ? ((1 - compressedSize / originalSize) * 100) : 0;
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <input
         ref={fileInputRef}
@@ -213,7 +213,7 @@ export default function ImageCompressor() {
       {/* Controls */}
       {originalFile && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
             <Grid container spacing={3} alignItems="center">
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
@@ -264,7 +264,7 @@ export default function ImageCompressor() {
           </Paper>
 
           {/* Stats */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}

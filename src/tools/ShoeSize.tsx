@@ -194,7 +194,7 @@ export default function ShoeSize() {
   const displayTable = gender === 'men' ? menSizeTable : womenSizeTable;
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Ввод */}
       <Paper
         elevation={0}
@@ -275,7 +275,7 @@ export default function ShoeSize() {
 
       {/* Результаты */}
       {converted ? (
-        <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid container spacing={2} sx={{ mb: 2 }}>
           {otherSystems.map((sys) => (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={sys}>
               <Paper

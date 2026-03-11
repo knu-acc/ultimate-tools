@@ -137,13 +137,13 @@ export default function KeywordDensity() {
   const maxCount = currentData.length > 0 ? currentData[0].count : 1;
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -171,7 +171,7 @@ export default function KeywordDensity() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >

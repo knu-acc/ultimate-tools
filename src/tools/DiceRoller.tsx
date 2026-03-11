@@ -75,7 +75,7 @@ export default function DiceRoller() {
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
             Граней
           </Typography>
-          <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap', mb: 3 }}>
+          <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap', mb: 2 }}>
             {sideOptions.map((s) => (
               <Chip
                 key={s}

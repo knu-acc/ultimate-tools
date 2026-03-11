@@ -8,16 +8,14 @@ import {
   Paper,
   TextField,
   Alert,
-  Snackbar,
   Chip,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FormatIndentIncreaseIcon from '@mui/icons-material/FormatIndentIncrease';
 import CompressIcon from '@mui/icons-material/Compress';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function formatXml(xml: string, indentStr: string): string {
@@ -195,13 +193,6 @@ export default function XmlFormatter() {
   const [indentOption, setIndentOption] = useState<IndentOption>('2');
   const [error, setError] = useState<string | null>(null);
   const [errorLine, setErrorLine] = useState<number | undefined>();
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
-
-  const showSnack = (msg: string) => {
-    setSnackMsg(msg);
-    setSnackOpen(true);
-  };
 
   const getIndentStr = (): string => {
     switch (indentOption) {
@@ -226,7 +217,6 @@ export default function XmlFormatter() {
       setOutput(formatted);
       setError(null);
       setErrorLine(undefined);
-      showSnack('XML отформатирован');
     } catch (e) {
       setError((e as Error).message);
       setOutput('');
@@ -240,20 +230,9 @@ export default function XmlFormatter() {
       setOutput(minified);
       setError(null);
       setErrorLine(undefined);
-      showSnack('XML минифицирован');
     } catch (e) {
       setError((e as Error).message);
       setOutput('');
-    }
-  };
-
-  const copyOutput = async () => {
-    if (!output) return;
-    try {
-      await navigator.clipboard.writeText(output);
-      showSnack('Скопировано в буфер обмена');
-    } catch {
-      showSnack('Не удалось скопировать');
     }
   };
 
@@ -262,7 +241,6 @@ export default function XmlFormatter() {
     setOutput('');
     setError(null);
     setErrorLine(undefined);
-    showSnack('Очищено');
   };
 
   const stats = useMemo(() => {
@@ -281,13 +259,13 @@ export default function XmlFormatter() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input */}
@@ -350,15 +328,7 @@ export default function XmlFormatter() {
           >
             Минифицировать
           </Button>
-          <Button
-            variant="outlined"
-            startIcon={<ContentCopyIcon />}
-            onClick={copyOutput}
-            disabled={!output}
-            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
-          >
-            Копировать
-          </Button>
+          <CopyButton text={output} tooltip="Копировать" />
           <Button
             variant="outlined"
             startIcon={<DeleteOutlineIcon />}
@@ -446,13 +416,6 @@ export default function XmlFormatter() {
         )}
       </Paper>
 
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

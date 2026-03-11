@@ -236,7 +236,7 @@ export default function PixelArt() {
   }, [grid, gridSize]);
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Grid container spacing={3}>
         {/* Tools panel */}
         <Grid size={{ xs: 12, md: 4 }}>
@@ -253,7 +253,7 @@ export default function PixelArt() {
               onChange={(_, v) => v && setTool(v)}
               fullWidth
               size="small"
-              sx={{ mb: 3 }}
+              sx={{ mb: 2 }}
             >
               <ToggleButton value="draw">
                 <Tooltip title="Рисовать">
@@ -304,7 +304,7 @@ export default function PixelArt() {
               />
             </Box>
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 3 }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 2 }}>
               {PRESET_COLORS.map((c) => (
                 <IconButton
                   key={c}
@@ -332,7 +332,7 @@ export default function PixelArt() {
               onChange={(_, v) => v && handleGridSizeChange(v)}
               fullWidth
               size="small"
-              sx={{ mb: 3 }}
+              sx={{ mb: 2 }}
             >
               {GRID_SIZES.map((s) => (
                 <ToggleButton key={s} value={s}>

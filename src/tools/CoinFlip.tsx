@@ -64,7 +64,7 @@ export default function CoinFlip() {
           border: `3px solid ${result === 'heads' ? '#FFD700' : result === 'tails' ? '#C0C0C0' : theme.palette.divider}`,
           transition: 'all 0.3s ease',
           transform: flipping ? 'rotateY(180deg)' : 'rotateY(0)',
-          mb: 3
+          mb: 2
         }}
       >
         {result ? (

@@ -9,14 +9,12 @@ import {
   Button,
   Chip,
   TextField,
-  Switch,
   useTheme
 } from '@mui/material';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface AspectPreset {
@@ -135,10 +133,6 @@ export default function VideoAspect() {
     setLocked(true);
   };
 
-  const copyRatio = () => {
-    navigator.clipboard.writeText(`${w}x${h} (${ratio})`);
-  };
-
   // Visual preview dimensions
   const maxPreviewSize = 250;
   let previewW = maxPreviewSize;
@@ -154,11 +148,11 @@ export default function VideoAspect() {
   }
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, borderRadius: 3 }}
+        sx={{ p: 3, mb: 2, borderRadius: 3 }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
@@ -191,15 +185,7 @@ export default function VideoAspect() {
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 3 }}>
-            <Button
-              variant="outlined"
-              fullWidth
-              onClick={copyRatio}
-              startIcon={<ContentCopyIcon />}
-              sx={{ height: 40 }}
-            >
-              Копировать
-            </Button>
+            <CopyButton text={`${w}x${h} (${ratio})`} tooltip="Копировать" />
           </Grid>
         </Grid>
 
@@ -212,7 +198,7 @@ export default function VideoAspect() {
       </Paper>
 
       {/* Ratio and Preview */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
+      <Grid container spacing={3} sx={{ mb: 2 }}>
         <Grid size={{ xs: 12, sm: 6 }}>
           <Paper
             elevation={0}
@@ -276,7 +262,7 @@ export default function VideoAspect() {
       {/* Presets */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, borderRadius: 3 }}
+        sx={{ p: 2, mb: 2, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
           Пропорции

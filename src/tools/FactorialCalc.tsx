@@ -162,7 +162,7 @@ export default function FactorialCalc() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}

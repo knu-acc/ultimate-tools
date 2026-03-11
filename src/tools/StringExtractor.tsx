@@ -12,12 +12,10 @@ import {
   List,
   ListItem,
   ListItemText,
-  IconButton,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type ExtractionType = 'emails' | 'urls' | 'phones' | 'ips' | 'numbers';
@@ -73,15 +71,11 @@ export default function StringExtractor() {
   const theme = useTheme();
   const [input, setInput] = useState('');
   const [activeTypes, setActiveTypes] = useState<ExtractionType[]>(['emails']);
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-  const [copiedAll, setCopiedAll] = useState(false);
 
   const toggleType = (type: ExtractionType) => {
     setActiveTypes((prev) =>
       prev.includes(type) ? (prev.length > 1 ? prev.filter((t) => t !== type) : prev) : [...prev, type]
     );
-    setCopiedIndex(null);
-    setCopiedAll(false);
   };
 
   const results = useMemo(() => {
@@ -98,32 +92,8 @@ export default function StringExtractor() {
 
   const totalCount = results.length;
 
-  const copyItem = async (value: string, index: number) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopiedIndex(index);
-      setTimeout(() => setCopiedIndex(null), 1500);
-    } catch {
-      // clipboard not available
-    }
-  };
-
-  const copyAll = async () => {
-    if (results.length === 0) return;
-    try {
-      const text = results.map((r) => r.value).join('\n');
-      await navigator.clipboard.writeText(text);
-      setCopiedAll(true);
-      setTimeout(() => setCopiedAll(false), 2000);
-    } catch {
-      // clipboard not available
-    }
-  };
-
   const handleClear = () => {
     setInput('');
-    setCopiedIndex(null);
-    setCopiedAll(false);
   };
 
   const getChipColor = (type: ExtractionType): 'primary' | 'secondary' | 'success' | 'warning' | 'info' => {
@@ -138,12 +108,12 @@ export default function StringExtractor() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -158,14 +128,14 @@ export default function StringExtractor() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Вставьте текст, из которого нужно извлечь данные..."
-          sx={{ mb: 3 }}
+          sx={{ mb: 2 }}
         />
 
         {/* Extraction type chips */}
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
           Тип извлечения
         </Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
           {EXTRACTION_OPTIONS.map((opt) => (
             <Chip
               key={opt.type}
@@ -203,15 +173,7 @@ export default function StringExtractor() {
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={copyAll}
-              disabled={results.length === 0}
-              sx={{ textTransform: 'none', borderRadius: 2 }}
-            >
-              {copiedAll ? 'Скопировано!' : 'Копировать все'}
-            </Button>
+            <CopyButton text={results.map((r) => r.value).join('\n')} />
             <Button
               variant="text"
               size="small"
@@ -239,19 +201,7 @@ export default function StringExtractor() {
                   key={`${item.type}-${item.value}-${index}`}
                   divider={index < results.length - 1}
                   secondaryAction={
-                    <IconButton
-                      edge="end"
-                      size="small"
-                      onClick={() => copyItem(item.value, index)}
-                      sx={{
-                        color:
-                          copiedIndex === index
-                            ? theme.palette.success.main
-                            : theme.palette.text.secondary
-                      }}
-                    >
-                      <ContentCopy fontSize="small" />
-                    </IconButton>
+                    <CopyButton text={item.value} size="small" />
                   }
                   sx={{
                     '&:hover': {

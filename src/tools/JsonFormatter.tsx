@@ -9,17 +9,15 @@ import {
   TextField,
   Alert,
   ButtonGroup,
-  Snackbar,
   Chip,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import CompressIcon from '@mui/icons-material/Compress';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface JsonError {
@@ -87,14 +85,7 @@ export default function JsonFormatter() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState<JsonError | null>(null);
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
   const [lastAction, setLastAction] = useState<string>('');
-
-  const showSnack = (msg: string) => {
-    setSnackMsg(msg);
-    setSnackOpen(true);
-  };
 
   const handleError = (e: unknown) => {
     const msg = (e as Error).message;
@@ -117,7 +108,6 @@ export default function JsonFormatter() {
       setOutput(formatted);
       setError(null);
       setLastAction('format');
-      showSnack('JSON отформатирован');
     } catch (e) {
       handleError(e);
     }
@@ -130,7 +120,6 @@ export default function JsonFormatter() {
       setOutput(minified);
       setError(null);
       setLastAction('minify');
-      showSnack('JSON минифицирован');
     } catch (e) {
       handleError(e);
     }
@@ -142,20 +131,9 @@ export default function JsonFormatter() {
       setError(null);
       setOutput('');
       setLastAction('validate');
-      showSnack('JSON валиден!');
     } catch (e) {
       handleError(e);
       setLastAction('validate');
-    }
-  };
-
-  const copyOutput = async () => {
-    if (!output) return;
-    try {
-      await navigator.clipboard.writeText(output);
-      showSnack('Скопировано в буфер обмена');
-    } catch {
-      showSnack('Не удалось скопировать');
     }
   };
 
@@ -164,7 +142,6 @@ export default function JsonFormatter() {
     setOutput('');
     setError(null);
     setLastAction('');
-    showSnack('Очищено');
   };
 
   const stats = useMemo(() => {
@@ -188,13 +165,13 @@ export default function JsonFormatter() {
   const outputLineCount = output ? output.split('\n').length : 0;
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input area */}
@@ -250,15 +227,7 @@ export default function JsonFormatter() {
             </Button>
           </ButtonGroup>
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button
-              variant="outlined"
-              startIcon={<ContentCopyIcon />}
-              onClick={copyOutput}
-              disabled={!output}
-              sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
-            >
-              Копировать
-            </Button>
+            <CopyButton text={output} />
             <Button
               variant="outlined"
               startIcon={<DeleteOutlineIcon />}
@@ -392,14 +361,6 @@ export default function JsonFormatter() {
         )}
       </Paper>
 
-      {/* Snackbar */}
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

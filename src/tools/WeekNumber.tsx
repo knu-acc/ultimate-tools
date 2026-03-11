@@ -144,7 +144,7 @@ export default function WeekNumber() {
           Номер недели по дате
         </Typography>
 
-        <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 8, sm: 6 }}>
             <TextField
               label="Дата"
@@ -172,7 +172,7 @@ export default function WeekNumber() {
         {/* Results */}
         {isValidDate && (
           <>
-            <Grid container spacing={2} sx={{ mb: 3 }}>
+            <Grid container spacing={2} sx={{ mb: 2 }}>
               <Grid size={{ xs: 6, sm: 3 }}>
                 <Paper
                   elevation={0}
@@ -275,7 +275,7 @@ export default function WeekNumber() {
               sx={{
                 borderRadius: 3,
                 p: 2,
-                mb: 3
+                mb: 2
               }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -314,7 +314,7 @@ export default function WeekNumber() {
               sx={{
                 borderRadius: 3,
                 p: 2,
-                mb: 3
+                mb: 2
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5, textAlign: 'center' }}>

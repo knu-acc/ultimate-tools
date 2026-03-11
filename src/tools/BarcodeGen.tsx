@@ -484,7 +484,7 @@ export default function BarcodeGen() {
           />
 
           {/* Show text toggle */}
-          <Box sx={{ mb: 3 }}>
+          <Box sx={{ mb: 2 }}>
             <Chip
               label={showText ? 'Текст под штрих-кодом: Вкл' : 'Текст под штрих-кодом: Выкл'}
               onClick={() => setShowText(!showText)}

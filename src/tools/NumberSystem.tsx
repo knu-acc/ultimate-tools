@@ -81,7 +81,7 @@ export default function NumberSystem() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
         <TextField
           fullWidth
           value={input}

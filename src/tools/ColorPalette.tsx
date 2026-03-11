@@ -4,8 +4,8 @@ import React, { useState, useCallback } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, useTheme, IconButton
 } from '@mui/material';
-import { ContentCopy, Refresh, Palette, Lock, LockOpen } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Refresh, Palette, Lock, LockOpen } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function hslToHex(h: number, s: number, l: number): string {
@@ -72,18 +72,10 @@ export default function ColorPalette() {
   const theme = useTheme();
   const [colors, setColors] = useState<string[]>(generatePalette(5));
   const [locked, setLocked] = useState<boolean[]>(Array(5).fill(false));
-  const [copied, setCopied] = useState<number | null>(null);
-
   const regenerate = useCallback(() => {
     const newColors = generatePalette(5);
     setColors(prev => prev.map((c, i) => locked[i] ? c : newColors[i]));
   }, [locked]);
-
-  const copyColor = (hex: string, index: number) => {
-    navigator.clipboard.writeText(hex);
-    setCopied(index);
-    setTimeout(() => setCopied(null), 1500);
-  };
 
   const toggleLock = (index: number) => {
     setLocked(prev => prev.map((v, i) => i === index ? !v : v));
@@ -98,7 +90,7 @@ export default function ColorPalette() {
           borderRadius: 3,
           overflow: 'hidden',
           height: { xs: 200, md: 280 },
-          mb: 3
+          mb: 2
         }}
       >
         {colors.map((color, i) => (
@@ -116,7 +108,6 @@ export default function ColorPalette() {
               '&:hover': { flex: 1.3 },
               position: 'relative'
             }}
-            onClick={() => copyColor(color, i)}
           >
             <Typography
               sx={{
@@ -126,8 +117,9 @@ export default function ColorPalette() {
                 mb: 0.5
               }}
             >
-              {copied === i ? '✓ Скопировано' : color}
+              {color}
             </Typography>
+            <CopyButton text={color} size="small" />
             <IconButton
               size="small"
               onClick={(e) => { e.stopPropagation(); toggleLock(i); }}
@@ -139,7 +131,7 @@ export default function ColorPalette() {
         ))}
       </Box>
 
-      <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center', mb: 2 }}>
         <Button
           variant="contained"
           startIcon={<Refresh />}
@@ -148,14 +140,7 @@ export default function ColorPalette() {
         >
           Генерировать (Пробел)
         </Button>
-        <Button
-          variant="outlined"
-          startIcon={<ContentCopy />}
-          onClick={() => navigator.clipboard.writeText(colors.join(', '))}
-          sx={{ borderRadius: 6 }}
-        >
-          Копировать все
-        </Button>
+        <CopyButton text={colors.join(', ')} />
       </Box>
 
       {/* Color details */}
@@ -211,14 +196,9 @@ export default function ColorPalette() {
         >
           {`:root {\n${colors.map((c, i) => `  --color-${i + 1}: ${c};`).join('\n')}\n}`}
         </Box>
-        <Button
-          size="small"
-          startIcon={<ContentCopy />}
-          onClick={() => navigator.clipboard.writeText(`:root {\n${colors.map((c, i) => `  --color-${i + 1}: ${c};`).join('\n')}\n}`)}
-          sx={{ mt: 1, borderRadius: 4 }}
-        >
-          Копировать CSS
-        </Button>
+        <Box sx={{ mt: 1 }}>
+          <CopyButton text={`:root {\n${colors.map((c, i) => `  --color-${i + 1}: ${c};`).join('\n')}\n}`} />
+        </Box>
       </Paper>
     </Box>
   );

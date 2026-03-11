@@ -4,8 +4,8 @@ import React, { useState, useMemo } from 'react';
 import {
   Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, Divider
 } from '@mui/material';
-import { Compare, ContentCopy } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Compare } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface DiffLine {

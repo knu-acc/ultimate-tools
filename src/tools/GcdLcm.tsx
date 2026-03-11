@@ -84,7 +84,7 @@ export default function GcdLcm() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
         <TextField
           fullWidth
           value={input}
@@ -102,7 +102,7 @@ export default function GcdLcm() {
 
       {result && (
         <>
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Paper
                 elevation={0}

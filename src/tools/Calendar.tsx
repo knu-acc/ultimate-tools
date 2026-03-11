@@ -243,7 +243,7 @@ export default function Calendar() {
           borderRadius: 3,
           p: 2,
           mt: 2,
-          backgroundColor: theme.palette.surfaceContainerLowest
+          backgroundColor: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1.5 }}>

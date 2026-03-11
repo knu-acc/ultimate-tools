@@ -119,7 +119,7 @@ export default function PregnancyCalc() {
       {results && (
         <>
           {/* Main info cards */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}

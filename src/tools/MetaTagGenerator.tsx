@@ -2,10 +2,9 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Button, useTheme, IconButton, Divider
+  Box, Typography, TextField, Paper, Grid, useTheme
 } from '@mui/material';
-import { ContentCopy, TravelExplore } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 export default function MetaTagGenerator() {
@@ -18,7 +17,6 @@ export default function MetaTagGenerator() {
   const [image, setImage] = useState('');
   const [siteName, setSiteName] = useState('');
   const [twitterHandle, setTwitterHandle] = useState('');
-  const [copied, setCopied] = useState(false);
 
   const generateMeta = (): string => {
     const lines: string[] = [];
@@ -57,12 +55,6 @@ export default function MetaTagGenerator() {
   };
 
   const output = generateMeta();
-
-  const copy = () => {
-    navigator.clipboard.writeText(output);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
 
   const titleLength = title.length;
   const descLength = description.length;
@@ -153,14 +145,7 @@ export default function MetaTagGenerator() {
             <Typography variant="subtitle2" fontWeight={600}>
               HTML-код
             </Typography>
-            <Button
-              size="small"
-              startIcon={<ContentCopy />}
-              onClick={copy}
-              sx={{ borderRadius: 4 }}
-            >
-              {copied ? 'Скопировано!' : 'Копировать'}
-            </Button>
+            <CopyButton text={output} />
           </Box>
           <Paper
             elevation={0}

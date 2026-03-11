@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Box,
   Typography,
@@ -15,13 +15,10 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  IconButton,
-  Tooltip,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface MatchInfo {
@@ -35,8 +32,6 @@ export default function RegexTester() {
   const [pattern, setPattern] = useState('');
   const [testString, setTestString] = useState('');
   const [flags, setFlags] = useState({ g: true, i: false, m: false, s: false });
-  const [copied, setCopied] = useState(false);
-
   const toggleFlag = (flag: keyof typeof flags) => {
     setFlags((prev) => ({ ...prev, [flag]: !prev[flag] }));
   };
@@ -108,14 +103,6 @@ export default function RegexTester() {
       .replace(/"/g, '&quot;');
   }
 
-  const copyRegex = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(`/${pattern}/${flagString}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch { /* ignore */ }
-  }, [pattern, flagString]);
-
   const flagDescriptions: Record<string, string> = {
     g: 'Глобальный поиск',
     i: 'Без учёта регистра',
@@ -124,11 +111,11 @@ export default function RegexTester() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Pattern Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3 }}
+        sx={{ p: 3, mb: 2 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <Typography variant="body1" sx={{ color: 'text.secondary', fontFamily: 'monospace', fontSize: '1.2rem' }}>
@@ -145,11 +132,7 @@ export default function RegexTester() {
           <Typography variant="body1" sx={{ color: 'text.secondary', fontFamily: 'monospace', fontSize: '1.2rem' }}>
             /{flagString}
           </Typography>
-          <Tooltip title={copied ? 'Скопировано!' : 'Копировать'}>
-            <IconButton onClick={copyRegex} size="small">
-              <ContentCopyIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+          <CopyButton text={`/${pattern}/${flagString}`} size="small" />
         </Box>
 
         <FormGroup row>
@@ -174,7 +157,7 @@ export default function RegexTester() {
       </Paper>
 
       {error && (
-        <Alert severity="error" sx={{ mb: 3, borderRadius: 3 }}>
+        <Alert severity="error" sx={{ mb: 2, borderRadius: 3 }}>
           {error}
         </Alert>
       )}
@@ -182,7 +165,7 @@ export default function RegexTester() {
       {/* Test String */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3 }}
+        sx={{ p: 3, mb: 2 }}
       >
         <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
           Тестовая строка
@@ -202,7 +185,7 @@ export default function RegexTester() {
       {testString && pattern && !error && (
         <Paper
           elevation={0}
-          sx={{ p: 3, mb: 3 }}
+          sx={{ p: 3, mb: 2 }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>

@@ -294,7 +294,7 @@ export default function AvatarGenerator() {
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
             Фон
           </Typography>
-          <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
+          <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <Chip
               label="Белый"
               onClick={() => setBgWhite(true)}

@@ -16,11 +16,9 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import CheckIcon from '@mui/icons-material/Check';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 // --- MD5 implementation (Web Crypto does not support MD5) ---
@@ -254,7 +252,7 @@ export default function ChecksumCalc() {
     : null;
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{

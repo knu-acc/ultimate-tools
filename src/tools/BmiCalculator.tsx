@@ -147,7 +147,7 @@ export default function BmiCalculator() {
             </Typography>
 
             {/* Gradient bar */}
-            <Box sx={{ position: 'relative', mb: 3 }}>
+            <Box sx={{ position: 'relative', mb: 2 }}>
               <Box
                 sx={{
                   height: 20,

@@ -8,17 +8,12 @@ import {
   TextField,
   Grid,
   Slider,
-  Button,
-  IconButton,
-  Tooltip,
   ToggleButton,
   ToggleButtonGroup,
   alpha,
   useTheme
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface RGB {
@@ -133,8 +128,6 @@ export default function ColorBlender() {
   const [color2, setColor2] = useState('#ef4444');
   const [steps, setSteps] = useState(5);
   const [mode, setMode] = useState<'rgb' | 'hsl'>('rgb');
-  const [copied, setCopied] = useState('');
-
   const getBlendedColors = useCallback((): string[] => {
     const c1 = hexToRgb(color1);
     const c2 = hexToRgb(color2);
@@ -154,19 +147,13 @@ export default function ColorBlender() {
 
   const gradientCSS = `background: linear-gradient(to right, ${blendedColors.join(', ')});`;
 
-  const copyToClipboard = async (text: string, label: string) => {
-    await navigator.clipboard.writeText(text);
-    setCopied(label);
-    setTimeout(() => setCopied(''), 2000);
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -296,7 +283,7 @@ export default function ColorBlender() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -321,53 +308,40 @@ export default function ColorBlender() {
             display: 'flex',
             gap: 0.5,
             flexWrap: 'wrap',
-            mb: 3
+            mb: 2
           }}
         >
           {blendedColors.map((color, index) => (
-            <Tooltip
+            <Box
               key={index}
-              title={copied === `color-${index}` ? 'Скопировано!' : `Нажмите, чтобы скопировать ${color}`}
+              sx={{
+                flex: '1 1 auto',
+                minWidth: 50,
+                textAlign: 'center'
+              }}
             >
               <Box
-                onClick={() => copyToClipboard(color, `color-${index}`)}
                 sx={{
-                  flex: '1 1 auto',
-                  minWidth: 50,
-                  cursor: 'pointer',
-                  textAlign: 'center',
-                  transition: 'transform 0.15s ease',
-                  '&:hover': { transform: 'scale(1.05)' }
+                  height: 48,
+                  backgroundColor: color,
+                  borderRadius: 1.5,
+                  mb: 0.5
                 }}
-              >
-                <Box
-                  sx={{
-                    height: 48,
-                    backgroundColor: color,
-                    borderRadius: 1.5,
-                    mb: 0.5,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  {copied === `color-${index}` && (
-                    <CheckIcon sx={{ color: '#fff', fontSize: 16, filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.5))' }} />
-                  )}
-                </Box>
+              />
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
                 <Typography
                   variant="caption"
                   sx={{
                     fontFamily: 'monospace',
                     fontSize: '0.65rem',
-                    color: 'text.secondary',
-                    display: 'block'
+                    color: 'text.secondary'
                   }}
                 >
                   {color}
                 </Typography>
               </Box>
-            </Tooltip>
+              <CopyButton text={color} size="small" />
+            </Box>
           ))}
         </Box>
 
@@ -400,14 +374,9 @@ export default function ColorBlender() {
         </Paper>
 
         {/* Copy all HEX values */}
-        <Button
-          size="small"
-          startIcon={copied === 'all' ? <CheckIcon /> : <ContentCopyIcon />}
-          onClick={() => copyToClipboard(blendedColors.join(', '), 'all')}
-          sx={{ mt: 1.5, borderRadius: 4 }}
-        >
-          {copied === 'all' ? 'Скопировано!' : 'Копировать все HEX'}
-        </Button>
+        <Box sx={{ mt: 1.5 }}>
+          <CopyButton text={blendedColors.join(', ')} />
+        </Box>
       </Paper>
     </Box>
   );

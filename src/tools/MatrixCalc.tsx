@@ -173,13 +173,13 @@ export default function MatrixCalc() {
   );
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Size selector */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -203,7 +203,7 @@ export default function MatrixCalc() {
       </Paper>
 
       {/* Matrix inputs */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Grid container spacing={2} sx={{ mb: 2 }}>
         <Grid size={{ xs: 12, sm: 6 }}>
           <MatrixInput label="\u041c\u0430\u0442\u0440\u0438\u0446\u0430 A" matrix={matA} setter={setMatA} />
         </Grid>
@@ -217,7 +217,7 @@ export default function MatrixCalc() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >

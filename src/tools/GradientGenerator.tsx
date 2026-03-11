@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, Slider, useTheme, IconButton, TextField,
+  Box, Typography, Paper, Grid, Button, Chip, Slider, useTheme, TextField,
   ToggleButton, ToggleButtonGroup
 } from '@mui/material';
-import { ContentCopy, Refresh, Add } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Refresh, Add } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 export default function GradientGenerator() {
@@ -14,19 +14,11 @@ export default function GradientGenerator() {
   const [colors, setColors] = useState(['#6750A4', '#D0BCFF']);
   const [angle, setAngle] = useState(135);
   const [type, setType] = useState<'linear' | 'radial'>('linear');
-  const [copied, setCopied] = useState(false);
-
   const gradientCSS = type === 'linear'
     ? `linear-gradient(${angle}deg, ${colors.join(', ')})`
     : `radial-gradient(circle, ${colors.join(', ')})`;
 
   const cssCode = `background: ${gradientCSS};`;
-
-  const copyCSS = () => {
-    navigator.clipboard.writeText(cssCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
 
   const randomize = () => {
     const randomColor = () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
@@ -65,7 +57,7 @@ export default function GradientGenerator() {
           height: { xs: 150, md: 200 },
           borderRadius: 3,
           background: gradientCSS,
-          mb: 3,
+          mb: 2,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
@@ -183,7 +175,7 @@ export default function GradientGenerator() {
         <Grid size={{ xs: 12, md: 6 }}>
           {/* Presets */}
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>Пресеты</Typography>
-          <Grid container spacing={1} sx={{ mb: 3 }}>
+          <Grid container spacing={1} sx={{ mb: 2 }}>
             {presets.map((preset) => (
               <Grid key={preset.name} size={4}>
                 <Paper
@@ -225,14 +217,9 @@ export default function GradientGenerator() {
               {cssCode}
             </Typography>
           </Paper>
-          <Button
-            size="small"
-            startIcon={<ContentCopy />}
-            onClick={copyCSS}
-            sx={{ mt: 1, borderRadius: 4 }}
-          >
-            {copied ? 'Скопировано!' : 'Копировать CSS'}
-          </Button>
+          <Box sx={{ mt: 1 }}>
+            <CopyButton text={cssCode} />
+          </Box>
         </Grid>
       </Grid>
     </Box>

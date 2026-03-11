@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   Box,
   Typography,
@@ -8,13 +8,11 @@ import {
   TextField,
   Grid,
   Button,
-  IconButton,
   Chip,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function formatRelative(date: Date, now: Date): string {
@@ -54,18 +52,9 @@ export default function UnixTimestamp() {
   const [tsInput, setTsInput] = useState('');
   const [dateInput, setDateInput] = useState('');
   const [timeInput, setTimeInput] = useState('');
-  const [copiedField, setCopiedField] = useState<string | null>(null);
-
   useEffect(() => {
     const timer = setInterval(() => setNow(Math.floor(Date.now() / 1000)), 1000);
     return () => clearInterval(timer);
-  }, []);
-
-  const copyToClipboard = useCallback((text: string, field: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedField(field);
-      setTimeout(() => setCopiedField(null), 1500);
-    });
   }, []);
 
   // Timestamp -> Date conversion
@@ -107,16 +96,6 @@ export default function UnixTimestamp() {
 
   const accentColor = theme.palette.primary.main;
 
-  const CopyBtn = ({ value, field }: { value: string; field: string }) => (
-    <IconButton
-      size="small"
-      onClick={() => copyToClipboard(value, field)}
-      sx={{ color: copiedField === field ? '#2e7d32' : 'text.secondary' }}
-    >
-      <ContentCopy sx={{ fontSize: 16 }} />
-    </IconButton>
-  );
-
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
       {/* Current timestamp */}
@@ -124,7 +103,7 @@ export default function UnixTimestamp() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3,
           textAlign: 'center',
           background: alpha(accentColor, 0.04)
@@ -144,12 +123,7 @@ export default function UnixTimestamp() {
           >
             {now}
           </Typography>
-          <IconButton
-            onClick={() => copyToClipboard(String(now), 'current')}
-            sx={{ color: copiedField === 'current' ? '#2e7d32' : 'text.secondary' }}
-          >
-            <ContentCopy />
-          </IconButton>
+          <CopyButton text={String(now)} />
         </Box>
         <Typography variant="caption" color="text.secondary">
           {new Date(now * 1000).toLocaleString('ru-RU')}
@@ -164,11 +138,9 @@ export default function UnixTimestamp() {
             label={`Мс: ${now * 1000}`}
             size="small"
             variant="outlined"
-            onClick={() => copyToClipboard(String(now * 1000), 'currentMs')}
             sx={{
-              cursor: 'pointer',
               borderColor: theme.palette.divider,
-              color: copiedField === 'currentMs' ? '#2e7d32' : 'text.secondary'
+              color: 'text.secondary'
             }}
           />
         </Box>
@@ -179,7 +151,7 @@ export default function UnixTimestamp() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -243,7 +215,7 @@ export default function UnixTimestamp() {
                     {item.value}
                   </Typography>
                 </Box>
-                <CopyBtn value={item.value} field={item.field} />
+                <CopyButton text={item.value} />
               </Paper>
             ))}
           </Box>
@@ -325,7 +297,7 @@ export default function UnixTimestamp() {
                   <Typography variant="h6" sx={{ fontWeight: 700, color: '#2e7d32', fontFamily: 'monospace' }}>
                     {dateResult.ts}
                   </Typography>
-                  <CopyBtn value={String(dateResult.ts)} field="dateSec" />
+                  <CopyButton text={String(dateResult.ts)} />
                 </Box>
               </Paper>
             </Grid>
@@ -347,7 +319,7 @@ export default function UnixTimestamp() {
                   <Typography variant="h6" sx={{ fontWeight: 700, color: '#1976d2', fontFamily: 'monospace' }}>
                     {dateResult.tsMs}
                   </Typography>
-                  <CopyBtn value={String(dateResult.tsMs)} field="dateMs" />
+                  <CopyButton text={String(dateResult.tsMs)} />
                 </Box>
               </Paper>
             </Grid>

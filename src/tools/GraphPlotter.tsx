@@ -334,7 +334,7 @@ export default function GraphPlotter() {
   }, [draw]);
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{

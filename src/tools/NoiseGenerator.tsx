@@ -175,7 +175,7 @@ export default function NoiseGenerator() {
       {/* Noise type selector */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, borderRadius: 3 }}
+        sx={{ p: 3, mb: 2, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
           Тип шума
@@ -218,7 +218,7 @@ export default function NoiseGenerator() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3,
           backgroundColor: alpha(theme.palette.background.default, 0.5)
         }}
@@ -256,7 +256,7 @@ export default function NoiseGenerator() {
       {/* Controls */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, borderRadius: 3 }}
+        sx={{ p: 3, mb: 2, borderRadius: 3 }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>

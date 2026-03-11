@@ -9,7 +9,6 @@ import {
   Slider,
   Chip,
   LinearProgress,
-  Snackbar,
   useTheme,
   alpha
 } from '@mui/material';
@@ -138,7 +137,7 @@ export default function PasswordGenerator() {
 
         {/* Strength bar */}
         {strength && (
-          <Box sx={{ mb: 3 }}>
+          <Box sx={{ mb: 2 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
               <Typography variant="body2" color="text.secondary">
                 Надёжность
@@ -256,7 +255,7 @@ export default function PasswordGenerator() {
               <Chip
                 key={`${pw}-${i}`}
                 label={pw.length > 40 ? pw.slice(0, 37) + '...' : pw}
-                onClick={() => copyText(pw)}
+                onClick={() => navigator.clipboard.writeText(pw)}
                 variant="outlined"
                 size="small"
                 sx={{
@@ -275,14 +274,6 @@ export default function PasswordGenerator() {
         </Paper>
       )}
 
-      {/* Snackbar */}
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

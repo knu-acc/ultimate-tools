@@ -194,7 +194,7 @@ export default function LengthConverter() {
                   p: 1.5,
                   borderRadius: 2,
                   textAlign: 'center',
-                  background: theme.palette.surfaceContainerLowest
+                  background: theme.palette.surfaceContainerLow
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: 'monospace', fontSize: '0.8rem' }}>

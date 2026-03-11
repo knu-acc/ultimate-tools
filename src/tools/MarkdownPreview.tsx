@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme, IconButton, Button, Divider
+  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme, IconButton
 } from '@mui/material';
-import { ContentCopy, FormatBold, FormatItalic, Code, FormatListBulleted, Title } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { FormatBold, FormatItalic, Code, FormatListBulleted, Title } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const defaultMd = `# Заголовок 1
@@ -152,16 +152,7 @@ export default function MarkdownPreview() {
             <Typography variant="subtitle2" fontWeight={600}>
               Превью
             </Typography>
-            <IconButton
-              size="small"
-              onClick={() => {
-                const html = parseMarkdown(markdown);
-                navigator.clipboard.writeText(html);
-              }}
-              title="Копировать HTML"
-            >
-              <ContentCopy fontSize="small" />
-            </IconButton>
+            <CopyButton text={parseMarkdown(markdown)} />
           </Box>
           <Paper
             elevation={0}

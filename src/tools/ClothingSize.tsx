@@ -171,7 +171,7 @@ export default function ClothingSize() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Настройки */}
       <Paper
         elevation={0}
@@ -274,7 +274,7 @@ export default function ClothingSize() {
       {/* Результат конвертации */}
       {matchedRow && (
         <>
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             {(Object.keys(sizeSystemLabels) as SizeSystem[]).map((sys) => (
               <Grid size={{ xs: 6, sm: 4, md: 2.4 }} key={sys}>
                 <Paper

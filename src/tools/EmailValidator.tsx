@@ -85,7 +85,7 @@ export default function EmailValidator() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Tabs */}
-      <Paper elevation={0} sx={{ mb: 3, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ mb: 2, borderRadius: 3 }}>
         <Tabs
           value={tab}
           onChange={(_, v) => setTab(v)}
@@ -106,7 +106,7 @@ export default function EmailValidator() {
       {/* Single Mode */}
       {tab === 0 && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
             <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
               Введите email для проверки
             </Typography>
@@ -195,7 +195,7 @@ export default function EmailValidator() {
       {/* Batch Mode */}
       {tab === 1 && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
             <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
               Введите email-адреса (по одному на строку, или через запятую/точку с запятой)
             </Typography>

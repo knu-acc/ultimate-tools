@@ -3,10 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Box, Typography, TextField, Button, Paper, Grid, Slider,
-  useTheme, IconButton, Select, MenuItem, FormControl, InputLabel
+  useTheme, Select, MenuItem, FormControl, InputLabel
 } from '@mui/material';
-import { ContentCopy, Download, QrCode2 } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Download, QrCode2 } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 import { generateQR } from './qrcore';
@@ -58,19 +58,6 @@ export default function QrGenerator() {
     link.download = 'qrcode.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
-  };
-
-  const handleCopy = async () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    try {
-      const blob = await new Promise<Blob>((resolve) => {
-        canvas.toBlob((b) => { if (b) resolve(b); }, 'image/png');
-      });
-      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-    } catch {
-      // fallback
-    }
   };
 
   return (
@@ -162,14 +149,7 @@ export default function QrGenerator() {
               >
                 Скачать PNG
               </Button>
-              <Button
-                variant="outlined"
-                startIcon={<ContentCopy />}
-                onClick={handleCopy}
-                sx={{ borderRadius: 5 }}
-              >
-                Копировать
-              </Button>
+              <CopyButton text={text} />
             </Box>
           </Paper>
         </Grid>

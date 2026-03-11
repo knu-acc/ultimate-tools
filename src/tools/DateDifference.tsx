@@ -120,7 +120,7 @@ export default function DateDifference() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -196,7 +196,7 @@ export default function DateDifference() {
 
       {result && (
         <Paper elevation={0} sx={{ p: 3 }}>
-          <Box sx={{ mb: 3, textAlign: 'center' }}>
+          <Box sx={{ mb: 2, textAlign: 'center' }}>
             <Chip
               label={result.readable}
               color="primary"
@@ -204,7 +204,7 @@ export default function DateDifference() {
             />
           </Box>
 
-          <Divider sx={{ mb: 3 }} />
+          <Divider sx={{ mb: 2 }} />
 
           <Grid container spacing={2}>
             {resultItems.map((item) => (

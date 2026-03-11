@@ -213,7 +213,7 @@ export default function PhoneValidator() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
           Введите номер телефона
         </Typography>

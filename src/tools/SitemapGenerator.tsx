@@ -16,12 +16,10 @@ import {
   alpha,
   useTheme
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface SitemapEntry {
@@ -41,7 +39,6 @@ export default function SitemapGenerator() {
   const [priority, setPriority] = useState(0.5);
   const [bulkText, setBulkText] = useState('');
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [copied, setCopied] = useState(false);
   const [nextId, setNextId] = useState(1);
 
   const addEntry = () => {
@@ -131,20 +128,14 @@ export default function SitemapGenerator() {
 
   const xml = generateXml();
 
-  const copyXml = async () => {
-    await navigator.clipboard.writeText(xml);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Add URL form */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -247,7 +238,7 @@ export default function SitemapGenerator() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -284,7 +275,7 @@ export default function SitemapGenerator() {
           elevation={0}
           sx={{
             p: 3,
-            mb: 3,
+            mb: 2,
             borderRadius: 3
           }}
         >
@@ -395,14 +386,9 @@ export default function SitemapGenerator() {
           </Typography>
         </Paper>
 
-        <Button
-          size="small"
-          startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
-          onClick={copyXml}
-          sx={{ mt: 1.5, borderRadius: 4 }}
-        >
-          {copied ? 'Скопировано!' : 'Копировать XML'}
-        </Button>
+        <Box sx={{ mt: 1.5 }}>
+          <CopyButton text={xml} />
+        </Box>
       </Paper>
     </Box>
   );

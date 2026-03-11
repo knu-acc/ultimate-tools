@@ -9,7 +9,6 @@ import {
   Grid,
   Button,
   IconButton,
-  Tooltip,
   Slider,
   MenuItem,
   ToggleButton,
@@ -17,12 +16,10 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type FieldType = 'firstName' | 'lastName' | 'email' | 'phone' | 'number' | 'boolean' | 'date' | 'uuid' | 'city' | 'country' | 'company';
@@ -175,7 +172,6 @@ export default function MockdataGenerator() {
   const [count, setCount] = useState(10);
   const [format, setFormat] = useState<'json' | 'csv'>('json');
   const [output, setOutput] = useState('');
-  const [copied, setCopied] = useState(false);
   const nextId = useState(5)[0];
   const idRef = { current: nextId };
 
@@ -209,14 +205,8 @@ export default function MockdataGenerator() {
     }
   }, [fields, count, format]);
 
-  const copyOutput = async () => {
-    await navigator.clipboard.writeText(output);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
-    <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
@@ -350,18 +340,7 @@ export default function MockdataGenerator() {
             <Typography variant="subtitle2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
               Результат
             </Typography>
-            <Tooltip title={copied ? 'Скопировано!' : 'Копировать'}>
-              <Button
-                size="small"
-                variant="outlined"
-                startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
-                onClick={copyOutput}
-                color={copied ? 'success' : 'primary'}
-                sx={{ borderRadius: 2 }}
-              >
-                {copied ? 'Скопировано' : 'Копировать'}
-              </Button>
-            </Tooltip>
+            <CopyButton text={output} />
           </Box>
           <TextField
             fullWidth

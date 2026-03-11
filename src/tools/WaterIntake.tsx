@@ -177,7 +177,7 @@ export default function WaterIntake() {
       {waterMl !== null && totalGlasses !== null && (
         <>
           {/* Daily recommendation */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Paper
                 elevation={0}

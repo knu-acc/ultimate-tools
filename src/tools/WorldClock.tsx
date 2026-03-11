@@ -96,14 +96,14 @@ export default function WorldClock() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Box
         sx={{
           p: { xs: 1, md: 0 },
         }}
       >
         {/* Search and add */}
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2 }}>
           <TextField
             label="Поиск города"
             value={search}

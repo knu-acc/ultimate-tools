@@ -105,11 +105,11 @@ export default function PaperSize() {
   const scaleBase = 200;
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Controls */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, borderRadius: 3 }}
+        sx={{ p: 2, mb: 2, borderRadius: 3 }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
@@ -154,7 +154,7 @@ export default function PaperSize() {
       {selectedEntries.length > 0 && (
         <Paper
           elevation={0}
-          sx={{ p: 3, mb: 3, borderRadius: 3 }}
+          sx={{ p: 3, mb: 2, borderRadius: 3 }}
         >
           <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
             Визуальное сравнение (нажмите на строку для выбора)

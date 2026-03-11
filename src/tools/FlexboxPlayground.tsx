@@ -4,16 +4,13 @@ import { useState } from 'react';
 import {
   Box,
   Typography,
-  Button,
   Paper,
   TextField,
-  Snackbar,
   Chip,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const ITEM_COLORS = ['#1976d2', '#388e3c', '#f57c00', '#7b1fa2', '#c62828'];
@@ -40,14 +37,6 @@ export default function FlexboxPlayground() {
   const [itemProps, setItemProps] = useState<ItemProps[]>(
     Array(5).fill(null).map(() => ({ flexGrow: 0, flexShrink: 1, flexBasis: 'auto' }))
   );
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
-
-  const showSnack = (msg: string) => {
-    setSnackMsg(msg);
-    setSnackOpen(true);
-  };
-
   const updateItemProp = (index: number, prop: keyof ItemProps, value: string | number) => {
     setItemProps((prev) => {
       const next = [...prev];
@@ -66,15 +55,6 @@ export default function FlexboxPlayground() {
     });
 
     return css;
-  };
-
-  const copyCss = async () => {
-    try {
-      await navigator.clipboard.writeText(generateCss());
-      showSnack('CSS скопирован в буфер обмена');
-    } catch {
-      showSnack('Не удалось скопировать');
-    }
   };
 
   const renderChipRow = (
@@ -105,13 +85,13 @@ export default function FlexboxPlayground() {
   );
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Container Controls */}
@@ -263,14 +243,7 @@ export default function FlexboxPlayground() {
           <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
             Сгенерированный CSS
           </Typography>
-          <Button
-            size="small"
-            startIcon={<ContentCopyIcon />}
-            onClick={copyCss}
-            sx={{ textTransform: 'none', fontSize: '0.75rem' }}
-          >
-            Копировать
-          </Button>
+          <CopyButton text={generateCss()} />
         </Box>
         <Paper
           elevation={0}
@@ -298,13 +271,6 @@ export default function FlexboxPlayground() {
         </Paper>
       </Paper>
 
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

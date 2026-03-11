@@ -2,10 +2,10 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, useTheme
+  Box, Typography, Paper, Grid, Chip, TextField, useTheme
 } from '@mui/material';
-import { ContentCopy, Palette } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Palette } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function hslToRgb(h: number, s: number, l: number): [number, number, number] {
@@ -98,7 +98,6 @@ export default function ColorWheel() {
   const theme = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [selectedHsl, setSelectedHsl] = useState<[number, number, number]>([0, 100, 50]);
-  const [copied, setCopied] = useState<string | null>(null);
   const wheelSize = 280;
 
   const [h, s, l] = selectedHsl;
@@ -144,12 +143,6 @@ export default function ColorWheel() {
       setSelectedHsl([Math.round(angle), Math.round(sat), light]);
     }
   }, [wheelSize]);
-
-  const copyValue = (val: string, label: string) => {
-    navigator.clipboard.writeText(val);
-    setCopied(label);
-    setTimeout(() => setCopied(null), 1500);
-  };
 
   const colorSchemes = [
     { label: 'Комплементарный', colors: [hex, complementary] },
@@ -256,14 +249,7 @@ export default function ColorWheel() {
                     slotProps={{ input: { readOnly: true } }}
                     sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' } }}
                   />
-                  <Button
-                    size="small"
-                    onClick={() => copyValue(value, label)}
-                    startIcon={<ContentCopy />}
-                    sx={{ borderRadius: 4, minWidth: 'auto', whiteSpace: 'nowrap' }}
-                  >
-                    {copied === label ? 'Скопировано!' : 'Копировать'}
-                  </Button>
+                  <CopyButton text={value} />
                 </Box>
               ))}
             </Box>
@@ -333,7 +319,6 @@ export default function ColorWheel() {
                       cursor: 'pointer',
                       '&:hover': { opacity: 0.85 }
                     }}
-                    onClick={() => copyValue(c, `${label}-${i}`)}
                   >
                     <Typography sx={{ color: getContrastColor(c), fontSize: '0.65rem', fontWeight: 600 }}>
                       {c}
@@ -341,19 +326,19 @@ export default function ColorWheel() {
                   </Box>
                 ))}
               </Box>
-              <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
+              <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', alignItems: 'center' }}>
                 {colors.map((c, i) => (
-                  <Chip
-                    key={i}
-                    label={copied === `${label}-${i}` ? 'Скопировано!' : c}
-                    size="small"
-                    onClick={() => copyValue(c, `${label}-${i}`)}
-                    sx={{
-                      cursor: 'pointer',
-                      fontFamily: 'monospace',
-                      fontSize: '0.75rem'
-                    }}
-                  />
+                  <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
+                    <Chip
+                      label={c}
+                      size="small"
+                      sx={{
+                        fontFamily: 'monospace',
+                        fontSize: '0.75rem'
+                      }}
+                    />
+                    <CopyButton text={c} size="small" />
+                  </Box>
                 ))}
               </Box>
             </Paper>

@@ -107,11 +107,11 @@ export default function ScreenResolution() {
   });
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Current screen */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, borderRadius: 3 }}
+        sx={{ p: 3, mb: 2, borderRadius: 3 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <MonitorIcon color="primary" />
@@ -170,7 +170,7 @@ export default function ScreenResolution() {
       {/* Search & filters */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, borderRadius: 3 }}
+        sx={{ p: 2, mb: 2, borderRadius: 3 }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>

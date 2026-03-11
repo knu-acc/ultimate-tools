@@ -10,10 +10,8 @@ import {
   MenuItem,
   Grid,
   Chip,
-  IconButton,
   useTheme } from '@mui/material';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type UnitKey =
@@ -65,8 +63,6 @@ export default function DataConverter() {
   const [input, setInput] = useState('1');
   const [unit, setUnit] = useState<UnitKey>('gb');
   const [mode, setMode] = useState<'decimal' | 'binary'>('decimal');
-  const [copied, setCopied] = useState('');
-
   const numericInput = parseFloat(input) || 0;
   const bits = UNITS[unit].toBits(numericInput);
   const displayKeys = mode === 'decimal' ? DECIMAL_KEYS : BINARY_KEYS;
@@ -80,27 +76,19 @@ export default function DataConverter() {
       value: formatValue(UNITS[k].fromBits(bits))
     }));
 
-  const handleCopy = async (key: string, value: string) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(key);
-      setTimeout(() => setCopied(''), 1500);
-    } catch { /* ignore */ }
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           background: theme.palette.surfaceContainerLow,
           borderRadius: 4
         }}
       >
         {/* Mode toggle */}
-        <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
+        <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
           <Chip
             label="Десятичная (×1000)"
             variant={mode === 'decimal' ? 'filled' : 'outlined'}
@@ -124,7 +112,7 @@ export default function DataConverter() {
         </Box>
 
         {/* Input row */}
-        <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap' }}>
           <TextField
             label="Значение"
             value={input}
@@ -159,7 +147,7 @@ export default function DataConverter() {
             label={`${formatValue(numericInput)} ${UNITS[unit].shortLabel} = ${formatValue(bits)} бит`}
             variant="outlined"
             color="info"
-            sx={{ mb: 3, fontFamily: 'monospace', borderRadius: 3 }}
+            sx={{ mb: 2, fontFamily: 'monospace', borderRadius: 3 }}
           />
         )}
 
@@ -189,16 +177,7 @@ export default function DataConverter() {
                   <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                     {r.label}
                   </Typography>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleCopy(r.key, r.value)}
-                    sx={{
-                      color: copied === r.key ? theme.palette.success.main : 'text.secondary',
-                      transition: 'color 200ms'
-                    }}
-                  >
-                    <ContentCopy sx={{ fontSize: 16 }} />
-                  </IconButton>
+                  <CopyButton text={r.value} size="small" />
                 </Box>
                 <Typography
                   variant="body1"
@@ -211,11 +190,6 @@ export default function DataConverter() {
                 >
                   {r.value} {r.shortLabel}
                 </Typography>
-                {copied === r.key && (
-                  <Typography variant="caption" sx={{ color: theme.palette.success.main }}>
-                    Скопировано!
-                  </Typography>
-                )}
               </Paper>
             </Grid>
           ))}

@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, IconButton
+  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme
 } from '@mui/material';
-import { ContentCopy, Refresh, Palette, Delete } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Refresh, Palette, Delete } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type ColorMode = 'any' | 'pastel' | 'dark' | 'vibrant';
@@ -75,18 +75,10 @@ export default function RandomColor() {
   const [mode, setMode] = useState<ColorMode>('any');
   const [current, setCurrent] = useState<GeneratedColor | null>(null);
   const [history, setHistory] = useState<GeneratedColor[]>([]);
-  const [copied, setCopied] = useState<string>('');
-
   const generate = () => {
     const color = generateRandomColor(mode);
     setCurrent(color);
     setHistory(prev => [color, ...prev].slice(0, 20));
-  };
-
-  const copyValue = (value: string) => {
-    navigator.clipboard.writeText(value);
-    setCopied(value);
-    setTimeout(() => setCopied(''), 1500);
   };
 
   const modes: { key: ColorMode; label: string }[] = [
@@ -181,20 +173,9 @@ export default function RandomColor() {
                         {item.value}
                       </Typography>
                     </Box>
-                    <IconButton
-                      size="small"
-                      onClick={() => copyValue(item.value)}
-                      sx={{ color: theme.palette.text.secondary }}
-                    >
-                      <ContentCopy fontSize="small" />
-                    </IconButton>
+                    <CopyButton text={item.value} size="small" />
                   </Box>
                 ))}
-                {copied && (
-                  <Typography variant="caption" color="primary" sx={{ mt: 0.5 }}>
-                    Скопировано: {copied}
-                  </Typography>
-                )}
               </Box>
             </Paper>
           )}
@@ -241,7 +222,7 @@ export default function RandomColor() {
                       transition: 'transform 0.2s',
                       '&:hover': { transform: 'scale(1.05)' }
                     }}
-                    onClick={() => copyValue(color.hex)}
+                    onClick={() => navigator.clipboard.writeText(color.hex)}
                   >
                     <Box sx={{ height: 50, bgcolor: color.hex }} />
                     <Box sx={{ p: 0.5, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>

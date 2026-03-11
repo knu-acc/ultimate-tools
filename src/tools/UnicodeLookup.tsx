@@ -5,8 +5,8 @@ import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme,
   IconButton, Tooltip, Dialog, DialogTitle, DialogContent
 } from '@mui/material';
-import { ContentCopy, Search, History, Close } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Search, History, Close } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface CharInfo {
@@ -109,7 +109,6 @@ export default function UnicodeLookup() {
   const [selectedCategory, setSelectedCategory] = useState<string>('arrows');
   const [selectedChar, setSelectedChar] = useState<CharInfo | null>(null);
   const [recentChars, setRecentChars] = useState<CharInfo[]>([]);
-  const [copied, setCopied] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
 
   const categoryChars = useMemo(() => {
@@ -189,12 +188,6 @@ export default function UnicodeLookup() {
     });
   };
 
-  const copyText = (text: string, label: string) => {
-    navigator.clipboard.writeText(text).catch(() => {});
-    setCopied(label);
-    setTimeout(() => setCopied(null), 1500);
-  };
-
   return (
     <Box>
       {/* Search */}
@@ -213,7 +206,7 @@ export default function UnicodeLookup() {
 
       {/* Search results */}
       {searchResults && (
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
             Результаты поиска
           </Typography>
@@ -288,7 +281,7 @@ export default function UnicodeLookup() {
         sx={{
           p: 2,
           borderRadius: 3,
-          mb: 3
+          mb: 2
         }}
       >
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -366,18 +359,13 @@ export default function UnicodeLookup() {
               </IconButton>
             </DialogTitle>
             <DialogContent>
-              <Box sx={{ textAlign: 'center', mb: 3 }}>
+              <Box sx={{ textAlign: 'center', mb: 2 }}>
                 <Typography variant="h1" sx={{ fontSize: '4rem' }}>
                   {selectedChar.char}
                 </Typography>
-                <Button
-                  size="small"
-                  startIcon={<ContentCopy />}
-                  onClick={() => copyText(selectedChar.char, 'char')}
-                  sx={{ borderRadius: 4, mt: 1 }}
-                >
-                  {copied === 'char' ? 'Скопировано!' : 'Копировать символ'}
-                </Button>
+                <Box sx={{ mt: 1 }}>
+                  <CopyButton text={selectedChar.char} tooltip="Копировать символ" />
+                </Box>
               </Box>
 
               {[
@@ -402,13 +390,7 @@ export default function UnicodeLookup() {
                     <Typography variant="caption" color="text.secondary">{row.label}</Typography>
                     <Typography variant="body2" fontFamily="monospace" fontWeight={600}>{row.value}</Typography>
                   </Box>
-                  <Tooltip title={copied === row.key ? 'Скопировано!' : 'Копировать'}>
-                    <IconButton size="small" onClick={() => copyText(row.value, row.key)}>
-                      <ContentCopy fontSize="small" sx={{
-                        color: copied === row.key ? theme.palette.success.main : theme.palette.text.secondary
-                      }} />
-                    </IconButton>
-                  </Tooltip>
+                  <CopyButton text={row.value} />
                 </Box>
               ))}
             </DialogContent>

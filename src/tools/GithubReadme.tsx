@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Typography,
@@ -10,18 +10,17 @@ import {
   Button,
   Chip,
   IconButton,
-  Tooltip,
   Switch,
   FormControlLabel,
   MenuItem,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import CheckIcon from '@mui/icons-material/Check';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type LicenseType = 'MIT' | 'Apache-2.0' | 'GPL-3.0' | 'BSD-3-Clause' | 'ISC' | 'Unlicense';
@@ -206,8 +205,6 @@ export default function GithubReadme() {
   const [techInput, setTechInput] = useState('');
   const [featureInput, setFeatureInput] = useState('');
   const [stepInput, setStepInput] = useState('');
-  const [copied, setCopied] = useState(false);
-
   const updateField = <K extends keyof ReadmeState>(key: K, value: ReadmeState[K]) => {
     setState((prev) => ({ ...prev, [key]: value }));
   };
@@ -248,13 +245,6 @@ export default function GithubReadme() {
   const applyPreset = (preset: PresetType) => {
     setState({ ...defaultState, ...presets[preset] });
   };
-
-  const copyReadme = useCallback(async () => {
-    const md = generateReadme(state);
-    await navigator.clipboard.writeText(md);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }, [state]);
 
   const markdown = generateReadme(state);
 
@@ -462,18 +452,7 @@ export default function GithubReadme() {
               <Typography variant="subtitle2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                 Предпросмотр Markdown
               </Typography>
-              <Tooltip title={copied ? 'Скопировано!' : 'Копировать README'}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
-                  onClick={copyReadme}
-                  color={copied ? 'success' : 'primary'}
-                  sx={{ borderRadius: 2 }}
-                >
-                  {copied ? 'Скопировано' : 'Копировать'}
-                </Button>
-              </Tooltip>
+              <CopyButton text={markdown} />
             </Box>
             <Box
               sx={{

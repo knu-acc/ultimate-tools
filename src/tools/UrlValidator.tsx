@@ -11,10 +11,9 @@ import {
   useTheme,
   IconButton
 } from '@mui/material';
-import ContentCopy from '@mui/icons-material/ContentCopy';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface UrlParts {
@@ -66,15 +65,8 @@ function parseUrl(input: string): UrlParts | null {
 export default function UrlValidator() {
   const theme = useTheme();
   const [url, setUrl] = useState('');
-  const [copied, setCopied] = useState<string | null>(null);
 
   const result = useMemo(() => parseUrl(url), [url]);
-
-  const handleCopy = (text: string, label: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(label);
-    setTimeout(() => setCopied(null), 1500);
-  };
 
   const parts: { label: string; value: string; key: string }[] = result && result.valid
     ? [
@@ -91,7 +83,7 @@ export default function UrlValidator() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
           Введите URL для анализа
         </Typography>
@@ -137,7 +129,7 @@ export default function UrlValidator() {
 
       {/* URL Parts */}
       {result && result.valid && (
-        <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
+        <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
           <Typography variant="h6" sx={{ mb: 2 }}>
             Компоненты URL
           </Typography>
@@ -168,13 +160,7 @@ export default function UrlValidator() {
                   {part.value}
                 </Typography>
                 {part.value && !part.value.startsWith('(') && (
-                  <IconButton
-                    size="small"
-                    onClick={() => handleCopy(part.value, part.key)}
-                    sx={{ color: copied === part.key ? 'success.main' : 'text.disabled' }}
-                  >
-                    <ContentCopy fontSize="small" />
-                  </IconButton>
+                  <CopyButton text={part.value} />
                 )}
               </Box>
             ))}
@@ -236,13 +222,7 @@ export default function UrlValidator() {
                     >
                       {key}
                     </Typography>
-                    <IconButton
-                      size="small"
-                      onClick={() => handleCopy(key, `key-${i}`)}
-                      sx={{ color: copied === `key-${i}` ? 'success.main' : 'text.disabled', ml: 0.5 }}
-                    >
-                      <ContentCopy sx={{ fontSize: 14 }} />
-                    </IconButton>
+                    <CopyButton text={key} />
                   </Box>
                 </Grid>
                 <Grid size={7}>
@@ -261,13 +241,7 @@ export default function UrlValidator() {
                     >
                       {decodeURIComponent(value)}
                     </Typography>
-                    <IconButton
-                      size="small"
-                      onClick={() => handleCopy(value, `val-${i}`)}
-                      sx={{ color: copied === `val-${i}` ? 'success.main' : 'text.disabled', ml: 0.5 }}
-                    >
-                      <ContentCopy sx={{ fontSize: 14 }} />
-                    </IconButton>
+                    <CopyButton text={value} />
                   </Box>
                 </Grid>
               </Grid>

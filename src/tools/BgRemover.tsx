@@ -184,7 +184,7 @@ export default function BgRemover() {
   }, [resultUrl, drawImageOnCanvas]);
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <input
         ref={fileInputRef}
         type="file"
@@ -233,7 +233,7 @@ export default function BgRemover() {
 
       {originalFile && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <ColorLensIcon /> Настройки удаления фона
             </Typography>
@@ -311,7 +311,7 @@ export default function BgRemover() {
           </Paper>
 
           {/* Info */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Paper
                 elevation={0}
@@ -342,7 +342,7 @@ export default function BgRemover() {
           </Grid>
 
           {/* Source canvas - clickable */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
               Исходное изображение (кликните для выбора цвета фона)
             </Typography>

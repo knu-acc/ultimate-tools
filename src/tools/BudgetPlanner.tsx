@@ -84,13 +84,13 @@ export default function BudgetPlanner() {
   return (
     <Box sx={{ maxWidth: 720, mx: 'auto' }}>
       {/* Header with currency */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h6" fontWeight={600}>Планировщик бюджета</Typography>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
 
       {/* Summary cards — always visible */}
-      <Grid container spacing={1.5} sx={{ mb: 3 }}>
+      <Grid container spacing={1.5} sx={{ mb: 2 }}>
         {summaryCards.map(card => (
           <Grid key={card.label} size={{ xs: 4 }}>
             <Paper
@@ -119,7 +119,7 @@ export default function BudgetPlanner() {
       </Grid>
 
       {/* Income */}
-      <Paper elevation={1} sx={{ p: 2.5, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLowest }}>
+      <Paper elevation={1} sx={{ p: 2.5, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box sx={{ fontSize: '1.1rem' }}>💰</Box>
@@ -180,7 +180,7 @@ export default function BudgetPlanner() {
       </Paper>
 
       {/* Expenses */}
-      <Paper elevation={1} sx={{ p: 2.5, mb: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLowest }}>
+      <Paper elevation={1} sx={{ p: 2.5, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box sx={{ fontSize: '1.1rem' }}>💸</Box>

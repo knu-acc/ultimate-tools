@@ -15,8 +15,7 @@ import {
   FormControl,
   InputLabel,
   useTheme } from '@mui/material';
-import { ContentCopy, Download } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { Download, ContentCopy } from '@mui/icons-material';
 
 
 type QrMode = 'url' | 'text' | 'wifi' | 'vcard';
@@ -149,7 +148,7 @@ export default function QrCodeGen() {
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
             Тип содержимого
           </Typography>
-          <Box sx={{ display: 'flex', gap: 1, mb: 3, flexWrap: 'wrap' }}>
+          <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             {modes.map((m) => (
               <Chip
                 key={m.value}

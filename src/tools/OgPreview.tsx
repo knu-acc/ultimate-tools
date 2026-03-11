@@ -7,18 +7,12 @@ import {
   Paper,
   TextField,
   Grid,
-  Button,
-  IconButton,
-  Tooltip,
-  Chip,
   MenuItem,
   alpha,
   useTheme
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 export default function OgPreview() {
@@ -29,7 +23,6 @@ export default function OgPreview() {
   const [url, setUrl] = useState('');
   const [ogType, setOgType] = useState('website');
   const [twitterCard, setTwitterCard] = useState('summary_large_image');
-  const [copied, setCopied] = useState(false);
 
   const titleWarning = title.length > 60;
   const descWarning = description.length > 155;
@@ -54,20 +47,14 @@ export default function OgPreview() {
     `<meta name="twitter:image" content="${imageUrl}" />`,
   ].join('\n');
 
-  const copyMeta = async () => {
-    await navigator.clipboard.writeText(metaTags);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input fields */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3
         }}
       >
@@ -168,7 +155,7 @@ export default function OgPreview() {
       </Paper>
 
       {/* Preview cards */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
+      <Grid container spacing={3} sx={{ mb: 2 }}>
         {/* Facebook preview */}
         <Grid size={{ xs: 12, sm: 6 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -467,14 +454,6 @@ export default function OgPreview() {
             {metaTags}
           </Typography>
         </Paper>
-        <Button
-          size="small"
-          startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
-          onClick={copyMeta}
-          sx={{ mt: 1.5, borderRadius: 4 }}
-        >
-          {copied ? 'Скопировано!' : 'Копировать мета-теги'}
-        </Button>
       </Paper>
     </Box>
   );

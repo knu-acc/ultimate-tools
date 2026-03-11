@@ -4,8 +4,8 @@ import React, { useState, useMemo } from 'react';
 import {
   Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme, Divider
 } from '@mui/material';
-import { ContentCopy, CheckCircle, Error as ErrorIcon } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CheckCircle, Error as ErrorIcon } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function base64UrlDecode(str: string): string {

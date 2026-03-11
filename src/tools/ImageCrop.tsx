@@ -281,7 +281,7 @@ export default function ImageCrop() {
   }, [cropRect, drawCropOverlay]);
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <input
         ref={fileInputRef}
@@ -332,7 +332,7 @@ export default function ImageCrop() {
       {originalFile && (
         <>
           {/* Controls */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CropIcon /> Параметры обрезки
             </Typography>
@@ -419,7 +419,7 @@ export default function ImageCrop() {
           </Paper>
 
           {/* Info */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
@@ -470,7 +470,7 @@ export default function ImageCrop() {
           </Grid>
 
           {/* Crop Canvas */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CropIcon /> Выберите область
             </Typography>

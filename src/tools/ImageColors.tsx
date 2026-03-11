@@ -13,11 +13,11 @@ import {
   alpha
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
 import PaletteIcon from '@mui/icons-material/Palette';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import CheckIcon from '@mui/icons-material/Check';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface ColorInfo {
@@ -86,12 +86,6 @@ export default function ImageColors() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const copyText = useCallback((text: string, id: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedColor(id);
-    setTimeout(() => setCopiedColor(null), 2000);
-  }, []);
-
   const processImage = useCallback((file: File) => {
     const url = URL.createObjectURL(file);
     setImageUrl(url);
@@ -150,21 +144,27 @@ export default function ImageColors() {
     setColors([]);
   }, [imageUrl]);
 
+  const copyText = useCallback(async (text: string, key: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopiedColor(key);
+    setTimeout(() => setCopiedColor(null), 2000);
+  }, []);
+
   const generateCssVariables = useCallback(() => {
     return colors
       .map((c, i) => `  --color-${i + 1}: ${c.hex};`)
       .join('\n');
   }, [colors]);
 
-  const copyCssVars = useCallback(() => {
+  const copyCssVars = useCallback(async () => {
     const css = `:root {\n${generateCssVariables()}\n}`;
-    navigator.clipboard.writeText(css);
+    await navigator.clipboard.writeText(css);
     setCopiedCss(true);
     setTimeout(() => setCopiedCss(false), 2000);
   }, [generateCssVariables]);
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <input
         ref={fileInputRef}

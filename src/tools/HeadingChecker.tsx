@@ -120,11 +120,11 @@ export default function HeadingChecker() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, borderRadius: 3 }}
+        sx={{ p: 3, mb: 2, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
           Вставьте HTML-код

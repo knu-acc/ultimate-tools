@@ -166,7 +166,7 @@ export default function ImageRotate() {
   }, []);
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <input
         ref={fileInputRef}
@@ -218,7 +218,7 @@ export default function ImageRotate() {
       {originalFile && (
         <>
           {/* Controls */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <RotateRightIcon /> Поворот и отражение
             </Typography>
@@ -227,7 +227,7 @@ export default function ImageRotate() {
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
               Быстрый поворот:
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3 }}>
+            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
               <Chip
                 icon={<RotateLeftIcon />}
                 label="90° влево"
@@ -257,7 +257,7 @@ export default function ImageRotate() {
             </Box>
 
             {/* Custom rotation */}
-            <Grid container spacing={2} alignItems="center" sx={{ mb: 3 }}>
+            <Grid container spacing={2} alignItems="center" sx={{ mb: 2 }}>
               <Grid size={{ xs: 12, md: 8 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
                   Произвольный угол: {rotation}°
@@ -293,7 +293,7 @@ export default function ImageRotate() {
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
               Отражение:
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3 }}>
+            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
               <Chip
                 icon={<FlipIcon />}
                 label="По горизонтали"
@@ -336,7 +336,7 @@ export default function ImageRotate() {
           </Paper>
 
           {/* Stats */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}

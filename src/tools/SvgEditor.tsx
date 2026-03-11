@@ -12,12 +12,10 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DownloadIcon from '@mui/icons-material/Download';
-import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const DEFAULT_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
@@ -52,7 +50,6 @@ const SVG_TEMPLATES: { label: string; code: string }[] = [
 export default function SvgEditor() {
   const theme = useTheme();
   const [svgCode, setSvgCode] = useState(DEFAULT_SVG);
-  const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -113,12 +110,6 @@ export default function SvgEditor() {
     [svgCode, handleCodeChange]
   );
 
-  const copyCode = useCallback(() => {
-    navigator.clipboard.writeText(svgCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }, [svgCode]);
-
   const downloadSvg = useCallback(() => {
     const blob = new Blob([svgCode], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
@@ -149,11 +140,11 @@ export default function SvgEditor() {
   const svgInfo = getSvgInfo();
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Quick insert buttons */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, borderRadius: 3 }}
+        sx={{ p: 2, mb: 2, borderRadius: 3 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
           <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
@@ -185,15 +176,7 @@ export default function SvgEditor() {
                 SVG Код
               </Typography>
               <Box sx={{ display: 'flex', gap: 1 }}>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
-                  onClick={copyCode}
-                  color={copied ? 'success' : 'primary'}
-                >
-                  {copied ? 'Скопировано' : 'Копировать'}
-                </Button>
+                <CopyButton text={svgCode} />
                 <Button
                   size="small"
                   variant="contained"

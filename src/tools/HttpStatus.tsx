@@ -61,7 +61,7 @@ export default function HttpStatus() {
     <Box>
       <TextField fullWidth value={search} onChange={e => setSearch(e.target.value)} placeholder="Поиск по коду или описанию..." size="small" sx={{ mb: 2 }} />
 
-      <Box sx={{ display: 'flex', gap: 1, mb: 3, flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
         <Chip label="Все" onClick={() => setFilter('all')} sx={{ fontWeight: filter === 'all' ? 700 : 400, bgcolor: filter === 'all' ? theme.palette.surfaceContainerHigh : undefined }} />
         {Object.entries(CATEGORIES).map(([key, cat]) => (
           <Chip key={key} label={cat.label} onClick={() => setFilter(key)} sx={{ fontWeight: filter === key ? 700 : 400, bgcolor: filter === key ? alpha(cat.color, 0.15) : undefined, color: filter === key ? cat.color : undefined }} />

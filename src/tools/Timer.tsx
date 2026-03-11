@@ -269,7 +269,7 @@ export default function TimerComponent() {
 
               {/* Timer Input */}
               {!timerRunning && timerRemaining === 0 && (
-                <Grid container spacing={2} sx={{ mb: 3, justifyContent: 'center' }}>
+                <Grid container spacing={2} sx={{ mb: 2, justifyContent: 'center' }}>
                   <Grid size={{ xs: 4 }}>
                     <TextField
                       label="Часы"
@@ -388,7 +388,7 @@ export default function TimerComponent() {
               </Box>
 
               {/* Stopwatch Controls */}
-              <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 3 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 2 }}>
                 {!swRunning ? (
                   <Button
                     variant="contained"

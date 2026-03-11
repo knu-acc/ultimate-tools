@@ -143,7 +143,7 @@ export default function ImageFilters() {
   };
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <input
         ref={fileInputRef}
         type="file"
@@ -190,7 +190,7 @@ export default function ImageFilters() {
           {/* Presets */}
           <Paper
             elevation={0}
-            sx={{ p: 2, mb: 3, borderRadius: 3 }}
+            sx={{ p: 2, mb: 2, borderRadius: 3 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
               Пресеты
@@ -211,7 +211,7 @@ export default function ImageFilters() {
           {/* Sliders */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 3, borderRadius: 3 }}
+            sx={{ p: 3, mb: 2, borderRadius: 3 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
               Настройки фильтров
@@ -236,7 +236,7 @@ export default function ImageFilters() {
           </Paper>
 
           {/* Actions */}
-          <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
+          <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <Button variant="contained" startIcon={<DownloadIcon />} onClick={downloadFiltered}>
               Скачать результат
             </Button>

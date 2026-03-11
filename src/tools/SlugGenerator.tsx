@@ -7,13 +7,10 @@ import {
   Paper,
   TextField,
   Chip,
-  IconButton,
-  Snackbar,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const CYRILLIC_MAP: Record<string, string> = {
@@ -58,22 +55,8 @@ export default function SlugGenerator() {
   const theme = useTheme();
   const [input, setInput] = useState('');
   const [separator, setSeparator] = useState<Separator>('-');
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
 
   const slug = useMemo(() => generateSlug(input, separator), [input, separator]);
-
-  const copyText = async (text: string) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setSnackMsg('Скопировано в буфер обмена');
-      setSnackOpen(true);
-    } catch {
-      setSnackMsg('Не удалось скопировать');
-      setSnackOpen(true);
-    }
-  };
 
   const fullUrl = slug ? `https://example.com/${slug}` : '';
 
@@ -85,7 +68,7 @@ export default function SlugGenerator() {
         sx={{
           p: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -101,11 +84,11 @@ export default function SlugGenerator() {
           multiline
           minRows={2}
           maxRows={4}
-          sx={{ mb: 3 }}
+          sx={{ mb: 2 }}
         />
 
         {/* Separator selector */}
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2 }}>
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
             Разделитель
           </Typography>
@@ -163,17 +146,7 @@ export default function SlugGenerator() {
               >
                 {slug}
               </Typography>
-              <IconButton
-                onClick={() => copyText(slug)}
-                size="small"
-                sx={{
-                  flexShrink: 0,
-                  color: 'primary.main',
-                  '&:hover': { background: alpha(theme.palette.primary.main, 0.1) }
-                }}
-              >
-                <ContentCopyIcon fontSize="small" />
-              </IconButton>
+              <CopyButton text={slug} size="small" />
             </>
           ) : (
             <Typography sx={{ color: 'text.disabled', fontStyle: 'italic' }}>
@@ -241,17 +214,7 @@ export default function SlugGenerator() {
                 {slug}
               </Box>
             </Typography>
-            <IconButton
-              onClick={() => copyText(fullUrl)}
-              size="small"
-              sx={{
-                flexShrink: 0,
-                color: 'text.secondary',
-                '&:hover': { background: alpha(theme.palette.primary.main, 0.1) }
-              }}
-            >
-              <ContentCopyIcon fontSize="small" />
-            </IconButton>
+            <CopyButton text={fullUrl} size="small" />
           </Box>
         </Paper>
       )}
@@ -291,13 +254,6 @@ export default function SlugGenerator() {
         </Paper>
       )}
 
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

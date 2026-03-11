@@ -8,17 +8,15 @@ import {
   Paper,
   TextField,
   Alert,
-  Snackbar,
   Chip,
   Grid,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface YamlError {
@@ -320,13 +318,6 @@ export default function YamlJson() {
   const [yaml, setYaml] = useState('');
   const [json, setJson] = useState('');
   const [error, setError] = useState<YamlError | null>(null);
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
-
-  const showSnack = (msg: string) => {
-    setSnackMsg(msg);
-    setSnackOpen(true);
-  };
 
   const yamlToJson = () => {
     try {
@@ -337,7 +328,6 @@ export default function YamlJson() {
       const parsed = parseYaml(yaml);
       setJson(JSON.stringify(parsed, null, 2));
       setError(null);
-      showSnack('YAML конвертирован в JSON');
     } catch (e) {
       const msg = (e as Error).message;
       const lineMatch = msg.match(/line\s+(\d+)/i);
@@ -357,19 +347,9 @@ export default function YamlJson() {
       const parsed = JSON.parse(json);
       setYaml(toYaml(parsed).trimEnd());
       setError(null);
-      showSnack('JSON конвертирован в YAML');
     } catch (e) {
       const msg = (e as Error).message;
       setError({ message: `Ошибка парсинга JSON: ${msg}` });
-    }
-  };
-
-  const copyText = async (text: string, label: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      showSnack(`${label} скопирован в буфер обмена`);
-    } catch {
-      showSnack('Не удалось скопировать');
     }
   };
 
@@ -377,17 +357,16 @@ export default function YamlJson() {
     setYaml('');
     setJson('');
     setError(null);
-    showSnack('Очищено');
   };
 
   return (
-    <Box sx={{ maxWidth: 1100, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {error && (
@@ -409,15 +388,7 @@ export default function YamlJson() {
               <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                 YAML
               </Typography>
-              <Button
-                size="small"
-                startIcon={<ContentCopyIcon />}
-                onClick={() => copyText(yaml, 'YAML')}
-                disabled={!yaml}
-                sx={{ textTransform: 'none', fontSize: '0.75rem' }}
-              >
-                Копировать
-              </Button>
+              <CopyButton text={yaml} tooltip="Копировать" />
             </Box>
             <TextField
               multiline
@@ -484,15 +455,7 @@ export default function YamlJson() {
               <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                 JSON
               </Typography>
-              <Button
-                size="small"
-                startIcon={<ContentCopyIcon />}
-                onClick={() => copyText(json, 'JSON')}
-                disabled={!json}
-                sx={{ textTransform: 'none', fontSize: '0.75rem' }}
-              >
-                Копировать
-              </Button>
+              <CopyButton text={json} tooltip="Копировать" />
             </Box>
             <TextField
               multiline
@@ -534,13 +497,6 @@ export default function YamlJson() {
         </Box>
       </Paper>
 
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

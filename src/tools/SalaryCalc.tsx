@@ -28,14 +28,14 @@ export default function SalaryCalc() {
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
-      <Paper elevation={0} sx={{ p: 3, borderRadius: 3, mb: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, borderRadius: 3, mb: 2 }}>
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>Месячная зарплата (до вычета НДФЛ)</Typography>
-        <TextField fullWidth type="number" value={monthly} onChange={e => setMonthly(e.target.value)} placeholder="Введите сумму в рублях" sx={{ mb: 3 }} />
+        <TextField fullWidth type="number" value={monthly} onChange={e => setMonthly(e.target.value)} placeholder="Введите сумму в рублях" sx={{ mb: 2 }} />
 
         {m > 0 && (
           <>
             <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>Разбивка по периодам (до НДФЛ)</Typography>
-            <Grid container spacing={1.5} sx={{ mb: 3 }}>
+            <Grid container spacing={1.5} sx={{ mb: 2 }}>
               {[
                 { label: 'В год', value: annual, color: theme.palette.primary.main },
                 { label: 'В месяц', value: m, color: theme.palette.success.main },
