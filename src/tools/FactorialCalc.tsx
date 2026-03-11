@@ -14,6 +14,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 interface TabPanelProps {
   children: React.ReactNode;
@@ -39,7 +40,7 @@ function factorialBig(n: number): bigint {
 function formatBigInt(val: bigint): string {
   const str = val.toString();
   if (str.length <= 20) return str;
-  return str.slice(0, 10) + '...' + str.slice(-10) + ` (${str.length} \u0446\u0438\u0444\u0440)`;
+  return str.slice(0, 10) + '...' + str.slice(-10) + ` (${str.length} цифр)`;
 }
 
 export default function FactorialCalc() {
@@ -131,7 +132,7 @@ export default function FactorialCalc() {
       }}
     >
       <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, color: 'text.secondary' }}>
-        \u041f\u043e\u0448\u0430\u0433\u043e\u0432\u043e\u0435 \u0440\u0435\u0448\u0435\u043d\u0438\u0435
+        Пошаговое решение
       </Typography>
       {steps.map((step, idx) => (
         <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
@@ -176,20 +177,21 @@ export default function FactorialCalc() {
             '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' }
           }}
         >
-          <Tab label="\u0424\u0430\u043a\u0442\u043e\u0440\u0438\u0430\u043b (n!)" />
-          <Tab label="\u041f\u0435\u0440\u0435\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0438 P(n,r)" />
-          <Tab label="\u0421\u043e\u0447\u0435\u0442\u0430\u043d\u0438\u044f C(n,r)" />
+          <Tab label="Факториал (n!)" />
+          <Tab label="Перестановки P(n,r)" />
+          <Tab label="Сочетания C(n,r)" />
         </Tabs>
         <Divider />
 
         {/* Factorial */}
         <TabPanel value={tab} index={0}>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-            \u0412\u044b\u0447\u0438\u0441\u043b\u0438\u0442\u044c \u0444\u0430\u043a\u0442\u043e\u0440\u0438\u0430\u043b \u0447\u0438\u0441\u043b\u0430 n (n! = 1 \u00d7 2 \u00d7 ... \u00d7 n). \u041c\u0430\u043a\u0441\u0438\u043c\u0443\u043c n = 1000.
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+            <Chip label="n! = 1 * 2 * ... * n" size="small" variant="outlined" sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }} />
+            <Chip label="max n = 1000" size="small" sx={{ fontFamily: 'monospace', fontSize: '0.8rem', backgroundColor: theme.palette.surfaceContainerHigh }} />
+          </Box>
           <TextField
             fullWidth
-            label="\u0427\u0438\u0441\u043b\u043e n"
+            label="Число n"
             type="number"
             value={factN}
             onChange={(e) => setFactN(e.target.value)}
@@ -206,9 +208,13 @@ export default function FactorialCalc() {
                   mt: 2,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: theme.palette.surfaceContainerLow
+                  background: theme.palette.surfaceContainerLow,
+                  position: 'relative'
                 }}
               >
+                <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
+                  <CopyButton text={factResult.value.toString()} />
+                </Box>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                   {factResult.n}!
                 </Typography>
@@ -231,14 +237,14 @@ export default function FactorialCalc() {
 
         {/* Permutations */}
         <TabPanel value={tab} index={1}>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-            \u041f\u0435\u0440\u0435\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0438 \u0431\u0435\u0437 \u043f\u043e\u0432\u0442\u043e\u0440\u0435\u043d\u0438\u0439: P(n, r) = n! / (n - r)!
-          </Typography>
+          <Box sx={{ mb: 2 }}>
+            <Chip label="P(n, r) = n! / (n - r)!" size="small" variant="outlined" sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }} />
+          </Box>
           <Grid container spacing={2}>
             <Grid size={{ xs: 6 }}>
               <TextField
                 fullWidth
-                label="n (\u0432\u0441\u0435\u0433\u043e \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432)"
+                label="n (всего элементов)"
                 type="number"
                 value={permN}
                 onChange={(e) => setPermN(e.target.value)}
@@ -250,7 +256,7 @@ export default function FactorialCalc() {
             <Grid size={{ xs: 6 }}>
               <TextField
                 fullWidth
-                label="r (\u0432\u044b\u0431\u0438\u0440\u0430\u0435\u043c)"
+                label="r (выбираем)"
                 type="number"
                 value={permR}
                 onChange={(e) => setPermR(e.target.value)}
@@ -269,9 +275,13 @@ export default function FactorialCalc() {
                   mt: 2,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: theme.palette.surfaceContainerLow
+                  background: theme.palette.surfaceContainerLow,
+                  position: 'relative'
                 }}
               >
+                <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
+                  <CopyButton text={permResult.value.toString()} />
+                </Box>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                   P({permN}, {permR})
                 </Typography>
@@ -294,14 +304,14 @@ export default function FactorialCalc() {
 
         {/* Combinations */}
         <TabPanel value={tab} index={2}>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-            \u0421\u043e\u0447\u0435\u0442\u0430\u043d\u0438\u044f \u0431\u0435\u0437 \u043f\u043e\u0432\u0442\u043e\u0440\u0435\u043d\u0438\u0439: C(n, r) = n! / (r! \u00d7 (n - r)!)
-          </Typography>
+          <Box sx={{ mb: 2 }}>
+            <Chip label="C(n, r) = n! / (r! * (n - r)!)" size="small" variant="outlined" sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }} />
+          </Box>
           <Grid container spacing={2}>
             <Grid size={{ xs: 6 }}>
               <TextField
                 fullWidth
-                label="n (\u0432\u0441\u0435\u0433\u043e \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432)"
+                label="n (всего элементов)"
                 type="number"
                 value={combN}
                 onChange={(e) => setCombN(e.target.value)}
@@ -313,7 +323,7 @@ export default function FactorialCalc() {
             <Grid size={{ xs: 6 }}>
               <TextField
                 fullWidth
-                label="r (\u0432\u044b\u0431\u0438\u0440\u0430\u0435\u043c)"
+                label="r (выбираем)"
                 type="number"
                 value={combR}
                 onChange={(e) => setCombR(e.target.value)}
@@ -332,9 +342,13 @@ export default function FactorialCalc() {
                   mt: 2,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: theme.palette.surfaceContainerLow
+                  background: theme.palette.surfaceContainerLow,
+                  position: 'relative'
                 }}
               >
+                <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
+                  <CopyButton text={combResult.value.toString()} />
+                </Box>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                   C({combN}, {combR})
                 </Typography>
@@ -365,42 +379,66 @@ export default function FactorialCalc() {
         }}
       >
         <Typography variant="h6" sx={{ mb: 2 }}>
-          \u0422\u0430\u0431\u043b\u0438\u0446\u0430 \u0444\u0430\u043a\u0442\u043e\u0440\u0438\u0430\u043b\u043e\u0432
+          Таблица факториалов
         </Typography>
-        <Grid container spacing={1}>
-          {commonValues.map(({ n, val }) => (
-            <Grid size={{ xs: 6, sm: 4 }} key={n}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  p: 1,
-                  borderRadius: 2,
-                  background: theme.palette.surfaceContainerLow,
-                  border: `1px solid ${alpha(theme.palette.divider, 0.5)}`
-                }}
-              >
-                <Chip
-                  label={`${n}!`}
-                  size="small"
-                  sx={{
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                    color: 'primary.main'
-                  }}
-                />
-                <Typography
-                  variant="body2"
-                  sx={{ fontFamily: 'monospace', fontWeight: 500, fontSize: '0.8rem' }}
-                >
-                  {val}
-                </Typography>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
+        <Box
+          component="table"
+          sx={{
+            width: '100%',
+            borderCollapse: 'collapse',
+            fontFamily: 'monospace',
+            fontSize: '0.85rem',
+            '& th, & td': {
+              px: 1.5,
+              py: 0.75,
+              textAlign: 'left',
+              borderBottom: `1px solid ${alpha(theme.palette.divider, 0.3)}`
+            },
+            '& th': {
+              fontWeight: 600,
+              color: 'text.secondary',
+              fontSize: '0.8rem'
+            },
+            '& tr:last-child td': {
+              borderBottom: 'none'
+            },
+            '& tr:hover td': {
+              backgroundColor: alpha(theme.palette.primary.main, 0.04)
+            }
+          }}
+        >
+          <thead>
+            <tr>
+              <Box component="th" sx={{ width: 60 }}>n</Box>
+              <th>n!</th>
+              <Box component="th" sx={{ width: 40 }} />
+            </tr>
+          </thead>
+          <tbody>
+            {commonValues.map(({ n, val }) => (
+              <tr key={n}>
+                <td>
+                  <Chip
+                    label={n}
+                    size="small"
+                    sx={{
+                      fontFamily: 'monospace',
+                      fontWeight: 700,
+                      height: 24,
+                      minWidth: 32,
+                      backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                      color: 'primary.main'
+                    }}
+                  />
+                </td>
+                <td>{val}</td>
+                <td>
+                  <CopyButton text={val.replace(/\s/g, '')} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Box>
       </Paper>
     </Box>
   );

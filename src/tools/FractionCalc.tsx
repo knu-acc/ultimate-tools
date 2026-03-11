@@ -5,15 +5,16 @@ import {
   Box,
   Typography,
   Paper,
-  TextField,
-  Grid,
+  InputBase,
   Button,
   Chip,
   Switch,
   FormControlLabel,
+  Grid,
   useTheme,
   alpha
 } from '@mui/material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 function gcd(a: number, b: number): number {
   a = Math.abs(a);
@@ -57,6 +58,107 @@ function toMixed(f: Fraction): { whole: number; num: number; den: number } | nul
   return { whole, num: remainder, den: s.den };
 }
 
+function FractionInput({
+  num,
+  den,
+  onNumChange,
+  onDenChange,
+}: {
+  num: string;
+  den: string;
+  onNumChange: (v: string) => void;
+  onDenChange: (v: string) => void;
+}) {
+  const theme = useTheme();
+
+  const inputSx = {
+    fontFamily: 'monospace',
+    fontWeight: 700,
+    fontSize: '1.25rem',
+    textAlign: 'center' as const,
+    width: 64,
+    py: 0.5,
+    px: 1,
+    borderRadius: 1.5,
+    backgroundColor: theme.palette.surfaceContainerHigh,
+    '& input': {
+      textAlign: 'center',
+      padding: 0,
+      MozAppearance: 'textfield',
+      '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+        WebkitAppearance: 'none',
+        margin: 0,
+      },
+    },
+  };
+
+  return (
+    <Box
+      sx={{
+        display: 'inline-flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 0.25,
+      }}
+    >
+      <InputBase
+        type="number"
+        value={num}
+        onChange={(e) => onNumChange(e.target.value)}
+        placeholder="0"
+        sx={inputSx}
+      />
+      <Box
+        sx={{
+          width: 56,
+          height: 2.5,
+          borderRadius: 1,
+          backgroundColor: theme.palette.text.primary,
+        }}
+      />
+      <InputBase
+        type="number"
+        value={den}
+        onChange={(e) => onDenChange(e.target.value)}
+        placeholder="1"
+        sx={inputSx}
+      />
+    </Box>
+  );
+}
+
+function FractionDisplay({
+  num,
+  den,
+  large,
+}: {
+  num: number | string;
+  den: number | string;
+  large?: boolean;
+}) {
+  const theme = useTheme();
+  const fontSize = large ? '1.3rem' : '1rem';
+
+  return (
+    <Box sx={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', mx: 0.5 }}>
+      <Typography sx={{ fontFamily: 'monospace', fontWeight: 700, fontSize, lineHeight: 1.2 }}>
+        {num}
+      </Typography>
+      <Box
+        sx={{
+          width: '100%',
+          height: 2,
+          backgroundColor: theme.palette.text.primary,
+          my: 0.3,
+        }}
+      />
+      <Typography sx={{ fontFamily: 'monospace', fontWeight: 700, fontSize, lineHeight: 1.2 }}>
+        {den}
+      </Typography>
+    </Box>
+  );
+}
+
 export default function FractionCalc() {
   const theme = useTheme();
   const [num1, setNum1] = useState('');
@@ -96,32 +198,30 @@ export default function FractionCalc() {
       const newNum1 = n1 * mult1;
       const newNum2 = n2 * mult2;
 
-      steps.push(`\u041d\u0430\u0445\u043e\u0434\u0438\u043c \u041d\u041e\u041a \u0437\u043d\u0430\u043c\u0435\u043d\u0430\u0442\u0435\u043b\u0435\u0439: \u041d\u041e\u041a(${d1}, ${d2}) = ${commonDen}`);
-      steps.push(`\u041f\u0440\u0438\u0432\u043e\u0434\u0438\u043c \u043a \u043e\u0431\u0449\u0435\u043c\u0443 \u0437\u043d\u0430\u043c\u0435\u043d\u0430\u0442\u0435\u043b\u044e:`);
-      steps.push(`  ${n1}/${d1} = ${newNum1}/${commonDen} (\u0443\u043c\u043d\u043e\u0436\u0438\u043b\u0438 \u043d\u0430 ${mult1})`);
-      steps.push(`  ${n2}/${d2} = ${newNum2}/${commonDen} (\u0443\u043c\u043d\u043e\u0436\u0438\u043b\u0438 \u043d\u0430 ${mult2})`);
+      steps.push(`\u041d\u041e\u041a(${d1}, ${d2}) = ${commonDen}`);
+      steps.push(`${n1}/${d1} = ${newNum1}/${commonDen}`);
+      steps.push(`${n2}/${d2} = ${newNum2}/${commonDen}`);
 
       const resNum = op === '+' ? newNum1 + newNum2 : newNum1 - newNum2;
-      steps.push(`${op === '+' ? '\u0421\u043a\u043b\u0430\u0434\u044b\u0432\u0430\u0435\u043c' : '\u0412\u044b\u0447\u0438\u0442\u0430\u0435\u043c'} \u0447\u0438\u0441\u043b\u0438\u0442\u0435\u043b\u0438: ${newNum1} ${op} ${newNum2} = ${resNum}`);
+      steps.push(`${newNum1} ${op === '+' ? '+' : '\u2212'} ${newNum2} = ${resNum}`);
 
       resultFrac = { num: resNum, den: commonDen };
     } else if (op === '\u00d7') {
-      steps.push(`\u0423\u043c\u043d\u043e\u0436\u0430\u0435\u043c \u0447\u0438\u0441\u043b\u0438\u0442\u0435\u043b\u0438: ${n1} \u00d7 ${n2} = ${n1 * n2}`);
-      steps.push(`\u0423\u043c\u043d\u043e\u0436\u0430\u0435\u043c \u0437\u043d\u0430\u043c\u0435\u043d\u0430\u0442\u0435\u043b\u0438: ${d1} \u00d7 ${d2} = ${d1 * d2}`);
+      steps.push(`${n1} \u00d7 ${n2} = ${n1 * n2}`);
+      steps.push(`${d1} \u00d7 ${d2} = ${d1 * d2}`);
       resultFrac = { num: n1 * n2, den: d1 * d2 };
     } else {
-      steps.push(`\u041f\u0435\u0440\u0435\u0432\u043e\u0440\u0430\u0447\u0438\u0432\u0430\u0435\u043c \u0432\u0442\u043e\u0440\u0443\u044e \u0434\u0440\u043e\u0431\u044c: ${n2}/${d2} \u2192 ${d2}/${n2}`);
-      steps.push(`\u0423\u043c\u043d\u043e\u0436\u0430\u0435\u043c: ${n1}/${d1} \u00d7 ${d2}/${n2}`);
-      steps.push(`\u0427\u0438\u0441\u043b\u0438\u0442\u0435\u043b\u0438: ${n1} \u00d7 ${d2} = ${n1 * d2}`);
-      steps.push(`\u0417\u043d\u0430\u043c\u0435\u043d\u0430\u0442\u0435\u043b\u0438: ${d1} \u00d7 ${n2} = ${d1 * n2}`);
+      steps.push(`${n2}/${d2} \u2192 ${d2}/${n2}`);
+      steps.push(`${n1}/${d1} \u00d7 ${d2}/${n2}`);
+      steps.push(`${n1} \u00d7 ${d2} = ${n1 * d2}`);
+      steps.push(`${d1} \u00d7 ${n2} = ${d1 * n2}`);
       resultFrac = { num: n1 * d2, den: d1 * n2 };
     }
 
     const simplified = simplify(resultFrac);
     const g = gcd(Math.abs(resultFrac.num), Math.abs(resultFrac.den));
     if (g > 1) {
-      steps.push(`\u0421\u043e\u043a\u0440\u0430\u0449\u0430\u0435\u043c \u043d\u0430 \u041d\u041e\u0414(${Math.abs(resultFrac.num)}, ${Math.abs(resultFrac.den)}) = ${g}`);
-      steps.push(`\u0420\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442: ${simplified.num}/${simplified.den}`);
+      steps.push(`\u041d\u041e\u0414 = ${g}, ${simplified.num}/${simplified.den}`);
     }
 
     const decimal = simplified.num / simplified.den;
@@ -134,165 +234,95 @@ export default function FractionCalc() {
       mixed,
       steps,
       f1,
-      f2
+      f2,
     };
   }, [num1, den1, num2, den2, op]);
 
-  const FractionDisplay = ({
-    num,
-    den,
-    large
-  }: {
-    num: number | string;
-    den: number | string;
-    large?: boolean;
-  }) => (
-    <Box sx={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', mx: 0.5 }}>
-      <Typography
-        sx={{
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          fontSize: large ? '1.3rem' : '1rem',
-          lineHeight: 1.2
-        }}
-      >
-        {num}
-      </Typography>
-      <Box
-        sx={{
-          width: '100%',
-          height: 2,
-          backgroundColor: theme.palette.text.primary,
-          my: 0.3
-        }}
-      />
-      <Typography
-        sx={{
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          fontSize: large ? '1.3rem' : '1rem',
-          lineHeight: 1.2
-        }}
-      >
-        {den}
-      </Typography>
-    </Box>
-  );
+  const resultText = result
+    ? showMixed && result.mixed
+      ? `${result.mixed.whole} ${result.mixed.num}/${result.mixed.den}`
+      : `${result.simplified.num}/${result.simplified.den}`
+    : '';
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      {/* Input */}
+    <Box sx={{ maxWidth: 600, mx: 'auto' }}>
+      {/* Input row */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
-          borderRadius: 3
+          mb: 2,
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          \u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0434\u0432\u0435 \u0434\u0440\u043e\u0431\u0438 \u0438 \u0432\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043e\u043f\u0435\u0440\u0430\u0446\u0438\u044e
-        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: { xs: 1.5, sm: 3 },
+            flexWrap: 'wrap',
+          }}
+        >
+          <FractionInput
+            num={num1}
+            den={den1}
+            onNumChange={setNum1}
+            onDenChange={setDen1}
+          />
 
-        <Grid container spacing={2} alignItems="center">
-          {/* Fraction 1 */}
-          <Grid size={{ xs: 12, sm: 4 }}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 2,
-                borderRadius: 3,
-                background: theme.palette.surfaceContainerLow
-              }}
-            >
-              <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                \u0414\u0440\u043e\u0431\u044c 1
-              </Typography>
-              <TextField
-                fullWidth
-                size="small"
-                label="\u0427\u0438\u0441\u043b\u0438\u0442\u0435\u043b\u044c"
-                type="number"
-                value={num1}
-                onChange={(e) => setNum1(e.target.value)}
-                sx={{ mt: 1, mb: 1 }}
-                slotProps={{ input: { sx: { fontFamily: 'monospace' } } }}
-              />
-              <TextField
-                fullWidth
-                size="small"
-                label="\u0417\u043d\u0430\u043c\u0435\u043d\u0430\u0442\u0435\u043b\u044c"
-                type="number"
-                value={den1}
-                onChange={(e) => setDen1(e.target.value)}
-                slotProps={{ input: { sx: { fontFamily: 'monospace' } } }}
-              />
-            </Paper>
-          </Grid>
+          <Box sx={{ display: 'flex', gap: 0.5 }}>
+            {operations.map((o) => (
+              <Button
+                key={o.value}
+                variant={op === o.value ? 'contained' : 'text'}
+                onClick={() => setOp(o.value)}
+                disableElevation
+                sx={{
+                  minWidth: 40,
+                  height: 40,
+                  fontWeight: 700,
+                  fontSize: '1.2rem',
+                  textTransform: 'none',
+                  borderRadius: 2,
+                  ...(op !== o.value && {
+                    color: 'text.secondary',
+                    backgroundColor: theme.palette.surfaceContainerHigh,
+                    '&:hover': {
+                      backgroundColor: theme.palette.surfaceContainerHighest,
+                    },
+                  }),
+                }}
+              >
+                {o.label}
+              </Button>
+            ))}
+          </Box>
 
-          {/* Operation */}
-          <Grid size={{ xs: 12, sm: 4 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
-              {operations.map((o) => (
-                <Button
-                  key={o.value}
-                  variant={op === o.value ? 'contained' : 'outlined'}
-                  onClick={() => setOp(o.value)}
-                  sx={{
-                    minWidth: 44,
-                    fontWeight: 700,
-                    fontSize: '1.2rem',
-                    textTransform: 'none'
-                  }}
-                >
-                  {o.label}
-                </Button>
-              ))}
-            </Box>
-          </Grid>
+          <FractionInput
+            num={num2}
+            den={den2}
+            onNumChange={setNum2}
+            onDenChange={setDen2}
+          />
+        </Box>
 
-          {/* Fraction 2 */}
-          <Grid size={{ xs: 12, sm: 4 }}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 2,
-                borderRadius: 3,
-                background: theme.palette.surfaceContainerLow
-              }}
-            >
-              <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                \u0414\u0440\u043e\u0431\u044c 2
-              </Typography>
-              <TextField
-                fullWidth
-                size="small"
-                label="\u0427\u0438\u0441\u043b\u0438\u0442\u0435\u043b\u044c"
-                type="number"
-                value={num2}
-                onChange={(e) => setNum2(e.target.value)}
-                sx={{ mt: 1, mb: 1 }}
-                slotProps={{ input: { sx: { fontFamily: 'monospace' } } }}
-              />
-              <TextField
-                fullWidth
-                size="small"
-                label="\u0417\u043d\u0430\u043c\u0435\u043d\u0430\u0442\u0435\u043b\u044c"
-                type="number"
-                value={den2}
-                onChange={(e) => setDen2(e.target.value)}
-                slotProps={{ input: { sx: { fontFamily: 'monospace' } } }}
-              />
-            </Paper>
-          </Grid>
-        </Grid>
-
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1.5 }}>
           <FormControlLabel
             control={
-              <Switch checked={showMixed} onChange={(e) => setShowMixed(e.target.checked)} />
+              <Switch
+                size="small"
+                checked={showMixed}
+                onChange={(e) => setShowMixed(e.target.checked)}
+              />
             }
-            label="\u041f\u043e\u043a\u0430\u0437\u0430\u0442\u044c \u043a\u0430\u043a \u0441\u043c\u0435\u0448\u0430\u043d\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e"
+            label={
+              <Typography variant="caption" color="text.secondary">
+                {'\u0421\u043c\u0435\u0448\u0430\u043d\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e'}
+              </Typography>
+            }
+            sx={{ m: 0 }}
           />
         </Box>
       </Paper>
@@ -304,124 +334,116 @@ export default function FractionCalc() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               borderRadius: 3,
-              background: theme.palette.surfaceContainerLow
+              background: theme.palette.surfaceContainerLow,
             }}
           >
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-              \u0420\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442
-            </Typography>
-
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 4 }}>
-                <Paper
-                  elevation={0}
-                  sx={{
-                    p: 2,
-                    textAlign: 'center',
-                    borderRadius: 3
-                  }}
-                >
+                <Box sx={{ textAlign: 'center' }}>
                   <Typography variant="caption" color="text.secondary">
-                    \u0418\u0441\u0445\u043e\u0434\u043d\u0430\u044f \u0434\u0440\u043e\u0431\u044c
+                    {'\u0418\u0441\u0445\u043e\u0434\u043d\u0430\u044f'}
                   </Typography>
-                  <Box sx={{ mt: 1 }}>
+                  <Box sx={{ mt: 0.5 }}>
                     <FractionDisplay num={result.original.num} den={result.original.den} large />
                   </Box>
-                </Paper>
+                </Box>
               </Grid>
+
               <Grid size={{ xs: 12, sm: 4 }}>
-                <Paper
-                  elevation={0}
+                <Box
                   sx={{
-                    p: 2,
                     textAlign: 'center',
-                    borderRadius: 3,
-                    background: alpha(theme.palette.success.main, 0.06)
+                    p: 1.5,
+                    borderRadius: 2,
+                    backgroundColor: alpha(theme.palette.primary.main, 0.06),
                   }}
                 >
-                  <Typography variant="caption" color="text.secondary">
-                    {showMixed && result.mixed
-                      ? '\u0421\u043c\u0435\u0448\u0430\u043d\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e'
-                      : '\u0421\u043e\u043a\u0440\u0430\u0449\u0451\u043d\u043d\u0430\u044f \u0434\u0440\u043e\u0431\u044c'}
-                  </Typography>
-                  <Box sx={{ mt: 1 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      {showMixed && result.mixed
+                        ? '\u0421\u043c\u0435\u0448\u0430\u043d\u043d\u043e\u0435'
+                        : '\u0421\u043e\u043a\u0440\u0430\u0449\u0451\u043d\u043d\u0430\u044f'}
+                    </Typography>
+                    <CopyButton text={resultText} size="small" />
+                  </Box>
+                  <Box sx={{ mt: 0.5 }}>
                     {showMixed && result.mixed ? (
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
-                        <Typography
-                          sx={{ fontFamily: 'monospace', fontWeight: 700, fontSize: '1.3rem' }}
-                        >
+                        <Typography sx={{ fontFamily: 'monospace', fontWeight: 700, fontSize: '1.3rem' }}>
                           {result.mixed.whole}
                         </Typography>
                         <FractionDisplay num={result.mixed.num} den={result.mixed.den} large />
                       </Box>
                     ) : (
-                      <FractionDisplay
-                        num={result.simplified.num}
-                        den={result.simplified.den}
-                        large
-                      />
+                      <FractionDisplay num={result.simplified.num} den={result.simplified.den} large />
                     )}
                   </Box>
-                </Paper>
+                </Box>
               </Grid>
+
               <Grid size={{ xs: 12, sm: 4 }}>
-                <Paper
-                  elevation={0}
-                  sx={{
-                    p: 2,
-                    textAlign: 'center',
-                    borderRadius: 3
-                  }}
-                >
-                  <Typography variant="caption" color="text.secondary">
-                    \u0414\u0435\u0441\u044f\u0442\u0438\u0447\u043d\u0430\u044f \u0434\u0440\u043e\u0431\u044c
-                  </Typography>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      {'\u0414\u0435\u0441\u044f\u0442\u0438\u0447\u043d\u0430\u044f'}
+                    </Typography>
+                    <CopyButton
+                      text={
+                        Number.isFinite(result.decimal)
+                          ? result.decimal.toLocaleString('ru-RU', { maximumFractionDigits: 8 })
+                          : ''
+                      }
+                      size="small"
+                    />
+                  </Box>
                   <Typography
-                    variant="h5"
-                    sx={{ mt: 1, fontFamily: 'monospace', fontWeight: 700, color: 'primary.main' }}
+                    sx={{
+                      mt: 0.5,
+                      fontFamily: 'monospace',
+                      fontWeight: 700,
+                      fontSize: '1.3rem',
+                      color: 'primary.main',
+                    }}
                   >
                     {Number.isFinite(result.decimal)
                       ? result.decimal.toLocaleString('ru-RU', { maximumFractionDigits: 8 })
                       : '\u2014'}
                   </Typography>
-                </Paper>
+                </Box>
               </Grid>
             </Grid>
           </Paper>
 
           {/* Steps */}
-          <Paper
-            elevation={0}
-            sx={{
-              p: 3,
-              borderRadius: 3
-            }}
-          >
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-              \u041f\u043e\u0448\u0430\u0433\u043e\u0432\u043e\u0435 \u0440\u0435\u0448\u0435\u043d\u0438\u0435
-            </Typography>
-            {result.steps.map((step, idx) => (
-              <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-                <Chip
-                  label={idx + 1}
-                  size="small"
-                  sx={{
-                    minWidth: 28,
-                    height: 24,
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    backgroundColor: theme.palette.surfaceContainerHigh,
-                    color: 'primary.main'
-                  }}
-                />
-                <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>
-                  {step}
-                </Typography>
+          {result.steps.length > 0 && (
+            <Paper
+              elevation={0}
+              sx={{
+                p: 2,
+                borderRadius: 3,
+                background: theme.palette.surfaceContainerLow,
+              }}
+            >
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
+                {result.steps.map((step, idx) => (
+                  <Chip
+                    key={idx}
+                    label={step}
+                    size="small"
+                    sx={{
+                      fontFamily: 'monospace',
+                      fontSize: '0.8rem',
+                      fontWeight: 500,
+                      backgroundColor: theme.palette.surfaceContainerHigh,
+                      height: 28,
+                    }}
+                  />
+                ))}
               </Box>
-            ))}
-          </Paper>
+            </Paper>
+          )}
         </>
       )}
     </Box>

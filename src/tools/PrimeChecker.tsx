@@ -7,11 +7,11 @@ import {
   Paper,
   TextField,
   Grid,
-  Button,
   Chip,
   useTheme,
   alpha
 } from '@mui/material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 function isPrime(n: number): boolean {
   if (n < 2) return false;
@@ -125,12 +125,10 @@ export default function PrimeChecker() {
           borderRadius: 3
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          \u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0447\u0438\u0441\u043b\u043e \u0434\u043b\u044f \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0438 (\u043e\u0442 1 \u0434\u043e 999 999 999)
-        </Typography>
         <TextField
           fullWidth
-          label="\u0427\u0438\u0441\u043b\u043e"
+          label="Число"
+          placeholder="От 1 до 999 999 999"
           type="number"
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -141,7 +139,7 @@ export default function PrimeChecker() {
 
         <Box sx={{ mt: 2 }}>
           <Typography variant="caption" sx={{ color: 'text.secondary', mb: 1, display: 'block' }}>
-            \u0411\u044b\u0441\u0442\u0440\u0430\u044f \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0430
+            Быстрая проверка
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {quickNumbers.map((num) => (
@@ -183,7 +181,7 @@ export default function PrimeChecker() {
               {result.n.toLocaleString('ru-RU')}
             </Typography>
             <Chip
-              label={result.prime ? '\u041f\u0440\u043e\u0441\u0442\u043e\u0435 \u0447\u0438\u0441\u043b\u043e' : '\u0421\u043e\u0441\u0442\u0430\u0432\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e'}
+              label={result.prime ? 'Простое число' : 'Составное число'}
               color={result.prime ? 'success' : 'error'}
               sx={{ fontWeight: 700, fontSize: '0.95rem', px: 2, py: 0.5 }}
             />
@@ -200,7 +198,7 @@ export default function PrimeChecker() {
               }}
             >
               <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                \u0420\u0430\u0437\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u043d\u0430 \u043f\u0440\u043e\u0441\u0442\u044b\u0435 \u043c\u043d\u043e\u0436\u0438\u0442\u0435\u043b\u0438
+                Разложение на простые множители
               </Typography>
               <Paper
                 elevation={0}
@@ -211,12 +209,15 @@ export default function PrimeChecker() {
                   background: theme.palette.surfaceContainerLow
                 }}
               >
-                <Typography
-                  variant="h5"
-                  sx={{ fontFamily: 'monospace', fontWeight: 700 }}
-                >
-                  {result.n} = {result.factorizationStr}
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                  <Typography
+                    variant="h5"
+                    sx={{ fontFamily: 'monospace', fontWeight: 700 }}
+                  >
+                    {result.n} = {result.factorizationStr}
+                  </Typography>
+                  <CopyButton text={`${result.n} = ${result.factorizationStr}`} />
+                </Box>
               </Paper>
               <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                 {result.factors.map(({ factor, power }) => (
@@ -247,10 +248,10 @@ export default function PrimeChecker() {
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
               <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                \u0414\u0435\u043b\u0438\u0442\u0435\u043b\u0438
+                Делители
               </Typography>
               <Chip
-                label={`${result.divisors.length} \u0448\u0442.`}
+                label={`${result.divisors.length} шт.`}
                 size="small"
                 sx={{
                   fontWeight: 600,
@@ -258,6 +259,7 @@ export default function PrimeChecker() {
                   color: 'primary.main'
                 }}
               />
+              <CopyButton text={result.divisors.join(', ')} tooltip="Копировать делители" />
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {result.divisors.map((d) => (
@@ -281,18 +283,23 @@ export default function PrimeChecker() {
                   p: 3,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: alpha('#2196f3', 0.04)
+                  background: alpha(theme.palette.primary.main, 0.04)
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                  \u041f\u0440\u0435\u0434\u044b\u0434\u0443\u0449\u0435\u0435 \u043f\u0440\u043e\u0441\u0442\u043e\u0435
+                  Предыдущее простое
                 </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{ fontWeight: 700, fontFamily: 'monospace', color: '#2196f3' }}
-                >
-                  {result.prev !== null ? result.prev.toLocaleString('ru-RU') : '\u2014'}
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: 700, fontFamily: 'monospace', color: theme.palette.primary.main }}
+                  >
+                    {result.prev !== null ? result.prev.toLocaleString('ru-RU') : '\u2014'}
+                  </Typography>
+                  {result.prev !== null && (
+                    <CopyButton text={result.prev.toString()} />
+                  )}
+                </Box>
               </Paper>
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
@@ -302,18 +309,21 @@ export default function PrimeChecker() {
                   p: 3,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: alpha('#4caf50', 0.04)
+                  background: alpha(theme.palette.success.main, 0.04)
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                  \u0421\u043b\u0435\u0434\u0443\u044e\u0449\u0435\u0435 \u043f\u0440\u043e\u0441\u0442\u043e\u0435
+                  Следующее простое
                 </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{ fontWeight: 700, fontFamily: 'monospace', color: '#4caf50' }}
-                >
-                  {result.next.toLocaleString('ru-RU')}
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontWeight: 700, fontFamily: 'monospace', color: theme.palette.success.main }}
+                  >
+                    {result.next.toLocaleString('ru-RU')}
+                  </Typography>
+                  <CopyButton text={result.next.toString()} />
+                </Box>
               </Paper>
             </Grid>
           </Grid>

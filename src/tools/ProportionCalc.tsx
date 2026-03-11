@@ -13,6 +13,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 const PHI = (1 + Math.sqrt(5)) / 2;
 
@@ -42,8 +43,8 @@ export default function ProportionCalc() {
     let missing: number;
     let missingLabel: string;
 
-    steps.push(`\u041f\u0440\u043e\u043f\u043e\u0440\u0446\u0438\u044f: A/B = C/D`);
-    steps.push(`\u041f\u0435\u0440\u0435\u043a\u0440\u0451\u0441\u0442\u043d\u043e\u0435 \u0443\u043c\u043d\u043e\u0436\u0435\u043d\u0438\u0435: A \u00d7 D = B \u00d7 C`);
+    steps.push(`Пропорция: A/B = C/D`);
+    steps.push(`Перекрёстное умножение: A \u00d7 D = B \u00d7 C`);
 
     if (va === null && vb !== null && vc !== null && vd !== null) {
       if (vd === 0) return null;
@@ -97,21 +98,21 @@ export default function ProportionCalc() {
     if (origSize !== '' && scaleFactor !== '' && newSize === '') {
       if (isNaN(orig) || isNaN(factor)) return null;
       const result = orig * factor;
-      steps.push(`\u041d\u043e\u0432\u044b\u0439 \u0440\u0430\u0437\u043c\u0435\u0440 = \u0418\u0441\u0445\u043e\u0434\u043d\u044b\u0439 \u00d7 \u041c\u0430\u0441\u0448\u0442\u0430\u0431`);
+      steps.push(`Новый размер = Исходный \u00d7 Масштаб`);
       steps.push(`= ${orig} \u00d7 ${factor} = ${result}`);
-      return { label: '\u041d\u043e\u0432\u044b\u0439 \u0440\u0430\u0437\u043c\u0435\u0440', value: result, steps };
+      return { label: 'Новый размер', value: result, steps };
     } else if (origSize !== '' && scaleFactor === '' && newSize !== '') {
       if (isNaN(orig) || isNaN(target) || orig === 0) return null;
       const result = target / orig;
-      steps.push(`\u041c\u0430\u0441\u0448\u0442\u0430\u0431 = \u041d\u043e\u0432\u044b\u0439 / \u0418\u0441\u0445\u043e\u0434\u043d\u044b\u0439`);
+      steps.push(`Масштаб = Новый / Исходный`);
       steps.push(`= ${target} / ${orig} = ${result}`);
-      return { label: '\u041c\u0430\u0441\u0448\u0442\u0430\u0431', value: result, steps };
+      return { label: 'Масштаб', value: result, steps };
     } else if (origSize === '' && scaleFactor !== '' && newSize !== '') {
       if (isNaN(factor) || isNaN(target) || factor === 0) return null;
       const result = target / factor;
-      steps.push(`\u0418\u0441\u0445\u043e\u0434\u043d\u044b\u0439 = \u041d\u043e\u0432\u044b\u0439 / \u041c\u0430\u0441\u0448\u0442\u0430\u0431`);
+      steps.push(`Исходный = Новый / Масштаб`);
       steps.push(`= ${target} / ${factor} = ${result}`);
-      return { label: '\u0418\u0441\u0445\u043e\u0434\u043d\u044b\u0439 \u0440\u0430\u0437\u043c\u0435\u0440', value: result, steps };
+      return { label: 'Исходный размер', value: result, steps };
     }
     return null;
   }, [origSize, scaleFactor, newSize]);
@@ -132,11 +133,8 @@ export default function ProportionCalc() {
           borderRadius: 3
         }}
       >
-        <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
-          \u041f\u0440\u043e\u043f\u043e\u0440\u0446\u0438\u044f
-        </Typography>
-        <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          \u041e\u0441\u0442\u0430\u0432\u044c\u0442\u0435 \u043e\u0434\u043d\u043e \u043f\u043e\u043b\u0435 \u043f\u0443\u0441\u0442\u044b\u043c \u2014 \u043e\u043d\u043e \u0431\u0443\u0434\u0435\u0442 \u0432\u044b\u0447\u0438\u0441\u043b\u0435\u043d\u043e \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+          Пропорция
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, flexWrap: 'wrap' }}>
@@ -194,7 +192,7 @@ export default function ProportionCalc() {
             onClick={() => { setA(''); setB(''); setC(''); setD(''); }}
             sx={{ textTransform: 'none' }}
           >
-            \u041e\u0447\u0438\u0441\u0442\u0438\u0442\u044c
+            Очистить
           </Button>
         </Box>
 
@@ -207,9 +205,13 @@ export default function ProportionCalc() {
                 mt: 2,
                 textAlign: 'center',
                 borderRadius: 3,
-                background: theme.palette.surfaceContainerLow
+                background: theme.palette.surfaceContainerLow,
+                position: 'relative'
               }}
             >
+              <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
+                <CopyButton text={proportionResult.missing.toString()} />
+              </Box>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                 {proportionResult.missingLabel} =
               </Typography>
@@ -231,7 +233,7 @@ export default function ProportionCalc() {
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, color: 'text.secondary' }}>
-                \u0420\u0435\u0448\u0435\u043d\u0438\u0435
+                Решение
               </Typography>
               {proportionResult.steps.map((step, idx) => (
                 <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
@@ -266,15 +268,15 @@ export default function ProportionCalc() {
           borderRadius: 3
         }}
       >
-        <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
-          \u0417\u043e\u043b\u043e\u0442\u043e\u0435 \u0441\u0435\u0447\u0435\u043d\u0438\u0435
-        </Typography>
-        <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          \u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0447\u0438\u0441\u043b\u043e, \u0447\u0442\u043e\u0431\u044b \u043d\u0430\u0439\u0442\u0438 \u043f\u0430\u0440\u0443 \u043f\u043e \u0437\u043e\u043b\u043e\u0442\u043e\u043c\u0443 \u0441\u0435\u0447\u0435\u043d\u0438\u044e (\u03c6 \u2248 1,618)
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+          <Typography variant="h6" sx={{ fontWeight: 600 }}>
+            Золотое сечение
+          </Typography>
+          <Chip label={`\u03c6 \u2248 1,618`} size="small" variant="outlined" sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }} />
+        </Box>
         <TextField
           fullWidth
-          label="\u0427\u0438\u0441\u043b\u043e"
+          label="Число"
           type="number"
           value={goldenInput}
           onChange={(e) => setGoldenInput(e.target.value)}
@@ -292,15 +294,19 @@ export default function ProportionCalc() {
                   p: 2,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: alpha('#ff9800', 0.06)
+                  background: alpha(theme.palette.warning.main, 0.06),
+                  position: 'relative'
                 }}
               >
+                <Box sx={{ position: 'absolute', top: 4, right: 4 }}>
+                  <CopyButton text={goldenResult.smaller.toString()} />
+                </Box>
                 <Typography variant="caption" color="text.secondary">
-                  \u041c\u0435\u043d\u044c\u0448\u0435\u0435 (\u00f7 \u03c6)
+                  Меньшее (/ \u03c6)
                 </Typography>
                 <Typography
                   variant="h5"
-                  sx={{ fontWeight: 700, fontFamily: 'monospace', color: '#e65100' }}
+                  sx={{ fontWeight: 700, fontFamily: 'monospace', color: theme.palette.warning.dark }}
                 >
                   {formatNum(goldenResult.smaller)}
                 </Typography>
@@ -313,15 +319,15 @@ export default function ProportionCalc() {
                   p: 2,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: alpha('#9c27b0', 0.06)
+                  background: alpha(theme.palette.secondary.main, 0.06)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
-                  \u0412\u0432\u0435\u0434\u0451\u043d\u043d\u043e\u0435
+                  Введённое
                 </Typography>
                 <Typography
                   variant="h5"
-                  sx={{ fontWeight: 700, fontFamily: 'monospace', color: '#9c27b0' }}
+                  sx={{ fontWeight: 700, fontFamily: 'monospace', color: theme.palette.secondary.main }}
                 >
                   {goldenInput}
                 </Typography>
@@ -334,15 +340,19 @@ export default function ProportionCalc() {
                   p: 2,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: alpha('#ff9800', 0.06)
+                  background: alpha(theme.palette.warning.main, 0.06),
+                  position: 'relative'
                 }}
               >
+                <Box sx={{ position: 'absolute', top: 4, right: 4 }}>
+                  <CopyButton text={goldenResult.larger.toString()} />
+                </Box>
                 <Typography variant="caption" color="text.secondary">
-                  \u0411\u043e\u043b\u044c\u0448\u0435\u0435 (\u00d7 \u03c6)
+                  Большее (* \u03c6)
                 </Typography>
                 <Typography
                   variant="h5"
-                  sx={{ fontWeight: 700, fontFamily: 'monospace', color: '#e65100' }}
+                  sx={{ fontWeight: 700, fontFamily: 'monospace', color: theme.palette.warning.dark }}
                 >
                   {formatNum(goldenResult.larger)}
                 </Typography>
@@ -360,18 +370,15 @@ export default function ProportionCalc() {
           borderRadius: 3
         }}
       >
-        <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
-          \u041a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440 \u043c\u0430\u0441\u0448\u0442\u0430\u0431\u0430
-        </Typography>
-        <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          \u0417\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u0435 \u0434\u0432\u0430 \u043f\u043e\u043b\u044f \u0438\u0437 \u0442\u0440\u0451\u0445 \u2014 \u0442\u0440\u0435\u0442\u044c\u0435 \u0432\u044b\u0447\u0438\u0441\u043b\u0438\u0442\u0441\u044f \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+          Калькулятор масштаба
         </Typography>
 
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="\u0418\u0441\u0445\u043e\u0434\u043d\u044b\u0439 \u0440\u0430\u0437\u043c\u0435\u0440"
+              label="Исходный размер"
               type="number"
               value={origSize}
               onChange={(e) => setOrigSize(e.target.value)}
@@ -381,7 +388,7 @@ export default function ProportionCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="\u041c\u0430\u0441\u0448\u0442\u0430\u0431 (\u043c\u043d\u043e\u0436\u0438\u0442\u0435\u043b\u044c)"
+              label="Масштаб (множитель)"
               type="number"
               value={scaleFactor}
               onChange={(e) => setScaleFactor(e.target.value)}
@@ -391,7 +398,7 @@ export default function ProportionCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="\u041d\u043e\u0432\u044b\u0439 \u0440\u0430\u0437\u043c\u0435\u0440"
+              label="Новый размер"
               type="number"
               value={newSize}
               onChange={(e) => setNewSize(e.target.value)}
@@ -407,7 +414,7 @@ export default function ProportionCalc() {
             onClick={() => { setOrigSize(''); setScaleFactor(''); setNewSize(''); }}
             sx={{ textTransform: 'none' }}
           >
-            \u041e\u0447\u0438\u0441\u0442\u0438\u0442\u044c
+            Очистить
           </Button>
         </Box>
 
@@ -420,9 +427,13 @@ export default function ProportionCalc() {
                 mt: 2,
                 textAlign: 'center',
                 borderRadius: 3,
-                background: theme.palette.surfaceContainerLow
+                background: theme.palette.surfaceContainerLow,
+                position: 'relative'
               }}
             >
+              <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
+                <CopyButton text={scaleResult.value.toString()} />
+              </Box>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                 {scaleResult.label}
               </Typography>

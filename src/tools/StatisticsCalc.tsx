@@ -1,17 +1,17 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Box,
   Typography,
   Paper,
   TextField,
   Grid,
-  Button,
   Chip,
   useTheme,
   alpha
 } from '@mui/material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 interface Stats {
   count: number;
@@ -29,7 +29,6 @@ interface Stats {
 export default function StatisticsCalc() {
   const theme = useTheme();
   const [input, setInput] = useState('');
-  const [calculated, setCalculated] = useState(false);
 
   const parseNumbers = (str: string): number[] => {
     return str
@@ -41,7 +40,6 @@ export default function StatisticsCalc() {
   };
 
   const stats = useMemo<Stats | null>(() => {
-    if (!calculated) return null;
     const nums = parseNumbers(input);
     if (nums.length === 0) return null;
 
@@ -75,23 +73,32 @@ export default function StatisticsCalc() {
     const stdDev = Math.sqrt(variance);
 
     return { count, sum, mean, median, mode, min, max, range, variance, stdDev };
-  }, [input, calculated]);
+  }, [input]);
 
   const formatNum = (n: number): string => {
     if (Number.isInteger(n)) return n.toLocaleString('ru-RU');
     return parseFloat(n.toFixed(6)).toLocaleString('ru-RU', { maximumFractionDigits: 6 });
   };
 
+  const buildCopyText = (): string => {
+    if (!stats) return '';
+    const lines = statItems.map((item) => `${item.label}: ${formatNum(stats[item.key] as number)}`);
+    const modeStr = stats.mode.length === 0
+      ? 'Мода: нет (все значения уникальны)'
+      : `Мода: ${stats.mode.map(formatNum).join(', ')}`;
+    return [...lines, modeStr].join('\n');
+  };
+
   const statItems: { label: string; key: keyof Stats; color: string }[] = [
-    { label: 'Количество', key: 'count', color: '#2196f3' },
-    { label: 'Сумма', key: 'sum', color: '#4caf50' },
-    { label: 'Среднее', key: 'mean', color: '#ff9800' },
-    { label: 'Медиана', key: 'median', color: '#9c27b0' },
-    { label: 'Минимум', key: 'min', color: '#00bcd4' },
-    { label: 'Максимум', key: 'max', color: '#f44336' },
-    { label: 'Размах', key: 'range', color: '#795548' },
-    { label: 'Дисперсия', key: 'variance', color: '#607d8b' },
-    { label: 'Стд. отклонение', key: 'stdDev', color: '#e91e63' },
+    { label: 'Количество', key: 'count', color: theme.palette.primary.main },
+    { label: 'Сумма', key: 'sum', color: theme.palette.success.main },
+    { label: 'Среднее', key: 'mean', color: theme.palette.warning.main },
+    { label: 'Медиана', key: 'median', color: theme.palette.secondary.main },
+    { label: 'Минимум', key: 'min', color: theme.palette.info.main },
+    { label: 'Максимум', key: 'max', color: theme.palette.error.main },
+    { label: 'Размах', key: 'range', color: theme.palette.warning.dark },
+    { label: 'Дисперсия', key: 'variance', color: theme.palette.info.dark },
+    { label: 'Стд. отклонение', key: 'stdDev', color: theme.palette.error.light },
   ];
 
   return (
@@ -103,16 +110,13 @@ export default function StatisticsCalc() {
           mb: 3
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          Введите числа через запятую, пробел или точку с запятой
-        </Typography>
         <TextField
           fullWidth
           multiline
           rows={3}
           value={input}
-          onChange={(e) => { setInput(e.target.value); setCalculated(false); }}
-          placeholder="1, 2, 3, 4, 5, 6, 7, 8, 9, 10"
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Введите числа через запятую, пробел или точку с запятой (1, 2, 3, 4, 5)"
           sx={{
             '& .MuiInputBase-input': {
               fontFamily: 'monospace',
@@ -120,31 +124,17 @@ export default function StatisticsCalc() {
             }
           }}
         />
-        <Box sx={{ mt: 1.5, display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Button
-            variant="contained"
-            onClick={() => setCalculated(true)}
-            disabled={!input.trim()}
-            sx={{ textTransform: 'none', fontWeight: 600 }}
-          >
-            Рассчитать
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => { setInput(''); setCalculated(false); }}
-            sx={{ textTransform: 'none' }}
-          >
-            Очистить
-          </Button>
-          {stats && (
+        {stats && (
+          <Box sx={{ mt: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
             <Typography variant="body2" color="text.secondary">
               Распознано чисел: {stats.count}
             </Typography>
-          )}
-        </Box>
+            <CopyButton text={buildCopyText()} tooltip="Копировать все результаты" />
+          </Box>
+        )}
       </Paper>
 
-      {calculated && !stats && (
+      {input.trim() && !stats && (
         <Paper
           elevation={0}
           sx={{
@@ -166,10 +156,6 @@ export default function StatisticsCalc() {
             p: 3
           }}
         >
-          <Typography variant="h6" sx={{ mb: 2.5 }}>
-            Результаты
-          </Typography>
-
           <Grid container spacing={2}>
             {statItems.map((item) => {
               const value = stats[item.key];
@@ -216,11 +202,11 @@ export default function StatisticsCalc() {
                   p: 2,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: alpha('#673ab7', 0.04),
+                  background: alpha(theme.palette.secondary.dark, 0.04),
                   transition: 'all 200ms ease',
                   '&:hover': {
-                    borderColor: '#673ab7',
-                    background: alpha('#673ab7', 0.08)
+                    borderColor: theme.palette.secondary.dark,
+                    background: alpha(theme.palette.secondary.dark, 0.08)
                   }
                 }}
               >
@@ -242,8 +228,8 @@ export default function StatisticsCalc() {
                           sx={{
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            backgroundColor: alpha('#673ab7', 0.15),
-                            color: '#673ab7'
+                            backgroundColor: alpha(theme.palette.secondary.dark, 0.15),
+                            color: theme.palette.secondary.dark
                           }}
                         />
                       ))}

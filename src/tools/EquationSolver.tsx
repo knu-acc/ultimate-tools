@@ -7,7 +7,6 @@ import {
   Paper,
   TextField,
   Grid,
-  Button,
   Chip,
   Tabs,
   Tab,
@@ -15,6 +14,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 interface TabPanelProps {
   children: React.ReactNode;
@@ -30,6 +30,7 @@ function TabPanel({ children, value, index }: TabPanelProps) {
 interface LinearResult {
   x: number;
   steps: string[];
+  identity?: boolean;
 }
 
 interface QuadraticResult {
@@ -39,42 +40,52 @@ interface QuadraticResult {
   type: 'two' | 'one' | 'none';
 }
 
+type LinearOutcome = LinearResult | { error: string } | null;
+type QuadraticOutcome = QuadraticResult | { error: string } | null;
+
+function isLinearResult(v: LinearOutcome): v is LinearResult {
+  return v !== null && 'steps' in v;
+}
+
+function isQuadraticResult(v: QuadraticOutcome): v is QuadraticResult {
+  return v !== null && 'discriminant' in v;
+}
+
+function isError(v: LinearOutcome | QuadraticOutcome): v is { error: string } {
+  return v !== null && 'error' in v;
+}
+
 export default function EquationSolver() {
   const theme = useTheme();
   const [tab, setTab] = useState(0);
 
-  // Linear: ax + b = 0
   const [linA, setLinA] = useState('');
   const [linB, setLinB] = useState('');
-  const [linSolved, setLinSolved] = useState(false);
 
-  // Quadratic: ax² + bx + c = 0
   const [quadA, setQuadA] = useState('');
   const [quadB, setQuadB] = useState('');
   const [quadC, setQuadC] = useState('');
-  const [quadSolved, setQuadSolved] = useState(false);
 
   const formatNum = (n: number): string => {
     if (Number.isInteger(n)) return n.toString();
     return parseFloat(n.toFixed(6)).toString();
   };
 
-  const linearResult = useMemo<LinearResult | string | null>(() => {
-    if (!linSolved) return null;
+  const linearResult = useMemo<LinearOutcome>(() => {
+    if (linA === '' && linB === '') return null;
     const a = parseFloat(linA);
     const b = parseFloat(linB);
-    if (isNaN(a) || isNaN(b)) return 'Введите корректные числа';
+    if (isNaN(a) || isNaN(b)) return null;
 
     const steps: string[] = [];
-    steps.push(`Уравнение: ${formatNum(a)}x + ${formatNum(b)} = 0`);
+    steps.push(`${formatNum(a)}x + ${formatNum(b)} = 0`);
 
     if (a === 0) {
       if (b === 0) {
-        steps.push('0 = 0 — тождество');
-        return { x: NaN, steps } as unknown as string;
+        steps.push('0 = 0 -- тождество');
+        return { x: NaN, steps, identity: true };
       }
-      steps.push(`${formatNum(b)} = 0 — противоречие`);
-      return 'Уравнение не имеет решений (a = 0, b ≠ 0)';
+      return { error: 'Уравнение не имеет решений (a = 0, b \u2260 0)' };
     }
 
     steps.push(`${formatNum(a)}x = ${formatNum(-b)}`);
@@ -82,44 +93,58 @@ export default function EquationSolver() {
     steps.push(`x = ${formatNum(-b)} / ${formatNum(a)}`);
     steps.push(`x = ${formatNum(x)}`);
     return { x, steps };
-  }, [linA, linB, linSolved]);
+  }, [linA, linB]);
 
-  const quadraticResult = useMemo<QuadraticResult | string | null>(() => {
-    if (!quadSolved) return null;
+  const quadraticResult = useMemo<QuadraticOutcome>(() => {
+    if (quadA === '' && quadB === '' && quadC === '') return null;
     const a = parseFloat(quadA);
     const b = parseFloat(quadB);
     const c = parseFloat(quadC);
-    if (isNaN(a) || isNaN(b) || isNaN(c)) return 'Введите корректные числа';
-    if (a === 0) return 'Коэффициент a не может быть равен 0 (это линейное уравнение)';
+    if (isNaN(a) || isNaN(b) || isNaN(c)) return null;
+    if (a === 0) return { error: 'Коэффициент a не может быть равен 0 (это линейное уравнение)' };
 
     const steps: string[] = [];
-    steps.push(`Уравнение: ${formatNum(a)}x² + ${formatNum(b)}x + ${formatNum(c)} = 0`);
+    steps.push(`${formatNum(a)}x\u00B2 + ${formatNum(b)}x + ${formatNum(c)} = 0`);
 
     const D = b * b - 4 * a * c;
-    steps.push(`D = b² − 4ac = ${formatNum(b)}² − 4·${formatNum(a)}·${formatNum(c)} = ${formatNum(D)}`);
+    steps.push(`D = b\u00B2 \u2212 4ac = ${formatNum(b)}\u00B2 \u2212 4\u00B7${formatNum(a)}\u00B7${formatNum(c)} = ${formatNum(D)}`);
 
     if (D < 0) {
-      steps.push('D < 0 — уравнение не имеет действительных корней');
+      steps.push('D < 0 \u2014 уравнение не имеет действительных корней');
       return { discriminant: D, roots: [], steps, type: 'none' };
     }
 
     if (D === 0) {
       const x = -b / (2 * a);
-      steps.push(`D = 0 — один корень (два совпадающих)`);
-      steps.push(`x = −b / (2a) = ${formatNum(-b)} / ${formatNum(2 * a)} = ${formatNum(x)}`);
+      steps.push('D = 0 \u2014 один корень (два совпадающих)');
+      steps.push(`x = \u2212b / (2a) = ${formatNum(-b)} / ${formatNum(2 * a)} = ${formatNum(x)}`);
       return { discriminant: D, roots: [x], steps, type: 'one' };
     }
 
     const sqrtD = Math.sqrt(D);
-    steps.push(`√D = ${formatNum(sqrtD)}`);
+    steps.push(`\u221AD = ${formatNum(sqrtD)}`);
 
     const x1 = (-b + sqrtD) / (2 * a);
     const x2 = (-b - sqrtD) / (2 * a);
-    steps.push(`x₁ = (−b + √D) / (2a) = (${formatNum(-b)} + ${formatNum(sqrtD)}) / ${formatNum(2 * a)} = ${formatNum(x1)}`);
-    steps.push(`x₂ = (−b − √D) / (2a) = (${formatNum(-b)} − ${formatNum(sqrtD)}) / ${formatNum(2 * a)} = ${formatNum(x2)}`);
+    steps.push(`x\u2081 = (\u2212b + \u221AD) / (2a) = (${formatNum(-b)} + ${formatNum(sqrtD)}) / ${formatNum(2 * a)} = ${formatNum(x1)}`);
+    steps.push(`x\u2082 = (\u2212b \u2212 \u221AD) / (2a) = (${formatNum(-b)} \u2212 ${formatNum(sqrtD)}) / ${formatNum(2 * a)} = ${formatNum(x2)}`);
 
     return { discriminant: D, roots: [x1, x2], steps, type: 'two' };
-  }, [quadA, quadB, quadC, quadSolved]);
+  }, [quadA, quadB, quadC]);
+
+  const linearCopyText = useMemo(() => {
+    if (!isLinearResult(linearResult)) return '';
+    if (linearResult.identity) return 'Тождество: 0 = 0';
+    if (isNaN(linearResult.x)) return '';
+    return `x = ${formatNum(linearResult.x)}`;
+  }, [linearResult]);
+
+  const quadraticCopyText = useMemo(() => {
+    if (!isQuadraticResult(quadraticResult)) return '';
+    if (quadraticResult.type === 'none') return 'Нет действительных корней';
+    if (quadraticResult.type === 'one') return `x = ${formatNum(quadraticResult.roots[0])}`;
+    return `x\u2081 = ${formatNum(quadraticResult.roots[0])}, x\u2082 = ${formatNum(quadraticResult.roots[1])}`;
+  }, [quadraticResult]);
 
   const StepsList = ({ steps }: { steps: string[] }) => (
     <Paper
@@ -159,6 +184,27 @@ export default function EquationSolver() {
     </Paper>
   );
 
+  const ResultCard = ({ children, copyText }: { children: React.ReactNode; copyText: string }) => (
+    <Paper
+      elevation={0}
+      sx={{
+        p: 2.5,
+        mt: 2,
+        textAlign: 'center',
+        borderRadius: 3,
+        background: theme.palette.surfaceContainerLow,
+        position: 'relative'
+      }}
+    >
+      {copyText && (
+        <Box sx={{ position: 'absolute', top: 12, right: 12 }}>
+          <CopyButton text={copyText} />
+        </Box>
+      )}
+      {children}
+    </Paper>
+  );
+
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
       <Paper
@@ -170,35 +216,28 @@ export default function EquationSolver() {
       >
         <Tabs
           value={tab}
-          onChange={(_, v) => {
-            setTab(v);
-            setLinSolved(false);
-            setQuadSolved(false);
-          }}
+          onChange={(_, v) => setTab(v)}
           sx={{
             mb: 1,
             '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' }
           }}
         >
           <Tab label="Линейное (ax + b = 0)" />
-          <Tab label="Квадратное (ax² + bx + c = 0)" />
+          <Tab label="Квадратное (ax\u00B2 + bx + c = 0)" />
         </Tabs>
 
         <Divider />
 
         {/* Linear equation */}
         <TabPanel value={tab} index={0}>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-            Решение линейного уравнения вида ax + b = 0
-          </Typography>
           <Grid container spacing={2} alignItems="center">
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Коэффициент a"
+                label="a"
                 type="number"
                 value={linA}
-                onChange={(e) => { setLinA(e.target.value); setLinSolved(false); }}
+                onChange={(e) => setLinA(e.target.value)}
                 placeholder="2"
               />
             </Grid>
@@ -208,10 +247,10 @@ export default function EquationSolver() {
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Коэффициент b"
+                label="b"
                 type="number"
                 value={linB}
-                onChange={(e) => { setLinB(e.target.value); setLinSolved(false); }}
+                onChange={(e) => setLinB(e.target.value)}
                 placeholder="-6"
               />
             </Grid>
@@ -219,19 +258,8 @@ export default function EquationSolver() {
           <Box sx={{ textAlign: 'center', mt: 1 }}>
             <Typography variant="body2" color="text.secondary">= 0</Typography>
           </Box>
-          <Box sx={{ mt: 2 }}>
-            <Button
-              variant="contained"
-              fullWidth
-              onClick={() => setLinSolved(true)}
-              disabled={!linA && !linB}
-              sx={{ textTransform: 'none', fontWeight: 600 }}
-            >
-              Решить уравнение
-            </Button>
-          </Box>
 
-          {typeof linearResult === 'string' && (
+          {isError(linearResult) && (
             <Paper
               elevation={0}
               sx={{
@@ -243,94 +271,82 @@ export default function EquationSolver() {
               }}
             >
               <Typography variant="body1" sx={{ color: 'error.main', fontWeight: 600 }}>
-                {linearResult}
+                {linearResult.error}
               </Typography>
             </Paper>
           )}
 
-          {linearResult && typeof linearResult === 'object' && 'x' in linearResult && !isNaN((linearResult as LinearResult).x) && (
+          {isLinearResult(linearResult) && linearResult.identity && (
+            <ResultCard copyText={linearCopyText}>
+              <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                Тождество: 0 = 0
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                Верно при любом x
+              </Typography>
+            </ResultCard>
+          )}
+
+          {isLinearResult(linearResult) && !isNaN(linearResult.x) && !linearResult.identity && (
             <>
-              <Paper
-                elevation={0}
-                sx={{
-                  p: 2.5,
-                  mt: 2,
-                  textAlign: 'center',
-                  borderRadius: 3,
-                  background: theme.palette.surfaceContainerLow
-                }}
-              >
+              <ResultCard copyText={linearCopyText}>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                   Решение
                 </Typography>
                 <Typography variant="h4" sx={{ fontWeight: 700, color: 'primary.main' }}>
-                  x = {formatNum((linearResult as LinearResult).x)}
+                  x = {formatNum(linearResult.x)}
                 </Typography>
-              </Paper>
-              <StepsList steps={(linearResult as LinearResult).steps} />
+              </ResultCard>
+              <StepsList steps={linearResult.steps} />
             </>
           )}
         </TabPanel>
 
         {/* Quadratic equation */}
         <TabPanel value={tab} index={1}>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-            Решение квадратного уравнения вида ax² + bx + c = 0
-          </Typography>
           <Grid container spacing={2} alignItems="center">
-            <Grid size={{ xs: 3 }}>
+            <Grid size={{ xs: 12, sm: 3 }}>
               <TextField
                 fullWidth
                 label="a"
                 type="number"
                 value={quadA}
-                onChange={(e) => { setQuadA(e.target.value); setQuadSolved(false); }}
+                onChange={(e) => setQuadA(e.target.value)}
                 placeholder="1"
               />
             </Grid>
-            <Grid size={{ xs: 1 }} sx={{ textAlign: 'center' }}>
+            <Grid size={{ xs: 12, sm: 1 }} sx={{ textAlign: 'center' }}>
               <Typography variant="body2" color="text.secondary">x² +</Typography>
             </Grid>
-            <Grid size={{ xs: 3 }}>
+            <Grid size={{ xs: 12, sm: 3 }}>
               <TextField
                 fullWidth
                 label="b"
                 type="number"
                 value={quadB}
-                onChange={(e) => { setQuadB(e.target.value); setQuadSolved(false); }}
+                onChange={(e) => setQuadB(e.target.value)}
                 placeholder="-5"
               />
             </Grid>
-            <Grid size={{ xs: 1 }} sx={{ textAlign: 'center' }}>
+            <Grid size={{ xs: 12, sm: 1 }} sx={{ textAlign: 'center' }}>
               <Typography variant="body2" color="text.secondary">x +</Typography>
             </Grid>
-            <Grid size={{ xs: 3 }}>
+            <Grid size={{ xs: 12, sm: 3 }}>
               <TextField
                 fullWidth
                 label="c"
                 type="number"
                 value={quadC}
-                onChange={(e) => { setQuadC(e.target.value); setQuadSolved(false); }}
+                onChange={(e) => setQuadC(e.target.value)}
                 placeholder="6"
               />
             </Grid>
-            <Grid size={{ xs: 1 }} sx={{ textAlign: 'center' }}>
+            <Grid size={{ xs: 12, sm: 1 }} sx={{ textAlign: 'center' }}>
               <Typography variant="body2" color="text.secondary">= 0</Typography>
             </Grid>
           </Grid>
-          <Box sx={{ mt: 2 }}>
-            <Button
-              variant="contained"
-              fullWidth
-              onClick={() => setQuadSolved(true)}
-              disabled={!quadA && !quadB && !quadC}
-              sx={{ textTransform: 'none', fontWeight: 600 }}
-            >
-              Решить уравнение
-            </Button>
-          </Box>
 
-          {typeof quadraticResult === 'string' && (
+          {isError(quadraticResult) && (
             <Paper
               elevation={0}
               sx={{
@@ -342,30 +358,21 @@ export default function EquationSolver() {
               }}
             >
               <Typography variant="body1" sx={{ color: 'error.main', fontWeight: 600 }}>
-                {quadraticResult}
+                {quadraticResult.error}
               </Typography>
             </Paper>
           )}
 
-          {quadraticResult && typeof quadraticResult === 'object' && 'discriminant' in quadraticResult && (
+          {isQuadraticResult(quadraticResult) && (
             <>
-              <Paper
-                elevation={0}
-                sx={{
-                  p: 2.5,
-                  mt: 2,
-                  textAlign: 'center',
-                  borderRadius: 3,
-                  background: theme.palette.surfaceContainerLow
-                }}
-              >
+              <ResultCard copyText={quadraticCopyText}>
                 <Box sx={{ mb: 1.5 }}>
                   <Chip
-                    label={`D = ${formatNum((quadraticResult as QuadraticResult).discriminant)}`}
+                    label={`D = ${formatNum(quadraticResult.discriminant)}`}
                     color={
-                      (quadraticResult as QuadraticResult).type === 'none'
+                      quadraticResult.type === 'none'
                         ? 'error'
-                        : (quadraticResult as QuadraticResult).type === 'one'
+                        : quadraticResult.type === 'one'
                           ? 'warning'
                           : 'success'
                     }
@@ -373,34 +380,34 @@ export default function EquationSolver() {
                     sx={{ fontFamily: 'monospace', fontWeight: 600 }}
                   />
                 </Box>
-                {(quadraticResult as QuadraticResult).type === 'none' && (
+                {quadraticResult.type === 'none' && (
                   <Typography variant="h6" sx={{ color: 'error.main', fontWeight: 600 }}>
                     Нет действительных корней
                   </Typography>
                 )}
-                {(quadraticResult as QuadraticResult).type === 'one' && (
+                {quadraticResult.type === 'one' && (
                   <Typography variant="h4" sx={{ fontWeight: 700, color: 'primary.main' }}>
-                    x = {formatNum((quadraticResult as QuadraticResult).roots[0])}
+                    x = {formatNum(quadraticResult.roots[0])}
                   </Typography>
                 )}
-                {(quadraticResult as QuadraticResult).type === 'two' && (
+                {quadraticResult.type === 'two' && (
                   <Grid container spacing={2}>
                     <Grid size={{ xs: 6 }}>
-                      <Typography variant="body2" color="text.secondary">x₁</Typography>
+                      <Typography variant="body2" color="text.secondary">x&#x2081;</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main' }}>
-                        {formatNum((quadraticResult as QuadraticResult).roots[0])}
+                        {formatNum(quadraticResult.roots[0])}
                       </Typography>
                     </Grid>
                     <Grid size={{ xs: 6 }}>
-                      <Typography variant="body2" color="text.secondary">x₂</Typography>
+                      <Typography variant="body2" color="text.secondary">x&#x2082;</Typography>
                       <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main' }}>
-                        {formatNum((quadraticResult as QuadraticResult).roots[1])}
+                        {formatNum(quadraticResult.roots[1])}
                       </Typography>
                     </Grid>
                   </Grid>
                 )}
-              </Paper>
-              <StepsList steps={(quadraticResult as QuadraticResult).steps} />
+              </ResultCard>
+              <StepsList steps={quadraticResult.steps} />
             </>
           )}
         </TabPanel>

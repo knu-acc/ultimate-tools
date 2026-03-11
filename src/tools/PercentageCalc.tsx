@@ -15,6 +15,7 @@ import {
   alpha
 } from '@mui/material';
 import PercentIcon from '@mui/icons-material/Percent';
+import { CopyButton } from '@/src/components/CopyButton';
 
 interface TabPanelProps {
   children: React.ReactNode;
@@ -96,9 +97,12 @@ export default function PercentageCalc() {
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
         {label}
       </Typography>
-      <Typography variant="h4" sx={{ fontWeight: 700, color: 'primary.main' }}>
-        {value}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+        <Typography variant="h4" sx={{ fontWeight: 700, color: 'primary.main' }}>
+          {value}
+        </Typography>
+        <CopyButton text={value} />
+      </Box>
     </Paper>
   );
 
@@ -131,9 +135,6 @@ export default function PercentageCalc() {
 
         {/* Mode 1: What is X% of Y */}
         <TabPanel value={tab} index={0}>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-            Сколько будет X процентов от числа Y?
-          </Typography>
           <Grid container spacing={2} alignItems="center">
             <Grid size={{ xs: 5 }}>
               <TextField
@@ -169,9 +170,6 @@ export default function PercentageCalc() {
 
         {/* Mode 2: X is what % of Y */}
         <TabPanel value={tab} index={1}>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-            Какой процент составляет X от Y?
-          </Typography>
           <Grid container spacing={2} alignItems="center">
             <Grid size={{ xs: 5 }}>
               <TextField
@@ -204,9 +202,6 @@ export default function PercentageCalc() {
 
         {/* Mode 3: Percentage change */}
         <TabPanel value={tab} index={2}>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-            На сколько процентов изменилось значение?
-          </Typography>
           <Grid container spacing={2} alignItems="center">
             <Grid size={{ xs: 5 }}>
               <TextField
@@ -251,9 +246,6 @@ export default function PercentageCalc() {
 
         {/* Mode 4: Add/subtract % */}
         <TabPanel value={tab} index={3}>
-          <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-            Прибавить или вычесть процент от числа
-          </Typography>
           <Grid container spacing={2} alignItems="center">
             <Grid size={{ xs: 5 }}>
               <TextField
@@ -291,15 +283,18 @@ export default function PercentageCalc() {
                     p: 2.5,
                     textAlign: 'center',
                     borderRadius: 3,
-                    background: alpha('#2e7d32', 0.06)
+                    background: alpha(theme.palette.success.main, 0.06)
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                     + {addSub_pct}%
                   </Typography>
-                  <Typography variant="h5" sx={{ fontWeight: 700, color: '#2e7d32' }}>
-                    {formatNum(result4.add)}
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                    <Typography variant="h5" sx={{ fontWeight: 700, color: theme.palette.success.main }}>
+                      {formatNum(result4.add)}
+                    </Typography>
+                    <CopyButton text={formatNum(result4.add)} />
+                  </Box>
                 </Paper>
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
@@ -309,15 +304,18 @@ export default function PercentageCalc() {
                     p: 2.5,
                     textAlign: 'center',
                     borderRadius: 3,
-                    background: alpha('#c62828', 0.06)
+                    background: alpha(theme.palette.error.main, 0.06)
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                     - {addSub_pct}%
                   </Typography>
-                  <Typography variant="h5" sx={{ fontWeight: 700, color: '#c62828' }}>
-                    {formatNum(result4.sub)}
-                  </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                    <Typography variant="h5" sx={{ fontWeight: 700, color: theme.palette.error.main }}>
+                      {formatNum(result4.sub)}
+                    </Typography>
+                    <CopyButton text={formatNum(result4.sub)} />
+                  </Box>
                 </Paper>
               </Grid>
             </Grid>
