@@ -15,8 +15,6 @@ import {
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import PaletteIcon from '@mui/icons-material/Palette';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CheckIcon from '@mui/icons-material/Check';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { CopyButton } from '@/src/components/CopyButton';
 
 
@@ -81,8 +79,6 @@ export default function ImageColors() {
   const [colors, setColors] = useState<ColorInfo[]>([]);
   const [imageUrl, setImageUrl] = useState('');
   const [dragging, setDragging] = useState(false);
-  const [copiedColor, setCopiedColor] = useState<string | null>(null);
-  const [copiedCss, setCopiedCss] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -144,24 +140,11 @@ export default function ImageColors() {
     setColors([]);
   }, [imageUrl]);
 
-  const copyText = useCallback(async (text: string, key: string) => {
-    await navigator.clipboard.writeText(text);
-    setCopiedColor(key);
-    setTimeout(() => setCopiedColor(null), 2000);
-  }, []);
-
   const generateCssVariables = useCallback(() => {
     return colors
       .map((c, i) => `  --color-${i + 1}: ${c.hex};`)
       .join('\n');
   }, [colors]);
-
-  const copyCssVars = useCallback(async () => {
-    const css = `:root {\n${generateCssVariables()}\n}`;
-    await navigator.clipboard.writeText(css);
-    setCopiedCss(true);
-    setTimeout(() => setCopiedCss(false), 2000);
-  }, [generateCssVariables]);
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
@@ -292,11 +275,9 @@ export default function ImageColors() {
                     <Grid size={{ xs: 6, sm: 4 }} key={i}>
                       <Paper
                         elevation={0}
-                        onClick={() => copyText(c.hex, `color-${i}`)}
                         sx={{
                           p: 1.5,
                           borderRadius: 2,
-                          cursor: 'pointer',
                           transition: 'all 150ms ease',
                           '&:hover': {
                             borderColor: theme.palette.primary.main,
@@ -323,11 +304,7 @@ export default function ImageColors() {
                               rgb({c.r}, {c.g}, {c.b})
                             </Typography>
                           </Box>
-                          {copiedColor === `color-${i}` ? (
-                            <CheckIcon sx={{ fontSize: 16, color: 'success.main' }} />
-                          ) : (
-                            <ContentCopyIcon sx={{ fontSize: 14, color: 'text.disabled' }} />
-                          )}
+                          <CopyButton text={c.hex} size="small" />
                         </Box>
                         <Typography variant="caption" color="text.secondary">
                           {c.percentage}%
@@ -350,15 +327,7 @@ export default function ImageColors() {
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                   Экспорт как CSS переменные
                 </Typography>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  startIcon={copiedCss ? <CheckIcon /> : <ContentCopyIcon />}
-                  onClick={copyCssVars}
-                  color={copiedCss ? 'success' : 'primary'}
-                >
-                  {copiedCss ? 'Скопировано' : 'Копировать'}
-                </Button>
+                <CopyButton text={`:root {\n${generateCssVariables()}\n}`} />
               </Box>
               <TextField
                 fullWidth
