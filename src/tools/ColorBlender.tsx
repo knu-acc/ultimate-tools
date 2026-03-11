@@ -14,10 +14,12 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface RGB {
   r: number;
@@ -106,7 +108,7 @@ function blendRGB(c1: RGB, c2: RGB, t: number): RGB {
   return {
     r: Math.round(c1.r + (c2.r - c1.r) * t),
     g: Math.round(c1.g + (c2.g - c1.g) * t),
-    b: Math.round(c1.b + (c2.b - c1.b) * t),
+    b: Math.round(c1.b + (c2.b - c1.b) * t)
   };
 }
 
@@ -165,8 +167,7 @@ export default function ColorBlender() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={3}>
@@ -184,7 +185,7 @@ export default function ColorBlender() {
                   backgroundColor: color1,
                   border: `2px solid ${theme.palette.divider}`,
                   flexShrink: 0,
-                  boxShadow: `0 2px 8px ${alpha(color1, 0.4)}`,
+                  boxShadow: `0 2px 8px ${alpha(color1, 0.4)}`
                 }}
               />
               <input
@@ -197,7 +198,7 @@ export default function ColorBlender() {
                   border: 'none',
                   cursor: 'pointer',
                   borderRadius: 4,
-                  padding: 0,
+                  padding: 0
                 }}
               />
               <TextField
@@ -223,7 +224,7 @@ export default function ColorBlender() {
                   backgroundColor: color2,
                   border: `2px solid ${theme.palette.divider}`,
                   flexShrink: 0,
-                  boxShadow: `0 2px 8px ${alpha(color2, 0.4)}`,
+                  boxShadow: `0 2px 8px ${alpha(color2, 0.4)}`
                 }}
               />
               <input
@@ -236,7 +237,7 @@ export default function ColorBlender() {
                   border: 'none',
                   cursor: 'pointer',
                   borderRadius: 4,
-                  padding: 0,
+                  padding: 0
                 }}
               />
               <TextField
@@ -296,8 +297,7 @@ export default function ColorBlender() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -311,8 +311,7 @@ export default function ColorBlender() {
             height: 60,
             borderRadius: 2,
             background: `linear-gradient(to right, ${blendedColors.join(', ')})`,
-            mb: 2,
-            border: `1px solid ${theme.palette.divider}`,
+            mb: 2
           }}
         />
 
@@ -322,7 +321,7 @@ export default function ColorBlender() {
             display: 'flex',
             gap: 0.5,
             flexWrap: 'wrap',
-            mb: 3,
+            mb: 3
           }}
         >
           {blendedColors.map((color, index) => (
@@ -338,7 +337,7 @@ export default function ColorBlender() {
                   cursor: 'pointer',
                   textAlign: 'center',
                   transition: 'transform 0.15s ease',
-                  '&:hover': { transform: 'scale(1.05)' },
+                  '&:hover': { transform: 'scale(1.05)' }
                 }}
               >
                 <Box
@@ -346,11 +345,10 @@ export default function ColorBlender() {
                     height: 48,
                     backgroundColor: color,
                     borderRadius: 1.5,
-                    border: `1px solid ${theme.palette.divider}`,
                     mb: 0.5,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
+                    justifyContent: 'center'
                   }}
                 >
                   {copied === `color-${index}` && (
@@ -363,7 +361,7 @@ export default function ColorBlender() {
                     fontFamily: 'monospace',
                     fontSize: '0.65rem',
                     color: 'text.secondary',
-                    display: 'block',
+                    display: 'block'
                   }}
                 >
                   {color}
@@ -382,11 +380,10 @@ export default function ColorBlender() {
           sx={{
             p: 2,
             borderRadius: 2,
-            bgcolor: alpha(theme.palette.primary.main, 0.04),
-            border: `1px solid ${theme.palette.divider}`,
+            bgcolor: theme.palette.surfaceContainerLow,
             display: 'flex',
             alignItems: 'flex-start',
-            gap: 1,
+            gap: 1
           }}
         >
           <Typography
@@ -394,20 +391,12 @@ export default function ColorBlender() {
               fontFamily: 'monospace',
               fontSize: '0.85rem',
               wordBreak: 'break-all',
-              flex: 1,
+              flex: 1
             }}
           >
             {gradientCSS}
           </Typography>
-          <Tooltip title={copied === 'css' ? 'Скопировано!' : 'Копировать CSS'}>
-            <IconButton
-              size="small"
-              onClick={() => copyToClipboard(gradientCSS, 'css')}
-              color={copied === 'css' ? 'success' : 'default'}
-            >
-              {copied === 'css' ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-            </IconButton>
-          </Tooltip>
+          <CopyButton text={gradientCSS} />
         </Paper>
 
         {/* Copy all HEX values */}
@@ -415,7 +404,7 @@ export default function ColorBlender() {
           size="small"
           startIcon={copied === 'all' ? <CheckIcon /> : <ContentCopyIcon />}
           onClick={() => copyToClipboard(blendedColors.join(', '), 'all')}
-          sx={{ mt: 1.5, borderRadius: '16px' }}
+          sx={{ mt: 1.5, borderRadius: 4 }}
         >
           {copied === 'all' ? 'Скопировано!' : 'Копировать все HEX'}
         </Button>

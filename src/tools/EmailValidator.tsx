@@ -12,7 +12,7 @@ import {
   alpha,
   IconButton,
   Tabs,
-  Tab,
+  Tab
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -40,7 +40,7 @@ function validateEmail(email: string): ValidationCheck[] {
   const domainValid = hasAt && domainPart.length > 0 && domainRegex.test(domainPart) && domainPart.includes('.');
 
   const tldPart = domainPart.split('.').pop() || '';
-  const tldValid = domainValid && tldPart.length >= 2 && /^[a-zA-Z]{2,}$/.test(tldPart);
+  const tldValid = domainValid && tldPart.length >= 2 && /^[a-zA-Z]{2}$/.test(tldPart);
 
   const localValid = localPart.length > 0 && /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+$/.test(localPart) && !localPart.startsWith('.') && !localPart.endsWith('.') && !localPart.includes('..');
 
@@ -85,7 +85,7 @@ export default function EmailValidator() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Tabs */}
-      <Paper elevation={0} sx={{ mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ mb: 3, borderRadius: 3 }}>
         <Tabs
           value={tab}
           onChange={(_, v) => setTab(v)}
@@ -94,8 +94,8 @@ export default function EmailValidator() {
             '& .MuiTab-root': {
               textTransform: 'none',
               fontWeight: 500,
-              fontSize: '0.9rem',
-            },
+              fontSize: '0.9rem'
+            }
           }}
         >
           <Tab label="Одиночная проверка" />
@@ -106,7 +106,7 @@ export default function EmailValidator() {
       {/* Single Mode */}
       {tab === 0 && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
             <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
               Введите email для проверки
             </Typography>
@@ -122,8 +122,8 @@ export default function EmailValidator() {
                     <IconButton size="small" onClick={() => setEmail('')} sx={{ mr: 0.5 }}>
                       <CancelIcon fontSize="small" sx={{ color: 'text.disabled' }} />
                     </IconButton>
-                  ) : null,
-                },
+                  ) : null
+                }
               }}
             />
 
@@ -152,7 +152,7 @@ export default function EmailValidator() {
 
           {/* Validation Checks */}
           {checks.length > 0 && (
-            <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+            <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Результаты проверки
               </Typography>
@@ -173,7 +173,7 @@ export default function EmailValidator() {
                         check.passed
                           ? alpha(theme.palette.success.main, 0.2)
                           : alpha(theme.palette.error.main, 0.2)
-                      }`,
+                      }`
                     }}
                   >
                     {check.passed ? (
@@ -195,7 +195,7 @@ export default function EmailValidator() {
       {/* Batch Mode */}
       {tab === 1 && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
             <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
               Введите email-адреса (по одному на строку, или через запятую/точку с запятой)
             </Typography>
@@ -215,7 +215,7 @@ export default function EmailValidator() {
             <Grid container spacing={3}>
               {/* Summary */}
               <Grid size={12}>
-                <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+                <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
                   <Typography variant="h6" sx={{ mb: 2 }}>
                     Итоги проверки
                   </Typography>
@@ -245,7 +245,7 @@ export default function EmailValidator() {
 
               {/* Results List */}
               <Grid size={12}>
-                <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+                <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
                   <Typography variant="h6" sx={{ mb: 2 }}>
                     Детальные результаты
                   </Typography>
@@ -266,7 +266,7 @@ export default function EmailValidator() {
                             result.valid
                               ? alpha(theme.palette.success.main, 0.15)
                               : alpha(theme.palette.error.main, 0.15)
-                          }`,
+                          }`
                         }}
                       >
                         {result.valid ? (

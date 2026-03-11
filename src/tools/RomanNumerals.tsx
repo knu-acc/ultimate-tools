@@ -9,7 +9,7 @@ import {
   Grid,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface ConversionEntry {
@@ -109,7 +109,7 @@ export default function RomanNumerals() {
       const entry: ConversionEntry = {
         input: input.trim(),
         output: result.output,
-        direction: result.direction,
+        direction: result.direction
       };
       setHistory((prev) => {
         const exists = prev.some((h) => h.input === entry.input && h.direction === entry.direction);
@@ -135,7 +135,7 @@ export default function RomanNumerals() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
             Введите число
@@ -148,7 +148,7 @@ export default function RomanNumerals() {
               height: 24,
               fontWeight: 600,
               backgroundColor: alpha(modeColor, 0.12),
-              color: modeColor,
+              color: modeColor
             }}
           />
         </Box>
@@ -169,8 +169,8 @@ export default function RomanNumerals() {
             '& .MuiInputBase-input': {
               fontFamily: 'monospace',
               fontSize: '1.3rem',
-              letterSpacing: 1,
-            },
+              letterSpacing: 1
+            }
           }}
         />
       </Paper>
@@ -184,7 +184,7 @@ export default function RomanNumerals() {
             mb: 3,
             border: `1px solid ${modeColor}`,
             backgroundColor: alpha(modeColor, 0.04),
-            borderRadius: 3,
+            borderRadius: 3
           }}
         >
           <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
@@ -196,7 +196,7 @@ export default function RomanNumerals() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: 2,
-              color: modeColor,
+              color: modeColor
             }}
           >
             {result.output}
@@ -208,7 +208,7 @@ export default function RomanNumerals() {
       )}
 
       {/* Reference Table */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
           Справочная таблица
         </Typography>
@@ -220,14 +220,13 @@ export default function RomanNumerals() {
                 sx={{
                   p: 1,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 2,
                   cursor: 'pointer',
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: '#9c27b0',
-                    backgroundColor: alpha('#9c27b0', 0.04),
-                  },
+                    backgroundColor: alpha('#9c27b0', 0.04)
+                  }
                 }}
                 onClick={() => setInput(String(num))}
               >
@@ -248,7 +247,7 @@ export default function RomanNumerals() {
 
       {/* History */}
       {history.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}` }}>
+        <Paper elevation={0} sx={{ p: 3 }}>
           <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
             История конвертаций
           </Typography>
@@ -268,7 +267,7 @@ export default function RomanNumerals() {
                     backgroundColor: alpha(color, 0.1),
                     color,
                     cursor: 'pointer',
-                    '&:hover': { backgroundColor: alpha(color, 0.2) },
+                    '&:hover': { backgroundColor: alpha(color, 0.2) }
                   }}
                 />
               );

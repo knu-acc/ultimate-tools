@@ -12,7 +12,7 @@ import {
   Divider,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface TabPanelProps {
@@ -126,9 +126,8 @@ export default function FactorialCalc() {
       sx={{
         p: 2,
         mt: 2,
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(theme.palette.info.main, 0.04),
+        background: alpha(theme.palette.info.main, 0.04)
       }}
     >
       <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, color: 'text.secondary' }}>
@@ -144,8 +143,8 @@ export default function FactorialCalc() {
               height: 22,
               fontSize: '0.7rem',
               fontWeight: 700,
-              backgroundColor: alpha(theme.palette.primary.main, 0.12),
-              color: 'primary.main',
+              backgroundColor: theme.palette.surfaceContainerHigh,
+              color: 'primary.main'
             }}
           />
           <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>
@@ -163,9 +162,8 @@ export default function FactorialCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Tabs
@@ -175,7 +173,7 @@ export default function FactorialCalc() {
           scrollButtons="auto"
           sx={{
             mb: 1,
-            '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' },
+            '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' }
           }}
         >
           <Tab label="\u0424\u0430\u043a\u0442\u043e\u0440\u0438\u0430\u043b (n!)" />
@@ -196,7 +194,7 @@ export default function FactorialCalc() {
             value={factN}
             onChange={(e) => setFactN(e.target.value)}
             slotProps={{
-              input: { sx: { fontFamily: 'monospace', fontSize: '1.1rem' } },
+              input: { sx: { fontFamily: 'monospace', fontSize: '1.1rem' } }
             }}
           />
           {factResult && (
@@ -207,9 +205,8 @@ export default function FactorialCalc() {
                   p: 2.5,
                   mt: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha(theme.palette.primary.main, 0.04),
+                  background: theme.palette.surfaceContainerLow
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -221,7 +218,7 @@ export default function FactorialCalc() {
                     fontWeight: 700,
                     color: 'primary.main',
                     fontFamily: 'monospace',
-                    wordBreak: 'break-all',
+                    wordBreak: 'break-all'
                   }}
                 >
                   {formatBigInt(factResult.value)}
@@ -246,7 +243,7 @@ export default function FactorialCalc() {
                 value={permN}
                 onChange={(e) => setPermN(e.target.value)}
                 slotProps={{
-                  input: { sx: { fontFamily: 'monospace' } },
+                  input: { sx: { fontFamily: 'monospace' } }
                 }}
               />
             </Grid>
@@ -258,7 +255,7 @@ export default function FactorialCalc() {
                 value={permR}
                 onChange={(e) => setPermR(e.target.value)}
                 slotProps={{
-                  input: { sx: { fontFamily: 'monospace' } },
+                  input: { sx: { fontFamily: 'monospace' } }
                 }}
               />
             </Grid>
@@ -271,9 +268,8 @@ export default function FactorialCalc() {
                   p: 2.5,
                   mt: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha(theme.palette.primary.main, 0.04),
+                  background: theme.palette.surfaceContainerLow
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -285,7 +281,7 @@ export default function FactorialCalc() {
                     fontWeight: 700,
                     color: 'primary.main',
                     fontFamily: 'monospace',
-                    wordBreak: 'break-all',
+                    wordBreak: 'break-all'
                   }}
                 >
                   {formatBigInt(permResult.value)}
@@ -310,7 +306,7 @@ export default function FactorialCalc() {
                 value={combN}
                 onChange={(e) => setCombN(e.target.value)}
                 slotProps={{
-                  input: { sx: { fontFamily: 'monospace' } },
+                  input: { sx: { fontFamily: 'monospace' } }
                 }}
               />
             </Grid>
@@ -322,7 +318,7 @@ export default function FactorialCalc() {
                 value={combR}
                 onChange={(e) => setCombR(e.target.value)}
                 slotProps={{
-                  input: { sx: { fontFamily: 'monospace' } },
+                  input: { sx: { fontFamily: 'monospace' } }
                 }}
               />
             </Grid>
@@ -335,9 +331,8 @@ export default function FactorialCalc() {
                   p: 2.5,
                   mt: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha(theme.palette.primary.main, 0.04),
+                  background: theme.palette.surfaceContainerLow
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -349,7 +344,7 @@ export default function FactorialCalc() {
                     fontWeight: 700,
                     color: 'primary.main',
                     fontFamily: 'monospace',
-                    wordBreak: 'break-all',
+                    wordBreak: 'break-all'
                   }}
                 >
                   {formatBigInt(combResult.value)}
@@ -366,8 +361,7 @@ export default function FactorialCalc() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="h6" sx={{ mb: 2 }}>
@@ -383,8 +377,8 @@ export default function FactorialCalc() {
                   alignItems: 'center',
                   p: 1,
                   borderRadius: 2,
-                  background: alpha(theme.palette.primary.main, 0.03),
-                  border: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
+                  background: theme.palette.surfaceContainerLow,
+                  border: `1px solid ${alpha(theme.palette.divider, 0.5)}`
                 }}
               >
                 <Chip
@@ -394,7 +388,7 @@ export default function FactorialCalc() {
                     fontFamily: 'monospace',
                     fontWeight: 700,
                     backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                    color: 'primary.main',
+                    color: 'primary.main'
                   }}
                 />
                 <Typography

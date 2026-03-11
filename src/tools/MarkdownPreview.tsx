@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme, IconButton, Button, Divider,
+  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme, IconButton, Button, Divider
 } from '@mui/material';
 import { ContentCopy, FormatBold, FormatItalic, Code, FormatListBulleted, Title } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const defaultMd = `# Заголовок 1
 ## Заголовок 2
@@ -94,7 +96,7 @@ export default function MarkdownPreview() {
   const stats = {
     chars: markdown.length,
     words: markdown.trim() ? markdown.trim().split(/\s+/).length : 0,
-    lines: markdown.split('\n').length,
+    lines: markdown.split('\n').length
   };
 
   return (
@@ -138,8 +140,8 @@ export default function MarkdownPreview() {
             sx={{
               '& .MuiOutlinedInput-root': {
                 fontFamily: 'monospace',
-                fontSize: '0.875rem',
-              },
+                fontSize: '0.875rem'
+              }
             }}
           />
         </Grid>
@@ -166,11 +168,10 @@ export default function MarkdownPreview() {
             sx={{
               p: 2.5,
               borderRadius: 2,
-              border: `1px solid ${theme.palette.divider}`,
               minHeight: 440,
               maxHeight: 440,
               overflow: 'auto',
-              bgcolor: alpha(theme.palette.background.paper, 0.5),
+              bgcolor: alpha(theme.palette.background.paper, 0.5)
             }}
           >
             <div dangerouslySetInnerHTML={{ __html: parseMarkdown(markdown) }} />

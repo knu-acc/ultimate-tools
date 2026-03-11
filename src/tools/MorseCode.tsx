@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, IconButton,
+  Box, Typography, TextField, Paper, Grid, Button, Chip, useTheme, IconButton
 } from '@mui/material';
 import { ContentCopy, SwapVert } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const MORSE_MAP: Record<string, string> = {
   'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
@@ -24,7 +26,7 @@ const MORSE_MAP: Record<string, string> = {
   'М': '--', 'Н': '-.', 'О': '---', 'П': '.--.', 'Р': '.-.', 'С': '...',
   'Т': '-', 'У': '..-', 'Ф': '..-.', 'Х': '....', 'Ц': '-.-.', 'Ч': '---.',
   'Ш': '----', 'Щ': '--.-', 'Ъ': '--.--', 'Ы': '-.--', 'Ь': '-..-',
-  'Э': '..-..', 'Ю': '..--', 'Я': '.-.-', 'Ё': '.',
+  'Э': '..-..', 'Ю': '..--', 'Я': '.-.-', 'Ё': '.'
 };
 
 const REVERSE_MORSE: Record<string, string> = {};
@@ -65,7 +67,7 @@ export default function MorseCode() {
           onClick={() => setMode('encode')}
           sx={{
             fontWeight: mode === 'encode' ? 700 : 400,
-            bgcolor: mode === 'encode' ? alpha(theme.palette.primary.main, 0.12) : alpha(theme.palette.primary.main, 0.04),
+            bgcolor: mode === 'encode' ? theme.palette.surfaceContainerHigh : theme.palette.surfaceContainerLow
           }}
         />
         <Chip
@@ -73,7 +75,7 @@ export default function MorseCode() {
           onClick={() => setMode('decode')}
           sx={{
             fontWeight: mode === 'decode' ? 700 : 400,
-            bgcolor: mode === 'decode' ? alpha(theme.palette.primary.main, 0.12) : alpha(theme.palette.primary.main, 0.04),
+            bgcolor: mode === 'decode' ? theme.palette.surfaceContainerHigh : theme.palette.surfaceContainerLow
           }}
         />
       </Box>
@@ -114,8 +116,8 @@ export default function MorseCode() {
                 fontFamily: mode === 'encode' ? 'monospace' : 'inherit',
                 fontSize: mode === 'encode' ? '1.1rem' : '0.875rem',
                 letterSpacing: mode === 'encode' ? 2 : 'normal',
-                bgcolor: alpha(theme.palette.primary.main, 0.03),
-              },
+                bgcolor: theme.palette.surfaceContainerLow
+              }
             }}
           />
         </Grid>
@@ -124,7 +126,7 @@ export default function MorseCode() {
       {/* Reference table */}
       <Paper
         elevation={0}
-        sx={{ mt: 3, p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.04) }}
+        sx={{ mt: 3, p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
           Справочник

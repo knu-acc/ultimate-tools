@@ -9,12 +9,13 @@ import {
   Chip,
   Grid,
   useTheme,
-  alpha,
-  IconButton,
+  IconButton
 } from '@mui/material';
 import ContentCopy from '@mui/icons-material/ContentCopy';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface UrlParts {
   valid: boolean;
@@ -45,7 +46,7 @@ function parseUrl(input: string): UrlParts | null {
       search: url.search,
       hash: url.hash,
       origin: url.origin,
-      searchParams: params,
+      searchParams: params
     };
   } catch {
     return {
@@ -57,7 +58,7 @@ function parseUrl(input: string): UrlParts | null {
       search: '',
       hash: '',
       origin: '',
-      searchParams: [],
+      searchParams: []
     };
   }
 }
@@ -90,7 +91,7 @@ export default function UrlValidator() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
           Введите URL для анализа
         </Typography>
@@ -106,8 +107,8 @@ export default function UrlValidator() {
                 <IconButton size="small" onClick={() => setUrl('')} sx={{ mr: 0.5 }}>
                   <CancelIcon fontSize="small" sx={{ color: 'text.disabled' }} />
                 </IconButton>
-              ) : null,
-            },
+              ) : null
+            }
           }}
         />
 
@@ -136,7 +137,7 @@ export default function UrlValidator() {
 
       {/* URL Parts */}
       {result && result.valid && (
-        <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+        <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
           <Typography variant="h6" sx={{ mb: 2 }}>
             Компоненты URL
           </Typography>
@@ -150,8 +151,8 @@ export default function UrlValidator() {
                   gap: 1.5,
                   p: 1.5,
                   borderRadius: 2,
-                  backgroundColor: alpha(theme.palette.primary.main, 0.04),
-                  border: `1px solid ${alpha(theme.palette.primary.main, 0.12)}`,
+                  backgroundColor: theme.palette.surfaceContainerLow,
+                  border: `1px solid ${theme.palette.surfaceContainerHigh}`
                 }}
               >
                 <Typography
@@ -183,7 +184,7 @@ export default function UrlValidator() {
 
       {/* Query Parameters Table */}
       {result && result.valid && result.searchParams.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+        <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
           <Typography variant="h6" sx={{ mb: 2 }}>
             Параметры запроса
           </Typography>
@@ -194,7 +195,7 @@ export default function UrlValidator() {
                 sx={{
                   p: 1.5,
                   borderRadius: 2,
-                  backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                  backgroundColor: theme.palette.surfaceContainerHigh
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 700 }}>
@@ -207,7 +208,7 @@ export default function UrlValidator() {
                 sx={{
                   p: 1.5,
                   borderRadius: 2,
-                  backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                  backgroundColor: theme.palette.surfaceContainerHigh
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 700 }}>
@@ -224,10 +225,9 @@ export default function UrlValidator() {
                     sx={{
                       p: 1.5,
                       borderRadius: 2,
-                      border: `1px solid ${theme.palette.divider}`,
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-between',
+                      justifyContent: 'space-between'
                     }}
                   >
                     <Typography
@@ -250,10 +250,9 @@ export default function UrlValidator() {
                     sx={{
                       p: 1.5,
                       borderRadius: 2,
-                      border: `1px solid ${theme.palette.divider}`,
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-between',
+                      justifyContent: 'space-between'
                     }}
                   >
                     <Typography

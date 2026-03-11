@@ -12,10 +12,12 @@ import {
   IconButton,
   Tooltip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type LengthUnit = 'meters' | 'kilometers' | 'centimeters' | 'millimeters' | 'miles' | 'yards' | 'feet' | 'inches';
 
@@ -27,7 +29,7 @@ const unitLabels: Record<LengthUnit, string> = {
   miles: 'Мили (mi)',
   yards: 'Ярды (yd)',
   feet: 'Футы (ft)',
-  inches: 'Дюймы (in)',
+  inches: 'Дюймы (in)'
 };
 
 const unitShort: Record<LengthUnit, string> = {
@@ -38,7 +40,7 @@ const unitShort: Record<LengthUnit, string> = {
   miles: 'mi',
   yards: 'yd',
   feet: 'ft',
-  inches: 'in',
+  inches: 'in'
 };
 
 // Conversion factors to meters
@@ -50,7 +52,7 @@ const toMeters: Record<LengthUnit, number> = {
   miles: 1609.344,
   yards: 0.9144,
   feet: 0.3048,
-  inches: 0.0254,
+  inches: 0.0254
 };
 
 function convertAll(value: number, from: LengthUnit): Record<LengthUnit, number> {
@@ -109,8 +111,7 @@ export default function LengthConverter() {
           p: 3,
           mb: 3,
           borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -127,7 +128,7 @@ export default function LengthConverter() {
             sx={{
               flex: 2,
               minWidth: 180,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' },
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
             }}
           />
           <Select
@@ -137,7 +138,7 @@ export default function LengthConverter() {
             sx={{
               flex: 1,
               minWidth: 200,
-              borderRadius: 2,
+              borderRadius: 2
             }}
           >
             {(Object.keys(unitLabels) as LengthUnit[]).map((unit) => (
@@ -165,11 +166,11 @@ export default function LengthConverter() {
                 p: 2.5,
                 borderRadius: 4,
                 border: `2px solid ${theme.palette.primary.main}`,
-                background: alpha(theme.palette.primary.main, 0.08),
+                background: theme.palette.surfaceContainerHigh,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: 1,
+                gap: 1
               }}
             >
               <Box sx={{ textAlign: 'center' }}>
@@ -193,12 +194,11 @@ export default function LengthConverter() {
                   sx={{
                     p: 2,
                     borderRadius: 4,
-                    border: `1px solid ${theme.palette.divider}`,
                     transition: 'all 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
-                      background: alpha(theme.palette.primary.main, 0.04),
-                    },
+                      background: theme.palette.surfaceContainerLow
+                    }
                   }}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -214,22 +214,13 @@ export default function LengthConverter() {
                           mt: 0.5,
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
+                          whiteSpace: 'nowrap'
                         }}
                       >
                         {valueStr} {unitShort[unit]}
                       </Typography>
                     </Box>
-                    <Tooltip title={copied === unit ? 'Скопировано!' : 'Копировать'}>
-                      <IconButton
-                        size="small"
-                        onClick={() => copyValue(unit, `${valueStr} ${unitShort[unit]}`)}
-                        color={copied === unit ? 'success' : 'default'}
-                        sx={{ mt: 0.5 }}
-                      >
-                        {copied === unit ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                      </IconButton>
-                    </Tooltip>
+                    <CopyButton text={valueStr} />
                   </Box>
                 </Paper>
               </Grid>
@@ -243,8 +234,7 @@ export default function LengthConverter() {
             p: 3,
             mb: 3,
             borderRadius: 4,
-            border: `1px solid ${theme.palette.divider}`,
-            textAlign: 'center',
+            textAlign: 'center'
           }}
         >
           <Typography color="text.secondary">
@@ -258,8 +248,7 @@ export default function LengthConverter() {
         elevation={0}
         sx={{
           p: 3,
-          borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 4
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -273,9 +262,8 @@ export default function LengthConverter() {
                 sx={{
                   p: 1.5,
                   borderRadius: 3,
-                  border: `1px solid ${theme.palette.divider}`,
                   textAlign: 'center',
-                  background: alpha(theme.palette.primary.main, 0.02),
+                  background: theme.palette.surfaceContainerLowest
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: 'monospace' }}>

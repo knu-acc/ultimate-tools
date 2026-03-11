@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, Divider,
+  Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, Divider
 } from '@mui/material';
 import { Casino, ContentCopy, Refresh } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 export default function RandomNumber() {
   const theme = useTheme();
@@ -94,9 +96,9 @@ export default function RandomNumber() {
             label={unique ? 'Уникальные числа' : 'С повторами'}
             onClick={() => setUnique(!unique)}
             sx={{
-              bgcolor: unique ? alpha(theme.palette.primary.main, 0.12) : alpha(theme.palette.primary.main, 0.05),
+              bgcolor: unique ? theme.palette.surfaceContainerHigh : theme.palette.surfaceContainerLow,
               fontWeight: unique ? 600 : 400,
-              mb: 2,
+              mb: 2
             }}
           />
 
@@ -109,8 +111,8 @@ export default function RandomNumber() {
                 onClick={() => { setMin(r.min); setMax(r.max); }}
                 sx={{
                   cursor: 'pointer',
-                  bgcolor: alpha(theme.palette.primary.main, 0.05),
-                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1) },
+                  bgcolor: theme.palette.surfaceContainerLow,
+                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1) }
                 }}
               />
             ))}
@@ -121,7 +123,7 @@ export default function RandomNumber() {
             fullWidth
             startIcon={<Casino />}
             onClick={generate}
-            sx={{ borderRadius: '20px', py: 1.2 }}
+            sx={{ borderRadius: 5, py: 1.2 }}
           >
             Генерировать
           </Button>
@@ -135,9 +137,9 @@ export default function RandomNumber() {
                 sx={{
                   p: 3,
                   borderRadius: 3,
-                  bgcolor: alpha(theme.palette.primary.main, 0.06),
+                  bgcolor: theme.palette.surfaceContainerLow,
                   textAlign: 'center',
-                  mb: 2,
+                  mb: 2
                 }}
               >
                 {results.length === 1 ? (
@@ -153,7 +155,7 @@ export default function RandomNumber() {
                         sx={{
                           fontWeight: 600,
                           fontSize: '0.9rem',
-                          bgcolor: alpha(theme.palette.primary.main, 0.1),
+                          bgcolor: alpha(theme.palette.primary.main, 0.1)
                         }}
                       />
                     ))}
@@ -164,7 +166,7 @@ export default function RandomNumber() {
               {results.length > 1 && (
                 <Paper
                   elevation={0}
-                  sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.03) }}
+                  sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
                 >
                   <Grid container spacing={1}>
                     <Grid size={4}>
@@ -189,7 +191,7 @@ export default function RandomNumber() {
                 size="small"
                 startIcon={<ContentCopy />}
                 onClick={() => navigator.clipboard.writeText(results.join(', '))}
-                sx={{ mt: 1, borderRadius: '16px' }}
+                sx={{ mt: 1, borderRadius: 4 }}
               >
                 Копировать
               </Button>
@@ -197,7 +199,7 @@ export default function RandomNumber() {
           ) : (
             <Paper
               elevation={0}
-              sx={{ p: 4, borderRadius: 3, bgcolor: alpha(theme.palette.primary.main, 0.04), textAlign: 'center' }}
+              sx={{ p: 4, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
             >
               <Casino sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">

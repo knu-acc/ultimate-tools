@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Button, alpha, useTheme, IconButton, Divider,
+  Box, Typography, TextField, Paper, Grid, Button, useTheme, IconButton, Divider
 } from '@mui/material';
 import { ContentCopy, TravelExplore } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 export default function MetaTagGenerator() {
   const theme = useTheme();
@@ -133,7 +135,7 @@ export default function MetaTagGenerator() {
           </Typography>
           <Paper
             elevation={0}
-            sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.03), mb: 2 }}
+            sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow, mb: 2 }}
           >
             <Typography variant="body1" sx={{ color: '#1a0dab', fontWeight: 400, fontSize: '1.1rem', mb: 0.5 }}>
               {title || 'Заголовок страницы'}
@@ -155,7 +157,7 @@ export default function MetaTagGenerator() {
               size="small"
               startIcon={<ContentCopy />}
               onClick={copy}
-              sx={{ borderRadius: '16px' }}
+              sx={{ borderRadius: 4 }}
             >
               {copied ? 'Скопировано!' : 'Копировать'}
             </Button>
@@ -167,7 +169,7 @@ export default function MetaTagGenerator() {
               borderRadius: 2,
               bgcolor: '#1e1e1e',
               maxHeight: 400,
-              overflow: 'auto',
+              overflow: 'auto'
             }}
           >
             <Box
@@ -178,7 +180,7 @@ export default function MetaTagGenerator() {
                 fontSize: '0.75rem',
                 lineHeight: 1.6,
                 color: '#d4d4d4',
-                whiteSpace: 'pre-wrap',
+                whiteSpace: 'pre-wrap'
               }}
             >
               {output}

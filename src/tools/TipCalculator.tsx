@@ -10,14 +10,17 @@ import {
   Chip,
   Divider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
+import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 
 const TIP_PRESETS = [5, 10, 15, 20, 25];
 
 export default function TipCalculator() {
   const theme = useTheme();
 
+  const [currency, setCurrency] = useState('RUB');
+  const sym = getCurrency(currency).symbol;
   const [billAmount, setBillAmount] = useState('');
   const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
   const [customTip, setCustomTip] = useState('');
@@ -58,7 +61,7 @@ export default function TipCalculator() {
       total,
       perPerson,
       tipPerPerson,
-      people: safePeople,
+      people: safePeople
     };
   }, [billAmount, tipPercent, people]);
 
@@ -77,9 +80,8 @@ export default function TipCalculator() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(color, 0.06),
+        background: alpha(color, 0.06)
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -93,20 +95,22 @@ export default function TipCalculator() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </Box>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={2.5}>
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Сумма счёта (₽)"
+              label="Сумма счёта ({sym})"
               type="number"
               value={billAmount}
               onChange={(e) => setBillAmount(e.target.value)}
@@ -115,10 +119,10 @@ export default function TipCalculator() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -139,7 +143,7 @@ export default function TipCalculator() {
                     fontWeight: 600,
                     fontSize: '0.875rem',
                     px: 0.5,
-                    cursor: 'pointer',
+                    cursor: 'pointer'
                   }}
                 />
               ))}
@@ -158,8 +162,8 @@ export default function TipCalculator() {
                     <Typography variant="body2" color="text.disabled">
                       %
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -172,7 +176,7 @@ export default function TipCalculator() {
               value={people}
               onChange={(e) => setPeople(e.target.value)}
               slotProps={{
-                htmlInput: { min: 1 },
+                htmlInput: { min: 1 }
               }}
             />
           </Grid>
@@ -190,21 +194,21 @@ export default function TipCalculator() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Чаевые"
-                  value={`${fmt(results.tipAmount)} ₽`}
+                  value={`${fmt(results.tipAmount)} {sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Итого со счётом"
-                  value={`${fmt(results.total)} ₽`}
+                  value={`${fmt(results.total)} {sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="На каждого"
-                  value={`${fmt(results.perPerson)} ₽`}
+                  value={`${fmt(results.perPerson)} {sym}`}
                   color="#2e7d32"
                 />
               </Grid>
@@ -216,9 +220,8 @@ export default function TipCalculator() {
                 sx={{
                   mt: 2,
                   p: 2,
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha('#6a1b9a', 0.04),
+                  background: alpha('#6a1b9a', 0.04)
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
@@ -229,7 +232,7 @@ export default function TipCalculator() {
                     Счёт на каждого:
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    {fmt(parseFloat(billAmount) / results.people)} ₽
+                    {fmt(parseFloat(billAmount) / results.people)} {sym}
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
@@ -237,7 +240,7 @@ export default function TipCalculator() {
                     Чаевые на каждого:
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 600, color: theme.palette.primary.main }}>
-                    {fmt(results.tipPerPerson)} ₽
+                    {fmt(results.tipPerPerson)} {sym}
                   </Typography>
                 </Box>
                 <Divider sx={{ my: 1 }} />
@@ -246,7 +249,7 @@ export default function TipCalculator() {
                     Итого на каждого:
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 700, color: '#2e7d32' }}>
-                    {fmt(results.perPerson)} ₽
+                    {fmt(results.perPerson)} {sym}
                   </Typography>
                 </Box>
               </Paper>

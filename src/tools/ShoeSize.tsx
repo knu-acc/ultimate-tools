@@ -13,7 +13,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 type SizeSystem = 'eu' | 'us_men' | 'us_women' | 'uk' | 'jp';
@@ -24,7 +24,7 @@ const systemLabels: Record<SizeSystem, string> = {
   us_men: 'US (муж.)',
   us_women: 'US (жен.)',
   uk: 'UK',
-  jp: 'JP (см)',
+  jp: 'JP (см)'
 };
 
 const systemShort: Record<SizeSystem, string> = {
@@ -32,7 +32,7 @@ const systemShort: Record<SizeSystem, string> = {
   us_men: 'US М',
   us_women: 'US Ж',
   uk: 'UK',
-  jp: 'см',
+  jp: 'см'
 };
 
 // All conversions go through EU as the common base
@@ -82,7 +82,7 @@ const systemIndex: Record<SizeSystem, number> = {
   us_men: 1,
   us_women: 2,
   uk: 3,
-  jp: 4,
+  jp: 4
 };
 
 function findClosestRow(
@@ -130,7 +130,7 @@ function interpolateConversion(
         us_men: sorted[i][1],
         us_women: sorted[i][2],
         uk: sorted[i][3],
-        jp: sorted[i][4],
+        jp: sorted[i][4]
       };
     }
     if (sorted[i][fromIdx] < value) {
@@ -163,7 +163,7 @@ function interpolateConversion(
       us_men: closest[1],
       us_women: closest[2],
       uk: closest[3],
-      jp: closest[4],
+      jp: closest[4]
     };
   }
 
@@ -202,8 +202,7 @@ export default function ShoeSize() {
           p: 3,
           mb: 3,
           borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -225,14 +224,14 @@ export default function ShoeSize() {
               fontWeight: 500,
               transition: 'all 200ms ease',
               '&.Mui-selected': {
-                background: alpha(theme.palette.primary.main, 0.12),
+                background: theme.palette.surfaceContainerHigh,
                 color: theme.palette.primary.main,
                 fontWeight: 600,
                 '&:hover': {
-                  background: alpha(theme.palette.primary.main, 0.18),
-                },
-              },
-            },
+                  background: alpha(theme.palette.primary.main, 0.18)
+                }
+              }
+            }
           }}
         >
           <ToggleButton value="men">Мужской</ToggleButton>
@@ -253,7 +252,7 @@ export default function ShoeSize() {
             sx={{
               flex: 2,
               minWidth: 160,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' },
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
             }}
           />
           <Select
@@ -263,7 +262,7 @@ export default function ShoeSize() {
             sx={{
               flex: 1,
               minWidth: 180,
-              borderRadius: 2,
+              borderRadius: 2
             }}
           >
             {(Object.keys(systemLabels) as SizeSystem[]).map((sys) => (
@@ -291,8 +290,8 @@ export default function ShoeSize() {
                 p: 2.5,
                 borderRadius: 4,
                 border: `2px solid ${theme.palette.primary.main}`,
-                background: alpha(theme.palette.primary.main, 0.08),
-                textAlign: 'center',
+                background: theme.palette.surfaceContainerHigh,
+                textAlign: 'center'
               }}
             >
               <Typography
@@ -322,13 +321,12 @@ export default function ShoeSize() {
                 sx={{
                   p: 2,
                   borderRadius: 4,
-                  border: `1px solid ${theme.palette.divider}`,
                   textAlign: 'center',
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: alpha(theme.palette.primary.main, 0.04),
-                  },
+                    background: theme.palette.surfaceContainerLow
+                  }
                 }}
               >
                 <Typography
@@ -342,7 +340,7 @@ export default function ShoeSize() {
                   sx={{
                     fontWeight: 700,
                     fontFamily: 'monospace',
-                    mt: 0.5,
+                    mt: 0.5
                   }}
                 >
                   {formatSize(converted[sys])}
@@ -358,8 +356,7 @@ export default function ShoeSize() {
             p: 3,
             mb: 3,
             borderRadius: 4,
-            border: `1px solid ${theme.palette.divider}`,
-            textAlign: 'center',
+            textAlign: 'center'
           }}
         >
           <Typography color="text.secondary">
@@ -373,8 +370,7 @@ export default function ShoeSize() {
             p: 3,
             mb: 3,
             borderRadius: 4,
-            border: `1px solid ${theme.palette.divider}`,
-            textAlign: 'center',
+            textAlign: 'center'
           }}
         >
           <Typography color="text.secondary">
@@ -388,8 +384,7 @@ export default function ShoeSize() {
         elevation={0}
         sx={{
           p: 3,
-          borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 4
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -406,19 +401,19 @@ export default function ShoeSize() {
                 textAlign: 'center',
                 borderBottom: `1px solid ${theme.palette.divider}`,
                 fontSize: '0.875rem',
-                whiteSpace: 'nowrap',
+                whiteSpace: 'nowrap'
               },
               '& th': {
                 fontWeight: 600,
                 color: 'text.secondary',
-                background: alpha(theme.palette.primary.main, 0.04),
+                background: theme.palette.surfaceContainerLow
               },
               '& td': {
-                fontFamily: 'monospace',
+                fontFamily: 'monospace'
               },
               '& tr:hover td': {
-                background: alpha(theme.palette.primary.main, 0.03),
-              },
+                background: theme.palette.surfaceContainerLow
+              }
             }}
           >
             <thead>

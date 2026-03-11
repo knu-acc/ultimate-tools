@@ -12,9 +12,11 @@ import {
   FormControlLabel,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopy from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const LOREM_WORDS = [
   'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
@@ -124,7 +126,7 @@ export default function LoremGenerator() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Controls */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
           Настройки генерации
         </Typography>
@@ -140,7 +142,7 @@ export default function LoremGenerator() {
             if (!isNaN(v)) setParagraphCount(Math.max(1, Math.min(20, v)));
           }}
           slotProps={{
-            input: { inputProps: { min: 1, max: 20 } },
+            input: { inputProps: { min: 1, max: 20 } }
           }}
           sx={{ mb: 3 }}
         />
@@ -202,8 +204,7 @@ export default function LoremGenerator() {
             sx={{
               p: 2,
               mb: 2,
-              border: `1px solid ${theme.palette.divider}`,
-              background: alpha(theme.palette.primary.main, 0.04),
+              background: theme.palette.surfaceContainerLow
             }}
           >
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
@@ -226,7 +227,7 @@ export default function LoremGenerator() {
           </Paper>
 
           {/* Text output */}
-          <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, position: 'relative' }}>
+          <Paper elevation={0} sx={{ p: 3, position: 'relative' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography variant="h6">
                 Результат
@@ -237,17 +238,7 @@ export default function LoremGenerator() {
                     Скопировано!
                   </Typography>
                 )}
-                <IconButton
-                  onClick={handleCopy}
-                  size="small"
-                  sx={{
-                    border: `1px solid ${theme.palette.divider}`,
-                    borderRadius: 2,
-                    '&:hover': { background: alpha(theme.palette.primary.main, 0.08) },
-                  }}
-                >
-                  <ContentCopy fontSize="small" />
-                </IconButton>
+                <CopyButton text={output} />
               </Box>
             </Box>
             <Box
@@ -256,8 +247,7 @@ export default function LoremGenerator() {
                 overflowY: 'auto',
                 p: 2,
                 borderRadius: 2,
-                backgroundColor: alpha(theme.palette.text.primary, 0.03),
-                border: `1px solid ${theme.palette.divider}`,
+                backgroundColor: alpha(theme.palette.text.primary, 0.03)
               }}
             >
               {output.split('\n\n').map((paragraph, i) => (
@@ -267,7 +257,7 @@ export default function LoremGenerator() {
                   sx={{
                     mb: i < stats.paragraphs - 1 ? 2 : 0,
                     lineHeight: 1.8,
-                    color: 'text.primary',
+                    color: 'text.primary'
                   }}
                 >
                   {paragraph}

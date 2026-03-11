@@ -12,9 +12,11 @@ import {
   IconButton,
   MenuItem,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface CronState {
   minute: string;
@@ -34,52 +36,52 @@ const presets: Preset[] = [
   {
     label: 'Каждую минуту',
     cron: { minute: '*', hour: '*', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждую минуту',
+    description: 'Выполняется каждую минуту'
   },
   {
     label: 'Каждый час',
     cron: { minute: '0', hour: '*', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется в начале каждого часа',
+    description: 'Выполняется в начале каждого часа'
   },
   {
     label: 'Ежедневно (полночь)',
     cron: { minute: '0', hour: '0', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждый день в полночь',
+    description: 'Выполняется каждый день в полночь'
   },
   {
     label: 'Ежедневно (9:00)',
     cron: { minute: '0', hour: '9', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждый день в 9:00',
+    description: 'Выполняется каждый день в 9:00'
   },
   {
     label: 'Еженедельно (пн)',
     cron: { minute: '0', hour: '0', dayOfMonth: '*', month: '*', dayOfWeek: '1' },
-    description: 'Выполняется каждый понедельник в полночь',
+    description: 'Выполняется каждый понедельник в полночь'
   },
   {
     label: 'Ежемесячно',
     cron: { minute: '0', hour: '0', dayOfMonth: '1', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется 1-го числа каждого месяца в полночь',
+    description: 'Выполняется 1-го числа каждого месяца в полночь'
   },
   {
     label: 'Каждые 5 минут',
     cron: { minute: '*/5', hour: '*', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждые 5 минут',
+    description: 'Выполняется каждые 5 минут'
   },
   {
     label: 'Каждые 30 минут',
     cron: { minute: '*/30', hour: '*', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждые 30 минут',
+    description: 'Выполняется каждые 30 минут'
   },
   {
     label: 'Будни (пн-пт, 9:00)',
     cron: { minute: '0', hour: '9', dayOfMonth: '*', month: '*', dayOfWeek: '1-5' },
-    description: 'Выполняется с понедельника по пятницу в 9:00',
+    description: 'Выполняется с понедельника по пятницу в 9:00'
   },
   {
     label: 'Ежегодно',
     cron: { minute: '0', hour: '0', dayOfMonth: '1', month: '1', dayOfWeek: '*' },
-    description: 'Выполняется 1 января в полночь',
+    description: 'Выполняется 1 января в полночь'
   },
 ];
 
@@ -210,7 +212,7 @@ export default function CronGenerator() {
     hour: '*',
     dayOfMonth: '*',
     month: '*',
-    dayOfWeek: '*',
+    dayOfWeek: '*'
   });
   const [copied, setCopied] = useState(false);
 
@@ -246,9 +248,8 @@ export default function CronGenerator() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         {/* Presets */}
@@ -266,9 +267,9 @@ export default function CronGenerator() {
                 cursor: 'pointer',
                 fontSize: '0.8rem',
                 '&:hover': {
-                  background: alpha(theme.palette.primary.main, 0.08),
-                  borderColor: theme.palette.primary.main,
-                },
+                  background: theme.palette.surfaceContainerHigh,
+                  borderColor: theme.palette.primary.main
+                }
               }}
             />
           ))}
@@ -372,12 +373,11 @@ export default function CronGenerator() {
           sx={{
             p: 2.5,
             mb: 2.5,
-            border: `1px solid ${theme.palette.divider}`,
             borderRadius: 2,
             background: theme.palette.mode === 'dark'
               ? alpha(theme.palette.common.black, 0.3)
               : alpha(theme.palette.grey[50], 1),
-            textAlign: 'center',
+            textAlign: 'center'
           }}
         >
           <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
@@ -390,19 +390,12 @@ export default function CronGenerator() {
                 fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
                 fontWeight: 700,
                 letterSpacing: 2,
-                color: theme.palette.primary.main,
+                color: theme.palette.primary.main
               }}
             >
               {cronExpression}
             </Typography>
-            <IconButton
-              onClick={copyToClipboard}
-              size="small"
-              color={copied ? 'success' : 'default'}
-              title={copied ? 'Скопировано!' : 'Копировать'}
-            >
-              <ContentCopyIcon fontSize="small" />
-            </IconButton>
+            <CopyButton text={cronExpression} />
           </Box>
         </Paper>
 
@@ -413,7 +406,7 @@ export default function CronGenerator() {
             justifyContent: 'center',
             gap: 1,
             mb: 2.5,
-            flexWrap: 'wrap',
+            flexWrap: 'wrap'
           }}
         >
           {[
@@ -440,7 +433,7 @@ export default function CronGenerator() {
             p: 2,
             border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
             borderRadius: 2,
-            background: alpha(theme.palette.primary.main, 0.04),
+            background: theme.palette.surfaceContainerLow
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 0.5 }}>
@@ -464,11 +457,11 @@ export default function CronGenerator() {
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
-                  fontSize: '0.9rem',
+                  fontSize: '0.9rem'
                 },
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2,
-                },
+                  borderRadius: 2
+                }
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -480,7 +473,7 @@ export default function CronGenerator() {
                       hour: parts[1],
                       dayOfMonth: parts[2],
                       month: parts[3],
-                      dayOfWeek: parts[4],
+                      dayOfWeek: parts[4]
                     });
                   }
                 }
@@ -500,7 +493,7 @@ export default function CronGenerator() {
                       hour: parts[1],
                       dayOfMonth: parts[2],
                       month: parts[3],
-                      dayOfWeek: parts[4],
+                      dayOfWeek: parts[4]
                     });
                   }
                 }

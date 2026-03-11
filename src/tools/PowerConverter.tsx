@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import {
-  Box, Typography, Paper, TextField, Select, MenuItem, Grid, IconButton, useTheme, alpha,
-} from '@mui/material';
+  Box, Typography, Paper, TextField, Select, MenuItem, Grid, IconButton, useTheme } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const UNITS = [
   { id: 'watt', name: 'Ватты', short: 'Вт', factor: 1 },
@@ -35,7 +36,7 @@ export default function PowerConverter() {
   const results = UNITS.filter(u => u.id !== fromUnit).map(u => ({
     ...u,
     converted: valid ? (num * source.factor / u.factor) : 0,
-    formatted: valid ? fmt(num * source.factor / u.factor) : '—',
+    formatted: valid ? fmt(num * source.factor / u.factor) : '—'
   }));
 
   const copy = async (id: string, val: string) => {
@@ -44,7 +45,7 @@ export default function PowerConverter() {
 
   return (
     <Box sx={{ maxWidth: 900, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, background: alpha(theme.palette.primary.main, 0.04), borderRadius: 4 }}>
+      <Paper elevation={0} sx={{ p: 3, background: theme.palette.surfaceContainerLow, borderRadius: 4 }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>Исходное значение</Typography>
         <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
           <TextField value={value} onChange={e => { if (e.target.value === '' || /^-?\d*\.?\d*$/.test(e.target.value)) setValue(e.target.value); }} size="small" label="Значение" error={value !== '' && !valid} sx={{ flex: 1, minWidth: 180, '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' } }} />
@@ -56,7 +57,7 @@ export default function PowerConverter() {
         <Grid container spacing={2}>
           {results.map(r => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={r.id}>
-              <Paper elevation={0} sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3, transition: 'all 200ms', '&:hover': { borderColor: theme.palette.primary.main, background: alpha(theme.palette.primary.main, 0.06) } }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius: 3, transition: 'all 200ms', '&:hover': { borderColor: theme.palette.primary.main, background: theme.palette.surfaceContainerLow } }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>{r.name}</Typography>
                   <IconButton size="small" onClick={() => copy(r.id, r.formatted)} sx={{ color: copied === r.id ? theme.palette.success.main : 'text.secondary' }}>

@@ -11,7 +11,7 @@ import {
   Chip,
   Divider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 const PHI = (1 + Math.sqrt(5)) / 2;
@@ -79,7 +79,7 @@ export default function ProportionCalc() {
     return {
       larger: val * PHI,
       smaller: val / PHI,
-      phi: PHI,
+      phi: PHI
     };
   }, [goldenInput]);
 
@@ -129,8 +129,7 @@ export default function ProportionCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
@@ -207,9 +206,8 @@ export default function ProportionCalc() {
                 p: 2.5,
                 mt: 2,
                 textAlign: 'center',
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
-                background: alpha(theme.palette.primary.main, 0.04),
+                background: theme.palette.surfaceContainerLow
               }}
             >
               <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -228,9 +226,8 @@ export default function ProportionCalc() {
               sx={{
                 p: 2,
                 mt: 2,
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
-                background: alpha(theme.palette.info.main, 0.04),
+                background: alpha(theme.palette.info.main, 0.04)
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, color: 'text.secondary' }}>
@@ -246,8 +243,8 @@ export default function ProportionCalc() {
                       height: 22,
                       fontSize: '0.7rem',
                       fontWeight: 700,
-                      backgroundColor: alpha(theme.palette.primary.main, 0.12),
-                      color: 'primary.main',
+                      backgroundColor: theme.palette.surfaceContainerHigh,
+                      color: 'primary.main'
                     }}
                   />
                   <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>
@@ -266,8 +263,7 @@ export default function ProportionCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
@@ -283,7 +279,7 @@ export default function ProportionCalc() {
           value={goldenInput}
           onChange={(e) => setGoldenInput(e.target.value)}
           slotProps={{
-            input: { sx: { fontFamily: 'monospace', fontSize: '1.1rem' } },
+            input: { sx: { fontFamily: 'monospace', fontSize: '1.1rem' } }
           }}
         />
 
@@ -295,9 +291,8 @@ export default function ProportionCalc() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha('#ff9800', 0.06),
+                  background: alpha('#ff9800', 0.06)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -317,9 +312,8 @@ export default function ProportionCalc() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha('#9c27b0', 0.06),
+                  background: alpha('#9c27b0', 0.06)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -339,9 +333,8 @@ export default function ProportionCalc() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha('#ff9800', 0.06),
+                  background: alpha('#ff9800', 0.06)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -364,8 +357,7 @@ export default function ProportionCalc() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
@@ -427,9 +419,8 @@ export default function ProportionCalc() {
                 p: 2.5,
                 mt: 2,
                 textAlign: 'center',
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
-                background: alpha(theme.palette.primary.main, 0.04),
+                background: theme.palette.surfaceContainerLow
               }}
             >
               <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -448,9 +439,8 @@ export default function ProportionCalc() {
               sx={{
                 p: 2,
                 mt: 2,
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
-                background: alpha(theme.palette.info.main, 0.04),
+                background: alpha(theme.palette.info.main, 0.04)
               }}
             >
               {scaleResult.steps.map((step, idx) => (
@@ -463,8 +453,8 @@ export default function ProportionCalc() {
                       height: 22,
                       fontSize: '0.7rem',
                       fontWeight: 700,
-                      backgroundColor: alpha(theme.palette.primary.main, 0.12),
-                      color: 'primary.main',
+                      backgroundColor: theme.palette.surfaceContainerHigh,
+                      color: 'primary.main'
                     }}
                   />
                   <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>

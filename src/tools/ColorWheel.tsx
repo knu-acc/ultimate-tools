@@ -2,9 +2,11 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme,
+  Box, Typography, Paper, Grid, Button, Chip, TextField, useTheme
 } from '@mui/material';
 import { ContentCopy, Palette } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   s /= 100;
@@ -165,10 +167,10 @@ export default function ColorWheel() {
             sx={{
               p: 3,
               borderRadius: 3,
-              bgcolor: alpha(theme.palette.primary.main, 0.04),
+              bgcolor: theme.palette.surfaceContainerLow,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              alignItems: 'center'
             }}
           >
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -199,7 +201,7 @@ export default function ColorWheel() {
                   }px, ${
                     Math.sin(h * Math.PI / 180) * (s / 100) * (wheelSize / 2 - 4) - 8
                   }px)`,
-                  pointerEvents: 'none',
+                  pointerEvents: 'none'
                 }}
               />
             </Box>
@@ -216,8 +218,8 @@ export default function ColorWheel() {
             sx={{
               p: 3,
               borderRadius: 3,
-              bgcolor: alpha(theme.palette.primary.main, 0.04),
-              mb: 2,
+              bgcolor: theme.palette.surfaceContainerLow,
+              mb: 2
             }}
           >
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -232,7 +234,7 @@ export default function ColorWheel() {
                 mb: 2,
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'center'
               }}
             >
               <Typography sx={{ color: getContrastColor(hex), fontWeight: 700, fontSize: '1.2rem' }}>
@@ -258,7 +260,7 @@ export default function ColorWheel() {
                     size="small"
                     onClick={() => copyValue(value, label)}
                     startIcon={<ContentCopy />}
-                    sx={{ borderRadius: '16px', minWidth: 'auto', whiteSpace: 'nowrap' }}
+                    sx={{ borderRadius: 4, minWidth: 'auto', whiteSpace: 'nowrap' }}
                   >
                     {copied === label ? 'Скопировано!' : 'Копировать'}
                   </Button>
@@ -270,7 +272,7 @@ export default function ColorWheel() {
           {/* HSL Sliders */}
           <Paper
             elevation={0}
-            sx={{ p: 3, borderRadius: 3, bgcolor: alpha(theme.palette.primary.main, 0.04) }}
+            sx={{ p: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
           >
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
               Ручная настройка HSL
@@ -313,7 +315,7 @@ export default function ColorWheel() {
           <Grid key={label} size={{ xs: 12, md: 4 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.04) }}
+              sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
             >
               <Typography variant="body2" fontWeight={600} gutterBottom>
                 {label}
@@ -329,7 +331,7 @@ export default function ColorWheel() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       cursor: 'pointer',
-                      '&:hover': { opacity: 0.85 },
+                      '&:hover': { opacity: 0.85 }
                     }}
                     onClick={() => copyValue(c, `${label}-${i}`)}
                   >
@@ -349,7 +351,7 @@ export default function ColorWheel() {
                     sx={{
                       cursor: 'pointer',
                       fontFamily: 'monospace',
-                      fontSize: '0.75rem',
+                      fontSize: '0.75rem'
                     }}
                   />
                 ))}

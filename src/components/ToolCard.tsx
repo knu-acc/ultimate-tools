@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Card, CardActionArea, CardContent, Typography, Box, Chip, alpha, useTheme } from '@mui/material';
+import { Card, CardActionArea, CardContent, Typography, Box, alpha, useTheme } from '@mui/material';
 import Link from 'next/link';
 import { Tool, toolGroups } from '@/src/data/tools';
 import DynamicIcon from './DynamicIcon';
@@ -15,24 +15,22 @@ interface Props {
 export default function ToolCard({ tool, showGroup = false, variant = 'default' }: Props) {
   const theme = useTheme();
   const group = toolGroups.find(g => g.id === tool.groupId);
-  const iconColor = group?.color || theme.palette.primary.main;
 
   if (variant === 'compact') {
     return (
       <Card
         elevation={0}
         sx={{
-          bgcolor: alpha(iconColor, 0.05),
-          border: 'none',
-          transition: `all 200ms cubic-bezier(0.2, 0, 0, 1)`,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms cubic-bezier(0.2, 0, 0, 1)',
           '&:hover': {
-            bgcolor: alpha(iconColor, 0.1),
+            bgcolor: theme.palette.surfaceContainerHigh,
             transform: 'scale(1.02)',
           },
         }}
       >
         <CardActionArea component={Link} href={`/tools/${tool.slug}`} sx={{ p: 2, textAlign: 'center' }}>
-          <DynamicIcon name={tool.icon} sx={{ color: iconColor, fontSize: 32, mb: 1 }} />
+          <DynamicIcon name={tool.icon} sx={{ color: theme.palette.onPrimaryContainer, fontSize: 32, mb: 1 }} />
           <Typography variant="body2" fontWeight={500} noWrap>
             {tool.name}
           </Typography>
@@ -49,7 +47,7 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
           bgcolor: 'transparent',
           transition: `all 200ms cubic-bezier(0.2, 0, 0, 1)`,
           '&:hover': {
-            bgcolor: alpha(theme.palette.primary.main, 0.05),
+            bgcolor: theme.palette.surfaceContainerHigh,
           },
         }}
       >
@@ -62,15 +60,15 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
             sx={{
               width: 40,
               height: 40,
-              borderRadius: '12px',
+              borderRadius: 3,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              bgcolor: alpha(iconColor, 0.08),
+              bgcolor: alpha(theme.palette.primaryContainer, 0.6),
               flexShrink: 0,
             }}
           >
-            <DynamicIcon name={tool.icon} sx={{ color: iconColor, fontSize: 20 }} />
+            <DynamicIcon name={tool.icon} sx={{ color: theme.palette.onPrimaryContainer, fontSize: 20 }} />
           </Box>
           <Box sx={{ minWidth: 0, flexGrow: 1 }}>
             <Typography variant="body2" fontWeight={500} noWrap>
@@ -88,20 +86,14 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
   // Default variant — MD3 filled card
   return (
     <Card
-      elevation={0}
+      elevation={1}
       sx={{
         height: '100%',
-        bgcolor: theme.palette.mode === 'dark'
-          ? alpha(theme.palette.primary.main, 0.05)
-          : alpha(iconColor, 0.04),
-        border: 'none',
-        transition: `all 250ms cubic-bezier(0.2, 0, 0, 1)`,
+        bgcolor: theme.palette.surfaceContainerLow,
+        transition: 'all 250ms cubic-bezier(0.2, 0, 0, 1)',
         '&:hover': {
-          bgcolor: theme.palette.mode === 'dark'
-            ? alpha(theme.palette.primary.main, 0.1)
-            : alpha(iconColor, 0.08),
-          boxShadow: `0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)`,
-          transform: 'translateY(-1px)',
+          bgcolor: theme.palette.surfaceContainerHigh,
+          boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)',
         },
       }}
     >
@@ -122,14 +114,14 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
             sx={{
               width: 48,
               height: 48,
-              borderRadius: '16px',
+              borderRadius: 3,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              bgcolor: alpha(iconColor, theme.palette.mode === 'dark' ? 0.15 : 0.1),
+              bgcolor: theme.palette.primaryContainer,
             }}
           >
-            <DynamicIcon name={tool.icon} sx={{ color: iconColor, fontSize: 24 }} />
+            <DynamicIcon name={tool.icon} sx={{ color: theme.palette.onPrimaryContainer, fontSize: 24 }} />
           </Box>
 
           {/* Title + group */}
@@ -158,23 +150,6 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
           >
             {tool.description}
           </Typography>
-
-          {/* Status chip */}
-          {tool.implemented && (
-            <Chip
-              label="Готов"
-              size="small"
-              sx={{
-                alignSelf: 'flex-start',
-                height: 24,
-                fontSize: '0.6875rem',
-                fontWeight: 500,
-                bgcolor: alpha(theme.palette.success.main, 0.12),
-                color: theme.palette.success.main,
-                border: 'none',
-              }}
-            />
-          )}
         </CardContent>
       </CardActionArea>
     </Card>

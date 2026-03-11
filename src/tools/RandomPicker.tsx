@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider,
+  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider
 } from '@mui/material';
 import { Casino } from '@mui/icons-material';
 
@@ -85,7 +85,7 @@ export default function RandomPicker() {
             disabled={animating}
             sx={{
               mb: 2,
-              '& .MuiOutlinedInput-root': { borderRadius: 3 },
+              '& .MuiOutlinedInput-root': { borderRadius: 3 }
             }}
           />
 
@@ -120,8 +120,8 @@ export default function RandomPicker() {
                 cursor: 'pointer',
                 bgcolor: removePicked
                   ? alpha(theme.palette.warning.main, 0.15)
-                  : alpha(theme.palette.primary.main, 0.06),
-                color: removePicked ? theme.palette.warning.dark : theme.palette.text.primary,
+                  : theme.palette.surfaceContainerLow,
+                color: removePicked ? theme.palette.warning.dark : theme.palette.text.primary
               }}
             />
           </Box>
@@ -133,7 +133,7 @@ export default function RandomPicker() {
             startIcon={<Casino />}
             onClick={pick}
             disabled={animating || items.length === 0}
-            sx={{ borderRadius: '24px', py: 1.2 }}
+            sx={{ borderRadius: 6, py: 1.2 }}
           >
             {animating
               ? 'Выбираю...'
@@ -157,9 +157,9 @@ export default function RandomPicker() {
               sx={{
                 p: 4,
                 borderRadius: 3,
-                bgcolor: alpha(theme.palette.primary.main, 0.08),
+                bgcolor: theme.palette.surfaceContainerHigh,
                 textAlign: 'center',
-                mb: 2,
+                mb: 2
               }}
             >
               <Typography
@@ -171,8 +171,8 @@ export default function RandomPicker() {
                   animation: 'pulse 0.15s infinite alternate',
                   '@keyframes pulse': {
                     '0%': { opacity: 0.6, transform: 'scale(0.97)' },
-                    '100%': { opacity: 1, transform: 'scale(1.03)' },
-                  },
+                    '100%': { opacity: 1, transform: 'scale(1.03)' }
+                  }
                 }}
               >
                 {animText}
@@ -188,7 +188,7 @@ export default function RandomPicker() {
                 borderRadius: 3,
                 bgcolor: alpha(theme.palette.success.main, 0.08),
                 textAlign: 'center',
-                mb: 2,
+                mb: 2
               }}
             >
               <Typography variant="caption" color="text.secondary">
@@ -210,7 +210,7 @@ export default function RandomPicker() {
                         py: 2.5,
                         px: 1,
                         bgcolor: alpha(theme.palette.success.main, 0.12),
-                        color: theme.palette.success.dark,
+                        color: theme.palette.success.dark
                       }}
                     />
                   ))}
@@ -225,8 +225,8 @@ export default function RandomPicker() {
               sx={{
                 p: 4,
                 borderRadius: 3,
-                bgcolor: alpha(theme.palette.primary.main, 0.04),
-                textAlign: 'center',
+                bgcolor: theme.palette.surfaceContainerLow,
+                textAlign: 'center'
               }}
             >
               <Casino sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
@@ -253,7 +253,7 @@ export default function RandomPicker() {
                     py: 0.5,
                     px: 1,
                     borderRadius: 2,
-                    bgcolor: i === 0 ? alpha(theme.palette.success.main, 0.05) : 'transparent',
+                    bgcolor: i === 0 ? alpha(theme.palette.success.main, 0.05) : 'transparent'
                   }}
                 >
                   <Typography variant="caption" color="text.secondary" sx={{ minWidth: 55 }}>
@@ -269,7 +269,7 @@ export default function RandomPicker() {
                           fontWeight: i === 0 ? 700 : 400,
                           bgcolor: i === 0
                             ? alpha(theme.palette.success.main, 0.12)
-                            : alpha(theme.palette.primary.main, 0.06),
+                            : theme.palette.surfaceContainerLow
                         }}
                       />
                     ))}

@@ -10,9 +10,11 @@ import {
   Chip,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type ReverseMode = 'chars' | 'words' | 'lines' | 'mirror';
 
@@ -39,7 +41,7 @@ const FLIP_MAP: Record<string, string> = {
   '.': '\u02D9', ',': '\u2018', '?': '\u00BF', '!': '\u00A1',
   '(': ')', ')': '(', '[': ']', ']': '[', '{': '}', '}': '{',
   '<': '>', '>': '<', '&': '\u214B', '_': '\u203E',
-  "'": ',', '"': '\u201E', '`': ',', ';': '\u061B',
+  "'": ',', '"': '\u201E', '`': ',', ';': '\u061B'
 };
 
 function reverseChars(text: string): string {
@@ -131,9 +133,8 @@ export default function TextReverse() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         {/* Input */}
@@ -150,8 +151,8 @@ export default function TextReverse() {
           sx={{
             mb: 2.5,
             '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
-            },
+              borderRadius: 2
+            }
           }}
         />
 
@@ -171,7 +172,7 @@ export default function TextReverse() {
                 fontWeight: 600,
                 fontSize: '0.85rem',
                 borderRadius: 2,
-                px: 1,
+                px: 1
               }}
             />
           ))}
@@ -196,14 +197,7 @@ export default function TextReverse() {
               <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                 Результат
               </Typography>
-              <IconButton
-                onClick={copyToClipboard}
-                size="small"
-                color={copied ? 'success' : 'default'}
-                title={copied ? 'Скопировано!' : 'Копировать'}
-              >
-                <ContentCopyIcon fontSize="small" />
-              </IconButton>
+              <CopyButton text={output} />
             </Box>
             <TextField
               multiline
@@ -215,11 +209,11 @@ export default function TextReverse() {
                 '& .MuiInputBase-root': {
                   background: theme.palette.mode === 'dark'
                     ? alpha(theme.palette.common.black, 0.3)
-                    : alpha(theme.palette.grey[50], 1),
+                    : alpha(theme.palette.grey[50], 1)
                 },
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2,
-                },
+                  borderRadius: 2
+                }
               }}
             />
           </Box>

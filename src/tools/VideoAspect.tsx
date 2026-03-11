@@ -10,13 +10,14 @@ import {
   Chip,
   TextField,
   Switch,
-  alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface AspectPreset {
   label: string;
@@ -157,7 +158,7 @@ export default function VideoAspect() {
       {/* Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 3, mb: 3, borderRadius: 3 }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
@@ -218,12 +219,11 @@ export default function VideoAspect() {
             sx={{
               p: 3,
               textAlign: 'center',
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
               height: '100%',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
             <AspectRatioIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
@@ -245,12 +245,11 @@ export default function VideoAspect() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
               height: '100%',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
             <Box
@@ -259,11 +258,11 @@ export default function VideoAspect() {
                 height: previewH,
                 border: `2px solid ${theme.palette.primary.main}`,
                 borderRadius: 2,
-                backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                backgroundColor: theme.palette.surfaceContainerHigh,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                transition: 'all 300ms ease',
+                transition: 'all 300ms ease'
               }}
             >
               <Typography variant="caption" color="primary" sx={{ fontWeight: 600 }}>
@@ -277,7 +276,7 @@ export default function VideoAspect() {
       {/* Presets */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, mb: 3, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
           Пропорции
@@ -299,7 +298,7 @@ export default function VideoAspect() {
       {/* Resolution table */}
       <Paper
         elevation={0}
-        sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 3, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
           Распространённые разрешения
@@ -329,7 +328,7 @@ export default function VideoAspect() {
                   key={res.name}
                   sx={{
                     borderBottom: `1px solid ${theme.palette.divider}`,
-                    '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) },
+                    '&:hover': { backgroundColor: theme.palette.surfaceContainerLow }
                   }}
                 >
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>

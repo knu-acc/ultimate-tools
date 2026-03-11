@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, IconButton, Slider,
+  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, IconButton, Slider
 } from '@mui/material';
 import { PlayArrow, Pause, Refresh, SkipNext, Settings } from '@mui/icons-material';
 
@@ -141,9 +141,9 @@ export default function PomodoroTimer() {
             }}
             sx={{
               fontWeight: phase === p ? 700 : 400,
-              bgcolor: phase === p ? alpha(getPhaseColor(p), 0.15) : alpha(theme.palette.primary.main, 0.05),
+              bgcolor: phase === p ? alpha(getPhaseColor(p), 0.15) : theme.palette.surfaceContainerLow,
               color: phase === p ? getPhaseColor(p) : theme.palette.text.primary,
-              border: phase === p ? `2px solid ${alpha(getPhaseColor(p), 0.3)}` : '2px solid transparent',
+              border: phase === p ? `2px solid ${alpha(getPhaseColor(p), 0.3)}` : '2px solid transparent'
             }}
           />
         ))}
@@ -187,21 +187,21 @@ export default function PomodoroTimer() {
           startIcon={isRunning ? <Pause /> : <PlayArrow />}
           onClick={() => setIsRunning(!isRunning)}
           sx={{
-            borderRadius: '28px',
+            borderRadius: 7,
             px: 4,
             bgcolor: getPhaseColor(phase),
-            '&:hover': { bgcolor: alpha(getPhaseColor(phase), 0.85) },
+            '&:hover': { bgcolor: alpha(getPhaseColor(phase), 0.85) }
           }}
         >
           {isRunning ? 'Пауза' : 'Старт'}
         </Button>
-        <IconButton onClick={skipPhase} sx={{ border: `1px solid ${theme.palette.divider}` }}>
+        <IconButton onClick={skipPhase} sx={{ }}>
           <SkipNext />
         </IconButton>
-        <IconButton onClick={reset} sx={{ border: `1px solid ${theme.palette.divider}` }}>
+        <IconButton onClick={reset} sx={{ }}>
           <Refresh />
         </IconButton>
-        <IconButton onClick={() => setShowSettings(!showSettings)} sx={{ border: `1px solid ${theme.palette.divider}` }}>
+        <IconButton onClick={() => setShowSettings(!showSettings)} sx={{ }}>
           <Settings />
         </IconButton>
       </Box>
@@ -218,7 +218,7 @@ export default function PomodoroTimer() {
               bgcolor: i < (completedPomodoros % longBreakInterval)
                 ? getPhaseColor('work')
                 : alpha(theme.palette.text.secondary, 0.15),
-              transition: 'bgcolor 0.3s',
+              transition: 'bgcolor 0.3s'
             }}
           />
         ))}
@@ -231,7 +231,7 @@ export default function PomodoroTimer() {
       {showSettings && (
         <Paper
           elevation={0}
-          sx={{ p: 3, borderRadius: 3, bgcolor: alpha(theme.palette.primary.main, 0.04), maxWidth: 400, mx: 'auto' }}
+          sx={{ p: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, maxWidth: 400, mx: 'auto' }}
         >
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>Настройки</Typography>
 

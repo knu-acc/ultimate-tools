@@ -9,8 +9,7 @@ import {
   Chip,
   TextField,
   Switch,
-  alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 
@@ -72,7 +71,7 @@ const CATEGORY_LABELS: Record<PaperCategory, string> = {
   all: 'Все',
   'iso-a': 'Серия A (ISO)',
   'iso-b': 'Серия B (ISO)',
-  us: 'Американские',
+  us: 'Американские'
 };
 
 function mmToInches(mm: number): string {
@@ -110,7 +109,7 @@ export default function PaperSize() {
       {/* Controls */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, mb: 3, borderRadius: 3 }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
@@ -155,7 +154,7 @@ export default function PaperSize() {
       {selectedEntries.length > 0 && (
         <Paper
           elevation={0}
-          sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+          sx={{ p: 3, mb: 3, borderRadius: 3 }}
         >
           <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
             Визуальное сравнение (нажмите на строку для выбора)
@@ -167,7 +166,7 @@ export default function PaperSize() {
               justifyContent: 'center',
               gap: 2,
               flexWrap: 'wrap',
-              minHeight: scaleBase + 40,
+              minHeight: scaleBase + 40
             }}
           >
             {selectedEntries.map((s) => {
@@ -183,11 +182,11 @@ export default function PaperSize() {
                       height: scaledH,
                       border: `2px solid ${theme.palette.primary.main}`,
                       borderRadius: 1,
-                      backgroundColor: alpha(theme.palette.primary.main, 0.06),
+                      backgroundColor: theme.palette.surfaceContainerLow,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      transition: 'all 300ms ease',
+                      transition: 'all 300ms ease'
                     }}
                   >
                     <Typography variant="caption" sx={{ fontWeight: 600, fontSize: 10 }}>
@@ -207,7 +206,7 @@ export default function PaperSize() {
       {/* Table */}
       <Paper
         elevation={0}
-        sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, borderRadius: 3 }}
       >
         <Box sx={{ overflowX: 'auto' }}>
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -234,9 +233,9 @@ export default function PaperSize() {
                       borderBottom: `1px solid ${theme.palette.divider}`,
                       cursor: 'pointer',
                       backgroundColor: isSelected
-                        ? alpha(theme.palette.primary.main, 0.08)
+                        ? theme.palette.surfaceContainerHigh
                         : 'transparent',
-                      '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) },
+                      '&:hover': { backgroundColor: theme.palette.surfaceContainerLow }
                     }}
                   >
                     <Box component="td" sx={{ py: 1.2, px: 1.5 }}>

@@ -10,7 +10,7 @@ import {
   Button,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface EuclidStep {
@@ -90,8 +90,7 @@ export default function GcdLcm() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
+          mb: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
@@ -106,8 +105,8 @@ export default function GcdLcm() {
             '& .MuiInputBase-input': {
               fontFamily: 'monospace',
               fontSize: '1.2rem',
-              letterSpacing: 1,
-            },
+              letterSpacing: 1
+            }
           }}
         />
         <Box sx={{ mt: 1.5, display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -135,8 +134,7 @@ export default function GcdLcm() {
           sx={{
             p: 2.5,
             textAlign: 'center',
-            border: `1px solid ${theme.palette.divider}`,
-            background: alpha(theme.palette.error.main, 0.06),
+            background: alpha(theme.palette.error.main, 0.06)
           }}
         >
           <Typography variant="body1" sx={{ color: 'error.main', fontWeight: 600 }}>
@@ -155,14 +153,13 @@ export default function GcdLcm() {
                 sx={{
                   p: 3,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
                   background: alpha('#2196f3', 0.04),
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: '#2196f3',
-                    background: alpha('#2196f3', 0.08),
-                  },
+                    background: alpha('#2196f3', 0.08)
+                  }
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -182,7 +179,7 @@ export default function GcdLcm() {
                       fontFamily: 'monospace',
                       backgroundColor: alpha('#2196f3', 0.12),
                       color: '#2196f3',
-                      fontWeight: 600,
+                      fontWeight: 600
                     }}
                   />
                 </Box>
@@ -194,14 +191,13 @@ export default function GcdLcm() {
                 sx={{
                   p: 3,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
                   background: alpha('#4caf50', 0.04),
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: '#4caf50',
-                    background: alpha('#4caf50', 0.08),
-                  },
+                    background: alpha('#4caf50', 0.08)
+                  }
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -221,7 +217,7 @@ export default function GcdLcm() {
                       fontFamily: 'monospace',
                       backgroundColor: alpha('#4caf50', 0.12),
                       color: '#4caf50',
-                      fontWeight: 600,
+                      fontWeight: 600
                     }}
                   />
                 </Box>
@@ -233,8 +229,7 @@ export default function GcdLcm() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
-              border: `1px solid ${theme.palette.divider}`,
+              p: 3
             }}
           >
             <Typography variant="h6" sx={{ mb: 2 }}>
@@ -261,7 +256,7 @@ export default function GcdLcm() {
                       alignItems: 'center',
                       gap: 1.5,
                       mb: 1,
-                      pl: 1,
+                      pl: 1
                     }}
                   >
                     <Chip
@@ -272,8 +267,8 @@ export default function GcdLcm() {
                         height: 24,
                         fontSize: '0.75rem',
                         fontWeight: 700,
-                        backgroundColor: alpha(theme.palette.primary.main, 0.12),
-                        color: 'primary.main',
+                        backgroundColor: theme.palette.surfaceContainerHigh,
+                        color: 'primary.main'
                       }}
                     />
                     <Typography
@@ -302,9 +297,8 @@ export default function GcdLcm() {
                 sx={{
                   p: 2,
                   mt: 2,
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha(theme.palette.info.main, 0.04),
+                  background: alpha(theme.palette.info.main, 0.04)
                 }}
               >
                 <Typography variant="body2" sx={{ fontFamily: 'monospace', color: 'text.secondary' }}>

@@ -9,7 +9,7 @@ import {
   Grid,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface Zone {
@@ -69,9 +69,8 @@ export default function HeartRateZone() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -87,7 +86,7 @@ export default function HeartRateZone() {
               onChange={(e) => setAge(e.target.value)}
               placeholder="25"
               slotProps={{
-                input: { inputProps: { min: 1, max: 120, step: 1 } },
+                input: { inputProps: { min: 1, max: 120, step: 1 } }
               }}
             />
           </Grid>
@@ -100,7 +99,7 @@ export default function HeartRateZone() {
               onChange={(e) => setRestingHR(e.target.value)}
               placeholder="60"
               slotProps={{
-                input: { inputProps: { min: 30, max: 200, step: 1 } },
+                input: { inputProps: { min: 30, max: 200, step: 1 } }
               }}
             />
           </Grid>
@@ -117,9 +116,8 @@ export default function HeartRateZone() {
               p: 3,
               mb: 3,
               textAlign: 'center',
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              background: alpha('#c62828', 0.04),
+              background: alpha('#c62828', 0.04)
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -136,7 +134,7 @@ export default function HeartRateZone() {
                   mt: 1,
                   fontWeight: 500,
                   backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                  color: theme.palette.primary.main,
+                  color: theme.palette.primary.main
                 }}
               />
             )}
@@ -160,7 +158,7 @@ export default function HeartRateZone() {
                     border: `1px solid ${alpha(zone.color, 0.3)}`,
                     borderRadius: 3,
                     background: alpha(zone.color, 0.04),
-                    borderLeft: `4px solid ${zone.color}`,
+                    borderLeft: `4px solid ${zone.color}`
                   }}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
@@ -178,7 +176,7 @@ export default function HeartRateZone() {
                       sx={{
                         fontWeight: 600,
                         backgroundColor: alpha(zone.color, 0.15),
-                        color: zone.color,
+                        color: zone.color
                       }}
                     />
                   </Box>
@@ -191,7 +189,7 @@ export default function HeartRateZone() {
                           height: 10,
                           borderRadius: 5,
                           backgroundColor: alpha(zone.color, 0.12),
-                          overflow: 'hidden',
+                          overflow: 'hidden'
                         }}
                       >
                         <Box
@@ -200,7 +198,7 @@ export default function HeartRateZone() {
                             width: `${widthPct}%`,
                             borderRadius: 5,
                             backgroundColor: zone.color,
-                            transition: 'width 0.4s ease',
+                            transition: 'width 0.4s ease'
                           }}
                         />
                       </Box>
@@ -223,8 +221,7 @@ export default function HeartRateZone() {
             sx={{
               p: 3,
               mt: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -235,7 +232,7 @@ export default function HeartRateZone() {
                 display: 'flex',
                 height: 28,
                 borderRadius: 14,
-                overflow: 'hidden',
+                overflow: 'hidden'
               }}
             >
               {results.zones.map((zone) => (
@@ -246,7 +243,7 @@ export default function HeartRateZone() {
                     backgroundColor: zone.color,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
+                    justifyContent: 'center'
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.6rem' }}>

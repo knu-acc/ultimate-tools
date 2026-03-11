@@ -9,7 +9,7 @@ import {
   Grid,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 type Mode = 'bedtime' | 'wakeup';
@@ -92,7 +92,7 @@ export default function SleepCalc() {
           duration: sleepMin,
           label: `Подъём в ${padTime(wake.h, wake.m)}`,
           color: getColor(sleepMin),
-          tag: getTag(sleepMin),
+          tag: getTag(sleepMin)
         });
       }
     } else {
@@ -107,7 +107,7 @@ export default function SleepCalc() {
           duration: sleepMin,
           label: `Лечь в ${padTime(bed.h, bed.m)}`,
           color: getColor(sleepMin),
-          tag: getTag(sleepMin),
+          tag: getTag(sleepMin)
         });
       }
     }
@@ -123,9 +123,8 @@ export default function SleepCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -151,20 +150,20 @@ export default function SleepCalc() {
                   borderRadius: 2,
                   border: `1.5px solid ${isActive ? theme.palette.primary.main : theme.palette.divider}`,
                   background: isActive
-                    ? alpha(theme.palette.primary.main, 0.08)
+                    ? theme.palette.surfaceContainerHigh
                     : 'transparent',
                   transition: 'all 0.15s ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: alpha(theme.palette.primary.main, 0.04),
-                  },
+                    background: theme.palette.surfaceContainerLow
+                  }
                 }}
               >
                 <Typography
                   variant="body2"
                   sx={{
                     fontWeight: isActive ? 700 : 500,
-                    color: isActive ? 'primary.main' : 'text.primary',
+                    color: isActive ? 'primary.main' : 'text.primary'
                   }}
                 >
                   {opt.label}
@@ -181,7 +180,7 @@ export default function SleepCalc() {
           value={time}
           onChange={(e) => setTime(e.target.value)}
           slotProps={{
-            inputLabel: { shrink: true },
+            inputLabel: { shrink: true }
           }}
         />
 
@@ -197,8 +196,7 @@ export default function SleepCalc() {
           sx={{
             p: 3,
             mb: 3,
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 3
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -221,8 +219,8 @@ export default function SleepCalc() {
                     transition: 'transform 0.15s ease, box-shadow 0.15s ease',
                     '&:hover': {
                       transform: 'translateY(-2px)',
-                      boxShadow: `0 4px 16px ${alpha(opt.color, 0.15)}`,
-                    },
+                      boxShadow: `0 4px 16px ${alpha(opt.color, 0.15)}`
+                    }
                   }}
                 >
                   <Typography
@@ -239,7 +237,7 @@ export default function SleepCalc() {
                       color: '#fff',
                       backgroundColor: opt.color,
                       fontSize: '0.75rem',
-                      mb: 1.5,
+                      mb: 1.5
                     }}
                   />
                   <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
@@ -262,8 +260,7 @@ export default function SleepCalc() {
           sx={{
             p: 3,
             mb: 3,
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 3
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1.5 }}>
@@ -282,7 +279,7 @@ export default function SleepCalc() {
                     height: 12,
                     borderRadius: '50%',
                     backgroundColor: item.color,
-                    flexShrink: 0,
+                    flexShrink: 0
                   }}
                 />
                 <Box>
@@ -304,9 +301,8 @@ export default function SleepCalc() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha('#7b1fa2', 0.03),
+          background: alpha('#7b1fa2', 0.03)
         }}
       >
         <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -327,7 +323,7 @@ export default function SleepCalc() {
                   justifyContent: 'center',
                   flexShrink: 0,
                   fontSize: '0.75rem',
-                  fontWeight: 700,
+                  fontWeight: 700
                 }}
               >
                 {i + 1}

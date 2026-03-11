@@ -11,12 +11,14 @@ import {
   Snackbar,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FormatIndentIncreaseIcon from '@mui/icons-material/FormatIndentIncrease';
 import CompressIcon from '@mui/icons-material/Compress';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 function formatXml(xml: string, indentStr: string): string {
   // Remove existing whitespace between tags
@@ -284,9 +286,8 @@ export default function XmlFormatter() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         {/* Input */}
@@ -305,9 +306,9 @@ export default function XmlFormatter() {
             '& .MuiInputBase-root': {
               fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
               fontSize: '0.85rem',
-              lineHeight: 1.6,
+              lineHeight: 1.6
             },
-            '& .MuiOutlinedInput-root': { borderRadius: 2 },
+            '& .MuiOutlinedInput-root': { borderRadius: 2 }
           }}
         />
 
@@ -396,16 +397,16 @@ export default function XmlFormatter() {
               value={output}
               slotProps={{
                 input: {
-                  readOnly: true,
-                },
+                  readOnly: true
+                }
               }}
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
                   fontSize: '0.85rem',
-                  lineHeight: 1.6,
+                  lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 },
+                '& .MuiOutlinedInput-root': { borderRadius: 2 }
               }}
             />
 

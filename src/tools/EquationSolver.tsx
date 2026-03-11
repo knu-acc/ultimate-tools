@@ -13,7 +13,7 @@ import {
   Tab,
   Divider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface TabPanelProps {
@@ -127,9 +127,8 @@ export default function EquationSolver() {
       sx={{
         p: 2.5,
         mt: 2,
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(theme.palette.info.main, 0.04),
+        background: alpha(theme.palette.info.main, 0.04)
       }}
     >
       <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5, color: 'text.secondary' }}>
@@ -145,8 +144,8 @@ export default function EquationSolver() {
               height: 24,
               fontSize: '0.75rem',
               fontWeight: 700,
-              backgroundColor: alpha(theme.palette.primary.main, 0.12),
-              color: 'primary.main',
+              backgroundColor: theme.palette.surfaceContainerHigh,
+              color: 'primary.main'
             }}
           />
           <Typography
@@ -166,8 +165,7 @@ export default function EquationSolver() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Tabs
@@ -179,7 +177,7 @@ export default function EquationSolver() {
           }}
           sx={{
             mb: 1,
-            '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' },
+            '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' }
           }}
         >
           <Tab label="Линейное (ax + b = 0)" />
@@ -240,9 +238,8 @@ export default function EquationSolver() {
                 p: 2.5,
                 mt: 2,
                 textAlign: 'center',
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
-                background: alpha(theme.palette.error.main, 0.06),
+                background: alpha(theme.palette.error.main, 0.06)
               }}
             >
               <Typography variant="body1" sx={{ color: 'error.main', fontWeight: 600 }}>
@@ -259,9 +256,8 @@ export default function EquationSolver() {
                   p: 2.5,
                   mt: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha(theme.palette.primary.main, 0.04),
+                  background: theme.palette.surfaceContainerLow
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -341,9 +337,8 @@ export default function EquationSolver() {
                 p: 2.5,
                 mt: 2,
                 textAlign: 'center',
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
-                background: alpha(theme.palette.error.main, 0.06),
+                background: alpha(theme.palette.error.main, 0.06)
               }}
             >
               <Typography variant="body1" sx={{ color: 'error.main', fontWeight: 600 }}>
@@ -360,9 +355,8 @@ export default function EquationSolver() {
                   p: 2.5,
                   mt: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha(theme.palette.primary.main, 0.04),
+                  background: theme.palette.surfaceContainerLow
                 }}
               >
                 <Box sx={{ mb: 1.5 }}>

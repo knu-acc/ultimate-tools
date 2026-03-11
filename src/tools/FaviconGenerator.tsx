@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, TextField, Grid, Button, Slider, alpha, useTheme,
+  Box, Typography, Paper, TextField, Grid, Button, Slider, useTheme
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
 
@@ -82,7 +82,7 @@ export default function FaviconGenerator() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 7 }}>
-          <Paper elevation={0} sx={{ p: 3, borderRadius: 3, border: `1px solid ${theme.palette.divider}`, textAlign: 'center', mb: 2 }}>
+          <Paper elevation={0} sx={{ p: 3, borderRadius: 3, textAlign: 'center', mb: 2 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>Предпросмотр</Typography>
             <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', alignItems: 'end', flexWrap: 'wrap' }}>
               {[16, 32, 64, 128].map(size => (
@@ -98,7 +98,7 @@ export default function FaviconGenerator() {
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>Скачать</Typography>
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
             {sizes.map(size => (
-              <Button key={size} variant="outlined" size="small" startIcon={<Download />} onClick={() => download(size)} sx={{ borderRadius: '20px' }}>
+              <Button key={size} variant="outlined" size="small" startIcon={<Download />} onClick={() => download(size)} sx={{ borderRadius: 5 }}>
                 {size}x{size}
               </Button>
             ))}

@@ -9,7 +9,7 @@ import {
   Chip,
   Grid,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -33,9 +33,9 @@ const countries: CountryInfo[] = [
       return {
         international: `+7 (${n.slice(0, 3)}) ${n.slice(3, 6)}-${n.slice(6, 8)}-${n.slice(8, 10)}`,
         national: `8 (${n.slice(0, 3)}) ${n.slice(3, 6)}-${n.slice(6, 8)}-${n.slice(8, 10)}`,
-        e164: `+7${n}`,
+        e164: `+7${n}`
       };
-    },
+    }
   },
   {
     code: 'US',
@@ -47,9 +47,9 @@ const countries: CountryInfo[] = [
       return {
         international: `+1 (${n.slice(0, 3)}) ${n.slice(3, 6)}-${n.slice(6, 10)}`,
         national: `(${n.slice(0, 3)}) ${n.slice(3, 6)}-${n.slice(6, 10)}`,
-        e164: `+1${n}`,
+        e164: `+1${n}`
       };
-    },
+    }
   },
   {
     code: 'UA',
@@ -61,9 +61,9 @@ const countries: CountryInfo[] = [
       return {
         international: `+380 (${n.slice(0, 2)}) ${n.slice(2, 5)}-${n.slice(5, 7)}-${n.slice(7, 9)}`,
         national: `0${n.slice(0, 2)} ${n.slice(2, 5)} ${n.slice(5, 7)} ${n.slice(7, 9)}`,
-        e164: `+380${n}`,
+        e164: `+380${n}`
       };
-    },
+    }
   },
   {
     code: 'BY',
@@ -75,9 +75,9 @@ const countries: CountryInfo[] = [
       return {
         international: `+375 (${n.slice(0, 2)}) ${n.slice(2, 5)}-${n.slice(5, 7)}-${n.slice(7, 9)}`,
         national: `8 (0${n.slice(0, 2)}) ${n.slice(2, 5)}-${n.slice(5, 7)}-${n.slice(7, 9)}`,
-        e164: `+375${n}`,
+        e164: `+375${n}`
       };
-    },
+    }
   },
   {
     code: 'KZ',
@@ -89,9 +89,9 @@ const countries: CountryInfo[] = [
       return {
         international: `+7 (${n.slice(0, 3)}) ${n.slice(3, 6)}-${n.slice(6, 8)}-${n.slice(8, 10)}`,
         national: `8 (${n.slice(0, 3)}) ${n.slice(3, 6)}-${n.slice(6, 8)}-${n.slice(8, 10)}`,
-        e164: `+7${n}`,
+        e164: `+7${n}`
       };
-    },
+    }
   },
   {
     code: 'DE',
@@ -103,9 +103,9 @@ const countries: CountryInfo[] = [
       return {
         international: `+49 ${n.slice(0, 3)} ${n.slice(3, 7)} ${n.slice(7)}`,
         national: `0${n.slice(0, 3)} ${n.slice(3, 7)} ${n.slice(7)}`,
-        e164: `+49${n}`,
+        e164: `+49${n}`
       };
-    },
+    }
   },
   {
     code: 'GB',
@@ -117,9 +117,9 @@ const countries: CountryInfo[] = [
       return {
         international: `+44 ${n.slice(0, 4)} ${n.slice(4)}`,
         national: `0${n.slice(0, 4)} ${n.slice(4)}`,
-        e164: `+44${n}`,
+        e164: `+44${n}`
       };
-    },
+    }
   },
 ];
 
@@ -176,7 +176,7 @@ export default function PhoneValidator() {
         valid: false,
         digits: digitsOnly,
         formatted: null,
-        reason: 'Не удалось определить страну. Проверьте код страны.',
+        reason: 'Не удалось определить страну. Проверьте код страны.'
       };
     }
 
@@ -213,7 +213,7 @@ export default function PhoneValidator() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
           Введите номер телефона
         </Typography>
@@ -265,7 +265,7 @@ export default function PhoneValidator() {
         <Grid container spacing={3}>
           {/* Formatted Versions */}
           <Grid size={12}>
-            <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+            <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Форматированные версии
               </Typography>
@@ -283,8 +283,8 @@ export default function PhoneValidator() {
                       justifyContent: 'space-between',
                       p: 1.5,
                       borderRadius: 2,
-                      backgroundColor: alpha(theme.palette.primary.main, 0.04),
-                      border: `1px solid ${alpha(theme.palette.primary.main, 0.12)}`,
+                      backgroundColor: theme.palette.surfaceContainerLow,
+                      border: `1px solid ${theme.palette.surfaceContainerHigh}`
                     }}
                   >
                     <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>
@@ -301,7 +301,7 @@ export default function PhoneValidator() {
 
           {/* Details */}
           <Grid size={12}>
-            <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+            <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Информация
               </Typography>
@@ -317,7 +317,7 @@ export default function PhoneValidator() {
       )}
 
       {/* Common Country Codes */}
-      <Paper elevation={0} sx={{ p: 3, mt: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mt: 3, borderRadius: 3 }}>
         <Typography variant="h6" sx={{ mb: 2 }}>
           Справочник кодов стран
         </Typography>
@@ -332,12 +332,11 @@ export default function PhoneValidator() {
                   p: 1.5,
                   borderRadius: 2,
                   backgroundColor: alpha(theme.palette.text.primary, 0.03),
-                  border: `1px solid ${theme.palette.divider}`,
                   cursor: 'pointer',
                   transition: 'background-color 0.15s',
                   '&:hover': {
-                    backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                  },
+                    backgroundColor: theme.palette.surfaceContainerHigh
+                  }
                 }}
                 onClick={() => setPhone(item.prefix + ' ')}
               >

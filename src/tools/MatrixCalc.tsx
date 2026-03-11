@@ -11,9 +11,7 @@ import {
   Chip,
   ToggleButton,
   ToggleButtonGroup,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 
 type MatrixSize = 2 | 3 | 4;
 type Matrix = number[][];
@@ -130,7 +128,7 @@ export default function MatrixCalc() {
   const MatrixInput = ({
     label,
     matrix,
-    setter,
+    setter
   }: {
     label: string;
     matrix: string[][];
@@ -140,8 +138,7 @@ export default function MatrixCalc() {
       elevation={0}
       sx={{
         p: 2,
-        border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 3,
+        borderRadius: 3
       }}
     >
       <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
@@ -161,9 +158,9 @@ export default function MatrixCalc() {
                   sx: {
                     fontFamily: 'monospace',
                     textAlign: 'center',
-                    fontSize: '0.9rem',
-                  },
-                },
+                    fontSize: '0.9rem'
+                  }
+                }
               }}
               sx={{ '& input': { textAlign: 'center', p: 1 } }}
             />
@@ -181,8 +178,7 @@ export default function MatrixCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
@@ -223,8 +219,7 @@ export default function MatrixCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
@@ -289,9 +284,8 @@ export default function MatrixCalc() {
           elevation={0}
           sx={{
             p: 3,
-            border: `1px solid ${theme.palette.divider}`,
             borderRadius: 3,
-            background: alpha(theme.palette.primary.main, 0.04),
+            background: theme.palette.surfaceContainerLow
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
@@ -322,7 +316,7 @@ export default function MatrixCalc() {
                 gridTemplateColumns: `repeat(${size}, 1fr)`,
                 gap: 1,
                 maxWidth: size <= 3 ? 300 : 400,
-                mx: 'auto',
+                mx: 'auto'
               }}
             >
               {result.matrix.map((row, i) =>
@@ -333,9 +327,8 @@ export default function MatrixCalc() {
                     sx={{
                       p: 1.5,
                       textAlign: 'center',
-                      border: `1px solid ${theme.palette.divider}`,
                       borderRadius: 2,
-                      background: alpha(theme.palette.primary.main, 0.06),
+                      background: theme.palette.surfaceContainerLow
                     }}
                   >
                     <Typography variant="body1" sx={{ fontFamily: 'monospace', fontWeight: 600 }}>

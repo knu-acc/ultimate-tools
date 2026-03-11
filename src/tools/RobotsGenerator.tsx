@@ -13,13 +13,15 @@ import {
   Chip,
   MenuItem,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface Rule {
   id: number;
@@ -120,8 +122,7 @@ export default function RobotsGenerator() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -134,7 +135,7 @@ export default function RobotsGenerator() {
             sx={{
               cursor: 'pointer',
               bgcolor: alpha(theme.palette.success.main, 0.1),
-              '&:hover': { bgcolor: alpha(theme.palette.success.main, 0.2) },
+              '&:hover': { bgcolor: alpha(theme.palette.success.main, 0.2) }
             }}
           />
           <Chip
@@ -143,7 +144,7 @@ export default function RobotsGenerator() {
             sx={{
               cursor: 'pointer',
               bgcolor: alpha(theme.palette.error.main, 0.1),
-              '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.2) },
+              '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.2) }
             }}
           />
           <Chip
@@ -152,7 +153,7 @@ export default function RobotsGenerator() {
             sx={{
               cursor: 'pointer',
               bgcolor: alpha(theme.palette.primary.main, 0.1),
-              '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.2) },
+              '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.2) }
             }}
           />
         </Box>
@@ -165,8 +166,7 @@ export default function RobotsGenerator() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -219,7 +219,7 @@ export default function RobotsGenerator() {
               size="small"
               startIcon={<AddIcon />}
               onClick={addRule}
-              sx={{ mb: 2, borderRadius: '16px' }}
+              sx={{ mb: 2, borderRadius: 4 }}
             >
               Добавить правило
             </Button>
@@ -252,19 +252,14 @@ export default function RobotsGenerator() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
               <Typography variant="subtitle2" fontWeight={600}>
                 Предпросмотр robots.txt
               </Typography>
-              <Tooltip title={copied ? 'Скопировано!' : 'Копировать'}>
-                <IconButton size="small" onClick={copyContent} color={copied ? 'success' : 'default'}>
-                  {copied ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                </IconButton>
-              </Tooltip>
+              <CopyButton text={content} />
             </Box>
 
             <Paper
@@ -272,9 +267,8 @@ export default function RobotsGenerator() {
               sx={{
                 p: 2,
                 borderRadius: 2,
-                bgcolor: alpha(theme.palette.primary.main, 0.04),
-                border: `1px solid ${theme.palette.divider}`,
-                minHeight: 200,
+                bgcolor: theme.palette.surfaceContainerLow,
+                minHeight: 200
               }}
             >
               <Typography
@@ -283,7 +277,7 @@ export default function RobotsGenerator() {
                   fontFamily: 'monospace',
                   fontSize: '0.85rem',
                   whiteSpace: 'pre-wrap',
-                  m: 0,
+                  m: 0
                 }}
               >
                 {content}
@@ -295,7 +289,7 @@ export default function RobotsGenerator() {
                 size="small"
                 startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
                 onClick={copyContent}
-                sx={{ borderRadius: '16px' }}
+                sx={{ borderRadius: 4 }}
               >
                 {copied ? 'Скопировано!' : 'Копировать'}
               </Button>
@@ -303,7 +297,7 @@ export default function RobotsGenerator() {
                 size="small"
                 startIcon={<DownloadIcon />}
                 onClick={downloadFile}
-                sx={{ borderRadius: '16px' }}
+                sx={{ borderRadius: 4 }}
               >
                 Скачать robots.txt
               </Button>

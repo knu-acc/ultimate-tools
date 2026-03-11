@@ -10,13 +10,15 @@ import {
   Chip,
   TextField,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import PaletteIcon from '@mui/icons-material/Palette';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface ColorInfo {
   hex: string;
@@ -70,7 +72,7 @@ function extractColors(imageData: ImageData, maxColors: number = 12): ColorInfo[
     g: c.g,
     b: c.b,
     count: c.count,
-    percentage: Math.round((c.count / sampledPixels) * 100 * 10) / 10,
+    percentage: Math.round((c.count / sampledPixels) * 100 * 10) / 10
   }));
 }
 
@@ -186,13 +188,13 @@ export default function ImageColors() {
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
             borderRadius: 3,
             backgroundColor: dragging
-              ? alpha(theme.palette.primary.main, 0.06)
+              ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
             transition: 'all 250ms ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
-              backgroundColor: alpha(theme.palette.primary.main, 0.04),
-            },
+              backgroundColor: theme.palette.surfaceContainerLow
+            }
           }}
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
@@ -215,7 +217,7 @@ export default function ImageColors() {
             <Grid size={{ xs: 12, md: 5 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                sx={{ p: 3, borderRadius: 3 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -233,13 +235,12 @@ export default function ImageColors() {
                 </Box>
                 <Box
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 2,
                     overflow: 'hidden',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: alpha(theme.palette.background.default, 0.5),
+                    backgroundColor: alpha(theme.palette.background.default, 0.5)
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -258,8 +259,7 @@ export default function ImageColors() {
                       display: 'flex',
                       height: 40,
                       borderRadius: 2,
-                      overflow: 'hidden',
-                      border: `1px solid ${theme.palette.divider}`,
+                      overflow: 'hidden'
                     }}
                   >
                     {colors.map((c, i) => (
@@ -268,7 +268,7 @@ export default function ImageColors() {
                         sx={{
                           flex: c.percentage,
                           backgroundColor: c.hex,
-                          minWidth: 4,
+                          minWidth: 4
                         }}
                       />
                     ))}
@@ -280,7 +280,7 @@ export default function ImageColors() {
             <Grid size={{ xs: 12, md: 7 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                sx={{ p: 3, borderRadius: 3 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="subtitle2" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -295,14 +295,13 @@ export default function ImageColors() {
                         onClick={() => copyText(c.hex, `color-${i}`)}
                         sx={{
                           p: 1.5,
-                          border: `1px solid ${theme.palette.divider}`,
                           borderRadius: 2,
                           cursor: 'pointer',
                           transition: 'all 150ms ease',
                           '&:hover': {
                             borderColor: theme.palette.primary.main,
-                            backgroundColor: alpha(theme.palette.primary.main, 0.04),
-                          },
+                            backgroundColor: theme.palette.surfaceContainerLow
+                          }
                         }}
                       >
                         <Box
@@ -312,7 +311,7 @@ export default function ImageColors() {
                             borderRadius: 1.5,
                             backgroundColor: c.hex,
                             mb: 1,
-                            border: `1px solid ${alpha(theme.palette.text.primary, 0.1)}`,
+                            border: `1px solid ${alpha(theme.palette.text.primary, 0.1)}`
                           }}
                         />
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -345,7 +344,7 @@ export default function ImageColors() {
           {colors.length > 0 && (
             <Paper
               elevation={0}
-              sx={{ p: 3, mt: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 3, mt: 3, borderRadius: 3 }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -369,8 +368,8 @@ export default function ImageColors() {
                 slotProps={{
                   input: {
                     readOnly: true,
-                    sx: { fontFamily: 'monospace', fontSize: '0.8rem' },
-                  },
+                    sx: { fontFamily: 'monospace', fontSize: '0.8rem' }
+                  }
                 }}
               />
             </Paper>

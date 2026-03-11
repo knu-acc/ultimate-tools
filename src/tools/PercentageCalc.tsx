@@ -12,7 +12,7 @@ import {
   Chip,
   Divider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import PercentIcon from '@mui/icons-material/Percent';
 
@@ -89,9 +89,8 @@ export default function PercentageCalc() {
         p: 2.5,
         mt: 2,
         textAlign: 'center',
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(theme.palette.primary.main, 0.04),
+        background: theme.palette.surfaceContainerLow
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -109,8 +108,7 @@ export default function PercentageCalc() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Tabs
@@ -120,7 +118,7 @@ export default function PercentageCalc() {
           scrollButtons="auto"
           sx={{
             mb: 1,
-            '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' },
+            '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' }
           }}
         >
           <Tab label="X% от Y" />
@@ -145,7 +143,7 @@ export default function PercentageCalc() {
                 value={pctOf_x}
                 onChange={(e) => setPctOf_x(e.target.value)}
                 slotProps={{
-                  input: { endAdornment: <PercentIcon sx={{ color: 'text.disabled', fontSize: 18 }} /> },
+                  input: { endAdornment: <PercentIcon sx={{ color: 'text.disabled', fontSize: 18 }} /> }
                 }}
               />
             </Grid>
@@ -265,7 +263,7 @@ export default function PercentageCalc() {
                 value={addSub_pct}
                 onChange={(e) => setAddSub_pct(e.target.value)}
                 slotProps={{
-                  input: { endAdornment: <PercentIcon sx={{ color: 'text.disabled', fontSize: 18 }} /> },
+                  input: { endAdornment: <PercentIcon sx={{ color: 'text.disabled', fontSize: 18 }} /> }
                 }}
               />
             </Grid>
@@ -292,9 +290,8 @@ export default function PercentageCalc() {
                   sx={{
                     p: 2.5,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    background: alpha('#2e7d32', 0.06),
+                    background: alpha('#2e7d32', 0.06)
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -311,9 +308,8 @@ export default function PercentageCalc() {
                   sx={{
                     p: 2.5,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    background: alpha('#c62828', 0.06),
+                    background: alpha('#c62828', 0.06)
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>

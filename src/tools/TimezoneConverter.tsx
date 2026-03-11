@@ -12,7 +12,7 @@ import {
   IconButton,
   MenuItem,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
@@ -99,7 +99,7 @@ function convertTime(
   return {
     date: `${targetDate.getUTCFullYear()}-${padTwo(targetDate.getUTCMonth() + 1)}-${padTwo(targetDate.getUTCDate())}`,
     time: `${padTwo(targetDate.getUTCHours())}:${padTwo(targetDate.getUTCMinutes())}`,
-    dayShift,
+    dayShift
   };
 }
 
@@ -171,9 +171,8 @@ export default function TimezoneConverter() {
       <Paper
         elevation={0}
         sx={{
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          p: 3,
+          p: 3
         }}
       >
         {/* Source */}
@@ -239,8 +238,7 @@ export default function TimezoneConverter() {
             <IconButton
               onClick={swapWithFirst}
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
-                borderRadius: 2,
+                borderRadius: 2
               }}
             >
               <SwapHorizIcon />
@@ -267,11 +265,10 @@ export default function TimezoneConverter() {
               key={pos}
               elevation={0}
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
                 p: 2,
                 mb: 2,
-                backgroundColor: alpha(theme.palette.primary.main, 0.02),
+                backgroundColor: theme.palette.surfaceContainerLowest
               }}
             >
               <Grid container spacing={2} sx={{ alignItems: 'center' }}>
@@ -300,7 +297,7 @@ export default function TimezoneConverter() {
                       sx={{
                         fontFamily: 'monospace',
                         fontSize: '1.1rem',
-                        fontWeight: 500,
+                        fontWeight: 500
                       }}
                     >
                       {result.date || '—'}
@@ -325,7 +322,7 @@ export default function TimezoneConverter() {
                         fontFamily: 'monospace',
                         fontSize: '1.5rem',
                         fontWeight: 400,
-                        color: 'primary.main',
+                        color: 'primary.main'
                       }}
                     >
                       {result.time || '—'}

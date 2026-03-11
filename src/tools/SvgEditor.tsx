@@ -10,13 +10,15 @@ import {
   Grid,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DownloadIcon from '@mui/icons-material/Download';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const DEFAULT_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
   <rect x="10" y="10" width="180" height="180" rx="20" fill="#4A90D9" stroke="#2C5F8A" stroke-width="3"/>
@@ -27,23 +29,23 @@ const DEFAULT_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height=
 const SVG_TEMPLATES: { label: string; code: string }[] = [
   {
     label: 'Прямоугольник',
-    code: '  <rect x="50" y="50" width="100" height="60" rx="5" fill="#4CAF50" stroke="#388E3C" stroke-width="2"/>',
+    code: '  <rect x="50" y="50" width="100" height="60" rx="5" fill="#4CAF50" stroke="#388E3C" stroke-width="2"/>'
   },
   {
     label: 'Круг',
-    code: '  <circle cx="100" cy="100" r="40" fill="#2196F3" stroke="#1565C0" stroke-width="2"/>',
+    code: '  <circle cx="100" cy="100" r="40" fill="#2196F3" stroke="#1565C0" stroke-width="2"/>'
   },
   {
     label: 'Линия',
-    code: '  <line x1="20" y1="20" x2="180" y2="180" stroke="#F44336" stroke-width="3" stroke-linecap="round"/>',
+    code: '  <line x1="20" y1="20" x2="180" y2="180" stroke="#F44336" stroke-width="3" stroke-linecap="round"/>'
   },
   {
     label: 'Текст',
-    code: '  <text x="100" y="100" text-anchor="middle" font-size="16" fill="#333" font-family="sans-serif">Текст</text>',
+    code: '  <text x="100" y="100" text-anchor="middle" font-size="16" fill="#333" font-family="sans-serif">Текст</text>'
   },
   {
     label: 'Путь',
-    code: '  <path d="M50 150 Q100 50 150 150" fill="none" stroke="#9C27B0" stroke-width="3"/>',
+    code: '  <path d="M50 150 Q100 50 150 150" fill="none" stroke="#9C27B0" stroke-width="3"/>'
   },
 ];
 
@@ -137,7 +139,7 @@ export default function SvgEditor() {
         width: svgEl.getAttribute('width') || 'auto',
         height: svgEl.getAttribute('height') || 'auto',
         viewBox: svgEl.getAttribute('viewBox') || 'нет',
-        elements: svgEl.children.length,
+        elements: svgEl.children.length
       };
     } catch {
       return null;
@@ -151,7 +153,7 @@ export default function SvgEditor() {
       {/* Quick insert buttons */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, mb: 3, borderRadius: 3 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
           <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
@@ -176,7 +178,7 @@ export default function SvgEditor() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper
             elevation={0}
-            sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3, height: '100%' }}
+            sx={{ p: 3, borderRadius: 3, height: '100%' }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -214,9 +216,9 @@ export default function SvgEditor() {
                   sx: {
                     fontFamily: 'monospace',
                     fontSize: '0.8rem',
-                    lineHeight: 1.5,
-                  },
-                },
+                    lineHeight: 1.5
+                  }
+                }
               }}
             />
             {error && (
@@ -234,14 +236,13 @@ export default function SvgEditor() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper
             elevation={0}
-            sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3, height: '100%' }}
+            sx={{ p: 3, borderRadius: 3, height: '100%' }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
               Предпросмотр
             </Typography>
             <Box
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 2,
                 p: 2,
                 minHeight: 300,
@@ -256,7 +257,7 @@ export default function SvgEditor() {
                   linear-gradient(45deg, transparent 75%, ${alpha(theme.palette.text.primary, 0.05)} 75%),
                   linear-gradient(-45deg, transparent 75%, ${alpha(theme.palette.text.primary, 0.05)} 75%)`,
                 backgroundSize: '20px 20px',
-                backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+                backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px'
               }}
             >
               {!error && svgCode.trim() && (

@@ -14,13 +14,15 @@ import {
   Slider,
   MenuItem,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface SitemapEntry {
   id: number;
@@ -92,7 +94,7 @@ export default function SitemapGenerator() {
       loc: url,
       lastmod: '',
       changefreq: 'weekly',
-      priority: 0.5,
+      priority: 0.5
     }));
     setEntries([...entries, ...newEntries]);
     setNextId(id);
@@ -143,8 +145,7 @@ export default function SitemapGenerator() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -219,7 +220,7 @@ export default function SitemapGenerator() {
             startIcon={editingId !== null ? <EditIcon /> : <AddIcon />}
             onClick={addEntry}
             disabled={!loc.trim()}
-            sx={{ borderRadius: '16px' }}
+            sx={{ borderRadius: 4 }}
           >
             {editingId !== null ? 'Сохранить' : 'Добавить'}
           </Button>
@@ -233,7 +234,7 @@ export default function SitemapGenerator() {
                 setChangefreq('weekly');
                 setPriority(0.5);
               }}
-              sx={{ borderRadius: '16px' }}
+              sx={{ borderRadius: 4 }}
             >
               Отмена
             </Button>
@@ -247,8 +248,7 @@ export default function SitemapGenerator() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -272,7 +272,7 @@ export default function SitemapGenerator() {
           startIcon={<AddIcon />}
           onClick={bulkAdd}
           disabled={!bulkText.trim()}
-          sx={{ borderRadius: '16px' }}
+          sx={{ borderRadius: 4 }}
         >
           Добавить все
         </Button>
@@ -285,8 +285,7 @@ export default function SitemapGenerator() {
           sx={{
             p: 3,
             mb: 3,
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 3
           }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -307,12 +306,11 @@ export default function SitemapGenerator() {
               sx={{
                 p: 1.5,
                 mb: 1,
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 2,
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
-                bgcolor: editingId === entry.id ? alpha(theme.palette.primary.main, 0.06) : 'transparent',
+                bgcolor: editingId === entry.id ? theme.palette.surfaceContainerLow : 'transparent'
               }}
             >
               <Box sx={{ flex: 1, overflow: 'hidden' }}>
@@ -323,7 +321,7 @@ export default function SitemapGenerator() {
                     fontSize: '0.85rem',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
+                    whiteSpace: 'nowrap'
                   }}
                 >
                   {entry.loc}
@@ -356,8 +354,7 @@ export default function SitemapGenerator() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
@@ -370,11 +367,7 @@ export default function SitemapGenerator() {
               size="small"
               sx={{ bgcolor: alpha(theme.palette.primary.main, 0.1) }}
             />
-            <Tooltip title={copied ? 'Скопировано!' : 'Копировать XML'}>
-              <IconButton size="small" onClick={copyXml} color={copied ? 'success' : 'default'}>
-                {copied ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-              </IconButton>
-            </Tooltip>
+            <CopyButton text={xml} />
           </Box>
         </Box>
 
@@ -383,10 +376,9 @@ export default function SitemapGenerator() {
           sx={{
             p: 2,
             borderRadius: 2,
-            bgcolor: alpha(theme.palette.primary.main, 0.04),
-            border: `1px solid ${theme.palette.divider}`,
+            bgcolor: theme.palette.surfaceContainerLow,
             maxHeight: 400,
-            overflow: 'auto',
+            overflow: 'auto'
           }}
         >
           <Typography
@@ -396,7 +388,7 @@ export default function SitemapGenerator() {
               fontSize: '0.8rem',
               whiteSpace: 'pre-wrap',
               wordBreak: 'break-all',
-              m: 0,
+              m: 0
             }}
           >
             {xml}
@@ -407,7 +399,7 @@ export default function SitemapGenerator() {
           size="small"
           startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
           onClick={copyXml}
-          sx={{ mt: 1.5, borderRadius: '16px' }}
+          sx={{ mt: 1.5, borderRadius: 4 }}
         >
           {copied ? 'Скопировано!' : 'Копировать XML'}
         </Button>

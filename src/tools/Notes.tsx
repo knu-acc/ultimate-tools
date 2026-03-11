@@ -15,7 +15,7 @@ import {
   IconButton,
   useTheme,
   alpha,
-  Divider,
+  Divider
 } from '@mui/material';
 import Add from '@mui/icons-material/Add';
 import Delete from '@mui/icons-material/Delete';
@@ -58,7 +58,7 @@ function formatDate(ts: number): string {
     month: '2-digit',
     year: 'numeric',
     hour: '2-digit',
-    minute: '2-digit',
+    minute: '2-digit'
   });
 }
 
@@ -95,7 +95,7 @@ export default function Notes() {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
       title: 'Новая заметка',
       content: '',
-      updatedAt: Date.now(),
+      updatedAt: Date.now()
     };
     setNotes((prev) => [newNote, ...prev]);
     setActiveId(newNote.id);
@@ -146,12 +146,11 @@ export default function Notes() {
           <Paper
             elevation={0}
             sx={{
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
               overflow: 'hidden',
               height: { md: 600 },
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: 'column'
             }}
           >
             <Box
@@ -160,7 +159,7 @@ export default function Notes() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                backgroundColor: alpha(theme.palette.primary.main, 0.04),
+                backgroundColor: theme.palette.surfaceContainerLow
               }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -179,7 +178,7 @@ export default function Notes() {
                   fontWeight: 600,
                   borderRadius: 2,
                   boxShadow: 'none',
-                  '&:hover': { boxShadow: 'none' },
+                  '&:hover': { boxShadow: 'none' }
                 }}
               >
                 Создать
@@ -190,7 +189,7 @@ export default function Notes() {
               sx={{
                 flex: 1,
                 overflowY: 'auto',
-                p: 0,
+                p: 0
               }}
             >
               {notes.length === 0 && (
@@ -199,7 +198,7 @@ export default function Notes() {
                     sx={{
                       fontSize: 48,
                       color: alpha(theme.palette.text.secondary, 0.2),
-                      mb: 1,
+                      mb: 1
                     }}
                   />
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -224,7 +223,7 @@ export default function Notes() {
                       }}
                       sx={{
                         color: 'text.disabled',
-                        '&:hover': { color: theme.palette.error.main },
+                        '&:hover': { color: theme.palette.error.main }
                       }}
                     >
                       <Delete fontSize="small" />
@@ -238,12 +237,12 @@ export default function Notes() {
                       borderRadius: 0,
                       py: 1.5,
                       '&.Mui-selected': {
-                        backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                        borderLeft: `3px solid ${theme.palette.primary.main}`,
+                        backgroundColor: theme.palette.surfaceContainerHigh,
+                        borderLeft: `3px solid ${theme.palette.primary.main}`
                       },
                       '&.Mui-selected:hover': {
-                        backgroundColor: alpha(theme.palette.primary.main, 0.12),
-                      },
+                        backgroundColor: theme.palette.surfaceContainerHigh
+                      }
                     }}
                   >
                     <ListItemText
@@ -252,10 +251,10 @@ export default function Notes() {
                       primaryTypographyProps={{
                         noWrap: true,
                         fontWeight: note.id === activeId ? 600 : 400,
-                        fontSize: '0.9rem',
+                        fontSize: '0.9rem'
                       }}
                       secondaryTypographyProps={{
-                        fontSize: '0.7rem',
+                        fontSize: '0.7rem'
                       }}
                     />
                   </ListItemButton>
@@ -270,12 +269,11 @@ export default function Notes() {
           <Paper
             elevation={0}
             sx={{
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
               height: { md: 600 },
               display: 'flex',
               flexDirection: 'column',
-              overflow: 'hidden',
+              overflow: 'hidden'
             }}
           >
             {activeNote ? (
@@ -284,7 +282,7 @@ export default function Notes() {
                 <Box
                   sx={{
                     p: 2,
-                    backgroundColor: alpha(theme.palette.primary.main, 0.04),
+                    backgroundColor: theme.palette.surfaceContainerLow
                   }}
                 >
                   <TextField
@@ -298,9 +296,9 @@ export default function Notes() {
                         disableUnderline: true,
                         sx: {
                           fontSize: '1.2rem',
-                          fontWeight: 700,
-                        },
-                      },
+                          fontWeight: 700
+                        }
+                      }
                     }}
                   />
                 </Box>
@@ -322,12 +320,12 @@ export default function Notes() {
                         fontSize: '0.95rem',
                         lineHeight: 1.7,
                         height: '100%',
-                        alignItems: 'flex-start',
+                        alignItems: 'flex-start'
                       },
                       '& .MuiInputBase-input': {
                         height: '100% !important',
-                        overflow: 'auto !important',
-                      },
+                        overflow: 'auto !important'
+                      }
                     }}
                   />
                 </Box>
@@ -342,7 +340,7 @@ export default function Notes() {
                     justifyContent: 'space-between',
                     flexWrap: 'wrap',
                     gap: 1,
-                    backgroundColor: alpha(theme.palette.text.primary, 0.02),
+                    backgroundColor: alpha(theme.palette.text.primary, 0.02)
                   }}
                 >
                   <Box sx={{ display: 'flex', gap: 2 }}>
@@ -366,13 +364,13 @@ export default function Notes() {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: 1,
+                  gap: 1
                 }}
               >
                 <StickyNote2
                   sx={{
                     fontSize: 64,
-                    color: alpha(theme.palette.text.secondary, 0.15),
+                    color: alpha(theme.palette.text.secondary, 0.15)
                   }}
                 />
                 <Typography variant="body1" sx={{ color: 'text.secondary' }}>

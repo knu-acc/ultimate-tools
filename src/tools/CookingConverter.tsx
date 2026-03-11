@@ -13,10 +13,12 @@ import {
   IconButton,
   Tooltip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type VolumeUnit = 'cups' | 'tbsp' | 'tsp' | 'ml' | 'liters' | 'floz';
 type WeightUnit = 'grams';
@@ -30,7 +32,7 @@ const unitLabels: Record<CookingUnit, string> = {
   ml: 'Миллилитры (мл)',
   liters: 'Литры (л)',
   floz: 'Жидкие унции (fl oz)',
-  grams: 'Граммы (г)',
+  grams: 'Граммы (г)'
 };
 
 const unitShort: Record<CookingUnit, string> = {
@@ -40,7 +42,7 @@ const unitShort: Record<CookingUnit, string> = {
   ml: 'мл',
   liters: 'л',
   floz: 'fl oz',
-  grams: 'г',
+  grams: 'г'
 };
 
 const ingredientLabels: Record<Ingredient, string> = {
@@ -48,7 +50,7 @@ const ingredientLabels: Record<Ingredient, string> = {
   flour: 'Мука',
   sugar: 'Сахар',
   butter: 'Масло сливочное',
-  oil: 'Масло растительное',
+  oil: 'Масло растительное'
 };
 
 // Density in g/ml for weight conversions
@@ -57,7 +59,7 @@ const ingredientDensity: Record<Ingredient, number> = {
   flour: 0.53,
   sugar: 0.85,
   butter: 0.91,
-  oil: 0.92,
+  oil: 0.92
 };
 
 // Conversion factors to ml
@@ -67,7 +69,7 @@ const toMl: Record<VolumeUnit, number> = {
   tsp: 5,
   ml: 1,
   liters: 1000,
-  floz: 29.5735,
+  floz: 29.5735
 };
 
 const volumeUnits: VolumeUnit[] = ['cups', 'tbsp', 'tsp', 'ml', 'liters', 'floz'];
@@ -149,8 +151,7 @@ export default function CookingConverter() {
           p: 3,
           mb: 3,
           borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -167,7 +168,7 @@ export default function CookingConverter() {
             sx={{
               flex: 2,
               minWidth: 160,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' },
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
             }}
           />
           <Select
@@ -177,7 +178,7 @@ export default function CookingConverter() {
             sx={{
               flex: 1,
               minWidth: 200,
-              borderRadius: 2,
+              borderRadius: 2
             }}
           >
             {(Object.keys(unitLabels) as CookingUnit[]).map((unit) => (
@@ -208,7 +209,7 @@ export default function CookingConverter() {
               sx={{
                 borderRadius: 3,
                 fontWeight: ingredient === ing ? 600 : 400,
-                transition: 'all 200ms ease',
+                transition: 'all 200ms ease'
               }}
             />
           ))}
@@ -226,8 +227,8 @@ export default function CookingConverter() {
                 p: 2.5,
                 borderRadius: 4,
                 border: `2px solid ${theme.palette.primary.main}`,
-                background: alpha(theme.palette.primary.main, 0.08),
-                textAlign: 'center',
+                background: theme.palette.surfaceContainerHigh,
+                textAlign: 'center'
               }}
             >
               <Typography
@@ -258,12 +259,11 @@ export default function CookingConverter() {
                   sx={{
                     p: 2,
                     borderRadius: 4,
-                    border: `1px solid ${theme.palette.divider}`,
                     transition: 'all 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
-                      background: alpha(theme.palette.primary.main, 0.04),
-                    },
+                      background: theme.palette.surfaceContainerLow
+                    }
                   }}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -282,7 +282,7 @@ export default function CookingConverter() {
                           mt: 0.5,
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
+                          whiteSpace: 'nowrap'
                         }}
                       >
                         {valueStr} {unitShort[unit]}
@@ -293,16 +293,7 @@ export default function CookingConverter() {
                         </Typography>
                       )}
                     </Box>
-                    <Tooltip title={copied === unit ? 'Скопировано!' : 'Копировать'}>
-                      <IconButton
-                        size="small"
-                        onClick={() => copyValue(unit, `${valueStr} ${unitShort[unit]}`)}
-                        color={copied === unit ? 'success' : 'default'}
-                        sx={{ mt: 0.5 }}
-                      >
-                        {copied === unit ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                      </IconButton>
-                    </Tooltip>
+                    <CopyButton text={valueStr} />
                   </Box>
                 </Paper>
               </Grid>
@@ -316,8 +307,7 @@ export default function CookingConverter() {
             p: 3,
             mb: 3,
             borderRadius: 4,
-            border: `1px solid ${theme.palette.divider}`,
-            textAlign: 'center',
+            textAlign: 'center'
           }}
         >
           <Typography color="text.secondary">
@@ -331,8 +321,7 @@ export default function CookingConverter() {
         elevation={0}
         sx={{
           p: 3,
-          borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 4
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -346,9 +335,8 @@ export default function CookingConverter() {
                 sx={{
                   p: 1.5,
                   borderRadius: 3,
-                  border: `1px solid ${theme.palette.divider}`,
                   textAlign: 'center',
-                  background: alpha(theme.palette.primary.main, 0.02),
+                  background: theme.palette.surfaceContainerLowest
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: 'monospace' }}>

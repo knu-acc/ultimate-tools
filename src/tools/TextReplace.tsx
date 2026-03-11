@@ -12,7 +12,7 @@ import {
   Switch,
   FormControlLabel,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface MatchInfo {
@@ -58,7 +58,7 @@ function findMatches(text: string, regex: RegExp | null): MatchInfo[] {
     matches.push({
       index: match.index,
       length: match[0].length,
-      text: match[0],
+      text: match[0]
     });
     if (matches.length > 10000) break;
   }
@@ -150,8 +150,7 @@ export default function TextReplace() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input text */}
@@ -253,7 +252,7 @@ export default function TextReplace() {
               border: `1px solid ${alpha(
                 matches.length > 0 ? theme.palette.success.main : theme.palette.warning.main,
                 0.3
-              )}`,
+              )}`
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
@@ -308,7 +307,7 @@ export default function TextReplace() {
                 lineHeight: 1.7,
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-word',
-                background: theme.palette.background.default,
+                background: theme.palette.background.default
               }}
             >
               {highlightedPreview.map((part, i) =>
@@ -321,7 +320,7 @@ export default function TextReplace() {
                       borderRadius: '3px',
                       px: 0.3,
                       py: 0.1,
-                      border: `1px solid ${alpha(theme.palette.warning.main, 0.5)}`,
+                      border: `1px solid ${alpha(theme.palette.warning.main, 0.5)}`
                     }}
                   >
                     {part.text}

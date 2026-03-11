@@ -11,10 +11,12 @@ import {
   Chip,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopy from '@mui/icons-material/ContentCopy';
 import SwapVert from '@mui/icons-material/SwapVert';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type Mode = 'text-to-binary' | 'binary-to-text';
 
@@ -154,9 +156,8 @@ export default function BinaryText() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 4,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 4
         }}
       >
         {/* Mode toggle */}
@@ -191,8 +192,8 @@ export default function BinaryText() {
             sx={{
               '& .MuiInputBase-root': {
                 fontFamily: 'monospace',
-                fontSize: '0.95rem',
-              },
+                fontSize: '0.95rem'
+              }
             }}
           />
           {/* Swap button */}
@@ -208,7 +209,7 @@ export default function BinaryText() {
                 bottom: 8,
                 borderRadius: 3,
                 textTransform: 'none',
-                fontWeight: 600,
+                fontWeight: 600
               }}
             >
               Поменять
@@ -227,7 +228,7 @@ export default function BinaryText() {
                 size="small"
                 onClick={() => handleCopy('main', mainResult)}
                 sx={{
-                  color: copied === 'main' ? theme.palette.success.main : 'text.secondary',
+                  color: copied === 'main' ? theme.palette.success.main : 'text.secondary'
                 }}
               >
                 <ContentCopy sx={{ fontSize: 18 }} />
@@ -237,11 +238,10 @@ export default function BinaryText() {
               elevation={0}
               sx={{
                 p: 2,
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
                 background: alpha(theme.palette.background.default, 0.6),
                 maxHeight: 200,
-                overflow: 'auto',
+                overflow: 'auto'
               }}
             >
               <Typography
@@ -250,7 +250,7 @@ export default function BinaryText() {
                   fontFamily: 'monospace',
                   wordBreak: 'break-all',
                   whiteSpace: 'pre-wrap',
-                  fontSize: '0.95rem',
+                  fontSize: '0.95rem'
                 }}
               >
                 {mainResult || '—'}
@@ -277,13 +277,12 @@ export default function BinaryText() {
                     elevation={0}
                     sx={{
                       p: 2,
-                      border: `1px solid ${theme.palette.divider}`,
                       borderRadius: 3,
                       transition: 'all 200ms ease',
                       '&:hover': {
                         borderColor: theme.palette.primary.main,
-                        background: alpha(theme.palette.primary.main, 0.04),
-                      },
+                        background: theme.palette.surfaceContainerLow
+                      }
                     }}
                   >
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
@@ -295,7 +294,7 @@ export default function BinaryText() {
                         onClick={() => handleCopy(r.key, r.value)}
                         sx={{
                           color: copied === r.key ? theme.palette.success.main : 'text.secondary',
-                          transition: 'color 200ms',
+                          transition: 'color 200ms'
                         }}
                       >
                         <ContentCopy sx={{ fontSize: 16 }} />
@@ -309,7 +308,7 @@ export default function BinaryText() {
                         whiteSpace: 'pre-wrap',
                         fontSize: '0.85rem',
                         maxHeight: 100,
-                        overflow: 'auto',
+                        overflow: 'auto'
                       }}
                     >
                       {r.value || '—'}

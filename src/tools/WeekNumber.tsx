@@ -11,7 +11,7 @@ import {
   Chip,
   useTheme,
   alpha,
-  LinearProgress,
+  LinearProgress
 } from '@mui/material';
 import TodayIcon from '@mui/icons-material/Today';
 import SearchIcon from '@mui/icons-material/Search';
@@ -135,9 +135,8 @@ export default function WeekNumber() {
       <Paper
         elevation={0}
         sx={{
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          p: 3,
+          p: 3
         }}
       >
         {/* Date input */}
@@ -178,11 +177,10 @@ export default function WeekNumber() {
                 <Paper
                   elevation={0}
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
                     p: 2,
                     textAlign: 'center',
-                    backgroundColor: alpha(theme.palette.primary.main, 0.04),
+                    backgroundColor: theme.palette.surfaceContainerLow
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -193,7 +191,7 @@ export default function WeekNumber() {
                       fontSize: '2rem',
                       fontWeight: 700,
                       color: 'primary.main',
-                      fontFamily: 'monospace',
+                      fontFamily: 'monospace'
                     }}
                   >
                     {weekNumber}
@@ -204,10 +202,9 @@ export default function WeekNumber() {
                 <Paper
                   elevation={0}
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
                     p: 2,
-                    textAlign: 'center',
+                    textAlign: 'center'
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -217,7 +214,7 @@ export default function WeekNumber() {
                     sx={{
                       fontSize: '2rem',
                       fontWeight: 700,
-                      fontFamily: 'monospace',
+                      fontFamily: 'monospace'
                     }}
                   >
                     {dayOfYear}
@@ -228,10 +225,9 @@ export default function WeekNumber() {
                 <Paper
                   elevation={0}
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
                     p: 2,
-                    textAlign: 'center',
+                    textAlign: 'center'
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -241,7 +237,7 @@ export default function WeekNumber() {
                     sx={{
                       fontSize: '2rem',
                       fontWeight: 700,
-                      fontFamily: 'monospace',
+                      fontFamily: 'monospace'
                     }}
                   >
                     {daysRemaining}
@@ -252,10 +248,9 @@ export default function WeekNumber() {
                 <Paper
                   elevation={0}
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
                     p: 2,
-                    textAlign: 'center',
+                    textAlign: 'center'
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -265,7 +260,7 @@ export default function WeekNumber() {
                     sx={{
                       fontSize: '2rem',
                       fontWeight: 700,
-                      fontFamily: 'monospace',
+                      fontFamily: 'monospace'
                     }}
                   >
                     {totalDays}
@@ -278,10 +273,9 @@ export default function WeekNumber() {
             <Paper
               elevation={0}
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
                 p: 2,
-                mb: 3,
+                mb: 3
               }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -300,8 +294,8 @@ export default function WeekNumber() {
                   borderRadius: 5,
                   backgroundColor: alpha(theme.palette.primary.main, 0.1),
                   '& .MuiLinearProgress-bar': {
-                    borderRadius: 5,
-                  },
+                    borderRadius: 5
+                  }
                 }}
               />
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
@@ -318,10 +312,9 @@ export default function WeekNumber() {
             <Paper
               elevation={0}
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
                 p: 2,
-                mb: 3,
+                mb: 3
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5, textAlign: 'center' }}>
@@ -360,10 +353,10 @@ export default function WeekNumber() {
                         backgroundColor: selectedMatch
                           ? 'primary.main'
                           : inWeek
-                            ? alpha(theme.palette.primary.main, 0.12)
+                            ? theme.palette.surfaceContainerHigh
                             : todayMatch
                               ? alpha(theme.palette.warning.main, 0.12)
-                              : 'transparent',
+                              : 'transparent'
                       }}
                     >
                       <Typography
@@ -372,7 +365,7 @@ export default function WeekNumber() {
                           fontWeight: selectedMatch || todayMatch ? 700 : 400,
                           color: selectedMatch
                             ? 'primary.contrastText'
-                            : 'text.primary',
+                            : 'text.primary'
                         }}
                       >
                         {day}
@@ -438,10 +431,9 @@ export default function WeekNumber() {
           <Paper
             elevation={0}
             sx={{
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
               p: 2,
-              backgroundColor: alpha(theme.palette.info.main, 0.04),
+              backgroundColor: alpha(theme.palette.info.main, 0.04)
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>

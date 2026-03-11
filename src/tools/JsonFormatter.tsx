@@ -12,13 +12,15 @@ import {
   Snackbar,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import CompressIcon from '@mui/icons-material/Compress';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface JsonError {
   message: string;
@@ -35,7 +37,7 @@ function parseErrorPosition(errMsg: string): { line?: number; column?: number; p
   return {
     position: posMatch ? parseInt(posMatch[1]) : undefined,
     line: lineMatch ? parseInt(lineMatch[1]) : undefined,
-    column: colMatch ? parseInt(colMatch[1]) : undefined,
+    column: colMatch ? parseInt(colMatch[1]) : undefined
   };
 }
 
@@ -191,9 +193,8 @@ export default function JsonFormatter() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         {/* Input area */}
@@ -212,11 +213,11 @@ export default function JsonFormatter() {
             '& .MuiInputBase-root': {
               fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
               fontSize: '0.85rem',
-              lineHeight: 1.6,
+              lineHeight: 1.6
             },
             '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
-            },
+              borderRadius: 2
+            }
           }}
         />
 
@@ -308,13 +309,12 @@ export default function JsonFormatter() {
             <Paper
               elevation={0}
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 2,
                 overflow: 'auto',
                 maxHeight: 450,
                 background: theme.palette.mode === 'dark'
                   ? alpha(theme.palette.common.black, 0.3)
-                  : alpha(theme.palette.grey[50], 1),
+                  : alpha(theme.palette.grey[50], 1)
               }}
             >
               <Box sx={{ display: 'flex' }}>
@@ -329,7 +329,7 @@ export default function JsonFormatter() {
                       userSelect: 'none',
                       textAlign: 'right',
                       minWidth: 44,
-                      flexShrink: 0,
+                      flexShrink: 0
                     }}
                   >
                     {Array.from({ length: outputLineCount }, (_, i) => (
@@ -340,7 +340,7 @@ export default function JsonFormatter() {
                           fontFamily: '"JetBrains Mono", monospace',
                           fontSize: '0.78rem',
                           color: 'text.disabled',
-                          lineHeight: '1.6rem',
+                          lineHeight: '1.6rem'
                         }}
                       >
                         {i + 1}
@@ -358,7 +358,7 @@ export default function JsonFormatter() {
                       fontSize: '0.78rem',
                       lineHeight: '1.6rem',
                       m: 0,
-                      whiteSpace: 'pre',
+                      whiteSpace: 'pre'
                     }}
                   />
                 </Box>

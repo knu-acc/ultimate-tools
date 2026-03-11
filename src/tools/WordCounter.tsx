@@ -11,7 +11,7 @@ import {
   Button,
   useTheme,
   alpha,
-  InputAdornment,
+  InputAdornment
 } from '@mui/material';
 import AbcIcon from '@mui/icons-material/Abc';
 import NotesIcon from '@mui/icons-material/Notes';
@@ -79,37 +79,37 @@ export default function WordCounter() {
       label: 'Символы',
       value: stats.chars.toLocaleString('ru-RU'),
       icon: <AbcIcon />,
-      color: theme.palette.primary.main,
+      color: theme.palette.primary.main
     },
     {
       label: 'Слова',
       value: stats.words.toLocaleString('ru-RU'),
       icon: <NotesIcon />,
-      color: theme.palette.secondary.main,
+      color: theme.palette.secondary.main
     },
     {
       label: 'Предложения',
       value: stats.sentences.toLocaleString('ru-RU'),
       icon: <ShortTextIcon />,
-      color: theme.palette.info.main,
+      color: theme.palette.info.main
     },
     {
       label: 'Абзацы',
       value: stats.paragraphs.toLocaleString('ru-RU'),
       icon: <SubjectIcon />,
-      color: theme.palette.success.main,
+      color: theme.palette.success.main
     },
     {
       label: 'Время чтения',
       value: stats.readingTime < 1 ? '< 1' : `${stats.readingTime}`,
       icon: <TimerIcon />,
-      color: theme.palette.warning.main,
+      color: theme.palette.warning.main
     },
     {
       label: 'Время речи',
       value: stats.speakingTime < 1 ? '< 1' : `${stats.speakingTime}`,
       icon: <RecordVoiceOverIcon />,
-      color: theme.palette.error.main,
+      color: theme.palette.error.main
     },
   ];
 
@@ -121,8 +121,7 @@ export default function WordCounter() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <TextField
@@ -148,15 +147,15 @@ export default function WordCounter() {
                     Очистить
                   </Button>
                 </InputAdornment>
-              ) : undefined,
-            },
+              ) : undefined
+            }
           }}
           sx={{
             '& .MuiOutlinedInput-root': {
               borderRadius: 2,
               fontSize: '1rem',
-              lineHeight: 1.7,
-            },
+              lineHeight: 1.7
+            }
           }}
         />
       </Paper>
@@ -176,8 +175,8 @@ export default function WordCounter() {
                 transition: 'transform 150ms ease, box-shadow 150ms ease',
                 '&:hover': {
                   transform: 'translateY(-2px)',
-                  boxShadow: `0 4px 20px ${alpha(card.color, 0.15)}`,
-                },
+                  boxShadow: `0 4px 20px ${alpha(card.color, 0.15)}`
+                }
               }}
             >
               <Box
@@ -187,7 +186,7 @@ export default function WordCounter() {
                   borderRadius: 2,
                   backgroundColor: alpha(card.color, 0.12),
                   color: card.color,
-                  mb: 1.5,
+                  mb: 1.5
                 }}
               >
                 {card.icon}
@@ -198,7 +197,7 @@ export default function WordCounter() {
                   fontWeight: 700,
                   color: card.color,
                   lineHeight: 1.2,
-                  mb: 0.5,
+                  mb: 0.5
                 }}
               >
                 {card.value}
@@ -209,7 +208,7 @@ export default function WordCounter() {
                   color: 'text.secondary',
                   fontWeight: 500,
                   textTransform: 'uppercase',
-                  letterSpacing: 0.5,
+                  letterSpacing: 0.5
                 }}
               >
                 {card.label}
@@ -229,8 +228,7 @@ export default function WordCounter() {
           elevation={0}
           sx={{
             p: 3,
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 3
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -255,8 +253,8 @@ export default function WordCounter() {
                   color: theme.palette.primary.dark,
                   border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
                   '&:hover': {
-                    backgroundColor: alpha(theme.palette.primary.main, 0.16),
-                  },
+                    backgroundColor: alpha(theme.palette.primary.main, 0.16)
+                  }
                 }}
               />
             ))}

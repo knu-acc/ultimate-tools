@@ -10,8 +10,9 @@ import {
   Chip,
   Divider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
+import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 
 interface YearData {
   year: number;
@@ -25,6 +26,8 @@ interface YearData {
 
 export default function InvestmentCalc() {
   const theme = useTheme();
+  const [currency, setCurrency] = useState('RUB');
+  const sym = getCurrency(currency).symbol;
   const [initial, setInitial] = useState('');
   const [monthly, setMonthly] = useState('');
   const [rate, setRate] = useState('');
@@ -69,7 +72,7 @@ export default function InvestmentCalc() {
         interest: yearInterest,
         endBalance: balance,
         totalContributions: totalContributed,
-        totalInterest: totalEarned,
+        totalInterest: totalEarned
       });
     }
 
@@ -85,7 +88,7 @@ export default function InvestmentCalc() {
       totalEarnings,
       contributionsPct,
       earningsPct,
-      yearlyData,
+      yearlyData
     };
   }, [initial, monthly, rate, years]);
 
@@ -97,15 +100,17 @@ export default function InvestmentCalc() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </Box>
       {/* Input */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -115,26 +120,26 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Начальная сумма (₽)"
+              label="Начальная сумма ({sym})"
               type="number"
               value={initial}
               onChange={(e) => setInitial(e.target.value)}
               placeholder="100000"
               slotProps={{
-                input: { inputProps: { min: 0, step: 1000 } },
+                input: { inputProps: { min: 0, step: 1000 } }
               }}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Ежемесячное пополнение (₽)"
+              label="Ежемесячное пополнение ({sym})"
               type="number"
               value={monthly}
               onChange={(e) => setMonthly(e.target.value)}
               placeholder="10000"
               slotProps={{
-                input: { inputProps: { min: 0, step: 500 } },
+                input: { inputProps: { min: 0, step: 500 } }
               }}
             />
           </Grid>
@@ -153,8 +158,8 @@ export default function InvestmentCalc() {
                     <Typography variant="body2" color="text.disabled">
                       %
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -167,7 +172,7 @@ export default function InvestmentCalc() {
               onChange={(e) => setYears(e.target.value)}
               placeholder="10"
               slotProps={{
-                input: { inputProps: { min: 1, max: 100, step: 1 } },
+                input: { inputProps: { min: 1, max: 100, step: 1 } }
               }}
             />
           </Grid>
@@ -184,16 +189,15 @@ export default function InvestmentCalc() {
               p: 3,
               mb: 3,
               textAlign: 'center',
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              background: alpha('#2e7d32', 0.04),
+              background: alpha('#2e7d32', 0.04)
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
               Итоговая сумма
             </Typography>
             <Typography variant="h3" sx={{ fontWeight: 700, color: '#2e7d32', mb: 1 }}>
-              {fmt(results.finalAmount)} ₽
+              {fmt(results.finalAmount)} {sym}
             </Typography>
           </Paper>
 
@@ -207,14 +211,14 @@ export default function InvestmentCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#1565c0', 0.3)}`,
-                  background: alpha('#1565c0', 0.05),
+                  background: alpha('#1565c0', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
                   Ваши взносы
                 </Typography>
                 <Typography variant="h5" sx={{ fontWeight: 700, color: '#1565c0' }}>
-                  {fmt(results.totalContributions)} ₽
+                  {fmt(results.totalContributions)} {sym}
                 </Typography>
                 <Chip
                   label={`${fmtPct(results.contributionsPct)}%`}
@@ -223,7 +227,7 @@ export default function InvestmentCalc() {
                     mt: 0.5,
                     fontWeight: 600,
                     backgroundColor: alpha('#1565c0', 0.12),
-                    color: '#1565c0',
+                    color: '#1565c0'
                   }}
                 />
               </Paper>
@@ -236,14 +240,14 @@ export default function InvestmentCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#2e7d32', 0.3)}`,
-                  background: alpha('#2e7d32', 0.05),
+                  background: alpha('#2e7d32', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
                   Доход от инвестиций
                 </Typography>
                 <Typography variant="h5" sx={{ fontWeight: 700, color: '#2e7d32' }}>
-                  {fmt(results.totalEarnings)} ₽
+                  {fmt(results.totalEarnings)} {sym}
                 </Typography>
                 <Chip
                   label={`${fmtPct(results.earningsPct)}%`}
@@ -252,7 +256,7 @@ export default function InvestmentCalc() {
                     mt: 0.5,
                     fontWeight: 600,
                     backgroundColor: alpha('#2e7d32', 0.12),
-                    color: '#2e7d32',
+                    color: '#2e7d32'
                   }}
                 />
               </Paper>
@@ -265,8 +269,7 @@ export default function InvestmentCalc() {
             sx={{
               p: 3,
               mb: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -278,7 +281,7 @@ export default function InvestmentCalc() {
                 height: 36,
                 borderRadius: 18,
                 overflow: 'hidden',
-                mb: 1.5,
+                mb: 1.5
               }}
             >
               <Box
@@ -288,7 +291,7 @@ export default function InvestmentCalc() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  minWidth: 50,
+                  minWidth: 50
                 }}
               >
                 <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.65rem' }}>
@@ -302,7 +305,7 @@ export default function InvestmentCalc() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  minWidth: 50,
+                  minWidth: 50
                 }}
               >
                 <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.65rem' }}>
@@ -317,8 +320,7 @@ export default function InvestmentCalc() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -332,7 +334,7 @@ export default function InvestmentCalc() {
                 gap: 1,
                 pb: 1,
                 mb: 1,
-                borderBottom: `1px solid ${theme.palette.divider}`,
+                borderBottom: `1px solid ${theme.palette.divider}`
               }}
             >
               <Typography variant="caption" sx={{ fontWeight: 700, width: 40, color: 'text.secondary' }}>
@@ -387,7 +389,7 @@ export default function InvestmentCalc() {
                         height: 3,
                         borderRadius: 1.5,
                         backgroundColor: alpha('#2e7d32', 0.08),
-                        overflow: 'hidden',
+                        overflow: 'hidden'
                       }}
                     >
                       <Box
@@ -395,21 +397,21 @@ export default function InvestmentCalc() {
                           height: '100%',
                           display: 'flex',
                           width: `${barWidth}%`,
-                          transition: 'width 0.3s ease',
+                          transition: 'width 0.3s ease'
                         }}
                       >
                         <Box
                           sx={{
                             width: `${(row.totalContributions / row.endBalance) * 100}%`,
                             backgroundColor: '#1565c0',
-                            borderRadius: '1.5px 0 0 1.5px',
+                            borderRadius: '1.5px 0 0 1.5px'
                           }}
                         />
                         <Box
                           sx={{
                             flex: 1,
                             backgroundColor: '#2e7d32',
-                            borderRadius: '0 1.5px 1.5px 0',
+                            borderRadius: '0 1.5px 1.5px 0'
                           }}
                         />
                       </Box>

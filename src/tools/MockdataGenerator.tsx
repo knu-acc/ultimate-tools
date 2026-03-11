@@ -15,13 +15,15 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type FieldType = 'firstName' | 'lastName' | 'email' | 'phone' | 'number' | 'boolean' | 'date' | 'uuid' | 'city' | 'country' | 'company';
 
@@ -117,7 +119,7 @@ function generateEmail(): string {
     'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
     'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
     'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch',
-    'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
+    'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya'
   };
   const translit = (s: string) => s.split('').map((c) => translitMap[c] || c).join('');
   const num = Math.floor(Math.random() * 100);
@@ -220,8 +222,7 @@ export default function MockdataGenerator() {
         sx={{
           p: 3,
           mb: 2,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
@@ -237,7 +238,7 @@ export default function MockdataGenerator() {
               onChange={(e) => updateField(field.id, { name: e.target.value })}
               sx={{ flex: 1 }}
               slotProps={{
-                htmlInput: { style: { fontFamily: 'monospace' } },
+                htmlInput: { style: { fontFamily: 'monospace' } }
               }}
             />
             <TextField
@@ -295,8 +296,7 @@ export default function MockdataGenerator() {
         sx={{
           p: 3,
           mb: 2,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={2} sx={{ alignItems: 'center' }}>
@@ -343,8 +343,7 @@ export default function MockdataGenerator() {
           elevation={0}
           sx={{
             p: 3,
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 3
           }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -372,14 +371,14 @@ export default function MockdataGenerator() {
             slotProps={{
               htmlInput: {
                 readOnly: true,
-                style: { fontFamily: 'monospace', fontSize: '0.8rem', lineHeight: 1.5 },
-              },
+                style: { fontFamily: 'monospace', fontSize: '0.8rem', lineHeight: 1.5 }
+              }
             }}
             sx={{
               '& .MuiInputBase-root': {
                 backgroundColor: alpha(theme.palette.background.default, 0.5),
-                borderRadius: 2,
-              },
+                borderRadius: 2
+              }
             }}
           />
         </Paper>

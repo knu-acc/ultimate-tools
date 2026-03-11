@@ -11,7 +11,7 @@ import {
   Slider,
   TextField,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
@@ -175,7 +175,7 @@ export default function NoiseGenerator() {
       {/* Noise type selector */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 3, mb: 3, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
           Тип шума
@@ -193,12 +193,12 @@ export default function NoiseGenerator() {
                   border: `2px solid ${noiseType === opt.type ? theme.palette.primary.main : theme.palette.divider}`,
                   borderRadius: 3,
                   backgroundColor: noiseType === opt.type
-                    ? alpha(theme.palette.primary.main, 0.08)
+                    ? theme.palette.surfaceContainerHigh
                     : 'transparent',
                   transition: 'all 200ms',
                   '&:hover': !isPlaying ? {
-                    borderColor: theme.palette.primary.main,
-                  } : {},
+                    borderColor: theme.palette.primary.main
+                  } : {}
                 }}
               >
                 <Typography variant="body1" sx={{ fontWeight: 600 }}>
@@ -219,9 +219,8 @@ export default function NoiseGenerator() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          backgroundColor: alpha(theme.palette.background.default, 0.5),
+          backgroundColor: alpha(theme.palette.background.default, 0.5)
         }}
       >
         <Box
@@ -230,7 +229,7 @@ export default function NoiseGenerator() {
             alignItems: 'flex-end',
             justifyContent: 'center',
             gap: '3px',
-            height: 100,
+            height: 100
           }}
         >
           {bars.map((h, i) => (
@@ -242,7 +241,7 @@ export default function NoiseGenerator() {
                 backgroundColor: isPlaying ? theme.palette.primary.main : theme.palette.divider,
                 borderRadius: 1,
                 transition: 'height 100ms ease',
-                opacity: isPlaying ? 0.8 : 0.3,
+                opacity: isPlaying ? 0.8 : 0.3
               }}
             />
           ))}
@@ -257,7 +256,7 @@ export default function NoiseGenerator() {
       {/* Controls */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 3, mb: 3, borderRadius: 3 }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>
@@ -282,8 +281,8 @@ export default function NoiseGenerator() {
               disabled={isPlaying}
               slotProps={{
                 input: {
-                  startAdornment: <TimerIcon sx={{ mr: 1, color: 'text.secondary', fontSize: 20 }} />,
-                },
+                  startAdornment: <TimerIcon sx={{ mr: 1, color: 'text.secondary', fontSize: 20 }} />
+                }
               }}
             />
           </Grid>
@@ -305,7 +304,7 @@ export default function NoiseGenerator() {
       {/* Info */}
       <Paper
         elevation={0}
-        sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, borderRadius: 3 }}
       >
         <Typography variant="caption" color="text.secondary">
           Генератор использует Web Audio API. Белый шум содержит равномерные частоты.

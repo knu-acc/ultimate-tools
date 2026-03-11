@@ -9,7 +9,7 @@ import {
   TextField,
   Chip,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -71,7 +71,7 @@ function analyzeHeadings(headings: HeadingEntry[]): AnalysisIssue[] {
     if (diff > 1) {
       issues.push({
         type: 'warning',
-        message: `Пропущен уровень: H${headings[i - 1].level} → H${headings[i].level} (строка ${headings[i].line}). Не пропускайте уровни заголовков`,
+        message: `Пропущен уровень: H${headings[i - 1].level} → H${headings[i].level} (строка ${headings[i].line}). Не пропускайте уровни заголовков`
       });
     }
   }
@@ -124,7 +124,7 @@ export default function HeadingChecker() {
       {/* Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 3, mb: 3, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
           Вставьте HTML-код
@@ -138,8 +138,8 @@ export default function HeadingChecker() {
           placeholder={'<h1>Заголовок страницы</h1>\n<h2>Подзаголовок</h2>\n<h3>Секция</h3>'}
           slotProps={{
             input: {
-              sx: { fontFamily: 'monospace', fontSize: 13 },
-            },
+              sx: { fontFamily: 'monospace', fontSize: 13 }
+            }
           }}
         />
       </Paper>
@@ -150,7 +150,7 @@ export default function HeadingChecker() {
           <Grid size={{ xs: 12, md: 7 }}>
             <Paper
               elevation={0}
-              sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 3, borderRadius: 3 }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                 <TitleIcon color="primary" fontSize="small" />
@@ -170,7 +170,7 @@ export default function HeadingChecker() {
                     py: 0.8,
                     pl: (h.level - 1) * 3,
                     borderBottom: `1px solid ${theme.palette.divider}`,
-                    '&:last-child': { borderBottom: 'none' },
+                    '&:last-child': { borderBottom: 'none' }
                   }}
                 >
                   <Chip
@@ -181,7 +181,7 @@ export default function HeadingChecker() {
                       fontSize: 11,
                       minWidth: 36,
                       backgroundColor: alpha(LEVEL_COLORS[h.level], 0.12),
-                      color: LEVEL_COLORS[h.level],
+                      color: LEVEL_COLORS[h.level]
                     }}
                   />
                   <Typography
@@ -192,7 +192,7 @@ export default function HeadingChecker() {
                       flex: 1,
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
+                      whiteSpace: 'nowrap'
                     }}
                   >
                     {h.text || <em style={{ color: theme.palette.text.secondary }}>пусто</em>}
@@ -215,9 +215,8 @@ export default function HeadingChecker() {
                   sx={{
                     p: 1.5,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    backgroundColor: errorCount > 0 ? alpha(theme.palette.error.main, 0.06) : undefined,
+                    backgroundColor: errorCount > 0 ? alpha(theme.palette.error.main, 0.06) : undefined
                   }}
                 >
                   <Typography variant="h6" color={errorCount > 0 ? 'error' : 'text.primary'} sx={{ fontWeight: 700 }}>
@@ -232,9 +231,8 @@ export default function HeadingChecker() {
                   sx={{
                     p: 1.5,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    backgroundColor: warningCount > 0 ? alpha(theme.palette.warning.main, 0.06) : undefined,
+                    backgroundColor: warningCount > 0 ? alpha(theme.palette.warning.main, 0.06) : undefined
                   }}
                 >
                   <Typography variant="h6" color={warningCount > 0 ? 'warning.main' : 'text.primary'} sx={{ fontWeight: 700 }}>
@@ -249,9 +247,8 @@ export default function HeadingChecker() {
                   sx={{
                     p: 1.5,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    backgroundColor: successCount > 0 ? alpha(theme.palette.success.main, 0.06) : undefined,
+                    backgroundColor: successCount > 0 ? alpha(theme.palette.success.main, 0.06) : undefined
                   }}
                 >
                   <Typography variant="h6" color={successCount > 0 ? 'success.main' : 'text.primary'} sx={{ fontWeight: 700 }}>
@@ -265,7 +262,7 @@ export default function HeadingChecker() {
             {/* Issues */}
             <Paper
               elevation={0}
-              sx={{ p: 2, mb: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2, mb: 2, borderRadius: 3 }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
                 Результаты анализа
@@ -279,7 +276,7 @@ export default function HeadingChecker() {
                     py: 1,
                     borderBottom: `1px solid ${theme.palette.divider}`,
                     '&:last-child': { borderBottom: 'none' },
-                    alignItems: 'flex-start',
+                    alignItems: 'flex-start'
                   }}
                 >
                   {getIssueIcon(issue.type)}
@@ -293,7 +290,7 @@ export default function HeadingChecker() {
             {/* SEO tips */}
             <Paper
               elevation={0}
-              sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2, borderRadius: 3 }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                 <InfoIcon fontSize="small" color="primary" />
@@ -319,7 +316,7 @@ export default function HeadingChecker() {
       {html.length > 0 && headings.length === 0 && (
         <Paper
           elevation={0}
-          sx={{ p: 4, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+          sx={{ p: 4, textAlign: 'center', borderRadius: 3 }}
         >
           <WarningIcon sx={{ fontSize: 48, color: 'warning.main', mb: 1 }} />
           <Typography variant="body1" sx={{ fontWeight: 500 }}>

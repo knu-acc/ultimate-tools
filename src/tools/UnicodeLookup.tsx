@@ -3,9 +3,11 @@
 import React, { useState, useMemo } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme,
-  IconButton, Tooltip, Dialog, DialogTitle, DialogContent,
+  IconButton, Tooltip, Dialog, DialogTitle, DialogContent
 } from '@mui/material';
 import { ContentCopy, Search, History, Close } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface CharInfo {
   char: string;
@@ -17,32 +19,32 @@ interface CharInfo {
 const CATEGORIES: Record<string, { label: string; ranges: [number, number][] }> = {
   arrows: {
     label: 'Стрелки',
-    ranges: [[0x2190, 0x21FF]],
+    ranges: [[0x2190, 0x21FF]]
   },
   math: {
     label: 'Математика',
-    ranges: [[0x2200, 0x22FF]],
+    ranges: [[0x2200, 0x22FF]]
   },
   currency: {
     label: 'Валюты',
-    ranges: [[0x0024, 0x0024], [0x00A2, 0x00A5], [0x20A0, 0x20CF]],
+    ranges: [[0x0024, 0x0024], [0x00A2, 0x00A5], [0x20A0, 0x20CF]]
   },
   emoji: {
     label: 'Эмодзи',
-    ranges: [[0x1F600, 0x1F64F]],
+    ranges: [[0x1F600, 0x1F64F]]
   },
   boxDrawing: {
     label: 'Рисование рамок',
-    ranges: [[0x2500, 0x257F]],
+    ranges: [[0x2500, 0x257F]]
   },
   greek: {
     label: 'Греческий',
-    ranges: [[0x0391, 0x03C9]],
+    ranges: [[0x0391, 0x03C9]]
   },
   cyrillic: {
     label: 'Кириллица',
-    ranges: [[0x0410, 0x044F]],
-  },
+    ranges: [[0x0410, 0x044F]]
+  }
 };
 
 function getCharName(cp: number): string {
@@ -91,7 +93,7 @@ function getCategoryChars(ranges: [number, number][]): CharInfo[] {
           char,
           codePoint: cp,
           hex: `U+${cp.toString(16).toUpperCase().padStart(4, '0')}`,
-          name: getCharName(cp),
+          name: getCharName(cp)
         });
       } catch {
         // skip invalid
@@ -129,7 +131,7 @@ export default function UnicodeLookup() {
         char: q,
         codePoint: cp,
         hex: `U+${cp.toString(16).toUpperCase().padStart(4, '0')}`,
-        name: getCharName(cp),
+        name: getCharName(cp)
       });
     }
 
@@ -145,7 +147,7 @@ export default function UnicodeLookup() {
               char,
               codePoint: cp,
               hex: `U+${cp.toString(16).toUpperCase().padStart(4, '0')}`,
-              name: getCharName(cp),
+              name: getCharName(cp)
             });
           }
         } catch {
@@ -166,7 +168,7 @@ export default function UnicodeLookup() {
               char,
               codePoint: cp,
               hex: `U+${cp.toString(16).toUpperCase().padStart(4, '0')}`,
-              name: getCharName(cp),
+              name: getCharName(cp)
             });
           }
         } catch {
@@ -204,8 +206,8 @@ export default function UnicodeLookup() {
         sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
         slotProps={{
           input: {
-            startAdornment: <Search sx={{ color: theme.palette.text.secondary, mr: 1 }} />,
-          },
+            startAdornment: <Search sx={{ color: theme.palette.text.secondary, mr: 1 }} />
+          }
         }}
       />
 
@@ -223,9 +225,8 @@ export default function UnicodeLookup() {
                 p: 2,
                 mb: 1,
                 borderRadius: 3,
-                border: `1px solid ${theme.palette.divider}`,
                 cursor: 'pointer',
-                '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.03) },
+                '&:hover': { bgcolor: theme.palette.surfaceContainerLow }
               }}
               onClick={() => handleCharClick(info)}
             >
@@ -274,8 +275,8 @@ export default function UnicodeLookup() {
               cursor: 'pointer',
               bgcolor: selectedCategory === key
                 ? alpha(theme.palette.primary.main, 0.15)
-                : alpha(theme.palette.primary.main, 0.04),
-              color: selectedCategory === key ? theme.palette.primary.main : theme.palette.text.primary,
+                : theme.palette.surfaceContainerLow,
+              color: selectedCategory === key ? theme.palette.primary.main : theme.palette.text.primary
             }}
           />
         ))}
@@ -287,8 +288,7 @@ export default function UnicodeLookup() {
         sx={{
           p: 2,
           borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          mb: 3,
+          mb: 3
         }}
       >
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -307,10 +307,10 @@ export default function UnicodeLookup() {
                   fontSize: '1.25rem',
                   border: `1px solid transparent`,
                   '&:hover': {
-                    bgcolor: alpha(theme.palette.primary.main, 0.08),
-                    border: `1px solid ${theme.palette.primary.main}`,
+                    bgcolor: theme.palette.surfaceContainerHigh,
+                    border: `1px solid ${theme.palette.primary.main}`
                   },
-                  transition: 'all 0.15s ease',
+                  transition: 'all 0.15s ease'
                 }}
               >
                 {info.char}
@@ -343,8 +343,8 @@ export default function UnicodeLookup() {
                     borderRadius: 1.5,
                     cursor: 'pointer',
                     fontSize: '1.1rem',
-                    bgcolor: alpha(theme.palette.primary.main, 0.04),
-                    '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1) },
+                    bgcolor: theme.palette.surfaceContainerLow,
+                    '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1) }
                   }}
                 >
                   {info.char}
@@ -374,7 +374,7 @@ export default function UnicodeLookup() {
                   size="small"
                   startIcon={<ContentCopy />}
                   onClick={() => copyText(selectedChar.char, 'char')}
-                  sx={{ borderRadius: '16px', mt: 1 }}
+                  sx={{ borderRadius: 4, mt: 1 }}
                 >
                   {copied === 'char' ? 'Скопировано!' : 'Копировать символ'}
                 </Button>
@@ -395,7 +395,7 @@ export default function UnicodeLookup() {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     py: 1,
-                    borderBottom: `1px solid ${theme.palette.divider}`,
+                    borderBottom: `1px solid ${theme.palette.divider}`
                   }}
                 >
                   <Box>
@@ -405,7 +405,7 @@ export default function UnicodeLookup() {
                   <Tooltip title={copied === row.key ? 'Скопировано!' : 'Копировать'}>
                     <IconButton size="small" onClick={() => copyText(row.value, row.key)}>
                       <ContentCopy fontSize="small" sx={{
-                        color: copied === row.key ? theme.palette.success.main : theme.palette.text.secondary,
+                        color: copied === row.key ? theme.palette.success.main : theme.palette.text.secondary
                       }} />
                     </IconButton>
                   </Tooltip>

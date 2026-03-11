@@ -9,9 +9,7 @@ import {
   Grid,
   Chip,
   Button,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 
 interface ParsedUA {
   browser: string;
@@ -33,7 +31,7 @@ function parseUserAgent(ua: string): ParsedUA {
     os: 'Неизвестно',
     osVersion: '',
     deviceType: 'Десктоп',
-    architecture: '',
+    architecture: ''
   };
 
   if (!ua) return result;
@@ -169,35 +167,35 @@ function parseUserAgent(ua: string): ParsedUA {
 const commonUserAgents = [
   {
     label: 'Chrome (Windows)',
-    ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
   },
   {
     label: 'Firefox (Linux)',
-    ua: 'Mozilla/5.0 (X11; Linux x86_64; rv:121.0) Gecko/20100101 Firefox/121.0',
+    ua: 'Mozilla/5.0 (X11; Linux x86_64; rv:121.0) Gecko/20100101 Firefox/121.0'
   },
   {
     label: 'Safari (macOS)',
-    ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15',
+    ua: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Safari/605.1.15'
   },
   {
     label: 'Edge (Windows)',
-    ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0',
+    ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0'
   },
   {
     label: 'Chrome (Android)',
-    ua: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36',
+    ua: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
   },
   {
     label: 'Safari (iPhone)',
-    ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1',
+    ua: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1'
   },
   {
     label: 'Googlebot',
-    ua: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+    ua: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
   },
   {
     label: 'Яндекс Браузер',
-    ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 YaBrowser/24.1.0.0 Safari/537.36',
+    ua: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 YaBrowser/24.1.0.0 Safari/537.36'
   },
 ];
 
@@ -226,8 +224,7 @@ export default function UserAgentParser() {
           p: 3,
           mb: 3,
           borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -273,8 +270,7 @@ export default function UserAgentParser() {
         sx={{
           p: 3,
           mb: 3,
-          borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -292,9 +288,9 @@ export default function UserAgentParser() {
                 borderRadius: 2,
                 cursor: 'pointer',
                 '&:hover': {
-                  backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                  borderColor: theme.palette.primary.main,
-                },
+                  backgroundColor: theme.palette.surfaceContainerHigh,
+                  borderColor: theme.palette.primary.main
+                }
               }}
             />
           ))}
@@ -311,12 +307,11 @@ export default function UserAgentParser() {
                 sx={{
                   p: 2.5,
                   borderRadius: 3,
-                  border: `1px solid ${theme.palette.divider}`,
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: alpha(theme.palette.primary.main, 0.04),
-                  },
+                    background: theme.palette.surfaceContainerLow
+                  }
                 }}
               >
                 <Typography
@@ -325,7 +320,7 @@ export default function UserAgentParser() {
                     fontWeight: 600,
                     color: 'text.secondary',
                     textTransform: 'uppercase',
-                    letterSpacing: 0.5,
+                    letterSpacing: 0.5
                   }}
                 >
                   {card.label}

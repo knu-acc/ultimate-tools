@@ -12,7 +12,7 @@ import {
   Tabs,
   Tab,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -20,6 +20,8 @@ import ImageIcon from '@mui/icons-material/Image';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 Б';
@@ -63,7 +65,7 @@ export default function ImageToBase64() {
           size: file.size,
           type: file.type,
           width: img.width,
-          height: img.height,
+          height: img.height
         });
         setPreviewUrl(result);
       };
@@ -140,7 +142,7 @@ export default function ImageToBase64() {
 
       <Paper
         elevation={0}
-        sx={{ mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ mb: 3, borderRadius: 3 }}
       >
         <Tabs
           value={mode}
@@ -168,13 +170,13 @@ export default function ImageToBase64() {
                 border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
                 borderRadius: 3,
                 backgroundColor: dragging
-                  ? alpha(theme.palette.primary.main, 0.06)
+                  ? theme.palette.surfaceContainerLow
                   : alpha(theme.palette.background.default, 0.5),
                 transition: 'all 250ms ease',
                 '&:hover': {
                   borderColor: theme.palette.primary.main,
-                  backgroundColor: alpha(theme.palette.primary.main, 0.04),
-                },
+                  backgroundColor: theme.palette.surfaceContainerLow
+                }
               }}
             >
               <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
@@ -197,7 +199,7 @@ export default function ImageToBase64() {
               {/* File info & preview */}
               <Paper
                 elevation={0}
-                sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                sx={{ p: 3, mb: 3, borderRadius: 3 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="h6">Информация о файле</Typography>
@@ -215,14 +217,13 @@ export default function ImageToBase64() {
                   <Grid size={{ xs: 12, sm: 4 }}>
                     <Box
                       sx={{
-                        border: `1px solid ${theme.palette.divider}`,
                         borderRadius: 2,
                         overflow: 'hidden',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor: alpha(theme.palette.background.default, 0.5),
-                        height: 160,
+                        height: 160
                       }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -260,7 +261,7 @@ export default function ImageToBase64() {
                 <Paper
                   key={fmt.key}
                   elevation={0}
-                  sx={{ p: 3, mb: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                  sx={{ p: 3, mb: 2, borderRadius: 3 }}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
                     <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -284,8 +285,8 @@ export default function ImageToBase64() {
                     slotProps={{
                       input: {
                         readOnly: true,
-                        sx: { fontFamily: 'monospace', fontSize: '0.8rem' },
-                      },
+                        sx: { fontFamily: 'monospace', fontSize: '0.8rem' }
+                      }
                     }}
                     size="small"
                   />
@@ -300,7 +301,7 @@ export default function ImageToBase64() {
         <>
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+            sx={{ p: 3, mb: 3, borderRadius: 3 }}
           >
             <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
               Вставьте строку Base64 или Data URI
@@ -314,8 +315,8 @@ export default function ImageToBase64() {
               onChange={(e) => handleReverseBase64(e.target.value)}
               slotProps={{
                 input: {
-                  sx: { fontFamily: 'monospace', fontSize: '0.8rem' },
-                },
+                  sx: { fontFamily: 'monospace', fontSize: '0.8rem' }
+                }
               }}
             />
             {reverseError && (
@@ -328,21 +329,20 @@ export default function ImageToBase64() {
           {reversePreview && (
             <Paper
               elevation={0}
-              sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 3, borderRadius: 3 }}
             >
               <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
                 Предпросмотр изображения
               </Typography>
               <Box
                 sx={{
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 2,
                   p: 2,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   backgroundColor: alpha(theme.palette.background.default, 0.5),
-                  minHeight: 200,
+                  minHeight: 200
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

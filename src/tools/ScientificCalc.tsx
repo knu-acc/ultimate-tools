@@ -12,7 +12,7 @@ import {
   Collapse,
   Divider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import HistoryIcon from '@mui/icons-material/History';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -143,7 +143,7 @@ export default function ScientificCalc() {
     fontSize: '1.15rem',
     fontWeight: 600,
     py: 2,
-    transition: 'all 120ms ease',
+    transition: 'all 120ms ease'
   };
 
   const btnNumber = {
@@ -151,11 +151,11 @@ export default function ScientificCalc() {
     backgroundColor: alpha(theme.palette.text.primary, 0.06),
     color: 'text.primary',
     '&:hover': {
-      backgroundColor: alpha(theme.palette.text.primary, 0.12),
+      backgroundColor: alpha(theme.palette.text.primary, 0.12)
     },
     '&:active': {
-      transform: 'scale(0.95)',
-    },
+      transform: 'scale(0.95)'
+    }
   };
 
   const btnOperator = {
@@ -165,11 +165,11 @@ export default function ScientificCalc() {
     fontWeight: 700,
     fontSize: '1.3rem',
     '&:hover': {
-      backgroundColor: alpha(theme.palette.primary.main, 0.25),
+      backgroundColor: alpha(theme.palette.primary.main, 0.25)
     },
     '&:active': {
-      transform: 'scale(0.95)',
-    },
+      transform: 'scale(0.95)'
+    }
   };
 
   const btnEquals = {
@@ -180,11 +180,11 @@ export default function ScientificCalc() {
     fontWeight: 700,
     '&:hover': {
       backgroundColor: 'primary.dark',
-      boxShadow: `0 4px 12px ${alpha(theme.palette.primary.main, 0.4)}`,
+      boxShadow: `0 4px 12px ${alpha(theme.palette.primary.main, 0.4)}`
     },
     '&:active': {
-      transform: 'scale(0.95)',
-    },
+      transform: 'scale(0.95)'
+    }
   };
 
   const btnClear = {
@@ -193,11 +193,11 @@ export default function ScientificCalc() {
     color: 'error.main',
     fontWeight: 700,
     '&:hover': {
-      backgroundColor: alpha(theme.palette.error.main, 0.22),
+      backgroundColor: alpha(theme.palette.error.main, 0.22)
     },
     '&:active': {
-      transform: 'scale(0.95)',
-    },
+      transform: 'scale(0.95)'
+    }
   };
 
   const btnFunction = {
@@ -207,11 +207,11 @@ export default function ScientificCalc() {
     fontSize: '0.85rem',
     fontWeight: 600,
     '&:hover': {
-      backgroundColor: alpha(theme.palette.secondary.main, 0.2),
+      backgroundColor: alpha(theme.palette.secondary.main, 0.2)
     },
     '&:active': {
-      transform: 'scale(0.95)',
-    },
+      transform: 'scale(0.95)'
+    }
   };
 
   const mainRows: { label: string; action: () => void; style: object }[][] = [
@@ -264,9 +264,8 @@ export default function ScientificCalc() {
       <Paper
         elevation={0}
         sx={{
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 4,
-          overflow: 'hidden',
+          overflow: 'hidden'
         }}
       >
         {/* Display */}
@@ -279,7 +278,7 @@ export default function ScientificCalc() {
               theme.palette.mode === 'dark'
                 ? alpha(theme.palette.common.black, 0.4)
                 : alpha(theme.palette.grey[900], 0.95),
-            color: theme.palette.common.white,
+            color: theme.palette.common.white
           }}
         >
           <Typography
@@ -292,7 +291,7 @@ export default function ScientificCalc() {
               mb: 0.5,
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
+              whiteSpace: 'nowrap'
             }}
           >
             {expression || '\u00A0'}
@@ -306,7 +305,7 @@ export default function ScientificCalc() {
               wordBreak: 'break-all',
               lineHeight: 1.2,
               transition: 'font-size 200ms ease',
-              color: theme.palette.common.white,
+              color: theme.palette.common.white
             }}
           >
             {display}
@@ -318,7 +317,7 @@ export default function ScientificCalc() {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            borderBottom: `1px solid ${theme.palette.divider}`,
+            borderBottom: `1px solid ${theme.palette.divider}`
           }}
         >
           <Button
@@ -331,7 +330,7 @@ export default function ScientificCalc() {
               color: 'text.secondary',
               fontWeight: 600,
               fontSize: '0.8rem',
-              py: 0.75,
+              py: 0.75
             }}
           >
             Научный режим
@@ -355,9 +354,9 @@ export default function ScientificCalc() {
                     height: 36,
                     backgroundColor: alpha(theme.palette.secondary.main, 0.1),
                     '&:hover': {
-                      backgroundColor: alpha(theme.palette.secondary.main, 0.2),
+                      backgroundColor: alpha(theme.palette.secondary.main, 0.2)
                     },
-                    cursor: 'pointer',
+                    cursor: 'pointer'
                   }}
                 />
               ))}
@@ -391,7 +390,7 @@ export default function ScientificCalc() {
             px: 2,
             py: 1,
             cursor: 'pointer',
-            '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) },
+            '&:hover': { backgroundColor: theme.palette.surfaceContainerLow }
           }}
           onClick={() => setShowHistory(!showHistory)}
         >
@@ -442,13 +441,13 @@ export default function ScientificCalc() {
                       py: 1.5,
                       borderRadius: 2,
                       cursor: 'pointer',
-                      backgroundColor: alpha(theme.palette.primary.main, 0.03),
+                      backgroundColor: theme.palette.surfaceContainerLow,
                       border: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
                       '&:hover': {
-                        backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                        borderColor: theme.palette.primary.main,
+                        backgroundColor: theme.palette.surfaceContainerHigh,
+                        borderColor: theme.palette.primary.main
                       },
-                      transition: 'all 120ms ease',
+                      transition: 'all 120ms ease'
                     }}
                   >
                     <Typography
@@ -457,7 +456,7 @@ export default function ScientificCalc() {
                         fontFamily: '"JetBrains Mono", "Fira Code", monospace',
                         color: 'text.secondary',
                         fontSize: '0.8rem',
-                        textAlign: 'right',
+                        textAlign: 'right'
                       }}
                     >
                       {item.expr}
@@ -468,7 +467,7 @@ export default function ScientificCalc() {
                         fontFamily: '"JetBrains Mono", "Fira Code", monospace',
                         fontWeight: 700,
                         textAlign: 'right',
-                        color: 'primary.main',
+                        color: 'primary.main'
                       }}
                     >
                       = {item.result}

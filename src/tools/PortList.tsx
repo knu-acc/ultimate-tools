@@ -9,7 +9,7 @@ import {
   Grid,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 type Protocol = 'TCP' | 'UDP' | 'TCP/UDP';
@@ -30,7 +30,7 @@ const categoryLabels: Record<Category, string> = {
   file: 'Передача файлов',
   remote: 'Удалённый доступ',
   messaging: 'Сообщения',
-  other: 'Другое',
+  other: 'Другое'
 };
 
 const ports: PortEntry[] = [
@@ -144,8 +144,7 @@ export default function PortList() {
           p: 3,
           mb: 3,
           borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <TextField
@@ -207,8 +206,7 @@ export default function PortList() {
         elevation={0}
         sx={{
           p: 3,
-          borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
@@ -224,16 +222,16 @@ export default function PortList() {
                 p: 1.5,
                 textAlign: 'left',
                 borderBottom: `1px solid ${theme.palette.divider}`,
-                fontSize: '0.875rem',
+                fontSize: '0.875rem'
               },
               '& th': {
                 fontWeight: 600,
                 color: 'text.secondary',
-                background: alpha(theme.palette.primary.main, 0.04),
+                background: theme.palette.surfaceContainerLow
               },
               '& tr:hover td': {
-                background: alpha(theme.palette.primary.main, 0.03),
-              },
+                background: theme.palette.surfaceContainerLow
+              }
             }}
           >
             <thead>
@@ -266,7 +264,7 @@ export default function PortList() {
                         fontSize: '0.75rem',
                         backgroundColor: alpha(protocolColor(p.protocol), 0.12),
                         color: protocolColor(p.protocol),
-                        border: 'none',
+                        border: 'none'
                       }}
                     />
                   </td>

@@ -11,10 +11,10 @@ import {
   Grid,
   Chip,
   IconButton,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 import ContentCopy from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type UnitKey =
   | 'bit' | 'byte'
@@ -39,7 +39,7 @@ const UNITS: Record<UnitKey, UnitInfo> = {
   pb:   { label: 'Петабайты',   shortLabel: 'ПБ',   toBits: (v) => v * 8 * 1e15,            fromBits: (b) => b / (8 * 1e15),          binary: false },
   kib:  { label: 'Кибибайты',   shortLabel: 'КиБ',  toBits: (v) => v * 8 * 1024,            fromBits: (b) => b / (8 * 1024),          binary: true },
   mib:  { label: 'Мебибайты',   shortLabel: 'МиБ',  toBits: (v) => v * 8 * 1024 ** 2,       fromBits: (b) => b / (8 * 1024 ** 2),     binary: true },
-  gib:  { label: 'Гибибайты',   shortLabel: 'ГиБ',  toBits: (v) => v * 8 * 1024 ** 3,       fromBits: (b) => b / (8 * 1024 ** 3),     binary: true },
+  gib:  { label: 'Гибибайты',   shortLabel: 'ГиБ',  toBits: (v) => v * 8 * 1024 ** 3,       fromBits: (b) => b / (8 * 1024 ** 3),     binary: true }
 };
 
 const UNIT_KEYS = Object.keys(UNITS) as UnitKey[];
@@ -77,7 +77,7 @@ export default function DataConverter() {
       key: k,
       label: UNITS[k].label,
       shortLabel: UNITS[k].shortLabel,
-      value: formatValue(UNITS[k].fromBits(bits)),
+      value: formatValue(UNITS[k].fromBits(bits))
     }));
 
   const handleCopy = async (key: string, value: string) => {
@@ -95,9 +95,8 @@ export default function DataConverter() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 4,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 4
         }}
       >
         {/* Mode toggle */}
@@ -137,7 +136,7 @@ export default function DataConverter() {
             sx={{
               flex: 2,
               minWidth: 160,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' },
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
             }}
           />
           <Select
@@ -175,7 +174,6 @@ export default function DataConverter() {
                 elevation={0}
                 sx={{
                   p: 2,
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
                   display: 'flex',
                   flexDirection: 'column',
@@ -183,8 +181,8 @@ export default function DataConverter() {
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: alpha(theme.palette.primary.main, 0.04),
-                  },
+                    background: theme.palette.surfaceContainerLow
+                  }
                 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -196,7 +194,7 @@ export default function DataConverter() {
                     onClick={() => handleCopy(r.key, r.value)}
                     sx={{
                       color: copied === r.key ? theme.palette.success.main : 'text.secondary',
-                      transition: 'color 200ms',
+                      transition: 'color 200ms'
                     }}
                   >
                     <ContentCopy sx={{ fontSize: 16 }} />
@@ -208,7 +206,7 @@ export default function DataConverter() {
                     fontFamily: 'monospace',
                     fontWeight: 500,
                     fontSize: '1rem',
-                    wordBreak: 'break-all',
+                    wordBreak: 'break-all'
                   }}
                 >
                   {r.value} {r.shortLabel}

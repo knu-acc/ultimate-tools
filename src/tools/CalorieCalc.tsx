@@ -11,7 +11,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 type Gender = 'male' | 'female';
@@ -86,9 +86,8 @@ export default function CalorieCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -113,13 +112,13 @@ export default function CalorieCalc() {
                 fontWeight: 600,
                 borderRadius: 2,
                 '&.Mui-selected': {
-                  background: alpha(theme.palette.primary.main, 0.12),
+                  background: theme.palette.surfaceContainerHigh,
                   color: theme.palette.primary.main,
                   '&:hover': {
-                    background: alpha(theme.palette.primary.main, 0.18),
-                  },
-                },
-              },
+                    background: alpha(theme.palette.primary.main, 0.18)
+                  }
+                }
+              }
             }}
           >
             <ToggleButton value="male">Мужской</ToggleButton>
@@ -137,7 +136,7 @@ export default function CalorieCalc() {
               onChange={(e) => setWeight(e.target.value)}
               placeholder="70"
               slotProps={{
-                input: { inputProps: { min: 20, max: 400, step: 0.5 } },
+                input: { inputProps: { min: 20, max: 400, step: 0.5 } }
               }}
             />
           </Grid>
@@ -150,7 +149,7 @@ export default function CalorieCalc() {
               onChange={(e) => setHeight(e.target.value)}
               placeholder="175"
               slotProps={{
-                input: { inputProps: { min: 50, max: 300, step: 1 } },
+                input: { inputProps: { min: 50, max: 300, step: 1 } }
               }}
             />
           </Grid>
@@ -163,7 +162,7 @@ export default function CalorieCalc() {
               onChange={(e) => setAge(e.target.value)}
               placeholder="25"
               slotProps={{
-                input: { inputProps: { min: 1, max: 150, step: 1 } },
+                input: { inputProps: { min: 1, max: 150, step: 1 } }
               }}
             />
           </Grid>
@@ -176,8 +175,7 @@ export default function CalorieCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1.5 }}>
@@ -197,13 +195,13 @@ export default function CalorieCalc() {
                   borderRadius: 2,
                   border: `1.5px solid ${isActive ? theme.palette.primary.main : theme.palette.divider}`,
                   background: isActive
-                    ? alpha(theme.palette.primary.main, 0.06)
+                    ? theme.palette.surfaceContainerLow
                     : 'transparent',
                   transition: 'all 0.15s ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: alpha(theme.palette.primary.main, 0.03),
-                  },
+                    background: theme.palette.surfaceContainerLow
+                  }
                 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -212,7 +210,7 @@ export default function CalorieCalc() {
                       variant="body2"
                       sx={{
                         fontWeight: isActive ? 700 : 500,
-                        color: isActive ? 'primary.main' : 'text.primary',
+                        color: isActive ? 'primary.main' : 'text.primary'
                       }}
                     >
                       {level.label}
@@ -248,7 +246,7 @@ export default function CalorieCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#1976d2', 0.3)}`,
-                  background: alpha('#1976d2', 0.05),
+                  background: alpha('#1976d2', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
@@ -270,7 +268,7 @@ export default function CalorieCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#2e7d32', 0.3)}`,
-                  background: alpha('#2e7d32', 0.05),
+                  background: alpha('#2e7d32', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
@@ -292,8 +290,7 @@ export default function CalorieCalc() {
             sx={{
               p: 3,
               mb: 2,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -313,7 +310,7 @@ export default function CalorieCalc() {
                       textAlign: 'center',
                       borderRadius: 2,
                       border: `1px solid ${alpha(m.color, 0.25)}`,
-                      background: alpha(m.color, 0.04),
+                      background: alpha(m.color, 0.04)
                     }}
                   >
                     <Box
@@ -323,7 +320,7 @@ export default function CalorieCalc() {
                         borderRadius: '50%',
                         backgroundColor: m.color,
                         mx: 'auto',
-                        mb: 0.5,
+                        mb: 0.5
                       }}
                     />
                     <Typography variant="caption" color="text.secondary">
@@ -343,8 +340,7 @@ export default function CalorieCalc() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -363,7 +359,7 @@ export default function CalorieCalc() {
                         variant="body2"
                         sx={{
                           fontWeight: isActive ? 700 : 400,
-                          color: isActive ? 'primary.main' : 'text.secondary',
+                          color: isActive ? 'primary.main' : 'text.secondary'
                         }}
                       >
                         {level.label}
@@ -373,7 +369,7 @@ export default function CalorieCalc() {
                         sx={{
                           fontWeight: 600,
                           fontFamily: 'monospace',
-                          color: isActive ? 'primary.main' : 'text.primary',
+                          color: isActive ? 'primary.main' : 'text.primary'
                         }}
                       >
                         {formatNum(levelTdee)} ккал
@@ -383,9 +379,9 @@ export default function CalorieCalc() {
                       sx={{
                         height: isActive ? 10 : 6,
                         borderRadius: 5,
-                        backgroundColor: alpha(theme.palette.primary.main, 0.08),
+                        backgroundColor: theme.palette.surfaceContainerHigh,
                         overflow: 'hidden',
-                        transition: 'height 0.2s ease',
+                        transition: 'height 0.2s ease'
                       }}
                     >
                       <Box
@@ -396,7 +392,7 @@ export default function CalorieCalc() {
                           backgroundColor: isActive
                             ? theme.palette.primary.main
                             : alpha(theme.palette.primary.main, 0.3),
-                          transition: 'width 0.4s ease, background-color 0.2s ease',
+                          transition: 'width 0.4s ease, background-color 0.2s ease'
                         }}
                       />
                     </Box>
@@ -412,9 +408,8 @@ export default function CalorieCalc() {
             sx={{
               mt: 2,
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              background: alpha(theme.palette.warning.main, 0.03),
+              background: alpha(theme.palette.warning.main, 0.03)
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -434,7 +429,7 @@ export default function CalorieCalc() {
                       textAlign: 'center',
                       borderRadius: 2,
                       border: `1px solid ${alpha(goal.color, 0.25)}`,
-                      background: alpha(goal.color, 0.04),
+                      background: alpha(goal.color, 0.04)
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">

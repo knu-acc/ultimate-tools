@@ -12,7 +12,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 type Gender = 'male' | 'female';
@@ -22,7 +22,7 @@ type SizeSystem = 'RU' | 'EU' | 'US' | 'UK' | 'INT';
 const categoryLabels: Record<ClothingCategory, string> = {
   outerwear: 'Верхняя одежда',
   pants: 'Брюки',
-  shirts: 'Рубашки',
+  shirts: 'Рубашки'
 };
 
 const sizeSystemLabels: Record<SizeSystem, string> = {
@@ -30,7 +30,7 @@ const sizeSystemLabels: Record<SizeSystem, string> = {
   EU: 'Европа (EU)',
   US: 'США (US)',
   UK: 'Великобритания (UK)',
-  INT: 'Международный',
+  INT: 'Международный'
 };
 
 // Size data: [RU, EU, US, UK, INT, chest_cm, waist_cm, hips_cm]
@@ -179,8 +179,7 @@ export default function ClothingSize() {
           p: 3,
           mb: 3,
           borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -199,14 +198,14 @@ export default function ClothingSize() {
               textTransform: 'none',
               fontWeight: 500,
               '&.Mui-selected': {
-                background: alpha(theme.palette.primary.main, 0.12),
+                background: theme.palette.surfaceContainerHigh,
                 color: theme.palette.primary.main,
                 fontWeight: 600,
                 '&:hover': {
-                  background: alpha(theme.palette.primary.main, 0.18),
-                },
-              },
-            },
+                  background: alpha(theme.palette.primary.main, 0.18)
+                }
+              }
+            }
           }}
         >
           <ToggleButton value="male">Мужчина</ToggleButton>
@@ -288,13 +287,13 @@ export default function ClothingSize() {
                     borderRadius: 3,
                     border: `1px solid ${sys === sizeSystem ? theme.palette.primary.main : theme.palette.divider}`,
                     borderWidth: sys === sizeSystem ? 2 : 1,
-                    background: sys === sizeSystem ? alpha(theme.palette.primary.main, 0.08) : 'transparent',
+                    background: sys === sizeSystem ? theme.palette.surfaceContainerHigh : 'transparent',
                     textAlign: 'center',
                     transition: 'all 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
-                      background: alpha(theme.palette.primary.main, 0.04),
-                    },
+                      background: theme.palette.surfaceContainerLow
+                    }
                   }}
                 >
                   <Typography
@@ -320,8 +319,7 @@ export default function ClothingSize() {
             sx={{
               p: 3,
               mb: 3,
-              borderRadius: 3,
-              border: `1px solid ${theme.palette.divider}`,
+              borderRadius: 3
             }}
           >
             <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -340,8 +338,8 @@ export default function ClothingSize() {
                       sx={{
                         p: 2,
                         borderRadius: 3,
-                        background: alpha(theme.palette.primary.main, 0.04),
-                        textAlign: 'center',
+                        background: theme.palette.surfaceContainerLow,
+                        textAlign: 'center'
                       }}
                     >
                       <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
@@ -363,8 +361,7 @@ export default function ClothingSize() {
         elevation={0}
         sx={{
           p: 3,
-          borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 3
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -381,19 +378,19 @@ export default function ClothingSize() {
                 textAlign: 'center',
                 borderBottom: `1px solid ${theme.palette.divider}`,
                 fontSize: '0.85rem',
-                whiteSpace: 'nowrap',
+                whiteSpace: 'nowrap'
               },
               '& th': {
                 fontWeight: 600,
                 color: 'text.secondary',
-                background: alpha(theme.palette.primary.main, 0.04),
+                background: theme.palette.surfaceContainerLow
               },
               '& td': {
-                fontFamily: 'monospace',
+                fontFamily: 'monospace'
               },
               '& tr:hover td': {
-                background: alpha(theme.palette.primary.main, 0.03),
-              },
+                background: theme.palette.surfaceContainerLow
+              }
             }}
           >
             <thead>
@@ -415,8 +412,8 @@ export default function ClothingSize() {
                   style={{
                     background:
                       matchedRow && row.ru === matchedRow.ru
-                        ? alpha(theme.palette.primary.main, 0.08)
-                        : undefined,
+                        ? theme.palette.surfaceContainerHigh
+                        : undefined
                   }}
                 >
                   <td>{row.ru}</td>

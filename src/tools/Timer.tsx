@@ -17,7 +17,7 @@ import {
   Divider,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
@@ -199,7 +199,7 @@ export default function TimerComponent() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ }}>
         <Tabs
           value={tab}
           onChange={(_, v) => setTab(v)}
@@ -227,7 +227,7 @@ export default function TimerComponent() {
                       : timerRunning
                         ? 'primary.main'
                         : 'text.primary',
-                    transition: 'color 300ms ease',
+                    transition: 'color 300ms ease'
                   }}
                 >
                   {timerRemaining > 0 || timerRunning
@@ -250,8 +250,8 @@ export default function TimerComponent() {
                       mt: 2,
                       height: 6,
                       borderRadius: 3,
-                      backgroundColor: alpha(theme.palette.primary.main, 0.12),
-                      overflow: 'hidden',
+                      backgroundColor: theme.palette.surfaceContainerHigh,
+                      overflow: 'hidden'
                     }}
                   >
                     <Box
@@ -260,7 +260,7 @@ export default function TimerComponent() {
                         width: `${timerProgress}%`,
                         backgroundColor: 'primary.main',
                         borderRadius: 3,
-                        transition: 'width 100ms linear',
+                        transition: 'width 100ms linear'
                       }}
                     />
                   </Box>
@@ -380,7 +380,7 @@ export default function TimerComponent() {
                     fontWeight: 300,
                     letterSpacing: 4,
                     color: swRunning ? 'primary.main' : 'text.primary',
-                    transition: 'color 300ms ease',
+                    transition: 'color 300ms ease'
                   }}
                 >
                   {formatTime(swElapsed)}
@@ -421,7 +421,7 @@ export default function TimerComponent() {
                     </Button>
                   </>
                 )}
-                <IconButton onClick={resetStopwatch} color="error" sx={{ border: `1px solid ${theme.palette.divider}` }}>
+                <IconButton onClick={resetStopwatch} color="error" sx={{ }}>
                   <RestartAltIcon />
                 </IconButton>
               </Box>
@@ -431,9 +431,8 @@ export default function TimerComponent() {
                 <Paper
                   elevation={0}
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    overflow: 'hidden',
+                    overflow: 'hidden'
                   }}
                 >
                   <Box
@@ -443,7 +442,7 @@ export default function TimerComponent() {
                       alignItems: 'center',
                       px: 2,
                       py: 1.5,
-                      backgroundColor: alpha(theme.palette.primary.main, 0.04),
+                      backgroundColor: theme.palette.surfaceContainerLow
                     }}
                   >
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
@@ -471,7 +470,7 @@ export default function TimerComponent() {
                               ? alpha(theme.palette.success.main, 0.06)
                               : isWorst
                                 ? alpha(theme.palette.error.main, 0.06)
-                                : 'transparent',
+                                : 'transparent'
                           }}
                         >
                           <ListItemText

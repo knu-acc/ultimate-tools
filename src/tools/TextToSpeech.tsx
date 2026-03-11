@@ -13,7 +13,7 @@ import {
   MenuItem,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
@@ -141,7 +141,7 @@ export default function TextToSpeech() {
             wordBreak: 'break-word',
             color: text ? theme.palette.text.primary : theme.palette.text.disabled,
             minHeight: 100,
-            lineHeight: 1.8,
+            lineHeight: 1.8
           }}
         >
           {text || 'Текст для озвучивания появится здесь...'}
@@ -160,7 +160,7 @@ export default function TextToSpeech() {
           whiteSpace: 'pre-wrap',
           wordBreak: 'break-word',
           minHeight: 100,
-          lineHeight: 1.8,
+          lineHeight: 1.8
         }}
       >
         {before}
@@ -171,7 +171,7 @@ export default function TextToSpeech() {
             borderRadius: 0.5,
             px: 0.3,
             py: 0.1,
-            transition: 'background-color 100ms ease',
+            transition: 'background-color 100ms ease'
           }}
         >
           {word}
@@ -189,7 +189,7 @@ export default function TextToSpeech() {
   if (!supported) {
     return (
       <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-        <Paper elevation={0} sx={{ border: `1px solid ${theme.palette.divider}`, p: 4, textAlign: 'center' }}>
+        <Paper elevation={0} sx={{ p: 4, textAlign: 'center' }}>
           <Typography variant="h6" color="error" gutterBottom>
             Синтез речи не поддерживается
           </Typography>
@@ -204,7 +204,7 @@ export default function TextToSpeech() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ }}>
         <Box sx={{ p: 3 }}>
           {/* Text Input */}
           <TextField
@@ -218,7 +218,7 @@ export default function TextToSpeech() {
             disabled={isPlaying || isPaused}
             sx={{
               mb: 3,
-              '& .MuiOutlinedInput-root': { borderRadius: 3 },
+              '& .MuiOutlinedInput-root': { borderRadius: 3 }
             }}
           />
 
@@ -231,9 +231,9 @@ export default function TextToSpeech() {
                 mb: 3,
                 borderRadius: 3,
                 border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
-                backgroundColor: alpha(theme.palette.primary.main, 0.03),
+                backgroundColor: theme.palette.surfaceContainerLow,
                 maxHeight: 200,
-                overflow: 'auto',
+                overflow: 'auto'
               }}
             >
               <Typography
@@ -242,7 +242,7 @@ export default function TextToSpeech() {
                   display: 'block',
                   mb: 1,
                   color: theme.palette.text.secondary,
-                  fontWeight: 600,
+                  fontWeight: 600
                 }}
               >
                 Воспроизведение
@@ -280,10 +280,9 @@ export default function TextToSpeech() {
               disabled={!isPlaying && !isPaused}
               color="error"
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
                 width: 48,
-                height: 48,
+                height: 48
               }}
             >
               <StopIcon />
@@ -386,11 +385,11 @@ export default function TextToSpeech() {
               px: 1.5,
               py: 1,
               borderRadius: 2,
-              backgroundColor: alpha(theme.palette.primary.main, 0.04),
+              backgroundColor: theme.palette.surfaceContainerLow,
               display: 'flex',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
-              gap: 1,
+              gap: 1
             }}
           >
             <Typography variant="body2" color="text.secondary">

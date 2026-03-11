@@ -10,9 +10,7 @@ import {
   MenuItem,
   Grid,
   Button,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 
 function isValidIp(ip: string): boolean {
   const parts = ip.split('.');
@@ -68,7 +66,7 @@ function calcSubnet(ip: string, cidr: number) {
     maskBinary: numberToBinary(mask),
     networkBinary: numberToBinary(network),
     ipClass: getIpClass(ipNum),
-    isPrivate: isPrivateIp(ipNum),
+    isPrivate: isPrivateIp(ipNum)
   };
 }
 
@@ -121,8 +119,7 @@ export default function IpCalculator() {
           p: 3,
           mb: 3,
           borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -176,13 +173,12 @@ export default function IpCalculator() {
                   sx={{
                     p: 2,
                     borderRadius: 3,
-                    border: `1px solid ${theme.palette.divider}`,
                     textAlign: 'center',
                     transition: 'all 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
-                      background: alpha(theme.palette.primary.main, 0.04),
-                    },
+                      background: theme.palette.surfaceContainerLow
+                    }
                   }}
                 >
                   <Typography
@@ -207,8 +203,7 @@ export default function IpCalculator() {
             elevation={0}
             sx={{
               p: 3,
-              borderRadius: 3,
-              border: `1px solid ${theme.palette.divider}`,
+              borderRadius: 3
             }}
           >
             <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -229,7 +224,7 @@ export default function IpCalculator() {
                   borderBottom: `1px solid ${theme.palette.divider}`,
                   '&:last-child': { borderBottom: 'none' },
                   flexWrap: 'wrap',
-                  gap: 1,
+                  gap: 1
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', minWidth: 140 }}>

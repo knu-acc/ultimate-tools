@@ -12,9 +12,7 @@ import {
   ButtonGroup,
   Alert,
   Chip,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
@@ -22,6 +20,8 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 function isBase64(str: string): boolean {
   if (!str || str.length % 4 !== 0) return false;
@@ -134,8 +134,7 @@ export default function Base64Encoder() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* File drop zone */}
@@ -154,12 +153,12 @@ export default function Base64Encoder() {
             borderRadius: 3,
             textAlign: 'center',
             cursor: 'pointer',
-            background: dragOver ? alpha(theme.palette.primary.main, 0.08) : 'transparent',
+            background: dragOver ? theme.palette.surfaceContainerHigh : 'transparent',
             transition: 'all 200ms ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
-              background: alpha(theme.palette.primary.main, 0.04),
-            },
+              background: theme.palette.surfaceContainerLow
+            }
           }}
         >
           <UploadFileIcon sx={{ fontSize: 32, color: 'text.secondary', mb: 1 }} />
@@ -193,7 +192,7 @@ export default function Base64Encoder() {
           placeholder="Введите текст или Base64 строку..."
           sx={{
             mb: 2,
-            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' },
+            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
           }}
         />
 
@@ -237,11 +236,7 @@ export default function Base64Encoder() {
                   variant="outlined"
                 />
               </Box>
-              <Tooltip title={copied ? 'Скопировано!' : 'Копировать'}>
-                <IconButton onClick={copyToClipboard} size="small" color={copied ? 'success' : 'default'}>
-                  {copied ? <CheckIcon /> : <ContentCopyIcon />}
-                </IconButton>
-              </Tooltip>
+              <CopyButton text={output} />
             </Box>
             <TextField
               multiline
@@ -253,8 +248,8 @@ export default function Base64Encoder() {
                 '& .MuiInputBase-root': {
                   fontFamily: 'monospace',
                   fontSize: '0.875rem',
-                  background: theme.palette.background.default,
-                },
+                  background: theme.palette.background.default
+                }
               }}
             />
           </Box>

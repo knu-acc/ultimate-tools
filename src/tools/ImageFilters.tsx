@@ -10,7 +10,7 @@ import {
   Chip,
   Slider,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -34,7 +34,7 @@ const DEFAULT_FILTERS: FilterState = {
   blur: 0,
   grayscale: 0,
   sepia: 0,
-  hueRotate: 0,
+  hueRotate: 0
 };
 
 interface FilterSliderDef {
@@ -166,13 +166,13 @@ export default function ImageFilters() {
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
             borderRadius: 4,
             backgroundColor: dragging
-              ? alpha(theme.palette.primary.main, 0.06)
+              ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
             transition: 'all 250ms ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
-              backgroundColor: alpha(theme.palette.primary.main, 0.04),
-            },
+              backgroundColor: theme.palette.surfaceContainerLow
+            }
           }}
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
@@ -190,7 +190,7 @@ export default function ImageFilters() {
           {/* Presets */}
           <Paper
             elevation={0}
-            sx={{ p: 2, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+            sx={{ p: 2, mb: 3, borderRadius: 3 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
               Пресеты
@@ -211,7 +211,7 @@ export default function ImageFilters() {
           {/* Sliders */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+            sx={{ p: 3, mb: 3, borderRadius: 3 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
               Настройки фильтров
@@ -256,7 +256,7 @@ export default function ImageFilters() {
             <Grid size={{ xs: 12, md: 6 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                sx={{ p: 2, borderRadius: 3 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                   <CompareIcon fontSize="small" color="action" />
@@ -273,7 +273,7 @@ export default function ImageFilters() {
                     maxHeight: 400,
                     objectFit: 'contain',
                     borderRadius: 2,
-                    display: 'block',
+                    display: 'block'
                   }}
                 />
               </Paper>
@@ -281,7 +281,7 @@ export default function ImageFilters() {
             <Grid size={{ xs: 12, md: 6 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                sx={{ p: 2, borderRadius: 3 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                   <CompareIcon fontSize="small" color="primary" />
@@ -297,7 +297,7 @@ export default function ImageFilters() {
                     maxHeight: 400,
                     objectFit: 'contain',
                     borderRadius: 2,
-                    display: 'block',
+                    display: 'block'
                   }}
                 />
               </Paper>

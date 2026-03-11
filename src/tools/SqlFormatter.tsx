@@ -11,9 +11,11 @@ import {
   Chip,
   Snackbar,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const SQL_KEYWORDS = [
   'SELECT', 'FROM', 'WHERE', 'JOIN', 'INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN',
@@ -146,7 +148,7 @@ export default function SqlFormatter() {
   const stats = output
     ? {
         lines: output.split('\n').length,
-        bytes: new TextEncoder().encode(output).length,
+        bytes: new TextEncoder().encode(output).length
       }
     : null;
 
@@ -156,9 +158,8 @@ export default function SqlFormatter() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         {/* Input */}
@@ -177,11 +178,11 @@ export default function SqlFormatter() {
             '& .MuiInputBase-root': {
               fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
               fontSize: '0.85rem',
-              lineHeight: 1.6,
+              lineHeight: 1.6
             },
             '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
-            },
+              borderRadius: 2
+            }
           }}
         />
 
@@ -238,13 +239,7 @@ export default function SqlFormatter() {
               <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                 Результат
               </Typography>
-              <IconButton
-                onClick={copyOutput}
-                size="small"
-                title="Копировать"
-              >
-                <ContentCopyIcon fontSize="small" />
-              </IconButton>
+              <CopyButton text={output} />
             </Box>
             <TextField
               multiline
@@ -259,11 +254,11 @@ export default function SqlFormatter() {
                   lineHeight: 1.6,
                   background: theme.palette.mode === 'dark'
                     ? alpha(theme.palette.common.black, 0.3)
-                    : alpha(theme.palette.grey[50], 1),
+                    : alpha(theme.palette.grey[50], 1)
                 },
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2,
-                },
+                  borderRadius: 2
+                }
               }}
             />
           </Box>

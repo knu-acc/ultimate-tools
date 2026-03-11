@@ -2,9 +2,11 @@
 
 import React, { useState, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, IconButton,
+  Box, Typography, Paper, Grid, Button, Chip, TextField, useTheme, IconButton
 } from '@mui/material';
 import { ContentCopy, Refresh, Palette, Lock, LockOpen } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 function hslToHex(h: number, s: number, l: number): string {
   s /= 100;
@@ -96,7 +98,7 @@ export default function ColorPalette() {
           borderRadius: 3,
           overflow: 'hidden',
           height: { xs: 200, md: 280 },
-          mb: 3,
+          mb: 3
         }}
       >
         {colors.map((color, i) => (
@@ -112,7 +114,7 @@ export default function ColorPalette() {
               cursor: 'pointer',
               transition: 'flex 0.3s ease',
               '&:hover': { flex: 1.3 },
-              position: 'relative',
+              position: 'relative'
             }}
             onClick={() => copyColor(color, i)}
           >
@@ -121,7 +123,7 @@ export default function ColorPalette() {
                 color: getContrastColor(color),
                 fontWeight: 700,
                 fontSize: { xs: '0.7rem', md: '0.9rem' },
-                mb: 0.5,
+                mb: 0.5
               }}
             >
               {copied === i ? '✓ Скопировано' : color}
@@ -142,7 +144,7 @@ export default function ColorPalette() {
           variant="contained"
           startIcon={<Refresh />}
           onClick={regenerate}
-          sx={{ borderRadius: '24px', px: 4 }}
+          sx={{ borderRadius: 6, px: 4 }}
         >
           Генерировать (Пробел)
         </Button>
@@ -150,7 +152,7 @@ export default function ColorPalette() {
           variant="outlined"
           startIcon={<ContentCopy />}
           onClick={() => navigator.clipboard.writeText(colors.join(', '))}
-          sx={{ borderRadius: '24px' }}
+          sx={{ borderRadius: 6 }}
         >
           Копировать все
         </Button>
@@ -167,7 +169,7 @@ export default function ColorPalette() {
                 sx={{
                   p: 2,
                   borderRadius: 2,
-                  bgcolor: alpha(theme.palette.primary.main, 0.04),
+                  bgcolor: theme.palette.surfaceContainerLow
                 }}
               >
                 <Box
@@ -176,7 +178,7 @@ export default function ColorPalette() {
                     height: 40,
                     borderRadius: 1.5,
                     bgcolor: color,
-                    mb: 1.5,
+                    mb: 1.5
                   }}
                 />
                 <Typography variant="body2" fontWeight={600}>{color}</Typography>
@@ -192,7 +194,7 @@ export default function ColorPalette() {
       {/* CSS export */}
       <Paper
         elevation={0}
-        sx={{ mt: 3, p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.04) }}
+        sx={{ mt: 3, p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
           CSS переменные
@@ -204,7 +206,7 @@ export default function ColorPalette() {
             fontSize: '0.8rem',
             m: 0,
             whiteSpace: 'pre-wrap',
-            color: theme.palette.text.secondary,
+            color: theme.palette.text.secondary
           }}
         >
           {`:root {\n${colors.map((c, i) => `  --color-${i + 1}: ${c};`).join('\n')}\n}`}
@@ -213,7 +215,7 @@ export default function ColorPalette() {
           size="small"
           startIcon={<ContentCopy />}
           onClick={() => navigator.clipboard.writeText(`:root {\n${colors.map((c, i) => `  --color-${i + 1}: ${c};`).join('\n')}\n}`)}
-          sx={{ mt: 1, borderRadius: '16px' }}
+          sx={{ mt: 1, borderRadius: 4 }}
         >
           Копировать CSS
         </Button>

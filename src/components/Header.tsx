@@ -37,9 +37,9 @@ export default function Header() {
         position="sticky"
         elevation={0}
         sx={{
-          bgcolor: alpha(theme.palette.background.paper, 0.92),
-          backdropFilter: 'blur(12px)',
-          borderBottom: `1px solid ${theme.palette.divider}`,
+          bgcolor: alpha(theme.palette.surfaceContainerLow, 0.95),
+          backdropFilter: 'blur(20px)',
+          boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)',
           color: theme.palette.text.primary,
         }}
       >
@@ -55,7 +55,7 @@ export default function Header() {
               sx={{
                 width: 32,
                 height: 32,
-                borderRadius: '8px',
+                borderRadius: 2,
                 bgcolor: theme.palette.primary.main,
                 display: 'flex',
                 alignItems: 'center',
@@ -85,7 +85,6 @@ export default function Header() {
                   color="inherit"
                   size="small"
                   sx={{
-                    borderRadius: '20px',
                     px: 2,
                     fontWeight: 400,
                     fontSize: '0.875rem',
@@ -109,12 +108,12 @@ export default function Header() {
               gap: 1,
               px: 2,
               height: 40,
-              borderRadius: '20px',
-              bgcolor: alpha(theme.palette.primary.main, 0.05),
+              borderRadius: 7,
+              bgcolor: theme.palette.surfaceContainerHigh,
               cursor: 'pointer',
               minWidth: { xs: 40, sm: 180, md: 240 },
               transition: 'all 200ms cubic-bezier(0.2, 0, 0, 1)',
-              '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1) },
+              '&:hover': { bgcolor: theme.palette.surfaceContainerHighest },
             }}
           >
             <SearchIcon sx={{ color: theme.palette.text.secondary, fontSize: 20 }} />
@@ -124,7 +123,7 @@ export default function Header() {
             <Typography
               variant="caption"
               sx={{
-                px: 0.75, py: 0.25, borderRadius: '4px',
+                px: 0.75, py: 0.25, borderRadius: 1,
                 bgcolor: alpha(theme.palette.text.primary, 0.06),
                 display: { xs: 'none', md: 'block' },
                 fontFamily: 'monospace', fontSize: '0.6875rem',
@@ -146,7 +145,7 @@ export default function Header() {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         PaperProps={{
-          sx: { width: 320, borderRadius: '0 16px 16px 0', bgcolor: theme.palette.background.paper },
+          sx: { width: 320, bgcolor: theme.palette.surfaceContainerLow },
         }}
       >
         <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -156,7 +155,7 @@ export default function Header() {
         <Divider />
         <List sx={{ px: 1.5, py: 1 }}>
           <ListItem disablePadding sx={{ mb: 0.5 }}>
-            <ListItemButton component={Link} href="/" onClick={() => setDrawerOpen(false)} sx={{ borderRadius: '28px', py: 1 }}>
+            <ListItemButton component={Link} href="/" onClick={() => setDrawerOpen(false)} sx={{ borderRadius: 7, py: 1 }}>
               <ListItemIcon sx={{ minWidth: 40 }}><Home sx={{ fontSize: 22 }} /></ListItemIcon>
               <ListItemText primary="Главная" primaryTypographyProps={{ fontWeight: 500, fontSize: '0.875rem' }} />
             </ListItemButton>
@@ -167,7 +166,7 @@ export default function Header() {
                 component={Link}
                 href={`/group/${group.slug}`}
                 onClick={() => setDrawerOpen(false)}
-                sx={{ borderRadius: '28px', py: 0.75, '&:hover': { bgcolor: alpha(group.color, 0.08) } }}
+                sx={{ borderRadius: 7, py: 0.75, '&:hover': { bgcolor: alpha(group.color, 0.08) } }}
               >
                 <ListItemIcon sx={{ minWidth: 40 }}>
                   <DynamicIcon name={group.icon} sx={{ color: group.color, fontSize: 22 }} />
@@ -178,7 +177,7 @@ export default function Header() {
           ))}
           <Divider sx={{ my: 1 }} />
           <ListItem disablePadding>
-            <ListItemButton component={Link} href="/blog" onClick={() => setDrawerOpen(false)} sx={{ borderRadius: '28px', py: 1 }}>
+            <ListItemButton component={Link} href="/blog" onClick={() => setDrawerOpen(false)} sx={{ borderRadius: 7, py: 1 }}>
               <ListItemIcon sx={{ minWidth: 40 }}><Article sx={{ fontSize: 22 }} /></ListItemIcon>
               <ListItemText primary="Блог" primaryTypographyProps={{ fontWeight: 500, fontSize: '0.875rem' }} />
             </ListItemButton>

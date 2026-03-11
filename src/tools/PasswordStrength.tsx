@@ -16,13 +16,15 @@ import {
   InputAdornment,
   Grid,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface StrengthInfo {
   score: number; // 0-4
@@ -46,9 +48,9 @@ export default function PasswordStrength() {
       uppercase: /[A-ZА-ЯЁ]/.test(password),
       digits: /[0-9]/.test(password),
       special: /[^a-zA-Zа-яёА-ЯЁ0-9]/.test(password),
-      noRepeating: !/(.)\1{2,}/.test(password),
+      noRepeating: !/(.)\1{2}/.test(password),
       noSequential: !/(012|123|234|345|456|567|678|789|abc|bcd|cde|def)/i.test(password),
-      noCommon: !/(password|qwerty|123456|admin|letmein|welcome|пароль)/i.test(password),
+      noCommon: !/(password|qwerty|123456|admin|letmein|welcome|пароль)/i.test(password)
     };
 
     return checks;
@@ -86,7 +88,7 @@ export default function PasswordStrength() {
 
     // Penalties
     if (/(password|qwerty|123456|admin|пароль)/i.test(password)) score -= 3;
-    if (/(.)\1{2,}/.test(password)) score -= 1;
+    if (/(.)\1{2}/.test(password)) score -= 1;
 
     // Normalize to 0-4
     score = Math.max(0, Math.min(4, Math.floor(score / 2)));
@@ -161,7 +163,7 @@ export default function PasswordStrength() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Password Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
           Введите пароль для проверки
         </Typography>
@@ -176,15 +178,13 @@ export default function PasswordStrength() {
             input: {
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={copyPassword} size="small" sx={{ mr: 0.5 }}>
-                    <ContentCopyIcon fontSize="small" />
-                  </IconButton>
+                  <CopyButton text={password} />
                   <IconButton onClick={() => setShowPassword(!showPassword)} size="small">
                     {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                   </IconButton>
                 </InputAdornment>
-              ),
-            },
+              )
+            }
           }}
         />
         {copied && (
@@ -216,8 +216,8 @@ export default function PasswordStrength() {
                 backgroundColor: alpha(strength.color, 0.15),
                 '& .MuiLinearProgress-bar': {
                   backgroundColor: strength.color,
-                  borderRadius: 5,
-                },
+                  borderRadius: 5
+                }
               }}
             />
           </Box>
@@ -228,7 +228,7 @@ export default function PasswordStrength() {
         <Grid container spacing={3}>
           {/* Character Analysis */}
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, height: '100%' }}>
+            <Paper elevation={0} sx={{ p: 3, height: '100%' }}>
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Анализ символов
               </Typography>
@@ -256,8 +256,8 @@ export default function PasswordStrength() {
                           backgroundColor: alpha(item.color, 0.12),
                           '& .MuiLinearProgress-bar': {
                             backgroundColor: item.color,
-                            borderRadius: 3,
-                          },
+                            borderRadius: 3
+                          }
                         }}
                       />
                     </Box>
@@ -274,7 +274,7 @@ export default function PasswordStrength() {
 
           {/* Criteria Checklist */}
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, height: '100%' }}>
+            <Paper elevation={0} sx={{ p: 3, height: '100%' }}>
               <Typography variant="h6" sx={{ mb: 1 }}>
                 Критерии
               </Typography>
@@ -296,7 +296,7 @@ export default function PasswordStrength() {
                             variant="body2"
                             sx={{
                               color: passed ? 'text.primary' : 'text.secondary',
-                              textDecoration: passed ? 'none' : 'none',
+                              textDecoration: passed ? 'none' : 'none'
                             }}
                           >
                             {label}
@@ -317,8 +317,7 @@ export default function PasswordStrength() {
                 elevation={0}
                 sx={{
                   p: 3,
-                  border: `1px solid ${theme.palette.divider}`,
-                  background: alpha(theme.palette.warning.main, 0.04),
+                  background: alpha(theme.palette.warning.main, 0.04)
                 }}
               >
                 <Typography variant="h6" sx={{ mb: 1.5 }}>

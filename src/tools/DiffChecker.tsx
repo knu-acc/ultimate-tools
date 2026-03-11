@@ -11,7 +11,7 @@ import {
   Chip,
   Grid,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -130,9 +130,8 @@ export default function DiffChecker() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         <Grid container spacing={2}>
@@ -151,9 +150,9 @@ export default function DiffChecker() {
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
                   fontSize: '0.85rem',
-                  lineHeight: 1.6,
+                  lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 },
+                '& .MuiOutlinedInput-root': { borderRadius: 2 }
               }}
             />
           </Grid>
@@ -172,9 +171,9 @@ export default function DiffChecker() {
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
                   fontSize: '0.85rem',
-                  lineHeight: 1.6,
+                  lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 },
+                '& .MuiOutlinedInput-root': { borderRadius: 2 }
               }}
             />
           </Grid>
@@ -212,7 +211,7 @@ export default function DiffChecker() {
                 fontSize: '0.75rem',
                 bgcolor: alpha(theme.palette.success.main, 0.1),
                 color: theme.palette.success.main,
-                fontWeight: 600,
+                fontWeight: 600
               }}
             />
             <Chip
@@ -222,7 +221,7 @@ export default function DiffChecker() {
                 fontSize: '0.75rem',
                 bgcolor: alpha(theme.palette.error.main, 0.1),
                 color: theme.palette.error.main,
-                fontWeight: 600,
+                fontWeight: 600
               }}
             />
             <Chip
@@ -239,10 +238,9 @@ export default function DiffChecker() {
           <Paper
             elevation={0}
             sx={{
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 2,
               overflow: 'auto',
-              maxHeight: 500,
+              maxHeight: 500
             }}
           >
             {diffResult.map((line, idx) => (
@@ -253,7 +251,7 @@ export default function DiffChecker() {
                   background: getBgColor(line.type),
                   borderBottom: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
                   '&:last-child': { borderBottom: 'none' },
-                  minHeight: 28,
+                  minHeight: 28
                 }}
               >
                 {/* Left line number */}
@@ -266,7 +264,7 @@ export default function DiffChecker() {
                     pl: 0.5,
                     py: 0.25,
                     borderRight: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
-                    userSelect: 'none',
+                    userSelect: 'none'
                   }}
                 >
                   <Typography
@@ -275,7 +273,7 @@ export default function DiffChecker() {
                       fontFamily: '"JetBrains Mono", monospace',
                       fontSize: '0.72rem',
                       color: 'text.disabled',
-                      lineHeight: '24px',
+                      lineHeight: '24px'
                     }}
                   >
                     {line.leftNum ?? ''}
@@ -292,7 +290,7 @@ export default function DiffChecker() {
                     pl: 0.5,
                     py: 0.25,
                     borderRight: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
-                    userSelect: 'none',
+                    userSelect: 'none'
                   }}
                 >
                   <Typography
@@ -301,7 +299,7 @@ export default function DiffChecker() {
                       fontFamily: '"JetBrains Mono", monospace',
                       fontSize: '0.72rem',
                       color: 'text.disabled',
-                      lineHeight: '24px',
+                      lineHeight: '24px'
                     }}
                   >
                     {line.rightNum ?? ''}
@@ -316,7 +314,7 @@ export default function DiffChecker() {
                     textAlign: 'center',
                     py: 0.25,
                     borderRight: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
-                    userSelect: 'none',
+                    userSelect: 'none'
                   }}
                 >
                   <Typography
@@ -326,7 +324,7 @@ export default function DiffChecker() {
                       fontSize: '0.8rem',
                       fontWeight: 700,
                       color: getLineColor(line.type),
-                      lineHeight: '24px',
+                      lineHeight: '24px'
                     }}
                   >
                     {getPrefix(line.type)}
@@ -343,7 +341,7 @@ export default function DiffChecker() {
                       lineHeight: '24px',
                       m: 0,
                       whiteSpace: 'pre',
-                      color: line.type === 'unchanged' ? 'text.secondary' : 'text.primary',
+                      color: line.type === 'unchanged' ? 'text.secondary' : 'text.primary'
                     }}
                   >
                     {line.text}

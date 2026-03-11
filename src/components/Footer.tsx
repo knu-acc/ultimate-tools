@@ -15,8 +15,7 @@ export default function Footer() {
         mt: 8,
         pt: 6,
         pb: 3,
-        bgcolor: alpha(theme.palette.text.primary, 0.02),
-        borderTop: `1px solid ${theme.palette.divider}`,
+        bgcolor: theme.palette.surfaceContainerLow,
       }}
     >
       <Container maxWidth="lg">

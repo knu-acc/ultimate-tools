@@ -10,7 +10,7 @@ import {
   Tooltip,
   useTheme,
   alpha,
-  Snackbar,
+  Snackbar
 } from '@mui/material';
 
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
@@ -37,7 +37,7 @@ const tailwindColors: Record<string, Record<number, string>> = {
   purple: { 50: '#faf5ff', 100: '#f3e8ff', 200: '#e9d5ff', 300: '#d8b4fe', 400: '#c084fc', 500: '#a855f7', 600: '#9333ea', 700: '#7e22ce', 800: '#6b21a8', 900: '#581c87', 950: '#3b0764' },
   fuchsia: { 50: '#fdf4ff', 100: '#fae8ff', 200: '#f5d0fe', 300: '#f0abfc', 400: '#e879f9', 500: '#d946ef', 600: '#c026d3', 700: '#a21caf', 800: '#86198f', 900: '#701a75', 950: '#4a044e' },
   pink: { 50: '#fdf2f8', 100: '#fce7f3', 200: '#fbcfe8', 300: '#f9a8d4', 400: '#f472b6', 500: '#ec4899', 600: '#db2777', 700: '#be185d', 800: '#9d174d', 900: '#831843', 950: '#500724' },
-  rose: { 50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c', 800: '#9f1239', 900: '#881337', 950: '#4c0519' },
+  rose: { 50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c', 800: '#9f1239', 900: '#881337', 950: '#4c0519' }
 };
 
 function getContrastColor(hex: string): string {
@@ -69,8 +69,7 @@ export default function TailwindColors() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <TextField
@@ -90,7 +89,7 @@ export default function TailwindColors() {
                 mb: 1,
                 fontWeight: 600,
                 textTransform: 'capitalize',
-                color: 'text.secondary',
+                color: 'text.secondary'
               }}
             >
               {colorName}
@@ -117,8 +116,8 @@ export default function TailwindColors() {
                         '&:hover': {
                           transform: 'scale(1.15)',
                           zIndex: 1,
-                          boxShadow: `0 4px 12px ${alpha(hex, 0.5)}`,
-                        },
+                          boxShadow: `0 4px 12px ${alpha(hex, 0.5)}`
+                        }
                       }}
                     >
                       <Typography
@@ -126,7 +125,7 @@ export default function TailwindColors() {
                           fontSize: { xs: '0.5rem', sm: '0.6rem' },
                           fontWeight: 600,
                           color: getContrastColor(hex),
-                          lineHeight: 1.2,
+                          lineHeight: 1.2
                         }}
                       >
                         {shade}
@@ -136,7 +135,7 @@ export default function TailwindColors() {
                           fontSize: { xs: '0.45rem', sm: '0.55rem' },
                           color: alpha(getContrastColor(hex), 0.7),
                           fontFamily: 'monospace',
-                          display: { xs: 'none', sm: 'block' },
+                          display: { xs: 'none', sm: 'block' }
                         }}
                       >
                         {hex}

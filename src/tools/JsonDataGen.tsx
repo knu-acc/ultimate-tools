@@ -15,12 +15,12 @@ import {
   IconButton,
   Snackbar,
   Tooltip,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const fieldTypes = [
   { value: 'string', label: 'Строка' },
@@ -63,7 +63,7 @@ const presetSchemas: Record<string, SchemaField[]> = {
     { id: 4, name: 'total', type: 'number' },
     { id: 5, name: 'address', type: 'address' },
     { id: 6, name: 'date', type: 'date' },
-  ],
+  ]
 };
 
 // --- Generators ---
@@ -233,9 +233,8 @@ export default function JsonDataGen() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 3
         }}
       >
         {/* Presets */}
@@ -376,18 +375,18 @@ export default function JsonDataGen() {
               value={output}
               slotProps={{
                 input: {
-                  readOnly: true,
-                },
+                  readOnly: true
+                }
               }}
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
                   fontSize: '0.8rem',
-                  lineHeight: 1.5,
+                  lineHeight: 1.5
                 },
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2,
-                },
+                  borderRadius: 2
+                }
               }}
             />
             <Box sx={{ mt: 1 }}>

@@ -9,7 +9,7 @@ import {
   Grid,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface StatCard {
@@ -51,7 +51,7 @@ export default function ReadingTime() {
       paragraphCount,
       readingTimeSec,
       speakingTimeSec,
-      avgWordLength,
+      avgWordLength
     };
   }, [text]);
 
@@ -69,34 +69,34 @@ export default function ReadingTime() {
       label: 'Время чтения',
       value: formatTime(stats.readingTimeSec),
       suffix: '~200 сл/мин',
-      color: theme.palette.primary.main,
+      color: theme.palette.primary.main
     },
     {
       label: 'Время речи',
       value: formatTime(stats.speakingTimeSec),
       suffix: '~130 сл/мин',
-      color: theme.palette.secondary.main,
+      color: theme.palette.secondary.main
     },
     {
       label: 'Слова',
       value: stats.wordCount.toLocaleString('ru-RU'),
-      color: theme.palette.info.main,
+      color: theme.palette.info.main
     },
     {
       label: 'Символы',
       value: stats.charCount.toLocaleString('ru-RU'),
       suffix: `без пробелов: ${stats.charNoSpaces.toLocaleString('ru-RU')}`,
-      color: theme.palette.success.main,
+      color: theme.palette.success.main
     },
     {
       label: 'Предложения',
       value: stats.sentenceCount.toLocaleString('ru-RU'),
-      color: theme.palette.warning.main,
+      color: theme.palette.warning.main
     },
     {
       label: 'Абзацы',
       value: stats.paragraphCount.toLocaleString('ru-RU'),
-      color: theme.palette.error.main,
+      color: theme.palette.error.main
     },
   ];
 
@@ -108,8 +108,7 @@ export default function ReadingTime() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <TextField
@@ -125,8 +124,8 @@ export default function ReadingTime() {
             '& .MuiOutlinedInput-root': {
               borderRadius: 2,
               fontSize: '1rem',
-              lineHeight: 1.7,
-            },
+              lineHeight: 1.7
+            }
           }}
         />
       </Paper>
@@ -146,8 +145,8 @@ export default function ReadingTime() {
                 transition: 'transform 150ms ease, box-shadow 150ms ease',
                 '&:hover': {
                   transform: 'translateY(-2px)',
-                  boxShadow: `0 4px 20px ${alpha(card.color, 0.15)}`,
-                },
+                  boxShadow: `0 4px 20px ${alpha(card.color, 0.15)}`
+                }
               }}
             >
               <Typography
@@ -156,7 +155,7 @@ export default function ReadingTime() {
                   fontWeight: 700,
                   color: card.color,
                   lineHeight: 1.2,
-                  mb: 0.5,
+                  mb: 0.5
                 }}
               >
                 {card.value}
@@ -168,7 +167,7 @@ export default function ReadingTime() {
                   fontWeight: 500,
                   textTransform: 'uppercase',
                   letterSpacing: 0.5,
-                  display: 'block',
+                  display: 'block'
                 }}
               >
                 {card.label}
@@ -180,7 +179,7 @@ export default function ReadingTime() {
                     color: alpha(card.color, 0.7),
                     fontSize: '0.68rem',
                     display: 'block',
-                    mt: 0.5,
+                    mt: 0.5
                   }}
                 >
                   {card.suffix}
@@ -196,8 +195,7 @@ export default function ReadingTime() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, mb: 2 }}>
@@ -209,9 +207,9 @@ export default function ReadingTime() {
             sx={{
               borderRadius: 2,
               fontWeight: 600,
-              backgroundColor: alpha(theme.palette.primary.main, 0.08),
+              backgroundColor: theme.palette.surfaceContainerHigh,
               color: theme.palette.primary.dark,
-              border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+              border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`
             }}
           />
           <Chip
@@ -221,7 +219,7 @@ export default function ReadingTime() {
               fontWeight: 600,
               backgroundColor: alpha(theme.palette.success.main, 0.08),
               color: theme.palette.success.dark,
-              border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`,
+              border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`
             }}
           />
           <Chip
@@ -231,7 +229,7 @@ export default function ReadingTime() {
               fontWeight: 600,
               backgroundColor: alpha(theme.palette.warning.main, 0.08),
               color: theme.palette.warning.dark,
-              border: `1px solid ${alpha(theme.palette.warning.main, 0.2)}`,
+              border: `1px solid ${alpha(theme.palette.warning.main, 0.2)}`
             }}
           />
         </Box>

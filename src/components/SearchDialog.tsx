@@ -66,7 +66,7 @@ export default function SearchDialog({ open, onClose }: Props) {
       onClose={onClose}
       maxWidth="sm"
       fullWidth
-      PaperProps={{ sx: { borderRadius: '28px', maxHeight: '70vh' } }}
+      PaperProps={{ sx: { borderRadius: 7, maxHeight: '70vh' } }}
     >
       <Box sx={{ p: 2, pb: 0 }}>
         <TextField
@@ -84,7 +84,7 @@ export default function SearchDialog({ open, onClose }: Props) {
           variant="outlined"
           sx={{
             '& .MuiOutlinedInput-root': {
-              borderRadius: '28px',
+              borderRadius: 7,
               bgcolor: alpha(theme.palette.primary.main, 0.04),
               '& fieldset': { border: 'none' },
             },
@@ -101,7 +101,7 @@ export default function SearchDialog({ open, onClose }: Props) {
                   selected={index === selectedIndex}
                   onClick={() => handleSelect(tool)}
                   sx={{
-                    borderRadius: '12px',
+                    borderRadius: 3,
                     mb: 0.5,
                     py: 1,
                     '&.Mui-selected': { bgcolor: alpha(theme.palette.primary.main, 0.08) },
@@ -112,7 +112,7 @@ export default function SearchDialog({ open, onClose }: Props) {
                       sx={{
                         width: 36,
                         height: 36,
-                        borderRadius: '10px',
+                        borderRadius: 2,
                         bgcolor: alpha(group?.color || theme.palette.primary.main, 0.1),
                         display: 'flex',
                         alignItems: 'center',

@@ -13,11 +13,13 @@ import {
   Chip,
   MenuItem,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 export default function OgPreview() {
   const theme = useTheme();
@@ -66,8 +68,7 @@ export default function OgPreview() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -176,9 +177,8 @@ export default function OgPreview() {
           <Paper
             elevation={0}
             sx={{
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              overflow: 'hidden',
+              overflow: 'hidden'
             }}
           >
             {imageUrl && (
@@ -191,7 +191,7 @@ export default function OgPreview() {
                   height: 200,
                   objectFit: 'cover',
                   display: 'block',
-                  bgcolor: alpha(theme.palette.text.primary, 0.05),
+                  bgcolor: alpha(theme.palette.text.primary, 0.05)
                 }}
                 onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                   e.currentTarget.style.display = 'none';
@@ -206,7 +206,7 @@ export default function OgPreview() {
                   bgcolor: alpha(theme.palette.text.primary, 0.05),
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justifyContent: 'center'
                 }}
               >
                 <Typography variant="body2" color="text.secondary">
@@ -227,7 +227,7 @@ export default function OgPreview() {
                 sx={{
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {title || 'Заголовок страницы'}
@@ -239,7 +239,7 @@ export default function OgPreview() {
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden',
+                  overflow: 'hidden'
                 }}
               >
                 {description || 'Описание страницы'}
@@ -256,9 +256,8 @@ export default function OgPreview() {
           <Paper
             elevation={0}
             sx={{
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              overflow: 'hidden',
+              overflow: 'hidden'
             }}
           >
             {twitterCard === 'summary_large_image' ? (
@@ -273,7 +272,7 @@ export default function OgPreview() {
                       height: 200,
                       objectFit: 'cover',
                       display: 'block',
-                      bgcolor: alpha(theme.palette.text.primary, 0.05),
+                      bgcolor: alpha(theme.palette.text.primary, 0.05)
                     }}
                     onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                       e.currentTarget.style.display = 'none';
@@ -287,7 +286,7 @@ export default function OgPreview() {
                       bgcolor: alpha(theme.palette.text.primary, 0.05),
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
+                      justifyContent: 'center'
                     }}
                   >
                     <Typography variant="body2" color="text.secondary">
@@ -306,7 +305,7 @@ export default function OgPreview() {
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
+                      overflow: 'hidden'
                     }}
                   >
                     {description || 'Описание'}
@@ -328,7 +327,7 @@ export default function OgPreview() {
                       height: 120,
                       objectFit: 'cover',
                       flexShrink: 0,
-                      bgcolor: alpha(theme.palette.text.primary, 0.05),
+                      bgcolor: alpha(theme.palette.text.primary, 0.05)
                     }}
                     onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                       e.currentTarget.style.display = 'none';
@@ -343,7 +342,7 @@ export default function OgPreview() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      flexShrink: 0,
+                      flexShrink: 0
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">
@@ -362,7 +361,7 @@ export default function OgPreview() {
                       display: '-webkit-box',
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
+                      overflow: 'hidden'
                     }}
                   >
                     {description || 'Описание'}
@@ -384,10 +383,9 @@ export default function OgPreview() {
           <Paper
             elevation={0}
             sx={{
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
               overflow: 'hidden',
-              maxWidth: 550,
+              maxWidth: 550
             }}
           >
             {imageUrl ? (
@@ -400,7 +398,7 @@ export default function OgPreview() {
                   height: 280,
                   objectFit: 'cover',
                   display: 'block',
-                  bgcolor: alpha(theme.palette.text.primary, 0.05),
+                  bgcolor: alpha(theme.palette.text.primary, 0.05)
                 }}
                 onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                   e.currentTarget.style.display = 'none';
@@ -414,7 +412,7 @@ export default function OgPreview() {
                   bgcolor: alpha(theme.palette.text.primary, 0.05),
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justifyContent: 'center'
                 }}
               >
                 <Typography variant="body2" color="text.secondary">
@@ -439,27 +437,21 @@ export default function OgPreview() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
           <Typography variant="subtitle2" fontWeight={600}>
             Мета-теги HTML
           </Typography>
-          <Tooltip title={copied ? 'Скопировано!' : 'Копировать'}>
-            <IconButton onClick={copyMeta} color={copied ? 'success' : 'default'} size="small">
-              {copied ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-            </IconButton>
-          </Tooltip>
+          <CopyButton text={metaTags} />
         </Box>
         <Paper
           elevation={0}
           sx={{
             p: 2,
             borderRadius: 2,
-            bgcolor: alpha(theme.palette.primary.main, 0.04),
-            border: `1px solid ${theme.palette.divider}`,
+            bgcolor: theme.palette.surfaceContainerLow
           }}
         >
           <Typography
@@ -469,7 +461,7 @@ export default function OgPreview() {
               fontSize: '0.8rem',
               whiteSpace: 'pre-wrap',
               wordBreak: 'break-all',
-              m: 0,
+              m: 0
             }}
           >
             {metaTags}
@@ -479,7 +471,7 @@ export default function OgPreview() {
           size="small"
           startIcon={copied ? <CheckIcon /> : <ContentCopyIcon />}
           onClick={copyMeta}
-          sx={{ mt: 1.5, borderRadius: '16px' }}
+          sx={{ mt: 1.5, borderRadius: 4 }}
         >
           {copied ? 'Скопировано!' : 'Копировать мета-теги'}
         </Button>

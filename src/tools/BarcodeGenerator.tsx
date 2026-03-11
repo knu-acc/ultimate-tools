@@ -12,9 +12,7 @@ import {
   Chip,
   Switch,
   FormControlLabel,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 
 type BarcodeType = 'code128' | 'ean13' | 'code39';
@@ -350,8 +348,7 @@ export default function BarcodeGenerator() {
             sx={{
               p: 3,
               borderRadius: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              textAlign: 'center',
+              textAlign: 'center'
             }}
           >
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -359,7 +356,6 @@ export default function BarcodeGenerator() {
             </Typography>
             <Box
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 2,
                 overflow: 'auto',
                 backgroundColor: '#fff',
@@ -367,7 +363,7 @@ export default function BarcodeGenerator() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 minHeight: 150,
-                p: 2,
+                p: 2
               }}
             >
               <canvas ref={canvasRef} style={{ display: 'block' }} />
@@ -379,7 +375,7 @@ export default function BarcodeGenerator() {
                 startIcon={<DownloadIcon />}
                 onClick={handleDownload}
                 disabled={!text.trim() || !!error}
-                sx={{ borderRadius: '20px' }}
+                sx={{ borderRadius: 5 }}
               >
                 Скачать PNG
               </Button>

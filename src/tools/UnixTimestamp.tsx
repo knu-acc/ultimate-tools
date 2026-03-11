@@ -11,9 +11,11 @@ import {
   IconButton,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopy from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 function formatRelative(date: Date, now: Date): string {
   const diffMs = now.getTime() - date.getTime();
@@ -85,10 +87,10 @@ export default function UnixTimestamp() {
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit',
+        second: '2-digit'
       }),
       utc: date.toUTCString(),
-      relative: formatRelative(date, new Date()),
+      relative: formatRelative(date, new Date())
     };
   }, [tsInput, now]);
 
@@ -125,8 +127,7 @@ export default function UnixTimestamp() {
           mb: 3,
           borderRadius: 3,
           textAlign: 'center',
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(accentColor, 0.04),
+          background: alpha(accentColor, 0.04)
         }}
       >
         <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -138,7 +139,7 @@ export default function UnixTimestamp() {
             sx={{
               fontWeight: 700,
               color: accentColor,
-              fontFamily: 'monospace',
+              fontFamily: 'monospace'
             }}
           >
             {now}
@@ -167,7 +168,7 @@ export default function UnixTimestamp() {
             sx={{
               cursor: 'pointer',
               borderColor: theme.palette.divider,
-              color: copiedField === 'currentMs' ? '#2e7d32' : 'text.secondary',
+              color: copiedField === 'currentMs' ? '#2e7d32' : 'text.secondary'
             }}
           />
         </Box>
@@ -179,8 +180,7 @@ export default function UnixTimestamp() {
         sx={{
           p: 3,
           mb: 3,
-          borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -229,7 +229,7 @@ export default function UnixTimestamp() {
                   background: alpha(accentColor, 0.02),
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between',
+                  justifyContent: 'space-between'
                 }}
               >
                 <Box>
@@ -255,8 +255,7 @@ export default function UnixTimestamp() {
         elevation={0}
         sx={{
           p: 3,
-          borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -282,7 +281,7 @@ export default function UnixTimestamp() {
               onChange={(e) => setTimeInput(e.target.value)}
               slotProps={{
                 inputLabel: { shrink: true },
-                input: { inputProps: { step: 1 } },
+                input: { inputProps: { step: 1 } }
               }}
             />
           </Grid>
@@ -316,7 +315,7 @@ export default function UnixTimestamp() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#2e7d32', 0.2)}`,
-                  background: alpha('#2e7d32', 0.04),
+                  background: alpha('#2e7d32', 0.04)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -338,7 +337,7 @@ export default function UnixTimestamp() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#1976d2', 0.2)}`,
-                  background: alpha('#1976d2', 0.04),
+                  background: alpha('#1976d2', 0.04)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">

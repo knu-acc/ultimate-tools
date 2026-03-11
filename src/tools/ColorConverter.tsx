@@ -10,10 +10,12 @@ import {
   IconButton,
   Tooltip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface RGB { r: number; g: number; b: number }
 interface HSL { h: number; s: number; l: number }
@@ -95,7 +97,7 @@ function rgbToCmyk(r: number, g: number, b: number): CMYK {
     c: Math.round(((c1 - k) / (1 - k)) * 100),
     m: Math.round(((m1 - k) / (1 - k)) * 100),
     y: Math.round(((y1 - k) / (1 - k)) * 100),
-    k: Math.round(k * 100),
+    k: Math.round(k * 100)
   };
 }
 
@@ -104,7 +106,7 @@ function cmykToRgb(c: number, m: number, y: number, k: number): RGB {
   return {
     r: Math.round(255 * (1 - c) * (1 - k)),
     g: Math.round(255 * (1 - m) * (1 - k)),
-    b: Math.round(255 * (1 - y) * (1 - k)),
+    b: Math.round(255 * (1 - y) * (1 - k))
   };
 }
 
@@ -193,8 +195,7 @@ export default function ColorConverter() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Color preview + picker */}
@@ -207,7 +208,7 @@ export default function ColorConverter() {
               backgroundColor: hex,
               border: `2px solid ${theme.palette.divider}`,
               boxShadow: `0 4px 20px ${alpha(hex, 0.4)}`,
-              flexShrink: 0,
+              flexShrink: 0
             }}
           />
           <Box sx={{ flex: 1, minWidth: 200 }}>
@@ -224,7 +225,7 @@ export default function ColorConverter() {
                 border: 'none',
                 borderRadius: 8,
                 cursor: 'pointer',
-                padding: 0,
+                padding: 0
               }}
             />
           </Box>
@@ -242,11 +243,7 @@ export default function ColorConverter() {
             onChange={(e) => handleHexChange(e.target.value)}
             sx={{ '& .MuiInputBase-root': { fontFamily: 'monospace' } }}
           />
-          <Tooltip title={copied === 'HEX' ? 'Скопировано!' : 'Копировать'}>
-            <IconButton onClick={() => copyValue('HEX', hex)} color={copied === 'HEX' ? 'success' : 'default'}>
-              {copied === 'HEX' ? <CheckIcon /> : <ContentCopyIcon />}
-            </IconButton>
-          </Tooltip>
+          <CopyButton text={hex} />
         </Box>
 
         {/* RGB */}
@@ -257,11 +254,7 @@ export default function ColorConverter() {
           <TextField size="small" label="R" type="number" value={rgb.r} onChange={(e) => handleRgbChange('r', e.target.value)} slotProps={{ htmlInput: { min: 0, max: 255 } }} sx={{ flex: 1 }} />
           <TextField size="small" label="G" type="number" value={rgb.g} onChange={(e) => handleRgbChange('g', e.target.value)} slotProps={{ htmlInput: { min: 0, max: 255 } }} sx={{ flex: 1 }} />
           <TextField size="small" label="B" type="number" value={rgb.b} onChange={(e) => handleRgbChange('b', e.target.value)} slotProps={{ htmlInput: { min: 0, max: 255 } }} sx={{ flex: 1 }} />
-          <Tooltip title={copied === 'RGB' ? 'Скопировано!' : 'Копировать'}>
-            <IconButton onClick={() => copyValue('RGB', `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`)} color={copied === 'RGB' ? 'success' : 'default'}>
-              {copied === 'RGB' ? <CheckIcon /> : <ContentCopyIcon />}
-            </IconButton>
-          </Tooltip>
+          <CopyButton text={`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`} />
         </Box>
 
         {/* HSL */}
@@ -272,11 +265,7 @@ export default function ColorConverter() {
           <TextField size="small" label="H" type="number" value={hsl.h} onChange={(e) => handleHslChange('h', e.target.value)} slotProps={{ htmlInput: { min: 0, max: 360 } }} sx={{ flex: 1 }} />
           <TextField size="small" label="S" type="number" value={hsl.s} onChange={(e) => handleHslChange('s', e.target.value)} slotProps={{ htmlInput: { min: 0, max: 100 } }} sx={{ flex: 1 }} />
           <TextField size="small" label="L" type="number" value={hsl.l} onChange={(e) => handleHslChange('l', e.target.value)} slotProps={{ htmlInput: { min: 0, max: 100 } }} sx={{ flex: 1 }} />
-          <Tooltip title={copied === 'HSL' ? 'Скопировано!' : 'Копировать'}>
-            <IconButton onClick={() => copyValue('HSL', `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`)} color={copied === 'HSL' ? 'success' : 'default'}>
-              {copied === 'HSL' ? <CheckIcon /> : <ContentCopyIcon />}
-            </IconButton>
-          </Tooltip>
+          <CopyButton text={`hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`} />
         </Box>
 
         {/* HSV */}
@@ -287,11 +276,7 @@ export default function ColorConverter() {
           <TextField size="small" label="H" type="number" value={hsv.h} slotProps={{ htmlInput: { min: 0, max: 360 }, input: { readOnly: true } }} sx={{ flex: 1 }} />
           <TextField size="small" label="S" type="number" value={hsv.s} slotProps={{ htmlInput: { min: 0, max: 100 }, input: { readOnly: true } }} sx={{ flex: 1 }} />
           <TextField size="small" label="V" type="number" value={hsv.v} slotProps={{ htmlInput: { min: 0, max: 100 }, input: { readOnly: true } }} sx={{ flex: 1 }} />
-          <Tooltip title={copied === 'HSV' ? 'Скопировано!' : 'Копировать'}>
-            <IconButton onClick={() => copyValue('HSV', `hsv(${hsv.h}, ${hsv.s}%, ${hsv.v}%)`)} color={copied === 'HSV' ? 'success' : 'default'}>
-              {copied === 'HSV' ? <CheckIcon /> : <ContentCopyIcon />}
-            </IconButton>
-          </Tooltip>
+          <CopyButton text={hex} />
         </Box>
 
         {/* CMYK */}
@@ -303,11 +288,7 @@ export default function ColorConverter() {
           <TextField size="small" label="M" type="number" value={cmyk.m} onChange={(e) => handleCmykChange('m', e.target.value)} slotProps={{ htmlInput: { min: 0, max: 100 } }} sx={{ flex: 1 }} />
           <TextField size="small" label="Y" type="number" value={cmyk.y} onChange={(e) => handleCmykChange('y', e.target.value)} slotProps={{ htmlInput: { min: 0, max: 100 } }} sx={{ flex: 1 }} />
           <TextField size="small" label="K" type="number" value={cmyk.k} onChange={(e) => handleCmykChange('k', e.target.value)} slotProps={{ htmlInput: { min: 0, max: 100 } }} sx={{ flex: 1 }} />
-          <Tooltip title={copied === 'CMYK' ? 'Скопировано!' : 'Копировать'}>
-            <IconButton onClick={() => copyValue('CMYK', `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`)} color={copied === 'CMYK' ? 'success' : 'default'}>
-              {copied === 'CMYK' ? <CheckIcon /> : <ContentCopyIcon />}
-            </IconButton>
-          </Tooltip>
+          <CopyButton text={hex} />
         </Box>
 
         {/* Quick copy chips */}
@@ -319,7 +300,6 @@ export default function ColorConverter() {
                 onClick={() => copyValue(cv.label, cv.value)}
                 sx={{
                   p: 1.5,
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 2,
                   cursor: 'pointer',
                   display: 'flex',
@@ -328,8 +308,8 @@ export default function ColorConverter() {
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: alpha(theme.palette.primary.main, 0.04),
-                  },
+                    background: theme.palette.surfaceContainerLow
+                  }
                 }}
               >
                 <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>

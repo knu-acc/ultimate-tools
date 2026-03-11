@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, Slider, alpha, useTheme, IconButton, TextField,
-  ToggleButton, ToggleButtonGroup,
+  Box, Typography, Paper, Grid, Button, Chip, Slider, useTheme, IconButton, TextField,
+  ToggleButton, ToggleButtonGroup
 } from '@mui/material';
 import { ContentCopy, Refresh, Add } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 export default function GradientGenerator() {
   const theme = useTheme();
@@ -66,7 +68,7 @@ export default function GradientGenerator() {
           mb: 3,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}
       >
         <Typography
@@ -74,7 +76,7 @@ export default function GradientGenerator() {
             color: '#fff',
             fontWeight: 700,
             fontSize: { xs: '0.9rem', md: '1.1rem' },
-            textShadow: '0 1px 4px rgba(0,0,0,0.3)',
+            textShadow: '0 1px 4px rgba(0,0,0,0.3)'
           }}
         >
           {gradientCSS.substring(0, 50)}...
@@ -120,8 +122,8 @@ export default function GradientGenerator() {
                       cursor: 'pointer',
                       fontWeight: angle === a ? 700 : 400,
                       bgcolor: angle === a
-                        ? alpha(theme.palette.primary.main, 0.12)
-                        : alpha(theme.palette.primary.main, 0.04),
+                        ? theme.palette.surfaceContainerHigh
+                        : theme.palette.surfaceContainerLow
                     }}
                   />
                 ))}
@@ -168,11 +170,11 @@ export default function GradientGenerator() {
 
           <Box sx={{ display: 'flex', gap: 1 }}>
             {colors.length < 5 && (
-              <Button size="small" startIcon={<Add />} onClick={addColor} sx={{ borderRadius: '16px' }}>
+              <Button size="small" startIcon={<Add />} onClick={addColor} sx={{ borderRadius: 4 }}>
                 Добавить цвет
               </Button>
             )}
-            <Button size="small" startIcon={<Refresh />} onClick={randomize} sx={{ borderRadius: '16px' }}>
+            <Button size="small" startIcon={<Refresh />} onClick={randomize} sx={{ borderRadius: 4 }}>
               Случайный
             </Button>
           </Box>
@@ -196,7 +198,7 @@ export default function GradientGenerator() {
                     alignItems: 'flex-end',
                     p: 1,
                     transition: 'transform 0.2s',
-                    '&:hover': { transform: 'scale(1.05)' },
+                    '&:hover': { transform: 'scale(1.05)' }
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>
@@ -214,9 +216,9 @@ export default function GradientGenerator() {
             sx={{
               p: 2,
               borderRadius: 2,
-              bgcolor: alpha(theme.palette.primary.main, 0.04),
+              bgcolor: theme.palette.surfaceContainerLow,
               fontFamily: 'monospace',
-              fontSize: '0.85rem',
+              fontSize: '0.85rem'
             }}
           >
             <Typography sx={{ fontFamily: 'monospace', fontSize: '0.85rem', wordBreak: 'break-all' }}>
@@ -227,7 +229,7 @@ export default function GradientGenerator() {
             size="small"
             startIcon={<ContentCopy />}
             onClick={copyCSS}
-            sx={{ mt: 1, borderRadius: '16px' }}
+            sx={{ mt: 1, borderRadius: 4 }}
           >
             {copied ? 'Скопировано!' : 'Копировать CSS'}
           </Button>

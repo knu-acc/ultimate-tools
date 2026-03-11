@@ -11,9 +11,11 @@ import {
   Grid,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface WeightUnit {
   key: string;
@@ -60,7 +62,7 @@ export default function WeightConverter() {
         label: target.label,
         short: target.short,
         value: converted,
-        formatted: isValid ? formatNumber(converted) : '—',
+        formatted: isValid ? formatNumber(converted) : '—'
       };
     });
 
@@ -81,9 +83,8 @@ export default function WeightConverter() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 4,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 4
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
@@ -106,7 +107,7 @@ export default function WeightConverter() {
             sx={{
               flex: 1,
               minWidth: 180,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' },
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
             }}
           />
           <Select
@@ -134,7 +135,6 @@ export default function WeightConverter() {
                 elevation={0}
                 sx={{
                   p: 2,
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
                   display: 'flex',
                   flexDirection: 'column',
@@ -142,8 +142,8 @@ export default function WeightConverter() {
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: alpha(theme.palette.primary.main, 0.06),
-                  },
+                    background: theme.palette.surfaceContainerLow
+                  }
                 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -155,7 +155,7 @@ export default function WeightConverter() {
                     onClick={() => copyValue(r.key, r.formatted)}
                     sx={{
                       color: copied === r.key ? theme.palette.success.main : 'text.secondary',
-                      transition: 'color 200ms ease',
+                      transition: 'color 200ms ease'
                     }}
                   >
                     <ContentCopyIcon sx={{ fontSize: 16 }} />
@@ -167,7 +167,7 @@ export default function WeightConverter() {
                     fontFamily: 'monospace',
                     fontWeight: 700,
                     fontSize: '1.15rem',
-                    wordBreak: 'break-all',
+                    wordBreak: 'break-all'
                   }}
                 >
                   {r.formatted}
@@ -197,7 +197,7 @@ export default function WeightConverter() {
               p: 2,
               borderRadius: 3,
               background: alpha(theme.palette.error.main, 0.08),
-              border: `1px solid ${alpha(theme.palette.error.main, 0.3)}`,
+              border: `1px solid ${alpha(theme.palette.error.main, 0.3)}`
             }}
           >
             <Typography variant="body2" color="error">

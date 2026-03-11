@@ -15,7 +15,7 @@ import {
   InputLabel,
   LinearProgress,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -186,13 +186,13 @@ export default function ImageCompressor() {
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
             borderRadius: 4,
             backgroundColor: dragging
-              ? alpha(theme.palette.primary.main, 0.06)
+              ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
             transition: 'all 250ms ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
-              backgroundColor: alpha(theme.palette.primary.main, 0.04),
-            },
+              backgroundColor: theme.palette.surfaceContainerLow
+            }
           }}
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
@@ -213,7 +213,7 @@ export default function ImageCompressor() {
       {/* Controls */}
       {originalFile && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
             <Grid container spacing={3} alignItems="center">
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
@@ -271,8 +271,7 @@ export default function ImageCompressor() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
-                  borderRadius: 3,
+                  borderRadius: 3
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -292,8 +291,7 @@ export default function ImageCompressor() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
-                  borderRadius: 3,
+                  borderRadius: 3
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -313,12 +311,11 @@ export default function ImageCompressor() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
                   background:
                     compressionRatio > 0
                       ? alpha(theme.palette.success.main, 0.06)
-                      : alpha(theme.palette.error.main, 0.06),
+                      : alpha(theme.palette.error.main, 0.06)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -328,7 +325,7 @@ export default function ImageCompressor() {
                   variant="h6"
                   sx={{
                     fontWeight: 700,
-                    color: compressionRatio > 0 ? 'success.main' : 'error.main',
+                    color: compressionRatio > 0 ? 'success.main' : 'error.main'
                   }}
                 >
                   {compressionRatio > 0 ? '-' : '+'}{Math.abs(compressionRatio).toFixed(1)}%
@@ -342,7 +339,7 @@ export default function ImageCompressor() {
           </Grid>
 
           {/* Preview */}
-          <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CompressIcon /> Предпросмотр
             </Typography>
@@ -356,14 +353,13 @@ export default function ImageCompressor() {
                 </Typography>
                 <Box
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 2,
                     overflow: 'hidden',
                     backgroundColor: alpha(theme.palette.background.default, 0.5),
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minHeight: 200,
+                    minHeight: 200
                   }}
                 >
                   {originalUrl && (
@@ -385,14 +381,13 @@ export default function ImageCompressor() {
                 </Typography>
                 <Box
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 2,
                     overflow: 'hidden',
                     backgroundColor: alpha(theme.palette.background.default, 0.5),
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minHeight: 200,
+                    minHeight: 200
                   }}
                 >
                   {compressedUrl ? (

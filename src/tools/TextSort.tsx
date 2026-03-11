@@ -10,9 +10,11 @@ import {
   Chip,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopy from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type SortMode = 'az' | 'za' | 'num-asc' | 'num-desc' | 'length' | 'shuffle';
 
@@ -104,7 +106,7 @@ export default function TextSort() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
           Введите текст (каждая строка — отдельный элемент)
         </Typography>
@@ -120,14 +122,14 @@ export default function TextSort() {
             '& .MuiInputBase-input': {
               fontFamily: 'monospace',
               fontSize: '0.95rem',
-              lineHeight: 1.6,
-            },
+              lineHeight: 1.6
+            }
           }}
         />
       </Paper>
 
       {/* Sort Options */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
           Способ сортировки
         </Typography>
@@ -149,8 +151,8 @@ export default function TextSort() {
                   transition: 'all 200ms ease',
                   '&:hover': {
                     backgroundColor: alpha(option.color, 0.1),
-                    borderColor: option.color,
-                  },
+                    borderColor: option.color
+                  }
                 }}
               />
             );
@@ -165,10 +167,9 @@ export default function TextSort() {
           sx={{
             p: 2,
             mb: 3,
-            border: `1px solid ${theme.palette.divider}`,
             display: 'flex',
             alignItems: 'center',
-            gap: 2,
+            gap: 2
           }}
         >
           <Chip
@@ -178,7 +179,7 @@ export default function TextSort() {
               fontWeight: 600,
               fontSize: '0.75rem',
               backgroundColor: alpha(activeColor, 0.12),
-              color: activeColor,
+              color: activeColor
             }}
           />
           <Typography variant="body2" color="text.secondary">
@@ -189,22 +190,13 @@ export default function TextSort() {
 
       {/* Output */}
       {sorted.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}` }}>
+        <Paper elevation={0} sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
               Результат
             </Typography>
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-              <IconButton
-                size="small"
-                onClick={handleCopy}
-                sx={{
-                  color: copied ? '#4caf50' : 'text.secondary',
-                  transition: 'color 200ms ease',
-                }}
-              >
-                <ContentCopy fontSize="small" />
-              </IconButton>
+              <CopyButton text={outputText} />
               {copied && (
                 <Typography variant="caption" sx={{ color: '#4caf50', fontWeight: 500 }}>
                   Скопировано
@@ -223,11 +215,11 @@ export default function TextSort() {
               '& .MuiInputBase-input': {
                 fontFamily: 'monospace',
                 fontSize: '0.95rem',
-                lineHeight: 1.6,
+                lineHeight: 1.6
               },
               '& .MuiOutlinedInput-root': {
-                backgroundColor: alpha(activeColor, 0.02),
-              },
+                backgroundColor: alpha(activeColor, 0.02)
+              }
             }}
           />
           <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
@@ -242,8 +234,8 @@ export default function TextSort() {
                 color: activeColor,
                 '&:hover': {
                   borderColor: activeColor,
-                  backgroundColor: alpha(activeColor, 0.06),
-                },
+                  backgroundColor: alpha(activeColor, 0.06)
+                }
               }}
             >
               {copied ? 'Скопировано!' : 'Копировать результат'}

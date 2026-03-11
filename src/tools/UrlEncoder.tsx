@@ -11,11 +11,13 @@ import {
   Chip,
   Tooltip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 function looksEncoded(str: string): boolean {
   return /%[0-9A-Fa-f]{2}/.test(str) || /\+/.test(str);
@@ -116,8 +118,7 @@ export default function UrlEncoder() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input */}
@@ -159,7 +160,7 @@ export default function UrlEncoder() {
           placeholder="Введите текст или URL-строку..."
           sx={{
             mb: 2,
-            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' },
+            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
           }}
         />
 
@@ -192,7 +193,7 @@ export default function UrlEncoder() {
               mb: 2,
               borderRadius: 2,
               background: alpha(theme.palette.error.main, 0.08),
-              border: `1px solid ${alpha(theme.palette.error.main, 0.3)}`,
+              border: `1px solid ${alpha(theme.palette.error.main, 0.3)}`
             }}
           >
             <Typography variant="body2" color="error">
@@ -223,15 +224,7 @@ export default function UrlEncoder() {
                   variant="outlined"
                   sx={{ fontVariantNumeric: 'tabular-nums' }}
                 />
-                <Tooltip title={copied ? 'Скопировано!' : 'Копировать'}>
-                  <IconButton
-                    onClick={() => copyToClipboard(output)}
-                    size="small"
-                    color={copied ? 'success' : 'default'}
-                  >
-                    {copied ? <CheckIcon /> : <ContentCopyIcon />}
-                  </IconButton>
-                </Tooltip>
+                <CopyButton text={output} />
               </Box>
             </Box>
             <TextField
@@ -244,8 +237,8 @@ export default function UrlEncoder() {
                 '& .MuiInputBase-root': {
                   fontFamily: 'monospace',
                   fontSize: '0.875rem',
-                  background: theme.palette.background.default,
-                },
+                  background: theme.palette.background.default
+                }
               }}
             />
           </Box>
@@ -257,9 +250,8 @@ export default function UrlEncoder() {
             elevation={0}
             sx={{
               p: 2,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              background: theme.palette.background.default,
+              background: theme.palette.background.default
             }}
           >
             <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
@@ -288,7 +280,7 @@ export default function UrlEncoder() {
                   p: 1.5,
                   borderRadius: 2,
                   background: alpha(theme.palette.secondary.main, 0.06),
-                  border: `1px solid ${alpha(theme.palette.secondary.main, 0.15)}`,
+                  border: `1px solid ${alpha(theme.palette.secondary.main, 0.15)}`
                 }}
               >
                 {encodeURIResult}
@@ -313,8 +305,8 @@ export default function UrlEncoder() {
                   wordBreak: 'break-all',
                   p: 1.5,
                   borderRadius: 2,
-                  background: alpha(theme.palette.primary.main, 0.06),
-                  border: `1px solid ${alpha(theme.palette.primary.main, 0.15)}`,
+                  background: theme.palette.surfaceContainerLow,
+                  border: `1px solid ${alpha(theme.palette.primary.main, 0.15)}`
                 }}
               >
                 {encodeURIComponentResult}
@@ -330,7 +322,7 @@ export default function UrlEncoder() {
                   p: 1.5,
                   borderRadius: 2,
                   background: alpha(theme.palette.warning.main, 0.08),
-                  border: `1px solid ${alpha(theme.palette.warning.main, 0.2)}`,
+                  border: `1px solid ${alpha(theme.palette.warning.main, 0.2)}`
                 }}
               >
                 <Typography variant="caption" color="text.secondary">

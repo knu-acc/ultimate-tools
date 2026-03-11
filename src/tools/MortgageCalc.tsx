@@ -12,11 +12,14 @@ import {
   ToggleButtonGroup,
   Divider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
+import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 
 export default function MortgageCalc() {
   const theme = useTheme();
+  const [currency, setCurrency] = useState('RUB');
+  const sym = getCurrency(currency).symbol;
 
   const [amount, setAmount] = useState('');
   const [rate, setRate] = useState('');
@@ -66,7 +69,7 @@ export default function MortgageCalc() {
       firstInterest,
       firstPrincipal,
       lastInterest,
-      lastPrincipal,
+      lastPrincipal
     };
   }, [amount, rate, term, termUnit]);
 
@@ -94,9 +97,8 @@ export default function MortgageCalc() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(color, 0.06),
+        background: alpha(color, 0.06)
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -110,20 +112,22 @@ export default function MortgageCalc() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </Box>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={2}>
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Сумма кредита (₽)"
+              label={`Сумма кредита (${sym})`}
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
@@ -132,10 +136,10 @@ export default function MortgageCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -154,8 +158,8 @@ export default function MortgageCalc() {
                     <Typography variant="body2" color="text.disabled">
                       %
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -211,21 +215,21 @@ export default function MortgageCalc() {
               <Grid size={{ xs: 12, sm: 6 }}>
                 <StatCard
                   label="Ежемесячный платёж"
-                  value={`${fmt(results.monthlyPayment)} ₽`}
+                  value={`${fmt(results.monthlyPayment)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <StatCard
                   label="Общая сумма выплат"
-                  value={`${fmt(results.totalPayment)} ₽`}
+                  value={`${fmt(results.totalPayment)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <StatCard
                   label="Переплата (проценты)"
-                  value={`${fmt(results.totalInterest)} ₽`}
+                  value={`${fmt(results.totalInterest)} ${sym}`}
                   color="#c62828"
                 />
               </Grid>
@@ -250,9 +254,8 @@ export default function MortgageCalc() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    background: alpha('#2e7d32', 0.04),
+                    background: alpha('#2e7d32', 0.04)
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
@@ -263,7 +266,7 @@ export default function MortgageCalc() {
                       Основной долг:
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
-                      {fmt(results.firstPrincipal)} ₽
+                      {fmt(results.firstPrincipal)} {sym}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -271,7 +274,7 @@ export default function MortgageCalc() {
                       Проценты:
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#c62828' }}>
-                      {fmt(results.firstInterest)} ₽
+                      {fmt(results.firstInterest)} {sym}
                     </Typography>
                   </Box>
                 </Paper>
@@ -282,9 +285,8 @@ export default function MortgageCalc() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    background: alpha('#1565c0', 0.04),
+                    background: alpha('#1565c0', 0.04)
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
@@ -295,7 +297,7 @@ export default function MortgageCalc() {
                       Основной долг:
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
-                      {fmt(results.lastPrincipal)} ₽
+                      {fmt(results.lastPrincipal)} {sym}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -303,7 +305,7 @@ export default function MortgageCalc() {
                       Проценты:
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#c62828' }}>
-                      {fmt(results.lastInterest)} ₽
+                      {fmt(results.lastInterest)} {sym}
                     </Typography>
                   </Box>
                 </Paper>

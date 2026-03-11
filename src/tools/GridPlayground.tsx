@@ -10,9 +10,11 @@ import {
   Snackbar,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const ITEM_COLORS = ['#1976d2', '#388e3c', '#f57c00', '#7b1fa2', '#c62828', '#00838f'];
 
@@ -99,9 +101,8 @@ export default function GridPlayground() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         {/* Presets */}
@@ -146,9 +147,9 @@ export default function GridPlayground() {
               input: {
                 sx: {
                   fontFamily: '"JetBrains Mono", monospace',
-                  fontSize: '0.85rem',
-                },
-              },
+                  fontSize: '0.85rem'
+                }
+              }
             }}
           />
         </Box>
@@ -170,9 +171,9 @@ export default function GridPlayground() {
               input: {
                 sx: {
                   fontFamily: '"JetBrains Mono", monospace',
-                  fontSize: '0.85rem',
-                },
-              },
+                  fontSize: '0.85rem'
+                }
+              }
             }}
           />
         </Box>
@@ -191,8 +192,8 @@ export default function GridPlayground() {
             sx={{ width: 80 }}
             slotProps={{
               input: {
-                sx: { fontSize: '0.85rem' },
-              },
+                sx: { fontSize: '0.85rem' }
+              }
             }}
           />
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>px</Typography>
@@ -219,7 +220,7 @@ export default function GridPlayground() {
             gap: `${gap}px`,
             justifyItems,
             alignItems,
-            overflow: 'auto',
+            overflow: 'auto'
           }}
         >
           {ITEM_COLORS.map((color, i) => (
@@ -233,7 +234,7 @@ export default function GridPlayground() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                p: 1,
+                p: 1
               }}
             >
               <Typography variant="h6" sx={{ color: '#fff', fontWeight: 700 }}>
@@ -261,11 +262,10 @@ export default function GridPlayground() {
           elevation={0}
           sx={{
             p: 2,
-            border: `1px solid ${theme.palette.divider}`,
             borderRadius: 2,
             bgcolor: theme.palette.mode === 'dark'
               ? alpha(theme.palette.common.black, 0.3)
-              : alpha(theme.palette.grey[50], 1),
+              : alpha(theme.palette.grey[50], 1)
           }}
         >
           <Typography
@@ -276,7 +276,7 @@ export default function GridPlayground() {
               lineHeight: 1.7,
               m: 0,
               whiteSpace: 'pre-wrap',
-              color: 'text.primary',
+              color: 'text.primary'
             }}
           >
             {generateCss()}

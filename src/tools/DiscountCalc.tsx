@@ -2,12 +2,15 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme,
+  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme
 } from '@mui/material';
+import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 import { LocalOffer, Percent } from '@mui/icons-material';
 
 export default function DiscountCalc() {
   const theme = useTheme();
+  const [currency, setCurrency] = useState('RUB');
+  const sym = getCurrency(currency).symbol;
   const [price, setPrice] = useState('');
   const [discount, setDiscount] = useState('');
 
@@ -21,10 +24,13 @@ export default function DiscountCalc() {
 
   return (
     <Box>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </Box>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Исходная цена (₽)
+            Исходная цена ({sym})
           </Typography>
           <TextField
             fullWidth
@@ -60,10 +66,10 @@ export default function DiscountCalc() {
                 sx={{
                   bgcolor: discountNum === d
                     ? alpha(theme.palette.primary.main, 0.15)
-                    : alpha(theme.palette.primary.main, 0.05),
+                    : theme.palette.surfaceContainerLow,
                   fontWeight: discountNum === d ? 600 : 400,
                   cursor: 'pointer',
-                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.12) },
+                  '&:hover': { bgcolor: theme.palette.surfaceContainerHigh }
                 }}
               />
             ))}
@@ -79,14 +85,14 @@ export default function DiscountCalc() {
                   p: 3,
                   borderRadius: 3,
                   bgcolor: alpha(theme.palette.success.main, 0.08),
-                  textAlign: 'center',
+                  textAlign: 'center'
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
                   Цена со скидкой
                 </Typography>
                 <Typography variant="h3" fontWeight={700} sx={{ color: theme.palette.success.main }}>
-                  {finalPrice.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} ₽
+                  {finalPrice.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} {sym}
                 </Typography>
               </Paper>
 
@@ -98,12 +104,12 @@ export default function DiscountCalc() {
                       p: 2,
                       borderRadius: 2,
                       bgcolor: alpha(theme.palette.error.main, 0.06),
-                      textAlign: 'center',
+                      textAlign: 'center'
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">Вы экономите</Typography>
                     <Typography variant="h6" fontWeight={600} color="error">
-                      {savings.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} ₽
+                      {savings.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} {sym}
                     </Typography>
                   </Paper>
                 </Grid>
@@ -113,13 +119,13 @@ export default function DiscountCalc() {
                     sx={{
                       p: 2,
                       borderRadius: 2,
-                      bgcolor: alpha(theme.palette.primary.main, 0.06),
-                      textAlign: 'center',
+                      bgcolor: theme.palette.surfaceContainerLow,
+                      textAlign: 'center'
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">Исходная цена</Typography>
                     <Typography variant="h6" fontWeight={600} sx={{ textDecoration: 'line-through', opacity: 0.6 }}>
-                      {priceNum.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} ₽
+                      {priceNum.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} {sym}
                     </Typography>
                   </Paper>
                 </Grid>
@@ -128,7 +134,7 @@ export default function DiscountCalc() {
               {/* Visual bar */}
               <Paper
                 elevation={0}
-                sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.04) }}
+                sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
               >
                 <Box sx={{ display: 'flex', height: 24, borderRadius: 2, overflow: 'hidden' }}>
                   <Box
@@ -138,7 +144,7 @@ export default function DiscountCalc() {
                       transition: 'width 0.3s ease',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
+                      justifyContent: 'center'
                     }}
                   >
                     <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
@@ -152,7 +158,7 @@ export default function DiscountCalc() {
                       transition: 'width 0.3s ease',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
+                      justifyContent: 'center'
                     }}
                   >
                     <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
@@ -174,8 +180,8 @@ export default function DiscountCalc() {
               sx={{
                 p: 4,
                 borderRadius: 3,
-                bgcolor: alpha(theme.palette.primary.main, 0.04),
-                textAlign: 'center',
+                bgcolor: theme.palette.surfaceContainerLow,
+                textAlign: 'center'
               }}
             >
               <LocalOffer sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />

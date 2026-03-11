@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme,
+  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme
 } from '@mui/material';
 import { PlayArrow, Refresh, Keyboard } from '@mui/icons-material';
 
@@ -101,10 +101,10 @@ export default function TypingSpeed() {
         sx={{
           p: 3,
           borderRadius: 3,
-          bgcolor: alpha(theme.palette.primary.main, 0.04),
+          bgcolor: theme.palette.surfaceContainerLow,
           mb: 2,
           cursor: 'text',
-          minHeight: 100,
+          minHeight: 100
         }}
         ref={inputRef}
         tabIndex={0}
@@ -137,7 +137,7 @@ export default function TypingSpeed() {
       {/* Stats */}
       <Grid container spacing={1.5} sx={{ mb: 2 }}>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.06), textAlign: 'center' }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>
             <Typography variant="h4" fontWeight={700} color="primary">{wpm}</Typography>
             <Typography variant="caption" color="text.secondary">Слов/мин (WPM)</Typography>
           </Paper>
@@ -163,7 +163,7 @@ export default function TypingSpeed() {
       </Grid>
 
       <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
-        <Button variant="outlined" startIcon={<Refresh />} onClick={reset} sx={{ borderRadius: '20px' }}>
+        <Button variant="outlined" startIcon={<Refresh />} onClick={reset} sx={{ borderRadius: 5 }}>
           Заново (Esc)
         </Button>
       </Box>

@@ -14,11 +14,13 @@ import {
   Grid,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface BaseInfo {
   name: string;
@@ -47,7 +49,7 @@ export default function NumberSystem() {
       2: /^[01]+$/,
       8: /^[0-7]+$/,
       10: /^[0-9]+$/,
-      16: /^[0-9a-fA-F]+$/,
+      16: /^[0-9a-fA-F]+$/
     };
     return validChars[base]?.test(value) ?? false;
   }, []);
@@ -65,7 +67,7 @@ export default function NumberSystem() {
         2: decimal.toString(2),
         8: decimal.toString(8),
         10: decimal.toString(10),
-        16: decimal.toString(16).toUpperCase(),
+        16: decimal.toString(16).toUpperCase()
       };
     } catch {
       return null;
@@ -94,7 +96,7 @@ export default function NumberSystem() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
           Введите число
         </Typography>
@@ -121,8 +123,8 @@ export default function NumberSystem() {
             '& .MuiInputBase-input': {
               fontFamily: 'monospace',
               fontSize: '1.3rem',
-              letterSpacing: 1,
-            },
+              letterSpacing: 1
+            }
           }}
           slotProps={{
             input: {
@@ -132,13 +134,13 @@ export default function NumberSystem() {
                     mr: 1,
                     fontFamily: 'monospace',
                     color: 'text.secondary',
-                    fontWeight: 600,
+                    fontWeight: 600
                   }}
                 >
                   {bases.find((b) => b.base === inputBase)?.prefix || ''}
                 </Typography>
-              ),
-            },
+              )
+            }
           }}
         />
 
@@ -169,7 +171,7 @@ export default function NumberSystem() {
                         height: 22,
                         backgroundColor: alpha(b.color, 0.12),
                         color: b.color,
-                        fontWeight: 700,
+                        fontWeight: 700
                       }}
                     />
                     <Typography variant="body2">{b.name}</Typography>
@@ -183,7 +185,7 @@ export default function NumberSystem() {
 
       {/* Results */}
       {conversions && (
-        <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}` }}>
+        <Paper elevation={0} sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
             <SwapVertIcon sx={{ color: 'text.secondary' }} />
             <Typography variant="h6">Результаты конвертации</Typography>
@@ -216,8 +218,8 @@ export default function NumberSystem() {
                       transition: 'all 200ms ease',
                       '&:hover': {
                         borderColor: b.color,
-                        backgroundColor: alpha(b.color, 0.04),
-                      },
+                        backgroundColor: alpha(b.color, 0.04)
+                      }
                     }}
                   >
                     <Chip
@@ -228,7 +230,7 @@ export default function NumberSystem() {
                         fontSize: '0.75rem',
                         fontWeight: 700,
                         backgroundColor: alpha(b.color, 0.15),
-                        color: b.color,
+                        color: b.color
                       }}
                     />
                     <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -243,7 +245,7 @@ export default function NumberSystem() {
                           fontSize: '1.1rem',
                           fontWeight: 500,
                           letterSpacing: 1,
-                          wordBreak: 'break-all',
+                          wordBreak: 'break-all'
                         }}
                       >
                         {b.prefix && (

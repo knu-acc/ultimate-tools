@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import {
-  Box, Typography, Paper, TextField, Grid, Chip, alpha, useTheme,
+  Box, Typography, Paper, TextField, Grid, Chip, alpha, useTheme
 } from '@mui/material';
 
 const STATUSES: Record<number, { text: string; desc: string; category: string }> = {
@@ -32,7 +32,7 @@ const STATUSES: Record<number, { text: string; desc: string; category: string }>
   500: { text: 'Internal Server Error', desc: 'Внутренняя ошибка сервера', category: 'server' },
   502: { text: 'Bad Gateway', desc: 'Неправильный ответ от вышестоящего сервера', category: 'server' },
   503: { text: 'Service Unavailable', desc: 'Сервис временно недоступен', category: 'server' },
-  504: { text: 'Gateway Timeout', desc: 'Тайм-аут от вышестоящего сервера', category: 'server' },
+  504: { text: 'Gateway Timeout', desc: 'Тайм-аут от вышестоящего сервера', category: 'server' }
 };
 
 const CATEGORIES: Record<string, { label: string; color: string }> = {
@@ -40,7 +40,7 @@ const CATEGORIES: Record<string, { label: string; color: string }> = {
   success: { label: '2xx Успех', color: '#4CAF50' },
   redirect: { label: '3xx Перенаправление', color: '#ff9800' },
   client: { label: '4xx Ошибки клиента', color: '#f44336' },
-  server: { label: '5xx Ошибки сервера', color: '#9c27b0' },
+  server: { label: '5xx Ошибки сервера', color: '#9c27b0' }
 };
 
 export default function HttpStatus() {
@@ -62,7 +62,7 @@ export default function HttpStatus() {
       <TextField fullWidth value={search} onChange={e => setSearch(e.target.value)} placeholder="Поиск по коду или описанию..." size="small" sx={{ mb: 2 }} />
 
       <Box sx={{ display: 'flex', gap: 1, mb: 3, flexWrap: 'wrap' }}>
-        <Chip label="Все" onClick={() => setFilter('all')} sx={{ fontWeight: filter === 'all' ? 700 : 400, bgcolor: filter === 'all' ? alpha(theme.palette.primary.main, 0.12) : undefined }} />
+        <Chip label="Все" onClick={() => setFilter('all')} sx={{ fontWeight: filter === 'all' ? 700 : 400, bgcolor: filter === 'all' ? theme.palette.surfaceContainerHigh : undefined }} />
         {Object.entries(CATEGORIES).map(([key, cat]) => (
           <Chip key={key} label={cat.label} onClick={() => setFilter(key)} sx={{ fontWeight: filter === key ? 700 : 400, bgcolor: filter === key ? alpha(cat.color, 0.15) : undefined, color: filter === key ? cat.color : undefined }} />
         ))}
@@ -73,7 +73,7 @@ export default function HttpStatus() {
           const cat = CATEGORIES[info.category];
           return (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={code}>
-              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, border: `1px solid ${theme.palette.divider}`, '&:hover': { borderColor: cat.color, bgcolor: alpha(cat.color, 0.04) }, transition: 'all 200ms' }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, '&:hover': { borderColor: cat.color, bgcolor: alpha(cat.color, 0.04) }, transition: 'all 200ms' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
                   <Chip label={code} size="small" sx={{ fontWeight: 700, bgcolor: alpha(cat.color, 0.12), color: cat.color, fontFamily: 'monospace' }} />
                   <Typography variant="body2" fontWeight={600}>{info.text}</Typography>

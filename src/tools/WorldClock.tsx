@@ -10,7 +10,7 @@ import {
   Chip,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -48,7 +48,7 @@ function formatTime(date: Date): string {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
-    hour12: false,
+    hour12: false
   });
 }
 
@@ -97,12 +97,9 @@ export default function WorldClock() {
 
   return (
     <Box sx={{ maxWidth: 900, mx: 'auto' }}>
-      <Paper
-        elevation={0}
+      <Box
         sx={{
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
-          p: 3,
+          p: { xs: 1, md: 0 },
         }}
       >
         {/* Search and add */}
@@ -114,20 +111,20 @@ export default function WorldClock() {
             fullWidth
             size="small"
             slotProps={{
-              htmlInput: { autoComplete: 'off' },
+              htmlInput: { autoComplete: 'off' }
             }}
           />
           {search && availableCities.length > 0 && (
             <Paper
-              elevation={0}
+              elevation={2}
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 2,
                 mt: 1,
                 p: 1,
                 display: 'flex',
                 flexWrap: 'wrap',
                 gap: 1,
+                bgcolor: theme.palette.surfaceContainerHigh,
               }}
             >
               {availableCities.map((city) => (
@@ -159,16 +156,18 @@ export default function WorldClock() {
             return (
               <Grid key={city.name} size={{ xs: 12, sm: 6, md: 4 }}>
                 <Paper
-                  elevation={0}
+                  elevation={1}
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
                     p: 2,
                     position: 'relative',
                     backgroundColor: isDay
                       ? alpha(theme.palette.warning.main, 0.04)
                       : alpha(theme.palette.info.main, 0.06),
-                    transition: 'background-color 0.3s ease',
+                    transition: `all 250ms cubic-bezier(0.2, 0, 0, 1)`,
+                    '&:hover': {
+                      boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)',
+                    },
                   }}
                 >
                   <IconButton
@@ -203,7 +202,7 @@ export default function WorldClock() {
                       fontSize: '2rem',
                       fontWeight: 300,
                       letterSpacing: 2,
-                      color: isDay ? 'text.primary' : 'info.main',
+                      color: 'text.primary'
                     }}
                   >
                     {formatTime(time)}
@@ -219,9 +218,11 @@ export default function WorldClock() {
                     sx={{
                       mt: 1,
                       backgroundColor: isDay
-                        ? alpha(theme.palette.warning.main, 0.12)
-                        : alpha(theme.palette.info.main, 0.12),
-                      color: isDay ? 'warning.dark' : 'info.dark',
+                        ? alpha(theme.palette.warning.main, 0.15)
+                        : alpha(theme.palette.info.main, 0.15),
+                      color: isDay
+                        ? theme.palette.mode === 'dark' ? theme.palette.warning.main : theme.palette.warning.dark
+                        : theme.palette.mode === 'dark' ? theme.palette.info.main : theme.palette.info.dark
                     }}
                   />
                 </Paper>
@@ -237,7 +238,7 @@ export default function WorldClock() {
             </Typography>
           </Box>
         )}
-      </Paper>
+      </Box>
     </Box>
   );
 }

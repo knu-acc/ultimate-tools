@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, IconButton,
+  Box, Typography, TextField, Paper, Grid, Button, Chip, useTheme, IconButton
 } from '@mui/material';
 import { ContentCopy, SwapVert } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 export default function HtmlEncoder() {
   const theme = useTheme();
@@ -42,7 +44,7 @@ export default function HtmlEncoder() {
           onClick={() => setMode('encode')}
           sx={{
             fontWeight: mode === 'encode' ? 700 : 400,
-            bgcolor: mode === 'encode' ? alpha(theme.palette.primary.main, 0.12) : alpha(theme.palette.primary.main, 0.04),
+            bgcolor: mode === 'encode' ? theme.palette.surfaceContainerHigh : theme.palette.surfaceContainerLow
           }}
         />
         <Chip
@@ -50,7 +52,7 @@ export default function HtmlEncoder() {
           onClick={() => setMode('decode')}
           sx={{
             fontWeight: mode === 'decode' ? 700 : 400,
-            bgcolor: mode === 'decode' ? alpha(theme.palette.primary.main, 0.12) : alpha(theme.palette.primary.main, 0.04),
+            bgcolor: mode === 'decode' ? theme.palette.surfaceContainerHigh : theme.palette.surfaceContainerLow
           }}
         />
       </Box>
@@ -98,8 +100,8 @@ export default function HtmlEncoder() {
               '& .MuiOutlinedInput-root': {
                 fontFamily: 'monospace',
                 fontSize: '0.85rem',
-                bgcolor: alpha(theme.palette.primary.main, 0.03),
-              },
+                bgcolor: theme.palette.surfaceContainerLow
+              }
             }}
           />
           <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
@@ -111,7 +113,7 @@ export default function HtmlEncoder() {
       {/* Common entities reference */}
       <Paper
         elevation={0}
-        sx={{ mt: 3, p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.04) }}
+        sx={{ mt: 3, p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
           Частые HTML-сущности

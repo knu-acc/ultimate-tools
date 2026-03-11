@@ -10,11 +10,13 @@ import {
   Button,
   Chip,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import PlaceIcon from '@mui/icons-material/Place';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface Coordinate {
   lat: number;
@@ -119,7 +121,7 @@ export default function CoordinateConverter() {
       {/* Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 3, mb: 3, borderRadius: 3 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <MyLocationIcon color="primary" fontSize="small" />
@@ -140,8 +142,8 @@ export default function CoordinateConverter() {
               placeholder="-90 ... 90"
               slotProps={{
                 input: {
-                  sx: { fontFamily: 'monospace' },
-                },
+                  sx: { fontFamily: 'monospace' }
+                }
               }}
             />
           </Grid>
@@ -157,8 +159,8 @@ export default function CoordinateConverter() {
               placeholder="-180 ... 180"
               slotProps={{
                 input: {
-                  sx: { fontFamily: 'monospace' },
-                },
+                  sx: { fontFamily: 'monospace' }
+                }
               }}
             />
           </Grid>
@@ -168,7 +170,7 @@ export default function CoordinateConverter() {
       {/* Quick presets */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, mb: 3, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
           Быстрый выбор
@@ -194,7 +196,7 @@ export default function CoordinateConverter() {
           <Grid size={{ xs: 12 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2.5, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2.5, borderRadius: 3 }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
@@ -216,8 +218,7 @@ export default function CoordinateConverter() {
                   fontSize: 16,
                   p: 1.5,
                   backgroundColor: alpha(theme.palette.background.default, 0.5),
-                  borderRadius: 2,
-                  border: `1px solid ${theme.palette.divider}`,
+                  borderRadius: 2
                 }}
               >
                 {ddString}
@@ -229,7 +230,7 @@ export default function CoordinateConverter() {
           <Grid size={{ xs: 12 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2.5, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2.5, borderRadius: 3 }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
@@ -251,8 +252,7 @@ export default function CoordinateConverter() {
                   fontSize: 16,
                   p: 1.5,
                   backgroundColor: alpha(theme.palette.background.default, 0.5),
-                  borderRadius: 2,
-                  border: `1px solid ${theme.palette.divider}`,
+                  borderRadius: 2
                 }}
               >
                 {dmsString}
@@ -264,7 +264,7 @@ export default function CoordinateConverter() {
           <Grid size={{ xs: 12 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2.5, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2.5, borderRadius: 3 }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
@@ -286,8 +286,7 @@ export default function CoordinateConverter() {
                   fontSize: 16,
                   p: 1.5,
                   backgroundColor: alpha(theme.palette.background.default, 0.5),
-                  borderRadius: 2,
-                  border: `1px solid ${theme.palette.divider}`,
+                  borderRadius: 2
                 }}
               >
                 {ddmString}
@@ -299,7 +298,7 @@ export default function CoordinateConverter() {
           <Grid size={{ xs: 12 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2, borderRadius: 3 }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
                 Подробная информация
@@ -384,7 +383,7 @@ export default function CoordinateConverter() {
       {!isValid && (latInput || lonInput) && (
         <Paper
           elevation={0}
-          sx={{ p: 3, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+          sx={{ p: 3, textAlign: 'center', borderRadius: 3 }}
         >
           <Typography variant="body2" color="text.secondary">
             Введите корректные координаты для конвертации

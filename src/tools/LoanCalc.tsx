@@ -19,12 +19,15 @@ import {
   TableRow,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
+import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 
 export default function LoanCalc() {
   const theme = useTheme();
 
+  const [currency, setCurrency] = useState('RUB');
+  const sym = getCurrency(currency).symbol;
   const [amount, setAmount] = useState('');
   const [rate, setRate] = useState('');
   const [term, setTerm] = useState('');
@@ -75,7 +78,7 @@ export default function LoanCalc() {
         payment: monthlyPayment,
         principalPart,
         interestPart,
-        balance,
+        balance
       });
     }
 
@@ -84,7 +87,7 @@ export default function LoanCalc() {
       totalPayment,
       totalInterest,
       months,
-      schedule,
+      schedule
     };
   }, [amount, rate, term, termUnit]);
 
@@ -104,9 +107,8 @@ export default function LoanCalc() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(color, 0.06),
+        background: alpha(color, 0.06)
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -120,20 +122,22 @@ export default function LoanCalc() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </Box>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={2}>
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Сумма займа (₽)"
+              label="Сумма займа ({sym})"
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
@@ -142,10 +146,10 @@ export default function LoanCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -164,8 +168,8 @@ export default function LoanCalc() {
                     <Typography variant="body2" color="text.disabled">
                       %
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -221,21 +225,21 @@ export default function LoanCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Ежемесячный платёж"
-                  value={`${fmt(results.monthlyPayment)} ₽`}
+                  value={`${fmt(results.monthlyPayment)} {sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Общая сумма выплат"
-                  value={`${fmt(results.totalPayment)} ₽`}
+                  value={`${fmt(results.totalPayment)} {sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Переплата (проценты)"
-                  value={`${fmt(results.totalInterest)} ₽`}
+                  value={`${fmt(results.totalInterest)} {sym}`}
                   color="#c62828"
                 />
               </Grid>
@@ -276,27 +280,26 @@ export default function LoanCalc() {
                 component={Paper}
                 elevation={0}
                 sx={{
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 2,
-                  maxHeight: 400,
+                  maxHeight: 400
                 }}
               >
                 <Table size="small" stickyHeader>
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={{ fontWeight: 600, bgcolor: alpha(theme.palette.primary.main, 0.08) }}>
+                      <TableCell sx={{ fontWeight: 600, bgcolor: theme.palette.surfaceContainerHigh }}>
                         Месяц
                       </TableCell>
-                      <TableCell align="right" sx={{ fontWeight: 600, bgcolor: alpha(theme.palette.primary.main, 0.08) }}>
+                      <TableCell align="right" sx={{ fontWeight: 600, bgcolor: theme.palette.surfaceContainerHigh }}>
                         Платёж
                       </TableCell>
-                      <TableCell align="right" sx={{ fontWeight: 600, bgcolor: alpha(theme.palette.primary.main, 0.08) }}>
+                      <TableCell align="right" sx={{ fontWeight: 600, bgcolor: theme.palette.surfaceContainerHigh }}>
                         Основной долг
                       </TableCell>
-                      <TableCell align="right" sx={{ fontWeight: 600, bgcolor: alpha(theme.palette.primary.main, 0.08) }}>
+                      <TableCell align="right" sx={{ fontWeight: 600, bgcolor: theme.palette.surfaceContainerHigh }}>
                         Проценты
                       </TableCell>
-                      <TableCell align="right" sx={{ fontWeight: 600, bgcolor: alpha(theme.palette.primary.main, 0.08) }}>
+                      <TableCell align="right" sx={{ fontWeight: 600, bgcolor: theme.palette.surfaceContainerHigh }}>
                         Остаток
                       </TableCell>
                     </TableRow>

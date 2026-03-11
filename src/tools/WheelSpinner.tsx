@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme,
+  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme
 } from '@mui/material';
 import { Casino } from '@mui/icons-material';
 
@@ -169,7 +169,7 @@ export default function WheelSpinner() {
             disabled={spinning}
             sx={{
               mb: 2,
-              '& .MuiOutlinedInput-root': { borderRadius: 3 },
+              '& .MuiOutlinedInput-root': { borderRadius: 3 }
             }}
           />
 
@@ -184,7 +184,7 @@ export default function WheelSpinner() {
             startIcon={<Casino />}
             onClick={spin}
             disabled={spinning || items.length < 2}
-            sx={{ borderRadius: '24px', py: 1.2 }}
+            sx={{ borderRadius: 6, py: 1.2 }}
           >
             {spinning ? 'Кручу...' : 'Крутить колесо'}
           </Button>
@@ -216,7 +216,7 @@ export default function WheelSpinner() {
                 borderRadius: 3,
                 bgcolor: alpha(theme.palette.success.main, 0.08),
                 textAlign: 'center',
-                mb: 2,
+                mb: 2
               }}
             >
               <Typography variant="caption" color="text.secondary">
@@ -234,8 +234,8 @@ export default function WheelSpinner() {
               sx={{
                 p: 3,
                 borderRadius: 3,
-                bgcolor: alpha(theme.palette.primary.main, 0.04),
-                textAlign: 'center',
+                bgcolor: theme.palette.surfaceContainerLow,
+                textAlign: 'center'
               }}
             >
               <Casino sx={{ fontSize: 40, color: theme.palette.text.secondary, mb: 1 }} />
@@ -261,7 +261,7 @@ export default function WheelSpinner() {
                       fontWeight: i === 0 ? 700 : 400,
                       bgcolor: i === 0
                         ? alpha(theme.palette.success.main, 0.15)
-                        : alpha(theme.palette.primary.main, 0.06),
+                        : theme.palette.surfaceContainerLow
                     }}
                   />
                 ))}

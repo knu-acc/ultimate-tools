@@ -8,8 +8,7 @@ import {
   Grid,
   Chip,
   TextField,
-  alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import MonitorIcon from '@mui/icons-material/Monitor';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
@@ -70,7 +69,7 @@ const CATEGORY_LABELS: Record<Category, { label: string; icon: React.ReactNode }
   desktop: { label: 'Десктоп', icon: <DesktopWindowsIcon fontSize="small" /> },
   laptop: { label: 'Ноутбук', icon: <LaptopIcon fontSize="small" /> },
   tablet: { label: 'Планшет', icon: <TabletIcon fontSize="small" /> },
-  phone: { label: 'Телефон', icon: <PhoneAndroidIcon fontSize="small" /> },
+  phone: { label: 'Телефон', icon: <PhoneAndroidIcon fontSize="small" /> }
 };
 
 function formatPixels(total: number): string {
@@ -89,7 +88,7 @@ export default function ScreenResolution() {
       width: window.screen.width,
       height: window.screen.height,
       pixelRatio: window.devicePixelRatio || 1,
-      colorDepth: window.screen.colorDepth,
+      colorDepth: window.screen.colorDepth
     });
   }, []);
 
@@ -112,7 +111,7 @@ export default function ScreenResolution() {
       {/* Current screen */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 3, mb: 3, borderRadius: 3 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <MonitorIcon color="primary" />
@@ -124,7 +123,7 @@ export default function ScreenResolution() {
           <Grid size={{ xs: 6, sm: 3 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
             >
               <Typography variant="caption" color="text.secondary">Разрешение</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -135,7 +134,7 @@ export default function ScreenResolution() {
           <Grid size={{ xs: 6, sm: 3 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
             >
               <Typography variant="caption" color="text.secondary">Физическое</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -146,7 +145,7 @@ export default function ScreenResolution() {
           <Grid size={{ xs: 6, sm: 3 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
             >
               <Typography variant="caption" color="text.secondary">Pixel Ratio</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -157,7 +156,7 @@ export default function ScreenResolution() {
           <Grid size={{ xs: 6, sm: 3 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
             >
               <Typography variant="caption" color="text.secondary">Глубина цвета</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -171,7 +170,7 @@ export default function ScreenResolution() {
       {/* Search & filters */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, mb: 3, borderRadius: 3 }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>
@@ -205,7 +204,7 @@ export default function ScreenResolution() {
       {/* Table */}
       <Paper
         elevation={0}
-        sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, borderRadius: 3 }}
       >
         <Box sx={{ overflowX: 'auto' }}>
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -225,7 +224,7 @@ export default function ScreenResolution() {
                   key={r.name}
                   sx={{
                     borderBottom: `1px solid ${theme.palette.divider}`,
-                    '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) },
+                    '&:hover': { backgroundColor: theme.palette.surfaceContainerLow }
                   }}
                 >
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>

@@ -12,7 +12,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 function isValidCidrNotation(input: string): boolean {
@@ -76,7 +76,7 @@ function divideBySubnets(networkIp: string, baseCidr: number, numSubnets: number
       broadcast: numberToIp(broadcast),
       mask: numberToIp(newMask),
       cidr: newCidr,
-      hosts: hostsPerSubnet,
+      hosts: hostsPerSubnet
     });
   }
   return results;
@@ -116,7 +116,7 @@ function divideByHosts(networkIp: string, baseCidr: number, hostsNeeded: number)
       broadcast: numberToIp(broadcast),
       mask: numberToIp(newMask),
       cidr: newCidr,
-      hosts: hostsPerSubnet,
+      hosts: hostsPerSubnet
     });
   }
   return results;
@@ -155,7 +155,7 @@ function vlsmDivide(networkIp: string, baseCidr: number, requests: VlsmRequest[]
       broadcast: numberToIp(broadcast),
       mask: numberToIp(newMask),
       cidr: newCidr,
-      hosts: subnetSize - 2,
+      hosts: subnetSize - 2
     });
     currentAddr = (broadcast + 1) >>> 0;
   }
@@ -212,8 +212,7 @@ export default function SubnetCalc() {
           p: 3,
           mb: 3,
           borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -237,14 +236,14 @@ export default function SubnetCalc() {
               textTransform: 'none',
               fontWeight: 500,
               '&.Mui-selected': {
-                background: alpha(theme.palette.primary.main, 0.12),
+                background: theme.palette.surfaceContainerHigh,
                 color: theme.palette.primary.main,
                 fontWeight: 600,
                 '&:hover': {
-                  background: alpha(theme.palette.primary.main, 0.18),
-                },
-              },
-            },
+                  background: alpha(theme.palette.primary.main, 0.18)
+                }
+              }
+            }
           }}
         >
           <ToggleButton value="subnets">По количеству подсетей</ToggleButton>
@@ -328,8 +327,7 @@ export default function SubnetCalc() {
           elevation={0}
           sx={{
             p: 3,
-            borderRadius: 3,
-            border: `1px solid ${theme.palette.divider}`,
+            borderRadius: 3
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -351,19 +349,19 @@ export default function SubnetCalc() {
                   textAlign: 'center',
                   borderBottom: `1px solid ${theme.palette.divider}`,
                   fontSize: '0.85rem',
-                  whiteSpace: 'nowrap',
+                  whiteSpace: 'nowrap'
                 },
                 '& th': {
                   fontWeight: 600,
                   color: 'text.secondary',
-                  background: alpha(theme.palette.primary.main, 0.04),
+                  background: theme.palette.surfaceContainerLow
                 },
                 '& td': {
-                  fontFamily: 'monospace',
+                  fontFamily: 'monospace'
                 },
                 '& tr:hover td': {
-                  background: alpha(theme.palette.primary.main, 0.03),
-                },
+                  background: theme.palette.surfaceContainerLow
+                }
               }}
             >
               <thead>
@@ -401,8 +399,7 @@ export default function SubnetCalc() {
           sx={{
             p: 3,
             borderRadius: 3,
-            border: `1px solid ${theme.palette.divider}`,
-            textAlign: 'center',
+            textAlign: 'center'
           }}
         >
           <Typography color="text.secondary">

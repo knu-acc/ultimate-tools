@@ -10,7 +10,7 @@ import {
   IconButton,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -135,7 +135,7 @@ export default function Calendar() {
                 sx={{
                   fontWeight: 600,
                   fontSize: compact ? '0.6rem' : '0.75rem',
-                  color: 'text.secondary',
+                  color: 'text.secondary'
                 }}
               >
                 {wd}
@@ -178,14 +178,14 @@ export default function Calendar() {
                   backgroundColor: selectedMatch
                     ? 'primary.main'
                     : todayMatch
-                      ? alpha(theme.palette.primary.main, 0.12)
+                      ? theme.palette.surfaceContainerHigh
                       : 'transparent',
                   '&:hover': {
                     backgroundColor: selectedMatch
                       ? 'primary.dark'
-                      : alpha(theme.palette.primary.main, 0.08),
+                      : theme.palette.surfaceContainerHigh
                   },
-                  transition: 'background-color 0.15s',
+                  transition: 'background-color 0.15s'
                 }}
               >
                 <Typography
@@ -198,7 +198,7 @@ export default function Calendar() {
                         ? 'error.main'
                         : isWeekend
                           ? 'error.light'
-                          : 'text.primary',
+                          : 'text.primary'
                   }}
                 >
                   {day}
@@ -211,7 +211,7 @@ export default function Calendar() {
                       width: 4,
                       height: 4,
                       borderRadius: '50%',
-                      backgroundColor: selectedMatch ? 'primary.contrastText' : 'error.main',
+                      backgroundColor: selectedMatch ? 'primary.contrastText' : 'error.main'
                     }}
                   />
                 )}
@@ -240,11 +240,10 @@ export default function Calendar() {
       <Paper
         elevation={0}
         sx={{
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
           p: 2,
           mt: 2,
-          backgroundColor: alpha(theme.palette.primary.main, 0.02),
+          backgroundColor: theme.palette.surfaceContainerLowest
         }}
       >
         <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1.5 }}>
@@ -272,9 +271,8 @@ export default function Calendar() {
       <Paper
         elevation={0}
         sx={{
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          p: 3,
+          p: 3
         }}
       >
         {/* Header */}
@@ -320,8 +318,7 @@ export default function Calendar() {
             <IconButton
               onClick={() => setYearView(!yearView)}
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
-                borderRadius: 2,
+                borderRadius: 2
               }}
             >
               {yearView ? <CalendarViewMonthIcon /> : <GridViewIcon />}
@@ -355,16 +352,15 @@ export default function Calendar() {
                 <Paper
                   elevation={0}
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 2,
                     p: 1,
                     cursor: 'pointer',
                     backgroundColor: m === today.getMonth() && year === today.getFullYear()
-                      ? alpha(theme.palette.primary.main, 0.04)
+                      ? theme.palette.surfaceContainerLow
                       : 'transparent',
                     '&:hover': {
-                      backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                    },
+                      backgroundColor: theme.palette.surfaceContainerHigh
+                    }
                   }}
                   onClick={() => {
                     setMonth(m);
@@ -379,7 +375,7 @@ export default function Calendar() {
                       textAlign: 'center',
                       color: m === today.getMonth() && year === today.getFullYear()
                         ? 'primary.main'
-                        : 'text.primary',
+                        : 'text.primary'
                     }}
                   >
                     {MONTHS_SHORT[m]}

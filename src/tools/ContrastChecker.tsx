@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, Paper, Grid, TextField, Chip, alpha, useTheme,
+  Box, Typography, Paper, Grid, TextField, Chip, alpha, useTheme
 } from '@mui/material';
 
 function hexToRgb(hex: string): [number, number, number] {
@@ -122,7 +122,7 @@ export default function ContrastChecker() {
 
         <Grid size={{ xs: 12, md: 7 }}>
           {/* Preview */}
-          <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: bgColor, border: `1px solid ${theme.palette.divider}`, mb: 2 }}>
+          <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: bgColor, mb: 2 }}>
             <Typography variant="h4" sx={{ color: fgColor, fontWeight: 700, mb: 1 }}>
               Заголовок страницы
             </Typography>
@@ -134,7 +134,7 @@ export default function ContrastChecker() {
             </Typography>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: fgColor, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: fgColor }}>
             <Typography variant="h4" sx={{ color: bgColor, fontWeight: 700, mb: 1 }}>
               Инвертированный вариант
             </Typography>

@@ -8,9 +8,7 @@ import {
   TextField,
   Chip,
   Grid,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 
 type TempUnit = 'celsius' | 'fahrenheit' | 'kelvin';
 
@@ -23,13 +21,13 @@ interface ConvertedValues {
 const unitLabels: Record<TempUnit, string> = {
   celsius: 'Цельсий (°C)',
   fahrenheit: 'Фаренгейт (°F)',
-  kelvin: 'Кельвин (K)',
+  kelvin: 'Кельвин (K)'
 };
 
 const unitSymbols: Record<TempUnit, string> = {
   celsius: '°C',
   fahrenheit: '°F',
-  kelvin: 'K',
+  kelvin: 'K'
 };
 
 function convert(value: number, from: TempUnit): ConvertedValues {
@@ -48,7 +46,7 @@ function convert(value: number, from: TempUnit): ConvertedValues {
   return {
     celsius: parseFloat(celsius.toFixed(4)),
     fahrenheit: parseFloat((celsius * 9 / 5 + 32).toFixed(4)),
-    kelvin: parseFloat((celsius + 273.15).toFixed(4)),
+    kelvin: parseFloat((celsius + 273.15).toFixed(4))
   };
 }
 
@@ -80,8 +78,7 @@ export default function TemperatureConverter() {
           p: 3,
           mb: 3,
           borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -96,7 +93,7 @@ export default function TemperatureConverter() {
           placeholder="Введите число"
           sx={{
             mb: 2.5,
-            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' },
+            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
           }}
         />
 
@@ -114,7 +111,7 @@ export default function TemperatureConverter() {
               sx={{
                 borderRadius: 3,
                 fontWeight: sourceUnit === unit ? 600 : 400,
-                transition: 'all 200ms ease',
+                transition: 'all 200ms ease'
               }}
             />
           ))}
@@ -133,8 +130,8 @@ export default function TemperatureConverter() {
                   p: 2.5,
                   borderRadius: 4,
                   border: `2px solid ${theme.palette.primary.main}`,
-                  background: alpha(theme.palette.primary.main, 0.08),
-                  textAlign: 'center',
+                  background: theme.palette.surfaceContainerHigh,
+                  textAlign: 'center'
                 }}
               >
                 <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}>
@@ -157,13 +154,12 @@ export default function TemperatureConverter() {
                   sx={{
                     p: 2.5,
                     borderRadius: 4,
-                    border: `1px solid ${theme.palette.divider}`,
                     textAlign: 'center',
                     transition: 'all 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
-                      background: alpha(theme.palette.primary.main, 0.04),
-                    },
+                      background: theme.palette.surfaceContainerLow
+                    }
                   }}
                 >
                   <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}>
@@ -183,8 +179,7 @@ export default function TemperatureConverter() {
               sx={{
                 p: 3,
                 borderRadius: 4,
-                border: `1px solid ${theme.palette.divider}`,
-                textAlign: 'center',
+                textAlign: 'center'
               }}
             >
               <Typography color="text.secondary">
@@ -200,8 +195,7 @@ export default function TemperatureConverter() {
         elevation={0}
         sx={{
           p: 3,
-          borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 4
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -217,20 +211,20 @@ export default function TemperatureConverter() {
                 p: 1.5,
                 textAlign: 'left',
                 borderBottom: `1px solid ${theme.palette.divider}`,
-                fontSize: '0.875rem',
+                fontSize: '0.875rem'
               },
               '& th': {
                 fontWeight: 600,
                 color: 'text.secondary',
-                background: alpha(theme.palette.primary.main, 0.04),
+                background: theme.palette.surfaceContainerLow
               },
               '& td': {
-                fontFamily: 'monospace',
+                fontFamily: 'monospace'
               },
               '& td:first-of-type': {
                 fontFamily: 'inherit',
-                fontWeight: 500,
-              },
+                fontWeight: 500
+              }
             }}
           >
             <thead>

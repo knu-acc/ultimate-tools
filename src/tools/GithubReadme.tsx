@@ -15,12 +15,14 @@ import {
   FormControlLabel,
   MenuItem,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type LicenseType = 'MIT' | 'Apache-2.0' | 'GPL-3.0' | 'BSD-3-Clause' | 'ISC' | 'Unlicense';
 type PresetType = 'basic' | 'detailed' | 'api' | 'library';
@@ -50,7 +52,7 @@ const defaultState: ReadmeState = {
   showBadges: true,
   showToc: true,
   showContributing: false,
-  showContact: false,
+  showContact: false
 };
 
 const presets: Record<PresetType, Partial<ReadmeState>> = {
@@ -65,7 +67,7 @@ const presets: Record<PresetType, Partial<ReadmeState>> = {
     showBadges: true,
     showToc: false,
     showContributing: false,
-    showContact: false,
+    showContact: false
   },
   detailed: {
     projectName: 'My Awesome Project',
@@ -78,7 +80,7 @@ const presets: Record<PresetType, Partial<ReadmeState>> = {
     showBadges: true,
     showToc: true,
     showContributing: true,
-    showContact: true,
+    showContact: true
   },
   api: {
     projectName: 'My API',
@@ -91,7 +93,7 @@ const presets: Record<PresetType, Partial<ReadmeState>> = {
     showBadges: true,
     showToc: true,
     showContributing: true,
-    showContact: false,
+    showContact: false
   },
   library: {
     projectName: 'my-library',
@@ -104,8 +106,8 @@ const presets: Record<PresetType, Partial<ReadmeState>> = {
     showBadges: true,
     showToc: false,
     showContributing: true,
-    showContact: false,
-  },
+    showContact: false
+  }
 };
 
 function generateReadme(state: ReadmeState): string {
@@ -264,8 +266,7 @@ export default function GithubReadme() {
         sx={{
           p: 2,
           mb: 2,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
@@ -294,8 +295,7 @@ export default function GithubReadme() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <TextField
@@ -455,8 +455,7 @@ export default function GithubReadme() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -481,9 +480,8 @@ export default function GithubReadme() {
                 p: 2,
                 borderRadius: 2,
                 backgroundColor: alpha(theme.palette.background.default, 0.5),
-                border: `1px solid ${theme.palette.divider}`,
                 maxHeight: 600,
-                overflow: 'auto',
+                overflow: 'auto'
               }}
             >
               <pre
@@ -494,7 +492,7 @@ export default function GithubReadme() {
                   fontFamily: 'monospace',
                   fontSize: '0.8rem',
                   lineHeight: 1.6,
-                  color: theme.palette.text.primary,
+                  color: theme.palette.text.primary
                 }}
               >
                 {markdown}

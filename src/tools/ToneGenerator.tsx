@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, Slider, TextField,
+  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, Slider, TextField
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
 
@@ -155,7 +155,7 @@ export default function ToneGenerator() {
         p: 3,
         borderRadius: 4,
         background: alpha(theme.palette.background.paper, 0.8),
-        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`
       }}
     >
       <Typography variant="h5" fontWeight={700} gutterBottom>
@@ -170,7 +170,7 @@ export default function ToneGenerator() {
           p: 3,
           borderRadius: 4,
           background: alpha(primaryColor, 0.06),
-          border: `1px solid ${alpha(primaryColor, 0.15)}`,
+          border: `1px solid ${alpha(primaryColor, 0.15)}`
         }}
       >
         <Typography variant="h3" fontWeight={800} sx={{ color: primaryColor }}>
@@ -285,8 +285,8 @@ export default function ToneGenerator() {
           fontSize: 16,
           background: isPlaying ? theme.palette.error.main : primaryColor,
           '&:hover': {
-            background: isPlaying ? theme.palette.error.dark : theme.palette.primary.dark,
-          },
+            background: isPlaying ? theme.palette.error.dark : theme.palette.primary.dark
+          }
         }}
       >
         {isPlaying ? 'Остановить' : 'Воспроизвести'}

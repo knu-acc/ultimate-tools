@@ -11,17 +11,19 @@ import {
   LinearProgress,
   Snackbar,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import LockIcon from '@mui/icons-material/Lock';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const CHARSETS: Record<string, string> = {
   'A-Z': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   'a-z': 'abcdefghijklmnopqrstuvwxyz',
   '0-9': '0123456789',
-  '!@#$': '!@#$%^&*()_+-=[]{}|;:,.<>?',
+  '!@#$': '!@#$%^&*()_+-=[]{}|;:,.<>?'
 };
 
 const SLIDER_MARKS = [8, 12, 16, 24, 32].map((v) => ({ value: v, label: String(v) }));
@@ -94,13 +96,9 @@ export default function PasswordGenerator() {
 
   return (
     <Box sx={{ maxWidth: 600, mx: 'auto' }}>
-      <Paper
-        elevation={0}
+      <Box
         sx={{
-          p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          p: { xs: 1, md: 0 },
         }}
       >
         {/* Password display */}
@@ -118,16 +116,16 @@ export default function PasswordGenerator() {
             borderRadius: 2,
             border: `2px dashed ${password ? theme.palette.primary.main : theme.palette.divider}`,
             background: password
-              ? alpha(theme.palette.primary.main, 0.04)
+              ? theme.palette.surfaceContainerLow
               : theme.palette.action.hover,
             cursor: password ? 'pointer' : 'default',
             transition: 'all 0.2s ease',
             '&:hover': password
               ? {
-                  background: alpha(theme.palette.primary.main, 0.08),
-                  borderColor: theme.palette.primary.dark,
+                  background: theme.palette.surfaceContainerHigh,
+                  borderColor: theme.palette.primary.dark
                 }
-              : {},
+              : {}
           }}
         >
           {password ? (
@@ -141,7 +139,7 @@ export default function PasswordGenerator() {
                   wordBreak: 'break-all',
                   letterSpacing: 1.5,
                   textAlign: 'center',
-                  flex: 1,
+                  flex: 1
                 }}
               >
                 {password}
@@ -176,8 +174,8 @@ export default function PasswordGenerator() {
                 '& .MuiLinearProgress-bar': {
                   borderRadius: 5,
                   backgroundColor: strength.color,
-                  transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease',
-                },
+                  transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease'
+                }
               }}
             />
           </Box>
@@ -196,7 +194,7 @@ export default function PasswordGenerator() {
                 color: 'primary.main',
                 fontFamily: 'monospace',
                 minWidth: 28,
-                textAlign: 'right',
+                textAlign: 'right'
               }}
             >
               {length}
@@ -213,8 +211,8 @@ export default function PasswordGenerator() {
             sx={{
               '& .MuiSlider-markLabel': {
                 fontSize: '0.7rem',
-                color: 'text.disabled',
-              },
+                color: 'text.disabled'
+              }
             }}
           />
         </Box>
@@ -239,7 +237,7 @@ export default function PasswordGenerator() {
                     fontWeight: 600,
                     fontSize: '0.9rem',
                     px: 1,
-                    transition: 'all 0.15s ease',
+                    transition: 'all 0.15s ease'
                   }}
                 />
               );
@@ -270,7 +268,7 @@ export default function PasswordGenerator() {
             Копировать
           </Button>
         </Box>
-      </Paper>
+      </Box>
 
       {/* Password history */}
       {history.length > 0 && (
@@ -279,8 +277,7 @@ export default function PasswordGenerator() {
           sx={{
             mt: 2,
             p: 2,
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 3
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
@@ -301,8 +298,8 @@ export default function PasswordGenerator() {
                   justifyContent: 'flex-start',
                   cursor: 'pointer',
                   '&:hover': {
-                    background: alpha(theme.palette.primary.main, 0.08),
-                  },
+                    background: theme.palette.surfaceContainerHigh
+                  }
                 }}
               />
             ))}

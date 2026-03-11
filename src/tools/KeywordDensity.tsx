@@ -13,7 +13,7 @@ import {
   Tabs,
   Tab,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 
 const STOP_WORDS = new Set([
@@ -100,7 +100,7 @@ export default function KeywordDensity() {
         .map(([word, count]) => ({
           word,
           count,
-          density: (count / totalWords) * 100,
+          density: (count / totalWords) * 100
         }))
         .sort((a, b) => b.count - a.count)
         .slice(0, topN);
@@ -144,8 +144,7 @@ export default function KeywordDensity() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -173,8 +172,7 @@ export default function KeywordDensity() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -239,7 +237,7 @@ export default function KeywordDensity() {
                       fontSize: '0.7rem',
                       height: 20,
                       bgcolor: alpha(theme.palette.error.main, 0.08),
-                      textDecoration: 'line-through',
+                      textDecoration: 'line-through'
                     }}
                   />
                 ))}
@@ -249,7 +247,7 @@ export default function KeywordDensity() {
                   sx={{
                     fontSize: '0.7rem',
                     height: 20,
-                    bgcolor: alpha(theme.palette.text.primary, 0.05),
+                    bgcolor: alpha(theme.palette.text.primary, 0.05)
                   }}
                 />
               </Box>
@@ -264,8 +262,7 @@ export default function KeywordDensity() {
           elevation={0}
           sx={{
             p: 3,
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 3
           }}
         >
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -297,7 +294,7 @@ export default function KeywordDensity() {
                   py: 1,
                   px: 1.5,
                   mb: 0.5,
-                  borderBottom: `1px solid ${theme.palette.divider}`,
+                  borderBottom: `1px solid ${theme.palette.divider}`
                 }}
               >
                 <Typography
@@ -348,8 +345,8 @@ export default function KeywordDensity() {
                     borderRadius: 1,
                     transition: 'background 0.15s ease',
                     '&:hover': {
-                      bgcolor: alpha(theme.palette.primary.main, 0.04),
-                    },
+                      bgcolor: theme.palette.surfaceContainerLow
+                    }
                   }}
                 >
                   <Typography
@@ -366,7 +363,7 @@ export default function KeywordDensity() {
                       minWidth: 100,
                       fontWeight: 500,
                       fontFamily: 'monospace',
-                      fontSize: '0.85rem',
+                      fontSize: '0.85rem'
                     }}
                   >
                     {item.word}
@@ -391,7 +388,7 @@ export default function KeywordDensity() {
                         height: 8,
                         borderRadius: 4,
                         bgcolor: alpha(theme.palette.primary.main, 0.1),
-                        overflow: 'hidden',
+                        overflow: 'hidden'
                       }}
                     >
                       <Box
@@ -400,7 +397,7 @@ export default function KeywordDensity() {
                           width: `${(item.count / maxCount) * 100}%`,
                           borderRadius: 4,
                           bgcolor: theme.palette.primary.main,
-                          transition: 'width 0.3s ease',
+                          transition: 'width 0.3s ease'
                         }}
                       />
                     </Box>

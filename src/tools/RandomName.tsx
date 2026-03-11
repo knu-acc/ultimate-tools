@@ -3,9 +3,11 @@
 import React, { useState, useCallback } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider,
-  IconButton, Tooltip,
+  IconButton, Tooltip
 } from '@mui/material';
 import { ContentCopy, Casino, Person } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const RUSSIAN_MALE_FIRST = [
   'Александр', 'Дмитрий', 'Максим', 'Иван', 'Артём', 'Михаил', 'Даниил', 'Матвей',
@@ -160,8 +162,8 @@ export default function RandomName() {
                   cursor: 'pointer',
                   bgcolor: gender === opt.value
                     ? alpha(theme.palette.primary.main, 0.15)
-                    : alpha(theme.palette.primary.main, 0.04),
-                  color: gender === opt.value ? theme.palette.primary.main : theme.palette.text.primary,
+                    : theme.palette.surfaceContainerLow,
+                  color: gender === opt.value ? theme.palette.primary.main : theme.palette.text.primary
                 }}
               />
             ))}
@@ -182,8 +184,8 @@ export default function RandomName() {
                   cursor: 'pointer',
                   bgcolor: nameType === opt.value
                     ? alpha(theme.palette.primary.main, 0.15)
-                    : alpha(theme.palette.primary.main, 0.04),
-                  color: nameType === opt.value ? theme.palette.primary.main : theme.palette.text.primary,
+                    : theme.palette.surfaceContainerLow,
+                  color: nameType === opt.value ? theme.palette.primary.main : theme.palette.text.primary
                 }}
               />
             ))}
@@ -204,8 +206,8 @@ export default function RandomName() {
                   cursor: 'pointer',
                   bgcolor: nationality === opt.value
                     ? alpha(theme.palette.primary.main, 0.15)
-                    : alpha(theme.palette.primary.main, 0.04),
-                  color: nationality === opt.value ? theme.palette.primary.main : theme.palette.text.primary,
+                    : theme.palette.surfaceContainerLow,
+                  color: nationality === opt.value ? theme.palette.primary.main : theme.palette.text.primary
                 }}
               />
             ))}
@@ -237,7 +239,7 @@ export default function RandomName() {
             size="large"
             startIcon={<Casino />}
             onClick={handleGenerate}
-            sx={{ borderRadius: '24px', py: 1.2 }}
+            sx={{ borderRadius: 6, py: 1.2 }}
           >
             Сгенерировать
           </Button>
@@ -254,7 +256,7 @@ export default function RandomName() {
                   size="small"
                   startIcon={<ContentCopy />}
                   onClick={copyAll}
-                  sx={{ borderRadius: '16px' }}
+                  sx={{ borderRadius: 4 }}
                 >
                   {copied === -1 ? 'Скопировано!' : 'Копировать все'}
                 </Button>
@@ -272,8 +274,7 @@ export default function RandomName() {
                     px: 2,
                     mb: 1,
                     borderRadius: 3,
-                    border: `1px solid ${theme.palette.divider}`,
-                    '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.03) },
+                    '&:hover': { bgcolor: theme.palette.surfaceContainerLow }
                   }}
                 >
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
@@ -285,7 +286,7 @@ export default function RandomName() {
                   <Tooltip title={copied === i ? 'Скопировано!' : 'Копировать'}>
                     <IconButton size="small" onClick={() => copyName(name, i)}>
                       <ContentCopy fontSize="small" sx={{
-                        color: copied === i ? theme.palette.success.main : theme.palette.text.secondary,
+                        color: copied === i ? theme.palette.success.main : theme.palette.text.secondary
                       }} />
                     </IconButton>
                   </Tooltip>
@@ -298,8 +299,8 @@ export default function RandomName() {
               sx={{
                 p: 4,
                 borderRadius: 3,
-                bgcolor: alpha(theme.palette.primary.main, 0.04),
-                textAlign: 'center',
+                bgcolor: theme.palette.surfaceContainerLow,
+                textAlign: 'center'
               }}
             >
               <Person sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />

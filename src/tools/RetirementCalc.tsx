@@ -11,12 +11,15 @@ import {
   Chip,
   Divider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
+import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 
 export default function RetirementCalc() {
   const theme = useTheme();
 
+  const [currency, setCurrency] = useState('RUB');
+  const sym = getCurrency(currency).symbol;
   const [currentAge, setCurrentAge] = useState('');
   const [retirementAge, setRetirementAge] = useState('');
   const [currentSavings, setCurrentSavings] = useState('');
@@ -71,7 +74,7 @@ export default function RetirementCalc() {
         year: thisYear + yr + 1,
         contributed: totalContributed,
         interest: totalInterest,
-        balance,
+        balance
       });
     }
 
@@ -126,7 +129,7 @@ export default function RetirementCalc() {
       monthlyIncome20,
       shortfall,
       annualDesired,
-      projection,
+      projection
     };
   }, [currentAge, retirementAge, currentSavings, monthlySavings, annualReturn, desiredMonthlyIncome]);
 
@@ -151,9 +154,8 @@ export default function RetirementCalc() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(color, 0.06),
+        background: alpha(color, 0.06)
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -167,13 +169,15 @@ export default function RetirementCalc() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </Box>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={2}>
@@ -191,8 +195,8 @@ export default function RetirementCalc() {
                     <Typography variant="body2" color="text.disabled">
                       лет
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -211,8 +215,8 @@ export default function RetirementCalc() {
                     <Typography variant="body2" color="text.disabled">
                       лет
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -220,7 +224,7 @@ export default function RetirementCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Текущие накопления (₽)"
+              label="Текущие накопления ({sym})"
               type="number"
               value={currentSavings}
               onChange={(e) => setCurrentSavings(e.target.value)}
@@ -229,10 +233,10 @@ export default function RetirementCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -240,7 +244,7 @@ export default function RetirementCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Ежемесячные накопления (₽)"
+              label="Ежемесячные накопления ({sym})"
               type="number"
               value={monthlySavings}
               onChange={(e) => setMonthlySavings(e.target.value)}
@@ -249,10 +253,10 @@ export default function RetirementCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -271,8 +275,8 @@ export default function RetirementCalc() {
                     <Typography variant="body2" color="text.disabled">
                       %
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -280,7 +284,7 @@ export default function RetirementCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Желаемый ежемесячный доход на пенсии (₽)"
+              label="Желаемый ежемесячный доход на пенсии ({sym})"
               type="number"
               value={desiredMonthlyIncome}
               onChange={(e) => setDesiredMonthlyIncome(e.target.value)}
@@ -289,10 +293,10 @@ export default function RetirementCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -321,21 +325,21 @@ export default function RetirementCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Накоплено к пенсии"
-                  value={`${fmtInt(results.totalAtRetirement)} ₽`}
+                  value={`${fmtInt(results.totalAtRetirement)} {sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Возможный ежемес. доход (бессрочно)"
-                  value={`${fmtInt(results.monthlyIncomePossible)} ₽`}
+                  value={`${fmtInt(results.monthlyIncomePossible)} {sym}`}
                   color="#2e7d32"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Ежемес. доход (на 20 лет)"
-                  value={`${fmtInt(results.monthlyIncome20)} ₽`}
+                  value={`${fmtInt(results.monthlyIncome20)} {sym}`}
                   color="#1565c0"
                 />
               </Grid>
@@ -349,9 +353,8 @@ export default function RetirementCalc() {
                       elevation={0}
                       sx={{
                         p: 2,
-                        border: `1px solid ${theme.palette.divider}`,
                         borderRadius: 3,
-                        background: alpha(results.yearsLast >= 30 ? '#2e7d32' : '#c62828', 0.06),
+                        background: alpha(results.yearsLast >= 30 ? '#2e7d32' : '#c62828', 0.06)
                       }}
                     >
                       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -361,7 +364,7 @@ export default function RetirementCalc() {
                         variant="h5"
                         sx={{
                           fontWeight: 700,
-                          color: results.yearsLast >= 30 ? '#2e7d32' : '#c62828',
+                          color: results.yearsLast >= 30 ? '#2e7d32' : '#c62828'
                         }}
                       >
                         {results.yearsLast >= 100 ? 'Бессрочно' : `${results.yearsLast.toFixed(1)} лет`}
@@ -373,9 +376,8 @@ export default function RetirementCalc() {
                       elevation={0}
                       sx={{
                         p: 2,
-                        border: `1px solid ${theme.palette.divider}`,
                         borderRadius: 3,
-                        background: alpha(results.shortfall <= 0 ? '#2e7d32' : '#c62828', 0.06),
+                        background: alpha(results.shortfall <= 0 ? '#2e7d32' : '#c62828', 0.06)
                       }}
                     >
                       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -386,10 +388,10 @@ export default function RetirementCalc() {
                           variant="h5"
                           sx={{
                             fontWeight: 700,
-                            color: results.shortfall <= 0 ? '#2e7d32' : '#c62828',
+                            color: results.shortfall <= 0 ? '#2e7d32' : '#c62828'
                           }}
                         >
-                          {fmtInt(Math.abs(results.shortfall))} ₽
+                          {fmtInt(Math.abs(results.shortfall))} {sym}
                         </Typography>
                         <Chip
                           label={results.shortfall <= 0 ? 'Достаточно' : 'Не хватает'}
@@ -397,7 +399,7 @@ export default function RetirementCalc() {
                           sx={{
                             bgcolor: alpha(results.shortfall <= 0 ? '#2e7d32' : '#c62828', 0.1),
                             color: results.shortfall <= 0 ? '#2e7d32' : '#c62828',
-                            fontWeight: 600,
+                            fontWeight: 600
                           }}
                         />
                       </Box>
@@ -414,12 +416,12 @@ export default function RetirementCalc() {
                 variant="outlined"
               />
               <Chip
-                label={`Всего внесено: ${fmtInt(results.totalContributed)} ₽`}
+                label={`Всего внесено: ${fmtInt(results.totalContributed)} {sym}`}
                 size="small"
                 variant="outlined"
               />
               <Chip
-                label={`Заработано на процентах: ${fmtInt(results.totalInterest)} ₽`}
+                label={`Заработано на процентах: ${fmtInt(results.totalInterest)} {sym}`}
                 size="small"
                 color="success"
                 variant="outlined"
@@ -442,13 +444,12 @@ export default function RetirementCalc() {
                       elevation={0}
                       sx={{
                         p: 1.5,
-                        border: `1px solid ${theme.palette.divider}`,
                         borderRadius: 2,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         flexWrap: 'wrap',
-                        gap: 1,
+                        gap: 1
                       }}
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 100 }}>
@@ -458,7 +459,7 @@ export default function RetirementCalc() {
                           sx={{
                             bgcolor: alpha(theme.palette.primary.main, 0.1),
                             fontWeight: 600,
-                            minWidth: 70,
+                            minWidth: 70
                           }}
                         />
                         <Typography variant="caption" color="text.secondary">
@@ -471,7 +472,7 @@ export default function RetirementCalc() {
                             Баланс
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                            {fmtInt(row.balance)} ₽
+                            {fmtInt(row.balance)} {sym}
                           </Typography>
                         </Box>
                         <Box sx={{ textAlign: 'right' }}>
@@ -479,7 +480,7 @@ export default function RetirementCalc() {
                             Внесено
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600, color: '#1565c0' }}>
-                            {fmtInt(row.contributed)} ₽
+                            {fmtInt(row.contributed)} {sym}
                           </Typography>
                         </Box>
                         <Box sx={{ textAlign: 'right' }}>
@@ -487,7 +488,7 @@ export default function RetirementCalc() {
                             Проценты
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
-                            +{fmtInt(row.interest)} ₽
+                            +{fmtInt(row.interest)} {sym}
                           </Typography>
                         </Box>
                       </Box>

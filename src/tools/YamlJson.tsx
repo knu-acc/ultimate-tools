@@ -12,12 +12,14 @@ import {
   Chip,
   Grid,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface YamlError {
   message: string;
@@ -341,7 +343,7 @@ export default function YamlJson() {
       const lineMatch = msg.match(/line\s+(\d+)/i);
       setError({
         message: `Ошибка парсинга YAML: ${msg}`,
-        line: lineMatch ? parseInt(lineMatch[1]) : undefined,
+        line: lineMatch ? parseInt(lineMatch[1]) : undefined
       });
     }
   };
@@ -384,9 +386,8 @@ export default function YamlJson() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         {error && (
@@ -429,9 +430,9 @@ export default function YamlJson() {
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
                   fontSize: '0.85rem',
-                  lineHeight: 1.6,
+                  lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 },
+                '& .MuiOutlinedInput-root': { borderRadius: 2 }
               }}
             />
           </Grid>
@@ -445,7 +446,7 @@ export default function YamlJson() {
                 justifyContent: 'center',
                 height: '100%',
                 gap: 1.5,
-                pt: { xs: 0, sm: 4 },
+                pt: { xs: 0, sm: 4 }
               }}
             >
               <Button
@@ -504,9 +505,9 @@ export default function YamlJson() {
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
                   fontSize: '0.85rem',
-                  lineHeight: 1.6,
+                  lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 },
+                '& .MuiOutlinedInput-root': { borderRadius: 2 }
               }}
             />
           </Grid>

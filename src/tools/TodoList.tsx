@@ -14,7 +14,7 @@ import {
   Chip,
   Divider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -119,7 +119,7 @@ export default function TodoList() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ }}>
         <Box sx={{ p: 3 }}>
           {/* Input */}
           <Box sx={{ display: 'flex', gap: 1.5, mb: 3 }}>
@@ -132,8 +132,8 @@ export default function TodoList() {
               size="small"
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 3,
-                },
+                  borderRadius: 3
+                }
               }}
             />
             <Button
@@ -145,7 +145,7 @@ export default function TodoList() {
                 borderRadius: 3,
                 px: 3,
                 whiteSpace: 'nowrap',
-                textTransform: 'none',
+                textTransform: 'none'
               }}
             >
               Добавить
@@ -176,7 +176,7 @@ export default function TodoList() {
               px: 1.5,
               py: 1,
               borderRadius: 2,
-              backgroundColor: alpha(theme.palette.primary.main, 0.04),
+              backgroundColor: theme.palette.surfaceContainerLow
             }}
           >
             <Typography variant="body2" color="text.secondary">
@@ -218,8 +218,8 @@ export default function TodoList() {
                     borderRadius: 2,
                     transition: 'background-color 150ms ease',
                     '&:hover': {
-                      backgroundColor: alpha(theme.palette.action.hover, 0.5),
-                    },
+                      backgroundColor: alpha(theme.palette.action.hover, 0.5)
+                    }
                   }}
                   secondaryAction={
                     <IconButton
@@ -228,7 +228,7 @@ export default function TodoList() {
                       onClick={() => deleteTodo(todo.id)}
                       sx={{
                         color: theme.palette.text.secondary,
-                        '&:hover': { color: theme.palette.error.main },
+                        '&:hover': { color: theme.palette.error.main }
                       }}
                     >
                       <DeleteIcon fontSize="small" />
@@ -251,7 +251,7 @@ export default function TodoList() {
                       transition: 'color 200ms ease, text-decoration 200ms ease',
                       wordBreak: 'break-word',
                       flex: 1,
-                      pr: 4,
+                      pr: 4
                     }}
                   >
                     {todo.text}
@@ -273,7 +273,7 @@ export default function TodoList() {
                   onClick={clearCompleted}
                   sx={{
                     borderRadius: 3,
-                    textTransform: 'none',
+                    textTransform: 'none'
                   }}
                 >
                   Очистить завершённые ({completedCount})

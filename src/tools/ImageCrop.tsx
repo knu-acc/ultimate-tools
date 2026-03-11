@@ -10,7 +10,7 @@ import {
   TextField,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -305,13 +305,13 @@ export default function ImageCrop() {
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
             borderRadius: 4,
             backgroundColor: dragging
-              ? alpha(theme.palette.primary.main, 0.06)
+              ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
             transition: 'all 250ms ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
-              backgroundColor: alpha(theme.palette.primary.main, 0.04),
-            },
+              backgroundColor: theme.palette.surfaceContainerLow
+            }
           }}
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
@@ -332,7 +332,7 @@ export default function ImageCrop() {
       {originalFile && (
         <>
           {/* Controls */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CropIcon /> Параметры обрезки
             </Typography>
@@ -423,7 +423,7 @@ export default function ImageCrop() {
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
               >
                 <Typography variant="caption" color="text.secondary">Оригинал</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -437,7 +437,7 @@ export default function ImageCrop() {
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
               >
                 <Typography variant="caption" color="text.secondary">Область обрезки</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
@@ -454,9 +454,8 @@ export default function ImageCrop() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: croppedUrl ? alpha(theme.palette.success.main, 0.06) : undefined,
+                  background: croppedUrl ? alpha(theme.palette.success.main, 0.06) : undefined
                 }}
               >
                 <Typography variant="caption" color="text.secondary">Результат</Typography>
@@ -471,19 +470,18 @@ export default function ImageCrop() {
           </Grid>
 
           {/* Crop Canvas */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CropIcon /> Выберите область
             </Typography>
             <Box
               ref={containerRef}
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 2,
                 overflow: 'hidden',
                 backgroundColor: alpha(theme.palette.background.default, 0.5),
                 display: 'flex',
-                justifyContent: 'center',
+                justifyContent: 'center'
               }}
             >
               <canvas
@@ -499,20 +497,19 @@ export default function ImageCrop() {
 
           {/* Cropped Preview */}
           {croppedUrl && (
-            <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}` }}>
+            <Paper elevation={0} sx={{ p: 3 }}>
               <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                 <ImageIcon /> Результат обрезки
               </Typography>
               <Box
                 sx={{
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 2,
                   overflow: 'hidden',
                   backgroundColor: alpha(theme.palette.background.default, 0.5),
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  minHeight: 100,
+                  minHeight: 100
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

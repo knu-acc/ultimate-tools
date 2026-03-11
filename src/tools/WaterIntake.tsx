@@ -12,7 +12,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 type ActivityLevel = 'low' | 'medium' | 'high';
@@ -82,9 +82,8 @@ export default function WaterIntake() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -100,7 +99,7 @@ export default function WaterIntake() {
           placeholder="70"
           sx={{ mb: 2.5 }}
           slotProps={{
-            input: { inputProps: { min: 20, max: 500, step: 0.5 } },
+            input: { inputProps: { min: 20, max: 500, step: 0.5 } }
           }}
         />
 
@@ -122,13 +121,13 @@ export default function WaterIntake() {
                 fontWeight: 600,
                 borderRadius: 2,
                 '&.Mui-selected': {
-                  background: alpha(theme.palette.primary.main, 0.12),
+                  background: theme.palette.surfaceContainerHigh,
                   color: theme.palette.primary.main,
                   '&:hover': {
-                    background: alpha(theme.palette.primary.main, 0.18),
-                  },
-                },
-              },
+                    background: alpha(theme.palette.primary.main, 0.18)
+                  }
+                }
+              }
             }}
           >
             <ToggleButton value="low">Низкая</ToggleButton>
@@ -160,13 +159,13 @@ export default function WaterIntake() {
                 fontWeight: 600,
                 borderRadius: 2,
                 '&.Mui-selected': {
-                  background: alpha(theme.palette.primary.main, 0.12),
+                  background: theme.palette.surfaceContainerHigh,
                   color: theme.palette.primary.main,
                   '&:hover': {
-                    background: alpha(theme.palette.primary.main, 0.18),
-                  },
-                },
-              },
+                    background: alpha(theme.palette.primary.main, 0.18)
+                  }
+                }
+              }
             }}
           >
             <ToggleButton value="normal">Обычный</ToggleButton>
@@ -191,7 +190,7 @@ export default function WaterIntake() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#1976d2', 0.3)}`,
-                  background: alpha('#1976d2', 0.05),
+                  background: alpha('#1976d2', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
@@ -213,7 +212,7 @@ export default function WaterIntake() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#2e7d32', 0.3)}`,
-                  background: alpha('#2e7d32', 0.05),
+                  background: alpha('#2e7d32', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
@@ -235,8 +234,7 @@ export default function WaterIntake() {
             sx={{
               p: 3,
               mb: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -251,7 +249,7 @@ export default function WaterIntake() {
                     fontWeight: 600,
                     color: '#fff',
                     backgroundColor: '#2e7d32',
-                    fontSize: '0.75rem',
+                    fontSize: '0.75rem'
                   }}
                 />
               )}
@@ -264,7 +262,7 @@ export default function WaterIntake() {
                   height: 16,
                   borderRadius: 8,
                   backgroundColor: alpha(progressColor, 0.12),
-                  overflow: 'hidden',
+                  overflow: 'hidden'
                 }}
               >
                 <Box
@@ -273,7 +271,7 @@ export default function WaterIntake() {
                     width: `${progressPct}%`,
                     borderRadius: 8,
                     backgroundColor: progressColor,
-                    transition: 'width 0.3s ease, background-color 0.3s ease',
+                    transition: 'width 0.3s ease, background-color 0.3s ease'
                   }}
                 />
               </Box>
@@ -313,8 +311,8 @@ export default function WaterIntake() {
                       overflow: 'hidden',
                       '&:hover': {
                         borderColor: '#1976d2',
-                        backgroundColor: alpha('#1976d2', 0.08),
-                      },
+                        backgroundColor: alpha('#1976d2', 0.08)
+                      }
                     }}
                   >
                     {isFilled && (
@@ -326,7 +324,7 @@ export default function WaterIntake() {
                           right: 0,
                           height: '70%',
                           backgroundColor: alpha('#1976d2', 0.25),
-                          borderRadius: '0 0 4px 4px',
+                          borderRadius: '0 0 4px 4px'
                         }}
                       />
                     )}
@@ -337,7 +335,7 @@ export default function WaterIntake() {
                         fontSize: '0.65rem',
                         color: isFilled ? '#1976d2' : 'text.disabled',
                         position: 'relative',
-                        zIndex: 1,
+                        zIndex: 1
                       }}
                     >
                       {i + 1}
@@ -357,7 +355,7 @@ export default function WaterIntake() {
                   textTransform: 'none',
                   fontWeight: 600,
                   borderRadius: 2,
-                  px: 3,
+                  px: 3
                 }}
               >
                 + 1 стакан (250 мл)
@@ -370,7 +368,7 @@ export default function WaterIntake() {
                   textTransform: 'none',
                   fontWeight: 600,
                   borderRadius: 2,
-                  px: 3,
+                  px: 3
                 }}
               >
                 Убрать стакан
@@ -384,7 +382,7 @@ export default function WaterIntake() {
                   textTransform: 'none',
                   fontWeight: 600,
                   borderRadius: 2,
-                  px: 3,
+                  px: 3
                 }}
               >
                 Сбросить
@@ -397,9 +395,8 @@ export default function WaterIntake() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              background: alpha('#0288d1', 0.03),
+              background: alpha('#0288d1', 0.03)
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -409,12 +406,12 @@ export default function WaterIntake() {
               {[
                 {
                   label: 'Базовая потребность',
-                  value: `${weight} кг x 30 мл = ${Math.round(parseFloat(weight) * 30)} мл`,
+                  value: `${weight} кг x 30 мл = ${Math.round(parseFloat(weight) * 30)} мл`
                 },
                 ...(activity !== 'low'
                   ? [{
                       label: 'Активность',
-                      value: `+${activity === 'medium' ? 500 : 1000} мл`,
+                      value: `+${activity === 'medium' ? 500 : 1000} мл`
                     }]
                   : []),
                 ...(climate === 'hot'
@@ -431,14 +428,14 @@ export default function WaterIntake() {
                     py: 0.5,
                     borderBottom: row.label === 'Итого'
                       ? 'none'
-                      : `1px solid ${alpha(theme.palette.divider, 0.5)}`,
+                      : `1px solid ${alpha(theme.palette.divider, 0.5)}`
                   }}
                 >
                   <Typography
                     variant="body2"
                     sx={{
                       color: row.label === 'Итого' ? 'primary.main' : 'text.secondary',
-                      fontWeight: row.label === 'Итого' ? 700 : 400,
+                      fontWeight: row.label === 'Итого' ? 700 : 400
                     }}
                   >
                     {row.label}
@@ -448,7 +445,7 @@ export default function WaterIntake() {
                     sx={{
                       fontWeight: 600,
                       fontFamily: 'monospace',
-                      color: row.label === 'Итого' ? 'primary.main' : 'text.primary',
+                      color: row.label === 'Итого' ? 'primary.main' : 'text.primary'
                     }}
                   >
                     {row.value}

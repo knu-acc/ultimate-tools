@@ -10,7 +10,7 @@ import {
   Button,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 function isPrime(n: number): boolean {
@@ -79,7 +79,7 @@ const superscript: Record<string, string> = {
   '6': '\u2076',
   '7': '\u2077',
   '8': '\u2078',
-  '9': '\u2079',
+  '9': '\u2079'
 };
 
 function toSuperscript(n: number): string {
@@ -122,8 +122,7 @@ export default function PrimeChecker() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
@@ -136,7 +135,7 @@ export default function PrimeChecker() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           slotProps={{
-            input: { sx: { fontFamily: 'monospace', fontSize: '1.2rem' } },
+            input: { sx: { fontFamily: 'monospace', fontSize: '1.2rem' } }
           }}
         />
 
@@ -155,8 +154,8 @@ export default function PrimeChecker() {
                   cursor: 'pointer',
                   fontFamily: 'monospace',
                   fontWeight: 600,
-                  backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                  '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.16) },
+                  backgroundColor: theme.palette.surfaceContainerHigh,
+                  '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.16) }
                 }}
               />
             ))}
@@ -173,12 +172,11 @@ export default function PrimeChecker() {
               p: 3,
               mb: 3,
               textAlign: 'center',
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
               background: alpha(
                 result.prime ? theme.palette.success.main : theme.palette.error.main,
                 0.06,
-              ),
+              )
             }}
           >
             <Typography variant="h4" sx={{ fontFamily: 'monospace', fontWeight: 700, mb: 1 }}>
@@ -198,8 +196,7 @@ export default function PrimeChecker() {
               sx={{
                 p: 3,
                 mb: 3,
-                border: `1px solid ${theme.palette.divider}`,
-                borderRadius: 3,
+                borderRadius: 3
               }}
             >
               <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
@@ -210,9 +207,8 @@ export default function PrimeChecker() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha(theme.palette.primary.main, 0.04),
+                  background: theme.palette.surfaceContainerLow
                 }}
               >
                 <Typography
@@ -232,7 +228,7 @@ export default function PrimeChecker() {
                       fontFamily: 'monospace',
                       fontWeight: 600,
                       borderColor: alpha(theme.palette.primary.main, 0.4),
-                      color: 'primary.main',
+                      color: 'primary.main'
                     }}
                   />
                 ))}
@@ -246,8 +242,7 @@ export default function PrimeChecker() {
             sx={{
               p: 3,
               mb: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
@@ -260,7 +255,7 @@ export default function PrimeChecker() {
                 sx={{
                   fontWeight: 600,
                   backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                  color: 'primary.main',
+                  color: 'primary.main'
                 }}
               />
             </Box>
@@ -285,9 +280,8 @@ export default function PrimeChecker() {
                 sx={{
                   p: 3,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha('#2196f3', 0.04),
+                  background: alpha('#2196f3', 0.04)
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -307,9 +301,8 @@ export default function PrimeChecker() {
                 sx={{
                   p: 3,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha('#4caf50', 0.04),
+                  background: alpha('#4caf50', 0.04)
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>

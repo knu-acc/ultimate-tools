@@ -379,14 +379,14 @@ export default function ToolPage({ slug }: { slug: string }) {
                 sx={{
                   width: 48,
                   height: 48,
-                  borderRadius: 2.5,
-                  bgcolor: alpha(group?.color || '#6750A4', 0.1),
+                  borderRadius: 3,
+                  bgcolor: theme.palette.primaryContainer,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <DynamicIcon name={tool.icon} sx={{ color: group?.color, fontSize: 24 }} />
+                <DynamicIcon name={tool.icon} sx={{ color: theme.palette.onPrimaryContainer, fontSize: 24 }} />
               </Box>
               <Box>
                 <Typography variant="h4" component="h1" fontWeight={700}>
@@ -399,18 +399,18 @@ export default function ToolPage({ slug }: { slug: string }) {
             </Box>
             <Box sx={{ display: 'flex', gap: 1, mt: 1, flexWrap: 'wrap' }}>
               {tool.keywords.slice(0, 5).map(kw => (
-                <Chip key={kw} label={kw} size="small" variant="outlined" />
+                <Chip key={kw} label={kw} size="small" sx={{ bgcolor: theme.palette.surfaceContainerHigh }} />
               ))}
             </Box>
           </Box>
 
           {/* Tool Body */}
           <Paper
-            elevation={0}
+            elevation={1}
             sx={{
               p: { xs: 2, md: 3 },
               borderRadius: 3,
-              border: `1px solid ${theme.palette.divider}`,
+              bgcolor: theme.palette.surfaceContainerLowest,
               minHeight: 300,
             }}
           >
@@ -433,7 +433,7 @@ export default function ToolPage({ slug }: { slug: string }) {
           {/* SEO Description */}
           <Paper
             elevation={0}
-            sx={{ mt: 3, p: 3, borderRadius: 3, bgcolor: alpha(theme.palette.primary.main, 0.03), border: `1px solid ${theme.palette.divider}` }}
+            sx={{ mt: 3, p: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
           >
             <Typography variant="h6" component="h2" fontWeight={600} gutterBottom>
               О инструменте «{tool.name}»

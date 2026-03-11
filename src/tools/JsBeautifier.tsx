@@ -13,9 +13,11 @@ import {
   ToggleButtonGroup,
   ToggleButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type IndentType = '2' | '4' | 'tab';
 
@@ -164,7 +166,7 @@ function beautifyJs(code: string, indentType: IndentType): string {
   }
 
   // Clean up multiple blank lines
-  result = result.replace(/\n{3,}/g, '\n\n');
+  result = result.replace(/\n{3}/g, '\n\n');
   // Remove trailing whitespace on each line
   result = result.replace(/[ \t]+\n/g, '\n');
   return result.trim();
@@ -306,9 +308,8 @@ export default function JsBeautifier() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         {/* Indent options */}
@@ -350,11 +351,11 @@ export default function JsBeautifier() {
             '& .MuiInputBase-root': {
               fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
               fontSize: '0.85rem',
-              lineHeight: 1.6,
+              lineHeight: 1.6
             },
             '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
-            },
+              borderRadius: 2
+            }
           }}
         />
 
@@ -422,14 +423,7 @@ export default function JsBeautifier() {
               <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                 Результат
               </Typography>
-              <IconButton
-                onClick={copyToClipboard}
-                size="small"
-                color={copied ? 'success' : 'default'}
-                title={copied ? 'Скопировано!' : 'Копировать'}
-              >
-                <ContentCopyIcon fontSize="small" />
-              </IconButton>
+              <CopyButton text={output} />
             </Box>
             <TextField
               multiline
@@ -444,11 +438,11 @@ export default function JsBeautifier() {
                   lineHeight: 1.6,
                   background: theme.palette.mode === 'dark'
                     ? alpha(theme.palette.common.black, 0.3)
-                    : alpha(theme.palette.grey[50], 1),
+                    : alpha(theme.palette.grey[50], 1)
                 },
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2,
-                },
+                  borderRadius: 2
+                }
               }}
             />
           </Box>

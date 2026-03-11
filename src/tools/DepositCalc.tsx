@@ -12,8 +12,9 @@ import {
   Divider,
   MenuItem,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
+import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 
 const capitalizationOptions = [
   { value: 'monthly', label: 'Ежемесячно', periods: 12 },
@@ -25,6 +26,8 @@ const capitalizationOptions = [
 export default function DepositCalc() {
   const theme = useTheme();
 
+  const [currency, setCurrency] = useState('RUB');
+  const sym = getCurrency(currency).symbol;
   const [deposit, setDeposit] = useState('');
   const [rate, setRate] = useState('');
   const [termMonths, setTermMonths] = useState('');
@@ -73,7 +76,7 @@ export default function DepositCalc() {
           month: m,
           balance: balanceCap + accruedInterest,
           interest: accruedInterest,
-          addition: add,
+          addition: add
         });
       } else {
         // Compound interest
@@ -99,7 +102,7 @@ export default function DepositCalc() {
           month: m,
           balance: balanceCap + accruedInterest,
           interest: totalInterestCap + accruedInterest,
-          addition: add,
+          addition: add
         });
       }
     }
@@ -139,7 +142,7 @@ export default function DepositCalc() {
       capBenefit,
       totalAdditions,
       months,
-      monthlyBreakdown,
+      monthlyBreakdown
     };
   }, [deposit, rate, termMonths, capitalization, monthlyAddition]);
 
@@ -163,9 +166,8 @@ export default function DepositCalc() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(color, 0.06),
+        background: alpha(color, 0.06)
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -179,20 +181,22 @@ export default function DepositCalc() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </Box>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Сумма вклада (₽)"
+              label="Сумма вклада ({sym})"
               type="number"
               value={deposit}
               onChange={(e) => setDeposit(e.target.value)}
@@ -201,10 +205,10 @@ export default function DepositCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -223,8 +227,8 @@ export default function DepositCalc() {
                     <Typography variant="body2" color="text.disabled">
                       %
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -243,8 +247,8 @@ export default function DepositCalc() {
                     <Typography variant="body2" color="text.disabled">
                       мес
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -268,7 +272,7 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Ежемесячное пополнение (₽)"
+              label="Ежемесячное пополнение ({sym})"
               type="number"
               value={monthlyAddition}
               onChange={(e) => setMonthlyAddition(e.target.value)}
@@ -277,10 +281,10 @@ export default function DepositCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -309,14 +313,14 @@ export default function DepositCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Итоговая сумма"
-                  value={`${fmt(results.finalWithCap)} ₽`}
+                  value={`${fmt(results.finalWithCap)} {sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Начислено процентов"
-                  value={`${fmt(results.totalInterestWithCap)} ₽`}
+                  value={`${fmt(results.totalInterestWithCap)} {sym}`}
                   color="#2e7d32"
                 />
               </Grid>
@@ -342,9 +346,8 @@ export default function DepositCalc() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    background: alpha('#2e7d32', 0.04),
+                    background: alpha('#2e7d32', 0.04)
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
@@ -355,7 +358,7 @@ export default function DepositCalc() {
                       Итого:
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
-                      {fmt(results.finalWithCap)} ₽
+                      {fmt(results.finalWithCap)} {sym}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -363,7 +366,7 @@ export default function DepositCalc() {
                       Проценты:
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
-                      {fmt(results.totalInterestWithCap)} ₽
+                      {fmt(results.totalInterestWithCap)} {sym}
                     </Typography>
                   </Box>
                 </Paper>
@@ -374,9 +377,8 @@ export default function DepositCalc() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    background: alpha('#1565c0', 0.04),
+                    background: alpha('#1565c0', 0.04)
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
@@ -387,7 +389,7 @@ export default function DepositCalc() {
                       Итого:
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#1565c0' }}>
-                      {fmt(results.finalNoCap)} ₽
+                      {fmt(results.finalNoCap)} {sym}
                     </Typography>
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -395,7 +397,7 @@ export default function DepositCalc() {
                       Проценты:
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#1565c0' }}>
-                      {fmt(results.totalInterestNoCap)} ₽
+                      {fmt(results.totalInterestNoCap)} {sym}
                     </Typography>
                   </Box>
                 </Paper>
@@ -405,7 +407,7 @@ export default function DepositCalc() {
             {results.capBenefit > 0 && (
               <Box sx={{ mt: 2 }}>
                 <Chip
-                  label={`Выгода от капитализации: +${fmt(results.capBenefit)} ₽`}
+                  label={`Выгода от капитализации: +${fmt(results.capBenefit)} {sym}`}
                   size="small"
                   color="success"
                   variant="outlined"
@@ -419,8 +421,7 @@ export default function DepositCalc() {
               sx={{
                 mt: 2,
                 p: 2,
-                borderRadius: 2,
-                border: `1px solid ${theme.palette.divider}`,
+                borderRadius: 2
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
@@ -434,7 +435,7 @@ export default function DepositCalc() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    transition: 'width 0.3s ease',
+                    transition: 'width 0.3s ease'
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
@@ -449,7 +450,7 @@ export default function DepositCalc() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      transition: 'width 0.3s ease',
+                      transition: 'width 0.3s ease'
                     }}
                   >
                     <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
@@ -464,7 +465,7 @@ export default function DepositCalc() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    transition: 'width 0.3s ease',
+                    transition: 'width 0.3s ease'
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
@@ -490,13 +491,12 @@ export default function DepositCalc() {
                       elevation={0}
                       sx={{
                         p: 1.5,
-                        border: `1px solid ${theme.palette.divider}`,
                         borderRadius: 2,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         flexWrap: 'wrap',
-                        gap: 1,
+                        gap: 1
                       }}
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 80 }}>
@@ -506,7 +506,7 @@ export default function DepositCalc() {
                           sx={{
                             bgcolor: alpha(theme.palette.primary.main, 0.1),
                             fontWeight: 600,
-                            minWidth: 60,
+                            minWidth: 60
                           }}
                         />
                       </Box>
@@ -516,7 +516,7 @@ export default function DepositCalc() {
                             Баланс
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                            {fmtInt(row.balance)} ₽
+                            {fmtInt(row.balance)} {sym}
                           </Typography>
                         </Box>
                         <Box sx={{ textAlign: 'right' }}>
@@ -524,7 +524,7 @@ export default function DepositCalc() {
                             Проценты
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
-                            +{fmtInt(row.interest)} ₽
+                            +{fmtInt(row.interest)} {sym}
                           </Typography>
                         </Box>
                       </Box>

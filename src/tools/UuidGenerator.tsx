@@ -18,14 +18,14 @@ import {
   ListItemText,
   Divider,
   Chip,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 function generateUuidV4(): string {
   const bytes = new Uint8Array(16);
@@ -88,8 +88,7 @@ export default function UuidGenerator() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Count slider */}
@@ -143,7 +142,7 @@ export default function UuidGenerator() {
 
       {/* Results */}
       {uuids.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}` }}>
+        <Paper elevation={0} sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <FingerprintIcon sx={{ color: 'primary.main', fontSize: 20 }} />
@@ -171,16 +170,12 @@ export default function UuidGenerator() {
               <ListItem
                 key={i}
                 secondaryAction={
-                  <Tooltip title={copiedIndex === i ? 'Скопировано!' : 'Копировать'}>
-                    <IconButton edge="end" onClick={() => copyOne(i)} size="small" color={copiedIndex === i ? 'success' : 'default'}>
-                      {copiedIndex === i ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                    </IconButton>
-                  </Tooltip>
+                  <CopyButton text={formatUuid(uuids[i])} />
                 }
                 sx={{
                   borderRadius: 1,
                   mb: 0.5,
-                  '&:hover': { background: alpha(theme.palette.primary.main, 0.04) },
+                  '&:hover': { background: theme.palette.surfaceContainerLow }
                 }}
               >
                 <Chip label={i + 1} size="small" sx={{ mr: 1.5, minWidth: 32, fontWeight: 600 }} />

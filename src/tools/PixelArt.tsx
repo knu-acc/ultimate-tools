@@ -13,7 +13,7 @@ import {
   IconButton,
   Tooltip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
@@ -242,7 +242,7 @@ export default function PixelArt() {
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper
             elevation={0}
-            sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+            sx={{ p: 3, borderRadius: 3 }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
               Инструменты
@@ -288,7 +288,7 @@ export default function PixelArt() {
                   borderRadius: 1,
                   backgroundColor: color,
                   border: `2px solid ${theme.palette.divider}`,
-                  flexShrink: 0,
+                  flexShrink: 0
                 }}
               />
               <TextField
@@ -297,8 +297,8 @@ export default function PixelArt() {
                 onChange={(e) => setColor(e.target.value)}
                 slotProps={{
                   input: {
-                    sx: { fontFamily: 'monospace' },
-                  },
+                    sx: { fontFamily: 'monospace' }
+                  }
                 }}
                 fullWidth
               />
@@ -317,7 +317,7 @@ export default function PixelArt() {
                       ? `3px solid ${theme.palette.primary.main}`
                       : `1px solid ${theme.palette.divider}`,
                     borderRadius: 1,
-                    '&:hover': { backgroundColor: c, opacity: 0.8 },
+                    '&:hover': { backgroundColor: c, opacity: 0.8 }
                   }}
                 />
               ))}
@@ -386,11 +386,10 @@ export default function PixelArt() {
             elevation={0}
             sx={{
               p: 2,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
             <canvas
@@ -407,7 +406,7 @@ export default function PixelArt() {
                 height: 'auto',
                 cursor: tool === 'pick' ? 'crosshair' : 'pointer',
                 imageRendering: 'pixelated',
-                borderRadius: 8,
+                borderRadius: 8
               }}
             />
           </Paper>

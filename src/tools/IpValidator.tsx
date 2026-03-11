@@ -10,12 +10,14 @@ import {
   Chip,
   Button,
   alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ListIcon from '@mui/icons-material/List';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface IpAnalysis {
   ip: string;
@@ -35,7 +37,7 @@ function validateIPv4(ip: string): IpAnalysis {
     type: '',
     class: '',
     binary: '',
-    errors: [],
+    errors: []
   };
 
   const parts = ip.split('.');
@@ -107,7 +109,7 @@ function validateIPv6(ip: string): IpAnalysis {
     type: '',
     class: '—',
     binary: '',
-    errors: [],
+    errors: []
   };
 
   // Expand :: shorthand
@@ -226,7 +228,7 @@ export default function IpValidator() {
           {/* Single IP */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+            sx={{ p: 3, mb: 3, borderRadius: 3 }}
           >
             <TextField
               label="IP-адрес (IPv4 или IPv6)"
@@ -236,8 +238,8 @@ export default function IpValidator() {
               placeholder="192.168.1.1 или 2001:db8::1"
               slotProps={{
                 input: {
-                  sx: { fontFamily: 'monospace', fontSize: 16 },
-                },
+                  sx: { fontFamily: 'monospace', fontSize: 16 }
+                }
               }}
             />
           </Paper>
@@ -250,11 +252,10 @@ export default function IpValidator() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
                     backgroundColor: singleResult.valid
                       ? alpha(theme.palette.success.main, 0.06)
-                      : alpha(theme.palette.error.main, 0.06),
+                      : alpha(theme.palette.error.main, 0.06)
                   }}
                 >
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -281,19 +282,19 @@ export default function IpValidator() {
               {singleResult.valid && (
                 <>
                   <Grid size={{ xs: 6, sm: 3 }}>
-                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}>
                       <Typography variant="caption" color="text.secondary">Версия</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>{singleResult.version}</Typography>
                     </Paper>
                   </Grid>
                   <Grid size={{ xs: 6, sm: 3 }}>
-                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}>
                       <Typography variant="caption" color="text.secondary">Класс</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>{singleResult.class}</Typography>
                     </Paper>
                   </Grid>
                   <Grid size={{ xs: 12, sm: 6 }}>
-                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}>
                       <Typography variant="caption" color="text.secondary">Тип</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>{singleResult.type}</Typography>
                     </Paper>
@@ -301,7 +302,7 @@ export default function IpValidator() {
 
                   {/* Binary */}
                   <Grid size={{ xs: 12 }}>
-                    <Paper elevation={0} sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+                    <Paper elevation={0} sx={{ p: 2, borderRadius: 3 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>Двоичное представление</Typography>
                         <Button
@@ -319,8 +320,7 @@ export default function IpValidator() {
                           wordBreak: 'break-all',
                           p: 1.5,
                           backgroundColor: alpha(theme.palette.background.default, 0.5),
-                          borderRadius: 2,
-                          border: `1px solid ${theme.palette.divider}`,
+                          borderRadius: 2
                         }}
                       >
                         {singleResult.binary}
@@ -337,7 +337,7 @@ export default function IpValidator() {
           {/* Batch mode */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+            sx={{ p: 3, mb: 3, borderRadius: 3 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
               Введите IP-адреса (по одному на строку)
@@ -351,8 +351,8 @@ export default function IpValidator() {
               placeholder={'192.168.1.1\n10.0.0.1\n8.8.8.8\n2001:db8::1'}
               slotProps={{
                 input: {
-                  sx: { fontFamily: 'monospace', fontSize: 13 },
-                },
+                  sx: { fontFamily: 'monospace', fontSize: 13 }
+                }
               }}
             />
           </Paper>
@@ -360,7 +360,7 @@ export default function IpValidator() {
           {batchResults.length > 0 && (
             <Paper
               elevation={0}
-              sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+              sx={{ p: 2, borderRadius: 3 }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
                 Результаты ({batchResults.filter((r) => r.valid).length}/{batchResults.length} корректных)
@@ -385,7 +385,7 @@ export default function IpValidator() {
                           borderBottom: `1px solid ${theme.palette.divider}`,
                           backgroundColor: r.valid
                             ? 'transparent'
-                            : alpha(theme.palette.error.main, 0.04),
+                            : alpha(theme.palette.error.main, 0.04)
                         }}
                       >
                         <Box component="td" sx={{ py: 1, px: 1.5 }}>

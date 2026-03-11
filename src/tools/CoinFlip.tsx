@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme,
+  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme
 } from '@mui/material';
 import { Toll, Refresh } from '@mui/icons-material';
 
@@ -27,7 +27,7 @@ export default function CoinFlip() {
       setFlipping(false);
       setStats(prev => ({
         ...prev,
-        [finalResult]: prev[finalResult] + 1,
+        [finalResult]: prev[finalResult] + 1
       }));
       setHistory(prev => [finalResult, ...prev].slice(0, 50));
     }, 600);
@@ -60,11 +60,11 @@ export default function CoinFlip() {
             ? alpha('#FFD700', 0.15)
             : result === 'tails'
               ? alpha('#C0C0C0', 0.2)
-              : alpha(theme.palette.primary.main, 0.06),
+              : theme.palette.surfaceContainerLow,
           border: `3px solid ${result === 'heads' ? '#FFD700' : result === 'tails' ? '#C0C0C0' : theme.palette.divider}`,
           transition: 'all 0.3s ease',
           transform: flipping ? 'rotateY(180deg)' : 'rotateY(0)',
-          mb: 3,
+          mb: 3
         }}
       >
         {result ? (
@@ -87,7 +87,7 @@ export default function CoinFlip() {
           size="large"
           onClick={flip}
           disabled={flipping}
-          sx={{ borderRadius: '24px', px: 4 }}
+          sx={{ borderRadius: 6, px: 4 }}
         >
           {flipping ? 'Подбрасываю...' : 'Подбросить'}
         </Button>
@@ -96,7 +96,7 @@ export default function CoinFlip() {
             variant="outlined"
             onClick={reset}
             startIcon={<Refresh />}
-            sx={{ borderRadius: '24px' }}
+            sx={{ borderRadius: 6 }}
           >
             Сброс
           </Button>
@@ -112,7 +112,7 @@ export default function CoinFlip() {
               sx={{
                 p: 2,
                 borderRadius: 3,
-                bgcolor: alpha('#FFD700', 0.08),
+                bgcolor: alpha('#FFD700', 0.08)
               }}
             >
               <Typography variant="h4" fontWeight={700} sx={{ color: '#B8860B' }}>
@@ -129,7 +129,7 @@ export default function CoinFlip() {
               sx={{
                 p: 2,
                 borderRadius: 3,
-                bgcolor: alpha(theme.palette.primary.main, 0.05),
+                bgcolor: theme.palette.surfaceContainerLow
               }}
             >
               <Typography variant="h4" fontWeight={700}>
@@ -146,7 +146,7 @@ export default function CoinFlip() {
               sx={{
                 p: 2,
                 borderRadius: 3,
-                bgcolor: alpha('#C0C0C0', 0.12),
+                bgcolor: alpha('#C0C0C0', 0.12)
               }}
             >
               <Typography variant="h4" fontWeight={700} sx={{ color: '#708090' }}>
@@ -188,7 +188,7 @@ export default function CoinFlip() {
                   fontSize: '0.7rem',
                   fontWeight: 700,
                   bgcolor: r === 'heads' ? alpha('#FFD700', 0.15) : alpha('#C0C0C0', 0.2),
-                  color: r === 'heads' ? '#B8860B' : '#708090',
+                  color: r === 'heads' ? '#B8860B' : '#708090'
                 }}
               />
             ))}

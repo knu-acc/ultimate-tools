@@ -2,9 +2,11 @@
 
 import React, { useState, useMemo } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, Divider,
+  Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, Divider
 } from '@mui/material';
 import { Compare, ContentCopy } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface DiffLine {
   type: 'added' | 'removed' | 'same';
@@ -100,7 +102,7 @@ export default function TextDiff() {
             onChange={(e) => setText1(e.target.value)}
             placeholder="Вставьте первый текст..."
             sx={{
-              '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' },
+              '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' }
             }}
           />
         </Grid>
@@ -116,7 +118,7 @@ export default function TextDiff() {
             onChange={(e) => setText2(e.target.value)}
             placeholder="Вставьте второй текст..."
             sx={{
-              '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' },
+              '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' }
             }}
           />
         </Grid>
@@ -147,10 +149,9 @@ export default function TextDiff() {
             elevation={0}
             sx={{
               borderRadius: 2,
-              border: `1px solid ${theme.palette.divider}`,
               overflow: 'hidden',
               maxHeight: 400,
-              overflowY: 'auto',
+              overflowY: 'auto'
             }}
           >
             {diff.map((line, idx) => (
@@ -163,7 +164,7 @@ export default function TextDiff() {
                   lineHeight: '20px',
                   bgcolor: getLineColor(line.type),
                   borderBottom: `1px solid ${alpha(theme.palette.divider, 0.3)}`,
-                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) },
+                  '&:hover': { bgcolor: theme.palette.surfaceContainerLow }
                 }}
               >
                 <Box sx={{ width: 32, textAlign: 'center', color: theme.palette.text.secondary, flexShrink: 0, py: 0.25 }}>
@@ -178,7 +179,7 @@ export default function TextDiff() {
                   fontWeight: 700,
                   color: line.type === 'added' ? '#2e7d32' : line.type === 'removed' ? '#c62828' : theme.palette.text.secondary,
                   flexShrink: 0,
-                  py: 0.25,
+                  py: 0.25
                 }}>
                   {getLinePrefix(line.type)}
                 </Box>

@@ -13,9 +13,11 @@ import {
   Switch,
   FormControlLabel,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface Stats {
   total: number;
@@ -54,8 +56,8 @@ function removeDuplicateLines(
     stats: {
       total,
       unique: uniqueLines.length,
-      removed: total - uniqueLines.length,
-    },
+      removed: total - uniqueLines.length
+    }
   };
 }
 
@@ -85,8 +87,7 @@ export default function RemoveDuplicates() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input */}
@@ -105,7 +106,7 @@ export default function RemoveDuplicates() {
           placeholder="Введите текст с дублирующимися строками..."
           sx={{
             mb: 2,
-            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' },
+            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
           }}
         />
 
@@ -118,8 +119,7 @@ export default function RemoveDuplicates() {
             mb: 3,
             p: 2,
             borderRadius: 3,
-            border: `1px solid ${theme.palette.divider}`,
-            background: alpha(theme.palette.background.default, 0.6),
+            background: alpha(theme.palette.background.default, 0.6)
           }}
         >
           <FormControlLabel
@@ -161,8 +161,7 @@ export default function RemoveDuplicates() {
                   textAlign: 'center',
                   p: 1.5,
                   borderRadius: 3,
-                  border: `1px solid ${theme.palette.divider}`,
-                  background: alpha(theme.palette.info.main, 0.06),
+                  background: alpha(theme.palette.info.main, 0.06)
                 }}
               >
                 <Typography
@@ -182,8 +181,7 @@ export default function RemoveDuplicates() {
                   textAlign: 'center',
                   p: 1.5,
                   borderRadius: 3,
-                  border: `1px solid ${theme.palette.divider}`,
-                  background: alpha(theme.palette.success.main, 0.06),
+                  background: alpha(theme.palette.success.main, 0.06)
                 }}
               >
                 <Typography
@@ -203,8 +201,7 @@ export default function RemoveDuplicates() {
                   textAlign: 'center',
                   p: 1.5,
                   borderRadius: 3,
-                  border: `1px solid ${theme.palette.divider}`,
-                  background: alpha(theme.palette.error.main, 0.06),
+                  background: alpha(theme.palette.error.main, 0.06)
                 }}
               >
                 <Typography
@@ -229,7 +226,7 @@ export default function RemoveDuplicates() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                mb: 1,
+                mb: 1
               }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -264,8 +261,8 @@ export default function RemoveDuplicates() {
                 '& .MuiInputBase-root': {
                   fontFamily: 'monospace',
                   fontSize: '0.875rem',
-                  background: theme.palette.background.default,
-                },
+                  background: theme.palette.background.default
+                }
               }}
             />
           </Box>

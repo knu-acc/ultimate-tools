@@ -12,10 +12,12 @@ import {
   Grid,
   Tooltip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 // Compact MD5 implementation (Web Crypto API does not support MD5)
 function md5(input: string): string {
@@ -228,8 +230,7 @@ export default function HashGenerator() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input */}
@@ -246,7 +247,7 @@ export default function HashGenerator() {
           placeholder="Введите текст для хеширования..."
           sx={{
             mb: 2,
-            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' },
+            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
           }}
         />
 
@@ -271,9 +272,9 @@ export default function HashGenerator() {
               '&:hover': {
                 background: !input.trim() || loading
                   ? undefined
-                  : theme.palette.primary.dark,
+                  : theme.palette.primary.dark
               },
-              transition: 'background 200ms ease',
+              transition: 'background 200ms ease'
             }}
           >
             {loading ? 'Генерация...' : 'Сгенерировать хеши'}
@@ -307,13 +308,12 @@ export default function HashGenerator() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
                     background: theme.palette.background.default,
                     transition: 'border-color 200ms ease',
                     '&:hover': {
-                      borderColor: theme.palette.primary.main,
-                    },
+                      borderColor: theme.palette.primary.main
+                    }
                   }}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
@@ -329,21 +329,13 @@ export default function HashGenerator() {
                           borderRadius: 1,
                           background: alpha(theme.palette.primary.main, 0.1),
                           color: theme.palette.primary.main,
-                          fontWeight: 500,
+                          fontWeight: 500
                         }}
                       >
                         {hash.bits} бит
                       </Typography>
                     </Box>
-                    <Tooltip title={copiedIdx === idx ? 'Скопировано!' : 'Копировать'}>
-                      <IconButton
-                        size="small"
-                        onClick={() => copyHash(hash.value, idx)}
-                        color={copiedIdx === idx ? 'success' : 'default'}
-                      >
-                        {copiedIdx === idx ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                      </IconButton>
-                    </Tooltip>
+                    <CopyButton text={hash.value} />
                   </Box>
                   <Typography
                     variant="body2"
@@ -353,7 +345,7 @@ export default function HashGenerator() {
                       wordBreak: 'break-all',
                       lineHeight: 1.6,
                       color: 'text.primary',
-                      userSelect: 'all',
+                      userSelect: 'all'
                     }}
                   >
                     {formatHash(hash.value)}

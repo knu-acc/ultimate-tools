@@ -12,11 +12,13 @@ import {
   IconButton,
   Tooltip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 interface HSL {
   h: number;
@@ -43,7 +45,7 @@ function hexToRgb(hex: string): RGB {
   return {
     r: (num >> 16) & 255,
     g: (num >> 8) & 255,
-    b: num & 255,
+    b: num & 255
   };
 }
 
@@ -70,7 +72,7 @@ function rgbToHsl(r: number, g: number, b: number): HSL {
   return {
     h: Math.round(h * 360),
     s: Math.round(s * 100),
-    l: Math.round(l * 100),
+    l: Math.round(l * 100)
   };
 }
 
@@ -97,7 +99,7 @@ function hslToRgb(h: number, s: number, l: number): RGB {
   return {
     r: Math.round(hue2rgb(p, q, h + 1 / 3) * 255),
     g: Math.round(hue2rgb(p, q, h) * 255),
-    b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255),
+    b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255)
   };
 }
 
@@ -109,7 +111,7 @@ function rgbToCmyk(r: number, g: number, b: number): CMYK {
     c: Math.round(((1 - rr - k) / (1 - k)) * 100),
     m: Math.round(((1 - gg - k) / (1 - k)) * 100),
     y: Math.round(((1 - bb - k) / (1 - k)) * 100),
-    k: Math.round(k * 100),
+    k: Math.round(k * 100)
   };
 }
 
@@ -424,7 +426,7 @@ export default function ColorPicker() {
         <Grid size={{ xs: 12, md: 7 }}>
           <Paper
             elevation={0}
-            sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+            sx={{ p: 3, borderRadius: 3 }}
           >
             <Box sx={{ display: 'flex', gap: 1.5 }} onMouseUp={handleMouseUp}>
               {/* SV square */}
@@ -441,8 +443,7 @@ export default function ColorPicker() {
                     height: 'auto',
                     aspectRatio: '1',
                     cursor: 'crosshair',
-                    borderRadius: 8,
-                    border: `1px solid ${theme.palette.divider}`,
+                    borderRadius: 8
                   }}
                 />
               </Box>
@@ -460,8 +461,7 @@ export default function ColorPicker() {
                     height: '100%',
                     aspectRatio: '32/300',
                     cursor: 'pointer',
-                    borderRadius: 8,
-                    border: `1px solid ${theme.palette.divider}`,
+                    borderRadius: 8
                   }}
                 />
               </Box>
@@ -476,7 +476,7 @@ export default function ColorPicker() {
                   borderRadius: 2,
                   backgroundColor: hex,
                   border: `2px solid ${theme.palette.divider}`,
-                  flexShrink: 0,
+                  flexShrink: 0
                 }}
               />
               <Box sx={{ flex: 1 }}>
@@ -488,8 +488,8 @@ export default function ColorPicker() {
                   fullWidth
                   slotProps={{
                     input: {
-                      sx: { fontFamily: 'monospace', fontWeight: 600 },
-                    },
+                      sx: { fontFamily: 'monospace', fontWeight: 600 }
+                    }
                   }}
                 />
               </Box>
@@ -505,7 +505,7 @@ export default function ColorPicker() {
                     cursor: 'pointer',
                     borderRadius: 8,
                     padding: 0,
-                    backgroundColor: 'transparent',
+                    backgroundColor: 'transparent'
                   }}
                 />
               </Box>
@@ -518,7 +518,7 @@ export default function ColorPicker() {
           {/* RGB sliders */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+            sx={{ p: 3, mb: 2, borderRadius: 3 }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
               RGB
@@ -592,7 +592,7 @@ export default function ColorPicker() {
       {/* Format outputs */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mt: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 3, mt: 3, borderRadius: 3 }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
           Форматы
@@ -609,19 +609,11 @@ export default function ColorPicker() {
                   slotProps={{
                     input: {
                       readOnly: true,
-                      sx: { fontFamily: 'monospace', fontSize: '0.85rem' },
-                    },
+                      sx: { fontFamily: 'monospace', fontSize: '0.85rem' }
+                    }
                   }}
                 />
-                <Tooltip title={copiedField === fmt.key ? 'Скопировано!' : 'Копировать'}>
-                  <IconButton
-                    size="small"
-                    onClick={() => copyText(fmt.value, fmt.key)}
-                    color={copiedField === fmt.key ? 'success' : 'default'}
-                  >
-                    {copiedField === fmt.key ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                  </IconButton>
-                </Tooltip>
+                <CopyButton text={fmt.value} />
               </Box>
             </Grid>
           ))}
@@ -631,7 +623,7 @@ export default function ColorPicker() {
       {/* Related colors */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mt: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 3, mt: 3, borderRadius: 3 }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
           Связанные цвета
@@ -646,13 +638,12 @@ export default function ColorPicker() {
                 }}
                 sx={{
                   p: 2,
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 2,
                   cursor: 'pointer',
                   transition: 'all 150ms ease',
                   '&:hover': {
-                    borderColor: theme.palette.primary.main,
-                  },
+                    borderColor: theme.palette.primary.main
+                  }
                 }}
               >
                 <Box
@@ -662,7 +653,7 @@ export default function ColorPicker() {
                     borderRadius: 1.5,
                     backgroundColor: rc.hex,
                     mb: 1,
-                    border: `1px solid ${alpha(theme.palette.text.primary, 0.1)}`,
+                    border: `1px solid ${alpha(theme.palette.text.primary, 0.1)}`
                   }}
                 />
                 <Typography variant="caption" color="text.secondary">
@@ -681,7 +672,7 @@ export default function ColorPicker() {
       {recentColors.length > 0 && (
         <Paper
           elevation={0}
-          sx={{ p: 3, mt: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+          sx={{ p: 3, mt: 3, borderRadius: 3 }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -704,7 +695,7 @@ export default function ColorPicker() {
                       ? `3px solid ${theme.palette.primary.main}`
                       : `1px solid ${theme.palette.divider}`,
                     borderRadius: 1.5,
-                    '&:hover': { backgroundColor: c, opacity: 0.85 },
+                    '&:hover': { backgroundColor: c, opacity: 0.85 }
                   }}
                 />
               </Tooltip>

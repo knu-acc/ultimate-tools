@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, IconButton,
+  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, IconButton
 } from '@mui/material';
 import { ContentCopy, Refresh, Palette, Delete } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type ColorMode = 'any' | 'pastel' | 'dark' | 'vibrant';
 
@@ -112,9 +114,9 @@ export default function RandomColor() {
                   cursor: 'pointer',
                   fontWeight: mode === m.key ? 600 : 400,
                   bgcolor: mode === m.key
-                    ? alpha(theme.palette.primary.main, 0.12)
-                    : alpha(theme.palette.primary.main, 0.05),
-                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.15) },
+                    ? theme.palette.surfaceContainerHigh
+                    : theme.palette.surfaceContainerLow,
+                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.15) }
                 }}
               />
             ))}
@@ -125,7 +127,7 @@ export default function RandomColor() {
             fullWidth
             startIcon={<Palette />}
             onClick={generate}
-            sx={{ borderRadius: '20px', py: 1.2, mb: 2 }}
+            sx={{ borderRadius: 5, py: 1.2, mb: 2 }}
           >
             Генерировать цвет
           </Button>
@@ -135,7 +137,7 @@ export default function RandomColor() {
               elevation={0}
               sx={{
                 borderRadius: 3,
-                overflow: 'hidden',
+                overflow: 'hidden'
               }}
             >
               <Box
@@ -144,7 +146,7 @@ export default function RandomColor() {
                   bgcolor: current.hex,
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justifyContent: 'center'
                 }}
               >
                 <Typography
@@ -156,7 +158,7 @@ export default function RandomColor() {
                 </Typography>
               </Box>
 
-              <Box sx={{ p: 2, bgcolor: alpha(theme.palette.primary.main, 0.04) }}>
+              <Box sx={{ p: 2, bgcolor: theme.palette.surfaceContainerLow }}>
                 {[
                   { label: 'HEX', value: current.hex },
                   { label: 'RGB', value: `rgb(${current.rgb.r}, ${current.rgb.g}, ${current.rgb.b})` },
@@ -168,7 +170,7 @@ export default function RandomColor() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      py: 0.75,
+                      py: 0.75
                     }}
                   >
                     <Box>
@@ -200,7 +202,7 @@ export default function RandomColor() {
           {!current && (
             <Paper
               elevation={0}
-              sx={{ p: 4, borderRadius: 3, bgcolor: alpha(theme.palette.primary.main, 0.04), textAlign: 'center' }}
+              sx={{ p: 4, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
             >
               <Palette sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
@@ -218,7 +220,7 @@ export default function RandomColor() {
           {history.length === 0 ? (
             <Paper
               elevation={0}
-              sx={{ p: 3, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.03), textAlign: 'center' }}
+              sx={{ p: 3, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
             >
               <Typography variant="body2" color="text.secondary">
                 История пока пуста
@@ -237,12 +239,12 @@ export default function RandomColor() {
                       cursor: 'pointer',
                       width: 80,
                       transition: 'transform 0.2s',
-                      '&:hover': { transform: 'scale(1.05)' },
+                      '&:hover': { transform: 'scale(1.05)' }
                     }}
                     onClick={() => copyValue(color.hex)}
                   >
                     <Box sx={{ height: 50, bgcolor: color.hex }} />
-                    <Box sx={{ p: 0.5, bgcolor: alpha(theme.palette.primary.main, 0.04), textAlign: 'center' }}>
+                    <Box sx={{ p: 0.5, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>
                       <Typography variant="caption" sx={{ fontFamily: 'monospace', fontSize: '0.65rem' }}>
                         {color.hex}
                       </Typography>
@@ -255,7 +257,7 @@ export default function RandomColor() {
                 size="small"
                 startIcon={<Delete />}
                 onClick={() => setHistory([])}
-                sx={{ mt: 1.5, borderRadius: '16px' }}
+                sx={{ mt: 1.5, borderRadius: 4 }}
               >
                 Очистить историю
               </Button>

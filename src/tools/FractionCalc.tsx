@@ -12,7 +12,7 @@ import {
   Switch,
   FormControlLabel,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 function gcd(a: number, b: number): number {
@@ -134,14 +134,14 @@ export default function FractionCalc() {
       mixed,
       steps,
       f1,
-      f2,
+      f2
     };
   }, [num1, den1, num2, den2, op]);
 
   const FractionDisplay = ({
     num,
     den,
-    large,
+    large
   }: {
     num: number | string;
     den: number | string;
@@ -153,7 +153,7 @@ export default function FractionCalc() {
           fontFamily: 'monospace',
           fontWeight: 700,
           fontSize: large ? '1.3rem' : '1rem',
-          lineHeight: 1.2,
+          lineHeight: 1.2
         }}
       >
         {num}
@@ -163,7 +163,7 @@ export default function FractionCalc() {
           width: '100%',
           height: 2,
           backgroundColor: theme.palette.text.primary,
-          my: 0.3,
+          my: 0.3
         }}
       />
       <Typography
@@ -171,7 +171,7 @@ export default function FractionCalc() {
           fontFamily: 'monospace',
           fontWeight: 700,
           fontSize: large ? '1.3rem' : '1rem',
-          lineHeight: 1.2,
+          lineHeight: 1.2
         }}
       >
         {den}
@@ -187,8 +187,7 @@ export default function FractionCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -202,9 +201,8 @@ export default function FractionCalc() {
               elevation={0}
               sx={{
                 p: 2,
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
-                background: alpha(theme.palette.primary.main, 0.03),
+                background: theme.palette.surfaceContainerLow
               }}
             >
               <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
@@ -244,7 +242,7 @@ export default function FractionCalc() {
                     minWidth: 44,
                     fontWeight: 700,
                     fontSize: '1.2rem',
-                    textTransform: 'none',
+                    textTransform: 'none'
                   }}
                 >
                   {o.label}
@@ -259,9 +257,8 @@ export default function FractionCalc() {
               elevation={0}
               sx={{
                 p: 2,
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 3,
-                background: alpha(theme.palette.primary.main, 0.03),
+                background: theme.palette.surfaceContainerLow
               }}
             >
               <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
@@ -308,9 +305,8 @@ export default function FractionCalc() {
             sx={{
               p: 3,
               mb: 3,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              background: alpha(theme.palette.primary.main, 0.04),
+              background: theme.palette.surfaceContainerLow
             }}
           >
             <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
@@ -324,8 +320,7 @@ export default function FractionCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
-                    borderRadius: 3,
+                    borderRadius: 3
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -342,9 +337,8 @@ export default function FractionCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
-                    background: alpha(theme.palette.success.main, 0.06),
+                    background: alpha(theme.palette.success.main, 0.06)
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -378,8 +372,7 @@ export default function FractionCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
-                    borderRadius: 3,
+                    borderRadius: 3
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -403,8 +396,7 @@ export default function FractionCalc() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
@@ -420,8 +412,8 @@ export default function FractionCalc() {
                     height: 24,
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    backgroundColor: alpha(theme.palette.primary.main, 0.12),
-                    color: 'primary.main',
+                    backgroundColor: theme.palette.surfaceContainerHigh,
+                    color: 'primary.main'
                   }}
                 />
                 <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>

@@ -13,12 +13,15 @@ import {
   FormControlLabel,
   Checkbox,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
+import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 
 export default function TaxCalc() {
   const theme = useTheme();
 
+  const [currency, setCurrency] = useState('RUB');
+  const sym = getCurrency(currency).symbol;
   const [salary, setSalary] = useState('');
   const [isMonthly, setIsMonthly] = useState(true);
 
@@ -55,13 +58,13 @@ export default function TaxCalc() {
 
     if (deductionProperty) {
       const propAmt = parseFloat(propertyAmount) || 0;
-      // Максимум 2 000 000 ₽ (260 000 ₽ возврат)
+      // Максимум 2 000 000 {sym} (260 000 {sym} возврат)
       totalDeductions += Math.min(propAmt, 2000000);
     }
 
     if (deductionEducation) {
       const eduAmt = parseFloat(educationAmount) || 0;
-      // Максимум 150 000 ₽ в год
+      // Максимум 150 000 {sym} в год
       totalDeductions += Math.min(eduAmt, 150000);
     }
 
@@ -92,7 +95,7 @@ export default function TaxCalc() {
       effectiveRate,
       taxableIncome,
       totalDeductions,
-      isHighRate: taxableIncome > threshold,
+      isHighRate: taxableIncome > threshold
     };
   }, [salary, isMonthly, deductionStandard, childrenCount, deductionProperty, propertyAmount, deductionEducation, educationAmount]);
 
@@ -118,9 +121,8 @@ export default function TaxCalc() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(color, 0.06),
+        background: alpha(color, 0.06)
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -134,13 +136,15 @@ export default function TaxCalc() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </Box>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={2}>
@@ -156,10 +160,10 @@ export default function TaxCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -173,10 +177,10 @@ export default function TaxCalc() {
                 sx={{
                   bgcolor: isMonthly
                     ? alpha(theme.palette.primary.main, 0.15)
-                    : alpha(theme.palette.primary.main, 0.05),
+                    : theme.palette.surfaceContainerLow,
                   fontWeight: isMonthly ? 600 : 400,
                   cursor: 'pointer',
-                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.12) },
+                  '&:hover': { bgcolor: theme.palette.surfaceContainerHigh }
                 }}
               />
               <Chip
@@ -186,10 +190,10 @@ export default function TaxCalc() {
                 sx={{
                   bgcolor: !isMonthly
                     ? alpha(theme.palette.primary.main, 0.15)
-                    : alpha(theme.palette.primary.main, 0.05),
+                    : theme.palette.surfaceContainerLow,
                   fontWeight: !isMonthly ? 600 : 400,
                   cursor: 'pointer',
-                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.12) },
+                  '&:hover': { bgcolor: theme.palette.surfaceContainerHigh }
                 }}
               />
             </Box>
@@ -207,9 +211,8 @@ export default function TaxCalc() {
             elevation={0}
             sx={{
               p: 2,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 2,
-              background: deductionStandard ? alpha('#2e7d32', 0.04) : 'transparent',
+              background: deductionStandard ? alpha('#2e7d32', 0.04) : 'transparent'
             }}
           >
             <FormControlLabel
@@ -222,7 +225,7 @@ export default function TaxCalc() {
               }
               label={
                 <Typography variant="body2">
-                  Стандартный вычет на детей (1 400 ₽/мес за 1-2 ребёнка, 3 000 ₽ за 3+)
+                  Стандартный вычет на детей (1 400 {sym}/мес за 1-2 ребёнка, 3 000 {sym} за 3+)
                 </Typography>
               }
             />
@@ -242,9 +245,8 @@ export default function TaxCalc() {
             elevation={0}
             sx={{
               p: 2,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 2,
-              background: deductionProperty ? alpha('#2e7d32', 0.04) : 'transparent',
+              background: deductionProperty ? alpha('#2e7d32', 0.04) : 'transparent'
             }}
           >
             <FormControlLabel
@@ -257,13 +259,13 @@ export default function TaxCalc() {
               }
               label={
                 <Typography variant="body2">
-                  Имущественный вычет (макс. 2 000 000 ₽)
+                  Имущественный вычет (макс. 2 000 000 {sym})
                 </Typography>
               }
             />
             {deductionProperty && (
               <TextField
-                label="Сумма расходов (₽)"
+                label="Сумма расходов ({sym})"
                 type="number"
                 size="small"
                 value={propertyAmount}
@@ -278,9 +280,8 @@ export default function TaxCalc() {
             elevation={0}
             sx={{
               p: 2,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 2,
-              background: deductionEducation ? alpha('#2e7d32', 0.04) : 'transparent',
+              background: deductionEducation ? alpha('#2e7d32', 0.04) : 'transparent'
             }}
           >
             <FormControlLabel
@@ -293,13 +294,13 @@ export default function TaxCalc() {
               }
               label={
                 <Typography variant="body2">
-                  Вычет за обучение (макс. 150 000 ₽/год)
+                  Вычет за обучение (макс. 150 000 {sym}/год)
                 </Typography>
               }
             />
             {deductionEducation && (
               <TextField
-                label="Сумма расходов (₽)"
+                label="Сумма расходов ({sym})"
                 type="number"
                 size="small"
                 value={educationAmount}
@@ -346,21 +347,21 @@ export default function TaxCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Начислено (гросс)"
-                  value={`${fmt(results.monthlyGross)} ₽`}
+                  value={`${fmt(results.monthlyGross)} {sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="НДФЛ"
-                  value={`${fmt(results.monthlyTax)} ₽`}
+                  value={`${fmt(results.monthlyTax)} {sym}`}
                   color="#c62828"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="На руки (нетто)"
-                  value={`${fmt(results.monthlyNet)} ₽`}
+                  value={`${fmt(results.monthlyNet)} {sym}`}
                   color="#2e7d32"
                 />
               </Grid>
@@ -374,21 +375,21 @@ export default function TaxCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Годовой доход"
-                  value={`${fmtInt(results.annualGross)} ₽`}
+                  value={`${fmtInt(results.annualGross)} {sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="НДФЛ за год"
-                  value={`${fmtInt(results.annualTax)} ₽`}
+                  value={`${fmtInt(results.annualTax)} {sym}`}
                   color="#c62828"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="На руки за год"
-                  value={`${fmtInt(results.annualNet)} ₽`}
+                  value={`${fmtInt(results.annualNet)} {sym}`}
                   color="#2e7d32"
                 />
               </Grid>
@@ -403,8 +404,7 @@ export default function TaxCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
-                    borderRadius: 2,
+                    borderRadius: 2
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -421,15 +421,14 @@ export default function TaxCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
-                    borderRadius: 2,
+                    borderRadius: 2
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                     Налогооблагаемая база
                   </Typography>
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                    {fmtInt(results.taxableIncome)} ₽
+                    {fmtInt(results.taxableIncome)} {sym}
                   </Typography>
                 </Paper>
               </Grid>
@@ -439,15 +438,14 @@ export default function TaxCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
-                    borderRadius: 2,
+                    borderRadius: 2
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
                     Сумма вычетов
                   </Typography>
                   <Typography variant="h6" sx={{ fontWeight: 600, color: '#2e7d32' }}>
-                    {fmtInt(results.totalDeductions)} ₽
+                    {fmtInt(results.totalDeductions)} {sym}
                   </Typography>
                 </Paper>
               </Grid>
@@ -456,7 +454,7 @@ export default function TaxCalc() {
             {results.isHighRate && (
               <Box sx={{ mt: 2 }}>
                 <Typography variant="body2" color="text.secondary">
-                  Доход превышает 5 000 000 ₽ в год. Сумма свыше облагается по ставке 15%.
+                  Доход превышает 5 000 000 {sym} в год. Сумма свыше облагается по ставке 15%.
                 </Typography>
               </Box>
             )}

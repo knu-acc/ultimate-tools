@@ -3,63 +3,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Box, Typography, TextField, Button, Paper, Grid, Slider,
-  alpha, useTheme, IconButton, Select, MenuItem, FormControl, InputLabel,
+  useTheme, IconButton, Select, MenuItem, FormControl, InputLabel
 } from '@mui/material';
 import { ContentCopy, Download, QrCode2 } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
 
-// Minimal QR Code generator using canvas
-// Uses a compact QR encoding algorithm
+
+import { generateQR } from './qrcore';
+
 function generateQRMatrix(text: string): boolean[][] {
-  // Simple QR-like pattern generator for demonstration
-  // In production, use a proper QR library
-  const size = Math.max(21, Math.min(41, 21 + Math.floor(text.length / 10) * 4));
-  const matrix: boolean[][] = Array.from({ length: size }, () => Array(size).fill(false));
-
-  // Finder patterns (top-left, top-right, bottom-left)
-  const drawFinder = (row: number, col: number) => {
-    for (let r = 0; r < 7; r++) {
-      for (let c = 0; c < 7; c++) {
-        if (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
-          if (row + r < size && col + c < size) matrix[row + r][col + c] = true;
-        }
-      }
-    }
-  };
-
-  drawFinder(0, 0);
-  drawFinder(0, size - 7);
-  drawFinder(size - 7, 0);
-
-  // Timing patterns
-  for (let i = 8; i < size - 8; i++) {
-    matrix[6][i] = i % 2 === 0;
-    matrix[i][6] = i % 2 === 0;
-  }
-
-  // Encode data as a pattern
-  let dataIdx = 0;
-  const bytes = new TextEncoder().encode(text);
-  for (let col = size - 1; col >= 1; col -= 2) {
-    if (col === 6) col = 5;
-    for (let row = 0; row < size; row++) {
-      for (let c = 0; c < 2; c++) {
-        const x = col - c;
-        const y = row;
-        if (matrix[y][x] === false && y > 8 && x > 8) {
-          const byteIdx = Math.floor(dataIdx / 8);
-          const bitIdx = 7 - (dataIdx % 8);
-          if (byteIdx < bytes.length) {
-            matrix[y][x] = ((bytes[byteIdx] >> bitIdx) & 1) === 1;
-          } else {
-            matrix[y][x] = (dataIdx % 3) === 0;
-          }
-          dataIdx++;
-        }
-      }
-    }
-  }
-
-  return matrix;
+  return generateQR(text);
 }
 
 export default function QrGenerator() {
@@ -177,8 +130,7 @@ export default function QrGenerator() {
           </Grid>
 
           <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-            💡 Для полноценных QR-кодов рекомендуем использовать библиотеку qrcode.js.
-            Данный генератор создаёт визуальный паттерн на основе введённых данных.
+            Генератор создаёт полноценные сканируемые QR-коды стандарта ISO 18004.
           </Typography>
         </Grid>
 
@@ -188,8 +140,8 @@ export default function QrGenerator() {
             sx={{
               p: 3,
               borderRadius: 3,
-              bgcolor: alpha(theme.palette.primary.main, 0.03),
-              textAlign: 'center',
+              bgcolor: theme.palette.surfaceContainerLow,
+              textAlign: 'center'
             }}
           >
             <canvas
@@ -197,8 +149,7 @@ export default function QrGenerator() {
               style={{
                 maxWidth: '100%',
                 height: 'auto',
-                borderRadius: 8,
-                border: `1px solid ${theme.palette.divider}`,
+                borderRadius: 8
               }}
             />
 
@@ -207,7 +158,7 @@ export default function QrGenerator() {
                 variant="contained"
                 startIcon={<Download />}
                 onClick={handleDownload}
-                sx={{ borderRadius: '20px' }}
+                sx={{ borderRadius: 5 }}
               >
                 Скачать PNG
               </Button>
@@ -215,7 +166,7 @@ export default function QrGenerator() {
                 variant="outlined"
                 startIcon={<ContentCopy />}
                 onClick={handleCopy}
-                sx={{ borderRadius: '20px' }}
+                sx={{ borderRadius: 5 }}
               >
                 Копировать
               </Button>

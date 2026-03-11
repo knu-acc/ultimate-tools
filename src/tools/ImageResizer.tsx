@@ -12,7 +12,7 @@ import {
   useTheme,
   alpha,
   IconButton,
-  Tooltip,
+  Tooltip
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -186,13 +186,13 @@ export default function ImageResizer() {
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
             borderRadius: 4,
             backgroundColor: dragging
-              ? alpha(theme.palette.primary.main, 0.06)
+              ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
             transition: 'all 250ms ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
-              backgroundColor: alpha(theme.palette.primary.main, 0.04),
-            },
+              backgroundColor: theme.palette.surfaceContainerLow
+            }
           }}
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
@@ -214,7 +214,7 @@ export default function ImageResizer() {
       {originalFile && (
         <>
           {/* Controls */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <AspectRatioIcon /> Размеры
             </Typography>
@@ -309,7 +309,7 @@ export default function ImageResizer() {
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
               >
                 <Typography variant="caption" color="text.secondary">Оригинал</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -323,7 +323,7 @@ export default function ImageResizer() {
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, textAlign: 'center', border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+                sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
               >
                 <Typography variant="caption" color="text.secondary">Новый размер</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
@@ -340,9 +340,8 @@ export default function ImageResizer() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
-                  background: alpha(theme.palette.info.main, 0.06),
+                  background: alpha(theme.palette.info.main, 0.06)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">Масштаб</Typography>
@@ -357,7 +356,7 @@ export default function ImageResizer() {
           </Grid>
 
           {/* Preview */}
-          <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <ImageIcon /> Предпросмотр
             </Typography>
@@ -371,14 +370,13 @@ export default function ImageResizer() {
                 </Typography>
                 <Box
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 2,
                     overflow: 'hidden',
                     backgroundColor: alpha(theme.palette.background.default, 0.5),
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minHeight: 200,
+                    minHeight: 200
                   }}
                 >
                   {originalUrl && (
@@ -400,14 +398,13 @@ export default function ImageResizer() {
                 </Typography>
                 <Box
                   sx={{
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 2,
                     overflow: 'hidden',
                     backgroundColor: alpha(theme.palette.background.default, 0.5),
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minHeight: 200,
+                    minHeight: 200
                   }}
                 >
                   {resizedUrl ? (

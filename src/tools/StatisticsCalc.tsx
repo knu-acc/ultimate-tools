@@ -10,7 +10,7 @@ import {
   Button,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface Stats {
@@ -100,8 +100,7 @@ export default function StatisticsCalc() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
+          mb: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
@@ -117,8 +116,8 @@ export default function StatisticsCalc() {
           sx={{
             '& .MuiInputBase-input': {
               fontFamily: 'monospace',
-              fontSize: '1rem',
-            },
+              fontSize: '1rem'
+            }
           }}
         />
         <Box sx={{ mt: 1.5, display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -151,8 +150,7 @@ export default function StatisticsCalc() {
           sx={{
             p: 2.5,
             textAlign: 'center',
-            border: `1px solid ${theme.palette.divider}`,
-            background: alpha(theme.palette.error.main, 0.06),
+            background: alpha(theme.palette.error.main, 0.06)
           }}
         >
           <Typography variant="body1" sx={{ color: 'error.main', fontWeight: 600 }}>
@@ -165,8 +163,7 @@ export default function StatisticsCalc() {
         <Paper
           elevation={0}
           sx={{
-            p: 3,
-            border: `1px solid ${theme.palette.divider}`,
+            p: 3
           }}
         >
           <Typography variant="h6" sx={{ mb: 2.5 }}>
@@ -183,14 +180,13 @@ export default function StatisticsCalc() {
                     sx={{
                       p: 2,
                       textAlign: 'center',
-                      border: `1px solid ${theme.palette.divider}`,
                       borderRadius: 3,
                       background: alpha(item.color, 0.04),
                       transition: 'all 200ms ease',
                       '&:hover': {
                         borderColor: item.color,
-                        background: alpha(item.color, 0.08),
-                      },
+                        background: alpha(item.color, 0.08)
+                      }
                     }}
                   >
                     <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
@@ -202,7 +198,7 @@ export default function StatisticsCalc() {
                         fontWeight: 700,
                         color: item.color,
                         fontFamily: 'monospace',
-                        mt: 0.5,
+                        mt: 0.5
                       }}
                     >
                       {formatNum(value as number)}
@@ -219,14 +215,13 @@ export default function StatisticsCalc() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  border: `1px solid ${theme.palette.divider}`,
                   borderRadius: 3,
                   background: alpha('#673ab7', 0.04),
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: '#673ab7',
-                    background: alpha('#673ab7', 0.08),
-                  },
+                    background: alpha('#673ab7', 0.08)
+                  }
                 }}
               >
                 <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
@@ -248,7 +243,7 @@ export default function StatisticsCalc() {
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             backgroundColor: alpha('#673ab7', 0.15),
-                            color: '#673ab7',
+                            color: '#673ab7'
                           }}
                         />
                       ))}

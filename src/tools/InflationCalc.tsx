@@ -12,8 +12,9 @@ import {
   Divider,
   Slider,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
+import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 
 const presets = [
   { label: 'РФ среднее (~7.5%)', value: 7.5 },
@@ -28,6 +29,8 @@ const currentYear = new Date().getFullYear();
 export default function InflationCalc() {
   const theme = useTheme();
 
+  const [currency, setCurrency] = useState('RUB');
+  const sym = getCurrency(currency).symbol;
   const [amount, setAmount] = useState('');
   const [startYear, setStartYear] = useState(String(currentYear - 10));
   const [endYear, setEndYear] = useState(String(currentYear));
@@ -72,7 +75,7 @@ export default function InflationCalc() {
       purchasingPowerLoss,
       multiplier,
       years,
-      breakdown,
+      breakdown
     };
   }, [amount, rate, effectiveStartYear, effectiveEndYear]);
 
@@ -93,9 +96,8 @@ export default function InflationCalc() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        border: `1px solid ${theme.palette.divider}`,
         borderRadius: 3,
-        background: alpha(color, 0.06),
+        background: alpha(color, 0.06)
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -109,20 +111,22 @@ export default function InflationCalc() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </Box>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={2}>
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Сумма (₽)"
+              label="Сумма ({sym})"
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
@@ -131,10 +135,10 @@ export default function InflationCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      ₽
+                      {sym}
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -217,8 +221,8 @@ export default function InflationCalc() {
                     <Typography variant="body2" color="text.disabled">
                       %
                     </Typography>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Grid>
@@ -235,7 +239,7 @@ export default function InflationCalc() {
                   sx={{
                     cursor: 'pointer',
                     borderColor: parseFloat(rate) === p.value ? theme.palette.primary.main : undefined,
-                    color: parseFloat(rate) === p.value ? theme.palette.primary.main : undefined,
+                    color: parseFloat(rate) === p.value ? theme.palette.primary.main : undefined
                   }}
                 />
               ))}
@@ -266,7 +270,7 @@ export default function InflationCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Эквивалентная сумма"
-                  value={`${fmt(results.equivalentAmount)} ₽`}
+                  value={`${fmt(results.equivalentAmount)} {sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
@@ -288,7 +292,7 @@ export default function InflationCalc() {
 
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                {fmt(parseFloat(amount))} ₽ в {effectiveStartYear} году эквивалентны {fmt(results.equivalentAmount)} ₽ в {effectiveEndYear} году
+                {fmt(parseFloat(amount))} {sym} в {effectiveStartYear} году эквивалентны {fmt(results.equivalentAmount)} {sym} в {effectiveEndYear} году
               </Typography>
             </Box>
 
@@ -298,8 +302,7 @@ export default function InflationCalc() {
               sx={{
                 mt: 2,
                 p: 2,
-                borderRadius: 2,
-                border: `1px solid ${theme.palette.divider}`,
+                borderRadius: 2
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
@@ -314,7 +317,7 @@ export default function InflationCalc() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     transition: 'width 0.3s ease',
-                    minWidth: 40,
+                    minWidth: 40
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
@@ -329,7 +332,7 @@ export default function InflationCalc() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     transition: 'width 0.3s ease',
-                    minWidth: 40,
+                    minWidth: 40
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
@@ -363,13 +366,12 @@ export default function InflationCalc() {
                       elevation={0}
                       sx={{
                         p: 1.5,
-                        border: `1px solid ${theme.palette.divider}`,
                         borderRadius: 2,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         flexWrap: 'wrap',
-                        gap: 1,
+                        gap: 1
                       }}
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 80 }}>
@@ -379,7 +381,7 @@ export default function InflationCalc() {
                           sx={{
                             bgcolor: alpha(theme.palette.primary.main, 0.1),
                             fontWeight: 600,
-                            minWidth: 60,
+                            minWidth: 60
                           }}
                         />
                       </Box>
@@ -397,7 +399,7 @@ export default function InflationCalc() {
                             Сумма
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                            {fmt(row.amount)} ₽
+                            {fmt(row.amount)} {sym}
                           </Typography>
                         </Box>
                       </Box>

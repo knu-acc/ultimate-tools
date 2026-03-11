@@ -8,10 +8,11 @@ import {
   Grid,
   TextField,
   Chip,
-  alpha,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type MimeCategory = 'all' | 'text' | 'image' | 'audio' | 'video' | 'application' | 'font';
 
@@ -105,7 +106,7 @@ const CATEGORY_LABELS: Record<MimeCategory, string> = {
   audio: 'Аудио',
   video: 'Видео',
   application: 'Приложения',
-  font: 'Шрифты',
+  font: 'Шрифты'
 };
 
 export default function MimeTypes() {
@@ -148,7 +149,7 @@ export default function MimeTypes() {
       {/* Search & filter */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, mb: 3, borderRadius: 3 }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 5 }}>
@@ -187,7 +188,7 @@ export default function MimeTypes() {
       {/* Table */}
       <Paper
         elevation={0}
-        sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}
+        sx={{ p: 2, borderRadius: 3 }}
       >
         <Box sx={{ overflowX: 'auto' }}>
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -209,7 +210,7 @@ export default function MimeTypes() {
                   sx={{
                     borderBottom: `1px solid ${theme.palette.divider}`,
                     cursor: 'pointer',
-                    '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) },
+                    '&:hover': { backgroundColor: theme.palette.surfaceContainerLow }
                   }}
                 >
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
@@ -222,7 +223,7 @@ export default function MimeTypes() {
                         fontFamily: 'monospace',
                         fontSize: 12,
                         color: copied === m.mime ? 'success.main' : 'text.primary',
-                        fontWeight: copied === m.mime ? 600 : 400,
+                        fontWeight: copied === m.mime ? 600 : 400
                       }}
                     >
                       {copied === m.mime ? 'Скопировано!' : m.mime}

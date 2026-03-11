@@ -10,9 +10,11 @@ import {
   IconButton,
   Snackbar,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const CYRILLIC_MAP: Record<string, string> = {
   'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
@@ -24,7 +26,7 @@ const CYRILLIC_MAP: Record<string, string> = {
   'Ж': 'Zh', 'З': 'Z', 'И': 'I', 'Й': 'J', 'К': 'K', 'Л': 'L', 'М': 'M',
   'Н': 'N', 'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U',
   'Ф': 'F', 'Х': 'Kh', 'Ц': 'Ts', 'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Shch',
-  'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya',
+  'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya'
 };
 
 type Separator = '-' | '_' | '.';
@@ -82,9 +84,8 @@ export default function SlugGenerator() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -121,7 +122,7 @@ export default function SlugGenerator() {
                   sx={{
                     fontWeight: 600,
                     fontSize: '0.85rem',
-                    transition: 'all 0.15s ease',
+                    transition: 'all 0.15s ease'
                   }}
                 />
               );
@@ -142,9 +143,9 @@ export default function SlugGenerator() {
             borderRadius: 2,
             border: `2px dashed ${slug ? theme.palette.primary.main : theme.palette.divider}`,
             background: slug
-              ? alpha(theme.palette.primary.main, 0.04)
+              ? theme.palette.surfaceContainerLow
               : theme.palette.action.hover,
-            transition: 'all 0.2s ease',
+            transition: 'all 0.2s ease'
           }}
         >
           {slug ? (
@@ -157,7 +158,7 @@ export default function SlugGenerator() {
                   wordBreak: 'break-all',
                   letterSpacing: 0.5,
                   flex: 1,
-                  color: 'text.primary',
+                  color: 'text.primary'
                 }}
               >
                 {slug}
@@ -168,7 +169,7 @@ export default function SlugGenerator() {
                 sx={{
                   flexShrink: 0,
                   color: 'primary.main',
-                  '&:hover': { background: alpha(theme.palette.primary.main, 0.1) },
+                  '&:hover': { background: alpha(theme.palette.primary.main, 0.1) }
                 }}
               >
                 <ContentCopyIcon fontSize="small" />
@@ -208,9 +209,8 @@ export default function SlugGenerator() {
           sx={{
             mt: 2,
             p: 2.5,
-            border: `1px solid ${theme.palette.divider}`,
             borderRadius: 3,
-            background: alpha(theme.palette.success.main, 0.03),
+            background: alpha(theme.palette.success.main, 0.03)
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1.5 }}>
@@ -223,7 +223,7 @@ export default function SlugGenerator() {
               gap: 1,
               p: 1.5,
               borderRadius: 2,
-              background: alpha(theme.palette.text.primary, 0.04),
+              background: alpha(theme.palette.text.primary, 0.04)
             }}
           >
             <Typography
@@ -231,7 +231,7 @@ export default function SlugGenerator() {
                 fontFamily: '"JetBrains Mono", "Consolas", monospace',
                 fontSize: '0.9rem',
                 wordBreak: 'break-all',
-                flex: 1,
+                flex: 1
               }}
             >
               <Box component="span" sx={{ color: 'text.disabled' }}>
@@ -247,7 +247,7 @@ export default function SlugGenerator() {
               sx={{
                 flexShrink: 0,
                 color: 'text.secondary',
-                '&:hover': { background: alpha(theme.palette.primary.main, 0.1) },
+                '&:hover': { background: alpha(theme.palette.primary.main, 0.1) }
               }}
             >
               <ContentCopyIcon fontSize="small" />
@@ -263,8 +263,7 @@ export default function SlugGenerator() {
           sx={{
             mt: 2,
             p: 2,
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 3
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
@@ -284,7 +283,7 @@ export default function SlugGenerator() {
                   sx={{
                     fontFamily: '"JetBrains Mono", "Consolas", monospace',
                     fontSize: '0.75rem',
-                    fontWeight: 500,
+                    fontWeight: 500
                   }}
                 />
               ))}

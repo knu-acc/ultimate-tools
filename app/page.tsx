@@ -24,8 +24,8 @@ export default function HomePage() {
       <Box
         sx={{
           background: theme.palette.mode === 'dark'
-            ? `linear-gradient(180deg, ${alpha(theme.palette.primary.dark, 0.3)} 0%, ${theme.palette.background.default} 100%)`
-            : `linear-gradient(180deg, ${theme.palette.primary.light} 0%, ${theme.palette.background.default} 100%)`,
+            ? `linear-gradient(180deg, ${alpha(theme.palette.primary.dark, 0.2)} 0%, ${theme.palette.background.default} 100%)`
+            : `linear-gradient(180deg, ${alpha(theme.palette.primaryContainer, 0.5)} 0%, ${theme.palette.background.default} 100%)`,
           pt: { xs: 6, md: 8 },
           pb: { xs: 4, md: 6 },
         }}
@@ -59,17 +59,15 @@ export default function HomePage() {
               alignItems: 'center',
               px: 2,
               height: 48,
-              borderRadius: '28px',
+              borderRadius: 7,
               maxWidth: 480,
               mx: 'auto',
               cursor: 'pointer',
-              bgcolor: theme.palette.mode === 'dark'
-                ? alpha(theme.palette.primary.main, 0.08)
-                : alpha(theme.palette.primary.main, 0.06),
+              bgcolor: theme.palette.surfaceContainerHigh,
               transition: 'all 200ms cubic-bezier(0.2, 0, 0, 1)',
               '&:hover': {
-                bgcolor: alpha(theme.palette.primary.main, 0.12),
-                boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)',
+                bgcolor: theme.palette.surfaceContainerHighest,
+                boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)',
               },
             }}
           >
@@ -97,9 +95,8 @@ export default function HomePage() {
                 href={`/tools/${tag.slug}`}
                 clickable
                 sx={{
-                  bgcolor: alpha(theme.palette.primary.main, 0.06),
-                  border: 'none',
-                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.12) },
+                  bgcolor: theme.palette.surfaceContainerHigh,
+                  '&:hover': { bgcolor: theme.palette.surfaceContainerHighest },
                 }}
               />
             ))}
@@ -121,12 +118,11 @@ export default function HomePage() {
                 <Card
                   elevation={0}
                   sx={{
-                    bgcolor: alpha(group.color, theme.palette.mode === 'dark' ? 0.08 : 0.05),
-                    border: 'none',
+                    bgcolor: theme.palette.surfaceContainerLow,
                     transition: 'all 200ms cubic-bezier(0.2, 0, 0, 1)',
                     '&:hover': {
-                      bgcolor: alpha(group.color, theme.palette.mode === 'dark' ? 0.14 : 0.1),
-                      transform: 'scale(1.02)',
+                      bgcolor: theme.palette.surfaceContainerHigh,
+                      boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)',
                     },
                   }}
                 >
@@ -176,7 +172,7 @@ export default function HomePage() {
                   href={`/group/${group.slug}`}
                   endIcon={<ArrowForward />}
                   size="small"
-                  sx={{ borderRadius: '20px' }}
+                  sx={{ borderRadius: 5 }}
                 >
                   Все {groupTools.length}
                 </Button>
@@ -197,8 +193,8 @@ export default function HomePage() {
           elevation={0}
           sx={{
             p: { xs: 3, md: 4 },
-            bgcolor: alpha(theme.palette.primary.main, 0.04),
-            borderRadius: '16px',
+            bgcolor: theme.palette.surfaceContainerLow,
+            borderRadius: 4,
           }}
         >
           <Typography variant="h6" component="h2" fontWeight={500} gutterBottom>

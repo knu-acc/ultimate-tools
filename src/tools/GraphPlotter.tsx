@@ -10,7 +10,7 @@ import {
   Button,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -121,7 +121,7 @@ function parseAtom(tokens: string[], pos: { i: number }): (x: number) => number 
     sqrt: Math.sqrt, abs: Math.abs, log: Math.log,
     ln: Math.log, log10: Math.log10, exp: Math.exp,
     asin: Math.asin, acos: Math.acos, atan: Math.atan,
-    ceil: Math.ceil, floor: Math.floor, round: Math.round,
+    ceil: Math.ceil, floor: Math.floor, round: Math.round
   };
 
   if (name === 'x') { pos.i++; return (x: number) => x; }
@@ -340,8 +340,7 @@ export default function GraphPlotter() {
         sx={{
           p: 3,
           mb: 2,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
@@ -356,7 +355,7 @@ export default function GraphPlotter() {
                 height: 16,
                 borderRadius: '50%',
                 backgroundColor: fn.color,
-                flexShrink: 0,
+                flexShrink: 0
               }}
             />
             <TextField
@@ -367,7 +366,7 @@ export default function GraphPlotter() {
               value={fn.expr}
               onChange={(e) => updateExpr(fn.id, e.target.value)}
               slotProps={{
-                htmlInput: { style: { fontFamily: 'monospace' } },
+                htmlInput: { style: { fontFamily: 'monospace' } }
               }}
             />
             {functions.length > 1 && (
@@ -393,8 +392,7 @@ export default function GraphPlotter() {
         sx={{
           p: 2,
           mb: 2,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Grid container spacing={1} sx={{ alignItems: 'center' }}>
@@ -456,9 +454,8 @@ export default function GraphPlotter() {
       <Paper
         elevation={0}
         sx={{
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          overflow: 'hidden',
+          overflow: 'hidden'
         }}
       >
         <canvas
@@ -466,7 +463,7 @@ export default function GraphPlotter() {
           style={{
             width: '100%',
             height: 500,
-            display: 'block',
+            display: 'block'
           }}
         />
       </Paper>

@@ -9,7 +9,7 @@ import {
   Tooltip,
   useTheme,
   alpha,
-  Snackbar,
+  Snackbar
 } from '@mui/material';
 
 const materialShades = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', 'A100', 'A200', 'A400', 'A700'] as const;
@@ -33,7 +33,7 @@ const materialColors: Record<string, Record<string, string>> = {
   'Deep Orange': { '50': '#fbe9e7', '100': '#ffccbc', '200': '#ffab91', '300': '#ff8a65', '400': '#ff7043', '500': '#ff5722', '600': '#f4511e', '700': '#e64a19', '800': '#d84315', '900': '#bf360c', 'A100': '#ff9e80', 'A200': '#ff6e40', 'A400': '#ff3d00', 'A700': '#dd2c00' },
   Brown: { '50': '#efebe9', '100': '#d7ccc8', '200': '#bcaaa4', '300': '#a1887f', '400': '#8d6e63', '500': '#795548', '600': '#6d4c41', '700': '#5d4037', '800': '#4e342e', '900': '#3e2723' },
   Grey: { '50': '#fafafa', '100': '#f5f5f5', '200': '#eeeeee', '300': '#e0e0e0', '400': '#bdbdbd', '500': '#9e9e9e', '600': '#757575', '700': '#616161', '800': '#424242', '900': '#212121' },
-  'Blue Grey': { '50': '#eceff1', '100': '#cfd8dc', '200': '#b0bec5', '300': '#90a4ae', '400': '#78909c', '500': '#607d8b', '600': '#546e7a', '700': '#455a64', '800': '#37474f', '900': '#263238' },
+  'Blue Grey': { '50': '#eceff1', '100': '#cfd8dc', '200': '#b0bec5', '300': '#90a4ae', '400': '#78909c', '500': '#607d8b', '600': '#546e7a', '700': '#455a64', '800': '#37474f', '900': '#263238' }
 };
 
 function getContrastColor(hex: string): string {
@@ -65,8 +65,7 @@ export default function MaterialColors() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <TextField
@@ -87,7 +86,7 @@ export default function MaterialColors() {
                 sx={{
                   mb: 1,
                   fontWeight: 600,
-                  color: 'text.secondary',
+                  color: 'text.secondary'
                 }}
               >
                 {colorName}
@@ -114,8 +113,8 @@ export default function MaterialColors() {
                           '&:hover': {
                             transform: 'scale(1.15)',
                             zIndex: 1,
-                            boxShadow: `0 4px 12px ${alpha(hex, 0.5)}`,
-                          },
+                            boxShadow: `0 4px 12px ${alpha(hex, 0.5)}`
+                          }
                         }}
                       >
                         <Typography
@@ -123,7 +122,7 @@ export default function MaterialColors() {
                             fontSize: { xs: '0.5rem', sm: '0.6rem' },
                             fontWeight: 600,
                             color: getContrastColor(hex),
-                            lineHeight: 1.2,
+                            lineHeight: 1.2
                           }}
                         >
                           {shade}
@@ -133,7 +132,7 @@ export default function MaterialColors() {
                             fontSize: { xs: '0.45rem', sm: '0.5rem' },
                             color: alpha(getContrastColor(hex), 0.7),
                             fontFamily: 'monospace',
-                            display: { xs: 'none', sm: 'block' },
+                            display: { xs: 'none', sm: 'block' }
                           }}
                         >
                           {hex}

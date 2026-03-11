@@ -9,11 +9,11 @@ import {
   TextField,
   IconButton,
   Chip,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const CYR_TO_LAT: Record<string, string> = {
   'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
@@ -29,7 +29,7 @@ const CYR_TO_LAT: Record<string, string> = {
   'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T',
   'У': 'U', 'Ф': 'F', 'Х': 'Kh', 'Ц': 'Ts', 'Ч': 'Ch',
   'Ш': 'Sh', 'Щ': 'Shch', 'Ъ': '', 'Ы': 'Y', 'Ь': '',
-  'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya',
+  'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya'
 };
 
 // Build reverse mapping (Latin → Cyrillic), longest keys first for greedy matching
@@ -112,8 +112,7 @@ export default function Transliteration() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Mode toggle */}
@@ -123,7 +122,7 @@ export default function Transliteration() {
             alignItems: 'center',
             justifyContent: 'center',
             gap: 1.5,
-            mb: 3,
+            mb: 3
           }}
         >
           <Chip
@@ -135,12 +134,11 @@ export default function Transliteration() {
           <IconButton
             onClick={toggleMode}
             sx={{
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 2,
               transition: 'all 200ms ease',
               '&:hover': {
-                background: alpha(theme.palette.primary.main, 0.08),
-              },
+                background: theme.palette.surfaceContainerHigh
+              }
             }}
           >
             <SwapVertIcon />
@@ -173,7 +171,7 @@ export default function Transliteration() {
           }
           sx={{
             mb: 1,
-            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' },
+            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
           }}
         />
 
@@ -195,7 +193,7 @@ export default function Transliteration() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                mb: 1,
+                mb: 1
               }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -235,8 +233,8 @@ export default function Transliteration() {
                 '& .MuiInputBase-root': {
                   fontFamily: 'monospace',
                   fontSize: '0.875rem',
-                  background: theme.palette.background.default,
-                },
+                  background: theme.palette.background.default
+                }
               }}
             />
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

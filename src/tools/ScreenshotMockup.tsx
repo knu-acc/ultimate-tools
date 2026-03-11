@@ -12,7 +12,7 @@ import {
   Switch,
   FormControlLabel,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -279,13 +279,13 @@ export default function ScreenshotMockup() {
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
             borderRadius: 4,
             backgroundColor: dragging
-              ? alpha(theme.palette.primary.main, 0.06)
+              ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
             transition: 'all 250ms ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
-              backgroundColor: alpha(theme.palette.primary.main, 0.04),
-            },
+              backgroundColor: theme.palette.surfaceContainerLow
+            }
           }}
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
@@ -300,7 +300,7 @@ export default function ScreenshotMockup() {
 
       {originalFile && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <DevicesIcon /> Настройки мокапа
             </Typography>
@@ -388,18 +388,17 @@ export default function ScreenshotMockup() {
           </Paper>
 
           {/* Preview */}
-          <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
               Предпросмотр
             </Typography>
             <Box
               sx={{
-                border: `1px solid ${theme.palette.divider}`,
                 borderRadius: 2,
                 overflow: 'hidden',
                 display: 'flex',
                 justifyContent: 'center',
-                backgroundColor: alpha(theme.palette.background.default, 0.5),
+                backgroundColor: alpha(theme.palette.background.default, 0.5)
               }}
             >
               <canvas

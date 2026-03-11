@@ -14,12 +14,14 @@ import {
   Divider,
   Snackbar,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckIcon from '@mui/icons-material/Check';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 // --- MD5 implementation (Web Crypto does not support MD5) ---
 function md5(input: string): string {
@@ -257,9 +259,8 @@ export default function ChecksumCalc() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
-          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          borderRadius: 3
         }}
       >
         {/* Input */}
@@ -281,8 +282,8 @@ export default function ChecksumCalc() {
             '& .MuiInputBase-root': {
               fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
               fontSize: '0.85rem',
-              lineHeight: 1.6,
-            },
+              lineHeight: 1.6
+            }
           }}
         />
 
@@ -348,8 +349,8 @@ export default function ChecksumCalc() {
                             : theme.palette.background.default,
                         transition: 'border-color 200ms ease, background 200ms ease',
                         '&:hover': {
-                          borderColor: match === null ? theme.palette.primary.main : undefined,
-                        },
+                          borderColor: match === null ? theme.palette.primary.main : undefined
+                        }
                       }}
                     >
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
@@ -365,7 +366,7 @@ export default function ChecksumCalc() {
                               borderRadius: 1,
                               background: alpha(theme.palette.primary.main, 0.1),
                               color: theme.palette.primary.main,
-                              fontWeight: 500,
+                              fontWeight: 500
                             }}
                           >
                             {hash.bits} бит
@@ -377,15 +378,7 @@ export default function ChecksumCalc() {
                             <CancelIcon sx={{ fontSize: 18, color: '#c62828' }} />
                           )}
                         </Box>
-                        <Tooltip title={copiedIdx === idx ? 'Скопировано!' : 'Копировать'}>
-                          <IconButton
-                            size="small"
-                            onClick={() => copyHash(hash.value, idx)}
-                            color={copiedIdx === idx ? 'success' : 'default'}
-                          >
-                            {copiedIdx === idx ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                          </IconButton>
-                        </Tooltip>
+                        <CopyButton text={hash.value} />
                       </Box>
                       <Typography
                         variant="body2"
@@ -395,7 +388,7 @@ export default function ChecksumCalc() {
                           wordBreak: 'break-all',
                           lineHeight: 1.6,
                           color: 'text.primary',
-                          userSelect: 'all',
+                          userSelect: 'all'
                         }}
                       >
                         {hash.value}
@@ -426,8 +419,8 @@ export default function ChecksumCalc() {
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", monospace',
-                  fontSize: '0.85rem',
-                },
+                  fontSize: '0.85rem'
+                }
               }}
             />
 

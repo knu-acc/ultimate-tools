@@ -9,7 +9,7 @@ import {
   Grid,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface Milestone {
@@ -88,7 +88,7 @@ export default function PregnancyCalc() {
       trimester,
       diffDays,
       t1End,
-      t2End,
+      t2End
     };
   }, [lmpDate]);
 
@@ -100,9 +100,8 @@ export default function PregnancyCalc() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -114,7 +113,7 @@ export default function PregnancyCalc() {
           value={lmpDate}
           onChange={(e) => setLmpDate(e.target.value)}
           slotProps={{
-            input: { inputProps: { max: new Date().toISOString().split('T')[0] } },
+            input: { inputProps: { max: new Date().toISOString().split('T')[0] } }
           }}
         />
       </Paper>
@@ -132,7 +131,7 @@ export default function PregnancyCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha(results.trimester.color, 0.3)}`,
-                  background: alpha(results.trimester.color, 0.05),
+                  background: alpha(results.trimester.color, 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -154,7 +153,7 @@ export default function PregnancyCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#c62828', 0.3)}`,
-                  background: alpha('#c62828', 0.05),
+                  background: alpha('#c62828', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -173,7 +172,7 @@ export default function PregnancyCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#7b1fa2', 0.3)}`,
-                  background: alpha('#7b1fa2', 0.05),
+                  background: alpha('#7b1fa2', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -192,8 +191,7 @@ export default function PregnancyCalc() {
             sx={{
               p: 3,
               mb: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -206,7 +204,7 @@ export default function PregnancyCalc() {
                 sx={{
                   fontWeight: 600,
                   backgroundColor: alpha(results.trimester.color, 0.12),
-                  color: results.trimester.color,
+                  color: results.trimester.color
                 }}
               />
             </Box>
@@ -217,8 +215,8 @@ export default function PregnancyCalc() {
                 sx={{
                   height: 16,
                   borderRadius: 8,
-                  backgroundColor: alpha(theme.palette.primary.main, 0.08),
-                  overflow: 'hidden',
+                  backgroundColor: theme.palette.surfaceContainerHigh,
+                  overflow: 'hidden'
                 }}
               >
                 <Box
@@ -227,7 +225,7 @@ export default function PregnancyCalc() {
                     width: `${results.progressPct}%`,
                     borderRadius: 8,
                     background: `linear-gradient(to right, #1976d2, #2e7d32, #ef6c00)`,
-                    transition: 'width 0.4s ease',
+                    transition: 'width 0.4s ease'
                   }}
                 />
               </Box>
@@ -250,7 +248,7 @@ export default function PregnancyCalc() {
                       height: 8,
                       borderRadius: 4,
                       backgroundColor: alpha(t.color, 0.25),
-                      mb: 0.5,
+                      mb: 0.5
                     }}
                   />
                   <Typography variant="caption" sx={{ fontWeight: 600, color: t.color, fontSize: '0.65rem' }}>
@@ -269,8 +267,7 @@ export default function PregnancyCalc() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -292,7 +289,7 @@ export default function PregnancyCalc() {
                       p: 1.5,
                       borderRadius: 2,
                       backgroundColor: isCurrent ? alpha(trimester.color, 0.06) : 'transparent',
-                      border: isCurrent ? `1px solid ${alpha(trimester.color, 0.2)}` : '1px solid transparent',
+                      border: isCurrent ? `1px solid ${alpha(trimester.color, 0.2)}` : '1px solid transparent'
                     }}
                   >
                     <Box
@@ -304,7 +301,7 @@ export default function PregnancyCalc() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        flexShrink: 0,
+                        flexShrink: 0
                       }}
                     >
                       <Typography
@@ -312,7 +309,7 @@ export default function PregnancyCalc() {
                         sx={{
                           fontWeight: 700,
                           color: isPast ? '#fff' : 'text.disabled',
-                          fontSize: '0.65rem',
+                          fontSize: '0.65rem'
                         }}
                       >
                         {milestone.week}
@@ -323,7 +320,7 @@ export default function PregnancyCalc() {
                         variant="body2"
                         sx={{
                           fontWeight: isCurrent ? 700 : isPast ? 500 : 400,
-                          color: isPast ? 'text.primary' : 'text.disabled',
+                          color: isPast ? 'text.primary' : 'text.disabled'
                         }}
                       >
                         {milestone.text}

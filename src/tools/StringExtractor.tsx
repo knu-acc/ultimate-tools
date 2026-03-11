@@ -14,9 +14,11 @@ import {
   ListItemText,
   IconButton,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopy from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type ExtractionType = 'emails' | 'urls' | 'phones' | 'ips' | 'numbers';
 
@@ -32,31 +34,31 @@ const EXTRACTION_OPTIONS: ExtractionOption[] = [
     type: 'emails',
     label: 'Email',
     description: 'Адреса электронной почты',
-    pattern: /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g,
+    pattern: /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2}/g
   },
   {
     type: 'urls',
     label: 'URL',
     description: 'Ссылки и веб-адреса',
-    pattern: /https?:\/\/[^\s<>"{}|\\^`[\]]+/g,
+    pattern: /https?:\/\/[^\s<>"{}|\\^`[\]]+/g
   },
   {
     type: 'phones',
     label: 'Телефоны',
     description: 'Номера телефонов',
-    pattern: /(?:\+?\d{1,3}[\s\-.]?)?\(?\d{2,4}\)?[\s\-.]?\d{2,4}[\s\-.]?\d{2,4}(?:[\s\-.]?\d{2,4})?/g,
+    pattern: /(?:\+?\d{1,3}[\s\-.]?)?\(?\d{2,4}\)?[\s\-.]?\d{2,4}[\s\-.]?\d{2,4}(?:[\s\-.]?\d{2,4})?/g
   },
   {
     type: 'ips',
     label: 'IP-адреса',
     description: 'IPv4 адреса',
-    pattern: /\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b/g,
+    pattern: /\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b/g
   },
   {
     type: 'numbers',
     label: 'Числа',
     description: 'Числовые значения',
-    pattern: /-?\d+(?:[.,]\d+)?(?:\s?%)?/g,
+    pattern: /-?\d+(?:[.,]\d+)?(?:\s?%)?/g
   },
 ];
 
@@ -130,7 +132,7 @@ export default function StringExtractor() {
       urls: 'secondary',
       phones: 'success',
       ips: 'warning',
-      numbers: 'info',
+      numbers: 'info'
     };
     return map[type];
   };
@@ -142,8 +144,7 @@ export default function StringExtractor() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input text */}
@@ -190,7 +191,7 @@ export default function StringExtractor() {
               border: `1px solid ${alpha(
                 totalCount > 0 ? theme.palette.success.main : theme.palette.text.disabled,
                 0.3
-              )}`,
+              )}`
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
@@ -229,7 +230,7 @@ export default function StringExtractor() {
             sx={{
               maxHeight: 350,
               overflow: 'auto',
-              background: theme.palette.background.default,
+              background: theme.palette.background.default
             }}
           >
             <List dense disablePadding>
@@ -246,7 +247,7 @@ export default function StringExtractor() {
                         color:
                           copiedIndex === index
                             ? theme.palette.success.main
-                            : theme.palette.text.secondary,
+                            : theme.palette.text.secondary
                       }}
                     >
                       <ContentCopy fontSize="small" />
@@ -254,8 +255,8 @@ export default function StringExtractor() {
                   }
                   sx={{
                     '&:hover': {
-                      background: alpha(theme.palette.primary.main, 0.04),
-                    },
+                      background: theme.palette.surfaceContainerLow
+                    }
                   }}
                 >
                   <ListItemText
@@ -272,7 +273,7 @@ export default function StringExtractor() {
                           variant="body2"
                           sx={{
                             fontFamily: 'monospace',
-                            wordBreak: 'break-all',
+                            wordBreak: 'break-all'
                           }}
                         >
                           {item.value}
@@ -293,7 +294,7 @@ export default function StringExtractor() {
               p: 4,
               textAlign: 'center',
               borderRadius: 2,
-              border: `1px dashed ${theme.palette.divider}`,
+              border: `1px dashed ${theme.palette.divider}`
             }}
           >
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>

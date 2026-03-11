@@ -1112,7 +1112,7 @@ PMT = P × r / (1 − (1+r)^−n)
   },
 ];
 
-export const articles: Article[] = [
+const _allArticles: Article[] = [
   ...baseArticles,
   ...calculatorArticles,
   ...colorArticles,
@@ -1135,6 +1135,11 @@ export const articles: Article[] = [
   ...unitArticles,
   ...productivityArticles,
 ];
+
+// Deduplicate by slug (keep first occurrence)
+export const articles: Article[] = _allArticles.filter(
+  (a, i, arr) => arr.findIndex(b => b.slug === a.slug) === i
+);
 
 export function getArticleBySlug(slug: string): Article | undefined {
   return articles.find(a => a.slug === slug);

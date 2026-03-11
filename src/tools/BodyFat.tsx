@@ -11,7 +11,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 type Gender = 'male' | 'female';
@@ -116,9 +116,8 @@ export default function BodyFat() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -143,13 +142,13 @@ export default function BodyFat() {
                 fontWeight: 600,
                 borderRadius: 2,
                 '&.Mui-selected': {
-                  background: alpha(theme.palette.primary.main, 0.12),
+                  background: theme.palette.surfaceContainerHigh,
                   color: theme.palette.primary.main,
                   '&:hover': {
-                    background: alpha(theme.palette.primary.main, 0.18),
-                  },
-                },
-              },
+                    background: alpha(theme.palette.primary.main, 0.18)
+                  }
+                }
+              }
             }}
           >
             <ToggleButton value="male">Мужчина</ToggleButton>
@@ -167,7 +166,7 @@ export default function BodyFat() {
               onChange={(e) => setWeight(e.target.value)}
               placeholder="70"
               slotProps={{
-                input: { inputProps: { min: 20, max: 400, step: 0.1 } },
+                input: { inputProps: { min: 20, max: 400, step: 0.1 } }
               }}
             />
           </Grid>
@@ -180,7 +179,7 @@ export default function BodyFat() {
               onChange={(e) => setHeight(e.target.value)}
               placeholder="175"
               slotProps={{
-                input: { inputProps: { min: 50, max: 300, step: 0.1 } },
+                input: { inputProps: { min: 50, max: 300, step: 0.1 } }
               }}
             />
           </Grid>
@@ -193,7 +192,7 @@ export default function BodyFat() {
               onChange={(e) => setNeck(e.target.value)}
               placeholder="38"
               slotProps={{
-                input: { inputProps: { min: 10, max: 100, step: 0.1 } },
+                input: { inputProps: { min: 10, max: 100, step: 0.1 } }
               }}
             />
           </Grid>
@@ -206,7 +205,7 @@ export default function BodyFat() {
               onChange={(e) => setWaist(e.target.value)}
               placeholder="85"
               slotProps={{
-                input: { inputProps: { min: 30, max: 250, step: 0.1 } },
+                input: { inputProps: { min: 30, max: 250, step: 0.1 } }
               }}
             />
           </Grid>
@@ -220,7 +219,7 @@ export default function BodyFat() {
                 onChange={(e) => setHip(e.target.value)}
                 placeholder="95"
                 slotProps={{
-                  input: { inputProps: { min: 30, max: 250, step: 0.1 } },
+                  input: { inputProps: { min: 30, max: 250, step: 0.1 } }
                 }}
               />
             </Grid>
@@ -238,9 +237,8 @@ export default function BodyFat() {
               p: 3,
               mb: 3,
               textAlign: 'center',
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              background: alpha(results.category.color, 0.05),
+              background: alpha(results.category.color, 0.05)
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -255,7 +253,7 @@ export default function BodyFat() {
                 fontWeight: 600,
                 color: '#fff',
                 backgroundColor: results.category.color,
-                fontSize: '0.9rem',
+                fontSize: '0.9rem'
               }}
             />
           </Paper>
@@ -270,7 +268,7 @@ export default function BodyFat() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#ef6c00', 0.3)}`,
-                  background: alpha('#ef6c00', 0.05),
+                  background: alpha('#ef6c00', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -289,7 +287,7 @@ export default function BodyFat() {
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#2e7d32', 0.3)}`,
-                  background: alpha('#2e7d32', 0.05),
+                  background: alpha('#2e7d32', 0.05)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -308,8 +306,7 @@ export default function BodyFat() {
             sx={{
               p: 3,
               mb: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -321,7 +318,7 @@ export default function BodyFat() {
                 height: 32,
                 borderRadius: 16,
                 overflow: 'hidden',
-                mb: 1.5,
+                mb: 1.5
               }}
             >
               <Box
@@ -331,7 +328,7 @@ export default function BodyFat() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  minWidth: 40,
+                  minWidth: 40
                 }}
               >
                 <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.65rem' }}>
@@ -344,7 +341,7 @@ export default function BodyFat() {
                   backgroundColor: '#2e7d32',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justifyContent: 'center'
                 }}
               >
                 <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.65rem' }}>
@@ -360,8 +357,7 @@ export default function BodyFat() {
             sx={{
               p: 3,
               mb: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 3
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -380,7 +376,7 @@ export default function BodyFat() {
                       p: 1.5,
                       borderRadius: 2,
                       backgroundColor: isActive ? alpha(cat.color, 0.08) : 'transparent',
-                      border: isActive ? `1px solid ${alpha(cat.color, 0.3)}` : '1px solid transparent',
+                      border: isActive ? `1px solid ${alpha(cat.color, 0.3)}` : '1px solid transparent'
                     }}
                   >
                     <Box
@@ -389,7 +385,7 @@ export default function BodyFat() {
                         height: 12,
                         borderRadius: '50%',
                         backgroundColor: cat.color,
-                        flexShrink: 0,
+                        flexShrink: 0
                       }}
                     />
                     <Typography
@@ -397,7 +393,7 @@ export default function BodyFat() {
                       sx={{
                         flex: 1,
                         fontWeight: isActive ? 700 : 400,
-                        color: isActive ? cat.color : 'text.secondary',
+                        color: isActive ? cat.color : 'text.secondary'
                       }}
                     >
                       {cat.label}
@@ -416,9 +412,8 @@ export default function BodyFat() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              background: alpha(theme.palette.primary.main, 0.02),
+              background: theme.palette.surfaceContainerLowest
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -431,7 +426,7 @@ export default function BodyFat() {
                   sx={{
                     display: 'flex',
                     gap: 1.5,
-                    alignItems: 'flex-start',
+                    alignItems: 'flex-start'
                   }}
                 >
                   <Box
@@ -443,7 +438,7 @@ export default function BodyFat() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      flexShrink: 0,
+                      flexShrink: 0
                     }}
                   >
                     <Typography variant="caption" sx={{ fontWeight: 700, color: 'primary.main', fontSize: '0.7rem' }}>
@@ -455,7 +450,7 @@ export default function BodyFat() {
                     sx={{
                       fontFamily: 'monospace',
                       color: i === results.formulaSteps.length - 1 ? results.category.color : 'text.secondary',
-                      fontWeight: i === results.formulaSteps.length - 1 ? 600 : 400,
+                      fontWeight: i === results.formulaSteps.length - 1 ? 600 : 400
                     }}
                   >
                     {step}

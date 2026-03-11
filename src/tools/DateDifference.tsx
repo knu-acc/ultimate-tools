@@ -10,9 +10,7 @@ import {
   TextField,
   Chip,
   Divider,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
@@ -82,7 +80,7 @@ export default function DateDifference() {
       hours: totalHours,
       minutes: totalMinutes,
       seconds: totalSeconds,
-      readable: parts.length > 0 ? parts.join(', ') : '0 дней',
+      readable: parts.length > 0 ? parts.join(', ') : '0 дней'
     });
   }, [dateFrom, dateTo]);
 
@@ -123,8 +121,7 @@ export default function DateDifference() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Grid container spacing={2} alignItems="center">
@@ -141,8 +138,8 @@ export default function DateDifference() {
                 input: {
                   startAdornment: (
                     <CalendarTodayIcon sx={{ mr: 1, color: 'text.secondary', fontSize: 20 }} />
-                  ),
-                },
+                  )
+                }
               }}
             />
             <Button size="small" onClick={() => setToday(setDateFrom)} sx={{ mt: 0.5 }}>
@@ -173,8 +170,8 @@ export default function DateDifference() {
                 input: {
                   startAdornment: (
                     <CalendarTodayIcon sx={{ mr: 1, color: 'text.secondary', fontSize: 20 }} />
-                  ),
-                },
+                  )
+                }
               }}
             />
             <Button size="small" onClick={() => setToday(setDateTo)} sx={{ mt: 0.5 }}>
@@ -198,7 +195,7 @@ export default function DateDifference() {
       </Paper>
 
       {result && (
-        <Paper elevation={0} sx={{ p: 3, border: `1px solid ${theme.palette.divider}` }}>
+        <Paper elevation={0} sx={{ p: 3 }}>
           <Box sx={{ mb: 3, textAlign: 'center' }}>
             <Chip
               label={result.readable}
@@ -217,13 +214,12 @@ export default function DateDifference() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    border: `1px solid ${theme.palette.divider}`,
                     borderRadius: 3,
                     transition: 'all 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
-                      background: alpha(theme.palette.primary.main, 0.04),
-                    },
+                      background: theme.palette.surfaceContainerLow
+                    }
                   }}
                 >
                   <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main', mb: 0.5 }}>

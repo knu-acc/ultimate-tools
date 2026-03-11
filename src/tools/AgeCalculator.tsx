@@ -9,7 +9,7 @@ import {
   Grid,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 const DAYS_RU = [
@@ -123,8 +123,7 @@ export default function AgeCalculator() {
         sx={{
           p: 3,
           mb: 3,
-          borderRadius: 3,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -140,9 +139,9 @@ export default function AgeCalculator() {
             inputLabel: { shrink: true },
             input: {
               inputProps: {
-                max: now.toISOString().split('T')[0],
-              },
-            },
+                max: now.toISOString().split('T')[0]
+              }
+            }
           }}
         />
         {birthInput && !birthDate && (
@@ -162,8 +161,7 @@ export default function AgeCalculator() {
               mb: 3,
               borderRadius: 3,
               textAlign: 'center',
-              border: `1px solid ${theme.palette.divider}`,
-              background: alpha(accentColor, 0.04),
+              background: alpha(accentColor, 0.04)
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -196,8 +194,7 @@ export default function AgeCalculator() {
             sx={{
               p: 3,
               mb: 3,
-              borderRadius: 3,
-              border: `1px solid ${theme.palette.divider}`,
+              borderRadius: 3
             }}
           >
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -208,22 +205,22 @@ export default function AgeCalculator() {
                 {
                   label: 'Дней',
                   value: stats.totalDays.toLocaleString('ru-RU'),
-                  color: '#2e7d32',
+                  color: '#2e7d32'
                 },
                 {
                   label: 'Недель',
                   value: stats.totalWeeks.toLocaleString('ru-RU'),
-                  color: '#1976d2',
+                  color: '#1976d2'
                 },
                 {
                   label: 'Месяцев',
                   value: stats.totalMonths.toLocaleString('ru-RU'),
-                  color: '#7b1fa2',
+                  color: '#7b1fa2'
                 },
                 {
                   label: 'Часов',
                   value: stats.totalHours.toLocaleString('ru-RU'),
-                  color: '#f57c00',
+                  color: '#f57c00'
                 },
               ].map((item) => (
                 <Grid size={{ xs: 6, sm: 3 }} key={item.label}>
@@ -234,7 +231,7 @@ export default function AgeCalculator() {
                       textAlign: 'center',
                       borderRadius: 3,
                       border: `1px solid ${alpha(item.color, 0.2)}`,
-                      background: alpha(item.color, 0.04),
+                      background: alpha(item.color, 0.04)
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">
@@ -255,8 +252,7 @@ export default function AgeCalculator() {
             sx={{
               p: 3,
               borderRadius: 3,
-              border: `1px solid ${theme.palette.divider}`,
-              background: alpha('#e91e63', 0.04),
+              background: alpha('#e91e63', 0.04)
             }}
           >
             <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
@@ -281,7 +277,7 @@ export default function AgeCalculator() {
                     mt: 1.5,
                     fontWeight: 500,
                     backgroundColor: alpha('#e91e63', 0.1),
-                    color: '#e91e63',
+                    color: '#e91e63'
                   }}
                 />
               </>

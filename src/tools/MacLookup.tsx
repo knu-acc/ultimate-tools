@@ -10,13 +10,13 @@ import {
   Button,
   IconButton,
   Tooltip,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import CasinoIcon from '@mui/icons-material/Casino';
 import SearchIcon from '@mui/icons-material/Search';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const ouiDatabase: Record<string, string> = {
   '00:1A:2B': 'Ayecom Technology',
@@ -245,7 +245,7 @@ const ouiDatabase: Record<string, string> = {
   'D8:50:E6': 'ASUSTek',
   'E0:3F:49': 'ASUSTek',
   'F0:79:59': 'ASUSTek',
-  'F4:6D:04': 'ASUSTek',
+  'F4:6D:04': 'ASUSTek'
 };
 
 function formatMac(input: string): string {
@@ -338,8 +338,7 @@ export default function MacLookup() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
@@ -358,7 +357,7 @@ export default function MacLookup() {
             error={!!error}
             helperText={error}
             slotProps={{
-              htmlInput: { maxLength: 17, style: { fontFamily: 'monospace', textTransform: 'uppercase' } },
+              htmlInput: { maxLength: 17, style: { fontFamily: 'monospace', textTransform: 'uppercase' } }
             }}
           />
           <Button
@@ -385,9 +384,8 @@ export default function MacLookup() {
             elevation={0}
             sx={{
               p: 3,
-              border: `1px solid ${theme.palette.divider}`,
               borderRadius: 3,
-              background: alpha(theme.palette.primary.main, 0.04),
+              background: theme.palette.surfaceContainerLow
             }}
           >
             <Grid container spacing={2}>
@@ -399,15 +397,7 @@ export default function MacLookup() {
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
                     {result.manufacturer}
                   </Typography>
-                  <Tooltip title={copied === 'manufacturer' ? 'Скопировано!' : 'Копировать'}>
-                    <IconButton
-                      size="small"
-                      onClick={() => copyValue('manufacturer', result.manufacturer)}
-                      color={copied === 'manufacturer' ? 'success' : 'default'}
-                    >
-                      {copied === 'manufacturer' ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                    </IconButton>
-                  </Tooltip>
+                  <CopyButton text={result.manufacturer} />
                 </Box>
               </Grid>
 
@@ -419,15 +409,7 @@ export default function MacLookup() {
                   <Typography sx={{ fontFamily: 'monospace', fontWeight: 500 }}>
                     {result.oui}
                   </Typography>
-                  <Tooltip title={copied === 'oui' ? 'Скопировано!' : 'Копировать'}>
-                    <IconButton
-                      size="small"
-                      onClick={() => copyValue('oui', result.oui)}
-                      color={copied === 'oui' ? 'success' : 'default'}
-                    >
-                      {copied === 'oui' ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                    </IconButton>
-                  </Tooltip>
+                  <CopyButton text={result.oui} />
                 </Box>
               </Grid>
 
@@ -439,15 +421,7 @@ export default function MacLookup() {
                   <Typography sx={{ fontFamily: 'monospace', fontWeight: 500 }}>
                     {result.formatted}
                   </Typography>
-                  <Tooltip title={copied === 'mac' ? 'Скопировано!' : 'Копировать'}>
-                    <IconButton
-                      size="small"
-                      onClick={() => copyValue('mac', result.formatted)}
-                      color={copied === 'mac' ? 'success' : 'default'}
-                    >
-                      {copied === 'mac' ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                    </IconButton>
-                  </Tooltip>
+                  <CopyButton text={result.formatted} />
                 </Box>
               </Grid>
             </Grid>

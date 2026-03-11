@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, IconButton, Slider, TextField,
+  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, IconButton, Slider, TextField
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
 
@@ -169,7 +169,7 @@ export default function Metronome() {
         p: 3,
         borderRadius: 4,
         background: alpha(theme.palette.background.paper, 0.8),
-        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
+        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`
       }}
     >
       <Typography variant="h5" fontWeight={700} gutterBottom>
@@ -196,7 +196,7 @@ export default function Metronome() {
               boxShadow:
                 isPlaying && currentBeat === i
                   ? `0 0 16px ${alpha(i === 0 ? theme.palette.error.main : primaryColor, 0.5)}`
-                  : 'none',
+                  : 'none'
             }}
           />
         ))}
@@ -220,7 +220,7 @@ export default function Metronome() {
             border: `1px solid ${alpha(theme.palette.divider, 0.2)}`,
             borderRadius: 3,
             width: 44,
-            height: 44,
+            height: 44
           }}
         >
           <Typography variant="h6" fontWeight={700}>−</Typography>
@@ -244,7 +244,7 @@ export default function Metronome() {
             border: `1px solid ${alpha(theme.palette.divider, 0.2)}`,
             borderRadius: 3,
             width: 44,
-            height: 44,
+            height: 44
           }}
         >
           <Typography variant="h6" fontWeight={700}>+</Typography>
@@ -313,8 +313,8 @@ export default function Metronome() {
               '&:hover': {
                 background: isPlaying
                   ? theme.palette.error.dark
-                  : theme.palette.primary.dark,
-              },
+                  : theme.palette.primary.dark
+              }
             }}
           >
             {isPlaying ? 'Стоп' : 'Старт'}
@@ -330,7 +330,7 @@ export default function Metronome() {
               borderRadius: 3,
               py: 1.5,
               fontWeight: 700,
-              fontSize: 16,
+              fontSize: 16
             }}
           >
             Тап темп

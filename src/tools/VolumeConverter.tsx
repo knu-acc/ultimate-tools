@@ -12,10 +12,12 @@ import {
   IconButton,
   Tooltip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type VolumeUnit =
   | 'liters'
@@ -39,7 +41,7 @@ const unitLabels: Record<VolumeUnit, string> = {
   tablespoons: 'Столовые ложки (tbsp)',
   teaspoons: 'Чайные ложки (tsp)',
   cubicMeters: 'Кубические метры (м³)',
-  cubicCentimeters: 'Кубические сантиметры (см³)',
+  cubicCentimeters: 'Кубические сантиметры (см³)'
 };
 
 const unitShort: Record<VolumeUnit, string> = {
@@ -52,7 +54,7 @@ const unitShort: Record<VolumeUnit, string> = {
   tablespoons: 'tbsp',
   teaspoons: 'tsp',
   cubicMeters: 'м³',
-  cubicCentimeters: 'см³',
+  cubicCentimeters: 'см³'
 };
 
 // Conversion factors to liters
@@ -66,7 +68,7 @@ const toLiters: Record<VolumeUnit, number> = {
   tablespoons: 0.01478676478,
   teaspoons: 0.00492892159,
   cubicMeters: 1000,
-  cubicCentimeters: 0.001,
+  cubicCentimeters: 0.001
 };
 
 function convertAll(value: number, from: VolumeUnit): Record<VolumeUnit, number> {
@@ -125,8 +127,7 @@ export default function VolumeConverter() {
           p: 3,
           mb: 3,
           borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -143,7 +144,7 @@ export default function VolumeConverter() {
             sx={{
               flex: 2,
               minWidth: 180,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' },
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
             }}
           />
           <Select
@@ -153,7 +154,7 @@ export default function VolumeConverter() {
             sx={{
               flex: 1,
               minWidth: 200,
-              borderRadius: 2,
+              borderRadius: 2
             }}
           >
             {(Object.keys(unitLabels) as VolumeUnit[]).map((unit) => (
@@ -181,11 +182,11 @@ export default function VolumeConverter() {
                 p: 2.5,
                 borderRadius: 4,
                 border: `2px solid ${theme.palette.primary.main}`,
-                background: alpha(theme.palette.primary.main, 0.08),
+                background: theme.palette.surfaceContainerHigh,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: 1,
+                gap: 1
               }}
             >
               <Box sx={{ textAlign: 'center' }}>
@@ -209,12 +210,11 @@ export default function VolumeConverter() {
                   sx={{
                     p: 2,
                     borderRadius: 4,
-                    border: `1px solid ${theme.palette.divider}`,
                     transition: 'all 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
-                      background: alpha(theme.palette.primary.main, 0.04),
-                    },
+                      background: theme.palette.surfaceContainerLow
+                    }
                   }}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -230,22 +230,13 @@ export default function VolumeConverter() {
                           mt: 0.5,
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
+                          whiteSpace: 'nowrap'
                         }}
                       >
                         {valueStr} {unitShort[unit]}
                       </Typography>
                     </Box>
-                    <Tooltip title={copied === unit ? 'Скопировано!' : 'Копировать'}>
-                      <IconButton
-                        size="small"
-                        onClick={() => copyValue(unit, `${valueStr} ${unitShort[unit]}`)}
-                        color={copied === unit ? 'success' : 'default'}
-                        sx={{ mt: 0.5 }}
-                      >
-                        {copied === unit ? <CheckIcon fontSize="small" /> : <ContentCopyIcon fontSize="small" />}
-                      </IconButton>
-                    </Tooltip>
+                    <CopyButton text={valueStr} />
                   </Box>
                 </Paper>
               </Grid>
@@ -259,8 +250,7 @@ export default function VolumeConverter() {
             p: 3,
             mb: 3,
             borderRadius: 4,
-            border: `1px solid ${theme.palette.divider}`,
-            textAlign: 'center',
+            textAlign: 'center'
           }}
         >
           <Typography color="text.secondary">
@@ -274,8 +264,7 @@ export default function VolumeConverter() {
         elevation={0}
         sx={{
           p: 3,
-          borderRadius: 4,
-          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 4
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -289,9 +278,8 @@ export default function VolumeConverter() {
                 sx={{
                   p: 1.5,
                   borderRadius: 3,
-                  border: `1px solid ${theme.palette.divider}`,
                   textAlign: 'center',
-                  background: alpha(theme.palette.primary.main, 0.02),
+                  background: theme.palette.surfaceContainerLowest
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: 'monospace' }}>

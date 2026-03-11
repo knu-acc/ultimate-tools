@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import {
-  Box, Typography, Paper, TextField, Button, Grid, Chip, alpha, useTheme, IconButton,
+  Box, Typography, Paper, TextField, Button, Grid, Chip, useTheme, IconButton
 } from '@mui/material';
 import { Delete, Add, Casino } from '@mui/icons-material';
 
@@ -37,7 +37,7 @@ export default function DecisionMaker() {
 
   return (
     <Box>
-      <Paper elevation={0} sx={{ p: 3, borderRadius: 3, border: `1px solid ${theme.palette.divider}`, mb: 2 }}>
+      <Paper elevation={0} sx={{ p: 3, borderRadius: 3, mb: 2 }}>
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>Варианты выбора</Typography>
         {options.map((opt, i) => (
           <Box key={i} sx={{ display: 'flex', gap: 1, mb: 1, alignItems: 'center' }}>
@@ -52,13 +52,13 @@ export default function DecisionMaker() {
       </Paper>
 
       <Box sx={{ textAlign: 'center', mb: 2 }}>
-        <Button variant="contained" size="large" startIcon={<Casino />} onClick={decide} disabled={validOptions.length < 2 || isAnimating} sx={{ borderRadius: '28px', px: 4 }}>
+        <Button variant="contained" size="large" startIcon={<Casino />} onClick={decide} disabled={validOptions.length < 2 || isAnimating} sx={{ borderRadius: 7, px: 4 }}>
           Выбрать!
         </Button>
       </Box>
 
       {result && (
-        <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: alpha(theme.palette.primary.main, 0.08), textAlign: 'center', border: `2px solid ${theme.palette.primary.main}`, transition: 'all 300ms' }}>
+        <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: theme.palette.surfaceContainerHigh, textAlign: 'center', border: `2px solid ${theme.palette.primary.main}`, transition: 'all 300ms' }}>
           <Typography variant="caption" color="text.secondary">{isAnimating ? 'Выбираю...' : 'Результат:'}</Typography>
           <Typography variant="h3" fontWeight={700} color="primary" sx={{ mt: 1, transition: 'all 100ms' }}>
             {result}

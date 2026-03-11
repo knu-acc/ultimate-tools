@@ -10,7 +10,7 @@ import {
   Chip,
   LinearProgress,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 interface BmiCategory {
@@ -70,7 +70,7 @@ export default function BmiCalculator() {
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
           Введите ваши параметры
         </Typography>
@@ -85,8 +85,8 @@ export default function BmiCalculator() {
               placeholder="170"
               slotProps={{
                 input: {
-                  inputProps: { min: 50, max: 300, step: 1 },
-                },
+                  inputProps: { min: 50, max: 300, step: 1 }
+                }
               }}
             />
           </Grid>
@@ -100,8 +100,8 @@ export default function BmiCalculator() {
               placeholder="70"
               slotProps={{
                 input: {
-                  inputProps: { min: 10, max: 500, step: 0.1 },
-                },
+                  inputProps: { min: 10, max: 500, step: 0.1 }
+                }
               }}
             />
           </Grid>
@@ -118,8 +118,7 @@ export default function BmiCalculator() {
               p: 3,
               mb: 3,
               textAlign: 'center',
-              border: `1px solid ${theme.palette.divider}`,
-              background: alpha(category.color, 0.05),
+              background: alpha(category.color, 0.05)
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -138,7 +137,7 @@ export default function BmiCalculator() {
                 color: '#fff',
                 backgroundColor: category.color,
                 fontSize: '0.9rem',
-                mb: 1.5,
+                mb: 1.5
               }}
             />
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
@@ -147,7 +146,7 @@ export default function BmiCalculator() {
           </Paper>
 
           {/* Visual Gauge */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               Шкала ИМТ
             </Typography>
@@ -158,7 +157,7 @@ export default function BmiCalculator() {
                 sx={{
                   height: 20,
                   borderRadius: 10,
-                  background: 'linear-gradient(to right, #1976d2 0%, #2e7d32 24%, #2e7d32 43%, #f57c00 57%, #d32f2f 72%, #b71c1c 86%, #880e4f 100%)',
+                  background: 'linear-gradient(to right, #1976d2 0%, #2e7d32 24%, #2e7d32 43%, #f57c00 57%, #d32f2f 72%, #b71c1c 86%, #880e4f 100%)'
                 }}
               />
               {/* Marker */}
@@ -177,7 +176,7 @@ export default function BmiCalculator() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transition: 'left 0.3s ease',
+                  transition: 'left 0.3s ease'
                 }}
               >
                 <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.6rem' }}>
@@ -211,7 +210,7 @@ export default function BmiCalculator() {
           </Paper>
 
           {/* Categories breakdown */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               Категории ИМТ
             </Typography>
@@ -231,14 +230,14 @@ export default function BmiCalculator() {
                             height: 10,
                             borderRadius: '50%',
                             backgroundColor: cat.color,
-                            flexShrink: 0,
+                            flexShrink: 0
                           }}
                         />
                         <Typography
                           variant="body2"
                           sx={{
                             fontWeight: isActive ? 700 : 400,
-                            color: isActive ? cat.color : 'text.secondary',
+                            color: isActive ? cat.color : 'text.secondary'
                           }}
                         >
                           {cat.label}
@@ -258,8 +257,8 @@ export default function BmiCalculator() {
                         transition: 'height 0.3s ease',
                         '& .MuiLinearProgress-bar': {
                           backgroundColor: cat.color,
-                          borderRadius: 4,
-                        },
+                          borderRadius: 4
+                        }
                       }}
                     />
                   </Box>
@@ -274,8 +273,7 @@ export default function BmiCalculator() {
               elevation={0}
               sx={{
                 p: 3,
-                border: `1px solid ${theme.palette.divider}`,
-                background: alpha('#2e7d32', 0.04),
+                background: alpha('#2e7d32', 0.04)
               }}
             >
               <Typography variant="h6" sx={{ mb: 1.5 }}>
@@ -292,7 +290,7 @@ export default function BmiCalculator() {
                       p: 2,
                       textAlign: 'center',
                       borderRadius: 3,
-                      border: `1px solid ${alpha('#2e7d32', 0.2)}`,
+                      border: `1px solid ${alpha('#2e7d32', 0.2)}`
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">
@@ -310,7 +308,7 @@ export default function BmiCalculator() {
                       p: 2,
                       textAlign: 'center',
                       borderRadius: 3,
-                      border: `1px solid ${alpha('#2e7d32', 0.2)}`,
+                      border: `1px solid ${alpha('#2e7d32', 0.2)}`
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">

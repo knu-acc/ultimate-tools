@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import {
-  Box, Typography, Paper, TextField, Grid, Button, alpha, useTheme,
+  Box, Typography, Paper, TextField, Grid, Button, alpha, useTheme
 } from '@mui/material';
 
 export default function Countdown() {
@@ -32,7 +32,7 @@ export default function Countdown() {
 
   return (
     <Box>
-      <Paper elevation={0} sx={{ p: 3, borderRadius: 3, border: `1px solid ${theme.palette.divider}`, mb: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, borderRadius: 3, mb: 3 }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>Название события</Typography>
@@ -69,7 +69,7 @@ export default function Countdown() {
             ))}
           </Grid>
 
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.04) }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>Также это:</Typography>
             <Typography variant="body2" color="text.secondary">
               {totalHours.toLocaleString('ru-RU')} часов • {totalMinutes.toLocaleString('ru-RU')} минут • {totalSeconds.toLocaleString('ru-RU')} секунд

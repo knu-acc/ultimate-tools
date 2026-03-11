@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider,
+  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider
 } from '@mui/material';
 import { Download, Face, Refresh } from '@mui/icons-material';
 
@@ -240,8 +240,8 @@ export default function AvatarGenerator() {
                     <Button size="small" onClick={handleRandomSeed} sx={{ minWidth: 36 }}>
                       <Refresh fontSize="small" />
                     </Button>
-                  ),
-                },
+                  )
+                }
               }}
             />
           </Box>
@@ -261,8 +261,8 @@ export default function AvatarGenerator() {
                   cursor: 'pointer',
                   bgcolor: style === opt.value
                     ? alpha(theme.palette.primary.main, 0.15)
-                    : alpha(theme.palette.primary.main, 0.04),
-                  color: style === opt.value ? theme.palette.primary.main : theme.palette.text.primary,
+                    : theme.palette.surfaceContainerLow,
+                  color: style === opt.value ? theme.palette.primary.main : theme.palette.text.primary
                 }}
               />
             ))}
@@ -283,8 +283,8 @@ export default function AvatarGenerator() {
                   cursor: 'pointer',
                   bgcolor: size === s
                     ? alpha(theme.palette.primary.main, 0.15)
-                    : alpha(theme.palette.primary.main, 0.04),
-                  color: size === s ? theme.palette.primary.main : theme.palette.text.primary,
+                    : theme.palette.surfaceContainerLow,
+                  color: size === s ? theme.palette.primary.main : theme.palette.text.primary
                 }}
               />
             ))}
@@ -303,8 +303,8 @@ export default function AvatarGenerator() {
                 cursor: 'pointer',
                 bgcolor: bgWhite
                   ? alpha(theme.palette.primary.main, 0.15)
-                  : alpha(theme.palette.primary.main, 0.04),
-                color: bgWhite ? theme.palette.primary.main : theme.palette.text.primary,
+                  : theme.palette.surfaceContainerLow,
+                color: bgWhite ? theme.palette.primary.main : theme.palette.text.primary
               }}
             />
             <Chip
@@ -315,8 +315,8 @@ export default function AvatarGenerator() {
                 cursor: 'pointer',
                 bgcolor: !bgWhite
                   ? alpha(theme.palette.primary.main, 0.15)
-                  : alpha(theme.palette.primary.main, 0.04),
-                color: !bgWhite ? theme.palette.primary.main : theme.palette.text.primary,
+                  : theme.palette.surfaceContainerLow,
+                color: !bgWhite ? theme.palette.primary.main : theme.palette.text.primary
               }}
             />
           </Box>
@@ -327,7 +327,7 @@ export default function AvatarGenerator() {
             size="large"
             startIcon={<Download />}
             onClick={handleDownload}
-            sx={{ borderRadius: '24px', py: 1.2 }}
+            sx={{ borderRadius: 6, py: 1.2 }}
           >
             Скачать PNG
           </Button>
@@ -339,11 +339,11 @@ export default function AvatarGenerator() {
             sx={{
               p: 3,
               borderRadius: 3,
-              bgcolor: alpha(theme.palette.primary.main, 0.03),
+              bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              alignItems: 'center'
             }}
           >
             <canvas
@@ -352,10 +352,9 @@ export default function AvatarGenerator() {
                 maxWidth: '100%',
                 height: 'auto',
                 borderRadius: 12,
-                border: `1px solid ${theme.palette.divider}`,
                 background: !bgWhite
                   ? `repeating-conic-gradient(${alpha(theme.palette.text.primary, 0.08)} 0% 25%, transparent 0% 50%) 50% / 16px 16px`
-                  : undefined,
+                  : undefined
               }}
             />
             <Typography variant="caption" color="text.secondary" sx={{ mt: 2 }}>

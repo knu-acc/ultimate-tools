@@ -10,9 +10,11 @@ import {
   Snackbar,
   Chip,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const ITEM_COLORS = ['#1976d2', '#388e3c', '#f57c00', '#7b1fa2', '#c62828'];
 
@@ -108,9 +110,8 @@ export default function FlexboxPlayground() {
         elevation={0}
         sx={{
           p: 3,
-          border: `1px solid ${theme.palette.divider}`,
           borderRadius: 3,
-          background: alpha(theme.palette.primary.main, 0.02),
+          background: theme.palette.surfaceContainerLowest
         }}
       >
         {/* Container Controls */}
@@ -137,8 +138,8 @@ export default function FlexboxPlayground() {
             sx={{ width: 80 }}
             slotProps={{
               input: {
-                sx: { fontSize: '0.85rem' },
-              },
+                sx: { fontSize: '0.85rem' }
+              }
             }}
           />
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>px</Typography>
@@ -162,7 +163,7 @@ export default function FlexboxPlayground() {
             alignItems,
             flexWrap: flexWrap as 'nowrap',
             gap: `${gap}px`,
-            overflow: 'auto',
+            overflow: 'auto'
           }}
         >
           {ITEM_COLORS.map((color, i) => (
@@ -182,7 +183,7 @@ export default function FlexboxPlayground() {
                 transition: 'border 0.15s',
                 flexGrow: itemProps[i].flexGrow,
                 flexShrink: itemProps[i].flexShrink,
-                flexBasis: itemProps[i].flexBasis,
+                flexBasis: itemProps[i].flexBasis
               }}
             >
               <Typography variant="h6" sx={{ color: '#fff', fontWeight: 700 }}>
@@ -212,8 +213,8 @@ export default function FlexboxPlayground() {
                 sx={{ width: 70 }}
                 slotProps={{
                   input: {
-                    sx: { fontSize: '0.85rem' },
-                  },
+                    sx: { fontSize: '0.85rem' }
+                  }
                 }}
               />
             </Box>
@@ -229,8 +230,8 @@ export default function FlexboxPlayground() {
                 sx={{ width: 70 }}
                 slotProps={{
                   input: {
-                    sx: { fontSize: '0.85rem' },
-                  },
+                    sx: { fontSize: '0.85rem' }
+                  }
                 }}
               />
             </Box>
@@ -245,8 +246,8 @@ export default function FlexboxPlayground() {
                 sx={{ width: 100 }}
                 slotProps={{
                   input: {
-                    sx: { fontSize: '0.85rem' },
-                  },
+                    sx: { fontSize: '0.85rem' }
+                  }
                 }}
               />
             </Box>
@@ -275,11 +276,10 @@ export default function FlexboxPlayground() {
           elevation={0}
           sx={{
             p: 2,
-            border: `1px solid ${theme.palette.divider}`,
             borderRadius: 2,
             bgcolor: theme.palette.mode === 'dark'
               ? alpha(theme.palette.common.black, 0.3)
-              : alpha(theme.palette.grey[50], 1),
+              : alpha(theme.palette.grey[50], 1)
           }}
         >
           <Typography
@@ -290,7 +290,7 @@ export default function FlexboxPlayground() {
               lineHeight: 1.7,
               m: 0,
               whiteSpace: 'pre-wrap',
-              color: 'text.primary',
+              color: 'text.primary'
             }}
           >
             {generateCss()}

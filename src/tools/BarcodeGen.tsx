@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider,
-  Select, MenuItem, FormControl, InputLabel,
+  Select, MenuItem, FormControl, InputLabel
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
 
@@ -70,7 +70,7 @@ const CODE39_BINARY: Record<string, string> = {
   'S': '101101011001', 'T': '101011011001', 'U': '110010101011', 'V': '100110101011',
   'W': '110011010101', 'X': '100101101011', 'Y': '110010110101', 'Z': '100110110101',
   '-': '100101011011', '.': '110010101101', ' ': '100110101101', '$': '100100100101',
-  '/': '100100101001', '+': '100101001001', '%': '101001001001', '*': '100101101101',
+  '/': '100100101001', '+': '100101001001', '%': '101001001001', '*': '100101101101'
 };
 
 function encodeCode128(text: string): number[] {
@@ -449,8 +449,8 @@ export default function BarcodeGen() {
                   cursor: 'pointer',
                   bgcolor: barcodeType === opt.value
                     ? alpha(theme.palette.primary.main, 0.15)
-                    : alpha(theme.palette.primary.main, 0.04),
-                  color: barcodeType === opt.value ? theme.palette.primary.main : theme.palette.text.primary,
+                    : theme.palette.surfaceContainerLow,
+                  color: barcodeType === opt.value ? theme.palette.primary.main : theme.palette.text.primary
                 }}
               />
             ))}
@@ -493,8 +493,8 @@ export default function BarcodeGen() {
                 cursor: 'pointer',
                 bgcolor: showText
                   ? alpha(theme.palette.primary.main, 0.15)
-                  : alpha(theme.palette.primary.main, 0.04),
-                color: showText ? theme.palette.primary.main : theme.palette.text.primary,
+                  : theme.palette.surfaceContainerLow,
+                color: showText ? theme.palette.primary.main : theme.palette.text.primary
               }}
             />
           </Box>
@@ -506,7 +506,7 @@ export default function BarcodeGen() {
             startIcon={<Download />}
             onClick={handleDownload}
             disabled={!!error}
-            sx={{ borderRadius: '24px', py: 1.2 }}
+            sx={{ borderRadius: 6, py: 1.2 }}
           >
             Скачать PNG
           </Button>
@@ -524,11 +524,11 @@ export default function BarcodeGen() {
             sx={{
               p: 3,
               borderRadius: 3,
-              bgcolor: alpha(theme.palette.primary.main, 0.03),
+              bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              alignItems: 'center'
             }}
           >
             <Box
@@ -536,15 +536,14 @@ export default function BarcodeGen() {
                 bgcolor: '#ffffff',
                 p: 2,
                 borderRadius: 2,
-                border: `1px solid ${theme.palette.divider}`,
-                display: 'inline-block',
+                display: 'inline-block'
               }}
             >
               <canvas
                 ref={canvasRef}
                 style={{
                   maxWidth: '100%',
-                  height: 'auto',
+                  height: 'auto'
                 }}
               />
             </Box>

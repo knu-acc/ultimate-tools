@@ -11,7 +11,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   useTheme,
-  alpha,
+  alpha
 } from '@mui/material';
 
 type Gender = 'male' | 'female';
@@ -73,25 +73,25 @@ export default function IdealWeight() {
         name: 'Девайн',
         description: 'Наиболее распространённая формула, часто используется в медицине и фармакологии',
         weight: calcDevine(h, gender),
-        color: '#1976d2',
+        color: '#1976d2'
       },
       {
         name: 'Робинсон',
         description: 'Модификация формулы Девайна 1983 года, считается более точной',
         weight: calcRobinson(h, gender),
-        color: '#2e7d32',
+        color: '#2e7d32'
       },
       {
         name: 'Миллер',
         description: 'Формула 1983 года, даёт несколько более высокие значения',
         weight: calcMiller(h, gender),
-        color: '#7b1fa2',
+        color: '#7b1fa2'
       },
       {
         name: 'Хамви',
         description: 'Одна из первых формул (1964), основа для многих последующих',
         weight: calcHamwi(h, gender),
-        color: '#e65100',
+        color: '#e65100'
       },
     ];
   }, [height, gender]);
@@ -108,7 +108,7 @@ export default function IdealWeight() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Ввод данных */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
           Введите ваши параметры
         </Typography>
@@ -123,8 +123,8 @@ export default function IdealWeight() {
               placeholder="170"
               slotProps={{
                 input: {
-                  inputProps: { min: 100, max: 250, step: 1 },
-                },
+                  inputProps: { min: 100, max: 250, step: 1 }
+                }
               }}
             />
           </Grid>
@@ -155,8 +155,7 @@ export default function IdealWeight() {
               p: 3,
               mb: 3,
               textAlign: 'center',
-              border: `1px solid ${theme.palette.divider}`,
-              background: alpha(theme.palette.primary.main, 0.05),
+              background: theme.palette.surfaceContainerLow
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -176,7 +175,7 @@ export default function IdealWeight() {
           </Paper>
 
           {/* Визуальная шкала сравнения */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3, border: `1px solid ${theme.palette.divider}` }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               Сравнение формул
             </Typography>
@@ -206,7 +205,7 @@ export default function IdealWeight() {
                             position: 'relative',
                             height: 12,
                             borderRadius: 6,
-                            backgroundColor: alpha(r.color, 0.1),
+                            backgroundColor: alpha(r.color, 0.1)
                           }}
                         >
                           <Box
@@ -218,7 +217,7 @@ export default function IdealWeight() {
                               width: `${pos}%`,
                               borderRadius: 6,
                               backgroundColor: alpha(r.color, 0.6),
-                              transition: 'width 0.4s ease',
+                              transition: 'width 0.4s ease'
                             }}
                           />
                           <Box
@@ -233,7 +232,7 @@ export default function IdealWeight() {
                               backgroundColor: r.color,
                               border: `2px solid ${theme.palette.background.paper}`,
                               boxShadow: `0 1px 4px ${alpha(r.color, 0.4)}`,
-                              transition: 'left 0.4s ease',
+                              transition: 'left 0.4s ease'
                             }}
                           />
                         </Box>
@@ -266,9 +265,8 @@ export default function IdealWeight() {
                   sx={{
                     p: 2.5,
                     height: '100%',
-                    border: `1px solid ${theme.palette.divider}`,
                     borderTop: `3px solid ${r.color}`,
-                    borderRadius: 2,
+                    borderRadius: 2
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 0.5, color: r.color }}>
@@ -297,7 +295,7 @@ export default function IdealWeight() {
                         mt: 1.5,
                         fontWeight: 500,
                         color: r.color,
-                        backgroundColor: alpha(r.color, 0.1),
+                        backgroundColor: alpha(r.color, 0.1)
                       }}
                     />
                   )}
@@ -312,9 +310,8 @@ export default function IdealWeight() {
             sx={{
               p: 2,
               mt: 3,
-              border: `1px solid ${theme.palette.divider}`,
               background: alpha(theme.palette.warning.main, 0.05),
-              borderRadius: 2,
+              borderRadius: 2
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>

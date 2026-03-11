@@ -10,12 +10,12 @@ import {
   IconButton,
   Tooltip,
   Grid,
-  useTheme,
-  alpha,
-} from '@mui/material';
+  useTheme } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 type CaseType =
   | 'upper'
@@ -134,8 +134,7 @@ export default function CaseConverter() {
         sx={{
           p: 3,
           mb: 3,
-          border: `1px solid ${theme.palette.divider}`,
-          background: alpha(theme.palette.primary.main, 0.04),
+          background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input */}
@@ -168,7 +167,7 @@ export default function CaseConverter() {
                   textTransform: 'none',
                   flexDirection: 'column',
                   py: 1.5,
-                  borderRadius: 2,
+                  borderRadius: 2
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '0.8rem' }}>
@@ -198,11 +197,7 @@ export default function CaseConverter() {
                     <SwapVertIcon />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title={copied ? 'Скопировано!' : 'Копировать'}>
-                  <IconButton onClick={copyToClipboard} size="small" color={copied ? 'success' : 'default'}>
-                    {copied ? <CheckIcon /> : <ContentCopyIcon />}
-                  </IconButton>
-                </Tooltip>
+                <CopyButton text={output} />
               </Box>
             </Box>
             <TextField
@@ -212,7 +207,7 @@ export default function CaseConverter() {
               value={output}
               slotProps={{ input: { readOnly: true } }}
               sx={{
-                '& .MuiInputBase-root': { fontFamily: 'monospace', background: theme.palette.background.default },
+                '& .MuiInputBase-root': { fontFamily: 'monospace', background: theme.palette.background.default }
               }}
             />
           </Box>

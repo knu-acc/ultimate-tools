@@ -2,9 +2,11 @@
 
 import React, { useState, useMemo } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme, Divider,
+  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme, Divider
 } from '@mui/material';
 import { ContentCopy, CheckCircle, Error as ErrorIcon } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 function base64UrlDecode(str: string): string {
   try {
@@ -48,7 +50,7 @@ function formatTimestamp(ts: number): string {
   try {
     return new Date(ts * 1000).toLocaleString('ru-RU', {
       day: '2-digit', month: '2-digit', year: 'numeric',
-      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
     });
   } catch {
     return String(ts);
@@ -84,7 +86,7 @@ export default function JwtDecoder() {
         placeholder="Вставьте JWT токен (eyJhbGci...)"
         sx={{
           mb: 2,
-          '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.8rem' },
+          '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.8rem' }
         }}
       />
 
@@ -119,7 +121,7 @@ export default function JwtDecoder() {
                   fontSize: '0.8rem',
                   m: 0,
                   whiteSpace: 'pre-wrap',
-                  color: theme.palette.text.primary,
+                  color: theme.palette.text.primary
                 }}
               >
                 {JSON.stringify(decoded.header, null, 2)}
@@ -147,7 +149,7 @@ export default function JwtDecoder() {
                   fontSize: '0.8rem',
                   m: 0,
                   whiteSpace: 'pre-wrap',
-                  color: theme.palette.text.primary,
+                  color: theme.palette.text.primary
                 }}
               >
                 {JSON.stringify(decoded.payload, null, 2)}
@@ -159,7 +161,7 @@ export default function JwtDecoder() {
           <Grid size={12}>
             <Paper
               elevation={0}
-              sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.04) }}
+              sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
             >
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>
                 Расшифрованные поля

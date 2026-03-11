@@ -3,9 +3,11 @@
 import React, { useState, useRef, useCallback } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider,
-  IconButton, Tooltip,
+  IconButton, Tooltip
 } from '@mui/material';
 import { Shuffle, Groups, Replay, ContentCopy, Delete } from '@mui/icons-material';
+import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+
 
 const TEAM_COLORS = [
   'primary', 'secondary', 'success', 'warning', 'error', 'info',
@@ -65,7 +67,7 @@ export default function TeamGenerator() {
         teamIdx++;
         result.push({
           name: `Команда ${teamIdx}`,
-          members: shuffled.slice(i, i + size),
+          members: shuffled.slice(i, i + size)
         });
       }
     }
@@ -95,12 +97,12 @@ export default function TeamGenerator() {
 
         const now = new Date();
         const timeStr = now.toLocaleTimeString('ru-RU', {
-          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
         });
         setHistory(prev => [{
           teams: finalTeams,
           time: timeStr,
-          participantCount: participants.length,
+          participantCount: participants.length
         }, ...prev].slice(0, 10));
       }
     }, 80);
@@ -143,7 +145,7 @@ export default function TeamGenerator() {
             disabled={animating}
             sx={{
               mb: 2,
-              '& .MuiOutlinedInput-root': { borderRadius: 3 },
+              '& .MuiOutlinedInput-root': { borderRadius: 3 }
             }}
           />
 
@@ -161,8 +163,8 @@ export default function TeamGenerator() {
                 cursor: 'pointer',
                 bgcolor: mode === 'count'
                   ? alpha(theme.palette.primary.main, 0.15)
-                  : alpha(theme.palette.primary.main, 0.04),
-                color: mode === 'count' ? theme.palette.primary.main : theme.palette.text.primary,
+                  : theme.palette.surfaceContainerLow,
+                color: mode === 'count' ? theme.palette.primary.main : theme.palette.text.primary
               }}
             />
             <Chip
@@ -173,8 +175,8 @@ export default function TeamGenerator() {
                 cursor: 'pointer',
                 bgcolor: mode === 'size'
                   ? alpha(theme.palette.primary.main, 0.15)
-                  : alpha(theme.palette.primary.main, 0.04),
-                color: mode === 'size' ? theme.palette.primary.main : theme.palette.text.primary,
+                  : theme.palette.surfaceContainerLow,
+                color: mode === 'size' ? theme.palette.primary.main : theme.palette.text.primary
               }}
             />
           </Box>
@@ -218,7 +220,7 @@ export default function TeamGenerator() {
             startIcon={<Shuffle />}
             onClick={handleSplit}
             disabled={animating || participants.length < 2}
-            sx={{ borderRadius: '24px', py: 1.2, mb: 1 }}
+            sx={{ borderRadius: 6, py: 1.2, mb: 1 }}
           >
             {animating ? 'Перемешиваю...' : 'Разделить'}
           </Button>
@@ -262,9 +264,8 @@ export default function TeamGenerator() {
                         sx={{
                           p: 2,
                           borderRadius: 3,
-                          border: `1px solid ${theme.palette.divider}`,
                           bgcolor: alpha(color.main, 0.05),
-                          transition: animating ? 'none' : 'all 0.3s ease',
+                          transition: animating ? 'none' : 'all 0.3s ease'
                         }}
                       >
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
@@ -281,7 +282,7 @@ export default function TeamGenerator() {
                               bgcolor: alpha(color.main, 0.12),
                               color: color.dark,
                               height: 22,
-                              fontSize: '0.75rem',
+                              fontSize: '0.75rem'
                             }}
                           />
                         </Box>
@@ -294,7 +295,7 @@ export default function TeamGenerator() {
                               mb: 0.5,
                               borderRadius: 1.5,
                               bgcolor: alpha(color.main, 0.06),
-                              fontSize: '0.875rem',
+                              fontSize: '0.875rem'
                             }}
                           >
                             {member}
@@ -314,8 +315,8 @@ export default function TeamGenerator() {
               sx={{
                 p: 4,
                 borderRadius: 3,
-                bgcolor: alpha(theme.palette.primary.main, 0.04),
-                textAlign: 'center',
+                bgcolor: theme.palette.surfaceContainerLow,
+                textAlign: 'center'
               }}
             >
               <Groups sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
@@ -346,10 +347,9 @@ export default function TeamGenerator() {
                     p: 1.5,
                     mb: 1,
                     borderRadius: 2,
-                    border: `1px solid ${theme.palette.divider}`,
                     bgcolor: i === 0 ? alpha(theme.palette.success.main, 0.03) : 'transparent',
                     cursor: 'pointer',
-                    '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) },
+                    '&:hover': { bgcolor: theme.palette.surfaceContainerLow }
                   }}
                   onClick={() => { setTeams(h.teams); }}
                 >
@@ -371,7 +371,7 @@ export default function TeamGenerator() {
                             fontSize: '0.7rem',
                             fontWeight: 700,
                             bgcolor: alpha(getTeamColor(ti).main, 0.12),
-                            color: getTeamColor(ti).dark,
+                            color: getTeamColor(ti).dark
                           }}
                         />
                       ))}
