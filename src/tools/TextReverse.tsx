@@ -4,16 +4,13 @@ import { useState } from 'react';
 import {
   Box,
   Typography,
-  Button,
   Paper,
   TextField,
   Chip,
-  IconButton,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type ReverseMode = 'chars' | 'words' | 'lines' | 'mirror';
@@ -90,11 +87,9 @@ export default function TextReverse() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [activeMode, setActiveMode] = useState<ReverseMode>('chars');
-  const [copied, setCopied] = useState(false);
 
   const handleModeChange = (mode: ReverseMode) => {
     setActiveMode(mode);
-    setCopied(false);
     if (input.trim()) {
       setOutput(applyReverse(input, mode));
     }
@@ -102,7 +97,6 @@ export default function TextReverse() {
 
   const handleInputChange = (value: string) => {
     setInput(value);
-    setCopied(false);
     if (value.trim()) {
       setOutput(applyReverse(value, activeMode));
     } else {
@@ -110,57 +104,27 @@ export default function TextReverse() {
     }
   };
 
-  const handleReverse = () => {
-    const result = applyReverse(input, activeMode);
-    setOutput(result);
-    setCopied(false);
-  };
-
-  const copyToClipboard = async () => {
-    if (!output) return;
-    try {
-      await navigator.clipboard.writeText(output);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* ignore */
-    }
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Исходный текст
-        </Typography>
         <TextField
           multiline
-          rows={6}
+          rows={5}
           fullWidth
           value={input}
           onChange={(e) => handleInputChange(e.target.value)}
-          placeholder="Введите текст для переворота..."
-          sx={{
-            mb: 2.5,
-            '& .MuiOutlinedInput-root': {
-              borderRadius: 2
-            }
-          }}
+          placeholder="Текст..."
+          sx={{ mb: 2 }}
         />
 
-        {/* Mode selection */}
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Режим переворота
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2.5 }}>
+        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
           {MODES.map((m) => (
             <Chip
               key={m.mode}
@@ -178,25 +142,9 @@ export default function TextReverse() {
           ))}
         </Box>
 
-        {/* Reverse button */}
-        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2.5 }}>
-          <Button
-            variant="contained"
-            onClick={handleReverse}
-            disabled={!input.trim()}
-            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 4 }}
-          >
-            Перевернуть
-          </Button>
-        </Box>
-
-        {/* Output */}
         {output && (
           <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-              <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                Результат
-              </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
               <CopyButton text={output} />
             </Box>
             <TextField
@@ -207,12 +155,7 @@ export default function TextReverse() {
               slotProps={{ input: { readOnly: true } }}
               sx={{
                 '& .MuiInputBase-root': {
-                  background: theme.palette.mode === 'dark'
-                    ? alpha(theme.palette.common.black, 0.3)
-                    : alpha(theme.palette.grey[50], 1)
-                },
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: 2
+                  background: alpha(theme.palette.text.primary, 0.03)
                 }
               }}
             />

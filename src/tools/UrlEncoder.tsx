@@ -13,10 +13,8 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function looksEncoded(str: string): boolean {
@@ -38,7 +36,6 @@ export default function UrlEncoder() {
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode' | null>(null);
   const [error, setError] = useState('');
-  const [copied, setCopied] = useState(false);
   const [suggestion, setSuggestion] = useState<'decode' | null>(null);
 
   // Comparison state
@@ -97,12 +94,6 @@ export default function UrlEncoder() {
     setShowComparison(false);
   }, [output]);
 
-  const copyToClipboard = async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const clear = () => {
     setInput('');
     setOutput('');
@@ -112,38 +103,28 @@ export default function UrlEncoder() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-            Входной текст
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            {suggestion === 'decode' && (
-              <Chip
-                label="Обнаружена закодированная строка"
-                size="small"
-                color="info"
-                variant="outlined"
-                onClick={handleDecode}
-                sx={{ cursor: 'pointer' }}
-              />
-            )}
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 1 }}>
+          {suggestion === 'decode' && (
             <Chip
-              label={`${input.length} символов`}
+              label="Обнаружена закодированная строка"
               size="small"
+              color="info"
               variant="outlined"
-              sx={{ fontVariantNumeric: 'tabular-nums' }}
+              onClick={handleDecode}
+              sx={{ cursor: 'pointer' }}
             />
-          </Box>
+          )}
         </Box>
         <TextField
           multiline
@@ -157,7 +138,7 @@ export default function UrlEncoder() {
             setError('');
             setShowComparison(false);
           }}
-          placeholder="Введите текст или URL-строку..."
+          placeholder="Текст или URL..."
           sx={{
             mb: 2,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
@@ -191,9 +172,8 @@ export default function UrlEncoder() {
             sx={{
               p: 2,
               mb: 2,
-              borderRadius: 2,
-              background: alpha(theme.palette.error.main, 0.08),
-              border: `1px solid ${alpha(theme.palette.error.main, 0.3)}`
+              borderRadius: 3,
+              background: alpha(theme.palette.error.main, 0.08)
             }}
           >
             <Typography variant="body2" color="error">
@@ -205,27 +185,8 @@ export default function UrlEncoder() {
         {/* Output */}
         {output && (
           <Box sx={{ mb: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                  Результат
-                </Typography>
-                <Chip
-                  label={mode === 'encode' ? 'Закодировано' : 'Декодировано'}
-                  size="small"
-                  color="primary"
-                  variant="outlined"
-                />
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Chip
-                  label={`${output.length} символов`}
-                  size="small"
-                  variant="outlined"
-                  sx={{ fontVariantNumeric: 'tabular-nums' }}
-                />
-                <CopyButton text={output} />
-              </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 1 }}>
+              <CopyButton text={output} />
             </Box>
             <TextField
               multiline
@@ -237,7 +198,7 @@ export default function UrlEncoder() {
                 '& .MuiInputBase-root': {
                   fontFamily: 'monospace',
                   fontSize: '0.875rem',
-                  background: theme.palette.background.default
+                  background: alpha(theme.palette.text.primary, 0.03)
                 }
               }}
             />
@@ -251,7 +212,7 @@ export default function UrlEncoder() {
             sx={{
               p: 2,
               borderRadius: 3,
-              background: theme.palette.background.default
+              background: alpha(theme.palette.text.primary, 0.03)
             }}
           >
             <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
@@ -265,11 +226,7 @@ export default function UrlEncoder() {
             <Box sx={{ mb: 2 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
                 <Chip label="encodeURI" size="small" color="secondary" variant="outlined" />
-                <Tooltip title="Копировать">
-                  <IconButton size="small" onClick={() => copyToClipboard(encodeURIResult)}>
-                    <ContentCopyIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
+                <CopyButton text={encodeURIResult} />
               </Box>
               <Typography
                 variant="body2"
@@ -279,8 +236,7 @@ export default function UrlEncoder() {
                   wordBreak: 'break-all',
                   p: 1.5,
                   borderRadius: 2,
-                  background: alpha(theme.palette.secondary.main, 0.06),
-                  border: `1px solid ${alpha(theme.palette.secondary.main, 0.15)}`
+                  background: alpha(theme.palette.secondary.main, 0.06)
                 }}
               >
                 {encodeURIResult}
@@ -291,11 +247,7 @@ export default function UrlEncoder() {
             <Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
                 <Chip label="encodeURIComponent" size="small" color="primary" variant="outlined" />
-                <Tooltip title="Копировать">
-                  <IconButton size="small" onClick={() => copyToClipboard(encodeURIComponentResult)}>
-                    <ContentCopyIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
+                <CopyButton text={encodeURIComponentResult} />
               </Box>
               <Typography
                 variant="body2"
@@ -305,8 +257,7 @@ export default function UrlEncoder() {
                   wordBreak: 'break-all',
                   p: 1.5,
                   borderRadius: 2,
-                  background: theme.palette.surfaceContainerLow,
-                  border: `1px solid ${alpha(theme.palette.primary.main, 0.15)}`
+                  background: theme.palette.surfaceContainerLow
                 }}
               >
                 {encodeURIComponentResult}
@@ -320,9 +271,8 @@ export default function UrlEncoder() {
                 sx={{
                   mt: 2,
                   p: 1.5,
-                  borderRadius: 2,
-                  background: alpha(theme.palette.warning.main, 0.08),
-                  border: `1px solid ${alpha(theme.palette.warning.main, 0.2)}`
+                  borderRadius: 3,
+                  background: alpha(theme.palette.warning.main, 0.08)
                 }}
               >
                 <Typography variant="caption" color="text.secondary">

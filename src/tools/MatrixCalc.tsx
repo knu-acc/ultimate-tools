@@ -11,7 +11,9 @@ import {
   Chip,
   ToggleButton,
   ToggleButtonGroup,
-  useTheme } from '@mui/material';
+  useTheme,
+  alpha } from '@mui/material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 type MatrixSize = 2 | 3 | 4;
 type Matrix = number[][];
@@ -181,9 +183,6 @@ export default function MatrixCalc() {
           borderRadius: 3
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          \u0420\u0430\u0437\u043c\u0435\u0440 \u043c\u0430\u0442\u0440\u0438\u0446\u044b
-        </Typography>
         <ToggleButtonGroup
           value={size}
           exclusive
@@ -222,9 +221,6 @@ export default function MatrixCalc() {
           borderRadius: 3
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          \u041e\u043f\u0435\u0440\u0430\u0446\u0438\u0438
-        </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
           <Button
             variant={operation === 'add' ? 'contained' : 'outlined'}
@@ -289,15 +285,14 @@ export default function MatrixCalc() {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
-            <Typography variant="h6" sx={{ fontWeight: 600 }}>
-              \u0420\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442
-            </Typography>
             <Chip
               label={result.label}
               size="small"
               color="primary"
               sx={{ fontFamily: 'monospace', fontWeight: 700 }}
             />
+            <Box sx={{ flex: 1 }} />
+            <CopyButton text={result.scalar !== undefined ? formatNum(result.scalar) : (result.matrix ? result.matrix.map(row => row.map(formatNum).join('\t')).join('\n') : '')} />
           </Box>
 
           {result.scalar !== undefined && (

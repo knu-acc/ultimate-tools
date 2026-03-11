@@ -10,12 +10,10 @@ import {
   Slider,
   Switch,
   FormControlLabel,
-  IconButton,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const LOREM_WORDS = [
@@ -82,7 +80,6 @@ export default function LoremGenerator() {
   const [wordsPerParagraph, setWordsPerParagraph] = useState(50);
   const [startWithLorem, setStartWithLorem] = useState(true);
   const [output, setOutput] = useState('');
-  const [copied, setCopied] = useState(false);
 
   const stats = useMemo(() => {
     if (!output) return { words: 0, chars: 0, charsNoSpace: 0, paragraphs: 0 };
@@ -109,32 +106,14 @@ export default function LoremGenerator() {
       }
     }
     setOutput(paragraphs.join('\n\n'));
-    setCopied(false);
-  };
-
-  const handleCopy = async () => {
-    if (!output) return;
-    try {
-      await navigator.clipboard.writeText(output);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* ignore */
-    }
   };
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      {/* Controls */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Настройки генерации
-        </Typography>
-
-        {/* Paragraph count */}
+      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <TextField
           fullWidth
-          label="Количество абзацев"
+          label="Абзацы"
           type="number"
           value={paragraphCount}
           onChange={(e) => {
@@ -144,10 +123,9 @@ export default function LoremGenerator() {
           slotProps={{
             input: { inputProps: { min: 1, max: 20 } }
           }}
-          sx={{ mb: 3 }}
+          sx={{ mb: 2 }}
         />
 
-        {/* Words per paragraph slider */}
         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
           Слов в абзаце: <strong>{wordsPerParagraph}</strong>
         </Typography>
@@ -183,27 +161,25 @@ export default function LoremGenerator() {
           sx={{ mb: 2, display: 'block' }}
         />
 
-        {/* Generate button */}
         <Button
           variant="contained"
           onClick={handleGenerate}
           fullWidth
-          size="large"
           sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 3 }}
         >
-          Сгенерировать текст
+          Сгенерировать
         </Button>
       </Paper>
 
       {/* Output */}
       {output && (
         <>
-          {/* Stats */}
           <Paper
             elevation={0}
             sx={{
               p: 2,
               mb: 2,
+              borderRadius: 3,
               background: theme.palette.surfaceContainerLow
             }}
           >
@@ -226,20 +202,9 @@ export default function LoremGenerator() {
             </Box>
           </Paper>
 
-          {/* Text output */}
-          <Paper elevation={0} sx={{ p: 3, position: 'relative' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-              <Typography variant="h6">
-                Результат
-              </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                {copied && (
-                  <Typography variant="caption" color="success.main">
-                    Скопировано!
-                  </Typography>
-                )}
-                <CopyButton text={output} />
-              </Box>
+          <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+              <CopyButton text={output} />
             </Box>
             <Box
               sx={{

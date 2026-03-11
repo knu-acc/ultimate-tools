@@ -87,18 +87,10 @@ export default function CalorieCalc() {
           p: 3,
           mb: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Введите ваши параметры
-        </Typography>
-
-        {/* Gender toggle */}
         <Box sx={{ mb: 2.5 }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-            Пол
-          </Typography>
           <ToggleButtonGroup
             value={gender}
             exclusive
@@ -178,8 +170,8 @@ export default function CalorieCalc() {
           borderRadius: 3
         }}
       >
-        <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1.5 }}>
-          Уровень активности
+        <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 1.5 }}>
+          Активность
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           {ACTIVITY_LEVELS.map((level) => {
@@ -245,7 +237,6 @@ export default function CalorieCalc() {
                   p: 3,
                   textAlign: 'center',
                   borderRadius: 3,
-                  border: `1px solid ${alpha('#1976d2', 0.3)}`,
                   background: alpha('#1976d2', 0.05)
                 }}
               >
@@ -267,7 +258,6 @@ export default function CalorieCalc() {
                   p: 3,
                   textAlign: 'center',
                   borderRadius: 3,
-                  border: `1px solid ${alpha('#2e7d32', 0.3)}`,
                   background: alpha('#2e7d32', 0.05)
                 }}
               >
@@ -293,8 +283,8 @@ export default function CalorieCalc() {
               borderRadius: 3
             }}
           >
-            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
-              Макронутриенты (на основе TDEE)
+            <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
+              Макронутриенты
             </Typography>
             <Grid container spacing={2}>
               {[
@@ -309,8 +299,7 @@ export default function CalorieCalc() {
                       p: 2,
                       textAlign: 'center',
                       borderRadius: 2,
-                      border: `1px solid ${alpha(m.color, 0.25)}`,
-                      background: alpha(m.color, 0.04)
+                      background: alpha(m.color, 0.06)
                     }}
                   >
                     <Box
@@ -428,8 +417,7 @@ export default function CalorieCalc() {
                       p: 2,
                       textAlign: 'center',
                       borderRadius: 2,
-                      border: `1px solid ${alpha(goal.color, 0.25)}`,
-                      background: alpha(goal.color, 0.04)
+                      background: alpha(goal.color, 0.06)
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">

@@ -177,14 +177,11 @@ export default function ClothingSize() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Пол
-        </Typography>
         <ToggleButtonGroup
           value={gender}
           exclusive
@@ -285,8 +282,6 @@ export default function ClothingSize() {
                   sx={{
                     p: 2,
                     borderRadius: 3,
-                    border: `1px solid ${sys === sizeSystem ? theme.palette.primary.main : theme.palette.divider}`,
-                    borderWidth: sys === sizeSystem ? 2 : 1,
                     background: sys === sizeSystem ? theme.palette.surfaceContainerHigh : 'transparent',
                     textAlign: 'center',
                     transition: 'all 200ms ease',
@@ -318,7 +313,7 @@ export default function ClothingSize() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               borderRadius: 3
             }}
           >

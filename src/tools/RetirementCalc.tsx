@@ -224,7 +224,7 @@ export default function RetirementCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Текущие накопления ({sym})"
+              label={`Текущие накопления (${sym})`}
               type="number"
               value={currentSavings}
               onChange={(e) => setCurrentSavings(e.target.value)}
@@ -244,7 +244,7 @@ export default function RetirementCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Ежемесячные накопления ({sym})"
+              label={`Ежемесячные накопления (${sym})`}
               type="number"
               value={monthlySavings}
               onChange={(e) => setMonthlySavings(e.target.value)}
@@ -284,7 +284,7 @@ export default function RetirementCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Желаемый ежемесячный доход на пенсии ({sym})"
+              label={`Желаемый ежемесячный доход на пенсии (${sym})`}
               type="number"
               value={desiredMonthlyIncome}
               onChange={(e) => setDesiredMonthlyIncome(e.target.value)}
@@ -325,21 +325,21 @@ export default function RetirementCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Накоплено к пенсии"
-                  value={`${fmtInt(results.totalAtRetirement)} {sym}`}
+                  value={`${fmtInt(results.totalAtRetirement)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Возможный ежемес. доход (бессрочно)"
-                  value={`${fmtInt(results.monthlyIncomePossible)} {sym}`}
+                  value={`${fmtInt(results.monthlyIncomePossible)} ${sym}`}
                   color="#2e7d32"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Ежемес. доход (на 20 лет)"
-                  value={`${fmtInt(results.monthlyIncome20)} {sym}`}
+                  value={`${fmtInt(results.monthlyIncome20)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
@@ -416,12 +416,12 @@ export default function RetirementCalc() {
                 variant="outlined"
               />
               <Chip
-                label={`Всего внесено: ${fmtInt(results.totalContributed)} {sym}`}
+                label={`Всего внесено: ${fmtInt(results.totalContributed)} ${sym}`}
                 size="small"
                 variant="outlined"
               />
               <Chip
-                label={`Заработано на процентах: ${fmtInt(results.totalInterest)} {sym}`}
+                label={`Заработано на процентах: ${fmtInt(results.totalInterest)} ${sym}`}
                 size="small"
                 color="success"
                 variant="outlined"

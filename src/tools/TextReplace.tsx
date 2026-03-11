@@ -144,36 +144,30 @@ export default function TextReplace() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input text */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-          Исходный текст
-        </Typography>
         <TextField
           multiline
-          rows={6}
+          rows={5}
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Введите или вставьте текст..."
-          sx={{ mb: 3 }}
+          placeholder="Текст..."
+          sx={{ mb: 2 }}
         />
 
-        {/* Search and Replace fields */}
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-              Найти
-            </Typography>
             <TextField
+              label="Найти"
               fullWidth
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -184,10 +178,8 @@ export default function TextReplace() {
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-              Заменить на
-            </Typography>
             <TextField
+              label="Заменить на"
               fullWidth
               value={replace}
               onChange={(e) => setReplace(e.target.value)}
@@ -197,10 +189,6 @@ export default function TextReplace() {
           </Grid>
         </Grid>
 
-        {/* Options */}
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          Параметры поиска
-        </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2, alignItems: 'center' }}>
           <Chip
             label="Учитывать регистр"
@@ -248,11 +236,7 @@ export default function TextReplace() {
               background: alpha(
                 matches.length > 0 ? theme.palette.success.main : theme.palette.warning.main,
                 0.1
-              ),
-              border: `1px solid ${alpha(
-                matches.length > 0 ? theme.palette.success.main : theme.palette.warning.main,
-                0.3
-              )}`
+              )
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
@@ -263,8 +247,7 @@ export default function TextReplace() {
           </Box>
         )}
 
-        {/* Action buttons */}
-        <Box sx={{ display: 'flex', gap: 1, mb: 3, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
           <Button
             variant="outlined"
             onClick={handleReplaceFirst}
@@ -290,14 +273,10 @@ export default function TextReplace() {
           </Button>
         </Box>
 
-        {/* Highlighted preview */}
         {highlightedPreview && highlightedPreview.length > 0 && (
           <Box>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-              Предпросмотр совпадений
-            </Typography>
             <Paper
-              variant="outlined"
+              elevation={0}
               sx={{
                 p: 2,
                 maxHeight: 250,
@@ -320,7 +299,7 @@ export default function TextReplace() {
                       borderRadius: '3px',
                       px: 0.3,
                       py: 0.1,
-                      border: `1px solid ${alpha(theme.palette.warning.main, 0.5)}`
+                      fontWeight: 600
                     }}
                   >
                     {part.text}

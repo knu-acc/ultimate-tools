@@ -6,9 +6,6 @@ import {
   Typography,
   Button,
   Paper,
-  TextField,
-  IconButton,
-  Tooltip,
   Slider,
   FormControlLabel,
   Checkbox,
@@ -16,15 +13,11 @@ import {
   List,
   ListItem,
   ListItemText,
-  Divider,
   Chip,
-  useTheme } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
+  useTheme
+} from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import FingerprintIcon from '@mui/icons-material/Fingerprint';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function generateUuidV4(): string {
@@ -44,9 +37,6 @@ export default function UuidGenerator() {
   const [uuids, setUuids] = useState<string[]>([]);
   const [uppercase, setUppercase] = useState(false);
   const [withDashes, setWithDashes] = useState(true);
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-  const [copiedAll, setCopiedAll] = useState(false);
-
   const formatUuid = useCallback(
     (uuid: string) => {
       let result = withDashes ? uuid : uuid.replace(/-/g, '');
@@ -58,27 +48,6 @@ export default function UuidGenerator() {
   const generate = () => {
     const newUuids = Array.from({ length: count }, () => generateUuidV4());
     setUuids(newUuids);
-    setCopiedIndex(null);
-    setCopiedAll(false);
-  };
-
-  const copyOne = async (index: number) => {
-    await navigator.clipboard.writeText(formatUuid(uuids[index]));
-    setCopiedIndex(index);
-    setTimeout(() => setCopiedIndex(null), 2000);
-  };
-
-  const copyAll = async () => {
-    const text = uuids.map(formatUuid).join('\n');
-    await navigator.clipboard.writeText(text);
-    setCopiedAll(true);
-    setTimeout(() => setCopiedAll(false), 2000);
-  };
-
-  const clear = () => {
-    setUuids([]);
-    setCopiedIndex(null);
-    setCopiedAll(false);
   };
 
   return (
@@ -87,15 +56,15 @@ export default function UuidGenerator() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Count slider */}
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Количество UUID
+              Количество
             </Typography>
             <Typography variant="body2" sx={{ fontWeight: 700, color: 'primary.main' }}>
               {count}
@@ -111,8 +80,7 @@ export default function UuidGenerator() {
           />
         </Box>
 
-        {/* Options */}
-        <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 6 }}>
             <FormControlLabel
               control={<Checkbox checked={uppercase} onChange={(e) => setUppercase(e.target.checked)} />}
@@ -127,43 +95,19 @@ export default function UuidGenerator() {
           </Grid>
         </Grid>
 
-        {/* Generate button */}
-        <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mb: 2 }}>
-          <Button variant="contained" size="large" startIcon={<RefreshIcon />} onClick={generate} sx={{ px: 5 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button variant="contained" startIcon={<RefreshIcon />} onClick={generate} sx={{ px: 4, textTransform: 'none', fontWeight: 600, borderRadius: 3 }}>
             Сгенерировать
           </Button>
-          {uuids.length > 0 && (
-            <Button variant="outlined" startIcon={<DeleteOutlineIcon />} onClick={clear} color="inherit">
-              Очистить
-            </Button>
-          )}
         </Box>
       </Paper>
 
-      {/* Results */}
       {uuids.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <FingerprintIcon sx={{ color: 'primary.main', fontSize: 20 }} />
-              <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                Сгенерировано: {uuids.length}
-              </Typography>
-            </Box>
-            <Tooltip title={copiedAll ? 'Скопировано!' : 'Копировать все'}>
-              <Button
-                size="small"
-                variant="outlined"
-                startIcon={copiedAll ? <CheckIcon /> : <ContentCopyIcon />}
-                onClick={copyAll}
-                color={copiedAll ? 'success' : 'primary'}
-              >
-                Копировать все
-              </Button>
-            </Tooltip>
+        <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+            <Chip label={`${uuids.length} UUID`} size="small" sx={{ fontWeight: 600 }} />
+            <CopyButton text={uuids.map(formatUuid).join('\n')} />
           </Box>
-
-          <Divider sx={{ mb: 1 }} />
 
           <List dense sx={{ maxHeight: 400, overflow: 'auto' }}>
             {uuids.map((uuid, i) => (

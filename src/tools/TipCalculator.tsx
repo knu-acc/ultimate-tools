@@ -110,7 +110,7 @@ export default function TipCalculator() {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Сумма счёта ({sym})"
+              label={`Сумма счёта (${sym})`}
               type="number"
               value={billAmount}
               onChange={(e) => setBillAmount(e.target.value)}
@@ -194,21 +194,21 @@ export default function TipCalculator() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Чаевые"
-                  value={`${fmt(results.tipAmount)} {sym}`}
+                  value={`${fmt(results.tipAmount)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Итого со счётом"
-                  value={`${fmt(results.total)} {sym}`}
+                  value={`${fmt(results.total)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="На каждого"
-                  value={`${fmt(results.perPerson)} {sym}`}
+                  value={`${fmt(results.perPerson)} ${sym}`}
                   color="#2e7d32"
                 />
               </Grid>

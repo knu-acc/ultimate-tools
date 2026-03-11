@@ -8,20 +8,17 @@ import {
   TextField,
   Chip,
   Grid,
-  useTheme } from '@mui/material';
+  useTheme,
+  alpha
+} from '@mui/material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 type TempUnit = 'celsius' | 'fahrenheit' | 'kelvin';
 
-interface ConvertedValues {
-  celsius: number;
-  fahrenheit: number;
-  kelvin: number;
-}
-
 const unitLabels: Record<TempUnit, string> = {
-  celsius: 'Цельсий (°C)',
-  fahrenheit: 'Фаренгейт (°F)',
-  kelvin: 'Кельвин (K)'
+  celsius: 'Цельсий',
+  fahrenheit: 'Фаренгейт',
+  kelvin: 'Кельвин'
 };
 
 const unitSymbols: Record<TempUnit, string> = {
@@ -30,18 +27,12 @@ const unitSymbols: Record<TempUnit, string> = {
   kelvin: 'K'
 };
 
-function convert(value: number, from: TempUnit): ConvertedValues {
+function convert(value: number, from: TempUnit): Record<TempUnit, number> {
   let celsius: number;
   switch (from) {
-    case 'celsius':
-      celsius = value;
-      break;
-    case 'fahrenheit':
-      celsius = (value - 32) * 5 / 9;
-      break;
-    case 'kelvin':
-      celsius = value - 273.15;
-      break;
+    case 'celsius': celsius = value; break;
+    case 'fahrenheit': celsius = (value - 32) * 5 / 9; break;
+    case 'kelvin': celsius = value - 273.15; break;
   }
   return {
     celsius: parseFloat(celsius.toFixed(4)),
@@ -50,156 +41,108 @@ function convert(value: number, from: TempUnit): ConvertedValues {
   };
 }
 
-const commonTemperatures = [
+const commonTemps = [
   { name: 'Абсолютный ноль', celsius: -273.15, fahrenheit: -459.67, kelvin: 0 },
   { name: 'Замерзание воды', celsius: 0, fahrenheit: 32, kelvin: 273.15 },
-  { name: 'Комнатная температура', celsius: 20, fahrenheit: 68, kelvin: 293.15 },
-  { name: 'Температура тела', celsius: 36.6, fahrenheit: 97.88, kelvin: 309.75 },
+  { name: 'Комнатная', celsius: 20, fahrenheit: 68, kelvin: 293.15 },
+  { name: 'Тело человека', celsius: 36.6, fahrenheit: 97.88, kelvin: 309.75 },
   { name: 'Кипение воды', celsius: 100, fahrenheit: 212, kelvin: 373.15 },
 ];
 
 export default function TemperatureConverter() {
   const theme = useTheme();
-  const [input, setInput] = useState<string>('0');
+  const [input, setInput] = useState('0');
   const [sourceUnit, setSourceUnit] = useState<TempUnit>('celsius');
 
   const numericValue = parseFloat(input);
   const isValid = input !== '' && !isNaN(numericValue);
-  const converted: ConvertedValues | null = isValid ? convert(numericValue, sourceUnit) : null;
+  const converted = isValid ? convert(numericValue, sourceUnit) : null;
 
   const otherUnits = (Object.keys(unitLabels) as TempUnit[]).filter((u) => u !== sourceUnit);
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
-      {/* Ввод */}
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
-          borderRadius: 4,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Введите значение
-        </Typography>
-        <TextField
-          fullWidth
-          size="small"
-          type="number"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Введите число"
-          sx={{
-            mb: 2.5,
-            '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
-          }}
-        />
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <TextField
+            fullWidth
+            type="number"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="0"
+            sx={{
+              flex: 1,
+              minWidth: 200,
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.2rem' }
+            }}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <Typography variant="body1" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
+                    {unitSymbols[sourceUnit]}
+                  </Typography>
+                )
+              }
+            }}
+          />
+        </Box>
 
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Исходная единица
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
           {(Object.keys(unitLabels) as TempUnit[]).map((unit) => (
             <Chip
               key={unit}
-              label={unitLabels[unit]}
+              label={`${unitLabels[unit]} (${unitSymbols[unit]})`}
               onClick={() => setSourceUnit(unit)}
               color={sourceUnit === unit ? 'primary' : 'default'}
               variant={sourceUnit === unit ? 'filled' : 'outlined'}
-              sx={{
-                borderRadius: 3,
-                fontWeight: sourceUnit === unit ? 600 : 400,
-                transition: 'all 200ms ease'
-              }}
+              sx={{ fontWeight: sourceUnit === unit ? 600 : 400 }}
             />
           ))}
         </Box>
       </Paper>
 
-      {/* Результаты */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        {converted ? (
-          <>
-            {/* Карточка исходного значения */}
-            <Grid size={{ xs: 12 }}>
+      {converted && (
+        <Grid container spacing={1.5} sx={{ mb: 2 }}>
+          {otherUnits.map((unit) => (
+            <Grid size={{ xs: 12, sm: 6 }} key={unit}>
               <Paper
                 elevation={0}
                 sx={{
                   p: 2.5,
-                  borderRadius: 4,
-                  border: `2px solid ${theme.palette.primary.main}`,
-                  background: theme.palette.surfaceContainerHigh,
-                  textAlign: 'center'
+                  borderRadius: 3,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 2,
+                  transition: 'all 200ms ease',
+                  '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
-                <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}>
-                  Исходное значение
-                </Typography>
-                <Typography variant="h4" sx={{ fontWeight: 700, fontFamily: 'monospace', mt: 0.5 }}>
-                  {converted[sourceUnit]} {unitSymbols[sourceUnit]}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {unitLabels[sourceUnit]}
-                </Typography>
-              </Paper>
-            </Grid>
-
-            {/* Карточки конвертированных значений */}
-            {otherUnits.map((unit) => (
-              <Grid size={{ xs: 12, sm: 6 }} key={unit}>
-                <Paper
-                  elevation={0}
-                  sx={{
-                    p: 2.5,
-                    borderRadius: 4,
-                    textAlign: 'center',
-                    transition: 'all 200ms ease',
-                    '&:hover': {
-                      borderColor: theme.palette.primary.main,
-                      background: theme.palette.surfaceContainerLow
-                    }
-                  }}
-                >
-                  <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                     {unitLabels[unit]}
                   </Typography>
-                  <Typography variant="h4" sx={{ fontWeight: 700, fontFamily: 'monospace', mt: 0.5 }}>
+                  <Typography variant="h5" sx={{ fontWeight: 700, fontFamily: 'monospace' }}>
                     {converted[unit]} {unitSymbols[unit]}
                   </Typography>
-                </Paper>
-              </Grid>
-            ))}
-          </>
-        ) : (
-          <Grid size={{ xs: 12 }}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 3,
-                borderRadius: 4,
-                textAlign: 'center'
-              }}
-            >
-              <Typography color="text.secondary">
-                Введите корректное число для конвертации
-              </Typography>
-            </Paper>
-          </Grid>
-        )}
-      </Grid>
+                </Box>
+                <CopyButton text={String(converted[unit])} />
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      )}
 
-      {/* Справочная таблица */}
-      <Paper
-        elevation={0}
-        sx={{
-          p: 3,
-          borderRadius: 4
-        }}
-      >
-        <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
-          Справочная таблица
+      <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
+        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
+          Справочник
         </Typography>
         <Box sx={{ overflowX: 'auto' }}>
           <Box
@@ -208,35 +151,21 @@ export default function TemperatureConverter() {
               width: '100%',
               borderCollapse: 'collapse',
               '& th, & td': {
-                p: 1.5,
+                p: 1,
                 textAlign: 'left',
                 borderBottom: `1px solid ${theme.palette.divider}`,
-                fontSize: '0.875rem'
+                fontSize: '0.8rem'
               },
-              '& th': {
-                fontWeight: 600,
-                color: 'text.secondary',
-                background: theme.palette.surfaceContainerLow
-              },
-              '& td': {
-                fontFamily: 'monospace'
-              },
-              '& td:first-of-type': {
-                fontFamily: 'inherit',
-                fontWeight: 500
-              }
+              '& th': { fontWeight: 600, color: 'text.secondary' },
+              '& td': { fontFamily: 'monospace' },
+              '& td:first-of-type': { fontFamily: 'inherit', fontWeight: 500 }
             }}
           >
             <thead>
-              <tr>
-                <th>Описание</th>
-                <th>°C</th>
-                <th>°F</th>
-                <th>K</th>
-              </tr>
+              <tr><th>Описание</th><th>°C</th><th>°F</th><th>K</th></tr>
             </thead>
             <tbody>
-              {commonTemperatures.map((row) => (
+              {commonTemps.map((row) => (
                 <tr key={row.name}>
                   <td>{row.name}</td>
                   <td>{row.celsius}</td>

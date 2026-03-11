@@ -107,11 +107,7 @@ export default function IdealWeight() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      {/* Ввод данных */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Введите ваши параметры
-        </Typography>
+      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
@@ -153,7 +149,7 @@ export default function IdealWeight() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               textAlign: 'center',
               background: theme.palette.surfaceContainerLow
             }}
@@ -176,7 +172,7 @@ export default function IdealWeight() {
 
           {/* Визуальная шкала сравнения */}
           <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               Сравнение формул
             </Typography>
 
@@ -265,8 +261,8 @@ export default function IdealWeight() {
                   sx={{
                     p: 2.5,
                     height: '100%',
-                    borderTop: `3px solid ${r.color}`,
-                    borderRadius: 2
+                    borderLeft: `3px solid ${r.color}`,
+                    borderRadius: 3
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 0.5, color: r.color }}>
@@ -304,22 +300,6 @@ export default function IdealWeight() {
             ))}
           </Grid>
 
-          {/* Примечание */}
-          <Paper
-            elevation={0}
-            sx={{
-              p: 2,
-              mt: 3,
-              background: alpha(theme.palette.warning.main, 0.05),
-              borderRadius: 2
-            }}
-          >
-            <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-              Формулы идеального веса дают приблизительные значения и не учитывают
-              индивидуальные особенности: телосложение, мышечную массу, возраст.
-              Для точной оценки рекомендуется обратиться к специалисту.
-            </Typography>
-          </Paper>
         </>
       )}
     </Box>

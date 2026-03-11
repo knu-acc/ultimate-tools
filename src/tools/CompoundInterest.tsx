@@ -166,7 +166,7 @@ export default function CompoundInterest() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Начальная сумма ({sym})"
+              label={`Начальная сумма (${sym})`}
               type="number"
               value={principal}
               onChange={(e) => setPrincipal(e.target.value)}
@@ -233,7 +233,7 @@ export default function CompoundInterest() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Ежемесячное пополнение ({sym})"
+              label={`Ежемесячное пополнение (${sym})`}
               type="number"
               value={monthlyAdd}
               onChange={(e) => setMonthlyAdd(e.target.value)}
@@ -274,21 +274,21 @@ export default function CompoundInterest() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Итоговая сумма"
-                  value={`${fmt(results.finalAmount)} {sym}`}
+                  value={`${fmt(results.finalAmount)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Всего внесено"
-                  value={`${fmt(results.totalContributions)} {sym}`}
+                  value={`${fmt(results.totalContributions)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Заработано на процентах"
-                  value={`${fmt(results.totalInterest)} {sym}`}
+                  value={`${fmt(results.totalInterest)} ${sym}`}
                   color="#2e7d32"
                 />
               </Grid>

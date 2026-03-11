@@ -9,20 +9,17 @@ import {
   Select,
   MenuItem,
   Grid,
-  IconButton,
   LinearProgress,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
-
+import { CopyButton } from '@/src/components/CopyButton';
 
 interface EnergyUnit {
   key: string;
   label: string;
   short: string;
-  toJoule: number; // conversion factor to Joules
+  toJoule: number;
 }
 
 const units: EnergyUnit[] = [
@@ -35,15 +32,7 @@ const units: EnergyUnit[] = [
   { key: 'erg', label: 'Эрги', short: 'эрг', toJoule: 1e-7 },
 ];
 
-const barColors = [
-  '#2196f3',
-  '#4caf50',
-  '#ff9800',
-  '#9c27b0',
-  '#f44336',
-  '#00bcd4',
-  '#e91e63',
-];
+const barColors = ['#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#f44336', '#00bcd4', '#e91e63'];
 
 function formatNumber(value: number): string {
   if (value === 0) return '0';
@@ -55,9 +44,8 @@ function formatNumber(value: number): string {
 
 export default function EnergyConverter() {
   const theme = useTheme();
-  const [inputValue, setInputValue] = useState<string>('1');
-  const [fromUnit, setFromUnit] = useState<string>('joule');
-  const [copied, setCopied] = useState<string>('');
+  const [inputValue, setInputValue] = useState('1');
+  const [fromUnit, setFromUnit] = useState('joule');
 
   const numericValue = parseFloat(inputValue);
   const isValid = inputValue !== '' && !isNaN(numericValue) && isFinite(numericValue) && numericValue >= 0;
@@ -76,58 +64,47 @@ export default function EnergyConverter() {
   });
 
   const otherResults = allResults.filter((r) => r.key !== fromUnit);
-
   const maxValue = Math.max(...allResults.map((r) => r.value), 1);
 
-  const copyValue = async (key: string, value: string) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(key);
-      setTimeout(() => setCopied(''), 1500);
-    } catch {
-      /* clipboard not available */
-    }
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 4
+          borderRadius: 3
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-          Исходное значение
-        </Typography>
-
-        <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
           <TextField
             value={inputValue}
             onChange={(e) => {
               const v = e.target.value;
-              if (v === '' || /^-?\d*\.?\d*$/.test(v)) {
-                setInputValue(v);
-              }
+              if (v === '' || /^-?\d*\.?\d*$/.test(v)) setInputValue(v);
             }}
-            size="small"
-            label="Значение"
+            placeholder="1"
             error={inputValue !== '' && !isValid}
-            helperText={inputValue !== '' && !isValid ? 'Введите корректное число' : ''}
             sx={{
               flex: 1,
               minWidth: 180,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.2rem' }
+            }}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
+                    {sourceUnit.short}
+                  </Typography>
+                )
+              }
             }}
           />
           <Select
             value={fromUnit}
             onChange={(e) => setFromUnit(e.target.value)}
-            size="small"
-            sx={{ minWidth: 260 }}
+            sx={{ minWidth: 200 }}
           >
             {units.map((u) => (
               <MenuItem key={u.key} value={u.key}>
@@ -136,90 +113,55 @@ export default function EnergyConverter() {
             ))}
           </Select>
         </Box>
+      </Paper>
 
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-          Результаты конвертации
-        </Typography>
-
-        <Grid container spacing={2}>
-          {otherResults.map((r) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={r.key}>
-              <Paper
-                elevation={0}
-                sx={{
-                  p: 2,
-                  borderRadius: 3,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 0.5,
-                  transition: 'all 200ms ease',
-                  '&:hover': {
-                    borderColor: theme.palette.primary.main,
-                    background: theme.palette.surfaceContainerLow
-                  }
-                }}
-              >
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                    {r.label}
-                  </Typography>
-                  <IconButton
-                    size="small"
-                    onClick={() => copyValue(r.key, r.formatted)}
-                    sx={{
-                      color: copied === r.key ? theme.palette.success.main : 'text.secondary',
-                      transition: 'color 200ms ease'
-                    }}
-                  >
-                    <ContentCopyIcon sx={{ fontSize: 16 }} />
-                  </IconButton>
-                </Box>
-                <Typography
-                  variant="h6"
+      {isValid && (
+        <>
+          <Grid container spacing={1.5} sx={{ mb: 2 }}>
+            {otherResults.map((r) => (
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={r.key}>
+                <Paper
+                  elevation={0}
                   sx={{
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    fontSize: '1.15rem',
-                    wordBreak: 'break-all'
+                    p: 2,
+                    borderRadius: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    transition: 'all 200ms ease',
+                    '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                   }}
                 >
-                  {r.formatted}
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    sx={{ ml: 0.5, color: 'text.secondary', fontWeight: 400 }}
-                  >
-                    {r.short}
-                  </Typography>
-                </Typography>
-                {copied === r.key && (
-                  <Typography variant="caption" sx={{ color: theme.palette.success.main }}>
-                    Скопировано!
-                  </Typography>
-                )}
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                    <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
+                      {r.label}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      sx={{ fontFamily: 'monospace', fontWeight: 700, fontSize: '1.1rem', wordBreak: 'break-all' }}
+                    >
+                      {r.formatted}
+                      <Typography component="span" variant="body2" sx={{ ml: 0.5, color: 'text.secondary', fontWeight: 400 }}>
+                        {r.short}
+                      </Typography>
+                    </Typography>
+                  </Box>
+                  <CopyButton text={r.formatted} />
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
 
-        {/* Visual energy comparison */}
-        {isValid && numericValue > 0 && (
-          <Box sx={{ mt: 4 }}>
-            <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-              Визуальное сравнение величин
-            </Typography>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 2.5,
-                borderRadius: 3
-              }}
-            >
+          {numericValue > 0 && (
+            <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
+              <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
+                Сравнение
+              </Typography>
               {allResults.map((r, idx) => {
                 const percent = maxValue > 0 ? (r.value / maxValue) * 100 : 0;
                 const color = barColors[idx % barColors.length];
                 return (
-                  <Box key={r.key} sx={{ mb: idx < allResults.length - 1 ? 2 : 0 }}>
+                  <Box key={r.key} sx={{ mb: idx < allResults.length - 1 ? 1.5 : 0 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                       <Typography
                         variant="caption"
@@ -245,11 +187,11 @@ export default function EnergyConverter() {
                       variant="determinate"
                       value={Math.min(percent, 100)}
                       sx={{
-                        height: 12,
-                        borderRadius: 6,
-                        backgroundColor: alpha(color, 0.15),
+                        height: 10,
+                        borderRadius: 5,
+                        backgroundColor: alpha(color, 0.12),
                         '& .MuiLinearProgress-bar': {
-                          borderRadius: 6,
+                          borderRadius: 5,
                           backgroundColor: r.key === fromUnit ? theme.palette.primary.main : color
                         }
                       }}
@@ -258,26 +200,9 @@ export default function EnergyConverter() {
                 );
               })}
             </Paper>
-          </Box>
-        )}
-
-        {inputValue !== '' && !isValid && (
-          <Paper
-            elevation={0}
-            sx={{
-              mt: 2,
-              p: 2,
-              borderRadius: 3,
-              background: alpha(theme.palette.error.main, 0.08),
-              border: `1px solid ${alpha(theme.palette.error.main, 0.3)}`
-            }}
-          >
-            <Typography variant="body2" color="error">
-              Пожалуйста, введите положительное число для конвертации.
-            </Typography>
-          </Paper>
-        )}
-      </Paper>
+          )}
+        </>
+      )}
     </Box>
   );
 }

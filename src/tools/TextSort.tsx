@@ -6,14 +6,11 @@ import {
   Typography,
   TextField,
   Paper,
-  Button,
   Chip,
-  IconButton,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopy from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type SortMode = 'az' | 'za' | 'num-asc' | 'num-desc' | 'length' | 'shuffle';
@@ -72,7 +69,6 @@ export default function TextSort() {
   const theme = useTheme();
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<SortMode>('az');
-  const [copied, setCopied] = useState(false);
   const [shuffleKey, setShuffleKey] = useState(0);
 
   const lines = useMemo(() => {
@@ -91,25 +87,12 @@ export default function TextSort() {
     setMode(newMode);
   };
 
-  const handleCopy = async () => {
-    if (!outputText) return;
-    try {
-      await navigator.clipboard.writeText(outputText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch { /* ignore */ }
-  };
-
   const activeOption = SORT_OPTIONS.find((o) => o.key === mode);
   const activeColor = activeOption?.color ?? theme.palette.primary.main;
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          Введите текст (каждая строка — отдельный элемент)
-        </Typography>
+      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <TextField
           fullWidth
           multiline
@@ -128,11 +111,7 @@ export default function TextSort() {
         />
       </Paper>
 
-      {/* Sort Options */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Способ сортировки
-        </Typography>
+      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
           {SORT_OPTIONS.map((option) => {
             const isActive = mode === option.key;
@@ -147,7 +126,7 @@ export default function TextSort() {
                   cursor: 'pointer',
                   backgroundColor: isActive ? alpha(option.color, 0.15) : 'transparent',
                   color: isActive ? option.color : 'text.secondary',
-                  border: `1px solid ${isActive ? option.color : theme.palette.divider}`,
+                  border: `1.5px solid ${isActive ? option.color : 'transparent'}`,
                   transition: 'all 200ms ease',
                   '&:hover': {
                     backgroundColor: alpha(option.color, 0.1),
@@ -160,13 +139,13 @@ export default function TextSort() {
         </Box>
       </Paper>
 
-      {/* Stats */}
       {lines.length > 0 && (
         <Paper
           elevation={0}
           sx={{
             p: 2,
-            mb: 3,
+            mb: 2,
+            borderRadius: 3,
             display: 'flex',
             alignItems: 'center',
             gap: 2
@@ -188,21 +167,10 @@ export default function TextSort() {
         </Paper>
       )}
 
-      {/* Output */}
       {sorted.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
-            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Результат
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-              <CopyButton text={outputText} />
-              {copied && (
-                <Typography variant="caption" sx={{ color: '#4caf50', fontWeight: 500 }}>
-                  Скопировано
-                </Typography>
-              )}
-            </Box>
+        <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+            <CopyButton text={outputText} />
           </Box>
           <TextField
             fullWidth
@@ -222,25 +190,6 @@ export default function TextSort() {
               }
             }}
           />
-          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<ContentCopy />}
-              onClick={handleCopy}
-              sx={{
-                textTransform: 'none',
-                borderColor: alpha(activeColor, 0.4),
-                color: activeColor,
-                '&:hover': {
-                  borderColor: activeColor,
-                  backgroundColor: alpha(activeColor, 0.06)
-                }
-              }}
-            >
-              {copied ? 'Скопировано!' : 'Копировать результат'}
-            </Button>
-          </Box>
         </Paper>
       )}
     </Box>

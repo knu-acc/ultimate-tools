@@ -200,14 +200,11 @@ export default function ShoeSize() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
-          borderRadius: 4,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Пол
-        </Typography>
         <ToggleButtonGroup
           value={gender}
           exclusive
@@ -238,9 +235,6 @@ export default function ShoeSize() {
           <ToggleButton value="women">Женский</ToggleButton>
         </ToggleButtonGroup>
 
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Введите размер
-        </Typography>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
           <TextField
             size="small"
@@ -282,45 +276,13 @@ export default function ShoeSize() {
       {/* Результаты */}
       {converted ? (
         <Grid container spacing={2} sx={{ mb: 3 }}>
-          {/* Исходное значение */}
-          <Grid size={{ xs: 12 }}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 2.5,
-                borderRadius: 4,
-                border: `2px solid ${theme.palette.primary.main}`,
-                background: theme.palette.surfaceContainerHigh,
-                textAlign: 'center'
-              }}
-            >
-              <Typography
-                variant="caption"
-                sx={{ fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}
-              >
-                Исходный размер
-              </Typography>
-              <Typography variant="h4" sx={{ fontWeight: 700, fontFamily: 'monospace', mt: 0.5 }}>
-                {formatSize(converted[sourceSystem])} {systemShort[sourceSystem]}
-              </Typography>
-              <Chip
-                label={gender === 'men' ? 'Мужской' : 'Женский'}
-                size="small"
-                color="primary"
-                variant="outlined"
-                sx={{ mt: 1, borderRadius: 2 }}
-              />
-            </Paper>
-          </Grid>
-
-          {/* Карточки результатов */}
           {otherSystems.map((sys) => (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={sys}>
               <Paper
                 elevation={0}
                 sx={{
                   p: 2,
-                  borderRadius: 4,
+                  borderRadius: 3,
                   textAlign: 'center',
                   transition: 'all 200ms ease',
                   '&:hover': {
@@ -349,42 +311,14 @@ export default function ShoeSize() {
             </Grid>
           ))}
         </Grid>
-      ) : isValid ? (
-        <Paper
-          elevation={0}
-          sx={{
-            p: 3,
-            mb: 3,
-            borderRadius: 4,
-            textAlign: 'center'
-          }}
-        >
-          <Typography color="text.secondary">
-            Размер вне диапазона таблицы. Попробуйте другое значение.
-          </Typography>
-        </Paper>
-      ) : (
-        <Paper
-          elevation={0}
-          sx={{
-            p: 3,
-            mb: 3,
-            borderRadius: 4,
-            textAlign: 'center'
-          }}
-        >
-          <Typography color="text.secondary">
-            Введите корректный размер для конвертации
-          </Typography>
-        </Paper>
-      )}
+      ) : null}
 
       {/* Таблица размеров */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          borderRadius: 4
+          borderRadius: 3
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>

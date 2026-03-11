@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Button, Chip, useTheme, IconButton
+  Box, Typography, TextField, Paper, Grid, Chip, useTheme, IconButton
 } from '@mui/material';
-import { ContentCopy, SwapVert } from '@mui/icons-material';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { SwapVert } from '@mui/icons-material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const MORSE_MAP: Record<string, string> = {
@@ -60,7 +60,7 @@ export default function MorseCode() {
   };
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
         <Chip
           label="Текст → Морзе"
@@ -82,33 +82,25 @@ export default function MorseCode() {
 
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            {mode === 'encode' ? 'Текст' : 'Код Морзе'}
-          </Typography>
           <TextField
             fullWidth
             multiline
-            rows={6}
+            rows={5}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={mode === 'encode' ? 'Введите текст...' : 'Введите код Морзе (точки и тире)...'}
+            placeholder={mode === 'encode' ? 'Текст...' : 'Код Морзе...'}
             sx={{ '& .MuiOutlinedInput-root': { fontFamily: mode === 'decode' ? 'monospace' : 'inherit' } }}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-            <Typography variant="subtitle2" fontWeight={600}>
-              {mode === 'encode' ? 'Код Морзе' : 'Текст'}
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 0.5 }}>
-              <IconButton size="small" onClick={swap}><SwapVert fontSize="small" /></IconButton>
-              <IconButton size="small" onClick={() => navigator.clipboard.writeText(output)}><ContentCopy fontSize="small" /></IconButton>
-            </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 0.5, mb: 1 }}>
+            <IconButton size="small" onClick={swap}><SwapVert fontSize="small" /></IconButton>
+            <CopyButton text={output} />
           </Box>
           <TextField
             fullWidth
             multiline
-            rows={6}
+            rows={5}
             value={output}
             slotProps={{ input: { readOnly: true } }}
             sx={{
@@ -123,14 +115,10 @@ export default function MorseCode() {
         </Grid>
       </Grid>
 
-      {/* Reference table */}
       <Paper
         elevation={0}
-        sx={{ mt: 3, p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
+        sx={{ mt: 2, p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
       >
-        <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          Справочник
-        </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {['А .-', 'Б -...', 'В .--', 'Г --.', 'Д -..', 'Е .', 'Ж ...-', 'З --..', 'И ..', 'К -.-',
             'Л .-..', 'М --', 'Н -.', 'О ---', 'П .--.', 'Р .-.', 'С ...', 'Т -', 'У ..-', 'Ф ..-.',

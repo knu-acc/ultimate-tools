@@ -14,9 +14,8 @@ import {
   alpha
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import LockIcon from '@mui/icons-material/Lock';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const CHARSETS: Record<string, string> = {
@@ -52,8 +51,6 @@ export default function PasswordGenerator() {
   const [activeCharsets, setActiveCharsets] = useState<string[]>(['A-Z', 'a-z', '0-9', '!@#$']);
   const [password, setPassword] = useState('');
   const [history, setHistory] = useState<string[]>([]);
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
 
   const toggleCharset = (key: string) => {
     setActiveCharsets((prev) =>
@@ -81,17 +78,6 @@ export default function PasswordGenerator() {
     });
   }, [length, activeCharsets]);
 
-  const copyText = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setSnackMsg('Скопировано в буфер обмена');
-      setSnackOpen(true);
-    } catch {
-      setSnackMsg('Не удалось скопировать');
-      setSnackOpen(true);
-    }
-  };
-
   const strength = password ? getStrength(password) : null;
 
   return (
@@ -104,10 +90,10 @@ export default function PasswordGenerator() {
         {/* Password display */}
         <Paper
           elevation={0}
-          onClick={() => password && copyText(password)}
+          onClick={() => password && navigator.clipboard.writeText(password)}
           sx={{
             p: 2.5,
-            mb: 3,
+            mb: 2,
             minHeight: 64,
             display: 'flex',
             alignItems: 'center',
@@ -146,9 +132,7 @@ export default function PasswordGenerator() {
               </Typography>
             </>
           ) : (
-            <Typography sx={{ color: 'text.disabled', fontStyle: 'italic' }}>
-              Нажмите «Сгенерировать» для создания пароля
-            </Typography>
+            <Typography sx={{ color: 'text.disabled' }}>...</Typography>
           )}
         </Paper>
 
@@ -181,8 +165,7 @@ export default function PasswordGenerator() {
           </Box>
         )}
 
-        {/* Length slider */}
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
               Длина пароля
@@ -217,11 +200,7 @@ export default function PasswordGenerator() {
           />
         </Box>
 
-        {/* Charset toggle chips */}
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-            Набор символов
-          </Typography>
+        <Box sx={{ mb: 2 }}>
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
             {Object.keys(CHARSETS).map((key) => {
               const active = activeCharsets.includes(key);
@@ -245,28 +224,17 @@ export default function PasswordGenerator() {
           </Box>
         </Box>
 
-        {/* Action buttons */}
-        <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center', mb: 1 }}>
+        <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center', alignItems: 'center', mb: 1 }}>
           <Button
             variant="contained"
-            size="large"
             startIcon={<RefreshIcon />}
             onClick={generate}
             disabled={activeCharsets.length === 0}
-            sx={{ px: 4, borderRadius: 2, textTransform: 'none', fontWeight: 600 }}
+            sx={{ px: 4, borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
           >
             Сгенерировать
           </Button>
-          <Button
-            variant="outlined"
-            size="large"
-            startIcon={<ContentCopyIcon />}
-            onClick={() => copyText(password)}
-            disabled={!password}
-            sx={{ px: 3, borderRadius: 2, textTransform: 'none', fontWeight: 600 }}
-          >
-            Копировать
-          </Button>
+          {password && <CopyButton text={password} />}
         </Box>
       </Box>
 

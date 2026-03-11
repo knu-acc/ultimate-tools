@@ -117,18 +117,15 @@ export default function AgeCalculator() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      {/* Input */}
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
-          borderRadius: 3
+          mb: 2,
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Введите дату рождения
-        </Typography>
         <TextField
           fullWidth
           type="date"
@@ -158,7 +155,7 @@ export default function AgeCalculator() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               borderRadius: 3,
               textAlign: 'center',
               background: alpha(accentColor, 0.04)
@@ -193,12 +190,12 @@ export default function AgeCalculator() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               borderRadius: 3
             }}
           >
-            <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-              Вы прожили
+            <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
+              Прожито
             </Typography>
             <Grid container spacing={2}>
               {[
@@ -230,8 +227,7 @@ export default function AgeCalculator() {
                       p: 2,
                       textAlign: 'center',
                       borderRadius: 3,
-                      border: `1px solid ${alpha(item.color, 0.2)}`,
-                      background: alpha(item.color, 0.04)
+                      background: alpha(item.color, 0.06)
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">
@@ -255,8 +251,8 @@ export default function AgeCalculator() {
               background: alpha('#e91e63', 0.04)
             }}
           >
-            <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-              До следующего дня рождения
+            <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
+              До дня рождения
             </Typography>
             {nextBday.totalDays === 0 ? (
               <Typography variant="h5" sx={{ fontWeight: 700, color: '#e91e63' }}>

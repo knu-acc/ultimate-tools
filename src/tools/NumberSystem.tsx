@@ -9,17 +9,12 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
-  IconButton,
-  Tooltip,
   Grid,
   Chip,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
-import SwapVertIcon from '@mui/icons-material/SwapVert';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface BaseInfo {
@@ -41,7 +36,6 @@ export default function NumberSystem() {
   const theme = useTheme();
   const [input, setInput] = useState('');
   const [inputBase, setInputBase] = useState(10);
-  const [copiedBase, setCopiedBase] = useState<number | null>(null);
 
   const isValidInput = useCallback((value: string, base: number): boolean => {
     if (!value) return true;
@@ -74,15 +68,6 @@ export default function NumberSystem() {
     }
   }, [input, inputBase, isValidInput]);
 
-  const copyValue = async (base: number) => {
-    if (!conversions) return;
-    try {
-      await navigator.clipboard.writeText(conversions[base as keyof typeof conversions]);
-      setCopiedBase(base);
-      setTimeout(() => setCopiedBase(null), 2000);
-    } catch { /* ignore */ }
-  };
-
   const formatBinary = (bin: string): string => {
     return bin.replace(/(.{4})/g, '$1 ').trim();
   };
@@ -97,9 +82,6 @@ export default function NumberSystem() {
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
       <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          Введите число
-        </Typography>
         <TextField
           fullWidth
           value={input}
@@ -144,10 +126,7 @@ export default function NumberSystem() {
           }}
         />
 
-        <Box sx={{ mt: 2.5 }}>
-          <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-            Система счисления ввода
-          </Typography>
+        <Box sx={{ mt: 2 }}>
           <RadioGroup
             row
             value={inputBase}
@@ -186,10 +165,7 @@ export default function NumberSystem() {
       {/* Results */}
       {conversions && (
         <Paper elevation={0} sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
-            <SwapVertIcon sx={{ color: 'text.secondary' }} />
-            <Typography variant="h6">Результаты конвертации</Typography>
-          </Box>
+          <Box sx={{ mb: 2 }} />
 
           <Grid container spacing={2}>
             {bases.map((b) => {
@@ -200,7 +176,6 @@ export default function NumberSystem() {
                   : b.base === 16
                     ? formatHex(value)
                     : value;
-              const isCopied = copiedBase === b.base;
               const isSource = b.base === inputBase;
 
               return (
@@ -259,15 +234,7 @@ export default function NumberSystem() {
                         {displayValue}
                       </Typography>
                     </Box>
-                    <Tooltip title={isCopied ? 'Скопировано!' : 'Копировать'}>
-                      <IconButton onClick={() => copyValue(b.base)} size="small">
-                        {isCopied ? (
-                          <CheckIcon fontSize="small" color="success" />
-                        ) : (
-                          <ContentCopyIcon fontSize="small" />
-                        )}
-                      </IconButton>
-                    </Tooltip>
+                    <CopyButton text={value} />
                   </Paper>
                 </Grid>
               );

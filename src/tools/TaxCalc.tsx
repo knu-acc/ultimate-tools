@@ -265,7 +265,7 @@ export default function TaxCalc() {
             />
             {deductionProperty && (
               <TextField
-                label="Сумма расходов ({sym})"
+                label={`Сумма расходов (${sym})`}
                 type="number"
                 size="small"
                 value={propertyAmount}
@@ -300,7 +300,7 @@ export default function TaxCalc() {
             />
             {deductionEducation && (
               <TextField
-                label="Сумма расходов ({sym})"
+                label={`Сумма расходов (${sym})`}
                 type="number"
                 size="small"
                 value={educationAmount}
@@ -347,21 +347,21 @@ export default function TaxCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Начислено (гросс)"
-                  value={`${fmt(results.monthlyGross)} {sym}`}
+                  value={`${fmt(results.monthlyGross)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="НДФЛ"
-                  value={`${fmt(results.monthlyTax)} {sym}`}
+                  value={`${fmt(results.monthlyTax)} ${sym}`}
                   color="#c62828"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="На руки (нетто)"
-                  value={`${fmt(results.monthlyNet)} {sym}`}
+                  value={`${fmt(results.monthlyNet)} ${sym}`}
                   color="#2e7d32"
                 />
               </Grid>
@@ -375,21 +375,21 @@ export default function TaxCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Годовой доход"
-                  value={`${fmtInt(results.annualGross)} {sym}`}
+                  value={`${fmtInt(results.annualGross)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="НДФЛ за год"
-                  value={`${fmtInt(results.annualTax)} {sym}`}
+                  value={`${fmtInt(results.annualTax)} ${sym}`}
                   color="#c62828"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="На руки за год"
-                  value={`${fmtInt(results.annualNet)} {sym}`}
+                  value={`${fmtInt(results.annualNet)} ${sym}`}
                   color="#2e7d32"
                 />
               </Grid>

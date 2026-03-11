@@ -22,8 +22,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface StrengthInfo {
@@ -37,7 +36,6 @@ export default function PasswordStrength() {
   const theme = useTheme();
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const analysis = useMemo(() => {
     const checks = {
@@ -140,14 +138,6 @@ export default function PasswordStrength() {
     return tips;
   }, [analysis]);
 
-  const copyPassword = async () => {
-    try {
-      await navigator.clipboard.writeText(password);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch { /* ignore */ }
-  };
-
   const criteriaList = [
     { key: 'length8', label: 'Минимум 8 символов' },
     { key: 'length12', label: 'Минимум 12 символов' },
@@ -162,17 +152,13 @@ export default function PasswordStrength() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      {/* Password Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          Введите пароль для проверки
-        </Typography>
+      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Введите пароль..."
+          placeholder="Пароль..."
           sx={{ '& .MuiInputBase-input': { fontFamily: 'monospace', fontSize: '1.1rem' } }}
           slotProps={{
             input: {
@@ -187,13 +173,6 @@ export default function PasswordStrength() {
             }
           }}
         />
-        {copied && (
-          <Typography variant="caption" color="success.main" sx={{ mt: 0.5, display: 'block' }}>
-            Скопировано!
-          </Typography>
-        )}
-
-        {/* Strength Meter */}
         {password && (
           <Box sx={{ mt: 3 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
@@ -225,12 +204,11 @@ export default function PasswordStrength() {
       </Paper>
 
       {password && (
-        <Grid container spacing={3}>
-          {/* Character Analysis */}
+        <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: 3, height: '100%' }}>
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                Анализ символов
+            <Paper elevation={0} sx={{ p: 3, height: '100%', borderRadius: 3 }}>
+              <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
+                Символы
               </Typography>
               {charAnalysis && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -272,10 +250,9 @@ export default function PasswordStrength() {
             </Paper>
           </Grid>
 
-          {/* Criteria Checklist */}
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: 3, height: '100%' }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>
+            <Paper elevation={0} sx={{ p: 3, height: '100%', borderRadius: 3 }}>
+              <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
                 Критерии
               </Typography>
               <List dense disablePadding>
@@ -310,19 +287,16 @@ export default function PasswordStrength() {
             </Paper>
           </Grid>
 
-          {/* Suggestions */}
           {suggestions.length > 0 && (
             <Grid size={12}>
               <Paper
                 elevation={0}
                 sx={{
                   p: 3,
+                  borderRadius: 3,
                   background: alpha(theme.palette.warning.main, 0.04)
                 }}
               >
-                <Typography variant="h6" sx={{ mb: 1.5 }}>
-                  Рекомендации
-                </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                   {suggestions.map((tip, i) => (
                     <Chip key={i} label={tip} variant="outlined" color="warning" size="small" />

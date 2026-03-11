@@ -81,15 +81,11 @@ export default function WaterIntake() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Введите ваши параметры
-        </Typography>
-
         <TextField
           fullWidth
           label="Вес (кг)"
@@ -189,8 +185,7 @@ export default function WaterIntake() {
                   p: 3,
                   textAlign: 'center',
                   borderRadius: 3,
-                  border: `1px solid ${alpha('#1976d2', 0.3)}`,
-                  background: alpha('#1976d2', 0.05)
+                  background: alpha('#1976d2', 0.06)
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
@@ -211,8 +206,7 @@ export default function WaterIntake() {
                   p: 3,
                   textAlign: 'center',
                   borderRadius: 3,
-                  border: `1px solid ${alpha('#2e7d32', 0.3)}`,
-                  background: alpha('#2e7d32', 0.05)
+                  background: alpha('#2e7d32', 0.06)
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
@@ -233,7 +227,7 @@ export default function WaterIntake() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               borderRadius: 3
             }}
           >

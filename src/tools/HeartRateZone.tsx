@@ -70,12 +70,9 @@ export default function HeartRateZone() {
           p: 3,
           mb: 3,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Введите ваши параметры
-        </Typography>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
@@ -114,7 +111,7 @@ export default function HeartRateZone() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               textAlign: 'center',
               borderRadius: 3,
               background: alpha('#c62828', 0.04)
@@ -155,7 +152,6 @@ export default function HeartRateZone() {
                   elevation={0}
                   sx={{
                     p: 2.5,
-                    border: `1px solid ${alpha(zone.color, 0.3)}`,
                     borderRadius: 3,
                     background: alpha(zone.color, 0.04),
                     borderLeft: `4px solid ${zone.color}`
@@ -224,8 +220,8 @@ export default function HeartRateZone() {
               borderRadius: 3
             }}
           >
-            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
-              Обзор зон
+            <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
+              Обзор
             </Typography>
             <Box
               sx={{

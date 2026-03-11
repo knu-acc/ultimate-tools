@@ -99,14 +99,11 @@ export default function PregnancyCalc() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Дата последней менструации
-        </Typography>
         <TextField
           fullWidth
           type="date"
@@ -130,7 +127,6 @@ export default function PregnancyCalc() {
                   p: 2.5,
                   textAlign: 'center',
                   borderRadius: 3,
-                  border: `1px solid ${alpha(results.trimester.color, 0.3)}`,
                   background: alpha(results.trimester.color, 0.05)
                 }}
               >
@@ -152,7 +148,6 @@ export default function PregnancyCalc() {
                   p: 2.5,
                   textAlign: 'center',
                   borderRadius: 3,
-                  border: `1px solid ${alpha('#c62828', 0.3)}`,
                   background: alpha('#c62828', 0.05)
                 }}
               >
@@ -171,7 +166,6 @@ export default function PregnancyCalc() {
                   p: 2.5,
                   textAlign: 'center',
                   borderRadius: 3,
-                  border: `1px solid ${alpha('#7b1fa2', 0.3)}`,
                   background: alpha('#7b1fa2', 0.05)
                 }}
               >
@@ -190,7 +184,7 @@ export default function PregnancyCalc() {
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               borderRadius: 3
             }}
           >
@@ -289,7 +283,7 @@ export default function PregnancyCalc() {
                       p: 1.5,
                       borderRadius: 2,
                       backgroundColor: isCurrent ? alpha(trimester.color, 0.06) : 'transparent',
-                      border: isCurrent ? `1px solid ${alpha(trimester.color, 0.2)}` : '1px solid transparent'
+                      border: 'none'
                     }}
                   >
                     <Box

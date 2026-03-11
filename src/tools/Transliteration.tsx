@@ -4,15 +4,15 @@ import { useState } from 'react';
 import {
   Box,
   Typography,
-  Button,
   Paper,
   TextField,
   IconButton,
   Chip,
-  useTheme } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+  useTheme,
+  alpha
+} from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 const CYR_TO_LAT: Record<string, string> = {
@@ -85,7 +85,6 @@ export default function Transliteration() {
   const theme = useTheme();
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<Mode>('cyr-to-lat');
-  const [copied, setCopied] = useState(false);
 
   const output = input
     ? mode === 'cyr-to-lat'
@@ -95,36 +94,20 @@ export default function Transliteration() {
 
   const toggleMode = () => {
     setMode((prev) => (prev === 'cyr-to-lat' ? 'lat-to-cyr' : 'cyr-to-lat'));
-    setCopied(false);
-  };
-
-  const copyToClipboard = async () => {
-    if (!output) return;
-    await navigator.clipboard.writeText(output);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Mode toggle */}
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 1.5,
-            mb: 3
-          }}
-        >
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5, mb: 2 }}>
           <Chip
             label="Кириллица"
             color={mode === 'cyr-to-lat' ? 'primary' : 'default'}
@@ -151,76 +134,23 @@ export default function Transliteration() {
           />
         </Box>
 
-        {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-          {mode === 'cyr-to-lat' ? 'Текст на кириллице' : 'Текст на латинице'}
-        </Typography>
         <TextField
           multiline
-          rows={5}
+          rows={4}
           fullWidth
           value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-            setCopied(false);
-          }}
-          placeholder={
-            mode === 'cyr-to-lat'
-              ? 'Введите текст на кириллице...'
-              : 'Vvedite tekst na latinitse...'
-          }
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={mode === 'cyr-to-lat' ? 'Кириллица...' : 'Latinitsa...'}
           sx={{
             mb: 1,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
           }}
         />
 
-        {/* Character count */}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-          <Chip
-            label={`${input.length} символов`}
-            size="small"
-            variant="outlined"
-            sx={{ fontSize: '0.75rem' }}
-          />
-        </Box>
-
-        {/* Output */}
         {output && (
-          <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                mb: 1
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                  Результат
-                </Typography>
-                <Chip
-                  label={
-                    mode === 'cyr-to-lat'
-                      ? 'Кириллица → Латиница'
-                      : 'Латиница → Кириллица'
-                  }
-                  size="small"
-                  color="primary"
-                  variant="outlined"
-                />
-              </Box>
-              <Button
-                size="small"
-                startIcon={<ContentCopyIcon />}
-                onClick={copyToClipboard}
-                color={copied ? 'success' : 'primary'}
-                variant="outlined"
-                sx={{ textTransform: 'none', borderRadius: 2 }}
-              >
-                {copied ? 'Скопировано!' : 'Копировать'}
-              </Button>
+          <Box sx={{ mt: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
+              <CopyButton text={output} />
             </Box>
             <TextField
               multiline
@@ -229,22 +159,13 @@ export default function Transliteration() {
               value={output}
               slotProps={{ input: { readOnly: true } }}
               sx={{
-                mb: 1,
                 '& .MuiInputBase-root': {
                   fontFamily: 'monospace',
                   fontSize: '0.875rem',
-                  background: theme.palette.background.default
+                  background: alpha(theme.palette.text.primary, 0.03)
                 }
               }}
             />
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Chip
-                label={`${output.length} символов`}
-                size="small"
-                variant="outlined"
-                sx={{ fontSize: '0.75rem' }}
-              />
-            </Box>
           </Box>
         )}
       </Paper>

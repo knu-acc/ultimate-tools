@@ -3,19 +3,15 @@
 import { useState } from 'react';
 import {
   Box,
-  Typography,
   Paper,
   TextField,
   Grid,
-  Button,
   Chip,
-  IconButton,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopy from '@mui/icons-material/ContentCopy';
 import SwapVert from '@mui/icons-material/SwapVert';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type Mode = 'text-to-binary' | 'binary-to-text';
@@ -101,7 +97,6 @@ export default function BinaryText() {
   const theme = useTheme();
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<Mode>('text-to-binary');
-  const [copied, setCopied] = useState('');
 
   const isTextMode = mode === 'text-to-binary';
 
@@ -125,14 +120,6 @@ export default function BinaryText() {
 
   const mainResult = isTextMode ? binary : sourceText;
 
-  const handleCopy = async (key: string, value: string) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(key);
-      setTimeout(() => setCopied(''), 1500);
-    } catch { /* ignore */ }
-  };
-
   const handleSwap = () => {
     const newMode: Mode = isTextMode ? 'binary-to-text' : 'text-to-binary';
     const newInput = mainResult;
@@ -150,38 +137,37 @@ export default function BinaryText() {
   const hasInput = input.trim().length > 0;
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 4
+          borderRadius: 3
         }}
       >
         {/* Mode toggle */}
-        <Box sx={{ display: 'flex', gap: 1, mb: 3, alignItems: 'center', flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 1, mb: 2, alignItems: 'center', flexWrap: 'wrap' }}>
           <Chip
             label="Текст → Двоичный"
             variant={isTextMode ? 'filled' : 'outlined'}
             color={isTextMode ? 'primary' : 'default'}
             onClick={() => { setMode('text-to-binary'); setInput(''); }}
-            sx={{ fontWeight: 600, borderRadius: 3, px: 1 }}
+            sx={{ fontWeight: 600, borderRadius: 2, px: 1 }}
           />
           <Chip
             label="Двоичный → Текст"
             variant={!isTextMode ? 'filled' : 'outlined'}
             color={!isTextMode ? 'primary' : 'default'}
             onClick={() => { setMode('binary-to-text'); setInput(''); }}
-            sx={{ fontWeight: 600, borderRadius: 3, px: 1 }}
+            sx={{ fontWeight: 600, borderRadius: 2, px: 1 }}
           />
         </Box>
 
         {/* Input area */}
-        <Box sx={{ position: 'relative', mb: 3 }}>
+        <Box sx={{ position: 'relative', mb: 2 }}>
           <TextField
-            label={isTextMode ? 'Введите текст' : 'Введите двоичный код (через пробел)'}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             multiline
@@ -198,54 +184,51 @@ export default function BinaryText() {
           />
           {/* Swap button */}
           {hasInput && (
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<SwapVert />}
+            <Box
+              component="button"
               onClick={handleSwap}
               sx={{
                 position: 'absolute',
                 right: 8,
                 bottom: 8,
                 borderRadius: 3,
-                textTransform: 'none',
-                fontWeight: 600
+                border: `1px solid ${theme.palette.divider}`,
+                background: theme.palette.surfaceContainerLow,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.5,
+                px: 1.5,
+                py: 0.5,
+                fontWeight: 600,
+                fontSize: '0.8rem',
+                color: theme.palette.text.secondary
               }}
             >
+              <SwapVert sx={{ fontSize: 16 }} />
               Поменять
-            </Button>
+            </Box>
           )}
         </Box>
 
         {/* Main result */}
         {hasInput && (
-          <Box sx={{ mb: 3 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-              <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                {isTextMode ? 'Двоичный результат' : 'Текстовый результат'}
-              </Typography>
-              <IconButton
-                size="small"
-                onClick={() => handleCopy('main', mainResult)}
-                sx={{
-                  color: copied === 'main' ? theme.palette.success.main : 'text.secondary'
-                }}
-              >
-                <ContentCopy sx={{ fontSize: 18 }} />
-              </IconButton>
+          <Box sx={{ mb: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 1 }}>
+              <CopyButton text={mainResult} />
             </Box>
             <Paper
               elevation={0}
               sx={{
                 p: 2,
                 borderRadius: 3,
-                background: alpha(theme.palette.background.default, 0.6),
+                background: alpha(theme.palette.text.primary, 0.03),
                 maxHeight: 200,
                 overflow: 'auto'
               }}
             >
-              <Typography
-                variant="body1"
+              <Box
+                component="span"
                 sx={{
                   fontFamily: 'monospace',
                   wordBreak: 'break-all',
@@ -253,85 +236,53 @@ export default function BinaryText() {
                   fontSize: '0.95rem'
                 }}
               >
-                {mainResult || '—'}
-              </Typography>
+                {mainResult || '\u2014'}
+              </Box>
             </Paper>
-            {copied === 'main' && (
-              <Typography variant="caption" sx={{ color: theme.palette.success.main }}>
-                Скопировано!
-              </Typography>
-            )}
           </Box>
         )}
 
         {/* Representations grid */}
         {hasInput && (
-          <>
-            <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-              Все представления
-            </Typography>
-            <Grid container spacing={2}>
-              {representations.map((r) => (
-                <Grid size={{ xs: 12, sm: 6 }} key={r.key}>
-                  <Paper
-                    elevation={0}
+          <Grid container spacing={2}>
+            {representations.map((r) => (
+              <Grid size={{ xs: 12, sm: 6 }} key={r.key}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 2,
+                    borderRadius: 3,
+                    transition: 'all 200ms ease',
+                    '&:hover': {
+                      borderColor: theme.palette.primary.main,
+                      background: theme.palette.surfaceContainerLow
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
+                    <Box component="span" sx={{ fontWeight: 600, fontSize: '0.75rem', color: 'text.secondary' }}>
+                      {r.label}
+                    </Box>
+                    <CopyButton text={r.value} />
+                  </Box>
+                  <Box
+                    component="span"
                     sx={{
-                      p: 2,
-                      borderRadius: 3,
-                      transition: 'all 200ms ease',
-                      '&:hover': {
-                        borderColor: theme.palette.primary.main,
-                        background: theme.palette.surfaceContainerLow
-                      }
+                      fontFamily: 'monospace',
+                      wordBreak: 'break-all',
+                      whiteSpace: 'pre-wrap',
+                      fontSize: '0.85rem',
+                      maxHeight: 100,
+                      overflow: 'auto',
+                      display: 'block'
                     }}
                   >
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
-                      <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                        {r.label}
-                      </Typography>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleCopy(r.key, r.value)}
-                        sx={{
-                          color: copied === r.key ? theme.palette.success.main : 'text.secondary',
-                          transition: 'color 200ms'
-                        }}
-                      >
-                        <ContentCopy sx={{ fontSize: 16 }} />
-                      </IconButton>
-                    </Box>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        fontFamily: 'monospace',
-                        wordBreak: 'break-all',
-                        whiteSpace: 'pre-wrap',
-                        fontSize: '0.85rem',
-                        maxHeight: 100,
-                        overflow: 'auto'
-                      }}
-                    >
-                      {r.value || '—'}
-                    </Typography>
-                    {copied === r.key && (
-                      <Typography variant="caption" sx={{ color: theme.palette.success.main }}>
-                        Скопировано!
-                      </Typography>
-                    )}
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        )}
-
-        {/* Empty state */}
-        {!hasInput && (
-          <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center' }}>
-            {isTextMode
-              ? 'Введите текст для преобразования в двоичный код'
-              : 'Введите двоичный код для преобразования в текст'}
-          </Typography>
+                    {r.value || '\u2014'}
+                  </Box>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
         )}
       </Paper>
     </Box>

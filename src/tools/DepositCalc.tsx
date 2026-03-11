@@ -196,7 +196,7 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Сумма вклада ({sym})"
+              label={`Сумма вклада (${sym})`}
               type="number"
               value={deposit}
               onChange={(e) => setDeposit(e.target.value)}
@@ -272,7 +272,7 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Ежемесячное пополнение ({sym})"
+              label={`Ежемесячное пополнение (${sym})`}
               type="number"
               value={monthlyAddition}
               onChange={(e) => setMonthlyAddition(e.target.value)}
@@ -313,14 +313,14 @@ export default function DepositCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Итоговая сумма"
-                  value={`${fmt(results.finalWithCap)} {sym}`}
+                  value={`${fmt(results.finalWithCap)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Начислено процентов"
-                  value={`${fmt(results.totalInterestWithCap)} {sym}`}
+                  value={`${fmt(results.totalInterestWithCap)} ${sym}`}
                   color="#2e7d32"
                 />
               </Grid>
@@ -407,7 +407,7 @@ export default function DepositCalc() {
             {results.capBenefit > 0 && (
               <Box sx={{ mt: 2 }}>
                 <Chip
-                  label={`Выгода от капитализации: +${fmt(results.capBenefit)} {sym}`}
+                  label={`Выгода от капитализации: +${fmt(results.capBenefit)} ${sym}`}
                   size="small"
                   color="success"
                   variant="outlined"

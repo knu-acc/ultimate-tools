@@ -137,7 +137,7 @@ export default function LoanCalc() {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Сумма займа ({sym})"
+              label={`Сумма займа (${sym})`}
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
@@ -225,21 +225,21 @@ export default function LoanCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Ежемесячный платёж"
-                  value={`${fmt(results.monthlyPayment)} {sym}`}
+                  value={`${fmt(results.monthlyPayment)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Общая сумма выплат"
-                  value={`${fmt(results.totalPayment)} {sym}`}
+                  value={`${fmt(results.totalPayment)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Переплата (проценты)"
-                  value={`${fmt(results.totalInterest)} {sym}`}
+                  value={`${fmt(results.totalInterest)} ${sym}`}
                   color="#c62828"
                 />
               </Grid>

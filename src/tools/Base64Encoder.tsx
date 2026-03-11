@@ -7,20 +7,13 @@ import {
   Button,
   Paper,
   TextField,
-  IconButton,
-  Tooltip,
   ButtonGroup,
   Alert,
   Chip,
-  useTheme } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
+  useTheme,
+  alpha } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 function isBase64(str: string): boolean {
@@ -38,7 +31,6 @@ export default function Base64Encoder() {
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode' | null>(null);
-  const [copied, setCopied] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [fileName, setFileName] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -112,13 +104,6 @@ export default function Base64Encoder() {
     if (file) handleFile(file);
   };
 
-  const copyToClipboard = async () => {
-    if (!output) return;
-    await navigator.clipboard.writeText(output);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const clear = () => {
     setInput('');
     setOutput('');
@@ -128,12 +113,13 @@ export default function Base64Encoder() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -177,9 +163,6 @@ export default function Base64Encoder() {
         </Box>
 
         {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-          Текст
-        </Typography>
         <TextField
           multiline
           rows={6}
@@ -189,7 +172,7 @@ export default function Base64Encoder() {
             setInput(e.target.value);
             setFileName('');
           }}
-          placeholder="Введите текст или Base64 строку..."
+          placeholder="Текст или Base64..."
           sx={{
             mb: 2,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
@@ -199,17 +182,17 @@ export default function Base64Encoder() {
         {/* Action buttons */}
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center', mb: 2 }}>
           <ButtonGroup variant="contained">
-            <Button startIcon={<LockIcon />} onClick={encode} disabled={!input}>
+            <Button onClick={encode} disabled={!input}>
               Кодировать
             </Button>
-            <Button startIcon={<LockOpenIcon />} onClick={decode} disabled={!input}>
+            <Button onClick={decode} disabled={!input}>
               Декодировать
             </Button>
-            <Button startIcon={<AutoFixHighIcon />} onClick={autoDetect} disabled={!input}>
+            <Button onClick={autoDetect} disabled={!input}>
               Авто
             </Button>
           </ButtonGroup>
-          <Button variant="outlined" startIcon={<DeleteOutlineIcon />} onClick={clear} color="inherit">
+          <Button variant="outlined" onClick={clear} color="inherit">
             Очистить
           </Button>
         </Box>
@@ -224,18 +207,7 @@ export default function Base64Encoder() {
         {/* Output */}
         {output && (
           <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                  Результат
-                </Typography>
-                <Chip
-                  label={mode === 'encode' ? 'Закодировано' : 'Декодировано'}
-                  size="small"
-                  color="primary"
-                  variant="outlined"
-                />
-              </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 1 }}>
               <CopyButton text={output} />
             </Box>
             <TextField
@@ -248,7 +220,7 @@ export default function Base64Encoder() {
                 '& .MuiInputBase-root': {
                   fontFamily: 'monospace',
                   fontSize: '0.875rem',
-                  background: theme.palette.background.default
+                  background: alpha(theme.palette.text.primary, 0.03)
                 }
               }}
             />

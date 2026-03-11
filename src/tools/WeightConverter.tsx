@@ -9,13 +9,10 @@ import {
   Select,
   MenuItem,
   Grid,
-  IconButton,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
-
+import { CopyButton } from '@/src/components/CopyButton';
 
 interface WeightUnit {
   key: string;
@@ -44,9 +41,8 @@ function formatNumber(value: number): string {
 
 export default function WeightConverter() {
   const theme = useTheme();
-  const [inputValue, setInputValue] = useState<string>('1');
-  const [fromUnit, setFromUnit] = useState<string>('kg');
-  const [copied, setCopied] = useState<string>('');
+  const [inputValue, setInputValue] = useState('1');
+  const [fromUnit, setFromUnit] = useState('kg');
 
   const numericValue = parseFloat(inputValue);
   const isValid = inputValue !== '' && !isNaN(numericValue) && isFinite(numericValue) && numericValue >= 0;
@@ -61,59 +57,48 @@ export default function WeightConverter() {
         key: target.key,
         label: target.label,
         short: target.short,
-        value: converted,
         formatted: isValid ? formatNumber(converted) : '—'
       };
     });
 
-  const copyValue = async (key: string, value: string) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(key);
-      setTimeout(() => setCopied(''), 1500);
-    } catch {
-      /* clipboard not available */
-    }
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 4
+          borderRadius: 3
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-          Исходное значение
-        </Typography>
-
-        <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
           <TextField
             value={inputValue}
             onChange={(e) => {
               const v = e.target.value;
-              if (v === '' || /^-?\d*\.?\d*$/.test(v)) {
-                setInputValue(v);
-              }
+              if (v === '' || /^-?\d*\.?\d*$/.test(v)) setInputValue(v);
             }}
-            size="small"
-            label="Значение"
+            placeholder="1"
             error={inputValue !== '' && !isValid}
-            helperText={inputValue !== '' && !isValid ? 'Введите корректное число' : ''}
             sx={{
               flex: 1,
               minWidth: 180,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.2rem' }
+            }}
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
+                    {sourceUnit.short}
+                  </Typography>
+                )
+              }
             }}
           />
           <Select
             value={fromUnit}
             onChange={(e) => setFromUnit(e.target.value)}
-            size="small"
             sx={{ minWidth: 180 }}
           >
             {units.map((u) => (
@@ -123,12 +108,10 @@ export default function WeightConverter() {
             ))}
           </Select>
         </Box>
+      </Paper>
 
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-          Результаты конвертации
-        </Typography>
-
-        <Grid container spacing={2}>
+      {isValid && (
+        <Grid container spacing={1.5}>
           {results.map((r) => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={r.key}>
               <Paper
@@ -137,75 +120,32 @@ export default function WeightConverter() {
                   p: 2,
                   borderRadius: 3,
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: 0.5,
+                  alignItems: 'center',
+                  gap: 1,
                   transition: 'all 200ms ease',
-                  '&:hover': {
-                    borderColor: theme.palette.primary.main,
-                    background: theme.palette.surfaceContainerLow
-                  }
+                  '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                   <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                     {r.label}
                   </Typography>
-                  <IconButton
-                    size="small"
-                    onClick={() => copyValue(r.key, r.formatted)}
-                    sx={{
-                      color: copied === r.key ? theme.palette.success.main : 'text.secondary',
-                      transition: 'color 200ms ease'
-                    }}
-                  >
-                    <ContentCopyIcon sx={{ fontSize: 16 }} />
-                  </IconButton>
-                </Box>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    fontSize: '1.15rem',
-                    wordBreak: 'break-all'
-                  }}
-                >
-                  {r.formatted}
                   <Typography
-                    component="span"
-                    variant="body2"
-                    sx={{ ml: 0.5, color: 'text.secondary', fontWeight: 400 }}
+                    variant="h6"
+                    sx={{ fontFamily: 'monospace', fontWeight: 700, fontSize: '1.1rem', wordBreak: 'break-all' }}
                   >
-                    {r.short}
+                    {r.formatted}
+                    <Typography component="span" variant="body2" sx={{ ml: 0.5, color: 'text.secondary', fontWeight: 400 }}>
+                      {r.short}
+                    </Typography>
                   </Typography>
-                </Typography>
-                {copied === r.key && (
-                  <Typography variant="caption" sx={{ color: theme.palette.success.main }}>
-                    Скопировано!
-                  </Typography>
-                )}
+                </Box>
+                <CopyButton text={r.formatted} />
               </Paper>
             </Grid>
           ))}
         </Grid>
-
-        {inputValue !== '' && !isValid && (
-          <Paper
-            elevation={0}
-            sx={{
-              mt: 2,
-              p: 2,
-              borderRadius: 3,
-              background: alpha(theme.palette.error.main, 0.08),
-              border: `1px solid ${alpha(theme.palette.error.main, 0.3)}`
-            }}
-          >
-            <Typography variant="body2" color="error">
-              Пожалуйста, введите положительное число для конвертации.
-            </Typography>
-          </Paper>
-        )}
-      </Paper>
+      )}
     </Box>
   );
 }

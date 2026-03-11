@@ -120,7 +120,7 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Начальная сумма ({sym})"
+              label={`Начальная сумма (${sym})`}
               type="number"
               value={initial}
               onChange={(e) => setInitial(e.target.value)}
@@ -133,7 +133,7 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Ежемесячное пополнение ({sym})"
+              label={`Ежемесячное пополнение (${sym})`}
               type="number"
               value={monthly}
               onChange={(e) => setMonthly(e.target.value)}

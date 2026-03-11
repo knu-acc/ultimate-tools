@@ -9,15 +9,10 @@ import {
   Select,
   MenuItem,
   Grid,
-  IconButton,
-  Tooltip,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
-
+import { CopyButton } from '@/src/components/CopyButton';
 
 type VolumeUnit =
   | 'liters'
@@ -32,16 +27,16 @@ type VolumeUnit =
   | 'cubicCentimeters';
 
 const unitLabels: Record<VolumeUnit, string> = {
-  liters: 'Литры (л)',
-  milliliters: 'Миллилитры (мл)',
-  gallons: 'Галлоны US (gal)',
-  quarts: 'Кварты (qt)',
-  pints: 'Пинты (pt)',
-  cups: 'Чашки (cup)',
-  tablespoons: 'Столовые ложки (tbsp)',
-  teaspoons: 'Чайные ложки (tsp)',
-  cubicMeters: 'Кубические метры (м³)',
-  cubicCentimeters: 'Кубические сантиметры (см³)'
+  liters: 'Литры',
+  milliliters: 'Миллилитры',
+  gallons: 'Галлоны US',
+  quarts: 'Кварты',
+  pints: 'Пинты',
+  cups: 'Чашки',
+  tablespoons: 'Столовые ложки',
+  teaspoons: 'Чайные ложки',
+  cubicMeters: 'Кубические метры',
+  cubicCentimeters: 'Кубические сантиметры'
 };
 
 const unitShort: Record<VolumeUnit, string> = {
@@ -57,7 +52,6 @@ const unitShort: Record<VolumeUnit, string> = {
   cubicCentimeters: 'см³'
 };
 
-// Conversion factors to liters
 const toLiters: Record<VolumeUnit, number> = {
   liters: 1,
   milliliters: 0.001,
@@ -102,9 +96,8 @@ const commonConversions = [
 
 export default function VolumeConverter() {
   const theme = useTheme();
-  const [input, setInput] = useState<string>('1');
+  const [input, setInput] = useState('1');
   const [sourceUnit, setSourceUnit] = useState<VolumeUnit>('liters');
-  const [copied, setCopied] = useState<string>('');
 
   const numericValue = parseFloat(input);
   const isValid = input !== '' && !isNaN(numericValue) && numericValue >= 0;
@@ -112,95 +105,56 @@ export default function VolumeConverter() {
 
   const otherUnits = (Object.keys(unitLabels) as VolumeUnit[]).filter((u) => u !== sourceUnit);
 
-  const copyValue = async (unit: VolumeUnit, value: string) => {
-    await navigator.clipboard.writeText(value);
-    setCopied(unit);
-    setTimeout(() => setCopied(''), 2000);
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
-      {/* Ввод */}
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
-          borderRadius: 4,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Введите значение
-        </Typography>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
           <TextField
-            size="small"
             type="number"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Введите число"
-            slotProps={{ htmlInput: { min: 0 } }}
+            placeholder="1"
+            error={input !== '' && !isValid}
+            slotProps={{
+              htmlInput: { min: 0 },
+              input: {
+                endAdornment: (
+                  <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
+                    {unitShort[sourceUnit]}
+                  </Typography>
+                )
+              }
+            }}
             sx={{
               flex: 2,
               minWidth: 180,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.2rem' }
             }}
           />
           <Select
-            size="small"
             value={sourceUnit}
             onChange={(e) => setSourceUnit(e.target.value as VolumeUnit)}
-            sx={{
-              flex: 1,
-              minWidth: 200,
-              borderRadius: 2
-            }}
+            sx={{ flex: 1, minWidth: 200 }}
           >
             {(Object.keys(unitLabels) as VolumeUnit[]).map((unit) => (
               <MenuItem key={unit} value={unit}>
-                {unitLabels[unit]}
+                {unitLabels[unit]} ({unitShort[unit]})
               </MenuItem>
             ))}
           </Select>
         </Box>
-        {input !== '' && !isValid && (
-          <Typography variant="caption" color="error" sx={{ mt: 1, display: 'block' }}>
-            Введите корректное неотрицательное число
-          </Typography>
-        )}
       </Paper>
 
-      {/* Результаты */}
-      {converted ? (
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          {/* Исходное значение */}
-          <Grid size={{ xs: 12 }}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 2.5,
-                borderRadius: 4,
-                border: `2px solid ${theme.palette.primary.main}`,
-                background: theme.palette.surfaceContainerHigh,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 1
-              }}
-            >
-              <Box sx={{ textAlign: 'center' }}>
-                <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}>
-                  Исходное значение
-                </Typography>
-                <Typography variant="h4" sx={{ fontWeight: 700, fontFamily: 'monospace', mt: 0.5 }}>
-                  {formatNumber(converted[sourceUnit])} {unitShort[sourceUnit]}
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-
-          {/* Карточки результатов */}
+      {converted && (
+        <Grid container spacing={1.5} sx={{ mb: 2 }}>
           {otherUnits.map((unit) => {
             const valueStr = formatNumber(converted[unit]);
             return (
@@ -209,87 +163,57 @@ export default function VolumeConverter() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 4,
+                    borderRadius: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
                     transition: 'all 200ms ease',
-                    '&:hover': {
-                      borderColor: theme.palette.primary.main,
-                      background: theme.palette.surfaceContainerLow
-                    }
+                    '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                   }}
                 >
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                        {unitLabels[unit]}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontWeight: 700,
-                          fontFamily: 'monospace',
-                          mt: 0.5,
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        {valueStr} {unitShort[unit]}
-                      </Typography>
-                    </Box>
-                    <CopyButton text={valueStr} />
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                    <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
+                      {unitLabels[unit]}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 700,
+                        fontFamily: 'monospace',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {valueStr} {unitShort[unit]}
+                    </Typography>
                   </Box>
+                  <CopyButton text={valueStr} />
                 </Paper>
               </Grid>
             );
           })}
         </Grid>
-      ) : (
-        <Paper
-          elevation={0}
-          sx={{
-            p: 3,
-            mb: 3,
-            borderRadius: 4,
-            textAlign: 'center'
-          }}
-        >
-          <Typography color="text.secondary">
-            Введите корректное число для конвертации
-          </Typography>
-        </Paper>
       )}
 
-      {/* Справочная таблица */}
-      <Paper
-        elevation={0}
-        sx={{
-          p: 3,
-          borderRadius: 4
-        }}
-      >
-        <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
-          Распространённые соотношения
+      <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
+        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
+          Справочник
         </Typography>
         <Grid container spacing={1.5}>
           {commonConversions.map((item, idx) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={idx}>
+            <Grid size={{ xs: 6, sm: 3 }} key={idx}>
               <Paper
                 elevation={0}
                 sx={{
                   p: 1.5,
-                  borderRadius: 3,
+                  borderRadius: 2,
                   textAlign: 'center',
                   background: theme.palette.surfaceContainerLowest
                 }}
               >
-                <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: 'monospace' }}>
-                  {item.from}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  =
-                </Typography>
-                <Typography variant="body2" sx={{ fontWeight: 500, fontFamily: 'monospace' }}>
-                  {item.to}
+                <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: 'monospace', fontSize: '0.8rem' }}>
+                  {item.from} = {item.to}
                 </Typography>
               </Paper>
             </Grid>

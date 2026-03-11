@@ -4,10 +4,8 @@ import { useState, useMemo } from 'react';
 import {
   Box,
   Typography,
-  Button,
   Paper,
   TextField,
-  IconButton,
   Grid,
   Chip,
   Switch,
@@ -15,8 +13,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 interface Stats {
@@ -66,62 +63,37 @@ export default function RemoveDuplicates() {
   const [input, setInput] = useState('');
   const [caseSensitive, setCaseSensitive] = useState(true);
   const [trimWhitespace, setTrimWhitespace] = useState(true);
-  const [copied, setCopied] = useState(false);
 
   const { result, stats } = useMemo(
     () => removeDuplicateLines(input, caseSensitive, trimWhitespace),
     [input, caseSensitive, trimWhitespace]
   );
 
-  const copyToClipboard = async () => {
-    if (!result) return;
-    await navigator.clipboard.writeText(result);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-          Исходный текст
-        </Typography>
         <TextField
           multiline
-          rows={6}
+          rows={5}
           fullWidth
           value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-            setCopied(false);
-          }}
-          placeholder="Введите текст с дублирующимися строками..."
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Текст..."
           sx={{
             mb: 2,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
           }}
         />
 
-        {/* Options */}
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 2,
-            mb: 3,
-            p: 2,
-            borderRadius: 3,
-            background: alpha(theme.palette.background.default, 0.6)
-          }}
-        >
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2 }}>
           <FormControlLabel
             control={
               <Switch
@@ -152,9 +124,8 @@ export default function RemoveDuplicates() {
           />
         </Box>
 
-        {/* Stats */}
         {input.trim() && (
-          <Grid container spacing={1.5} sx={{ mb: 3 }}>
+          <Grid container spacing={1.5} sx={{ mb: 2 }}>
             <Grid size={{ xs: 4 }}>
               <Box
                 sx={{
@@ -218,38 +189,13 @@ export default function RemoveDuplicates() {
           </Grid>
         )}
 
-        {/* Output */}
         {result && (
           <Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                mb: 1
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                  Результат
-                </Typography>
-                <Chip
-                  label={`−${stats.removed} дублей`}
-                  size="small"
-                  color={stats.removed > 0 ? 'success' : 'default'}
-                  variant="outlined"
-                />
-              </Box>
-              <Button
-                size="small"
-                startIcon={<ContentCopyIcon />}
-                onClick={copyToClipboard}
-                color={copied ? 'success' : 'primary'}
-                variant="outlined"
-                sx={{ textTransform: 'none', borderRadius: 2 }}
-              >
-                {copied ? 'Скопировано!' : 'Копировать'}
-              </Button>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mb: 1, alignItems: 'center' }}>
+              {stats.removed > 0 && (
+                <Chip label={`−${stats.removed}`} size="small" color="success" sx={{ fontWeight: 600 }} />
+              )}
+              <CopyButton text={result} />
             </Box>
             <TextField
               multiline
@@ -261,7 +207,7 @@ export default function RemoveDuplicates() {
                 '& .MuiInputBase-root': {
                   fontFamily: 'monospace',
                   fontSize: '0.875rem',
-                  background: theme.palette.background.default
+                  background: alpha(theme.palette.text.primary, 0.03)
                 }
               }}
             />

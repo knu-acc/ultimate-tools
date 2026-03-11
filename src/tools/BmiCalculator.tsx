@@ -69,11 +69,7 @@ export default function BmiCalculator() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Введите ваши параметры
-        </Typography>
+      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
@@ -111,13 +107,13 @@ export default function BmiCalculator() {
       {/* Result */}
       {bmi !== null && category && (
         <>
-          {/* BMI Value */}
           <Paper
             elevation={0}
             sx={{
               p: 3,
-              mb: 3,
+              mb: 2,
               textAlign: 'center',
+              borderRadius: 3,
               background: alpha(category.color, 0.05)
             }}
           >
@@ -145,9 +141,8 @@ export default function BmiCalculator() {
             </Typography>
           </Paper>
 
-          {/* Visual Gauge */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
+            <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               Шкала ИМТ
             </Typography>
 
@@ -209,9 +204,8 @@ export default function BmiCalculator() {
             </Box>
           </Paper>
 
-          {/* Categories breakdown */}
-          <Paper elevation={0} sx={{ p: 3, mb: 3 }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
+            <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               Категории ИМТ
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -267,20 +261,17 @@ export default function BmiCalculator() {
             </Box>
           </Paper>
 
-          {/* Healthy range */}
           {healthyRange && (
             <Paper
               elevation={0}
               sx={{
                 p: 3,
+                borderRadius: 3,
                 background: alpha('#2e7d32', 0.04)
               }}
             >
-              <Typography variant="h6" sx={{ mb: 1.5 }}>
-                Здоровый диапазон веса
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Для вашего роста ({height} см) нормальный вес составляет:
+              <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
+                Здоровый диапазон ({height} см)
               </Typography>
               <Grid container spacing={2}>
                 <Grid size={{ xs: 6 }}>
@@ -290,7 +281,7 @@ export default function BmiCalculator() {
                       p: 2,
                       textAlign: 'center',
                       borderRadius: 3,
-                      border: `1px solid ${alpha('#2e7d32', 0.2)}`
+                      background: alpha('#2e7d32', 0.05)
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">
@@ -308,7 +299,7 @@ export default function BmiCalculator() {
                       p: 2,
                       textAlign: 'center',
                       borderRadius: 3,
-                      border: `1px solid ${alpha('#2e7d32', 0.2)}`
+                      background: alpha('#2e7d32', 0.05)
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">

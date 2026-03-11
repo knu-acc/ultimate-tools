@@ -10,11 +10,11 @@ import {
   IconButton,
   Tooltip,
   Grid,
-  useTheme } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
+  useTheme,
+  alpha
+} from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 type CaseType =
@@ -103,20 +103,11 @@ export default function CaseConverter() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [activeCase, setActiveCase] = useState<CaseType | null>(null);
-  const [copied, setCopied] = useState(false);
 
   const handleConvert = (type: CaseType) => {
     const result = convertCase(input, type);
     setOutput(result);
     setActiveCase(type);
-    setCopied(false);
-  };
-
-  const copyToClipboard = async () => {
-    if (!output) return;
-    await navigator.clipboard.writeText(output);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   const useAsInput = () => {
@@ -128,34 +119,27 @@ export default function CaseConverter() {
   };
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-          Исходный текст
-        </Typography>
         <TextField
           multiline
           rows={4}
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Введите текст для конвертации..."
-          sx={{ mb: 3 }}
+          placeholder="Текст..."
+          sx={{ mb: 2 }}
         />
 
-        {/* Conversion buttons */}
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          Выберите формат
-        </Typography>
-        <Grid container spacing={1} sx={{ mb: 3 }}>
+        <Grid container spacing={1} sx={{ mb: 2 }}>
           {CASE_OPTIONS.map((opt) => (
             <Grid size={{ xs: 6, sm: 4, md: 3 }} key={opt.type}>
               <Button
@@ -184,21 +168,15 @@ export default function CaseConverter() {
           ))}
         </Grid>
 
-        {/* Output */}
         {output && (
           <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-              <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                Результат
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 0.5 }}>
-                <Tooltip title="Использовать как входной текст">
-                  <IconButton onClick={useAsInput} size="small">
-                    <SwapVertIcon />
-                  </IconButton>
-                </Tooltip>
-                <CopyButton text={output} />
-              </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 0.5, mb: 1 }}>
+              <Tooltip title="Использовать как вход">
+                <IconButton onClick={useAsInput} size="small">
+                  <SwapVertIcon />
+                </IconButton>
+              </Tooltip>
+              <CopyButton text={output} />
             </Box>
             <TextField
               multiline
@@ -207,7 +185,7 @@ export default function CaseConverter() {
               value={output}
               slotProps={{ input: { readOnly: true } }}
               sx={{
-                '& .MuiInputBase-root': { fontFamily: 'monospace', background: theme.palette.background.default }
+                '& .MuiInputBase-root': { fontFamily: 'monospace', background: alpha(theme.palette.text.primary, 0.03) }
               }}
             />
           </Box>

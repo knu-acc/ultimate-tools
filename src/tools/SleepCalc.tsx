@@ -122,16 +122,11 @@ export default function SleepCalc() {
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLowest
+          background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Выберите режим расчёта
-        </Typography>
-
-        {/* Mode selector */}
         <Box sx={{ display: 'flex', gap: 1.5, mb: 2.5, flexWrap: 'wrap' }}>
           {([
             { key: 'bedtime' as Mode, label: 'Я знаю время отхода ко сну' },
@@ -195,7 +190,7 @@ export default function SleepCalc() {
           elevation={0}
           sx={{
             p: 3,
-            mb: 3,
+            mb: 2,
             borderRadius: 3
           }}
         >
@@ -214,7 +209,6 @@ export default function SleepCalc() {
                     p: 2.5,
                     textAlign: 'center',
                     borderRadius: 3,
-                    border: `1.5px solid ${alpha(opt.color, 0.35)}`,
                     background: alpha(opt.color, 0.05),
                     transition: 'transform 0.15s ease, box-shadow 0.15s ease',
                     '&:hover': {
@@ -259,7 +253,7 @@ export default function SleepCalc() {
           elevation={0}
           sx={{
             p: 3,
-            mb: 3,
+            mb: 2,
             borderRadius: 3
           }}
         >

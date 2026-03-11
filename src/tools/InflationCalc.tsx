@@ -126,7 +126,7 @@ export default function InflationCalc() {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Сумма ({sym})"
+              label={`Сумма (${sym})`}
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
@@ -270,7 +270,7 @@ export default function InflationCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
                   label="Эквивалентная сумма"
-                  value={`${fmt(results.equivalentAmount)} {sym}`}
+                  value={`${fmt(results.equivalentAmount)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>

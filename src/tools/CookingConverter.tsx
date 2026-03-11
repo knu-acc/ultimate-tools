@@ -10,15 +10,10 @@ import {
   MenuItem,
   Grid,
   Chip,
-  IconButton,
-  Tooltip,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
-
+import { CopyButton } from '@/src/components/CopyButton';
 
 type VolumeUnit = 'cups' | 'tbsp' | 'tsp' | 'ml' | 'liters' | 'floz';
 type WeightUnit = 'grams';
@@ -26,13 +21,13 @@ type CookingUnit = VolumeUnit | WeightUnit;
 type Ingredient = 'water' | 'flour' | 'sugar' | 'butter' | 'oil';
 
 const unitLabels: Record<CookingUnit, string> = {
-  cups: 'Стаканы (cup)',
-  tbsp: 'Ст. ложки (ст.л.)',
-  tsp: 'Ч. ложки (ч.л.)',
-  ml: 'Миллилитры (мл)',
-  liters: 'Литры (л)',
-  floz: 'Жидкие унции (fl oz)',
-  grams: 'Граммы (г)'
+  cups: 'Стаканы',
+  tbsp: 'Ст. ложки',
+  tsp: 'Ч. ложки',
+  ml: 'Миллилитры',
+  liters: 'Литры',
+  floz: 'Жидкие унции',
+  grams: 'Граммы'
 };
 
 const unitShort: Record<CookingUnit, string> = {
@@ -53,7 +48,6 @@ const ingredientLabels: Record<Ingredient, string> = {
   oil: 'Масло растительное'
 };
 
-// Density in g/ml for weight conversions
 const ingredientDensity: Record<Ingredient, number> = {
   water: 1.0,
   flour: 0.53,
@@ -62,7 +56,6 @@ const ingredientDensity: Record<Ingredient, number> = {
   oil: 0.92
 };
 
-// Conversion factors to ml
 const toMl: Record<VolumeUnit, number> = {
   cups: 240,
   tbsp: 15,
@@ -82,7 +75,6 @@ function convertAll(
   let inMl: number;
 
   if (from === 'grams') {
-    // grams -> ml via density, then to all units
     inMl = value / ingredientDensity[ingredient];
   } else {
     inMl = value * toMl[from];
@@ -93,7 +85,6 @@ function convertAll(
     const raw = inMl / toMl[unit];
     result[unit] = parseFloat(raw.toPrecision(8));
   }
-  // ml -> grams via density
   result.grams = parseFloat((inMl * ingredientDensity[ingredient]).toPrecision(8));
 
   return result as Record<CookingUnit, number>;
@@ -121,10 +112,9 @@ const commonConversions = [
 
 export default function CookingConverter() {
   const theme = useTheme();
-  const [input, setInput] = useState<string>('1');
+  const [input, setInput] = useState('1');
   const [sourceUnit, setSourceUnit] = useState<CookingUnit>('cups');
   const [ingredient, setIngredient] = useState<Ingredient>('water');
-  const [copied, setCopied] = useState<string>('');
 
   const numericValue = parseFloat(input);
   const isValid = input !== '' && !isNaN(numericValue) && numericValue >= 0;
@@ -132,72 +122,53 @@ export default function CookingConverter() {
 
   const otherUnits = (Object.keys(unitLabels) as CookingUnit[]).filter((u) => u !== sourceUnit);
 
-  const copyValue = async (unit: CookingUnit, value: string) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(unit);
-      setTimeout(() => setCopied(''), 2000);
-    } catch {
-      // clipboard not available
-    }
-  };
-
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
-      {/* Ввод */}
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
-          borderRadius: 4,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Введите значение
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2.5 }}>
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
           <TextField
-            size="small"
             type="number"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Введите число"
-            slotProps={{ htmlInput: { min: 0, step: 'any' } }}
+            placeholder="1"
+            error={input !== '' && !isValid}
+            slotProps={{
+              htmlInput: { min: 0, step: 'any' },
+              input: {
+                endAdornment: (
+                  <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
+                    {unitShort[sourceUnit]}
+                  </Typography>
+                )
+              }
+            }}
             sx={{
               flex: 2,
               minWidth: 160,
-              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.1rem' }
+              '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '1.2rem' }
             }}
           />
           <Select
-            size="small"
             value={sourceUnit}
             onChange={(e) => setSourceUnit(e.target.value as CookingUnit)}
-            sx={{
-              flex: 1,
-              minWidth: 200,
-              borderRadius: 2
-            }}
+            sx={{ flex: 1, minWidth: 180 }}
           >
             {(Object.keys(unitLabels) as CookingUnit[]).map((unit) => (
               <MenuItem key={unit} value={unit}>
-                {unitLabels[unit]}
+                {unitLabels[unit]} ({unitShort[unit]})
               </MenuItem>
             ))}
           </Select>
         </Box>
 
-        {input !== '' && !isValid && (
-          <Typography variant="caption" color="error" sx={{ mb: 2, display: 'block' }}>
-            Введите корректное неотрицательное число
-          </Typography>
-        )}
-
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Ингредиент (для пересчёта в граммы)
-        </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {(Object.keys(ingredientLabels) as Ingredient[]).map((ing) => (
             <Chip
@@ -206,8 +177,8 @@ export default function CookingConverter() {
               onClick={() => setIngredient(ing)}
               color={ingredient === ing ? 'primary' : 'default'}
               variant={ingredient === ing ? 'filled' : 'outlined'}
+              size="small"
               sx={{
-                borderRadius: 3,
                 fontWeight: ingredient === ing ? 600 : 400,
                 transition: 'all 200ms ease'
               }}
@@ -216,40 +187,8 @@ export default function CookingConverter() {
         </Box>
       </Paper>
 
-      {/* Результаты */}
-      {converted ? (
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          {/* Исходное значение */}
-          <Grid size={{ xs: 12 }}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 2.5,
-                borderRadius: 4,
-                border: `2px solid ${theme.palette.primary.main}`,
-                background: theme.palette.surfaceContainerHigh,
-                textAlign: 'center'
-              }}
-            >
-              <Typography
-                variant="caption"
-                sx={{ fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 1 }}
-              >
-                Исходное значение
-              </Typography>
-              <Typography variant="h4" sx={{ fontWeight: 700, fontFamily: 'monospace', mt: 0.5 }}>
-                {formatNumber(converted[sourceUnit])} {unitShort[sourceUnit]}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {unitLabels[sourceUnit]}
-                {(sourceUnit === 'grams' || otherUnits.includes('grams' as CookingUnit)) && (
-                  <> &middot; {ingredientLabels[ingredient]}</>
-                )}
-              </Typography>
-            </Paper>
-          </Grid>
-
-          {/* Карточки результатов */}
+      {converted && (
+        <Grid container spacing={1.5} sx={{ mb: 2 }}>
           {otherUnits.map((unit) => {
             const valueStr = formatNumber(converted[unit]);
             return (
@@ -258,95 +197,65 @@ export default function CookingConverter() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 4,
+                    borderRadius: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
                     transition: 'all 200ms ease',
-                    '&:hover': {
-                      borderColor: theme.palette.primary.main,
-                      background: theme.palette.surfaceContainerLow
-                    }
+                    '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                   }}
                 >
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography
-                        variant="caption"
-                        sx={{ fontWeight: 600, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 0.5 }}
-                      >
-                        {unitLabels[unit]}
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                    <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
+                      {unitLabels[unit]}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 700,
+                        fontFamily: 'monospace',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {valueStr}
+                      <Typography component="span" variant="body2" sx={{ ml: 0.5, color: 'text.secondary', fontWeight: 400 }}>
+                        {unitShort[unit]}
                       </Typography>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontWeight: 700,
-                          fontFamily: 'monospace',
-                          mt: 0.5,
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        {valueStr} {unitShort[unit]}
+                    </Typography>
+                    {unit === 'grams' && (
+                      <Typography variant="caption" color="text.secondary">
+                        {ingredientLabels[ingredient]}
                       </Typography>
-                      {unit === 'grams' && (
-                        <Typography variant="caption" color="text.secondary">
-                          {ingredientLabels[ingredient]}
-                        </Typography>
-                      )}
-                    </Box>
-                    <CopyButton text={valueStr} />
+                    )}
                   </Box>
+                  <CopyButton text={valueStr} />
                 </Paper>
               </Grid>
             );
           })}
         </Grid>
-      ) : (
-        <Paper
-          elevation={0}
-          sx={{
-            p: 3,
-            mb: 3,
-            borderRadius: 4,
-            textAlign: 'center'
-          }}
-        >
-          <Typography color="text.secondary">
-            Введите корректное число для конвертации
-          </Typography>
-        </Paper>
       )}
 
-      {/* Распространённые соотношения */}
-      <Paper
-        elevation={0}
-        sx={{
-          p: 3,
-          borderRadius: 4
-        }}
-      >
-        <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
-          Распространённые соотношения
+      <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
+        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
+          Справочник
         </Typography>
         <Grid container spacing={1.5}>
           {commonConversions.map((item, idx) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={idx}>
+            <Grid size={{ xs: 6, sm: 3 }} key={idx}>
               <Paper
                 elevation={0}
                 sx={{
                   p: 1.5,
-                  borderRadius: 3,
+                  borderRadius: 2,
                   textAlign: 'center',
                   background: theme.palette.surfaceContainerLowest
                 }}
               >
-                <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: 'monospace' }}>
-                  {item.from}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  =
-                </Typography>
-                <Typography variant="body2" sx={{ fontWeight: 500, fontFamily: 'monospace' }}>
-                  {item.to}
+                <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: 'monospace', fontSize: '0.8rem' }}>
+                  {item.from} = {item.to}
                 </Typography>
               </Paper>
             </Grid>

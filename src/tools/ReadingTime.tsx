@@ -101,24 +101,24 @@ export default function ReadingTime() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
-      {/* Ввод текста */}
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
-          borderRadius: 3
+          mb: 2,
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <TextField
           multiline
-          minRows={8}
-          maxRows={20}
+          minRows={6}
+          maxRows={16}
           fullWidth
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Вставьте или введите текст для анализа времени чтения..."
+          placeholder="Текст..."
           variant="outlined"
           sx={{
             '& .MuiOutlinedInput-root': {
@@ -130,58 +130,26 @@ export default function ReadingTime() {
         />
       </Paper>
 
-      {/* Карточки статистики */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Grid container spacing={1.5} sx={{ mb: 2 }}>
         {statCards.map((card) => (
           <Grid size={{ xs: 6, md: 4 }} key={card.label}>
             <Paper
               elevation={0}
               sx={{
-                p: 2.5,
+                p: 2,
                 textAlign: 'center',
                 borderRadius: 3,
-                backgroundColor: alpha(card.color, 0.06),
-                border: `1px solid ${alpha(card.color, 0.15)}`,
-                transition: 'transform 150ms ease, box-shadow 150ms ease',
-                '&:hover': {
-                  transform: 'translateY(-2px)',
-                  boxShadow: `0 4px 20px ${alpha(card.color, 0.15)}`
-                }
+                backgroundColor: alpha(card.color, 0.06)
               }}
             >
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 700,
-                  color: card.color,
-                  lineHeight: 1.2,
-                  mb: 0.5
-                }}
-              >
+              <Typography variant="h5" sx={{ fontWeight: 700, color: card.color, mb: 0.5 }}>
                 {card.value}
               </Typography>
-              <Typography
-                variant="caption"
-                sx={{
-                  color: 'text.secondary',
-                  fontWeight: 500,
-                  textTransform: 'uppercase',
-                  letterSpacing: 0.5,
-                  display: 'block'
-                }}
-              >
+              <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
                 {card.label}
               </Typography>
               {card.suffix && (
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: alpha(card.color, 0.7),
-                    fontSize: '0.68rem',
-                    display: 'block',
-                    mt: 0.5
-                  }}
-                >
+                <Typography variant="caption" sx={{ color: alpha(card.color, 0.7), fontSize: '0.65rem', display: 'block', mt: 0.3 }}>
                   {card.suffix}
                 </Typography>
               )}
@@ -190,17 +158,7 @@ export default function ReadingTime() {
         ))}
       </Grid>
 
-      {/* Средняя длина слова */}
-      <Paper
-        elevation={0}
-        sx={{
-          p: 3,
-          borderRadius: 3
-        }}
-      >
-        <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, mb: 2 }}>
-          Дополнительная статистика
-        </Typography>
+      <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
           <Chip
             label={`Средняя длина слова: ${stats.avgWordLength.toFixed(1)} симв.`}
@@ -209,7 +167,6 @@ export default function ReadingTime() {
               fontWeight: 600,
               backgroundColor: theme.palette.surfaceContainerHigh,
               color: theme.palette.primary.dark,
-              border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`
             }}
           />
           <Chip
@@ -219,7 +176,6 @@ export default function ReadingTime() {
               fontWeight: 600,
               backgroundColor: alpha(theme.palette.success.main, 0.08),
               color: theme.palette.success.dark,
-              border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`
             }}
           />
           <Chip
@@ -229,7 +185,6 @@ export default function ReadingTime() {
               fontWeight: 600,
               backgroundColor: alpha(theme.palette.warning.main, 0.08),
               color: theme.palette.warning.dark,
-              border: `1px solid ${alpha(theme.palette.warning.main, 0.2)}`
             }}
           />
         </Box>

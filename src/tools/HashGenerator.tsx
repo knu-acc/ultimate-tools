@@ -6,17 +6,13 @@ import {
   Typography,
   Paper,
   TextField,
-  IconButton,
   Switch,
   FormControlLabel,
   Grid,
-  Tooltip,
   useTheme,
   alpha
 } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CheckIcon from '@mui/icons-material/Check';
-import { CopyButton, ShareButton } from '@/src/components/CopyButton';
+import { CopyButton } from '@/src/components/CopyButton';
 
 
 // Compact MD5 implementation (Web Crypto API does not support MD5)
@@ -171,7 +167,6 @@ export default function HashGenerator() {
   const [input, setInput] = useState('');
   const [hashes, setHashes] = useState<HashResult[]>([]);
   const [uppercase, setUppercase] = useState(false);
-  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
 
   const generateHashes = useCallback(async () => {
@@ -214,29 +209,20 @@ export default function HashGenerator() {
     [generateHashes]
   );
 
-  const copyHash = async (value: string, idx: number) => {
-    const text = uppercase ? value.toUpperCase() : value;
-    await navigator.clipboard.writeText(text);
-    setCopiedIdx(idx);
-    setTimeout(() => setCopiedIdx(null), 2000);
-  };
-
   const formatHash = (value: string) => (uppercase ? value.toUpperCase() : value);
 
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
           p: 3,
-          mb: 3,
+          mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
         {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-          Исходный текст
-        </Typography>
         <TextField
           multiline
           rows={5}
@@ -244,7 +230,7 @@ export default function HashGenerator() {
           value={input}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="Введите текст для хеширования..."
+          placeholder="Текст..."
           sx={{
             mb: 2,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
@@ -295,21 +281,17 @@ export default function HashGenerator() {
           />
         </Box>
 
-        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
-          Подсказка: Ctrl + Enter для быстрой генерации
-        </Typography>
-
         {/* Hash Results */}
         {hashes.length > 0 && (
           <Grid container spacing={2}>
-            {hashes.map((hash, idx) => (
+            {hashes.map((hash) => (
               <Grid size={{ xs: 12, md: 6 }} key={hash.algorithm}>
                 <Paper
                   elevation={0}
                   sx={{
                     p: 2,
                     borderRadius: 3,
-                    background: theme.palette.background.default,
+                    background: alpha(theme.palette.text.primary, 0.03),
                     transition: 'border-color 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main
@@ -335,7 +317,7 @@ export default function HashGenerator() {
                         {hash.bits} бит
                       </Typography>
                     </Box>
-                    <CopyButton text={hash.value} />
+                    <CopyButton text={formatHash(hash.value)} />
                   </Box>
                   <Typography
                     variant="body2"
@@ -354,15 +336,6 @@ export default function HashGenerator() {
               </Grid>
             ))}
           </Grid>
-        )}
-
-        {/* Empty state */}
-        {hashes.length === 0 && input.trim() && !loading && (
-          <Box sx={{ textAlign: 'center', py: 4 }}>
-            <Typography variant="body2" color="text.secondary">
-              Нажмите &laquo;Сгенерировать хеши&raquo; для получения результатов
-            </Typography>
-          </Box>
         )}
       </Paper>
     </Box>
