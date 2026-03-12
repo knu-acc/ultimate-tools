@@ -264,7 +264,7 @@ export default function ScientificCalc() {
       <Paper
         elevation={0}
         sx={{
-          borderRadius: 4,
+          borderRadius: 3,
           overflow: 'hidden'
         }}
       >

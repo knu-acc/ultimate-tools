@@ -120,15 +120,15 @@ export default function PrimeChecker() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <TextField
           fullWidth
-          label="Число"
-          placeholder="От 1 до 999 999 999"
+          placeholder="1 ... 999 999 999"
           type="number"
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -192,9 +192,10 @@ export default function PrimeChecker() {
             <Paper
               elevation={0}
               sx={{
-                p: 3,
+                p: { xs: 2, sm: 3 },
                 mb: 2,
-                borderRadius: 3
+                borderRadius: 3,
+                background: theme.palette.surfaceContainerLow
               }}
             >
               <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
@@ -241,9 +242,10 @@ export default function PrimeChecker() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3
+              borderRadius: 3,
+              background: theme.palette.surfaceContainerLow
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>

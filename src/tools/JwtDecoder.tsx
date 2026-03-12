@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme, Divider
+  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme
 } from '@mui/material';
-import { CheckCircle, Error as ErrorIcon } from '@mui/icons-material';
+import { Error as ErrorIcon } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
 
 
@@ -73,34 +73,36 @@ export default function JwtDecoder() {
   const timeFields = ['exp', 'iat', 'nbf', 'auth_time'];
 
   return (
-    <Box>
-      <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-        JWT токен
-      </Typography>
-      <TextField
-        fullWidth
-        multiline
-        rows={4}
-        value={token}
-        onChange={(e) => setToken(e.target.value)}
-        placeholder="Вставьте JWT токен (eyJhbGci...)"
-        sx={{
-          mb: 2,
-          '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.8rem' }
-        }}
-      />
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Paper
+        elevation={0}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+      >
+        <TextField
+          fullWidth
+          multiline
+          rows={4}
+          value={token}
+          onChange={(e) => setToken(e.target.value)}
+          placeholder="Вставьте JWT токен (eyJhbGci...)"
+          sx={{
+            mb: 2,
+            '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.8rem', borderRadius: 2 }
+          }}
+        />
 
-      {decoded && !decoded.valid && (
-        <Paper
-          elevation={0}
-          sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.error.main, 0.08), mb: 2 }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <ErrorIcon sx={{ color: theme.palette.error.main }} />
-            <Typography color="error" fontWeight={600}>{decoded.error}</Typography>
-          </Box>
-        </Paper>
-      )}
+        {decoded && !decoded.valid && (
+          <Paper
+            elevation={0}
+            sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.error.main, 0.08) }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <ErrorIcon sx={{ color: theme.palette.error.main }} />
+              <Typography color="error" fontWeight={600}>{decoded.error}</Typography>
+            </Box>
+          </Paper>
+        )}
+      </Paper>
 
       {decoded?.valid && (
         <Grid container spacing={2}>

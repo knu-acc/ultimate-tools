@@ -8,7 +8,8 @@ import {
   Grid,
   TextField,
   Chip,
-  useTheme
+  useTheme,
+  alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
 
@@ -141,17 +142,17 @@ export default function MimeTypes() {
       {/* Search & filter */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 5 }}>
             <TextField
-              label="Поиск по расширению или MIME типу"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               size="small"
               fullWidth
               placeholder=".jpg, image/jpeg, PDF..."
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 7 }}>
@@ -180,7 +181,7 @@ export default function MimeTypes() {
       {/* Table */}
       <Paper
         elevation={0}
-        sx={{ p: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
       >
         <Box sx={{ overflowX: 'auto' }}>
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -200,7 +201,7 @@ export default function MimeTypes() {
                   key={m.ext + m.mime}
                   sx={{
                     borderBottom: `1px solid ${theme.palette.divider}`,
-                    '&:hover': { backgroundColor: theme.palette.surfaceContainerLow }
+                    '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) }
                   }}
                 >
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>

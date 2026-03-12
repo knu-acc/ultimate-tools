@@ -19,7 +19,6 @@ import {
 } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
-import ImageIcon from '@mui/icons-material/Image';
 import CompressIcon from '@mui/icons-material/Compress';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -184,7 +183,7 @@ export default function ImageCompressor() {
             textAlign: 'center',
             cursor: 'pointer',
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
-            borderRadius: 4,
+            borderRadius: 3,
             backgroundColor: dragging
               ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
@@ -213,7 +212,7 @@ export default function ImageCompressor() {
       {/* Controls */}
       {originalFile && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Grid container spacing={3} alignItems="center">
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
@@ -271,7 +270,9 @@ export default function ImageCompressor() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3
+                  borderRadius: 3,
+                  transition: 'background-color 200ms',
+                  '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -291,7 +292,9 @@ export default function ImageCompressor() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3
+                  borderRadius: 3,
+                  transition: 'background-color 200ms',
+                  '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -339,7 +342,7 @@ export default function ImageCompressor() {
           </Grid>
 
           {/* Preview */}
-          <Paper elevation={0} sx={{ p: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CompressIcon /> Предпросмотр
             </Typography>
@@ -399,7 +402,7 @@ export default function ImageCompressor() {
                     />
                   ) : (
                     <Box sx={{ p: 4, textAlign: 'center' }}>
-                      <ImageIcon sx={{ fontSize: 48, color: 'text.disabled', mb: 1 }} />
+                      <CompressIcon sx={{ fontSize: 48, color: 'text.disabled', mb: 1 }} />
                       <Typography variant="body2" color="text.secondary">
                         Обработка...
                       </Typography>

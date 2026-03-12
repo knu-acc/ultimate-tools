@@ -10,7 +10,9 @@ import {
   TextField,
   Chip,
   Divider,
-  useTheme } from '@mui/material';
+  useTheme,
+  alpha
+} from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
@@ -104,13 +106,13 @@ export default function DateDifference() {
 
   const resultItems = result
     ? [
-        { label: 'Дни', value: result.days.toLocaleString('ru-RU'), icon: '📅' },
-        { label: 'Недели', value: result.weeks.toLocaleString('ru-RU'), icon: '📆' },
-        { label: 'Месяцы', value: result.months.toLocaleString('ru-RU'), icon: '🗓️' },
-        { label: 'Годы', value: result.years.toLocaleString('ru-RU'), icon: '🎂' },
-        { label: 'Часы', value: result.hours.toLocaleString('ru-RU'), icon: '🕐' },
-        { label: 'Минуты', value: result.minutes.toLocaleString('ru-RU'), icon: '⏱️' },
-        { label: 'Секунды', value: result.seconds.toLocaleString('ru-RU'), icon: '⏲️' },
+        { label: 'Дни', value: result.days.toLocaleString('ru-RU') },
+        { label: 'Недели', value: result.weeks.toLocaleString('ru-RU') },
+        { label: 'Месяцы', value: result.months.toLocaleString('ru-RU') },
+        { label: 'Годы', value: result.years.toLocaleString('ru-RU') },
+        { label: 'Часы', value: result.hours.toLocaleString('ru-RU') },
+        { label: 'Минуты', value: result.minutes.toLocaleString('ru-RU') },
+        { label: 'Секунды', value: result.seconds.toLocaleString('ru-RU') },
       ]
     : [];
 
@@ -119,8 +121,9 @@ export default function DateDifference() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -195,7 +198,7 @@ export default function DateDifference() {
       </Paper>
 
       {result && (
-        <Paper elevation={0} sx={{ p: 3 }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
           <Box sx={{ mb: 2, textAlign: 'center' }}>
             <Chip
               label={result.readable}
@@ -215,10 +218,10 @@ export default function DateDifference() {
                     p: 2,
                     textAlign: 'center',
                     borderRadius: 3,
+                    backgroundColor: theme.palette.surfaceContainerLow,
                     transition: 'all 200ms ease',
                     '&:hover': {
-                      borderColor: theme.palette.primary.main,
-                      background: theme.palette.surfaceContainerLow
+                      backgroundColor: alpha(theme.palette.primary.main, 0.04)
                     }
                   }}
                 >

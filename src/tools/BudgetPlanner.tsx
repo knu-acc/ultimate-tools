@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import {
   Box, Typography, Paper, TextField, Grid, Button,
-  Chip, IconButton, Divider, useTheme, alpha, InputAdornment,
+  Chip, IconButton, useTheme, alpha, InputAdornment,
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
@@ -82,7 +82,7 @@ export default function BudgetPlanner() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 720, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       {/* Header with currency */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h6" fontWeight={600}>Планировщик бюджета</Typography>
@@ -101,6 +101,8 @@ export default function BudgetPlanner() {
                 bgcolor: alpha(card.color, isDark ? 0.15 : 0.07),
                 border: `1px solid ${alpha(card.color, 0.2)}`,
                 textAlign: 'center',
+                transition: 'background-color 0.2s ease',
+                '&:hover': { bgcolor: alpha(card.color, isDark ? 0.2 : 0.1) },
               }}
             >
               <Box sx={{ color: card.color, mb: 0.5, '& svg': { fontSize: 20 } }}>{card.icon}</Box>
@@ -119,7 +121,7 @@ export default function BudgetPlanner() {
       </Grid>
 
       {/* Income */}
-      <Paper elevation={1} sx={{ p: 2.5, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box sx={{ fontSize: '1.1rem' }}>💰</Box>
@@ -180,7 +182,7 @@ export default function BudgetPlanner() {
       </Paper>
 
       {/* Expenses */}
-      <Paper elevation={1} sx={{ p: 2.5, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box sx={{ fontSize: '1.1rem' }}>💸</Box>
@@ -263,7 +265,7 @@ export default function BudgetPlanner() {
         <>
           {/* Expense distribution bar */}
           {results.breakdown.length > 0 && (
-            <Paper elevation={1} sx={{ p: 2.5, mb: 2, borderRadius: 3 }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 1.5 }}>
                 Распределение расходов
               </Typography>
@@ -296,7 +298,7 @@ export default function BudgetPlanner() {
 
           {/* Savings rate */}
           {results.totalIncome > 0 && (
-            <Paper elevation={1} sx={{ p: 2.5, mb: 2, borderRadius: 3 }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                 <Typography variant="subtitle2" fontWeight={600}>Норма сбережений</Typography>
                 <Chip
@@ -325,7 +327,7 @@ export default function BudgetPlanner() {
 
           {/* 50/30/20 rule */}
           {results.totalIncome > 0 && (
-            <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>Правило 50/30/20</Typography>
               <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
                 Рекомендуемое распределение от вашего дохода {fmt(results.totalIncome)} {sym}

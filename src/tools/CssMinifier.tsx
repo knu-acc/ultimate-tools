@@ -7,9 +7,7 @@ import {
   Button,
   Paper,
   TextField,
-  Grid,
   Chip,
-  IconButton,
   useTheme,
   alpha
 } from '@mui/material';
@@ -92,32 +90,18 @@ export default function CssMinifier() {
   const theme = useTheme();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [copied, setCopied] = useState(false);
   const [lastAction, setLastAction] = useState<string>('');
 
   const handleMinify = () => {
     const result = minifyCss(input);
     setOutput(result);
     setLastAction('minify');
-    setCopied(false);
   };
 
   const handleBeautify = () => {
     const result = beautifyCss(input);
     setOutput(result);
     setLastAction('beautify');
-    setCopied(false);
-  };
-
-  const copyToClipboard = async () => {
-    if (!output) return;
-    try {
-      await navigator.clipboard.writeText(output);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* ignore */
-    }
   };
 
   const stats = useMemo(() => {
@@ -135,15 +119,11 @@ export default function CssMinifier() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Исходный CSS
-        </Typography>
         <TextField
           multiline
           rows={10}
@@ -165,28 +145,24 @@ export default function CssMinifier() {
         />
 
         {/* Action buttons */}
-        <Grid container spacing={1.5} sx={{ mb: 2.5, justifyContent: 'center' }}>
-          <Grid>
-            <Button
-              variant="contained"
-              onClick={handleMinify}
-              disabled={!input.trim()}
-              sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
-            >
-              Минифицировать
-            </Button>
-          </Grid>
-          <Grid>
-            <Button
-              variant="contained"
-              onClick={handleBeautify}
-              disabled={!input.trim()}
-              sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
-            >
-              Форматировать
-            </Button>
-          </Grid>
-        </Grid>
+        <Box sx={{ display: 'flex', gap: 1.5, mb: 2.5, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Button
+            variant="contained"
+            onClick={handleMinify}
+            disabled={!input.trim()}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
+          >
+            Минифицировать
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleBeautify}
+            disabled={!input.trim()}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
+          >
+            Форматировать
+          </Button>
+        </Box>
 
         {/* Stats */}
         {stats && (
@@ -220,10 +196,7 @@ export default function CssMinifier() {
         {/* Output */}
         {output && (
           <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-              <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                Результат
-              </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
               <CopyButton text={output} />
             </Box>
             <TextField

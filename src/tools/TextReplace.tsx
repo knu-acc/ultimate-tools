@@ -12,7 +12,7 @@ import {
   Switch,
   FormControlLabel,
   useTheme,
-  alpha
+  alpha,
 } from '@mui/material';
 
 interface MatchInfo {
@@ -148,7 +148,7 @@ export default function TextReplace() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -167,11 +167,10 @@ export default function TextReplace() {
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
-              label="Найти"
               fullWidth
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Текст для поиска..."
+              placeholder="Найти..."
               error={!!regexError}
               helperText={regexError || undefined}
               size="small"
@@ -179,11 +178,10 @@ export default function TextReplace() {
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
-              label="Заменить на"
               fullWidth
               value={replace}
               onChange={(e) => setReplace(e.target.value)}
-              placeholder="Текст замены..."
+              placeholder="Заменить на..."
               size="small"
             />
           </Grid>
@@ -281,6 +279,7 @@ export default function TextReplace() {
                 p: 2,
                 maxHeight: 250,
                 overflow: 'auto',
+                borderRadius: 3,
                 fontFamily: 'monospace',
                 fontSize: '0.875rem',
                 lineHeight: 1.7,

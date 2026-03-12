@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import {
-  Box, Typography, Paper, TextField, Grid, Button, alpha, useTheme
+  Box, Typography, Paper, TextField, Grid, alpha, useTheme
 } from '@mui/material';
 
 export default function Countdown() {
@@ -31,15 +31,22 @@ export default function Countdown() {
   const totalSeconds = Math.floor(absDiff / 1000);
 
   return (
-    <Box>
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       <Paper elevation={0} sx={{ p: 3, borderRadius: 3, mb: 2 }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>Название события</Typography>
             <TextField fullWidth value={targetName} onChange={e => setTargetName(e.target.value)} placeholder="Новый год, День рождения..." size="small" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>Дата и время</Typography>
             <TextField fullWidth type="datetime-local" value={targetDate} onChange={e => setTargetDate(e.target.value)} size="small" />
           </Grid>
         </Grid>
@@ -69,7 +76,7 @@ export default function Countdown() {
             ))}
           </Grid>
 
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>Также это:</Typography>
             <Typography variant="body2" color="text.secondary">
               {totalHours.toLocaleString('ru-RU')} часов • {totalMinutes.toLocaleString('ru-RU')} минут • {totalSeconds.toLocaleString('ru-RU')} секунд

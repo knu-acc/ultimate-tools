@@ -247,14 +247,15 @@ export default function GithubReadme() {
   const markdown = generateReadme(state);
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Presets */}
       <Paper
         elevation={0}
         sx={{
-          p: 2,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
@@ -282,14 +283,15 @@ export default function GithubReadme() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
-              borderRadius: 3
+              p: { xs: 2, sm: 3 },
+              borderRadius: 3,
+              background: theme.palette.surfaceContainerLow
             }}
           >
             <TextField
               fullWidth
               size="small"
-              label="Название проекта"
+              placeholder="Название проекта"
               value={state.projectName}
               onChange={(e) => updateField('projectName', e.target.value)}
               sx={{ mb: 2 }}
@@ -298,7 +300,7 @@ export default function GithubReadme() {
             <TextField
               fullWidth
               size="small"
-              label="Описание"
+              placeholder="Описание проекта"
               multiline
               rows={2}
               value={state.description}
@@ -389,7 +391,7 @@ export default function GithubReadme() {
             <TextField
               fullWidth
               size="small"
-              label="Использование"
+              placeholder="Использование"
               multiline
               rows={3}
               value={state.usage}
@@ -442,13 +444,14 @@ export default function GithubReadme() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
-              borderRadius: 3
+              p: { xs: 2, sm: 3 },
+              borderRadius: 3,
+              background: theme.palette.surfaceContainerLow
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                Предпросмотр Markdown
+                Предпросмотр
               </Typography>
               <CopyButton text={markdown} />
             </Box>

@@ -2,9 +2,9 @@
 
 import React, { useState, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, Select, MenuItem, FormControl, InputLabel
+  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme
 } from '@mui/material';
-import { Casino, Refresh } from '@mui/icons-material';
+import { Casino } from '@mui/icons-material';
 
 const diceFaces: Record<number, string[]> = {
   1: ['⚀'], 2: ['⚁'], 3: ['⚂'], 4: ['⚃'], 5: ['⚄'], 6: ['⚅']
@@ -21,7 +21,6 @@ export default function DiceRoller() {
   const roll = useCallback(() => {
     setRolling(true);
 
-    // Quick animation
     let animCount = 0;
     const interval = setInterval(() => {
       const animResults = Array.from({ length: diceCount }, () =>
@@ -49,7 +48,16 @@ export default function DiceRoller() {
   const sideOptions = [4, 6, 8, 10, 12, 20, 100];
 
   return (
-    <Box>
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -112,7 +120,6 @@ export default function DiceRoller() {
         <Grid size={{ xs: 12, md: 7 }}>
           {results.length > 0 ? (
             <>
-              {/* Dice display */}
               <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', justifyContent: 'center', mb: 2 }}>
                 {results.map((val, i) => (
                   <Paper
@@ -142,7 +149,6 @@ export default function DiceRoller() {
                 ))}
               </Box>
 
-              {/* Sum */}
               <Paper
                 elevation={0}
                 sx={{
@@ -194,7 +200,6 @@ export default function DiceRoller() {
             </Paper>
           )}
 
-          {/* History */}
           {history.length > 1 && (
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>

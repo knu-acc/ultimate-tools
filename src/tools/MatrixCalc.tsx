@@ -139,8 +139,11 @@ export default function MatrixCalc() {
     <Paper
       elevation={0}
       sx={{
-        p: 2,
-        borderRadius: 3
+        p: { xs: 1.5, sm: 2 },
+        borderRadius: 3,
+        background: theme.palette.surfaceContainerLow,
+        transition: 'background 0.2s ease',
+        '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
       }}
     >
       <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
@@ -178,9 +181,10 @@ export default function MatrixCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <ToggleButtonGroup
@@ -216,9 +220,10 @@ export default function MatrixCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
@@ -279,7 +284,7 @@ export default function MatrixCalc() {
         <Paper
           elevation={0}
           sx={{
-            p: 3,
+            p: { xs: 2, sm: 3 },
             borderRadius: 3,
             background: theme.palette.surfaceContainerLow
           }}

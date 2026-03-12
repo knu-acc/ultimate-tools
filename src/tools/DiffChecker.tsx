@@ -7,7 +7,6 @@ import {
   Button,
   Paper,
   TextField,
-  Snackbar,
   Chip,
   Grid,
   useTheme,
@@ -68,26 +67,17 @@ export default function DiffChecker() {
   const [original, setOriginal] = useState('');
   const [modified, setModified] = useState('');
   const [diffResult, setDiffResult] = useState<DiffLine[] | null>(null);
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
-
-  const showSnack = (msg: string) => {
-    setSnackMsg(msg);
-    setSnackOpen(true);
-  };
 
   const handleCompare = () => {
     if (!original && !modified) return;
     const diff = computeDiff(original, modified);
     setDiffResult(diff);
-    showSnack('Сравнение выполнено');
   };
 
   const clear = () => {
     setOriginal('');
     setModified('');
     setDiffResult(null);
-    showSnack('Очищено');
   };
 
   const stats = useMemo(() => {
@@ -129,23 +119,20 @@ export default function DiffChecker() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-              Оригинал
-            </Typography>
             <TextField
               multiline
               rows={12}
               fullWidth
               value={original}
               onChange={(e) => setOriginal(e.target.value)}
-              placeholder="Вставьте оригинальный текст..."
+              placeholder="Оригинальный текст..."
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
@@ -157,16 +144,13 @@ export default function DiffChecker() {
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-              Изменённый
-            </Typography>
             <TextField
               multiline
               rows={12}
               fullWidth
               value={modified}
               onChange={(e) => setModified(e.target.value)}
-              placeholder="Вставьте изменённый текст..."
+              placeholder="Изменённый текст..."
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
@@ -353,13 +337,6 @@ export default function DiffChecker() {
         )}
       </Paper>
 
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

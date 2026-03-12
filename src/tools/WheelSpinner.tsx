@@ -23,7 +23,6 @@ export default function WheelSpinner() {
   const [history, setHistory] = useState<string[]>([]);
   const [rotation, setRotation] = useState(0);
   const animRef = useRef<number>(0);
-  const speedRef = useRef(0);
 
   const getItems = useCallback(() => {
     return text.split('\n').map(s => s.trim()).filter(Boolean);
@@ -51,7 +50,6 @@ export default function WheelSpinner() {
       const startAngle = angle + i * sliceAngle;
       const endAngle = startAngle + sliceAngle;
 
-      // Sector
       ctx.beginPath();
       ctx.moveTo(cx, cy);
       ctx.arc(cx, cy, r, startAngle, endAngle);
@@ -59,12 +57,10 @@ export default function WheelSpinner() {
       ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length];
       ctx.fill();
 
-      // Border
       ctx.strokeStyle = 'rgba(255,255,255,0.3)';
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      // Text
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(startAngle + sliceAngle / 2);
@@ -76,7 +72,6 @@ export default function WheelSpinner() {
       ctx.restore();
     });
 
-    // Center circle
     ctx.beginPath();
     ctx.arc(cx, cy, 22, 0, 2 * Math.PI);
     ctx.fillStyle = theme.palette.mode === 'dark' ? '#333' : '#fff';
@@ -85,7 +80,6 @@ export default function WheelSpinner() {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Pointer (triangle at the right)
     ctx.beginPath();
     ctx.moveTo(size - 4, cy - 16);
     ctx.lineTo(size - 4, cy + 16);
@@ -129,7 +123,6 @@ export default function WheelSpinner() {
         animRef.current = requestAnimationFrame(animate);
       } else {
         setRotation(currentAngle);
-        // Determine winner
         const sliceAngle = (2 * Math.PI) / items.length;
         const normalizedAngle = ((-(currentAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI));
         const winnerIndex = Math.floor(normalizedAngle / sliceAngle) % items.length;
@@ -152,7 +145,16 @@ export default function WheelSpinner() {
   const items = getItems();
 
   return (
-    <Box>
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -197,7 +199,6 @@ export default function WheelSpinner() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 7 }}>
-          {/* Wheel */}
           <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
             <canvas
               ref={canvasRef}
@@ -207,7 +208,6 @@ export default function WheelSpinner() {
             />
           </Box>
 
-          {/* Result */}
           {result && (
             <Paper
               elevation={0}
@@ -245,7 +245,6 @@ export default function WheelSpinner() {
             </Paper>
           )}
 
-          {/* History */}
           {history.length > 0 && (
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>

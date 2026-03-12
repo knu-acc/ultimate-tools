@@ -9,7 +9,6 @@ import {
   TextField,
   Grid,
   Chip,
-  IconButton,
   MenuItem,
   useTheme,
   alpha
@@ -213,8 +212,6 @@ export default function CronGenerator() {
     month: '*',
     dayOfWeek: '*'
   });
-  const [copied, setCopied] = useState(false);
-
   const cronExpression = useMemo(() => {
     return `${cron.minute} ${cron.hour} ${cron.dayOfMonth} ${cron.month} ${cron.dayOfWeek}`;
   }, [cron]);
@@ -223,22 +220,10 @@ export default function CronGenerator() {
 
   const updateField = (field: keyof CronState, value: string) => {
     setCron((prev) => ({ ...prev, [field]: value }));
-    setCopied(false);
   };
 
   const applyPreset = (preset: Preset) => {
     setCron({ ...preset.cron });
-    setCopied(false);
-  };
-
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(cronExpression);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* ignore */
-    }
   };
 
   return (
@@ -246,7 +231,7 @@ export default function CronGenerator() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
@@ -445,9 +430,6 @@ export default function CronGenerator() {
 
         {/* Manual input */}
         <Box sx={{ mt: 3 }}>
-          <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-            Или введите cron-выражение вручную
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1.5 }}>
             <TextField
               fullWidth

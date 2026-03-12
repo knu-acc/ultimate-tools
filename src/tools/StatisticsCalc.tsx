@@ -106,8 +106,10 @@ export default function StatisticsCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          mb: 2
+          p: { xs: 2, sm: 3 },
+          mb: 2,
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <TextField
@@ -116,7 +118,7 @@ export default function StatisticsCalc() {
           rows={3}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Введите числа через запятую, пробел или точку с запятой (1, 2, 3, 4, 5)"
+          placeholder="1, 2, 3, 4, 5"
           sx={{
             '& .MuiInputBase-input': {
               fontFamily: 'monospace',
@@ -140,6 +142,7 @@ export default function StatisticsCalc() {
           sx={{
             p: 2.5,
             textAlign: 'center',
+            borderRadius: 3,
             background: alpha(theme.palette.error.main, 0.06)
           }}
         >
@@ -153,7 +156,9 @@ export default function StatisticsCalc() {
         <Paper
           elevation={0}
           sx={{
-            p: 3
+            p: { xs: 2, sm: 3 },
+            borderRadius: 3,
+            background: theme.palette.surfaceContainerLow
           }}
         >
           <Grid container spacing={2}>

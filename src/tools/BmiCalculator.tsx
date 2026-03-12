@@ -68,17 +68,16 @@ export default function BmiCalculator() {
     n.toLocaleString('ru-RU', { maximumFractionDigits: 1 });
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Рост (см)"
+              placeholder="Рост, см"
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              placeholder="170"
               slotProps={{
                 input: {
                   inputProps: { min: 50, max: 300, step: 1 }
@@ -89,11 +88,10 @@ export default function BmiCalculator() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Вес (кг)"
+              placeholder="Вес, кг"
               type="number"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              placeholder="70"
               slotProps={{
                 input: {
                   inputProps: { min: 10, max: 500, step: 0.1 }
@@ -141,7 +139,7 @@ export default function BmiCalculator() {
             </Typography>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               Шкала ИМТ
             </Typography>
@@ -204,7 +202,7 @@ export default function BmiCalculator() {
             </Box>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               Категории ИМТ
             </Typography>

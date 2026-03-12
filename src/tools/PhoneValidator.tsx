@@ -211,12 +211,9 @@ export default function PhoneValidator() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          Введите номер телефона
-        </Typography>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <TextField
           fullWidth
           value={phone}
@@ -265,8 +262,8 @@ export default function PhoneValidator() {
         <Grid container spacing={3}>
           {/* Formatted Versions */}
           <Grid size={12}>
-            <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
-              <Typography variant="h6" sx={{ mb: 2 }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+              <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                 Форматированные версии
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -301,8 +298,8 @@ export default function PhoneValidator() {
 
           {/* Details */}
           <Grid size={12}>
-            <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
-              <Typography variant="h6" sx={{ mb: 2 }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+              <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                 Информация
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
@@ -317,8 +314,8 @@ export default function PhoneValidator() {
       )}
 
       {/* Common Country Codes */}
-      <Paper elevation={0} sx={{ p: 3, mt: 3, borderRadius: 3 }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mt: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+        <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
           Справочник кодов стран
         </Typography>
         <Grid container spacing={1}>

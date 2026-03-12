@@ -2,16 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import {
-  Box,
-  Typography,
-  Paper,
-  Grid,
-  Button,
-  Chip,
-  Slider,
-  TextField,
-  alpha,
-  useTheme
+  Box, Typography, Paper, Grid, Button, Slider, TextField, alpha, useTheme
 } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
@@ -132,12 +123,10 @@ export default function NoiseGenerator() {
     processor.connect(gain);
     processorRef.current = processor;
 
-    // Animation
     animRef.current = setInterval(() => {
       setBars(Array.from({ length: BAR_COUNT }, () => Math.random() * 80 + 10));
     }, 100);
 
-    // Timer
     const mins = parseInt(timerMinutes);
     if (mins > 0) {
       let remaining = mins * 60;
@@ -171,7 +160,16 @@ export default function NoiseGenerator() {
   };
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       {/* Noise type selector */}
       <Paper
         elevation={0}
@@ -273,11 +271,11 @@ export default function NoiseGenerator() {
           </Grid>
           <Grid size={{ xs: 12, sm: 3 }}>
             <TextField
-              label="Таймер (мин)"
               value={timerMinutes}
               onChange={(e) => setTimerMinutes(e.target.value.replace(/\D/g, ''))}
               size="small"
               fullWidth
+              placeholder="Таймер (мин)"
               disabled={isPlaying}
               slotProps={{
                 input: {

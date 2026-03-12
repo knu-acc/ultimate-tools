@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, useTheme, IconButton
+  Box, Typography, Paper, Grid, Button, IconButton, useTheme, alpha
 } from '@mui/material';
-import { Refresh, Palette, Lock, LockOpen } from '@mui/icons-material';
+import { Refresh, Lock, LockOpen } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
-
 
 function hslToHex(h: number, s: number, l: number): string {
   s /= 100;
@@ -82,7 +81,7 @@ export default function ColorPalette() {
   };
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       {/* Main palette */}
       <Box
         sx={{
@@ -136,7 +135,7 @@ export default function ColorPalette() {
           variant="contained"
           startIcon={<Refresh />}
           onClick={regenerate}
-          sx={{ borderRadius: 6, px: 4 }}
+          sx={{ borderRadius: 3, px: 4, textTransform: 'none', fontWeight: 600 }}
         >
           Генерировать (Пробел)
         </Button>
@@ -153,8 +152,9 @@ export default function ColorPalette() {
                 elevation={0}
                 sx={{
                   p: 2,
-                  borderRadius: 2,
-                  bgcolor: theme.palette.surfaceContainerLow
+                  borderRadius: 3,
+                  bgcolor: theme.palette.surfaceContainerLow,
+                  '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
                 <Box
@@ -179,7 +179,13 @@ export default function ColorPalette() {
       {/* CSS export */}
       <Paper
         elevation={0}
-        sx={{ mt: 3, p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
+        sx={{
+          mt: 3,
+          p: 2,
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+        }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
           CSS переменные

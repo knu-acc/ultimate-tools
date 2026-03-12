@@ -12,18 +12,18 @@ import {
   Chip,
   Switch,
   FormControlLabel,
-  useTheme } from '@mui/material';
+  useTheme,
+  alpha
+} from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 
 type BarcodeType = 'code128' | 'ean13' | 'code39';
 
-// Code128 encoding tables
 const CODE128_START_B = 104;
 const CODE128_STOP = 106;
 
 const CODE128B: Record<string, number> = {};
 (() => {
-  // Space (32) to DEL (127) maps to values 0-95
   for (let i = 32; i <= 126; i++) {
     CODE128B[String.fromCharCode(i)] = i - 32;
   }
@@ -54,7 +54,6 @@ const CODE128_PATTERNS: number[][] = [
   [2,1,1,2,3,2],[2,3,3,1,1,1,2],
 ];
 
-// Code39 character set
 const CODE39_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%*';
 const CODE39_PATTERNS = [
   '101001101101','110100101011','101100101011','110110010101','101001101011',
@@ -74,7 +73,6 @@ function encodeCode128(text: string): number[] {
     const val = CODE128B[char];
     if (val !== undefined) values.push(val);
   }
-  // Checksum
   let checksum = values[0];
   for (let i = 1; i < values.length; i++) {
     checksum += values[i] * i;
@@ -87,7 +85,6 @@ function encodeCode128(text: string): number[] {
 function encodeEAN13(digits: string): string | null {
   if (digits.length < 12) return null;
   const d = digits.slice(0, 12).split('').map(Number);
-  // Calculate check digit
   let sum = 0;
   for (let i = 0; i < 12; i++) {
     sum += d[i] * (i % 2 === 0 ? 1 : 3);
@@ -104,16 +101,16 @@ function encodeEAN13(digits: string): string | null {
     'LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL',
   ];
 
-  let bars = '101'; // Start guard
+  let bars = '101';
   const p = parity[d[0]];
   for (let i = 1; i <= 6; i++) {
     bars += p[i - 1] === 'L' ? L[d[i]] : G[d[i]];
   }
-  bars += '01010'; // Center guard
+  bars += '01010';
   for (let i = 7; i <= 12; i++) {
     bars += R[d[i]];
   }
-  bars += '101'; // End guard
+  bars += '101';
   return bars;
 }
 
@@ -161,9 +158,8 @@ export default function BarcodeGenerator() {
 
     if (barcodeType === 'code128') {
       const values = encodeCode128(text);
-      // Calculate total width
       let totalBars = 0;
-      values.forEach((val, idx) => {
+      values.forEach((val) => {
         const pattern = CODE128_PATTERNS[val];
         if (pattern) {
           totalBars += pattern.reduce((a, b) => a + b, 0);
@@ -275,12 +271,9 @@ export default function BarcodeGenerator() {
   ];
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Тип штрих-кода
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             {types.map((t) => (
               <Chip
@@ -293,43 +286,42 @@ export default function BarcodeGenerator() {
             ))}
           </Box>
 
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            {barcodeType === 'ean13' ? 'Цифры (минимум 12)' : 'Текст / число'}
-          </Typography>
           <TextField
             fullWidth
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder={barcodeType === 'ean13' ? '123456789012' : 'Введите данные...'}
+            placeholder={barcodeType === 'ean13' ? '12 цифр для EAN-13' : 'Данные для штрих-кода...'}
             size="small"
             error={!!error}
             helperText={error}
             sx={{ mb: 2 }}
           />
 
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Ширина линии: {barWidth}px
-          </Typography>
-          <Slider
-            value={barWidth}
-            onChange={(_, v) => setBarWidth(v as number)}
-            min={1}
-            max={5}
-            step={1}
-            sx={{ mb: 2 }}
-          />
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
+              Ширина линии: {barWidth}px
+            </Typography>
+            <Slider
+              value={barWidth}
+              onChange={(_, v) => setBarWidth(v as number)}
+              min={1}
+              max={5}
+              step={1}
+            />
+          </Box>
 
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Высота: {barHeight}px
-          </Typography>
-          <Slider
-            value={barHeight}
-            onChange={(_, v) => setBarHeight(v as number)}
-            min={40}
-            max={200}
-            step={10}
-            sx={{ mb: 2 }}
-          />
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
+              Высота: {barHeight}px
+            </Typography>
+            <Slider
+              value={barHeight}
+              onChange={(_, v) => setBarHeight(v as number)}
+              min={40}
+              max={200}
+              step={10}
+            />
+          </Box>
 
           <FormControlLabel
             control={
@@ -346,14 +338,13 @@ export default function BarcodeGenerator() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
-              textAlign: 'center'
+              bgcolor: theme.palette.surfaceContainerLow,
+              textAlign: 'center',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Предпросмотр
-            </Typography>
             <Box
               sx={{
                 borderRadius: 2,
@@ -375,7 +366,7 @@ export default function BarcodeGenerator() {
                 startIcon={<DownloadIcon />}
                 onClick={handleDownload}
                 disabled={!text.trim() || !!error}
-                sx={{ borderRadius: 5 }}
+                sx={{ borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
               >
                 Скачать PNG
               </Button>

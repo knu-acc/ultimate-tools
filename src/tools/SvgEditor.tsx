@@ -17,7 +17,6 @@ import AddIcon from '@mui/icons-material/Add';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { CopyButton } from '@/src/components/CopyButton';
 
-
 const DEFAULT_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
   <rect x="10" y="10" width="180" height="180" rx="20" fill="#4A90D9" stroke="#2C5F8A" stroke-width="3"/>
   <circle cx="100" cy="85" r="35" fill="#FFD93D"/>
@@ -144,12 +143,9 @@ export default function SvgEditor() {
       {/* Quick insert buttons */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
-          <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
-            Быстрая вставка:
-          </Typography>
           {SVG_TEMPLATES.map((t) => (
             <Button
               key={t.label}
@@ -157,6 +153,7 @@ export default function SvgEditor() {
               variant="outlined"
               startIcon={<AddIcon />}
               onClick={() => insertTemplate(t.code)}
+              sx={{ transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
             >
               {t.label}
             </Button>
@@ -169,7 +166,7 @@ export default function SvgEditor() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper
             elevation={0}
-            sx={{ p: 3, borderRadius: 3, height: '100%' }}
+            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, height: '100%' }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -219,7 +216,7 @@ export default function SvgEditor() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper
             elevation={0}
-            sx={{ p: 3, borderRadius: 3, height: '100%' }}
+            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, height: '100%' }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
               Предпросмотр

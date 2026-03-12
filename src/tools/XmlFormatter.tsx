@@ -263,15 +263,11 @@ export default function XmlFormatter() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Входной XML
-        </Typography>
         <TextField
           multiline
           rows={10}
@@ -357,9 +353,6 @@ export default function XmlFormatter() {
         {/* Output */}
         {output && (
           <Box>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-              Результат
-            </Typography>
             <TextField
               multiline
               rows={12}

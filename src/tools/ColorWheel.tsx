@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Chip, TextField, useTheme
+  Box, Typography, Paper, Grid, Chip, TextField, useTheme, alpha
 } from '@mui/material';
-import { Palette } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
 
 

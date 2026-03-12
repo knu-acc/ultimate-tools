@@ -4,7 +4,6 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import {
   Box,
   Typography,
-  Button,
   Paper,
   TextField,
   Grid,
@@ -127,17 +126,10 @@ export default function ColorPicker() {
   const [rgb, setRgb] = useState<RGB>({ r: 74, g: 144, b: 217 });
   const [hsl, setHsl] = useState<HSL>({ h: 211, s: 66, l: 57 });
   const [recentColors, setRecentColors] = useState<string[]>([]);
-  const [copiedField, setCopiedField] = useState<string | null>(null);
   const svCanvasRef = useRef<HTMLCanvasElement>(null);
   const hueCanvasRef = useRef<HTMLCanvasElement>(null);
   const isDraggingSV = useRef(false);
   const isDraggingHue = useRef(false);
-
-  const copyText = useCallback((text: string, field: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 2000);
-  }, []);
 
   const addToRecent = useCallback((hexColor: string) => {
     setRecentColors((prev) => {
@@ -424,7 +416,7 @@ export default function ColorPicker() {
         <Grid size={{ xs: 12, md: 7 }}>
           <Paper
             elevation={0}
-            sx={{ p: 3, borderRadius: 3 }}
+            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
           >
             <Box sx={{ display: 'flex', gap: 1.5 }} onMouseUp={handleMouseUp}>
               {/* SV square */}
@@ -480,7 +472,7 @@ export default function ColorPicker() {
               <Box sx={{ flex: 1 }}>
                 <TextField
                   size="small"
-                  label="HEX"
+                  placeholder="HEX"
                   value={hex}
                   onChange={(e) => updateFromHex(e.target.value)}
                   fullWidth
@@ -516,7 +508,7 @@ export default function ColorPicker() {
           {/* RGB sliders */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 2, borderRadius: 3 }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
               RGB
@@ -590,7 +582,7 @@ export default function ColorPicker() {
       {/* Format outputs */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mt: 3, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
           Форматы
@@ -621,7 +613,7 @@ export default function ColorPicker() {
       {/* Related colors */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mt: 3, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
           Связанные цвета
@@ -640,7 +632,7 @@ export default function ColorPicker() {
                   cursor: 'pointer',
                   transition: 'all 150ms ease',
                   '&:hover': {
-                    borderColor: theme.palette.primary.main
+                    bgcolor: alpha(theme.palette.primary.main, 0.04)
                   }
                 }}
               >
@@ -670,7 +662,7 @@ export default function ColorPicker() {
       {recentColors.length > 0 && (
         <Paper
           elevation={0}
-          sx={{ p: 3, mt: 3, borderRadius: 3 }}
+          sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>

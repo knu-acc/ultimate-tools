@@ -1,12 +1,9 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, Divider
+  Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme
 } from '@mui/material';
-import { Compare } from '@mui/icons-material';
-import { CopyButton } from '@/src/components/CopyButton';
-
 
 interface DiffLine {
   type: 'added' | 'removed' | 'same';
@@ -88,41 +85,44 @@ export default function TextDiff() {
   };
 
   return (
-    <Box>
-      <Grid container spacing={2} sx={{ mb: 2 }}>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Оригинальный текст
-          </Typography>
-          <TextField
-            fullWidth
-            multiline
-            rows={10}
-            value={text1}
-            onChange={(e) => setText1(e.target.value)}
-            placeholder="Вставьте первый текст..."
-            sx={{
-              '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' }
-            }}
-          />
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Paper
+        elevation={0}
+        sx={{
+          p: { xs: 2, sm: 3 },
+          mb: 2,
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
+        }}
+      >
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              fullWidth
+              multiline
+              rows={10}
+              value={text1}
+              onChange={(e) => setText1(e.target.value)}
+              placeholder="Оригинальный текст..."
+              sx={{
+                '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' }
+              }}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              fullWidth
+              multiline
+              rows={10}
+              value={text2}
+              onChange={(e) => setText2(e.target.value)}
+              placeholder="Изменённый текст..."
+              sx={{
+                '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' }
+              }}
+            />
+          </Grid>
         </Grid>
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Изменённый текст
-          </Typography>
-          <TextField
-            fullWidth
-            multiline
-            rows={10}
-            value={text2}
-            onChange={(e) => setText2(e.target.value)}
-            placeholder="Вставьте второй текст..."
-            sx={{
-              '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' }
-            }}
-          />
-        </Grid>
-      </Grid>
 
       {/* Stats */}
       {diff.length > 0 && (
@@ -148,7 +148,7 @@ export default function TextDiff() {
           <Paper
             elevation={0}
             sx={{
-              borderRadius: 2,
+              borderRadius: 3,
               overflow: 'hidden',
               maxHeight: 400,
               overflowY: 'auto'
@@ -164,7 +164,7 @@ export default function TextDiff() {
                   lineHeight: '20px',
                   bgcolor: getLineColor(line.type),
                   borderBottom: `1px solid ${alpha(theme.palette.divider, 0.3)}`,
-                  '&:hover': { bgcolor: theme.palette.surfaceContainerLow }
+                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
                 <Box sx={{ width: 32, textAlign: 'center', color: theme.palette.text.secondary, flexShrink: 0, py: 0.25 }}>
@@ -195,13 +195,14 @@ export default function TextDiff() {
       {diff.length === 0 && text1 && text2 && (
         <Paper
           elevation={0}
-          sx={{ p: 3, textAlign: 'center', borderRadius: 2, bgcolor: alpha('#4caf50', 0.06) }}
+          sx={{ p: 3, textAlign: 'center', borderRadius: 3, bgcolor: alpha('#4caf50', 0.06) }}
         >
           <Typography color="success.main" fontWeight={600}>
             Тексты идентичны!
           </Typography>
         </Paper>
       )}
+      </Paper>
     </Box>
   );
 }

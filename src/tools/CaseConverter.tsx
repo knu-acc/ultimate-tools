@@ -11,7 +11,7 @@ import {
   Tooltip,
   Grid,
   useTheme,
-  alpha
+  alpha,
 } from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { CopyButton } from '@/src/components/CopyButton';
@@ -123,7 +123,7 @@ export default function CaseConverter() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow

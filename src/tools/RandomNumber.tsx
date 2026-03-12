@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme, Divider
+  Box, Typography, TextField, Paper, Grid, Button, Chip, alpha, useTheme
 } from '@mui/material';
-import { Casino, Refresh } from '@mui/icons-material';
+import { Casino } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
-
 
 export default function RandomNumber() {
   const theme = useTheme();
@@ -52,54 +51,46 @@ export default function RandomNumber() {
   ];
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Grid container spacing={2}>
             <Grid size={6}>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                Минимум
-              </Typography>
               <TextField
                 fullWidth
                 type="number"
                 value={min}
                 onChange={(e) => setMin(e.target.value)}
+                placeholder="Минимум"
               />
             </Grid>
             <Grid size={6}>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                Максимум
-              </Typography>
               <TextField
                 fullWidth
                 type="number"
                 value={max}
                 onChange={(e) => setMax(e.target.value)}
+                placeholder="Максимум"
               />
             </Grid>
           </Grid>
 
-          <Typography variant="subtitle2" fontWeight={600} sx={{ mt: 2 }} gutterBottom>
-            Количество
-          </Typography>
           <TextField
             fullWidth
             type="number"
             value={count}
             onChange={(e) => setCount(e.target.value)}
+            placeholder="Количество"
             inputProps={{ min: 1, max: 1000 }}
-            sx={{ mb: 2 }}
+            sx={{ mt: 2, mb: 2 }}
           />
 
           <Chip
             label={unique ? 'Уникальные числа' : 'С повторами'}
             onClick={() => setUnique(!unique)}
-            sx={{
-              bgcolor: unique ? theme.palette.surfaceContainerHigh : theme.palette.surfaceContainerLow,
-              fontWeight: unique ? 600 : 400,
-              mb: 2
-            }}
+            variant={unique ? 'filled' : 'outlined'}
+            color={unique ? 'primary' : 'default'}
+            sx={{ fontWeight: 600, mb: 2 }}
           />
 
           <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap', mb: 2 }}>
@@ -109,10 +100,10 @@ export default function RandomNumber() {
                 label={r.label}
                 size="small"
                 onClick={() => { setMin(r.min); setMax(r.max); }}
+                variant="outlined"
                 sx={{
                   cursor: 'pointer',
-                  bgcolor: theme.palette.surfaceContainerLow,
-                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1) }
+                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
                 }}
               />
             ))}
@@ -123,7 +114,7 @@ export default function RandomNumber() {
             fullWidth
             startIcon={<Casino />}
             onClick={generate}
-            sx={{ borderRadius: 5, py: 1.2 }}
+            sx={{ borderRadius: 3, py: 1.2, textTransform: 'none', fontWeight: 600 }}
           >
             Генерировать
           </Button>
@@ -135,11 +126,12 @@ export default function RandomNumber() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   borderRadius: 3,
                   bgcolor: theme.palette.surfaceContainerLow,
                   textAlign: 'center',
-                  mb: 2
+                  mb: 2,
+                  '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
                 {results.length === 1 ? (
@@ -166,7 +158,7 @@ export default function RandomNumber() {
               {results.length > 1 && (
                 <Paper
                   elevation={0}
-                  sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
+                  sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
                 >
                   <Grid container spacing={1}>
                     <Grid size={4}>

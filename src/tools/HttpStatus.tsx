@@ -58,22 +58,34 @@ export default function HttpStatus() {
   });
 
   return (
-    <Box>
-      <TextField fullWidth value={search} onChange={e => setSearch(e.target.value)} placeholder="Поиск по коду или описанию..." size="small" sx={{ mb: 2 }} />
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Paper
+        elevation={0}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+      >
+        <TextField
+          fullWidth
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Поиск по коду или описанию..."
+          size="small"
+          sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+        />
 
-      <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
-        <Chip label="Все" onClick={() => setFilter('all')} sx={{ fontWeight: filter === 'all' ? 700 : 400, bgcolor: filter === 'all' ? theme.palette.surfaceContainerHigh : undefined }} />
-        {Object.entries(CATEGORIES).map(([key, cat]) => (
-          <Chip key={key} label={cat.label} onClick={() => setFilter(key)} sx={{ fontWeight: filter === key ? 700 : 400, bgcolor: filter === key ? alpha(cat.color, 0.15) : undefined, color: filter === key ? cat.color : undefined }} />
-        ))}
-      </Box>
+        <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+          <Chip label="Все" onClick={() => setFilter('all')} sx={{ fontWeight: filter === 'all' ? 700 : 400, bgcolor: filter === 'all' ? theme.palette.surfaceContainerHigh : undefined }} />
+          {Object.entries(CATEGORIES).map(([key, cat]) => (
+            <Chip key={key} label={cat.label} onClick={() => setFilter(key)} sx={{ fontWeight: filter === key ? 700 : 400, bgcolor: filter === key ? alpha(cat.color, 0.15) : undefined, color: filter === key ? cat.color : undefined }} />
+          ))}
+        </Box>
+      </Paper>
 
       <Grid container spacing={1.5}>
         {filtered.map(([code, info]) => {
           const cat = CATEGORIES[info.category];
           return (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={code}>
-              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, '&:hover': { borderColor: cat.color, bgcolor: alpha(cat.color, 0.04) }, transition: 'all 200ms' }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }, transition: 'all 200ms' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
                   <Chip label={code} size="small" sx={{ fontWeight: 700, bgcolor: alpha(cat.color, 0.12), color: cat.color, fontFamily: 'monospace' }} />
                   <Typography variant="body2" fontWeight={600}>{info.text}</Typography>

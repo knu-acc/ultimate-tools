@@ -14,9 +14,10 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  useTheme } from '@mui/material';
+  useTheme,
+  alpha
+} from '@mui/material';
 import { Download } from '@mui/icons-material';
-
 
 type QrMode = 'url' | 'text' | 'wifi' | 'vcard';
 
@@ -32,15 +33,10 @@ export default function QrCodeGen() {
   const [mode, setMode] = useState<QrMode>('url');
   const [size, setSize] = useState(256);
 
-  // URL / Text
   const [urlText, setUrlText] = useState('https://example.com');
-
-  // WiFi
   const [wifiSsid, setWifiSsid] = useState('');
   const [wifiPassword, setWifiPassword] = useState('');
   const [wifiEncryption, setWifiEncryption] = useState<'WPA' | 'WEP' | 'nopass'>('WPA');
-
-  // vCard
   const [vcardName, setVcardName] = useState('');
   const [vcardPhone, setVcardPhone] = useState('');
   const [vcardEmail, setVcardEmail] = useState('');
@@ -54,10 +50,7 @@ export default function QrCodeGen() {
       case 'wifi':
         return `WIFI:T:${wifiEncryption};S:${wifiSsid};P:${wifiPassword};;`;
       case 'vcard': {
-        const parts = [
-          'BEGIN:VCARD',
-          'VERSION:3.0',
-        ];
+        const parts = ['BEGIN:VCARD', 'VERSION:3.0'];
         if (vcardName) parts.push(`FN:${vcardName}`);
         if (vcardPhone) parts.push(`TEL:${vcardPhone}`);
         if (vcardEmail) parts.push(`EMAIL:${vcardEmail}`);
@@ -121,19 +114,6 @@ export default function QrCodeGen() {
     link.click();
   }, []);
 
-  const handleCopy = useCallback(async () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    try {
-      const blob = await new Promise<Blob>((resolve) => {
-        canvas.toBlob((b) => { if (b) resolve(b); }, 'image/png');
-      });
-      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-    } catch {
-      // fallback
-    }
-  }, []);
-
   const modes: { value: QrMode; label: string }[] = [
     { value: 'url', label: 'URL' },
     { value: 'text', label: 'Текст' },
@@ -142,12 +122,9 @@ export default function QrCodeGen() {
   ];
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Тип содержимого
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             {modes.map((m) => (
               <Chip
@@ -160,45 +137,33 @@ export default function QrCodeGen() {
             ))}
           </Box>
 
-          {/* URL / Text mode */}
           {(mode === 'url' || mode === 'text') && (
-            <>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                {mode === 'url' ? 'URL-адрес' : 'Текст'}
-              </Typography>
-              <TextField
-                fullWidth
-                multiline
-                rows={3}
-                value={urlText}
-                onChange={(e) => setUrlText(e.target.value)}
-                placeholder={mode === 'url' ? 'https://example.com' : 'Введите текст...'}
-                sx={{ mb: 2 }}
-              />
-            </>
+            <TextField
+              fullWidth
+              multiline
+              rows={3}
+              value={urlText}
+              onChange={(e) => setUrlText(e.target.value)}
+              placeholder={mode === 'url' ? 'https://example.com' : 'Введите текст...'}
+              sx={{ mb: 2 }}
+            />
           )}
 
-          {/* WiFi mode */}
           {mode === 'wifi' && (
             <>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                Настройки WiFi
-              </Typography>
               <TextField
                 fullWidth
-                label="Название сети (SSID)"
                 value={wifiSsid}
                 onChange={(e) => setWifiSsid(e.target.value)}
-                placeholder="MyWiFiNetwork"
+                placeholder="Название сети (SSID)"
                 size="small"
                 sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                label="Пароль"
                 value={wifiPassword}
                 onChange={(e) => setWifiPassword(e.target.value)}
-                placeholder="password123"
+                placeholder="Пароль"
                 size="small"
                 sx={{ mb: 2 }}
               />
@@ -217,24 +182,18 @@ export default function QrCodeGen() {
             </>
           )}
 
-          {/* vCard mode */}
           {mode === 'vcard' && (
             <>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                Контактные данные
-              </Typography>
               <TextField
                 fullWidth
-                label="Имя"
                 value={vcardName}
                 onChange={(e) => setVcardName(e.target.value)}
-                placeholder="Иван Иванов"
+                placeholder="Имя"
                 size="small"
                 sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                label="Телефон"
                 value={vcardPhone}
                 onChange={(e) => setVcardPhone(e.target.value)}
                 placeholder="+7 999 123-45-67"
@@ -243,50 +202,47 @@ export default function QrCodeGen() {
               />
               <TextField
                 fullWidth
-                label="Email"
                 value={vcardEmail}
                 onChange={(e) => setVcardEmail(e.target.value)}
-                placeholder="ivan@example.com"
+                placeholder="Email"
                 size="small"
                 sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                label="Организация"
                 value={vcardOrg}
                 onChange={(e) => setVcardOrg(e.target.value)}
-                placeholder="ООО Компания"
+                placeholder="Организация"
                 size="small"
                 sx={{ mb: 2 }}
               />
             </>
           )}
 
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Размер: {size}px
-          </Typography>
-          <Slider
-            value={size}
-            onChange={(_, v) => setSize(v as number)}
-            min={128}
-            max={512}
-            step={32}
-            sx={{ mb: 2 }}
-          />
-
-          <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-            Генератор создаёт полноценные сканируемые QR-коды стандарта ISO 18004.
-          </Typography>
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
+              Размер: {size}px
+            </Typography>
+            <Slider
+              value={size}
+              onChange={(_, v) => setSize(v as number)}
+              min={128}
+              max={512}
+              step={32}
+            />
+          </Box>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
-              textAlign: 'center'
+              textAlign: 'center',
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
             <canvas
@@ -303,16 +259,9 @@ export default function QrCodeGen() {
                 variant="contained"
                 startIcon={<Download />}
                 onClick={handleDownload}
-                sx={{ borderRadius: 5 }}
+                sx={{ borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
               >
                 Скачать PNG
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={handleCopy}
-                sx={{ borderRadius: 5 }}
-              >
-                Копировать
               </Button>
             </Box>
           </Paper>

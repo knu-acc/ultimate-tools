@@ -21,7 +21,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { CopyButton } from '@/src/components/CopyButton';
 
-
 type FieldType = 'firstName' | 'lastName' | 'email' | 'phone' | 'number' | 'boolean' | 'date' | 'uuid' | 'city' | 'country' | 'company';
 
 interface FieldDef {
@@ -206,13 +205,14 @@ export default function MockdataGenerator() {
   }, [fields, count, format]);
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
@@ -223,9 +223,9 @@ export default function MockdataGenerator() {
           <Box key={field.id} sx={{ display: 'flex', gap: 1, mb: 1, alignItems: 'center' }}>
             <TextField
               size="small"
-              label="Имя поля"
               value={field.name}
               onChange={(e) => updateField(field.id, { name: e.target.value })}
+              placeholder="Имя поля"
               sx={{ flex: 1 }}
               slotProps={{
                 htmlInput: { style: { fontFamily: 'monospace' } }
@@ -234,7 +234,6 @@ export default function MockdataGenerator() {
             <TextField
               select
               size="small"
-              label="Тип"
               value={field.type}
               onChange={(e) => updateField(field.id, { type: e.target.value as FieldType })}
               sx={{ minWidth: 150 }}
@@ -249,18 +248,18 @@ export default function MockdataGenerator() {
               <>
                 <TextField
                   size="small"
-                  label="Мин"
                   type="number"
                   value={field.min ?? 0}
                   onChange={(e) => updateField(field.id, { min: parseInt(e.target.value) || 0 })}
+                  placeholder="Мин"
                   sx={{ width: 80 }}
                 />
                 <TextField
                   size="small"
-                  label="Макс"
                   type="number"
                   value={field.max ?? 1000}
                   onChange={(e) => updateField(field.id, { max: parseInt(e.target.value) || 1000 })}
+                  placeholder="Макс"
                   sx={{ width: 80 }}
                 />
               </>
@@ -275,7 +274,7 @@ export default function MockdataGenerator() {
           size="small"
           startIcon={<AddIcon />}
           onClick={addField}
-          sx={{ mt: 1, borderRadius: 2 }}
+          sx={{ mt: 1, borderRadius: 3 }}
         >
           Добавить поле
         </Button>
@@ -284,9 +283,10 @@ export default function MockdataGenerator() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Grid container spacing={2} sx={{ alignItems: 'center' }}>
@@ -320,7 +320,7 @@ export default function MockdataGenerator() {
               variant="contained"
               startIcon={<PlayArrowIcon />}
               onClick={generate}
-              sx={{ borderRadius: 2, height: 40 }}
+              sx={{ borderRadius: 3, height: 40, textTransform: 'none', fontWeight: 600 }}
             >
               Сгенерировать
             </Button>
@@ -332,8 +332,9 @@ export default function MockdataGenerator() {
         <Paper
           elevation={0}
           sx={{
-            p: 3,
-            borderRadius: 3
+            p: { xs: 2, sm: 3 },
+            borderRadius: 3,
+            background: theme.palette.surfaceContainerLow
           }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -356,7 +357,7 @@ export default function MockdataGenerator() {
             sx={{
               '& .MuiInputBase-root': {
                 backgroundColor: alpha(theme.palette.background.default, 0.5),
-                borderRadius: 2
+                borderRadius: 3
               }
             }}
           />

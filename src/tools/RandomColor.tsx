@@ -2,11 +2,10 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme
+  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme
 } from '@mui/material';
-import { Refresh, Palette, Delete } from '@mui/icons-material';
+import { Palette, Delete } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
-
 
 type ColorMode = 'any' | 'pastel' | 'dark' | 'vibrant';
 
@@ -75,6 +74,7 @@ export default function RandomColor() {
   const [mode, setMode] = useState<ColorMode>('any');
   const [current, setCurrent] = useState<GeneratedColor | null>(null);
   const [history, setHistory] = useState<GeneratedColor[]>([]);
+
   const generate = () => {
     const color = generateRandomColor(mode);
     setCurrent(color);
@@ -89,7 +89,16 @@ export default function RandomColor() {
   ];
 
   return (
-    <Box>
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -187,7 +196,7 @@ export default function RandomColor() {
             >
               <Palette sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
-                Нажмите «Генерировать цвет» для создания случайного цвета
+                Нажмите «Генерировать цвет»
               </Typography>
             </Paper>
           )}
@@ -201,7 +210,7 @@ export default function RandomColor() {
           {history.length === 0 ? (
             <Paper
               elevation={0}
-              sx={{ p: 3, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
+              sx={{ p: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
             >
               <Typography variant="body2" color="text.secondary">
                 История пока пуста

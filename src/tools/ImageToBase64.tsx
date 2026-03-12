@@ -20,7 +20,6 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CopyButton } from '@/src/components/CopyButton';
 
-
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 Б';
   const units = ['Б', 'КБ', 'МБ', 'ГБ'];
@@ -190,7 +189,7 @@ export default function ImageToBase64() {
               {/* File info & preview */}
               <Paper
                 elevation={0}
-                sx={{ p: 3, mb: 2, borderRadius: 3 }}
+                sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="h6">Информация о файле</Typography>
@@ -252,7 +251,7 @@ export default function ImageToBase64() {
                 <Paper
                   key={fmt.key}
                   elevation={0}
-                  sx={{ p: 3, mb: 2, borderRadius: 3 }}
+                  sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
                     <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -284,7 +283,7 @@ export default function ImageToBase64() {
         <>
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 2, borderRadius: 3 }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
           >
             <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
               Вставьте строку Base64 или Data URI
@@ -312,7 +311,7 @@ export default function ImageToBase64() {
           {reversePreview && (
             <Paper
               elevation={0}
-              sx={{ p: 3, borderRadius: 3 }}
+              sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
             >
               <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
                 Предпросмотр изображения

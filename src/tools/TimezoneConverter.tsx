@@ -172,7 +172,8 @@ export default function TimezoneConverter() {
         elevation={0}
         sx={{
           borderRadius: 3,
-          p: 3
+          p: { xs: 2, sm: 3 },
+          backgroundColor: theme.palette.surfaceContainerLow
         }}
       >
         {/* Source */}
@@ -268,7 +269,11 @@ export default function TimezoneConverter() {
                 borderRadius: 3,
                 p: 2,
                 mb: 2,
-                backgroundColor: theme.palette.surfaceContainerLow
+                backgroundColor: theme.palette.surfaceContainerHigh,
+                transition: 'all 200ms ease',
+                '&:hover': {
+                  backgroundColor: alpha(theme.palette.primary.main, 0.04)
+                }
               }}
             >
               <Grid container spacing={2} sx={{ alignItems: 'center' }}>
@@ -343,7 +348,7 @@ export default function TimezoneConverter() {
         })}
 
         {targetIndices.length === 0 && (
-          <Box sx={{ textAlign: 'center', py: 3 }}>
+          <Box sx={{ textAlign: 'center', py: 4 }}>
             <Typography color="text.secondary">
               Добавьте целевой часовой пояс для конвертации
             </Typography>

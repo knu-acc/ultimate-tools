@@ -168,16 +168,18 @@ export default function RetirementCalc() {
   );
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          p: { xs: 2, sm: 3 },
+          bgcolor: theme.palette.surfaceContainerLow,
+          borderRadius: 3,
+          transition: 'background-color 0.2s ease',
+          '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Grid container spacing={2}>
@@ -188,7 +190,7 @@ export default function RetirementCalc() {
               type="number"
               value={currentAge}
               onChange={(e) => setCurrentAge(e.target.value)}
-              placeholder="Например: 30"
+              placeholder="30"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -208,7 +210,7 @@ export default function RetirementCalc() {
               type="number"
               value={retirementAge}
               onChange={(e) => setRetirementAge(e.target.value)}
-              placeholder="Например: 60"
+              placeholder="60"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -228,7 +230,7 @@ export default function RetirementCalc() {
               type="number"
               value={currentSavings}
               onChange={(e) => setCurrentSavings(e.target.value)}
-              placeholder="Например: 500000"
+              placeholder="500000"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -248,7 +250,7 @@ export default function RetirementCalc() {
               type="number"
               value={monthlySavings}
               onChange={(e) => setMonthlySavings(e.target.value)}
-              placeholder="Например: 20000"
+              placeholder="20000"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -268,7 +270,7 @@ export default function RetirementCalc() {
               type="number"
               value={annualReturn}
               onChange={(e) => setAnnualReturn(e.target.value)}
-              placeholder="Например: 10"
+              placeholder="10"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -288,7 +290,7 @@ export default function RetirementCalc() {
               type="number"
               value={desiredMonthlyIncome}
               onChange={(e) => setDesiredMonthlyIncome(e.target.value)}
-              placeholder="Например: 80000"
+              placeholder="80000"
               slotProps={{
                 input: {
                   endAdornment: (

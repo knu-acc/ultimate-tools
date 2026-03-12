@@ -180,16 +180,18 @@ export default function DepositCalc() {
   );
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          p: { xs: 2, sm: 3 },
+          bgcolor: theme.palette.surfaceContainerLow,
+          borderRadius: 3,
+          transition: 'background-color 0.2s ease',
+          '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Grid container spacing={2}>
@@ -200,7 +202,7 @@ export default function DepositCalc() {
               type="number"
               value={deposit}
               onChange={(e) => setDeposit(e.target.value)}
-              placeholder="Например: 500000"
+              placeholder="500000"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -220,7 +222,7 @@ export default function DepositCalc() {
               type="number"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
-              placeholder="Например: 16"
+              placeholder="16"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -240,7 +242,7 @@ export default function DepositCalc() {
               type="number"
               value={termMonths}
               onChange={(e) => setTermMonths(e.target.value)}
-              placeholder="Например: 12"
+              placeholder="12"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -420,8 +422,9 @@ export default function DepositCalc() {
               elevation={0}
               sx={{
                 mt: 2,
-                p: 2,
-                borderRadius: 2
+                p: { xs: 1.5, sm: 2 },
+                borderRadius: 3,
+                bgcolor: theme.palette.surfaceContainerLow
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>

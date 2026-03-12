@@ -245,12 +245,12 @@ export default function FractionCalc() {
     : '';
 
   return (
-    <Box sx={{ maxWidth: 600, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input row */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow,
@@ -333,7 +333,7 @@ export default function FractionCalc() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               borderRadius: 3,
               background: theme.palette.surfaceContainerLow,
@@ -421,7 +421,7 @@ export default function FractionCalc() {
             <Paper
               elevation={0}
               sx={{
-                p: 2,
+                p: { xs: 1.5, sm: 2 },
                 borderRadius: 3,
                 background: theme.palette.surfaceContainerLow,
               }}

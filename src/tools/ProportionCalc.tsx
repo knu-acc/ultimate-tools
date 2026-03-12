@@ -9,7 +9,6 @@ import {
   Grid,
   Button,
   Chip,
-  Divider,
   useTheme,
   alpha
 } from '@mui/material';
@@ -128,9 +127,10 @@ export default function ProportionCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
@@ -139,7 +139,7 @@ export default function ProportionCalc() {
 
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, flexWrap: 'wrap' }}>
           <TextField
-            label="A"
+            placeholder="A"
             type="number"
             value={a}
             onChange={(e) => setA(e.target.value)}
@@ -151,7 +151,7 @@ export default function ProportionCalc() {
             /
           </Typography>
           <TextField
-            label="B"
+            placeholder="B"
             type="number"
             value={b}
             onChange={(e) => setB(e.target.value)}
@@ -163,7 +163,7 @@ export default function ProportionCalc() {
             =
           </Typography>
           <TextField
-            label="C"
+            placeholder="C"
             type="number"
             value={c}
             onChange={(e) => setC(e.target.value)}
@@ -175,7 +175,7 @@ export default function ProportionCalc() {
             /
           </Typography>
           <TextField
-            label="D"
+            placeholder="D"
             type="number"
             value={d}
             onChange={(e) => setD(e.target.value)}
@@ -263,9 +263,10 @@ export default function ProportionCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -276,7 +277,7 @@ export default function ProportionCalc() {
         </Box>
         <TextField
           fullWidth
-          label="Число"
+          placeholder="100"
           type="number"
           value={goldenInput}
           onChange={(e) => setGoldenInput(e.target.value)}
@@ -366,8 +367,9 @@ export default function ProportionCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          borderRadius: 3
+          p: { xs: 2, sm: 3 },
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
@@ -378,7 +380,7 @@ export default function ProportionCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Исходный размер"
+              placeholder="Исходный"
               type="number"
               value={origSize}
               onChange={(e) => setOrigSize(e.target.value)}
@@ -388,7 +390,7 @@ export default function ProportionCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Масштаб (множитель)"
+              placeholder="Масштаб"
               type="number"
               value={scaleFactor}
               onChange={(e) => setScaleFactor(e.target.value)}
@@ -398,7 +400,7 @@ export default function ProportionCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Новый размер"
+              placeholder="Новый"
               type="number"
               value={newSize}
               onChange={(e) => setNewSize(e.target.value)}

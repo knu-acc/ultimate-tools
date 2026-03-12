@@ -11,7 +11,7 @@ import {
   Button,
   useTheme,
   alpha,
-  InputAdornment
+  InputAdornment,
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -65,7 +65,7 @@ export default function WordCounter() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow

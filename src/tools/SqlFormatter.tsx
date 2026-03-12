@@ -7,9 +7,7 @@ import {
   Paper,
   TextField,
   Button,
-  IconButton,
   Chip,
-  Snackbar,
   alpha,
   useTheme
 } from '@mui/material';
@@ -108,40 +106,20 @@ export default function SqlFormatter() {
   const theme = useTheme();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
-
-  const showSnack = (msg: string) => {
-    setSnackMsg(msg);
-    setSnackOpen(true);
-  };
 
   const handleFormat = () => {
     const result = formatSql(input);
     setOutput(result);
-    showSnack('SQL отформатирован');
   };
 
   const handleMinify = () => {
     const result = minifySql(input);
     setOutput(result);
-    showSnack('SQL минифицирован');
-  };
-
-  const copyOutput = async () => {
-    if (!output) return;
-    try {
-      await navigator.clipboard.writeText(output);
-      showSnack('Скопировано в буфер обмена');
-    } catch {
-      showSnack('Не удалось скопировать');
-    }
   };
 
   const clear = () => {
     setInput('');
     setOutput('');
-    showSnack('Очищено');
   };
 
   const stats = output
@@ -156,15 +134,11 @@ export default function SqlFormatter() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          SQL запрос
-        </Typography>
         <TextField
           multiline
           rows={10}
@@ -234,10 +208,7 @@ export default function SqlFormatter() {
         {/* Output */}
         {output && (
           <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-              <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                Результат
-              </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
               <CopyButton text={output} />
             </Box>
             <TextField
@@ -264,13 +235,6 @@ export default function SqlFormatter() {
         )}
       </Paper>
 
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

@@ -116,11 +116,11 @@ export default function AgeCalculator() {
   const accentColor = theme.palette.primary.main;
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -227,7 +227,11 @@ export default function AgeCalculator() {
                       p: 2,
                       textAlign: 'center',
                       borderRadius: 3,
-                      background: alpha(item.color, 0.06)
+                      background: alpha(item.color, 0.06),
+                      transition: 'all 200ms ease',
+                      '&:hover': {
+                        background: alpha(item.color, 0.1)
+                      }
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">

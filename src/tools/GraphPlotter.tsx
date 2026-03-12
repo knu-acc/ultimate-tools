@@ -338,13 +338,14 @@ export default function GraphPlotter() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          Поддержка: x, +, -, *, /, ^, sin, cos, tan, sqrt, abs, log, PI, E
+          x, +, -, *, /, ^, sin, cos, tan, sqrt, abs, log, PI, E
         </Typography>
 
         {functions.map((fn, idx) => (
@@ -361,8 +362,7 @@ export default function GraphPlotter() {
             <TextField
               fullWidth
               size="small"
-              label={`f${idx + 1}(x)`}
-              placeholder="sin(x), x^2, 2*x+1..."
+              placeholder={`f${idx + 1}(x) = sin(x), x^2...`}
               value={fn.expr}
               onChange={(e) => updateExpr(fn.id, e.target.value)}
               slotProps={{
@@ -390,9 +390,10 @@ export default function GraphPlotter() {
       <Paper
         elevation={0}
         sx={{
-          p: 2,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Grid container spacing={1} sx={{ alignItems: 'center' }}>
@@ -400,7 +401,7 @@ export default function GraphPlotter() {
             <TextField
               fullWidth
               size="small"
-              label="X мин"
+              placeholder="X мин"
               type="number"
               value={xMin}
               onChange={(e) => setXMin(parseFloat(e.target.value) || -10)}
@@ -410,7 +411,7 @@ export default function GraphPlotter() {
             <TextField
               fullWidth
               size="small"
-              label="X макс"
+              placeholder="X макс"
               type="number"
               value={xMax}
               onChange={(e) => setXMax(parseFloat(e.target.value) || 10)}
@@ -420,7 +421,7 @@ export default function GraphPlotter() {
             <TextField
               fullWidth
               size="small"
-              label="Y мин"
+              placeholder="Y мин"
               type="number"
               value={yMin}
               onChange={(e) => setYMin(parseFloat(e.target.value) || -10)}
@@ -430,7 +431,7 @@ export default function GraphPlotter() {
             <TextField
               fullWidth
               size="small"
-              label="Y макс"
+              placeholder="Y макс"
               type="number"
               value={yMax}
               onChange={(e) => setYMax(parseFloat(e.target.value) || 10)}

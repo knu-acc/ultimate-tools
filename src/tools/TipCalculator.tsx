@@ -81,7 +81,9 @@ export default function TipCalculator() {
         p: 2.5,
         textAlign: 'center',
         borderRadius: 3,
-        background: alpha(color, 0.06)
+        background: alpha(color, 0.06),
+        transition: 'background 150ms ease',
+        '&:hover': { background: alpha(color, 0.10) }
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -94,7 +96,7 @@ export default function TipCalculator() {
   );
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
@@ -106,7 +108,7 @@ export default function TipCalculator() {
           borderRadius: 3
         }}
       >
-        <Grid container spacing={2.5}>
+        <Grid container spacing={2}>
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
@@ -184,9 +186,9 @@ export default function TipCalculator() {
 
         {results && (
           <>
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={{ my: 2 }} />
 
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
               Результат
             </Typography>
 

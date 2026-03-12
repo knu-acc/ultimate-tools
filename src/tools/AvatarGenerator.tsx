@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider
+  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme
 } from '@mui/material';
-import { Download, Face, Refresh } from '@mui/icons-material';
+import { Download, Refresh } from '@mui/icons-material';
 
 type AvatarStyle = 'geometric' | 'pixel' | 'gradient';
 
@@ -47,7 +47,6 @@ function drawGeometric(ctx: CanvasRenderingContext2D, size: number, seed: string
   const cellSize = size / gridSize;
   const cells: boolean[][] = [];
 
-  // Generate 5x5 symmetric pattern (only need left half + center)
   for (let row = 0; row < gridSize; row++) {
     cells[row] = [];
     for (let col = 0; col < gridSize; col++) {
@@ -56,7 +55,6 @@ function drawGeometric(ctx: CanvasRenderingContext2D, size: number, seed: string
         const pseudoRandom = hashString(seed + String(bitIndex));
         cells[row][col] = pseudoRandom % 3 !== 0;
       } else {
-        // Mirror
         cells[row][col] = cells[row][gridSize - 1 - col];
       }
     }
@@ -96,9 +94,7 @@ function drawPixel(ctx: CanvasRenderingContext2D, size: number, seed: string, bg
       const pseudoRandom = hashString(seed + String(bitIndex));
       if (pseudoRandom % 3 !== 0) {
         ctx.fillStyle = color;
-        // Left side
         ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
-        // Mirror right side
         ctx.fillRect((gridSize - 1 - col) * cellSize, row * cellSize, cellSize, cellSize);
       }
     }
@@ -117,7 +113,6 @@ function drawGradient(ctx: CanvasRenderingContext2D, size: number, seed: string,
     ctx.clearRect(0, 0, size, size);
   }
 
-  // Draw gradient background circle
   const cx = size / 2;
   const cy = size / 2;
   const radius = size * 0.42;
@@ -131,7 +126,6 @@ function drawGradient(ctx: CanvasRenderingContext2D, size: number, seed: string,
   ctx.fillStyle = gradient;
   ctx.fill();
 
-  // Draw 5x5 symmetric pattern on top in white/transparent
   const gridSize = 5;
   const patternSize = size * 0.6;
   const cellSize = patternSize / gridSize;
@@ -149,7 +143,6 @@ function drawGradient(ctx: CanvasRenderingContext2D, size: number, seed: string,
         ctx.beginPath();
         ctx.roundRect(x + 1, y + 1, cellSize - 2, cellSize - 2, cellSize * 0.2);
         ctx.fill();
-        // Mirror
         const mx = offsetX + (gridSize - 1 - col) * cellSize;
         ctx.beginPath();
         ctx.roundRect(mx + 1, y + 1, cellSize - 2, cellSize - 2, cellSize * 0.2);
@@ -221,18 +214,15 @@ export default function AvatarGenerator() {
   ];
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Текст (seed)
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <TextField
               fullWidth
               value={seed}
               onChange={(e) => setSeed(e.target.value)}
-              placeholder="Введите текст..."
+              placeholder="Текст (seed)..."
               sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
               slotProps={{
                 input: {
@@ -246,78 +236,46 @@ export default function AvatarGenerator() {
             />
           </Box>
 
-          {/* Style */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Стиль
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             {styleOptions.map(opt => (
               <Chip
                 key={opt.value}
                 label={opt.label}
                 onClick={() => setStyle(opt.value)}
-                sx={{
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  bgcolor: style === opt.value
-                    ? alpha(theme.palette.primary.main, 0.15)
-                    : theme.palette.surfaceContainerLow,
-                  color: style === opt.value ? theme.palette.primary.main : theme.palette.text.primary
-                }}
+                variant={style === opt.value ? 'filled' : 'outlined'}
+                color={style === opt.value ? 'primary' : 'default'}
+                sx={{ fontWeight: 600, cursor: 'pointer' }}
               />
             ))}
           </Box>
 
-          {/* Size */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Размер
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             {sizeOptions.map(s => (
               <Chip
                 key={s}
                 label={`${s}px`}
                 onClick={() => setSize(s)}
-                sx={{
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  bgcolor: size === s
-                    ? alpha(theme.palette.primary.main, 0.15)
-                    : theme.palette.surfaceContainerLow,
-                  color: size === s ? theme.palette.primary.main : theme.palette.text.primary
-                }}
+                variant={size === s ? 'filled' : 'outlined'}
+                color={size === s ? 'primary' : 'default'}
+                sx={{ fontWeight: 600, cursor: 'pointer' }}
               />
             ))}
           </Box>
 
-          {/* Background */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Фон
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <Chip
-              label="Белый"
+              label="Белый фон"
               onClick={() => setBgWhite(true)}
-              sx={{
-                fontWeight: 600,
-                cursor: 'pointer',
-                bgcolor: bgWhite
-                  ? alpha(theme.palette.primary.main, 0.15)
-                  : theme.palette.surfaceContainerLow,
-                color: bgWhite ? theme.palette.primary.main : theme.palette.text.primary
-              }}
+              variant={bgWhite ? 'filled' : 'outlined'}
+              color={bgWhite ? 'primary' : 'default'}
+              sx={{ fontWeight: 600, cursor: 'pointer' }}
             />
             <Chip
               label="Прозрачный"
               onClick={() => setBgWhite(false)}
-              sx={{
-                fontWeight: 600,
-                cursor: 'pointer',
-                bgcolor: !bgWhite
-                  ? alpha(theme.palette.primary.main, 0.15)
-                  : theme.palette.surfaceContainerLow,
-                color: !bgWhite ? theme.palette.primary.main : theme.palette.text.primary
-              }}
+              variant={!bgWhite ? 'filled' : 'outlined'}
+              color={!bgWhite ? 'primary' : 'default'}
+              sx={{ fontWeight: 600, cursor: 'pointer' }}
             />
           </Box>
 
@@ -327,7 +285,7 @@ export default function AvatarGenerator() {
             size="large"
             startIcon={<Download />}
             onClick={handleDownload}
-            sx={{ borderRadius: 6, py: 1.2 }}
+            sx={{ borderRadius: 3, py: 1.2, textTransform: 'none', fontWeight: 600 }}
           >
             Скачать PNG
           </Button>
@@ -337,13 +295,14 @@ export default function AvatarGenerator() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center'
+              alignItems: 'center',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
             <canvas
@@ -358,7 +317,7 @@ export default function AvatarGenerator() {
               }}
             />
             <Typography variant="caption" color="text.secondary" sx={{ mt: 2 }}>
-              {size} x {size} px | Стиль: {styleOptions.find(s => s.value === style)?.label}
+              {size} x {size} px | {styleOptions.find(s => s.value === style)?.label}
             </Typography>
           </Paper>
         </Grid>

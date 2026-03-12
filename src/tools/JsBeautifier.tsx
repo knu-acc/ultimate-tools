@@ -7,9 +7,7 @@ import {
   Button,
   Paper,
   TextField,
-  Grid,
   Chip,
-  IconButton,
   ToggleButtonGroup,
   ToggleButton,
   useTheme,
@@ -261,7 +259,6 @@ export default function JsBeautifier() {
   const theme = useTheme();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [copied, setCopied] = useState(false);
   const [indentType, setIndentType] = useState<IndentType>('2');
   const [lastAction, setLastAction] = useState<string>('');
 
@@ -269,25 +266,12 @@ export default function JsBeautifier() {
     const result = beautifyJs(input, indentType);
     setOutput(result);
     setLastAction('beautify');
-    setCopied(false);
   };
 
   const handleMinify = () => {
     const result = minifyJs(input);
     setOutput(result);
     setLastAction('minify');
-    setCopied(false);
-  };
-
-  const copyToClipboard = async () => {
-    if (!output) return;
-    try {
-      await navigator.clipboard.writeText(output);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* ignore */
-    }
   };
 
   const stats = useMemo(() => {
@@ -306,7 +290,7 @@ export default function JsBeautifier() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
@@ -334,10 +318,6 @@ export default function JsBeautifier() {
           </ToggleButtonGroup>
         </Box>
 
-        {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Исходный код JavaScript / TypeScript
-        </Typography>
         <TextField
           multiline
           rows={12}
@@ -359,28 +339,24 @@ export default function JsBeautifier() {
         />
 
         {/* Action buttons */}
-        <Grid container spacing={1.5} sx={{ mb: 2.5, justifyContent: 'center' }}>
-          <Grid>
-            <Button
-              variant="contained"
-              onClick={handleBeautify}
-              disabled={!input.trim()}
-              sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
-            >
-              Форматировать
-            </Button>
-          </Grid>
-          <Grid>
-            <Button
-              variant="contained"
-              onClick={handleMinify}
-              disabled={!input.trim()}
-              sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
-            >
-              Минифицировать
-            </Button>
-          </Grid>
-        </Grid>
+        <Box sx={{ display: 'flex', gap: 1.5, mb: 2.5, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Button
+            variant="contained"
+            onClick={handleBeautify}
+            disabled={!input.trim()}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
+          >
+            Форматировать
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleMinify}
+            disabled={!input.trim()}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
+          >
+            Минифицировать
+          </Button>
+        </Box>
 
         {/* Stats */}
         {stats && (
@@ -418,10 +394,7 @@ export default function JsBeautifier() {
         {/* Output */}
         {output && (
           <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-              <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-                Результат
-              </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
               <CopyButton text={output} />
             </Box>
             <TextField

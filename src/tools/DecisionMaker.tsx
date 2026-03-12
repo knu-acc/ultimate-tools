@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import {
-  Box, Typography, Paper, TextField, Button, Grid, Chip, useTheme, IconButton
+  Box, Typography, Paper, TextField, Button, Chip, alpha, useTheme, IconButton
 } from '@mui/material';
 import { Delete, Add, Casino } from '@mui/icons-material';
 
@@ -36,7 +36,16 @@ export default function DecisionMaker() {
   };
 
   return (
-    <Box>
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       <Paper elevation={0} sx={{ p: 3, borderRadius: 3, mb: 2 }}>
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>Варианты выбора</Typography>
         {options.map((opt, i) => (

@@ -8,13 +8,10 @@ import {
   TextField,
   Grid,
   Button,
-  IconButton,
-  Tooltip,
   Chip,
   Divider,
-  Snackbar,
   useTheme,
-  alpha
+  alpha,
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -196,14 +193,6 @@ export default function ChecksumCalc() {
   const [hashes, setHashes] = useState<HashResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [compareHash, setCompareHash] = useState('');
-  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [snackMsg, setSnackMsg] = useState('');
-
-  const showSnack = (msg: string) => {
-    setSnackMsg(msg);
-    setSnackOpen(true);
-  };
 
   const generateHashes = useCallback(async () => {
     if (!input) return;
@@ -230,17 +219,6 @@ export default function ChecksumCalc() {
     }
   }, [input]);
 
-  const copyHash = async (value: string, idx: number) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopiedIdx(idx);
-      showSnack('Скопировано в буфер обмена');
-      setTimeout(() => setCopiedIdx(null), 2000);
-    } catch {
-      showSnack('Не удалось скопировать');
-    }
-  };
-
   const compareNormalized = compareHash.trim().toLowerCase();
   const matchResult = (hash: HashResult) => {
     if (!compareNormalized) return null;
@@ -252,19 +230,18 @@ export default function ChecksumCalc() {
     : null;
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          p: { xs: 2, sm: 3 },
+          bgcolor: theme.palette.surfaceContainerLow,
+          borderRadius: 3,
+          transition: 'background-color 0.2s ease',
+          '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         {/* Input */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Исходный текст
-        </Typography>
         <TextField
           multiline
           rows={6}
@@ -274,7 +251,7 @@ export default function ChecksumCalc() {
             setInput(e.target.value);
             setHashes([]);
           }}
-          placeholder="Введите текст для вычисления контрольных сумм..."
+          placeholder="Текст для вычисления контрольных сумм..."
           sx={{
             mb: 2,
             '& .MuiInputBase-root': {
@@ -400,11 +377,8 @@ export default function ChecksumCalc() {
             {/* Compare mode */}
             <Divider sx={{ my: 3 }} />
 
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
               Сравнение
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-              Вставьте ожидаемый хеш для проверки совпадения
             </Typography>
 
             <TextField
@@ -413,7 +387,7 @@ export default function ChecksumCalc() {
               label="Ожидаемый хеш"
               value={compareHash}
               onChange={(e) => setCompareHash(e.target.value)}
-              placeholder="Вставьте хеш для сравнения..."
+              placeholder="Вставьте хеш..."
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", monospace',
@@ -447,13 +421,6 @@ export default function ChecksumCalc() {
         )}
       </Paper>
 
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={2000}
-        onClose={() => setSnackOpen(false)}
-        message={snackMsg}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

@@ -8,7 +8,6 @@ import {
   TextField,
   Grid,
   Chip,
-  Divider,
   useTheme,
   alpha
 } from '@mui/material';
@@ -99,7 +98,7 @@ export default function InvestmentCalc() {
     n.toLocaleString('ru-RU', { maximumFractionDigits: 1 });
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
@@ -107,15 +106,14 @@ export default function InvestmentCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
-          background: theme.palette.surfaceContainerLow
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'background-color 0.2s ease',
+          '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Параметры инвестиции
-        </Typography>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
@@ -186,11 +184,13 @@ export default function InvestmentCalc() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
               borderRadius: 3,
-              background: alpha('#2e7d32', 0.04)
+              bgcolor: alpha('#2e7d32', 0.04),
+              transition: 'background-color 0.2s ease',
+              '&:hover': { bgcolor: alpha('#2e7d32', 0.07) }
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -207,11 +207,13 @@ export default function InvestmentCalc() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 2.5,
+                  p: { xs: 2, sm: 2.5 },
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#1565c0', 0.3)}`,
-                  background: alpha('#1565c0', 0.05)
+                  bgcolor: alpha('#1565c0', 0.05),
+                  transition: 'background-color 0.2s ease',
+                  '&:hover': { bgcolor: alpha('#1565c0', 0.08) }
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -236,11 +238,13 @@ export default function InvestmentCalc() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 2.5,
+                  p: { xs: 2, sm: 2.5 },
                   textAlign: 'center',
                   borderRadius: 3,
                   border: `1px solid ${alpha('#2e7d32', 0.3)}`,
-                  background: alpha('#2e7d32', 0.05)
+                  bgcolor: alpha('#2e7d32', 0.05),
+                  transition: 'background-color 0.2s ease',
+                  '&:hover': { bgcolor: alpha('#2e7d32', 0.08) }
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -267,9 +271,12 @@ export default function InvestmentCalc() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              transition: 'background-color 0.2s ease',
+              '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -319,8 +326,11 @@ export default function InvestmentCalc() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
-              borderRadius: 3
+              p: { xs: 2, sm: 3 },
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              transition: 'background-color 0.2s ease',
+              '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>

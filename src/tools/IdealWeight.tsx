@@ -107,16 +107,15 @@ export default function IdealWeight() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Рост (см)"
+              placeholder="Рост, см"
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              placeholder="170"
               slotProps={{
                 input: {
                   inputProps: { min: 100, max: 250, step: 1 }
@@ -148,8 +147,9 @@ export default function IdealWeight() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
+              borderRadius: 3,
               textAlign: 'center',
               background: theme.palette.surfaceContainerLow
             }}
@@ -171,7 +171,7 @@ export default function IdealWeight() {
           </Paper>
 
           {/* Визуальная шкала сравнения */}
-          <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               Сравнение формул
             </Typography>

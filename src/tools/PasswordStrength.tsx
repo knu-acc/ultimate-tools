@@ -151,8 +151,8 @@ export default function PasswordStrength() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
@@ -206,7 +206,7 @@ export default function PasswordStrength() {
       {password && (
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: 3, height: '100%', borderRadius: 3 }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
                 Символы
               </Typography>
@@ -251,7 +251,7 @@ export default function PasswordStrength() {
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: 3, height: '100%', borderRadius: 3 }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
                 Критерии
               </Typography>
@@ -292,9 +292,11 @@ export default function PasswordStrength() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   borderRadius: 3,
-                  background: alpha(theme.palette.warning.main, 0.04)
+                  bgcolor: alpha(theme.palette.warning.main, 0.04),
+                  transition: 'background-color 0.2s ease',
+                  '&:hover': { bgcolor: alpha(theme.palette.warning.main, 0.07) }
                 }}
               >
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>

@@ -197,7 +197,7 @@ export default function IpValidator() {
   }, [batchInput]);
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       {/* Mode toggle */}
       <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
         <Chip
@@ -222,7 +222,7 @@ export default function IpValidator() {
           {/* Single IP */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 2, borderRadius: 3 }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}
           >
             <TextField
               label="IP-адрес (IPv4 или IPv6)"
@@ -325,7 +325,7 @@ export default function IpValidator() {
           {/* Batch mode */}
           <Paper
             elevation={0}
-            sx={{ p: 3, mb: 2, borderRadius: 3 }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
               Введите IP-адреса (по одному на строку)
@@ -348,7 +348,7 @@ export default function IpValidator() {
           {batchResults.length > 0 && (
             <Paper
               elevation={0}
-              sx={{ p: 2, borderRadius: 3 }}
+              sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
                 Результаты ({batchResults.filter((r) => r.valid).length}/{batchResults.length} корректных)

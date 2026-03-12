@@ -122,7 +122,9 @@ export default function TaxCalc() {
         p: 2.5,
         textAlign: 'center',
         borderRadius: 3,
-        background: alpha(color, 0.06)
+        background: alpha(color, 0.06),
+        transition: 'background 150ms ease',
+        '&:hover': { background: alpha(color, 0.10) }
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -202,7 +204,7 @@ export default function TaxCalc() {
 
         <Divider sx={{ my: 3 }} />
 
-        <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+        <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
           Налоговые вычеты
         </Typography>
 
@@ -211,7 +213,7 @@ export default function TaxCalc() {
             elevation={0}
             sx={{
               p: 2,
-              borderRadius: 2,
+              borderRadius: 3,
               background: deductionStandard ? alpha('#2e7d32', 0.04) : 'transparent'
             }}
           >
@@ -245,7 +247,7 @@ export default function TaxCalc() {
             elevation={0}
             sx={{
               p: 2,
-              borderRadius: 2,
+              borderRadius: 3,
               background: deductionProperty ? alpha('#2e7d32', 0.04) : 'transparent'
             }}
           >
@@ -280,7 +282,7 @@ export default function TaxCalc() {
             elevation={0}
             sx={{
               p: 2,
-              borderRadius: 2,
+              borderRadius: 3,
               background: deductionEducation ? alpha('#2e7d32', 0.04) : 'transparent'
             }}
           >
@@ -325,9 +327,9 @@ export default function TaxCalc() {
 
         {results && (
           <>
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={{ my: 2 }} />
 
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                 Результаты
               </Typography>
@@ -395,7 +397,7 @@ export default function TaxCalc() {
               </Grid>
             </Grid>
 
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={{ my: 2 }} />
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 4 }}>
@@ -404,7 +406,10 @@ export default function TaxCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    borderRadius: 2
+                    borderRadius: 3,
+                    background: alpha('#e65100', 0.06),
+                    transition: 'background 150ms ease',
+                    '&:hover': { background: alpha('#e65100', 0.10) }
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -421,7 +426,10 @@ export default function TaxCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    borderRadius: 2
+                    borderRadius: 3,
+                    background: theme.palette.surfaceContainerLow,
+                    transition: 'background 150ms ease',
+                    '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -438,7 +446,10 @@ export default function TaxCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    borderRadius: 2
+                    borderRadius: 3,
+                    background: alpha('#2e7d32', 0.06),
+                    transition: 'background 150ms ease',
+                    '&:hover': { background: alpha('#2e7d32', 0.10) }
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>

@@ -12,7 +12,7 @@ import {
   alpha,
   IconButton,
   Tabs,
-  Tab
+  Tab,
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -83,9 +83,9 @@ export default function EmailValidator() {
   const invalidCount = batchResults.filter((r) => !r.valid).length;
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       {/* Tabs */}
-      <Paper elevation={0} sx={{ mb: 2, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
         <Tabs
           value={tab}
           onChange={(_, v) => setTab(v)}
@@ -106,10 +106,7 @@ export default function EmailValidator() {
       {/* Single Mode */}
       {tab === 0 && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
-            <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-              Введите email для проверки
-            </Typography>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <TextField
               fullWidth
               value={email}
@@ -152,8 +149,8 @@ export default function EmailValidator() {
 
           {/* Validation Checks */}
           {checks.length > 0 && (
-            <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
-              <Typography variant="h6" sx={{ mb: 2 }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+              <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                 Результаты проверки
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -195,10 +192,7 @@ export default function EmailValidator() {
       {/* Batch Mode */}
       {tab === 1 && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
-            <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-              Введите email-адреса (по одному на строку, или через запятую/точку с запятой)
-            </Typography>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <TextField
               fullWidth
               multiline
@@ -215,8 +209,8 @@ export default function EmailValidator() {
             <Grid container spacing={3}>
               {/* Summary */}
               <Grid size={12}>
-                <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
-                  <Typography variant="h6" sx={{ mb: 2 }}>
+                <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+                  <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                     Итоги проверки
                   </Typography>
                   <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
@@ -245,8 +239,8 @@ export default function EmailValidator() {
 
               {/* Results List */}
               <Grid size={12}>
-                <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
-                  <Typography variant="h6" sx={{ mb: 2 }}>
+                <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+                  <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                     Детальные результаты
                   </Typography>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

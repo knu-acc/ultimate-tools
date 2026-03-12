@@ -199,7 +199,7 @@ export default function TimerComponent() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ }}>
+      <Paper elevation={0} sx={{ borderRadius: 3, overflow: 'hidden' }}>
         <Tabs
           value={tab}
           onChange={(_, v) => setTab(v)}
@@ -210,12 +210,12 @@ export default function TimerComponent() {
           <Tab icon={<TimerIcon />} label="Секундомер" />
         </Tabs>
 
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: { xs: 2, sm: 3 } }}>
           {/* Timer Tab */}
           {tab === 0 && (
             <Box>
               {/* Timer Display */}
-              <Box sx={{ textAlign: 'center', mb: 4 }}>
+              <Box sx={{ textAlign: 'center', mb: 3 }}>
                 <Typography
                   sx={{
                     fontFamily: 'monospace',
@@ -372,7 +372,7 @@ export default function TimerComponent() {
           {tab === 1 && (
             <Box>
               {/* Stopwatch Display */}
-              <Box sx={{ textAlign: 'center', mb: 4 }}>
+              <Box sx={{ textAlign: 'center', mb: 3 }}>
                 <Typography
                   sx={{
                     fontFamily: 'monospace',
@@ -421,7 +421,7 @@ export default function TimerComponent() {
                     </Button>
                   </>
                 )}
-                <IconButton onClick={resetStopwatch} color="error" sx={{ }}>
+                <IconButton onClick={resetStopwatch} color="error">
                   <RestartAltIcon />
                 </IconButton>
               </Box>

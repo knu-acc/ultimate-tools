@@ -115,7 +115,7 @@ export default function RegexTester() {
       {/* Pattern Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 2 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <Typography variant="body1" sx={{ color: 'text.secondary', fontFamily: 'monospace', fontSize: '1.2rem' }}>
@@ -165,11 +165,8 @@ export default function RegexTester() {
       {/* Test String */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 2 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
       >
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-          Тестовая строка
-        </Typography>
         <TextField
           fullWidth
           multiline
@@ -185,11 +182,11 @@ export default function RegexTester() {
       {testString && pattern && !error && (
         <Paper
           elevation={0}
-          sx={{ p: 3, mb: 2 }}
+          sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Результат с подсветкой
+            <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
+              Подсветка
             </Typography>
             <Chip
               label={`${matches.length} ${matches.length === 1 ? 'совпадение' : 'совпадений'}`}
@@ -217,10 +214,10 @@ export default function RegexTester() {
       {matches.length > 0 && (
         <Paper
           elevation={0}
-          sx={{ p: 3 }}
+          sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
         >
-          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
-            Список совпадений
+          <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
+            Совпадения
           </Typography>
           <List disablePadding>
             {matches.map((m, i) => (

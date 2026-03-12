@@ -9,7 +9,8 @@ import {
   Chip,
   Grid,
   useTheme,
-  IconButton
+  alpha,
+  IconButton,
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -81,12 +82,9 @@ export default function UrlValidator() {
     : [];
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          Введите URL для анализа
-        </Typography>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <TextField
           fullWidth
           value={url}
@@ -129,8 +127,8 @@ export default function UrlValidator() {
 
       {/* URL Parts */}
       {result && result.valid && (
-        <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+          <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
             Компоненты URL
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -170,8 +168,8 @@ export default function UrlValidator() {
 
       {/* Query Parameters Table */}
       {result && result.valid && result.searchParams.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+          <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
             Параметры запроса
           </Typography>
           <Grid container spacing={1}>

@@ -169,15 +169,11 @@ export default function JsonFormatter() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input area */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Входные данные
-        </Typography>
         <TextField
           multiline
           rows={12}
@@ -272,9 +268,6 @@ export default function JsonFormatter() {
         {/* Output area */}
         {output && lastAction !== 'validate' && (
           <Box>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-              Результат
-            </Typography>
             <Paper
               elevation={0}
               sx={{

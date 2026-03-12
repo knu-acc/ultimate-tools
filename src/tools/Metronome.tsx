@@ -153,7 +153,6 @@ export default function Metronome() {
     };
   }, []);
 
-  // Reset beat counter when time signature changes
   useEffect(() => {
     currentBeatRef.current = 0;
     setCurrentBeat(0);
@@ -163,19 +162,16 @@ export default function Metronome() {
   const primaryColor = theme.palette.primary.main;
 
   return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: 3,
-        borderRadius: 4,
-        background: alpha(theme.palette.background.paper, 0.8),
-        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`
-      }}
-    >
-      <Typography variant="h5" fontWeight={700} gutterBottom>
-        Метроном
-      </Typography>
-
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       {/* Beat Indicator */}
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, my: 3 }}>
         {Array.from({ length: beats }, (_, i) => (
@@ -341,6 +337,6 @@ export default function Metronome() {
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center', mt: 1 }}>
         Нажимайте «Тап темп» в ритме для определения BPM
       </Typography>
-    </Paper>
+    </Box>
   );
 }

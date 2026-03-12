@@ -137,7 +137,9 @@ export default function CompoundInterest() {
         p: 2.5,
         textAlign: 'center',
         borderRadius: 3,
-        background: alpha(color, 0.06)
+        background: alpha(color, 0.06),
+        transition: 'background 150ms ease',
+        '&:hover': { background: alpha(color, 0.10) }
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -264,9 +266,9 @@ export default function CompoundInterest() {
 
         {results && (
           <>
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={{ my: 2 }} />
 
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
               Результаты
             </Typography>
 
@@ -312,12 +314,12 @@ export default function CompoundInterest() {
             <Paper
               elevation={0}
               sx={{
-                mt: 3,
+                mt: 2,
                 p: 2,
-                borderRadius: 2
+                borderRadius: 3
               }}
             >
-              <Box sx={{ display: 'flex', height: 28, borderRadius: 2, overflow: 'hidden' }}>
+              <Box sx={{ display: 'flex', height: 28, borderRadius: 3, overflow: 'hidden' }}>
                 <Box
                   sx={{
                     width: `${(results.totalContributions / results.finalAmount) * 100}%`,
@@ -360,9 +362,9 @@ export default function CompoundInterest() {
             {/* Таблица по годам */}
             {results.yearlyBreakdown.length > 0 && (
               <>
-                <Divider sx={{ my: 3 }} />
+                <Divider sx={{ my: 2 }} />
 
-                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
                   Рост по годам
                 </Typography>
 
@@ -373,7 +375,7 @@ export default function CompoundInterest() {
                       elevation={0}
                       sx={{
                         p: 1.5,
-                        borderRadius: 2,
+                        borderRadius: 3,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',

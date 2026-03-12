@@ -108,7 +108,9 @@ export default function LoanCalc() {
         p: 2.5,
         textAlign: 'center',
         borderRadius: 3,
-        background: alpha(color, 0.06)
+        background: alpha(color, 0.06),
+        transition: 'background 150ms ease',
+        '&:hover': { background: alpha(color, 0.10) }
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -215,9 +217,9 @@ export default function LoanCalc() {
 
         {results && (
           <>
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={{ my: 2 }} />
 
-            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
               Результаты расчёта
             </Typography>
 
@@ -259,7 +261,7 @@ export default function LoanCalc() {
               />
             </Box>
 
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={{ my: 2 }} />
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
@@ -280,7 +282,7 @@ export default function LoanCalc() {
                 component={Paper}
                 elevation={0}
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: 3,
                   maxHeight: 400
                 }}
               >

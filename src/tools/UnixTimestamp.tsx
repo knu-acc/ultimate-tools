@@ -97,12 +97,12 @@ export default function UnixTimestamp() {
   const accentColor = theme.palette.primary.main;
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Current timestamp */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           textAlign: 'center',
@@ -150,7 +150,7 @@ export default function UnixTimestamp() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3
         }}
@@ -161,10 +161,9 @@ export default function UnixTimestamp() {
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
           <TextField
             fullWidth
-            label="Unix-метка времени"
+            placeholder="1700000000"
             value={tsInput}
             onChange={(e) => setTsInput(e.target.value)}
-            placeholder="1700000000"
             type="number"
           />
           <Button
@@ -201,7 +200,11 @@ export default function UnixTimestamp() {
                   background: alpha(accentColor, 0.02),
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  transition: 'all 200ms ease',
+                  '&:hover': {
+                    background: alpha(accentColor, 0.06)
+                  }
                 }}
               >
                 <Box>
@@ -226,7 +229,7 @@ export default function UnixTimestamp() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3
         }}
       >

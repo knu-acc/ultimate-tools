@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, Slider, useTheme, TextField,
-  ToggleButton, ToggleButtonGroup
+  ToggleButton, ToggleButtonGroup, alpha
 } from '@mui/material';
 import { Refresh, Add } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
-
 
 export default function GradientGenerator() {
   const theme = useTheme();
@@ -49,7 +48,7 @@ export default function GradientGenerator() {
   ];
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       {/* Preview */}
       <Box
         sx={{
@@ -77,8 +76,6 @@ export default function GradientGenerator() {
 
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
-          {/* Type */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>Тип градиента</Typography>
           <ToggleButtonGroup
             value={type}
             exclusive
@@ -90,41 +87,35 @@ export default function GradientGenerator() {
             <ToggleButton value="radial" sx={{ borderRadius: '0 16px 16px 0', px: 3 }}>Радиальный</ToggleButton>
           </ToggleButtonGroup>
 
-          {/* Angle (only for linear) */}
           {type === 'linear' && (
             <>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                Угол: {angle}°
-              </Typography>
-              <Slider
-                value={angle}
-                onChange={(_, v) => setAngle(v as number)}
-                min={0}
-                max={360}
-                sx={{ mb: 2 }}
-              />
-              <Box sx={{ display: 'flex', gap: 0.5, mb: 2 }}>
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
+                  Угол: {angle}°
+                </Typography>
+                <Slider
+                  value={angle}
+                  onChange={(_, v) => setAngle(v as number)}
+                  min={0}
+                  max={360}
+                />
+              </Box>
+              <Box sx={{ display: 'flex', gap: 0.5, mb: 2, flexWrap: 'wrap' }}>
                 {[0, 45, 90, 135, 180, 225, 270, 315].map(a => (
                   <Chip
                     key={a}
                     label={`${a}°`}
                     size="small"
                     onClick={() => setAngle(a)}
-                    sx={{
-                      cursor: 'pointer',
-                      fontWeight: angle === a ? 700 : 400,
-                      bgcolor: angle === a
-                        ? theme.palette.surfaceContainerHigh
-                        : theme.palette.surfaceContainerLow
-                    }}
+                    variant={angle === a ? 'filled' : 'outlined'}
+                    color={angle === a ? 'primary' : 'default'}
+                    sx={{ cursor: 'pointer', fontWeight: angle === a ? 700 : 400 }}
                   />
                 ))}
               </Box>
             </>
           )}
 
-          {/* Colors */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>Цвета</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 2 }}>
             {colors.map((color, i) => (
               <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -150,7 +141,7 @@ export default function GradientGenerator() {
                 />
                 {colors.length > 2 && (
                   <Chip
-                    label="×"
+                    label="x"
                     size="small"
                     onClick={() => removeColor(i)}
                     sx={{ cursor: 'pointer', minWidth: 28 }}
@@ -162,19 +153,17 @@ export default function GradientGenerator() {
 
           <Box sx={{ display: 'flex', gap: 1 }}>
             {colors.length < 5 && (
-              <Button size="small" startIcon={<Add />} onClick={addColor} sx={{ borderRadius: 4 }}>
+              <Button size="small" startIcon={<Add />} onClick={addColor} sx={{ borderRadius: 3 }}>
                 Добавить цвет
               </Button>
             )}
-            <Button size="small" startIcon={<Refresh />} onClick={randomize} sx={{ borderRadius: 4 }}>
+            <Button size="small" startIcon={<Refresh />} onClick={randomize} sx={{ borderRadius: 3 }}>
               Случайный
             </Button>
           </Box>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
-          {/* Presets */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>Пресеты</Typography>
           <Grid container spacing={1} sx={{ mb: 2 }}>
             {presets.map((preset) => (
               <Grid key={preset.name} size={4}>
@@ -183,7 +172,7 @@ export default function GradientGenerator() {
                   onClick={() => setColors([...preset.colors])}
                   sx={{
                     height: 56,
-                    borderRadius: 2,
+                    borderRadius: 3,
                     background: `linear-gradient(135deg, ${preset.colors.join(', ')})`,
                     cursor: 'pointer',
                     display: 'flex',
@@ -201,25 +190,27 @@ export default function GradientGenerator() {
             ))}
           </Grid>
 
-          {/* CSS Output */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>CSS код</Typography>
           <Paper
             elevation={0}
             sx={{
               p: 2,
-              borderRadius: 2,
+              borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
-              fontFamily: 'monospace',
-              fontSize: '0.85rem'
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
-            <Typography sx={{ fontFamily: 'monospace', fontSize: '0.85rem', wordBreak: 'break-all' }}>
+            <Typography
+              sx={{
+                fontFamily: 'monospace',
+                fontSize: '0.85rem',
+                wordBreak: 'break-all',
+                mb: 1
+              }}
+            >
               {cssCode}
             </Typography>
-          </Paper>
-          <Box sx={{ mt: 1 }}>
             <CopyButton text={cssCode} />
-          </Box>
+          </Paper>
         </Grid>
       </Grid>
     </Box>

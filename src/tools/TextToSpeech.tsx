@@ -13,7 +13,7 @@ import {
   MenuItem,
   IconButton,
   useTheme,
-  alpha
+  alpha,
 } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
@@ -188,8 +188,8 @@ export default function TextToSpeech() {
 
   if (!supported) {
     return (
-      <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-        <Paper elevation={0} sx={{ p: 4, textAlign: 'center' }}>
+      <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, textAlign: 'center', borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
           <Typography variant="h6" color="error" gutterBottom>
             Синтез речи не поддерживается
           </Typography>
@@ -203,9 +203,9 @@ export default function TextToSpeech() {
   }
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ }}>
-        <Box sx={{ p: 3 }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Paper elevation={0} sx={{ borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+        <Box sx={{ p: { xs: 2, sm: 3 } }}>
           {/* Text Input */}
           <TextField
             fullWidth
@@ -291,12 +291,6 @@ export default function TextToSpeech() {
 
           {/* Voice Selector */}
           <Box sx={{ mb: 2 }}>
-            <Typography
-              variant="body2"
-              sx={{ mb: 1, fontWeight: 600, color: theme.palette.text.secondary }}
-            >
-              Голос
-            </Typography>
             <Select
               fullWidth
               size="small"
@@ -323,10 +317,7 @@ export default function TextToSpeech() {
           {/* Sliders */}
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, sm: 4 }}>
-              <Typography
-                variant="body2"
-                sx={{ mb: 1, fontWeight: 600, color: theme.palette.text.secondary }}
-              >
+              <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
                 Скорость: {rate.toFixed(1)}x
               </Typography>
               <Slider
@@ -341,10 +332,7 @@ export default function TextToSpeech() {
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
-              <Typography
-                variant="body2"
-                sx={{ mb: 1, fontWeight: 600, color: theme.palette.text.secondary }}
-              >
+              <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
                 Тон: {pitch.toFixed(1)}
               </Typography>
               <Slider
@@ -359,10 +347,7 @@ export default function TextToSpeech() {
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
-              <Typography
-                variant="body2"
-                sx={{ mb: 1, fontWeight: 600, color: theme.palette.text.secondary }}
-              >
+              <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
                 Громкость: {Math.round(volume * 100)}%
               </Typography>
               <Slider

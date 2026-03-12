@@ -183,7 +183,7 @@ export default function MemeGenerator() {
               textAlign: 'center',
               cursor: 'pointer',
               border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
-              borderRadius: 4,
+              borderRadius: 3,
               backgroundColor: dragging
                 ? theme.palette.surfaceContainerLow
                 : alpha(theme.palette.background.default, 0.5),
@@ -204,7 +204,7 @@ export default function MemeGenerator() {
             </Typography>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
               Или вставьте URL изображения
             </Typography>
@@ -226,7 +226,7 @@ export default function MemeGenerator() {
 
       {hasImage && (
         <>
-          <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <TextFieldsIcon /> Настройки мема
             </Typography>
@@ -298,10 +298,7 @@ export default function MemeGenerator() {
               </Grid>
             </Grid>
 
-            <Typography variant="body2" sx={{ fontWeight: 500, mt: 2, mb: 1, color: 'text.secondary' }}>
-              Позиция текста
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+            <Box sx={{ display: 'flex', gap: 1, mt: 2, mb: 2 }}>
               {([
                 { value: 'top', label: 'Сверху' },
                 { value: 'bottom', label: 'Снизу' },
@@ -332,7 +329,7 @@ export default function MemeGenerator() {
           </Paper>
 
           {/* Preview */}
-          <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
               Предпросмотр
             </Typography>

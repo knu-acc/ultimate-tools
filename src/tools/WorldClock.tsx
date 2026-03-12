@@ -105,7 +105,7 @@ export default function WorldClock() {
         {/* Search and add */}
         <Box sx={{ mb: 2 }}>
           <TextField
-            label="Поиск города"
+            placeholder="Поиск города..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             fullWidth
@@ -118,7 +118,7 @@ export default function WorldClock() {
             <Paper
               elevation={2}
               sx={{
-                borderRadius: 2,
+                borderRadius: 3,
                 mt: 1,
                 p: 1,
                 display: 'flex',
@@ -166,7 +166,9 @@ export default function WorldClock() {
                       : alpha(theme.palette.info.main, 0.06),
                     transition: `all 250ms cubic-bezier(0.2, 0, 0, 1)`,
                     '&:hover': {
-                      boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)',
+                      backgroundColor: isDay
+                        ? alpha(theme.palette.warning.main, 0.08)
+                        : alpha(theme.palette.info.main, 0.1),
                     },
                   }}
                 >

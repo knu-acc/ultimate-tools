@@ -16,7 +16,6 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import LockIcon from '@mui/icons-material/Lock';
 import { CopyButton } from '@/src/components/CopyButton';
 
-
 const CHARSETS: Record<string, string> = {
   'A-Z': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   'a-z': 'abcdefghijklmnopqrstuvwxyz',
@@ -80,161 +79,149 @@ export default function PasswordGenerator() {
   const strength = password ? getStrength(password) : null;
 
   return (
-    <Box sx={{ maxWidth: 600, mx: 'auto' }}>
-      <Box
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
+      {/* Password display */}
+      <Paper
+        elevation={0}
         sx={{
-          p: { xs: 1, md: 0 },
+          p: 2.5,
+          mb: 2,
+          minHeight: 64,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 1.5,
+          borderRadius: 3,
+          background: password
+            ? theme.palette.surfaceContainerLow
+            : theme.palette.action.hover,
+          transition: 'all 0.2s ease',
+          '&:hover': {
+            background: alpha(theme.palette.primary.main, 0.04)
+          }
         }}
       >
-        {/* Password display */}
-        <Paper
-          elevation={0}
-          onClick={() => password && navigator.clipboard.writeText(password)}
-          sx={{
-            p: 2.5,
-            mb: 2,
-            minHeight: 64,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 1.5,
-            borderRadius: 2,
-            border: `2px dashed ${password ? theme.palette.primary.main : theme.palette.divider}`,
-            background: password
-              ? theme.palette.surfaceContainerLow
-              : theme.palette.action.hover,
-            cursor: password ? 'pointer' : 'default',
-            transition: 'all 0.2s ease',
-            '&:hover': password
-              ? {
-                  background: theme.palette.surfaceContainerHigh,
-                  borderColor: theme.palette.primary.dark
-                }
-              : {}
-          }}
-        >
-          {password ? (
-            <>
-              <LockIcon sx={{ color: 'primary.main', fontSize: 22, flexShrink: 0 }} />
-              <Typography
-                sx={{
-                  fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
-                  fontSize: { xs: '1rem', sm: '1.25rem' },
-                  fontWeight: 600,
-                  wordBreak: 'break-all',
-                  letterSpacing: 1.5,
-                  textAlign: 'center',
-                  flex: 1
-                }}
-              >
-                {password}
-              </Typography>
-            </>
-          ) : (
-            <Typography sx={{ color: 'text.disabled' }}>...</Typography>
-          )}
-        </Paper>
-
-        {/* Strength bar */}
-        {strength && (
-          <Box sx={{ mb: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
-              <Typography variant="body2" color="text.secondary">
-                Надёжность
-              </Typography>
-              <Typography variant="body2" sx={{ color: strength.color, fontWeight: 700 }}>
-                {strength.label}
-              </Typography>
-            </Box>
-            <LinearProgress
-              variant="determinate"
-              value={strength.value}
-              sx={{
-                height: 10,
-                borderRadius: 5,
-                backgroundColor: alpha(theme.palette.text.primary, 0.08),
-                transition: 'none',
-                '& .MuiLinearProgress-bar': {
-                  borderRadius: 5,
-                  backgroundColor: strength.color,
-                  transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease'
-                }
-              }}
-            />
-          </Box>
-        )}
-
-        <Box sx={{ mb: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Длина пароля
-            </Typography>
+        {password ? (
+          <>
+            <LockIcon sx={{ color: 'primary.main', fontSize: 22, flexShrink: 0 }} />
             <Typography
-              variant="body2"
               sx={{
-                fontWeight: 700,
-                color: 'primary.main',
-                fontFamily: 'monospace',
-                minWidth: 28,
-                textAlign: 'right'
+                fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
+                fontSize: { xs: '1rem', sm: '1.25rem' },
+                fontWeight: 600,
+                wordBreak: 'break-all',
+                letterSpacing: 1.5,
+                textAlign: 'center',
+                flex: 1
               }}
             >
-              {length}
+              {password}
+            </Typography>
+          </>
+        ) : (
+          <Typography sx={{ color: 'text.disabled' }}>...</Typography>
+        )}
+      </Paper>
+
+      {/* Strength bar */}
+      {strength && (
+        <Box sx={{ mb: 2 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+            <Typography variant="body2" color="text.secondary">
+              Надёжность
+            </Typography>
+            <Typography variant="body2" sx={{ color: strength.color, fontWeight: 700 }}>
+              {strength.label}
             </Typography>
           </Box>
-          <Slider
-            value={length}
-            onChange={(_, v) => setLength(v as number)}
-            min={4}
-            max={64}
-            step={1}
-            marks={SLIDER_MARKS}
-            valueLabelDisplay="auto"
+          <LinearProgress
+            variant="determinate"
+            value={strength.value}
             sx={{
-              '& .MuiSlider-markLabel': {
-                fontSize: '0.7rem',
-                color: 'text.disabled'
+              height: 10,
+              borderRadius: 5,
+              backgroundColor: alpha(theme.palette.text.primary, 0.08),
+              transition: 'none',
+              '& .MuiLinearProgress-bar': {
+                borderRadius: 5,
+                backgroundColor: strength.color,
+                transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease'
               }
             }}
           />
         </Box>
+      )}
 
-        <Box sx={{ mb: 2 }}>
-          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-            {Object.keys(CHARSETS).map((key) => {
-              const active = activeCharsets.includes(key);
-              return (
-                <Chip
-                  key={key}
-                  label={key}
-                  onClick={() => toggleCharset(key)}
-                  variant={active ? 'filled' : 'outlined'}
-                  color={active ? 'primary' : 'default'}
-                  sx={{
-                    fontFamily: 'monospace',
-                    fontWeight: 600,
-                    fontSize: '0.9rem',
-                    px: 1,
-                    transition: 'all 0.15s ease'
-                  }}
-                />
-              );
-            })}
-          </Box>
-        </Box>
-
-        <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center', alignItems: 'center', mb: 1 }}>
-          <Button
-            variant="contained"
-            startIcon={<RefreshIcon />}
-            onClick={generate}
-            disabled={activeCharsets.length === 0}
-            sx={{ px: 4, borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
+      <Box sx={{ mb: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
+            Длина пароля
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: 700,
+              color: 'primary.main',
+              fontFamily: 'monospace',
+              minWidth: 28,
+              textAlign: 'right'
+            }}
           >
-            Сгенерировать
-          </Button>
-          {password && <CopyButton text={password} />}
+            {length}
+          </Typography>
         </Box>
+        <Slider
+          value={length}
+          onChange={(_, v) => setLength(v as number)}
+          min={4}
+          max={64}
+          step={1}
+          marks={SLIDER_MARKS}
+          valueLabelDisplay="auto"
+          sx={{
+            '& .MuiSlider-markLabel': {
+              fontSize: '0.7rem',
+              color: 'text.disabled'
+            }
+          }}
+        />
+      </Box>
+
+      <Box sx={{ mb: 2 }}>
+        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+          {Object.keys(CHARSETS).map((key) => {
+            const active = activeCharsets.includes(key);
+            return (
+              <Chip
+                key={key}
+                label={key}
+                onClick={() => toggleCharset(key)}
+                variant={active ? 'filled' : 'outlined'}
+                color={active ? 'primary' : 'default'}
+                sx={{
+                  fontFamily: 'monospace',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  px: 1,
+                  transition: 'all 0.15s ease'
+                }}
+              />
+            );
+          })}
+        </Box>
+      </Box>
+
+      <Box sx={{ display: 'flex', gap: 1.5, justifyContent: 'center', alignItems: 'center', mb: 1 }}>
+        <Button
+          variant="contained"
+          startIcon={<RefreshIcon />}
+          onClick={generate}
+          disabled={activeCharsets.length === 0}
+          sx={{ px: 4, borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
+        >
+          Сгенерировать
+        </Button>
+        {password && <CopyButton text={password} />}
       </Box>
 
       {/* Password history */}
@@ -244,36 +231,48 @@ export default function PasswordGenerator() {
           sx={{
             mt: 2,
             p: 2,
-            borderRadius: 3
+            borderRadius: 3,
+            background: theme.palette.surfaceContainerLow
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-            История (нажмите, чтобы скопировать)
+            История
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
             {history.map((pw, i) => (
-              <Chip
+              <Box
                 key={`${pw}-${i}`}
-                label={pw.length > 40 ? pw.slice(0, 37) + '...' : pw}
-                onClick={() => navigator.clipboard.writeText(pw)}
-                variant="outlined"
-                size="small"
                 sx={{
-                  fontFamily: '"JetBrains Mono", "Consolas", monospace',
-                  fontSize: '0.75rem',
-                  maxWidth: '100%',
-                  justifyContent: 'flex-start',
-                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  px: 1.5,
+                  py: 0.5,
+                  borderRadius: 2,
                   '&:hover': {
-                    background: theme.palette.surfaceContainerHigh
+                    background: alpha(theme.palette.primary.main, 0.04)
                   }
                 }}
-              />
+              >
+                <Typography
+                  sx={{
+                    fontFamily: '"JetBrains Mono", "Consolas", monospace',
+                    fontSize: '0.75rem',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    flex: 1,
+                    mr: 1
+                  }}
+                >
+                  {pw}
+                </Typography>
+                <CopyButton text={pw} size="small" />
+              </Box>
             ))}
           </Box>
         </Paper>
       )}
-
     </Box>
   );
 }

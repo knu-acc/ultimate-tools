@@ -161,7 +161,7 @@ export default function FactorialCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -191,7 +191,7 @@ export default function FactorialCalc() {
           </Box>
           <TextField
             fullWidth
-            label="Число n"
+            placeholder="n"
             type="number"
             value={factN}
             onChange={(e) => setFactN(e.target.value)}
@@ -244,7 +244,7 @@ export default function FactorialCalc() {
             <Grid size={{ xs: 6 }}>
               <TextField
                 fullWidth
-                label="n (всего элементов)"
+                placeholder="n"
                 type="number"
                 value={permN}
                 onChange={(e) => setPermN(e.target.value)}
@@ -256,7 +256,7 @@ export default function FactorialCalc() {
             <Grid size={{ xs: 6 }}>
               <TextField
                 fullWidth
-                label="r (выбираем)"
+                placeholder="r"
                 type="number"
                 value={permR}
                 onChange={(e) => setPermR(e.target.value)}
@@ -311,7 +311,7 @@ export default function FactorialCalc() {
             <Grid size={{ xs: 6 }}>
               <TextField
                 fullWidth
-                label="n (всего элементов)"
+                placeholder="n"
                 type="number"
                 value={combN}
                 onChange={(e) => setCombN(e.target.value)}
@@ -323,7 +323,7 @@ export default function FactorialCalc() {
             <Grid size={{ xs: 6 }}>
               <TextField
                 fullWidth
-                label="r (выбираем)"
+                placeholder="r"
                 type="number"
                 value={combR}
                 onChange={(e) => setCombR(e.target.value)}
@@ -374,8 +374,9 @@ export default function FactorialCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          borderRadius: 3
+          p: { xs: 2, sm: 3 },
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="h6" sx={{ mb: 2 }}>

@@ -303,7 +303,7 @@ export default function ImageCrop() {
             textAlign: 'center',
             cursor: 'pointer',
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
-            borderRadius: 4,
+            borderRadius: 3,
             backgroundColor: dragging
               ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
@@ -332,7 +332,7 @@ export default function ImageCrop() {
       {originalFile && (
         <>
           {/* Controls */}
-          <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CropIcon /> Параметры обрезки
             </Typography>
@@ -423,7 +423,7 @@ export default function ImageCrop() {
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
+                sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
                 <Typography variant="caption" color="text.secondary">Оригинал</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -437,7 +437,7 @@ export default function ImageCrop() {
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}
+                sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
                 <Typography variant="caption" color="text.secondary">Область обрезки</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
@@ -470,7 +470,7 @@ export default function ImageCrop() {
           </Grid>
 
           {/* Crop Canvas */}
-          <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CropIcon /> Выберите область
             </Typography>
@@ -497,7 +497,7 @@ export default function ImageCrop() {
 
           {/* Cropped Preview */}
           {croppedUrl && (
-            <Paper elevation={0} sx={{ p: 3 }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
               <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                 <ImageIcon /> Результат обрезки
               </Typography>

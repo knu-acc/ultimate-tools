@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, Chip, useTheme, IconButton
+  Box, Typography, TextField, Paper, Grid, Chip, useTheme, IconButton, alpha
 } from '@mui/material';
 import { SwapVert } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
@@ -117,7 +117,14 @@ export default function MorseCode() {
 
       <Paper
         elevation={0}
-        sx={{ mt: 2, p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
+        sx={{
+          mt: 2,
+          p: { xs: 2, sm: 3 },
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+        }}
       >
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {['А .-', 'Б -...', 'В .--', 'Г --.', 'Д -..', 'Е .', 'Ж ...-', 'З --..', 'И ..', 'К -.-',

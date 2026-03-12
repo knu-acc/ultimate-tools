@@ -136,7 +136,7 @@ export default function WeekNumber() {
         elevation={0}
         sx={{
           borderRadius: 3,
-          p: 3
+          p: { xs: 2, sm: 3 }
         }}
       >
         {/* Date input */}
@@ -180,7 +180,11 @@ export default function WeekNumber() {
                     borderRadius: 3,
                     p: 2,
                     textAlign: 'center',
-                    backgroundColor: theme.palette.surfaceContainerLow
+                    backgroundColor: theme.palette.surfaceContainerLow,
+                    transition: 'all 200ms ease',
+                    '&:hover': {
+                      backgroundColor: alpha(theme.palette.primary.main, 0.04)
+                    }
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -204,7 +208,11 @@ export default function WeekNumber() {
                   sx={{
                     borderRadius: 3,
                     p: 2,
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    transition: 'all 200ms ease',
+                    '&:hover': {
+                      backgroundColor: alpha(theme.palette.primary.main, 0.04)
+                    }
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -227,7 +235,11 @@ export default function WeekNumber() {
                   sx={{
                     borderRadius: 3,
                     p: 2,
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    transition: 'all 200ms ease',
+                    '&:hover': {
+                      backgroundColor: alpha(theme.palette.primary.main, 0.04)
+                    }
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
@@ -250,7 +262,11 @@ export default function WeekNumber() {
                   sx={{
                     borderRadius: 3,
                     p: 2,
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    transition: 'all 200ms ease',
+                    '&:hover': {
+                      backgroundColor: alpha(theme.palette.primary.main, 0.04)
+                    }
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">

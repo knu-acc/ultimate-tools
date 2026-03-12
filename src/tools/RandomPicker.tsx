@@ -32,7 +32,6 @@ export default function RandomPicker() {
     setResult([]);
     setAnimText('');
 
-    // Shuffle animation
     let tick = 0;
     const totalTicks = 18;
     animRef.current = setInterval(() => {
@@ -43,7 +42,6 @@ export default function RandomPicker() {
       if (tick >= totalTicks) {
         if (animRef.current) clearInterval(animRef.current);
 
-        // Pick random unique items
         const shuffled = [...items].sort(() => Math.random() - 0.5);
         const picked = shuffled.slice(0, count);
 
@@ -55,7 +53,6 @@ export default function RandomPicker() {
         const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         setHistory(prev => [{ items: picked, time: timeStr }, ...prev].slice(0, 20));
 
-        // Remove picked items from the list if option enabled
         if (removePicked) {
           const remaining = items.filter(item => !picked.includes(item));
           setText(remaining.join('\n'));
@@ -65,10 +62,18 @@ export default function RandomPicker() {
   }, [getItems, pickCount, animating, removePicked]);
 
   const items = getItems();
-  const maxPick = Math.max(1, items.length);
 
   return (
-    <Box>
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -93,10 +98,9 @@ export default function RandomPicker() {
             Элементов: {items.length}
           </Typography>
 
-          {/* Pick count slider */}
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Выбрать количество: {pickCount}
+              Выбрать: {pickCount}
             </Typography>
             <Slider
               value={pickCount}
@@ -110,7 +114,6 @@ export default function RandomPicker() {
             />
           </Box>
 
-          {/* Remove picked toggle */}
           <Box sx={{ mb: 2 }}>
             <Chip
               label={removePicked ? 'Удалять выбранные: Вкл' : 'Удалять выбранные: Выкл'}
@@ -150,7 +153,6 @@ export default function RandomPicker() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 7 }}>
-          {/* Animated / Result display */}
           {animating && (
             <Paper
               elevation={0}
@@ -236,7 +238,6 @@ export default function RandomPicker() {
             </Paper>
           )}
 
-          {/* History */}
           {history.length > 0 && (
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>

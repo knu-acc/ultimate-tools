@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, Slider, TextField
+  Box, Typography, Grid, Button, Chip, alpha, useTheme, Slider, TextField
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
 
@@ -32,7 +32,7 @@ function getNoteName(freq: number): string | null {
   const semitones = 12 * Math.log2(freq / 440);
   const rounded = Math.round(semitones);
   if (Math.abs(semitones - rounded) > 0.15) return null;
-  const noteIndex = ((rounded % 12) + 12 + 9) % 12; // A4 = index 9
+  const noteIndex = ((rounded % 12) + 12 + 9) % 12;
   const octave = 4 + Math.floor((rounded + 9) / 12);
   return `${noteNames[noteIndex]}${octave}`;
 }
@@ -55,7 +55,6 @@ export default function ToneGenerator() {
 
       if (ctx.state === 'suspended') ctx.resume();
 
-      // Clean up previous nodes
       if (oscillatorRef.current) {
         try { oscillatorRef.current.stop(); } catch {}
         oscillatorRef.current.disconnect();
@@ -108,7 +107,6 @@ export default function ToneGenerator() {
     }
   }, [isPlaying, startTone, stopTone]);
 
-  // Update oscillator params live while playing
   useEffect(() => {
     if (isPlaying && oscillatorRef.current) {
       oscillatorRef.current.frequency.value = frequency;
@@ -127,7 +125,6 @@ export default function ToneGenerator() {
     }
   }, [volume, isPlaying]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       try { oscillatorRef.current?.stop(); } catch {}
@@ -149,26 +146,23 @@ export default function ToneGenerator() {
   const noteName = getNoteName(frequency);
 
   return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: 3,
-        borderRadius: 4,
-        background: alpha(theme.palette.background.paper, 0.8),
-        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`
-      }}
-    >
-      <Typography variant="h5" fontWeight={700} gutterBottom>
-        Генератор тона
-      </Typography>
-
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       {/* Frequency Display */}
       <Box
         sx={{
           textAlign: 'center',
           my: 3,
           p: 3,
-          borderRadius: 4,
+          borderRadius: 3,
           background: alpha(primaryColor, 0.06),
           border: `1px solid ${alpha(primaryColor, 0.15)}`
         }}
@@ -295,6 +289,6 @@ export default function ToneGenerator() {
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center', mt: 2 }}>
         Используется Web Audio API для генерации звука
       </Typography>
-    </Paper>
+    </Box>
   );
 }

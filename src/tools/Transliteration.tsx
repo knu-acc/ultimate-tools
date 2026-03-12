@@ -101,7 +101,7 @@ export default function Transliteration() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -120,7 +120,7 @@ export default function Transliteration() {
               borderRadius: 2,
               transition: 'all 200ms ease',
               '&:hover': {
-                background: theme.palette.surfaceContainerHigh
+                background: alpha(theme.palette.primary.main, 0.04)
               }
             }}
           >

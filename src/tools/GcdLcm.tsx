@@ -84,12 +84,12 @@ export default function GcdLcm() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <TextField
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Введите числа через запятую, например: 12, 18, 24"
+          placeholder="12, 18, 24"
           sx={{
             '& .MuiInputBase-input': {
               fontFamily: 'monospace',
@@ -187,7 +187,7 @@ export default function GcdLcm() {
             </Grid>
           </Grid>
 
-          <Paper elevation={0} sx={{ p: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               Алгоритм Евклида (пошагово)
             </Typography>

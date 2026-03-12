@@ -2,20 +2,12 @@
 
 import { useState, useCallback } from 'react';
 import {
-  Box,
-  Typography,
-  Paper,
-  Grid,
-  Button,
-  Chip,
-  TextField,
-  useTheme
+  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme
 } from '@mui/material';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { CopyButton } from '@/src/components/CopyButton';
-
 
 interface AspectPreset {
   label: string;
@@ -114,7 +106,6 @@ export default function VideoAspect() {
     const d = gcd(preset.w, preset.h);
     setLockedRatio({ w: preset.w / d, h: preset.h / d });
     setLocked(true);
-    // Set to a common resolution for this ratio
     const resolution = COMMON_RESOLUTIONS.find((r) => r.aspect === preset.label);
     if (resolution) {
       setWidth(String(resolution.width));
@@ -133,7 +124,6 @@ export default function VideoAspect() {
     setLocked(true);
   };
 
-  // Visual preview dimensions
   const maxPreviewSize = 250;
   let previewW = maxPreviewSize;
   let previewH = maxPreviewSize;
@@ -148,7 +138,16 @@ export default function VideoAspect() {
   }
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       {/* Input */}
       <Paper
         elevation={0}
@@ -157,11 +156,11 @@ export default function VideoAspect() {
         <Grid container spacing={3} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
-              label="Ширина (px)"
               value={width}
               onChange={(e) => handleWidthChange(e.target.value)}
               fullWidth
               size="small"
+              placeholder="Ширина (px)"
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 1 }}>
@@ -177,11 +176,11 @@ export default function VideoAspect() {
           </Grid>
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
-              label="Высота (px)"
               value={height}
               onChange={(e) => handleHeightChange(e.target.value)}
               fullWidth
               size="small"
+              placeholder="Высота (px)"
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 3 }}>
@@ -189,7 +188,6 @@ export default function VideoAspect() {
           </Grid>
         </Grid>
 
-        {/* Lock info */}
         {locked && (
           <Typography variant="caption" color="primary" sx={{ mt: 1, display: 'block' }}>
             Пропорции заблокированы. Изменение одного значения автоматически пересчитает другое.

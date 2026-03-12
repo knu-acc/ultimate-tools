@@ -206,12 +206,16 @@ export default function EquationSolver() {
   );
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          background: theme.palette.surfaceContainerLow
+          p: { xs: 2, sm: 3 },
+          mb: 2,
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow,
+          transition: 'background 0.2s ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Tabs
@@ -234,11 +238,10 @@ export default function EquationSolver() {
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="a"
                 type="number"
                 value={linA}
                 onChange={(e) => setLinA(e.target.value)}
-                placeholder="2"
+                placeholder="a"
               />
             </Grid>
             <Grid size={{ xs: 2 }} sx={{ textAlign: 'center' }}>
@@ -247,11 +250,10 @@ export default function EquationSolver() {
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="b"
                 type="number"
                 value={linB}
                 onChange={(e) => setLinB(e.target.value)}
-                placeholder="-6"
+                placeholder="b"
               />
             </Grid>
           </Grid>
@@ -308,11 +310,10 @@ export default function EquationSolver() {
             <Grid size={{ xs: 12, sm: 3 }}>
               <TextField
                 fullWidth
-                label="a"
                 type="number"
                 value={quadA}
                 onChange={(e) => setQuadA(e.target.value)}
-                placeholder="1"
+                placeholder="a"
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 1 }} sx={{ textAlign: 'center' }}>
@@ -321,11 +322,10 @@ export default function EquationSolver() {
             <Grid size={{ xs: 12, sm: 3 }}>
               <TextField
                 fullWidth
-                label="b"
                 type="number"
                 value={quadB}
                 onChange={(e) => setQuadB(e.target.value)}
-                placeholder="-5"
+                placeholder="b"
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 1 }} sx={{ textAlign: 'center' }}>
@@ -334,11 +334,10 @@ export default function EquationSolver() {
             <Grid size={{ xs: 12, sm: 3 }}>
               <TextField
                 fullWidth
-                label="c"
                 type="number"
                 value={quadC}
                 onChange={(e) => setQuadC(e.target.value)}
-                placeholder="6"
+                placeholder="c"
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 1 }} sx={{ textAlign: 'center' }}>

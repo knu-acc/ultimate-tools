@@ -135,11 +135,8 @@ export default function RomanNumerals() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-            Введите число
-          </Typography>
           <Chip
             label={modeLabel}
             size="small"
@@ -208,7 +205,7 @@ export default function RomanNumerals() {
       )}
 
       {/* Reference Table */}
-      <Paper elevation={0} sx={{ p: 3, mb: 2 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
           Справочная таблица
         </Typography>
@@ -224,8 +221,8 @@ export default function RomanNumerals() {
                   cursor: 'pointer',
                   transition: 'all 200ms ease',
                   '&:hover': {
-                    borderColor: '#9c27b0',
-                    backgroundColor: alpha('#9c27b0', 0.04)
+                    borderColor: theme.palette.primary.main,
+                    backgroundColor: alpha(theme.palette.primary.main, 0.04)
                   }
                 }}
                 onClick={() => setInput(String(num))}
@@ -247,7 +244,7 @@ export default function RomanNumerals() {
 
       {/* History */}
       {history.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3 }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
           <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
             История конвертаций
           </Typography>

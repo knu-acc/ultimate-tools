@@ -7,7 +7,6 @@ import {
   Button,
   Paper,
   TextField,
-  Grid,
   Chip,
   List,
   ListItem,
@@ -112,29 +111,21 @@ export default function StringExtractor() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
+          borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input text */}
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-          Исходный текст
-        </Typography>
         <TextField
           multiline
           rows={6}
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Вставьте текст, из которого нужно извлечь данные..."
+          placeholder="Текст для извлечения данных..."
           sx={{ mb: 2 }}
         />
-
-        {/* Extraction type chips */}
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 500, color: 'text.secondary' }}>
-          Тип извлечения
-        </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
           {EXTRACTION_OPTIONS.map((opt) => (
             <Chip
@@ -192,6 +183,7 @@ export default function StringExtractor() {
             sx={{
               maxHeight: 350,
               overflow: 'auto',
+              borderRadius: 3,
               background: theme.palette.background.default
             }}
           >
@@ -205,7 +197,7 @@ export default function StringExtractor() {
                   }
                   sx={{
                     '&:hover': {
-                      background: theme.palette.surfaceContainerLow
+                      background: alpha(theme.palette.primary.main, 0.04)
                     }
                   }}
                 >

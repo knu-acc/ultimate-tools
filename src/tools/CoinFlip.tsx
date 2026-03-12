@@ -15,7 +15,6 @@ export default function CoinFlip() {
 
   const flip = useCallback(() => {
     setFlipping(true);
-    // Animate for 600ms
     const interval = setInterval(() => {
       setResult(Math.random() > 0.5 ? 'heads' : 'tails');
     }, 80);
@@ -44,8 +43,17 @@ export default function CoinFlip() {
   const tailsPercent = total > 0 ? ((stats.tails / total) * 100).toFixed(1) : '0';
 
   return (
-    <Box sx={{ textAlign: 'center' }}>
-      {/* Coin display */}
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      textAlign: 'center',
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       <Paper
         elevation={0}
         sx={{
@@ -103,7 +111,6 @@ export default function CoinFlip() {
         )}
       </Box>
 
-      {/* Stats */}
       {total > 0 && (
         <Grid container spacing={2} sx={{ maxWidth: 500, mx: 'auto' }}>
           <Grid size={4}>
@@ -160,7 +167,6 @@ export default function CoinFlip() {
         </Grid>
       )}
 
-      {/* Distribution bar */}
       {total > 0 && (
         <Box sx={{ mt: 2, maxWidth: 500, mx: 'auto' }}>
           <Box sx={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden' }}>
@@ -170,7 +176,6 @@ export default function CoinFlip() {
         </Box>
       )}
 
-      {/* History */}
       {history.length > 0 && (
         <Box sx={{ mt: 3, maxWidth: 500, mx: 'auto' }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>

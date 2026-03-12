@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider
+  Box, Typography, Paper, Grid, Button, Chip, useTheme, Slider, alpha
 } from '@mui/material';
 import { Casino, Person } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
-
 
 const RUSSIAN_MALE_FIRST = [
   'Александр', 'Дмитрий', 'Максим', 'Иван', 'Артём', 'Михаил', 'Даниил', 'Матвей',
@@ -129,94 +128,68 @@ export default function RandomName() {
   ];
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
-          {/* Gender */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Пол
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             {genderOptions.map(opt => (
               <Chip
                 key={opt.value}
                 label={opt.label}
                 onClick={() => setGender(opt.value)}
-                sx={{
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  bgcolor: gender === opt.value
-                    ? alpha(theme.palette.primary.main, 0.15)
-                    : theme.palette.surfaceContainerLow,
-                  color: gender === opt.value ? theme.palette.primary.main : theme.palette.text.primary
-                }}
+                variant={gender === opt.value ? 'filled' : 'outlined'}
+                color={gender === opt.value ? 'primary' : 'default'}
+                sx={{ fontWeight: 600, cursor: 'pointer' }}
               />
             ))}
           </Box>
 
-          {/* Type */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Тип
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             {typeOptions.map(opt => (
               <Chip
                 key={opt.value}
                 label={opt.label}
                 onClick={() => setNameType(opt.value)}
-                sx={{
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  bgcolor: nameType === opt.value
-                    ? alpha(theme.palette.primary.main, 0.15)
-                    : theme.palette.surfaceContainerLow,
-                  color: nameType === opt.value ? theme.palette.primary.main : theme.palette.text.primary
-                }}
+                variant={nameType === opt.value ? 'filled' : 'outlined'}
+                color={nameType === opt.value ? 'primary' : 'default'}
+                sx={{ fontWeight: 600, cursor: 'pointer' }}
               />
             ))}
           </Box>
 
-          {/* Nationality */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Национальность
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             {natOptions.map(opt => (
               <Chip
                 key={opt.value}
                 label={opt.label}
                 onClick={() => setNationality(opt.value)}
-                sx={{
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  bgcolor: nationality === opt.value
-                    ? alpha(theme.palette.primary.main, 0.15)
-                    : theme.palette.surfaceContainerLow,
-                  color: nationality === opt.value ? theme.palette.primary.main : theme.palette.text.primary
-                }}
+                variant={nationality === opt.value ? 'filled' : 'outlined'}
+                color={nationality === opt.value ? 'primary' : 'default'}
+                sx={{ fontWeight: 600, cursor: 'pointer' }}
               />
             ))}
           </Box>
 
-          {/* Count */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Количество: {count}
-          </Typography>
-          <Slider
-            value={count}
-            onChange={(_, val) => setCount(val as number)}
-            min={1}
-            max={20}
-            step={1}
-            marks={[
-              { value: 1, label: '1' },
-              { value: 5, label: '5' },
-              { value: 10, label: '10' },
-              { value: 15, label: '15' },
-              { value: 20, label: '20' },
-            ]}
-            sx={{ mb: 2, mx: 1 }}
-          />
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
+              Количество: {count}
+            </Typography>
+            <Slider
+              value={count}
+              onChange={(_, val) => setCount(val as number)}
+              min={1}
+              max={20}
+              step={1}
+              marks={[
+                { value: 1, label: '1' },
+                { value: 5, label: '5' },
+                { value: 10, label: '10' },
+                { value: 15, label: '15' },
+                { value: 20, label: '20' },
+              ]}
+              sx={{ mx: 1 }}
+            />
+          </Box>
 
           <Button
             variant="contained"
@@ -224,7 +197,7 @@ export default function RandomName() {
             size="large"
             startIcon={<Casino />}
             onClick={handleGenerate}
-            sx={{ borderRadius: 6, py: 1.2 }}
+            sx={{ borderRadius: 3, py: 1.2, textTransform: 'none', fontWeight: 600 }}
           >
             Сгенерировать
           </Button>
@@ -252,7 +225,7 @@ export default function RandomName() {
                     px: 2,
                     mb: 1,
                     borderRadius: 3,
-                    '&:hover': { bgcolor: theme.palette.surfaceContainerLow }
+                    '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
                   }}
                 >
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>

@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
-import { LocalOffer, Percent } from '@mui/icons-material';
+import { LocalOffer } from '@mui/icons-material';
 
 export default function DiscountCalc() {
   const theme = useTheme();
@@ -23,33 +23,29 @@ export default function DiscountCalc() {
   const quickDiscounts = [5, 10, 15, 20, 25, 30, 50, 70];
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Исходная цена ({sym})
-          </Typography>
           <TextField
             fullWidth
+            label={`Исходная цена (${sym})`}
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            placeholder="Введите цену"
+            placeholder="Например: 5000"
             sx={{ mb: 2 }}
           />
 
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Скидка (%)
-          </Typography>
           <TextField
             fullWidth
+            label="Скидка (%)"
             type="number"
             value={discount}
             onChange={(e) => setDiscount(e.target.value)}
-            placeholder="Введите скидку"
+            placeholder="Например: 20"
             sx={{ mb: 2 }}
           />
 
@@ -102,9 +98,11 @@ export default function DiscountCalc() {
                     elevation={0}
                     sx={{
                       p: 2,
-                      borderRadius: 2,
+                      borderRadius: 3,
                       bgcolor: alpha(theme.palette.error.main, 0.06),
-                      textAlign: 'center'
+                      textAlign: 'center',
+                      transition: 'background 150ms ease',
+                      '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.10) }
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">Вы экономите</Typography>
@@ -118,9 +116,11 @@ export default function DiscountCalc() {
                     elevation={0}
                     sx={{
                       p: 2,
-                      borderRadius: 2,
+                      borderRadius: 3,
                       bgcolor: theme.palette.surfaceContainerLow,
-                      textAlign: 'center'
+                      textAlign: 'center',
+                      transition: 'background 150ms ease',
+                      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">Исходная цена</Typography>
@@ -134,9 +134,9 @@ export default function DiscountCalc() {
               {/* Visual bar */}
               <Paper
                 elevation={0}
-                sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
+                sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
               >
-                <Box sx={{ display: 'flex', height: 24, borderRadius: 2, overflow: 'hidden' }}>
+                <Box sx={{ display: 'flex', height: 24, borderRadius: 3, overflow: 'hidden' }}>
                   <Box
                     sx={{
                       width: `${100 - discountNum}%`,

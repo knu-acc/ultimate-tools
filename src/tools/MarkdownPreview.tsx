@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme, IconButton
 } from '@mui/material';
@@ -100,75 +100,84 @@ export default function MarkdownPreview() {
   };
 
   return (
-    <Box>
-      {/* Toolbar */}
-      <Box sx={{ display: 'flex', gap: 0.5, mb: 2, flexWrap: 'wrap' }}>
-        <IconButton size="small" onClick={() => insertAtCursor('**', '**')} title="Жирный">
-          <FormatBold fontSize="small" />
-        </IconButton>
-        <IconButton size="small" onClick={() => insertAtCursor('*', '*')} title="Курсив">
-          <FormatItalic fontSize="small" />
-        </IconButton>
-        <IconButton size="small" onClick={() => insertAtCursor('`', '`')} title="Код">
-          <Code fontSize="small" />
-        </IconButton>
-        <IconButton size="small" onClick={() => insertAtCursor('\n- ')} title="Список">
-          <FormatListBulleted fontSize="small" />
-        </IconButton>
-        <IconButton size="small" onClick={() => insertAtCursor('\n## ')} title="Заголовок">
-          <Title fontSize="small" />
-        </IconButton>
-        <Box sx={{ flexGrow: 1 }} />
-        <Chip label={`${stats.chars} символов`} size="small" />
-        <Chip label={`${stats.words} слов`} size="small" />
-        <Chip label={`${stats.lines} строк`} size="small" />
-      </Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Paper
+        elevation={0}
+        sx={{
+          p: { xs: 2, sm: 3 },
+          mb: 2,
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
+        }}
+      >
+        {/* Toolbar */}
+        <Box sx={{ display: 'flex', gap: 0.5, mb: 2, flexWrap: 'wrap' }}>
+          <IconButton size="small" onClick={() => insertAtCursor('**', '**')} title="Жирный"
+            sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
+            <FormatBold fontSize="small" />
+          </IconButton>
+          <IconButton size="small" onClick={() => insertAtCursor('*', '*')} title="Курсив"
+            sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
+            <FormatItalic fontSize="small" />
+          </IconButton>
+          <IconButton size="small" onClick={() => insertAtCursor('`', '`')} title="Код"
+            sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Code fontSize="small" />
+          </IconButton>
+          <IconButton size="small" onClick={() => insertAtCursor('\n- ')} title="Список"
+            sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
+            <FormatListBulleted fontSize="small" />
+          </IconButton>
+          <IconButton size="small" onClick={() => insertAtCursor('\n## ')} title="Заголовок"
+            sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Title fontSize="small" />
+          </IconButton>
+          <Box sx={{ flexGrow: 1 }} />
+          <Chip label={`${stats.chars} символов`} size="small" />
+          <Chip label={`${stats.words} слов`} size="small" />
+          <Chip label={`${stats.lines} строк`} size="small" />
+        </Box>
 
-      <Grid container spacing={2}>
-        {/* Editor */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Markdown
-          </Typography>
-          <TextField
-            fullWidth
-            multiline
-            rows={20}
-            value={markdown}
-            onChange={(e) => setMarkdown(e.target.value)}
-            placeholder="Введите Markdown..."
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                fontFamily: 'monospace',
-                fontSize: '0.875rem'
-              }
-            }}
-          />
-        </Grid>
+        <Grid container spacing={2}>
+          {/* Editor */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <TextField
+              fullWidth
+              multiline
+              rows={20}
+              value={markdown}
+              onChange={(e) => setMarkdown(e.target.value)}
+              placeholder="Markdown..."
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  fontFamily: 'monospace',
+                  fontSize: '0.875rem'
+                }
+              }}
+            />
+          </Grid>
 
-        {/* Preview */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-            <Typography variant="subtitle2" fontWeight={600}>
-              Превью
-            </Typography>
-            <CopyButton text={parseMarkdown(markdown)} />
-          </Box>
-          <Paper
-            elevation={0}
-            sx={{
-              p: 2.5,
-              borderRadius: 2,
-              minHeight: 440,
-              maxHeight: 440,
-              overflow: 'auto',
-              bgcolor: alpha(theme.palette.background.paper, 0.5)
-            }}
-          >
-            <div dangerouslySetInnerHTML={{ __html: parseMarkdown(markdown) }} />
-          </Paper>
+          {/* Preview */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', mb: 1 }}>
+              <CopyButton text={parseMarkdown(markdown)} />
+            </Box>
+            <Paper
+              elevation={0}
+              sx={{
+                p: 2.5,
+                borderRadius: 3,
+                minHeight: 440,
+                maxHeight: 440,
+                overflow: 'auto',
+                bgcolor: alpha(theme.palette.background.paper, 0.5)
+              }}
+            >
+              <div dangerouslySetInnerHTML={{ __html: parseMarkdown(markdown) }} />
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      </Paper>
     </Box>
   );
 }

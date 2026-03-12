@@ -14,11 +14,11 @@ import {
   ListItem,
   ListItemText,
   Chip,
-  useTheme
+  useTheme,
+  alpha
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { CopyButton } from '@/src/components/CopyButton';
-
 
 function generateUuidV4(): string {
   const bytes = new Uint8Array(16);
@@ -51,11 +51,11 @@ export default function UuidGenerator() {
   };
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -103,7 +103,7 @@ export default function UuidGenerator() {
       </Paper>
 
       {uuids.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Chip label={`${uuids.length} UUID`} size="small" sx={{ fontWeight: 600 }} />
             <CopyButton text={uuids.map(formatUuid).join('\n')} />
@@ -117,9 +117,9 @@ export default function UuidGenerator() {
                   <CopyButton text={formatUuid(uuids[i])} />
                 }
                 sx={{
-                  borderRadius: 1,
+                  borderRadius: 2,
                   mb: 0.5,
-                  '&:hover': { background: theme.palette.surfaceContainerLow }
+                  '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
                 <Chip label={i + 1} size="small" sx={{ mr: 1.5, minWidth: 32, fontWeight: 600 }} />

@@ -79,12 +79,12 @@ export default function CalorieCalc() {
   };
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Inputs */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -122,11 +122,10 @@ export default function CalorieCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Вес (кг)"
+              placeholder="Вес, кг"
               type="number"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              placeholder="70"
               slotProps={{
                 input: { inputProps: { min: 20, max: 400, step: 0.5 } }
               }}
@@ -135,11 +134,10 @@ export default function CalorieCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Рост (см)"
+              placeholder="Рост, см"
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              placeholder="175"
               slotProps={{
                 input: { inputProps: { min: 50, max: 300, step: 1 } }
               }}
@@ -148,11 +146,10 @@ export default function CalorieCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Возраст (лет)"
+              placeholder="Возраст"
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              placeholder="25"
               slotProps={{
                 input: { inputProps: { min: 1, max: 150, step: 1 } }
               }}
@@ -165,9 +162,10 @@ export default function CalorieCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          background: theme.palette.surfaceContainerLow
         }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 1.5 }}>
@@ -192,7 +190,7 @@ export default function CalorieCalc() {
                   transition: 'all 0.15s ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: theme.palette.surfaceContainerLow
+                    background: alpha(theme.palette.primary.main, 0.04)
                   }
                 }}
               >
@@ -278,9 +276,10 @@ export default function CalorieCalc() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3
+              borderRadius: 3,
+              background: theme.palette.surfaceContainerLow
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
@@ -328,8 +327,9 @@ export default function CalorieCalc() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
-              borderRadius: 3
+              p: { xs: 2, sm: 3 },
+              borderRadius: 3,
+              background: theme.palette.surfaceContainerLow
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>

@@ -14,7 +14,9 @@ import {
   Slider,
   IconButton,
   Tooltip,
-  useTheme } from '@mui/material';
+  useTheme,
+  alpha,
+} from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
 import { CopyButton } from '@/src/components/CopyButton';
@@ -209,13 +211,15 @@ export default function JsonDataGen() {
   };
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          p: { xs: 2, sm: 3 },
+          bgcolor: theme.palette.surfaceContainerLow,
+          borderRadius: 3,
+          transition: 'background-color 0.2s ease',
+          '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         {/* Presets */}

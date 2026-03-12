@@ -6,6 +6,7 @@ import {
   Typography,
   Paper,
   TextField,
+  Button,
   Switch,
   FormControlLabel,
   Grid,
@@ -13,7 +14,6 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
-
 
 // Compact MD5 implementation (Web Crypto API does not support MD5)
 function md5(input: string): string {
@@ -212,17 +212,16 @@ export default function HashGenerator() {
   const formatHash = (value: string) => (uppercase ? value.toUpperCase() : value);
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Input */}
         <TextField
           multiline
           rows={5}
@@ -230,41 +229,22 @@ export default function HashGenerator() {
           value={input}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="Текст..."
+          placeholder="Текст для хеширования..."
           sx={{
             mb: 2,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
           }}
         />
 
-        {/* Controls */}
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2, flexWrap: 'wrap', gap: 1 }}>
-          <Box
-            component="button"
+          <Button
+            variant="contained"
             onClick={generateHashes}
             disabled={!input.trim() || loading}
-            sx={{
-              px: 3,
-              py: 1,
-              border: 'none',
-              borderRadius: 2,
-              cursor: !input.trim() || loading ? 'not-allowed' : 'pointer',
-              fontWeight: 600,
-              fontSize: '0.875rem',
-              color: theme.palette.primary.contrastText,
-              background: !input.trim() || loading
-                ? theme.palette.action.disabledBackground
-                : theme.palette.primary.main,
-              '&:hover': {
-                background: !input.trim() || loading
-                  ? undefined
-                  : theme.palette.primary.dark
-              },
-              transition: 'background 200ms ease'
-            }}
+            sx={{ px: 3, borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
           >
             {loading ? 'Генерация...' : 'Сгенерировать хеши'}
-          </Box>
+          </Button>
           <FormControlLabel
             control={
               <Switch
@@ -281,7 +261,6 @@ export default function HashGenerator() {
           />
         </Box>
 
-        {/* Hash Results */}
         {hashes.length > 0 && (
           <Grid container spacing={2}>
             {hashes.map((hash) => (
@@ -292,9 +271,9 @@ export default function HashGenerator() {
                     p: 2,
                     borderRadius: 3,
                     background: alpha(theme.palette.text.primary, 0.03),
-                    transition: 'border-color 200ms ease',
+                    transition: 'background 200ms ease',
                     '&:hover': {
-                      borderColor: theme.palette.primary.main
+                      background: alpha(theme.palette.primary.main, 0.04)
                     }
                   }}
                 >

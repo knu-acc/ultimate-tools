@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme,
+  Box, Typography, Paper, Grid, Chip, TextField, alpha, useTheme,
   IconButton, Tooltip, Dialog, DialogTitle, DialogContent
 } from '@mui/material';
 import { Search, History, Close } from '@mui/icons-material';
@@ -189,7 +189,7 @@ export default function UnicodeLookup() {
   };
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Search */}
       <TextField
         fullWidth
@@ -279,9 +279,12 @@ export default function UnicodeLookup() {
       <Paper
         elevation={0}
         sx={{
-          p: 2,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
-          mb: 2
+          mb: 2,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>

@@ -8,7 +8,6 @@ import {
 import { Shuffle, Groups, Replay, Delete } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
 
-
 const TEAM_COLORS = [
   'primary', 'secondary', 'success', 'warning', 'error', 'info',
 ] as const;
@@ -108,10 +107,6 @@ export default function TeamGenerator() {
     }, 80);
   }, [getParticipants, animating, splitIntoTeams]);
 
-  const handleReshuffle = () => {
-    handleSplit();
-  };
-
   const getTeamsText = (teamsData: Team[]) => {
     return teamsData.map(t =>
       `${t.name}:\n${t.members.map(m => `  - ${m}`).join('\n')}`
@@ -119,7 +114,6 @@ export default function TeamGenerator() {
   };
 
   const participants = getParticipants();
-  const maxTeams = Math.max(2, participants.length);
 
   const getTeamColor = (index: number) => {
     const colorKey = TEAM_COLORS[index % TEAM_COLORS.length];
@@ -127,7 +121,16 @@ export default function TeamGenerator() {
   };
 
   return (
-    <Box>
+    <Box sx={{
+      maxWidth: 800,
+      mx: 'auto',
+      mb: 2,
+      borderRadius: 3,
+      bgcolor: theme.palette.surfaceContainerLow,
+      p: { xs: 2, sm: 3 },
+      transition: 'background 0.2s ease',
+      '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
+    }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -140,7 +143,7 @@ export default function TeamGenerator() {
             fullWidth
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder={'Иван\nМария\nАлексей\nОльга\nДмитрий\nАнна'}
+            placeholder={'Иван\nМария\nАлексей\nОльга'}
             disabled={animating}
             sx={{
               mb: 2,
@@ -152,7 +155,6 @@ export default function TeamGenerator() {
             Участников: {participants.length}
           </Typography>
 
-          {/* Mode toggle */}
           <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <Chip
               label="По количеству команд"
@@ -183,7 +185,7 @@ export default function TeamGenerator() {
           {mode === 'count' ? (
             <Box sx={{ mb: 2 }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                Количество команд: {teamCount}
+                Команд: {teamCount}
               </Typography>
               <Slider
                 value={teamCount}
@@ -198,7 +200,7 @@ export default function TeamGenerator() {
           ) : (
             <Box sx={{ mb: 2 }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                Размер команды: {teamSize}
+                Размер: {teamSize}
               </Typography>
               <Slider
                 value={teamSize}
@@ -232,7 +234,6 @@ export default function TeamGenerator() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 7 }}>
-          {/* Teams result */}
           {teams.length > 0 && (
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
@@ -242,7 +243,7 @@ export default function TeamGenerator() {
                 <Box sx={{ display: 'flex', gap: 1 }}>
                   <CopyButton text={getTeamsText(teams)} />
                   <Tooltip title="Перемешать заново">
-                    <IconButton size="small" onClick={handleReshuffle} disabled={animating}>
+                    <IconButton size="small" onClick={handleSplit} disabled={animating}>
                       <Replay fontSize="small" />
                     </IconButton>
                   </Tooltip>
@@ -321,7 +322,6 @@ export default function TeamGenerator() {
             </Paper>
           )}
 
-          {/* History */}
           {history.length > 0 && (
             <Box sx={{ mt: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>

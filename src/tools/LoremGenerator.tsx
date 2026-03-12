@@ -110,10 +110,10 @@ export default function LoremGenerator() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <TextField
           fullWidth
-          label="Абзацы"
+          placeholder="Абзацы"
           type="number"
           value={paragraphCount}
           onChange={(e) => {

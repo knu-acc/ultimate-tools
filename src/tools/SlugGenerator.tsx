@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
 
-
 const CYRILLIC_MAP: Record<string, string> = {
   'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
   'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'j', 'к': 'k', 'л': 'l', 'м': 'm',
@@ -61,37 +60,27 @@ export default function SlugGenerator() {
   const fullUrl = slug ? `https://example.com/${slug}` : '';
 
   return (
-    <Box sx={{ maxWidth: 600, mx: 'auto' }}>
-      {/* Input */}
+    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Введите текст для генерации слага
-        </Typography>
-
         <TextField
           fullWidth
-          label="Исходный текст"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Привет мир! Hello World"
+          placeholder="Текст для генерации слага..."
           multiline
           minRows={2}
           maxRows={4}
           sx={{ mb: 2 }}
         />
 
-        {/* Separator selector */}
         <Box sx={{ mb: 2 }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-            Разделитель
-          </Typography>
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
             {SEPARATORS.map((sep) => {
               const active = separator === sep.value;
@@ -123,10 +112,9 @@ export default function SlugGenerator() {
             display: 'flex',
             alignItems: 'center',
             gap: 1.5,
-            borderRadius: 2,
-            border: `2px dashed ${slug ? theme.palette.primary.main : theme.palette.divider}`,
+            borderRadius: 3,
             background: slug
-              ? theme.palette.surfaceContainerLow
+              ? alpha(theme.palette.primary.main, 0.04)
               : theme.palette.action.hover,
             transition: 'all 0.2s ease'
           }}
@@ -155,7 +143,6 @@ export default function SlugGenerator() {
           )}
         </Paper>
 
-        {/* Character count */}
         {slug && (
           <Box sx={{ display: 'flex', gap: 1.5, mb: 1, flexWrap: 'wrap' }}>
             <Chip
@@ -183,7 +170,8 @@ export default function SlugGenerator() {
             mt: 2,
             p: 2.5,
             borderRadius: 3,
-            background: alpha(theme.palette.success.main, 0.03)
+            background: theme.palette.surfaceContainerLow,
+            '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1.5 }}>
@@ -195,7 +183,7 @@ export default function SlugGenerator() {
               alignItems: 'center',
               gap: 1,
               p: 1.5,
-              borderRadius: 2,
+              borderRadius: 3,
               background: alpha(theme.palette.text.primary, 0.04)
             }}
           >
@@ -226,7 +214,8 @@ export default function SlugGenerator() {
           sx={{
             mt: 2,
             p: 2,
-            borderRadius: 3
+            borderRadius: 3,
+            background: theme.palette.surfaceContainerLow
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
@@ -253,7 +242,6 @@ export default function SlugGenerator() {
           </Box>
         </Paper>
       )}
-
     </Box>
   );
 }

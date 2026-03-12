@@ -183,7 +183,7 @@ export default function Calendar() {
                   '&:hover': {
                     backgroundColor: selectedMatch
                       ? 'primary.dark'
-                      : theme.palette.surfaceContainerHigh
+                      : alpha(theme.palette.primary.main, 0.04)
                   },
                   transition: 'background-color 0.15s'
                 }}
@@ -272,7 +272,7 @@ export default function Calendar() {
         elevation={0}
         sx={{
           borderRadius: 3,
-          p: 3
+          p: { xs: 2, sm: 3 }
         }}
       >
         {/* Header */}
@@ -359,7 +359,7 @@ export default function Calendar() {
                       ? theme.palette.surfaceContainerLow
                       : 'transparent',
                     '&:hover': {
-                      backgroundColor: theme.palette.surfaceContainerHigh
+                      backgroundColor: alpha(theme.palette.primary.main, 0.04)
                     }
                   }}
                   onClick={() => {
