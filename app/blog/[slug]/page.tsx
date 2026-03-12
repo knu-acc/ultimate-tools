@@ -19,7 +19,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: article.description,
       type: 'article',
       publishedTime: article.date,
+      siteName: 'Ultimate Tools',
+      locale: 'ru_RU',
+      url: `https://utools.app/blog/${slug}`,
     },
+    alternates: {
+      canonical: `https://utools.app/blog/${slug}`,
+    },
+    robots: { index: true, follow: true },
   };
 }
 

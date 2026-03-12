@@ -18,10 +18,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${group.name} | Ultimate Tools`,
       description: group.description,
+      siteName: 'Ultimate Tools',
+      locale: 'ru_RU',
+      url: `https://utools.app/group/${slug}`,
     },
     alternates: {
       canonical: `https://utools.app/group/${slug}`,
     },
+    robots: { index: true, follow: true },
   };
 }
 

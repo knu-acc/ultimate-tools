@@ -7,7 +7,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Блог | Ultimate Tools',
     description: 'Статьи и руководства по онлайн-инструментам',
+    siteName: 'Ultimate Tools',
+    locale: 'ru_RU',
   },
+  alternates: {
+    canonical: 'https://utools.app/blog',
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function Page() {
