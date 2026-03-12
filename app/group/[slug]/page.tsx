@@ -13,10 +13,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const groupTools = getToolsByGroup(group.id);
   return {
     title: `${group.name} — ${groupTools.length} бесплатных онлайн инструментов`,
-    description: `${group.description}. ${groupTools.length} инструментов в категории "${group.name}". Бесплатно, работает в браузере.`,
+    description: `${group.description}. Инструменты: ${groupTools.slice(0, 3).map(t => t.name).join(', ')} и другие. Бесплатно.`,
+    keywords: [...new Set(groupTools.flatMap(t => t.keywords))].slice(0, 10),
     openGraph: {
       title: `${group.name} | Ultimate Tools`,
       description: group.description,
+    },
+    alternates: {
+      canonical: `https://utools.app/group/${slug}`,
     },
   };
 }

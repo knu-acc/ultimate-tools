@@ -16,11 +16,17 @@ export const metadata: Metadata = {
   keywords: [
     'онлайн инструменты', 'конвертер валют', 'генератор паролей', 'JSON форматирование',
     'калькулятор', 'конвертер единиц', 'бесплатные утилиты', 'SEO инструменты',
+    'калькулятор онлайн', 'конвертер единиц онлайн', 'генератор паролей',
+    'qr код генератор', 'json formatter онлайн', 'счётчик слов онлайн',
+    'regex тестер', 'base64 декодер',
   ],
+  applicationName: 'Ultimate Tools',
+  authors: [{ name: 'Ultimate Tools', url: 'https://utools.app' }],
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
     siteName: 'Ultimate Tools',
+    url: 'https://utools.app',
     title: `Ultimate Tools — ${stats.totalTools}+ бесплатных онлайн утилит`,
     description: `Конвертеры, калькуляторы, генераторы и утилиты для разработчиков. Всё бесплатно, работает в браузере.`,
   },
@@ -30,7 +36,7 @@ export const metadata: Metadata = {
     description: `${stats.totalTools}+ бесплатных онлайн-инструментов в одном месте`,
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: '/', languages: { 'ru': '/' } },
+  alternates: { canonical: 'https://utools.app', languages: { 'ru': 'https://utools.app' } },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -43,6 +49,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#6750A4" />
+        <meta name="geo.region" content="RU" />
+        <meta name="geo.placename" content="Russia" />
+        <meta name="yandex-verification" content="placeholder" />
       </head>
       <body>
         <ThemeRegistry>

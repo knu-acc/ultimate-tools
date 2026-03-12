@@ -25,8 +25,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const toolPages: MetadataRoute.Sitemap = tools.map(t => ({
     url: `${BASE_URL}/tools/${t.slug}`,
     lastModified: now,
-    changeFrequency: 'weekly' as const,
-    priority: 0.9,
+    changeFrequency: 'monthly' as const,
+    priority: (t as any).featured ? 1.0 : t.implemented ? 0.9 : 0.6,
   }));
 
   // Article pages

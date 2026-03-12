@@ -339,6 +339,26 @@ const toolComponents: Record<string, React.ComponentType> = {
   'qr-code-gen': QrCodeGenTool,
 };
 
+function getToolFAQ(tool: { name: string; description: string; groupId: string; slug: string }): Array<{q: string; a: string}> {
+  const base = [
+    { q: `Как пользоваться инструментом «${tool.name}»?`, a: `Откройте страницу инструмента «${tool.name}» на сайте Ultimate Tools. Введите данные в соответствующие поля и результат появится автоматически. Инструмент работает полностью в браузере — никаких загрузок и регистрации не требуется.` },
+    { q: `Бесплатно ли использование «${tool.name}»?`, a: `Да, «${tool.name}» абсолютно бесплатен и не требует регистрации. Все инструменты на Ultimate Tools доступны без ограничений.` },
+    { q: `Безопасно ли использовать «${tool.name}»?`, a: `Да, все данные обрабатываются локально в вашем браузере. Никакая информация не отправляется на серверы — ваши данные остаются полностью конфиденциальными.` },
+  ];
+
+  const groupFAQs: Record<string, Array<{q: string; a: string}>> = {
+    converters: [{ q: `Насколько точен ${tool.name}?`, a: `Конвертер использует стандартные коэффициенты перевода с высокой точностью. Результаты соответствуют международным стандартам измерений.` }],
+    calculators: [{ q: `Можно ли доверять расчётам ${tool.name}?`, a: `Да, ${tool.name} использует проверенные формулы и алгоритмы. Тем не менее для важных финансовых решений рекомендуем проверять результаты у специалиста.` }],
+    developers: [{ q: `Поддерживает ли ${tool.name} большие объёмы данных?`, a: `${tool.name} обрабатывает данные прямо в браузере, что обеспечивает высокую скорость работы. Для очень больших файлов рекомендуем разбивать данные на части.` }],
+    images: [{ q: `Какие форматы изображений поддерживает ${tool.name}?`, a: `${tool.name} работает с популярными форматами: JPEG, PNG, WebP, GIF, SVG. Обработка происходит в браузере без загрузки файлов на сервер.` }],
+    security: [{ q: `Хранятся ли мои данные при использовании ${tool.name}?`, a: `Нет. Все данные обрабатываются исключительно в вашем браузере. Пароли, хэши и другая чувствительная информация не передаётся и не сохраняется на серверах.` }],
+    health: [{ q: `Заменяет ли ${tool.name} консультацию врача?`, a: `Нет, ${tool.name} предназначен только для информационных целей. Для медицинских решений всегда консультируйтесь с квалифицированным специалистом.` }],
+    finance: [{ q: `Насколько точны финансовые расчёты в ${tool.name}?`, a: `${tool.name} выполняет расчёты по стандартным финансовым формулам. Для официальных финансовых решений рекомендуем проверять данные у финансового консультанта.` }],
+  };
+
+  return [...base, ...(groupFAQs[tool.groupId] || [])];
+}
+
 export default function ToolPage({ slug }: { slug: string }) {
   const theme = useTheme();
   const tool = getToolBySlug(slug);
@@ -357,6 +377,7 @@ export default function ToolPage({ slug }: { slug: string }) {
   const ToolComponent = toolComponents[tool.slug];
 
   return (
+    <>
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Breadcrumbs */}
       <Breadcrumbs separator={<NavigateNext fontSize="small" />} sx={{ mb: 3 }}>
@@ -493,9 +514,31 @@ export default function ToolPage({ slug }: { slug: string }) {
             operatingSystem: 'Any',
             offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
             url: `https://utools.app/tools/${tool.slug}`,
+            inLanguage: 'ru',
+            isAccessibleForFree: true,
+            browserRequirements: 'Requires JavaScript',
+            author: { '@type': 'Organization', name: 'Ultimate Tools', url: 'https://utools.app' },
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: getToolFAQ(tool).map(faq => ({
+              '@type': 'Question',
+              name: faq.q,
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.a,
+              },
+            })),
           }),
         }}
       />
     </Container>
+    </>
   );
 }
