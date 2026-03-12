@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Container, Typography, Box, Grid, Breadcrumbs, Paper, Chip, alpha, useTheme, Button,
 } from '@mui/material';
@@ -9,6 +9,7 @@ import DynamicIcon from '@/src/components/DynamicIcon';
 import Link from 'next/link';
 import { getToolBySlug, getToolsByGroup, toolGroups } from '@/src/data/tools';
 import ToolCard from '@/src/components/ToolCard';
+import { useRecentTools } from '@/src/hooks/useRecentTools';
 
 // Import implemented tools
 import PasswordGeneratorTool from '@/src/tools/PasswordGenerator';
@@ -362,6 +363,11 @@ function getToolFAQ(tool: { name: string; description: string; groupId: string; 
 export default function ToolPage({ slug }: { slug: string }) {
   const theme = useTheme();
   const tool = getToolBySlug(slug);
+  const { addRecentTool } = useRecentTools();
+
+  useEffect(() => {
+    if (tool) addRecentTool(tool.slug);
+  }, [tool?.slug]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!tool) {
     return (

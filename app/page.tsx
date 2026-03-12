@@ -5,18 +5,21 @@ import {
   Container, Typography, Box, Grid, Card, CardActionArea, CardContent,
   Button, Chip, alpha, useTheme, Paper,
 } from '@mui/material';
-import { Search as SearchIcon, ArrowForward, TrendingUp } from '@mui/icons-material';
+import { Search as SearchIcon, ArrowForward, History } from '@mui/icons-material';
 import DynamicIcon from '@/src/components/DynamicIcon';
 import Link from 'next/link';
-import { tools, toolGroups, getFeaturedTools, getStats, getToolsByGroup } from '@/src/data/tools';
+import { tools, toolGroups, getFeaturedTools, getStats, getToolsByGroup, getToolBySlug } from '@/src/data/tools';
 import ToolCard from '@/src/components/ToolCard';
 import SearchDialog from '@/src/components/SearchDialog';
+import { useRecentTools } from '@/src/hooks/useRecentTools';
 
 export default function HomePage() {
   const theme = useTheme();
   const stats = getStats();
   const featuredTools = getFeaturedTools();
   const [searchOpen, setSearchOpen] = useState(false);
+  const { recentSlugs } = useRecentTools();
+  const recentTools = recentSlugs.map(s => getToolBySlug(s)).filter(Boolean) as NonNullable<ReturnType<typeof getToolBySlug>>[];
 
   return (
     <>
@@ -105,6 +108,36 @@ export default function HomePage() {
       </Box>
 
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
+
+        {/* Recently Used */}
+        {recentTools.length > 0 && (
+          <Box sx={{ mb: 5 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+              <History sx={{ color: theme.palette.text.secondary, fontSize: 20 }} />
+              <Typography variant="h6" component="h2" fontWeight={500} color="text.secondary">
+                Недавно использованные
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+              {recentTools.map(tool => (
+                <Chip
+                  key={tool.slug}
+                  label={tool.name}
+                  component={Link}
+                  href={`/tools/${tool.slug}`}
+                  clickable
+                  icon={<DynamicIcon name={tool.icon} sx={{ fontSize: '1rem !important' }} />}
+                  sx={{
+                    bgcolor: theme.palette.surfaceContainerHigh,
+                    '&:hover': { bgcolor: theme.palette.surfaceContainerHighest },
+                    height: 36,
+                    fontSize: '0.8125rem',
+                  }}
+                />
+              ))}
+            </Box>
+          </Box>
+        )}
 
         {/* Categories — MD3 filled cards */}
         <Typography variant="h5" component="h2" sx={{ mb: 3, fontWeight: 400 }}>
