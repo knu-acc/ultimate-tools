@@ -150,24 +150,23 @@ export default function ColorWheel() {
   ];
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Grid container spacing={3}>
         {/* Color Wheel */}
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center'
+              alignItems: 'center',
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Цветовое колесо
-            </Typography>
             <Box sx={{ position: 'relative', width: wheelSize, height: wheelSize, cursor: 'crosshair' }}>
               <canvas
                 ref={canvasRef}
@@ -208,15 +207,14 @@ export default function ColorWheel() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
-              mb: 2
+              mb: 2,
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Выбранный цвет
-            </Typography>
             <Box
               sx={{
                 width: '100%',
@@ -257,11 +255,14 @@ export default function ColorWheel() {
           {/* HSL Sliders */}
           <Paper
             elevation={0}
-            sx={{ p: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
+            sx={{
+              p: { xs: 2, sm: 3 },
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+            }}
           >
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Ручная настройка HSL
-            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {[
                 { label: 'Оттенок (H)', val: h, max: 360, idx: 0 as const },
@@ -300,7 +301,13 @@ export default function ColorWheel() {
           <Grid key={label} size={{ xs: 12, md: 4 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
+              sx={{
+                p: { xs: 2, sm: 3 },
+                borderRadius: 3,
+                bgcolor: theme.palette.surfaceContainerLow,
+                transition: 'all 200ms ease',
+                '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+              }}
             >
               <Typography variant="body2" fontWeight={600} gutterBottom>
                 {label}

@@ -384,10 +384,9 @@ export default function ChecksumCalc() {
             <TextField
               fullWidth
               size="small"
-              label="Ожидаемый хеш"
               value={compareHash}
               onChange={(e) => setCompareHash(e.target.value)}
-              placeholder="Вставьте хеш..."
+              placeholder="Ожидаемый хеш..."
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", monospace',

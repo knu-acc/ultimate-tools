@@ -167,7 +167,9 @@ export default function DepositCalc() {
         p: 2.5,
         textAlign: 'center',
         borderRadius: 3,
-        background: alpha(color, 0.06)
+        background: alpha(color, 0.06),
+        transition: 'background-color 0.2s ease',
+        '&:hover': { background: alpha(color, 0.1) }
       }}
     >
       <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -180,7 +182,7 @@ export default function DepositCalc() {
   );
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
@@ -198,11 +200,10 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label={`Сумма вклада (${sym})`}
+              placeholder={`Сумма вклада, ${sym}`}
               type="number"
               value={deposit}
               onChange={(e) => setDeposit(e.target.value)}
-              placeholder="500000"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -218,11 +219,10 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Годовая ставка"
+              placeholder="Годовая ставка, %"
               type="number"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
-              placeholder="16"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -238,11 +238,10 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Срок (месяцев)"
+              placeholder="Срок, месяцев"
               type="number"
               value={termMonths}
               onChange={(e) => setTermMonths(e.target.value)}
-              placeholder="12"
               slotProps={{
                 input: {
                   endAdornment: (
@@ -259,7 +258,7 @@ export default function DepositCalc() {
             <TextField
               fullWidth
               select
-              label="Капитализация"
+              placeholder="Капитализация"
               value={capitalization}
               onChange={(e) => setCapitalization(e.target.value)}
             >
@@ -274,11 +273,10 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label={`Ежемесячное пополнение (${sym})`}
+              placeholder={`Ежемесячное пополнение, ${sym}`}
               type="number"
               value={monthlyAddition}
               onChange={(e) => setMonthlyAddition(e.target.value)}
-              placeholder="0"
               slotProps={{
                 input: {
                   endAdornment: (

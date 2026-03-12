@@ -9,7 +9,8 @@ import {
   Chip,
   TextField,
   Switch,
-  useTheme
+  useTheme,
+  alpha
 } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 
@@ -22,14 +23,6 @@ interface PaperSizeEntry {
   category: PaperCategory;
 }
 
-const ISO_A: PaperSizeEntry[] = Array.from({ length: 11 }, (_, i) => {
-  const w = Math.round(841 / Math.pow(2, i / 2));
-  const h = Math.round(1189 / Math.pow(2, i / 2));
-  const sorted = [w, h].sort((a, b) => a - b);
-  return { name: `A${i}`, widthMm: sorted[0], heightMm: sorted[1], category: 'iso-a' as PaperCategory };
-});
-
-// Corrected ISO A sizes
 const ISO_A_CORRECT: PaperSizeEntry[] = [
   { name: 'A0', widthMm: 841, heightMm: 1189, category: 'iso-a' },
   { name: 'A1', widthMm: 594, heightMm: 841, category: 'iso-a' },
@@ -109,12 +102,12 @@ export default function PaperSize() {
       {/* Controls */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
-              label="Поиск по названию"
+              placeholder="Поиск по названию"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               size="small"
@@ -154,7 +147,7 @@ export default function PaperSize() {
       {selectedEntries.length > 0 && (
         <Paper
           elevation={0}
-          sx={{ p: 3, mb: 2, borderRadius: 3 }}
+          sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
         >
           <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
             Визуальное сравнение (нажмите на строку для выбора)
@@ -206,7 +199,7 @@ export default function PaperSize() {
       {/* Table */}
       <Paper
         elevation={0}
-        sx={{ p: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
       >
         <Box sx={{ overflowX: 'auto' }}>
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>

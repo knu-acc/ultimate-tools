@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme
+  Box, Typography, Paper, Grid, Button, alpha, useTheme
 } from '@mui/material';
-import { PlayArrow, Refresh, Keyboard } from '@mui/icons-material';
+import { Refresh } from '@mui/icons-material';
 
 const TEXTS_RU = [
   'Быстрая коричневая лиса перепрыгнула через ленивую собаку. Этот текст содержит все буквы алфавита.',
@@ -94,12 +94,12 @@ export default function TypingSpeed() {
   }, [started, finished]);
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Text display */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           bgcolor: theme.palette.surfaceContainerLow,
           mb: 2,
@@ -137,25 +137,25 @@ export default function TypingSpeed() {
       {/* Stats */}
       <Grid container spacing={1.5} sx={{ mb: 2 }}>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <Typography variant="h4" fontWeight={700} color="primary">{wpm}</Typography>
             <Typography variant="caption" color="text.secondary">Слов/мин (WPM)</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.success.main, 0.06), textAlign: 'center' }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.success.main, 0.06), textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.success.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.success.main }}>{accuracy}%</Typography>
             <Typography variant="caption" color="text.secondary">Точность</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.warning.main, 0.06), textAlign: 'center' }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.warning.main, 0.06), textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.warning.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.warning.main }}>{cpm}</Typography>
             <Typography variant="caption" color="text.secondary">Симв/мин (CPM)</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.error.main, 0.06), textAlign: 'center' }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.error.main, 0.06), textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.error.main }}>{errors}</Typography>
             <Typography variant="caption" color="text.secondary">Ошибки</Typography>
           </Paper>
@@ -175,7 +175,7 @@ export default function TypingSpeed() {
       )}
 
       {finished && (
-        <Paper elevation={0} sx={{ mt: 2, p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.success.main, 0.08), textAlign: 'center' }}>
+        <Paper elevation={0} sx={{ mt: 2, p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: alpha(theme.palette.success.main, 0.08), textAlign: 'center' }}>
           <Typography variant="h6" fontWeight={600} color="success.main">
             Готово! {wpm} WPM с точностью {accuracy}%
           </Typography>

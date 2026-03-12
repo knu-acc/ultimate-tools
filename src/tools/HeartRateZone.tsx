@@ -62,12 +62,12 @@ export default function HeartRateZone() {
   }, [age, restingHR]);
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -77,11 +77,10 @@ export default function HeartRateZone() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Возраст (лет)"
+              placeholder="Возраст, лет"
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              placeholder="25"
               slotProps={{
                 input: { inputProps: { min: 1, max: 120, step: 1 } }
               }}
@@ -90,11 +89,10 @@ export default function HeartRateZone() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="ЧСС в покое (уд/мин) — необязательно"
+              placeholder="ЧСС в покое, уд/мин (необязательно)"
               type="number"
               value={restingHR}
               onChange={(e) => setRestingHR(e.target.value)}
-              placeholder="60"
               slotProps={{
                 input: { inputProps: { min: 30, max: 200, step: 1 } }
               }}
@@ -110,7 +108,7 @@ export default function HeartRateZone() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
               borderRadius: 3,
@@ -215,8 +213,8 @@ export default function HeartRateZone() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
-              mt: 3,
+              p: { xs: 2, sm: 3 },
+              mt: 2,
               borderRadius: 3
             }}
           >

@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, IconButton, Slider, TextField
+  Box, Typography, Grid, Button, Chip, alpha, useTheme, IconButton, Slider, TextField
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
 
@@ -230,7 +230,7 @@ export default function Metronome() {
           }}
           type="number"
           size="small"
-          inputProps={{ min: 20, max: 300, style: { textAlign: 'center', fontWeight: 700, fontSize: 18 } }}
+          slotProps={{ htmlInput: { min: 20, max: 300, style: { textAlign: 'center', fontWeight: 700, fontSize: 18 } } }}
           sx={{ width: 100 }}
         />
 

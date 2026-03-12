@@ -116,12 +116,12 @@ export default function SleepCalc() {
   }, [time, mode]);
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Mode & Input */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -171,7 +171,7 @@ export default function SleepCalc() {
         <TextField
           fullWidth
           type="time"
-          label={mode === 'bedtime' ? 'Время отхода ко сну' : 'Время подъёма'}
+          placeholder={mode === 'bedtime' ? 'Время отхода ко сну' : 'Время подъёма'}
           value={time}
           onChange={(e) => setTime(e.target.value)}
           slotProps={{
@@ -189,7 +189,7 @@ export default function SleepCalc() {
         <Paper
           elevation={0}
           sx={{
-            p: 3,
+            p: { xs: 2, sm: 3 },
             mb: 2,
             borderRadius: 3
           }}
@@ -252,7 +252,7 @@ export default function SleepCalc() {
         <Paper
           elevation={0}
           sx={{
-            p: 3,
+            p: { xs: 2, sm: 3 },
             mb: 2,
             borderRadius: 3
           }}
@@ -294,7 +294,7 @@ export default function SleepCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3,
           background: alpha('#7b1fa2', 0.03)
         }}

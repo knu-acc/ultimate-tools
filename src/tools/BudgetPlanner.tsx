@@ -82,7 +82,7 @@ export default function BudgetPlanner() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Header with currency */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h6" fontWeight={600}>Планировщик бюджета</Typography>
@@ -94,7 +94,7 @@ export default function BudgetPlanner() {
         {summaryCards.map(card => (
           <Grid key={card.label} size={{ xs: 4 }}>
             <Paper
-              elevation={1}
+              elevation={0}
               sx={{
                 p: { xs: 1.5, sm: 2 },
                 borderRadius: 3,

@@ -142,9 +142,12 @@ export default function KeywordDensity() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -170,9 +173,12 @@ export default function KeywordDensity() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -261,8 +267,11 @@ export default function KeywordDensity() {
         <Paper
           elevation={0}
           sx={{
-            p: 3,
-            borderRadius: 3
+            p: { xs: 2, sm: 3 },
+            borderRadius: 3,
+            bgcolor: theme.palette.surfaceContainerLow,
+            transition: 'all 200ms ease',
+            '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
           }}
         >
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>

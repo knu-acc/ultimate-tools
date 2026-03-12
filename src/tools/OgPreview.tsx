@@ -53,21 +53,20 @@ export default function OgPreview() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
-        <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          Данные Open Graph
-        </Typography>
-
         <Grid container spacing={2}>
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
               size="small"
-              label="og:title"
+              placeholder="og:title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               helperText={
@@ -84,7 +83,7 @@ export default function OgPreview() {
             <TextField
               fullWidth
               size="small"
-              label="og:description"
+              placeholder="og:description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               multiline
@@ -103,20 +102,18 @@ export default function OgPreview() {
             <TextField
               fullWidth
               size="small"
-              label="og:image URL"
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="https://example.com/image.jpg"
+              placeholder="og:image URL (https://example.com/image.jpg)"
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
               size="small"
-              label="og:url"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://example.com"
+              placeholder="og:url (https://example.com)"
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 3 }}>
@@ -423,8 +420,11 @@ export default function OgPreview() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          borderRadius: 3
+          p: { xs: 2, sm: 3 },
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>

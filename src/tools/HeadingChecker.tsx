@@ -124,7 +124,14 @@ export default function HeadingChecker() {
       {/* Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 2, borderRadius: 3 }}
+        sx={{
+          p: { xs: 2, sm: 3 },
+          mb: 2,
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+        }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
           Вставьте HTML-код
@@ -150,7 +157,13 @@ export default function HeadingChecker() {
           <Grid size={{ xs: 12, md: 7 }}>
             <Paper
               elevation={0}
-              sx={{ p: 3, borderRadius: 3 }}
+              sx={{
+                p: { xs: 2, sm: 3 },
+                borderRadius: 3,
+                bgcolor: theme.palette.surfaceContainerLow,
+                transition: 'all 200ms ease',
+                '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+              }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                 <TitleIcon color="primary" fontSize="small" />
@@ -262,7 +275,14 @@ export default function HeadingChecker() {
             {/* Issues */}
             <Paper
               elevation={0}
-              sx={{ p: 2, mb: 2, borderRadius: 3 }}
+              sx={{
+                p: { xs: 2, sm: 3 },
+                mb: 2,
+                borderRadius: 3,
+                bgcolor: theme.palette.surfaceContainerLow,
+                transition: 'all 200ms ease',
+                '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+              }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
                 Результаты анализа
@@ -290,7 +310,13 @@ export default function HeadingChecker() {
             {/* SEO tips */}
             <Paper
               elevation={0}
-              sx={{ p: 2, borderRadius: 3 }}
+              sx={{
+                p: { xs: 2, sm: 3 },
+                borderRadius: 3,
+                bgcolor: theme.palette.surfaceContainerLow,
+                transition: 'all 200ms ease',
+                '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+              }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                 <InfoIcon fontSize="small" color="primary" />
@@ -316,7 +342,12 @@ export default function HeadingChecker() {
       {html.length > 0 && headings.length === 0 && (
         <Paper
           elevation={0}
-          sx={{ p: 4, textAlign: 'center', borderRadius: 3 }}
+          sx={{
+            p: { xs: 2, sm: 3 },
+            textAlign: 'center',
+            borderRadius: 3,
+            bgcolor: theme.palette.surfaceContainerLow
+          }}
         >
           <WarningIcon sx={{ fontSize: 48, color: 'warning.main', mb: 1 }} />
           <Typography variant="body1" sx={{ fontWeight: 500 }}>

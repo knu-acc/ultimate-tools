@@ -12,6 +12,7 @@ import {
   Chip,
   Switch,
   FormControlLabel,
+  Alert,
   useTheme,
   alpha
 } from '@mui/material';
@@ -19,6 +20,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 
 type BarcodeType = 'code128' | 'ean13' | 'code39';
 
+// ── Code 128 (Code Set B: ASCII 32–126) ─────────────────────────────────────
 const CODE128_START_B = 104;
 const CODE128_STOP = 106;
 
@@ -54,6 +56,63 @@ const CODE128_PATTERNS: number[][] = [
   [2,1,1,2,3,2],[2,3,3,1,1,1,2],
 ];
 
+function encodeCode128(text: string): { values: number[]; invalidChars: string[] } {
+  const values: number[] = [CODE128_START_B];
+  const invalidChars: string[] = [];
+  for (const char of text) {
+    const val = CODE128B[char];
+    if (val !== undefined) {
+      values.push(val);
+    } else {
+      if (!invalidChars.includes(char)) invalidChars.push(char);
+    }
+  }
+  let checksum = values[0];
+  for (let i = 1; i < values.length; i++) {
+    checksum += values[i] * i;
+  }
+  values.push(checksum % 103);
+  values.push(CODE128_STOP);
+  return { values, invalidChars };
+}
+
+// ── EAN-13 ───────────────────────────────────────────────────────────────────
+function calcEAN13Check(digits12: number[]): number {
+  let sum = 0;
+  for (let i = 0; i < 12; i++) sum += digits12[i] * (i % 2 === 0 ? 1 : 3);
+  return (10 - (sum % 10)) % 10;
+}
+
+function encodeEAN13(digits: string): { bars: string; display: string } | null {
+  const clean = digits.replace(/\D/g, '');
+  if (clean.length < 12) return null;
+
+  const d = clean.slice(0, 12).split('').map(Number);
+  const check = calcEAN13Check(d);
+  d.push(check);
+
+  const L = ['0001101','0011001','0010011','0111101','0100011','0110001','0101111','0111011','0110111','0001011'];
+  const G = ['0100111','0110011','0011011','0100001','0011101','0111001','0000101','0010001','0001001','0010111'];
+  const R = ['1110010','1100110','1101100','1000010','1011100','1001110','1010000','1000100','1001000','1110100'];
+  const parityTable = [
+    'LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG',
+    'LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL',
+  ];
+
+  let bars = '101'; // left guard
+  const p = parityTable[d[0]];
+  for (let i = 1; i <= 6; i++) bars += p[i - 1] === 'L' ? L[d[i]] : G[d[i]];
+  bars += '01010'; // center guard
+  for (let i = 7; i <= 12; i++) bars += R[d[i]];
+  bars += '101'; // right guard
+
+  return { bars, display: d.join('') };
+}
+
+// ── Code 39 ──────────────────────────────────────────────────────────────────
+// Each pattern is a binary run-length string.
+// '1' = narrow element (1 unit), '11' = wide element (3 units by renderer).
+// The renderer uses run-length detection so '1' → narrowWidth, '11' → wideWidth (3×).
 const CODE39_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%*';
 const CODE39_PATTERNS = [
   '101001101101','110100101011','101100101011','110110010101','101001101011',
@@ -67,65 +126,71 @@ const CODE39_PATTERNS = [
   '100100101001','100101001001','101001001001','100101101101',
 ];
 
-function encodeCode128(text: string): number[] {
-  const values: number[] = [CODE128_START_B];
-  for (const char of text) {
-    const val = CODE128B[char];
-    if (val !== undefined) values.push(val);
+function validateCode39(text: string): string[] {
+  const validChars = CODE39_CHARS.replace('*', ''); // * is reserved for start/stop
+  const invalid: string[] = [];
+  for (const char of text.toUpperCase()) {
+    if (!validChars.includes(char) && !invalid.includes(char)) {
+      invalid.push(char);
+    }
   }
-  let checksum = values[0];
-  for (let i = 1; i < values.length; i++) {
-    checksum += values[i] * i;
-  }
-  values.push(checksum % 103);
-  values.push(CODE128_STOP);
-  return values;
-}
-
-function encodeEAN13(digits: string): string | null {
-  if (digits.length < 12) return null;
-  const d = digits.slice(0, 12).split('').map(Number);
-  let sum = 0;
-  for (let i = 0; i < 12; i++) {
-    sum += d[i] * (i % 2 === 0 ? 1 : 3);
-  }
-  const check = (10 - (sum % 10)) % 10;
-  d.push(check);
-
-  const L = ['0001101','0011001','0010011','0111101','0100011','0110001','0101111','0111011','0110111','0001011'];
-  const G = ['0100111','0110011','0011011','0100001','0011101','0111001','0000101','0010001','0001001','0010111'];
-  const R = ['1110010','1100110','1101100','1000010','1011100','1001110','1010000','1000100','1001000','1110100'];
-
-  const parity = [
-    'LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG',
-    'LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL',
-  ];
-
-  let bars = '101';
-  const p = parity[d[0]];
-  for (let i = 1; i <= 6; i++) {
-    bars += p[i - 1] === 'L' ? L[d[i]] : G[d[i]];
-  }
-  bars += '01010';
-  for (let i = 7; i <= 12; i++) {
-    bars += R[d[i]];
-  }
-  bars += '101';
-  return bars;
+  return invalid;
 }
 
 function encodeCode39(text: string): string {
-  const upper = ('*' + text.toUpperCase() + '*');
+  const upper = '*' + text.toUpperCase() + '*';
   let bars = '';
-  for (const char of upper) {
+  for (let ci = 0; ci < upper.length; ci++) {
+    const char = upper[ci];
     const idx = CODE39_CHARS.indexOf(char);
     if (idx >= 0) {
-      bars += CODE39_PATTERNS[idx] + '0';
+      bars += CODE39_PATTERNS[idx];
+      if (ci < upper.length - 1) bars += '0'; // narrow inter-character gap
     }
   }
   return bars;
 }
 
+// Render Code39 bars with proper narrow:wide = 1:3 ratio using run-length detection
+function renderCode39(
+  ctx: CanvasRenderingContext2D,
+  bars: string,
+  x: number,
+  y: number,
+  narrowW: number,
+  height: number
+): number {
+  const wideW = narrowW * 3;
+  let pos = x;
+  let i = 0;
+  ctx.fillStyle = '#000000';
+  while (i < bars.length) {
+    const bit = bars[i];
+    let runLen = 1;
+    while (i + runLen < bars.length && bars[i + runLen] === bit) runLen++;
+    const pw = runLen > 1 ? wideW : narrowW;
+    if (bit === '1') ctx.fillRect(pos, y, pw, height);
+    pos += pw;
+    i += runLen;
+  }
+  return pos;
+}
+
+function getCode39TotalWidth(bars: string, narrowW: number): number {
+  const wideW = narrowW * 3;
+  let total = 0;
+  let i = 0;
+  while (i < bars.length) {
+    const bit = bars[i];
+    let runLen = 1;
+    while (i + runLen < bars.length && bars[i + runLen] === bit) runLen++;
+    total += runLen > 1 ? wideW : narrowW;
+    i += runLen;
+  }
+  return total;
+}
+
+// ── Component ────────────────────────────────────────────────────────────────
 export default function BarcodeGenerator() {
   const theme = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -144,32 +209,36 @@ export default function BarcodeGenerator() {
 
     setError('');
 
-    if (!text.trim()) {
-      canvas.width = 200;
-      canvas.height = 50;
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, 0, 200, 50);
-      return;
-    }
+    const clearCanvas = (w = 200, h = 80) => {
+      canvas.width = w;
+      canvas.height = h;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, w, h);
+    };
+
+    if (!text.trim()) { clearCanvas(); return; }
 
     const paddingX = 20;
     const paddingY = 10;
     const textHeight = showText ? 24 : 0;
 
+    // ── Code 128 ──
     if (barcodeType === 'code128') {
-      const values = encodeCode128(text);
+      const { values, invalidChars } = encodeCode128(text);
+
+      if (invalidChars.length > 0) {
+        setError(`Недопустимые символы для Code 128: ${invalidChars.map(c => `"${c}"`).join(', ')} (допустимы ASCII 32–126)`);
+      }
+
       let totalBars = 0;
       values.forEach((val) => {
         const pattern = CODE128_PATTERNS[val];
-        if (pattern) {
-          totalBars += pattern.reduce((a, b) => a + b, 0);
-        }
+        if (pattern) totalBars += pattern.reduce((a, b) => a + b, 0);
       });
 
       canvas.width = totalBars * barWidth + paddingX * 2;
       canvas.height = barHeight + paddingY * 2 + textHeight;
-
-      ctx.fillStyle = '#FFFFFF';
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       let x = paddingX;
@@ -178,7 +247,7 @@ export default function BarcodeGenerator() {
         if (!pattern) return;
         for (let i = 0; i < pattern.length; i++) {
           const w = pattern[i] * barWidth;
-          ctx.fillStyle = i % 2 === 0 ? '#000000' : '#FFFFFF';
+          ctx.fillStyle = i % 2 === 0 ? '#000000' : '#ffffff';
           ctx.fillRect(x, paddingY, w, barHeight);
           x += w;
         }
@@ -190,23 +259,23 @@ export default function BarcodeGenerator() {
         ctx.textAlign = 'center';
         ctx.fillText(text, canvas.width / 2, barHeight + paddingY + 18);
       }
+
+    // ── EAN-13 ──
     } else if (barcodeType === 'ean13') {
-      const cleanDigits = text.replace(/\D/g, '');
-      if (cleanDigits.length < 12) {
+      const clean = text.replace(/\D/g, '');
+      if (clean.length < 12) {
         setError('EAN-13 требует минимум 12 цифр');
-        canvas.width = 200;
-        canvas.height = 50;
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(0, 0, 200, 50);
+        clearCanvas();
         return;
       }
-      const bars = encodeEAN13(cleanDigits);
-      if (!bars) return;
+
+      const result = encodeEAN13(clean);
+      if (!result) { clearCanvas(); return; }
+      const { bars, display } = result;
 
       canvas.width = bars.length * barWidth + paddingX * 2;
       canvas.height = barHeight + paddingY * 2 + textHeight;
-
-      ctx.fillStyle = '#FFFFFF';
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < bars.length; i++) {
@@ -217,30 +286,30 @@ export default function BarcodeGenerator() {
       }
 
       if (showText) {
-        const d = cleanDigits.slice(0, 12).split('').map(Number);
-        let sum = 0;
-        for (let i = 0; i < 12; i++) sum += d[i] * (i % 2 === 0 ? 1 : 3);
-        const check = (10 - (sum % 10)) % 10;
-        const display = cleanDigits.slice(0, 12) + check;
         ctx.fillStyle = '#000000';
         ctx.font = '14px monospace';
         ctx.textAlign = 'center';
         ctx.fillText(display, canvas.width / 2, barHeight + paddingY + 18);
       }
-    } else if (barcodeType === 'code39') {
-      const bars = encodeCode39(text);
-      canvas.width = bars.length * barWidth + paddingX * 2;
-      canvas.height = barHeight + paddingY * 2 + textHeight;
 
-      ctx.fillStyle = '#FFFFFF';
+    // ── Code 39 ──
+    } else if (barcodeType === 'code39') {
+      const invalidChars = validateCode39(text);
+      if (invalidChars.length > 0) {
+        setError(`Недопустимые символы для Code 39: ${invalidChars.map(c => `"${c}"`).join(', ')}`);
+        clearCanvas();
+        return;
+      }
+
+      const bars = encodeCode39(text);
+      const totalWidth = getCode39TotalWidth(bars, barWidth);
+
+      canvas.width = totalWidth + paddingX * 2;
+      canvas.height = barHeight + paddingY * 2 + textHeight;
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      for (let i = 0; i < bars.length; i++) {
-        if (bars[i] === '1') {
-          ctx.fillStyle = '#000000';
-          ctx.fillRect(paddingX + i * barWidth, paddingY, barWidth, barHeight);
-        }
-      }
+      renderCode39(ctx, bars, paddingX, paddingY, barWidth, barHeight);
 
       if (showText) {
         ctx.fillStyle = '#000000';
@@ -251,9 +320,7 @@ export default function BarcodeGenerator() {
     }
   }, [text, barcodeType, barWidth, barHeight, showText]);
 
-  useEffect(() => {
-    drawBarcode();
-  }, [drawBarcode]);
+  useEffect(() => { drawBarcode(); }, [drawBarcode]);
 
   const handleDownload = useCallback(() => {
     const canvas = canvasRef.current;
@@ -264,74 +331,107 @@ export default function BarcodeGenerator() {
     link.click();
   }, [barcodeType]);
 
-  const types: { value: BarcodeType; label: string }[] = [
-    { value: 'code128', label: 'Code 128' },
-    { value: 'ean13', label: 'EAN-13' },
-    { value: 'code39', label: 'Code 39' },
+  const handleTypeChange = (type: BarcodeType) => {
+    setBarcodeType(type);
+    setError('');
+    if (type === 'ean13') setText('590123412345');
+    else if (type === 'code39') setText('HELLO-WORLD');
+    else setText('Hello, World!');
+  };
+
+  const types: { value: BarcodeType; label: string; hint: string }[] = [
+    { value: 'code128', label: 'Code 128', hint: 'ASCII 32–126, любая длина' },
+    { value: 'ean13',   label: 'EAN-13',   hint: '12–13 цифр' },
+    { value: 'code39',  label: 'Code 39',  hint: 'Цифры, A–Z, -. $/+%' },
   ];
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
-          <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
-            {types.map((t) => (
-              <Chip
-                key={t.value}
-                label={t.label}
-                onClick={() => setBarcodeType(t.value)}
-                color={barcodeType === t.value ? 'primary' : 'default'}
-                variant={barcodeType === t.value ? 'filled' : 'outlined'}
-              />
-            ))}
-          </Box>
-
-          <TextField
-            fullWidth
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder={barcodeType === 'ean13' ? '12 цифр для EAN-13' : 'Данные для штрих-кода...'}
-            size="small"
-            error={!!error}
-            helperText={error}
-            sx={{ mb: 2 }}
-          />
-
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-              Ширина линии: {barWidth}px
+          <Paper
+            elevation={0}
+            sx={{
+              p: { xs: 2, sm: 3 },
+              mb: 2,
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+            }}
+          >
+            <Typography variant="subtitle2" sx={{ mb: 1.5, color: 'text.secondary', fontWeight: 600 }}>
+              Формат штрих-кода
             </Typography>
-            <Slider
-              value={barWidth}
-              onChange={(_, v) => setBarWidth(v as number)}
-              min={1}
-              max={5}
-              step={1}
-            />
-          </Box>
+            <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+              {types.map((t) => (
+                <Chip
+                  key={t.value}
+                  label={t.label}
+                  onClick={() => handleTypeChange(t.value)}
+                  color={barcodeType === t.value ? 'primary' : 'default'}
+                  variant={barcodeType === t.value ? 'filled' : 'outlined'}
+                  title={t.hint}
+                />
+              ))}
+            </Box>
 
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-              Высота: {barHeight}px
+            <Typography variant="caption" sx={{ color: 'text.disabled', display: 'block', mb: 1.5 }}>
+              {types.find(t => t.value === barcodeType)?.hint}
             </Typography>
-            <Slider
-              value={barHeight}
-              onChange={(_, v) => setBarHeight(v as number)}
-              min={40}
-              max={200}
-              step={10}
-            />
-          </Box>
 
-          <FormControlLabel
-            control={
-              <Switch
-                checked={showText}
-                onChange={(e) => setShowText(e.target.checked)}
+            <TextField
+              fullWidth
+              label="Данные"
+              value={text}
+              onChange={(e) => { setText(e.target.value); setError(''); }}
+              placeholder={
+                barcodeType === 'ean13' ? '12 или 13 цифр' :
+                barcodeType === 'code39' ? 'HELLO-WORLD' :
+                'Hello, World!'
+              }
+              size="small"
+              error={!!error}
+              sx={{ mb: 2 }}
+            />
+
+            {error && (
+              <Alert severity="warning" sx={{ mb: 2, borderRadius: 2 }}>
+                {error}
+              </Alert>
+            )}
+
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
+                Ширина линии: {barWidth}px
+              </Typography>
+              <Slider
+                value={barWidth}
+                onChange={(_, v) => setBarWidth(v as number)}
+                min={1}
+                max={5}
+                step={1}
               />
-            }
-            label="Показать текст"
-          />
+            </Box>
+
+            <Box sx={{ mb: 2 }}>
+              <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
+                Высота: {barHeight}px
+              </Typography>
+              <Slider
+                value={barHeight}
+                onChange={(_, v) => setBarHeight(v as number)}
+                min={40}
+                max={200}
+                step={10}
+              />
+            </Box>
+
+            <FormControlLabel
+              control={<Switch checked={showText} onChange={(e) => setShowText(e.target.checked)} />}
+              label="Показать текст"
+            />
+          </Paper>
         </Grid>
 
         <Grid size={{ xs: 12, md: 7 }}>
@@ -342,6 +442,7 @@ export default function BarcodeGenerator() {
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
+              transition: 'all 200ms ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
@@ -350,6 +451,8 @@ export default function BarcodeGenerator() {
                 borderRadius: 2,
                 overflow: 'auto',
                 backgroundColor: '#fff',
+                border: '1px solid',
+                borderColor: 'divider',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -357,7 +460,7 @@ export default function BarcodeGenerator() {
                 p: 2
               }}
             >
-              <canvas ref={canvasRef} style={{ display: 'block' }} />
+              <canvas ref={canvasRef} style={{ display: 'block', maxWidth: '100%' }} />
             </Box>
 
             <Box sx={{ mt: 2 }}>

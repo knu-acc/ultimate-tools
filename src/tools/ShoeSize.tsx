@@ -199,7 +199,7 @@ export default function ShoeSize() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -287,7 +287,7 @@ export default function ShoeSize() {
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: theme.palette.surfaceContainerLow
+                    background: alpha(theme.palette.primary.main, 0.04)
                   }
                 }}
               >
@@ -317,7 +317,7 @@ export default function ShoeSize() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3
         }}
       >

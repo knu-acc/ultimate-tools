@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Grid, Button, Chip, alpha, useTheme, Slider, TextField
+  Box, Typography, Button, Chip, alpha, useTheme, Slider, TextField
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
 
@@ -193,7 +193,7 @@ export default function ToneGenerator() {
           }}
           type="number"
           size="small"
-          inputProps={{ min: 20, max: 20000, step: 1, style: { textAlign: 'center', fontWeight: 700 } }}
+          slotProps={{ htmlInput: { min: 20, max: 20000, step: 1, style: { textAlign: 'center', fontWeight: 700 } } }}
           sx={{ width: 130 }}
         />
         <Typography variant="caption" color="text.secondary">

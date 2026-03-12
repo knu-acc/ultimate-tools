@@ -296,7 +296,9 @@ export default function ProportionCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha(theme.palette.warning.main, 0.06),
-                  position: 'relative'
+                  position: 'relative',
+                  transition: 'all 200ms ease',
+                  '&:hover': { background: alpha(theme.palette.warning.main, 0.12) }
                 }}
               >
                 <Box sx={{ position: 'absolute', top: 4, right: 4 }}>
@@ -320,7 +322,9 @@ export default function ProportionCalc() {
                   p: 2,
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: alpha(theme.palette.secondary.main, 0.06)
+                  background: alpha(theme.palette.secondary.main, 0.06),
+                  transition: 'all 200ms ease',
+                  '&:hover': { background: alpha(theme.palette.secondary.main, 0.12) }
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
@@ -342,7 +346,9 @@ export default function ProportionCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha(theme.palette.warning.main, 0.06),
-                  position: 'relative'
+                  position: 'relative',
+                  transition: 'all 200ms ease',
+                  '&:hover': { background: alpha(theme.palette.warning.main, 0.12) }
                 }}
               >
                 <Box sx={{ position: 'absolute', top: 4, right: 4 }}>

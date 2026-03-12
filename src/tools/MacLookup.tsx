@@ -8,9 +8,8 @@ import {
   TextField,
   Grid,
   Button,
-  IconButton,
-  Tooltip,
-  useTheme } from '@mui/material';
+  useTheme,
+  alpha } from '@mui/material';
 import CasinoIcon from '@mui/icons-material/Casino';
 import SearchIcon from '@mui/icons-material/Search';
 import { CopyButton } from '@/src/components/CopyButton';
@@ -286,7 +285,6 @@ export default function MacLookup() {
   const [input, setInput] = useState('');
   const [result, setResult] = useState<{ manufacturer: string; oui: string; formatted: string } | null>(null);
   const [error, setError] = useState('');
-  const [copied, setCopied] = useState('');
 
   const handleInputChange = (value: string) => {
     const formatted = formatMac(value);
@@ -323,18 +321,12 @@ export default function MacLookup() {
     }
   };
 
-  const copyValue = async (label: string, value: string) => {
-    await navigator.clipboard.writeText(value);
-    setCopied(label);
-    setTimeout(() => setCopied(''), 2000);
-  };
-
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3
         }}
@@ -347,8 +339,7 @@ export default function MacLookup() {
           <TextField
             fullWidth
             size="small"
-            label="MAC-адрес"
-            placeholder="00:1A:2B:3C:4D:5E"
+            placeholder="MAC-адрес (00:1A:2B:3C:4D:5E)"
             value={input}
             onChange={(e) => handleInputChange(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleLookup()}
@@ -381,7 +372,7 @@ export default function MacLookup() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               background: theme.palette.surfaceContainerLow
             }}

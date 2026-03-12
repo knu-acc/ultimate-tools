@@ -242,7 +242,7 @@ export default function JsonDataGen() {
             <Box key={field.id} sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
               <TextField
                 size="small"
-                label="Имя поля"
+                placeholder="Имя поля"
                 value={field.name}
                 onChange={(e) => updateField(field.id, 'name', e.target.value)}
                 sx={{ flex: 1 }}
@@ -250,7 +250,7 @@ export default function JsonDataGen() {
               <TextField
                 size="small"
                 select
-                label="Тип"
+                placeholder="Тип"
                 value={field.type}
                 onChange={(e) => updateField(field.id, 'type', e.target.value)}
                 sx={{ minWidth: 140 }}

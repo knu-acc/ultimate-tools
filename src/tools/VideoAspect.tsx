@@ -151,7 +151,7 @@ export default function VideoAspect() {
       {/* Input */}
       <Paper
         elevation={0}
-        sx={{ p: 3, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
@@ -260,7 +260,7 @@ export default function VideoAspect() {
       {/* Presets */}
       <Paper
         elevation={0}
-        sx={{ p: 2, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
           Пропорции
@@ -282,7 +282,7 @@ export default function VideoAspect() {
       {/* Resolution table */}
       <Paper
         elevation={0}
-        sx={{ p: 3, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
           Распространённые разрешения

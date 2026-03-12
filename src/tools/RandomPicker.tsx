@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider
 } from '@mui/material';
@@ -76,9 +76,6 @@ export default function RandomPicker() {
     }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Элементы (по одному на строку)
-          </Typography>
           <TextField
             multiline
             minRows={5}
@@ -86,7 +83,7 @@ export default function RandomPicker() {
             fullWidth
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Введите варианты..."
+            placeholder="Элементы (по одному на строку)..."
             disabled={animating}
             sx={{
               mb: 2,

@@ -232,7 +232,7 @@ export default function CalorieCalc() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha('#1976d2', 0.05)
@@ -253,7 +253,7 @@ export default function CalorieCalc() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha('#2e7d32', 0.05)
@@ -396,7 +396,7 @@ export default function CalorieCalc() {
             elevation={0}
             sx={{
               mt: 2,
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               background: alpha(theme.palette.warning.main, 0.03)
             }}

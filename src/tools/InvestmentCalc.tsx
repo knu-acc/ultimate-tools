@@ -98,7 +98,7 @@ export default function InvestmentCalc() {
     n.toLocaleString('ru-RU', { maximumFractionDigits: 1 });
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
@@ -118,11 +118,10 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label={`Начальная сумма (${sym})`}
+              placeholder={`Начальная сумма, ${sym}`}
               type="number"
               value={initial}
               onChange={(e) => setInitial(e.target.value)}
-              placeholder="100000"
               slotProps={{
                 input: { inputProps: { min: 0, step: 1000 } }
               }}
@@ -131,11 +130,10 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label={`Ежемесячное пополнение (${sym})`}
+              placeholder={`Ежемесячное пополнение, ${sym}`}
               type="number"
               value={monthly}
               onChange={(e) => setMonthly(e.target.value)}
-              placeholder="10000"
               slotProps={{
                 input: { inputProps: { min: 0, step: 500 } }
               }}
@@ -144,11 +142,10 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Годовая доходность (%)"
+              placeholder="Годовая доходность, %"
               type="number"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
-              placeholder="10"
               slotProps={{
                 input: {
                   inputProps: { min: 0.1, max: 100, step: 0.1 },
@@ -164,11 +161,10 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Срок (лет)"
+              placeholder="Срок, лет"
               type="number"
               value={years}
               onChange={(e) => setYears(e.target.value)}
-              placeholder="10"
               slotProps={{
                 input: { inputProps: { min: 1, max: 100, step: 1 } }
               }}

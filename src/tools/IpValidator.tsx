@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
-import ListIcon from '@mui/icons-material/List';
 import { CopyButton } from '@/src/components/CopyButton';
 
 
@@ -209,7 +208,6 @@ export default function IpValidator() {
         />
         <Chip
           label="Пакетный режим"
-          icon={<ListIcon />}
           onClick={() => setBatchMode(true)}
           variant={batchMode ? 'filled' : 'outlined'}
           color={batchMode ? 'primary' : 'default'}
@@ -225,11 +223,10 @@ export default function IpValidator() {
             sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}
           >
             <TextField
-              label="IP-адрес (IPv4 или IPv6)"
               value={singleIp}
               onChange={(e) => setSingleIp(e.target.value)}
               fullWidth
-              placeholder="192.168.1.1 или 2001:db8::1"
+              placeholder="IP-адрес (IPv4 или IPv6): 192.168.1.1 или 2001:db8::1"
               slotProps={{
                 input: {
                   sx: { fontFamily: 'monospace', fontSize: 16 }
@@ -276,19 +273,19 @@ export default function IpValidator() {
               {singleResult.valid && (
                 <>
                   <Grid size={{ xs: 6, sm: 3 }}>
-                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}>
+                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
                       <Typography variant="caption" color="text.secondary">Версия</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>{singleResult.version}</Typography>
                     </Paper>
                   </Grid>
                   <Grid size={{ xs: 6, sm: 3 }}>
-                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}>
+                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
                       <Typography variant="caption" color="text.secondary">Класс</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>{singleResult.class}</Typography>
                     </Paper>
                   </Grid>
                   <Grid size={{ xs: 12, sm: 6 }}>
-                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3 }}>
+                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
                       <Typography variant="caption" color="text.secondary">Тип</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>{singleResult.type}</Typography>
                     </Paper>
@@ -296,7 +293,7 @@ export default function IpValidator() {
 
                   {/* Binary */}
                   <Grid size={{ xs: 12 }}>
-                    <Paper elevation={0} sx={{ p: 2, borderRadius: 3 }}>
+                    <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>Двоичное представление</Typography>
                         <CopyButton text={singleResult.binary} />
@@ -327,16 +324,13 @@ export default function IpValidator() {
             elevation={0}
             sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}
           >
-            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Введите IP-адреса (по одному на строку)
-            </Typography>
             <TextField
               multiline
               rows={6}
               value={batchInput}
               onChange={(e) => setBatchInput(e.target.value)}
               fullWidth
-              placeholder={'192.168.1.1\n10.0.0.1\n8.8.8.8\n2001:db8::1'}
+              placeholder={'IP-адреса (по одному на строку):\n192.168.1.1\n10.0.0.1\n8.8.8.8\n2001:db8::1'}
               slotProps={{
                 input: {
                   sx: { fontFamily: 'monospace', fontSize: 13 }

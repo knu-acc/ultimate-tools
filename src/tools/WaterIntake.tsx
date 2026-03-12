@@ -75,12 +75,12 @@ export default function WaterIntake() {
   const progressColor = getProgressColor();
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Inputs */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -88,11 +88,10 @@ export default function WaterIntake() {
       >
         <TextField
           fullWidth
-          label="Вес (кг)"
+          placeholder="Вес, кг"
           type="number"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
-          placeholder="70"
           sx={{ mb: 2.5 }}
           slotProps={{
             input: { inputProps: { min: 20, max: 500, step: 0.5 } }
@@ -101,9 +100,6 @@ export default function WaterIntake() {
 
         {/* Activity level */}
         <Box sx={{ mb: 2.5 }}>
-          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-            Уровень активности
-          </Typography>
           <ToggleButtonGroup
             value={activity}
             exclusive
@@ -139,9 +135,6 @@ export default function WaterIntake() {
 
         {/* Climate */}
         <Box>
-          <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-            Климат
-          </Typography>
           <ToggleButtonGroup
             value={climate}
             exclusive
@@ -182,7 +175,7 @@ export default function WaterIntake() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha('#1976d2', 0.06)
@@ -203,7 +196,7 @@ export default function WaterIntake() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha('#2e7d32', 0.06)
@@ -226,7 +219,7 @@ export default function WaterIntake() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               borderRadius: 3
             }}
@@ -388,7 +381,7 @@ export default function WaterIntake() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               background: alpha('#0288d1', 0.03)
             }}

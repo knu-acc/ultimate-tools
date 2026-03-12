@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import {
-  Box, Typography, TextField, Paper, Grid, useTheme
+  Box, Typography, TextField, Paper, Grid, useTheme, alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
 
@@ -60,74 +60,77 @@ export default function MetaTagGenerator() {
   const descLength = description.length;
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Заголовок страницы
-          </Typography>
-          <TextField
-            fullWidth
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Мой сайт — Главная страница"
-            helperText={`${titleLength}/60 символов${titleLength > 60 ? ' ⚠️ Рекомендуется до 60' : ''}`}
-            sx={{ mb: 2 }}
-          />
+          <Paper
+            elevation={0}
+            sx={{
+              p: { xs: 2, sm: 3 },
+              mb: 2,
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+            }}
+          >
+            <TextField
+              fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Заголовок страницы"
+              helperText={`${titleLength}/60 символов${titleLength > 60 ? ' — рекомендуется до 60' : ''}`}
+              sx={{ mb: 2 }}
+            />
 
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Описание
-          </Typography>
-          <TextField
-            fullWidth
-            multiline
-            rows={3}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Краткое описание страницы для поисковых систем"
-            helperText={`${descLength}/160 символов${descLength > 160 ? ' ⚠️ Рекомендуется до 160' : ''}`}
-            sx={{ mb: 2 }}
-          />
+            <TextField
+              fullWidth
+              multiline
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Краткое описание страницы для поисковых систем"
+              helperText={`${descLength}/160 символов${descLength > 160 ? ' — рекомендуется до 160' : ''}`}
+              sx={{ mb: 2 }}
+            />
 
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Ключевые слова
-          </Typography>
-          <TextField
-            fullWidth
-            value={keywords}
-            onChange={(e) => setKeywords(e.target.value)}
-            placeholder="ключевое слово 1, ключевое слово 2"
-            sx={{ mb: 2 }}
-          />
+            <TextField
+              fullWidth
+              value={keywords}
+              onChange={(e) => setKeywords(e.target.value)}
+              placeholder="Ключевые слова через запятую"
+              sx={{ mb: 2 }}
+            />
 
-          <Grid container spacing={2}>
-            <Grid size={6}>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>Автор</Typography>
-              <TextField fullWidth size="small" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Имя автора" />
+            <Grid container spacing={2}>
+              <Grid size={6}>
+                <TextField fullWidth size="small" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Автор" />
+              </Grid>
+              <Grid size={6}>
+                <TextField fullWidth size="small" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://example.com" />
+              </Grid>
+              <Grid size={6}>
+                <TextField fullWidth size="small" value={image} onChange={(e) => setImage(e.target.value)} placeholder="https://example.com/og.jpg" />
+              </Grid>
+              <Grid size={6}>
+                <TextField fullWidth size="small" value={siteName} onChange={(e) => setSiteName(e.target.value)} placeholder="Имя сайта" />
+              </Grid>
             </Grid>
-            <Grid size={6}>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>URL</Typography>
-              <TextField fullWidth size="small" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://example.com" />
-            </Grid>
-            <Grid size={6}>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>Изображение</Typography>
-              <TextField fullWidth size="small" value={image} onChange={(e) => setImage(e.target.value)} placeholder="https://example.com/og.jpg" />
-            </Grid>
-            <Grid size={6}>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>Имя сайта</Typography>
-              <TextField fullWidth size="small" value={siteName} onChange={(e) => setSiteName(e.target.value)} placeholder="Мой Сайт" />
-            </Grid>
-          </Grid>
+          </Paper>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
           {/* Google Preview */}
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Превью Google
-          </Typography>
           <Paper
             elevation={0}
-            sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow, mb: 2 }}
+            sx={{
+              p: { xs: 2, sm: 3 },
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              mb: 2,
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+            }}
           >
             <Typography variant="body1" sx={{ color: '#1a0dab', fontWeight: 400, fontSize: '1.1rem', mb: 0.5 }}>
               {title || 'Заголовок страницы'}
@@ -141,35 +144,46 @@ export default function MetaTagGenerator() {
           </Paper>
 
           {/* Code output */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-            <Typography variant="subtitle2" fontWeight={600}>
-              HTML-код
-            </Typography>
-            <CopyButton text={output} />
-          </Box>
           <Paper
             elevation={0}
             sx={{
-              p: 2,
-              borderRadius: 2,
-              bgcolor: '#1e1e1e',
-              maxHeight: 400,
-              overflow: 'auto'
+              p: { xs: 2, sm: 3 },
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
-            <Box
-              component="pre"
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+              <Typography variant="subtitle2" fontWeight={600}>
+                HTML-код
+              </Typography>
+              <CopyButton text={output} />
+            </Box>
+            <Paper
+              elevation={0}
               sx={{
-                m: 0,
-                fontFamily: 'monospace',
-                fontSize: '0.75rem',
-                lineHeight: 1.6,
-                color: '#d4d4d4',
-                whiteSpace: 'pre-wrap'
+                p: 2,
+                borderRadius: 2,
+                bgcolor: '#1e1e1e',
+                maxHeight: 400,
+                overflow: 'auto'
               }}
             >
-              {output}
-            </Box>
+              <Box
+                component="pre"
+                sx={{
+                  m: 0,
+                  fontFamily: 'monospace',
+                  fontSize: '0.75rem',
+                  lineHeight: 1.6,
+                  color: '#d4d4d4',
+                  whiteSpace: 'pre-wrap'
+                }}
+              >
+                {output}
+              </Box>
+            </Paper>
           </Paper>
         </Grid>
       </Grid>

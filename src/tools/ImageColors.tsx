@@ -200,7 +200,13 @@ export default function ImageColors() {
             <Grid size={{ xs: 12, md: 5 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 3, borderRadius: 3 }}
+                sx={{
+                  p: { xs: 2, sm: 3 },
+                  borderRadius: 3,
+                  bgcolor: theme.palette.surfaceContainerLow,
+                  transition: 'all 200ms ease',
+                  '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+                }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -263,7 +269,13 @@ export default function ImageColors() {
             <Grid size={{ xs: 12, md: 7 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 3, borderRadius: 3 }}
+                sx={{
+                  p: { xs: 2, sm: 3 },
+                  borderRadius: 3,
+                  bgcolor: theme.palette.surfaceContainerLow,
+                  transition: 'all 200ms ease',
+                  '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+                }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="subtitle2" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -321,7 +333,14 @@ export default function ImageColors() {
           {colors.length > 0 && (
             <Paper
               elevation={0}
-              sx={{ p: 3, mt: 3, borderRadius: 3 }}
+              sx={{
+                p: { xs: 2, sm: 3 },
+                mt: 2,
+                borderRadius: 3,
+                bgcolor: theme.palette.surfaceContainerLow,
+                transition: 'all 200ms ease',
+                '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+              }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>

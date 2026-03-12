@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme, IconButton, Slider
+  Box, Typography, Paper, Button, Chip, alpha, useTheme, IconButton, Slider
 } from '@mui/material';
 import { PlayArrow, Pause, Refresh, SkipNext, Settings } from '@mui/icons-material';
 
@@ -231,7 +231,7 @@ export default function PomodoroTimer() {
       {showSettings && (
         <Paper
           elevation={0}
-          sx={{ p: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, maxWidth: 400, mx: 'auto' }}
+          sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, maxWidth: 400, mx: 'auto' }}
         >
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>Настройки</Typography>
 

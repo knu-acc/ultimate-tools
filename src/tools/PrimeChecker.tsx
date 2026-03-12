@@ -167,7 +167,7 @@ export default function PrimeChecker() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
               borderRadius: 3,
@@ -282,10 +282,12 @@ export default function PrimeChecker() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: alpha(theme.palette.primary.main, 0.04)
+                  background: alpha(theme.palette.primary.main, 0.04),
+                  transition: 'all 200ms ease',
+                  '&:hover': { background: alpha(theme.palette.primary.main, 0.08) }
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
@@ -308,10 +310,12 @@ export default function PrimeChecker() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   textAlign: 'center',
                   borderRadius: 3,
-                  background: alpha(theme.palette.success.main, 0.04)
+                  background: alpha(theme.palette.success.main, 0.04),
+                  transition: 'all 200ms ease',
+                  '&:hover': { background: alpha(theme.palette.success.main, 0.08) }
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>

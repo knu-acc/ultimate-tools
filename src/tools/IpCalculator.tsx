@@ -10,7 +10,8 @@ import {
   MenuItem,
   Grid,
   Button,
-  useTheme } from '@mui/material';
+  useTheme,
+  alpha } from '@mui/material';
 
 function isValidIp(ip: string): boolean {
   const parts = ip.split('.');
@@ -116,7 +117,7 @@ export default function IpCalculator() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -131,7 +132,6 @@ export default function IpCalculator() {
             value={ip}
             onChange={(e) => setIp(e.target.value)}
             placeholder="192.168.1.0"
-            label="IP-адрес"
             error={ip !== '' && !valid}
             helperText={ip !== '' && !valid ? 'Некорректный IP-адрес' : ''}
             slotProps={{ htmlInput: { style: { fontFamily: 'monospace', fontSize: '1.1rem' } } }}
@@ -177,7 +177,7 @@ export default function IpCalculator() {
                     transition: 'all 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
-                      background: theme.palette.surfaceContainerLow
+                      background: alpha(theme.palette.primary.main, 0.04)
                     }
                   }}
                 >
@@ -202,7 +202,7 @@ export default function IpCalculator() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3
             }}
           >

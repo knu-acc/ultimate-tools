@@ -209,7 +209,7 @@ export default function SubnetCalc() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -261,8 +261,7 @@ export default function SubnetCalc() {
                 setNetwork(e.target.value);
                 setCalculated(false);
               }}
-              label="Адрес сети с CIDR"
-              placeholder="192.168.1.0/24"
+              placeholder="Адрес сети с CIDR (192.168.1.0/24)"
               error={!validNetwork}
               helperText={!validNetwork ? 'Формат: IP/CIDR (например, 192.168.1.0/24)' : ''}
               slotProps={{ htmlInput: { style: { fontFamily: 'monospace' } } }}
@@ -279,7 +278,7 @@ export default function SubnetCalc() {
                   setNumSubnets(e.target.value);
                   setCalculated(false);
                 }}
-                label="Количество подсетей"
+                placeholder="Количество подсетей"
                 slotProps={{ htmlInput: { min: 1, max: 256 } }}
               />
             )}
@@ -293,7 +292,7 @@ export default function SubnetCalc() {
                   setNumHosts(e.target.value);
                   setCalculated(false);
                 }}
-                label="Хостов на подсеть"
+                placeholder="Хостов на подсеть"
                 slotProps={{ htmlInput: { min: 1 } }}
               />
             )}
@@ -306,8 +305,7 @@ export default function SubnetCalc() {
                   setVlsmInput(e.target.value);
                   setCalculated(false);
                 }}
-                label="Количество хостов (через запятую)"
-                placeholder="100, 50, 25, 10"
+                placeholder="Количество хостов через запятую (100, 50, 25, 10)"
               />
             )}
           </Grid>
@@ -326,7 +324,7 @@ export default function SubnetCalc() {
         <Paper
           elevation={0}
           sx={{
-            p: 3,
+            p: { xs: 2, sm: 3 },
             borderRadius: 3
           }}
         >
@@ -397,7 +395,7 @@ export default function SubnetCalc() {
         <Paper
           elevation={0}
           sx={{
-            p: 3,
+            p: { xs: 2, sm: 3 },
             borderRadius: 3,
             textAlign: 'center'
           }}

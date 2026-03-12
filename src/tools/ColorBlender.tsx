@@ -152,17 +152,17 @@ export default function ColorBlender() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Grid container spacing={3}>
           {/* Color A */}
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Цвет A
-            </Typography>
             <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
               <Box
                 sx={{
@@ -199,9 +199,6 @@ export default function ColorBlender() {
 
           {/* Color B */}
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Цвет B
-            </Typography>
             <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center' }}>
               <Box
                 sx={{
@@ -282,9 +279,12 @@ export default function ColorBlender() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>

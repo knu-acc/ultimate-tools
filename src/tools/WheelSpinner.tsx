@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme
 } from '@mui/material';
@@ -157,9 +157,6 @@ export default function WheelSpinner() {
     }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Элементы (по одному на строку)
-          </Typography>
           <TextField
             multiline
             minRows={5}
@@ -167,7 +164,7 @@ export default function WheelSpinner() {
             fullWidth
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Введите варианты..."
+            placeholder="Элементы (по одному на строку)..."
             disabled={spinning}
             sx={{
               mb: 2,

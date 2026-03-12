@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme
 } from '@mui/material';

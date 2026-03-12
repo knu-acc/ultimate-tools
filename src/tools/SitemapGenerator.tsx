@@ -9,7 +9,6 @@ import {
   Grid,
   Button,
   IconButton,
-  Tooltip,
   Chip,
   Slider,
   MenuItem,
@@ -134,9 +133,12 @@ export default function SitemapGenerator() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -148,10 +150,9 @@ export default function SitemapGenerator() {
             <TextField
               fullWidth
               size="small"
-              label="URL (loc)"
               value={loc}
               onChange={(e) => setLoc(e.target.value)}
-              placeholder="https://example.com/page"
+              placeholder="URL (https://example.com/page)"
               sx={{ '& .MuiInputBase-root': { fontFamily: 'monospace' } }}
             />
           </Grid>
@@ -171,7 +172,7 @@ export default function SitemapGenerator() {
               fullWidth
               size="small"
               select
-              label="Частота обновления (changefreq)"
+              label="Частота обновления"
               value={changefreq}
               onChange={(e) => setChangefreq(e.target.value)}
             >
@@ -237,9 +238,12 @@ export default function SitemapGenerator() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -344,8 +348,11 @@ export default function SitemapGenerator() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          borderRadius: 3
+          p: { xs: 2, sm: 3 },
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>

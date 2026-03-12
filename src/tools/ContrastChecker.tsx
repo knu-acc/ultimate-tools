@@ -49,28 +49,26 @@ export default function ContrastChecker() {
   const ratingColor = ratio >= 7 ? theme.palette.success.main : ratio >= 4.5 ? '#4CAF50' : ratio >= 3 ? theme.palette.warning.main : theme.palette.error.main;
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={6}>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>Цвет текста</Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }} />
-                <TextField size="small" value={fgColor} onChange={(e) => setFgColor(e.target.value)} sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
+                <TextField size="small" value={fgColor} onChange={(e) => setFgColor(e.target.value)} placeholder="Цвет текста" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
               </Box>
             </Grid>
             <Grid size={6}>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>Цвет фона</Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }} />
-                <TextField size="small" value={bgColor} onChange={(e) => setBgColor(e.target.value)} sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
+                <TextField size="small" value={bgColor} onChange={(e) => setBgColor(e.target.value)} placeholder="Цвет фона" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
               </Box>
             </Grid>
           </Grid>
 
           {/* Contrast Ratio */}
-          <Paper elevation={0} sx={{ p: 3, borderRadius: 3, bgcolor: alpha(ratingColor, 0.08), textAlign: 'center', mb: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: alpha(ratingColor, 0.08), textAlign: 'center', mb: 2 }}>
             <Typography variant="h2" fontWeight={700} sx={{ color: ratingColor }}>
               {ratio.toFixed(2)}:1
             </Typography>
@@ -122,7 +120,7 @@ export default function ContrastChecker() {
 
         <Grid size={{ xs: 12, md: 7 }}>
           {/* Preview */}
-          <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: bgColor, mb: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: bgColor, mb: 2 }}>
             <Typography variant="h4" sx={{ color: fgColor, fontWeight: 700, mb: 1 }}>
               Заголовок страницы
             </Typography>
@@ -134,7 +132,7 @@ export default function ContrastChecker() {
             </Typography>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: fgColor }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: fgColor }}>
             <Typography variant="h4" sx={{ color: bgColor, fontWeight: 700, mb: 1 }}>
               Инвертированный вариант
             </Typography>

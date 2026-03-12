@@ -10,7 +10,6 @@ import {
   Grid,
   useTheme,
   alpha,
-  IconButton,
   Tabs,
   Tab,
 } from '@mui/material';
@@ -113,15 +112,6 @@ export default function EmailValidator() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="example@domain.com"
               sx={{ '& .MuiInputBase-input': { fontFamily: 'monospace', fontSize: '1.1rem' } }}
-              slotProps={{
-                input: {
-                  endAdornment: email.trim() ? (
-                    <IconButton size="small" onClick={() => setEmail('')} sx={{ mr: 0.5 }}>
-                      <CancelIcon fontSize="small" sx={{ color: 'text.disabled' }} />
-                    </IconButton>
-                  ) : null
-                }
-              }}
             />
 
             {email.trim() && (
@@ -206,7 +196,7 @@ export default function EmailValidator() {
           </Paper>
 
           {batchResults.length > 0 && (
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               {/* Summary */}
               <Grid size={12}>
                 <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>

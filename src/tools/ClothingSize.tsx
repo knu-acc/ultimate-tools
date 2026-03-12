@@ -176,7 +176,7 @@ export default function ClothingSize() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -228,9 +228,6 @@ export default function ClothingSize() {
 
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-              Система размеров
-            </Typography>
             <Select
               size="small"
               fullWidth
@@ -249,9 +246,6 @@ export default function ClothingSize() {
             </Select>
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-              Размер
-            </Typography>
             <Select
               size="small"
               fullWidth
@@ -287,7 +281,7 @@ export default function ClothingSize() {
                     transition: 'all 200ms ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
-                      background: theme.palette.surfaceContainerLow
+                      background: alpha(theme.palette.primary.main, 0.04)
                     }
                   }}
                 >
@@ -312,7 +306,7 @@ export default function ClothingSize() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               borderRadius: 3
             }}
@@ -355,7 +349,7 @@ export default function ClothingSize() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3
         }}
       >

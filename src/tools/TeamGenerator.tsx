@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider,
   IconButton, Tooltip
@@ -133,9 +133,6 @@ export default function TeamGenerator() {
     }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Участники (по одному на строку)
-          </Typography>
           <TextField
             multiline
             minRows={6}
@@ -143,7 +140,7 @@ export default function TeamGenerator() {
             fullWidth
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder={'Иван\nМария\nАлексей\nОльга'}
+            placeholder={'Участники (по одному на строку):\nИван\nМария\nАлексей\nОльга'}
             disabled={animating}
             sx={{
               mb: 2,

@@ -141,7 +141,7 @@ export default function PortList() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -153,7 +153,6 @@ export default function PortList() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Поиск по номеру порта или названию сервиса..."
-          label="Поиск"
           slotProps={{ htmlInput: { style: { fontSize: '1rem' } } }}
           sx={{ mb: 2 }}
         />
@@ -205,7 +204,7 @@ export default function PortList() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: 3
         }}
       >

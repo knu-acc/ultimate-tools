@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Typography,
@@ -8,9 +8,9 @@ import {
   TextField,
   Tooltip,
   useTheme,
-  alpha,
-  Snackbar
+  alpha
 } from '@mui/material';
+import { CopyButton } from '@/src/components/CopyButton';
 
 const materialShades = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', 'A100', 'A200', 'A400', 'A700'] as const;
 
@@ -47,31 +47,28 @@ function getContrastColor(hex: string): string {
 export default function MaterialColors() {
   const theme = useTheme();
   const [search, setSearch] = useState('');
-  const [snackbar, setSnackbar] = useState('');
-
-  const copyColor = useCallback(async (hex: string) => {
-    await navigator.clipboard.writeText(hex);
-    setSnackbar(hex);
-  }, []);
 
   const filteredColors = Object.entries(materialColors).filter(([name]) =>
     name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <TextField
           fullWidth
           size="small"
-          label="Поиск по названию цвета"
+          placeholder="Поиск по названию цвета..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           sx={{ mb: 2 }}
@@ -95,9 +92,8 @@ export default function MaterialColors() {
                 {availableShades.map((shade) => {
                   const hex = colorShades[shade];
                   return (
-                    <Tooltip key={shade} title={`${colorName} ${shade}: ${hex} (нажмите для копирования)`}>
+                    <Tooltip key={shade} title={`${colorName} ${shade}: ${hex}`}>
                       <Box
-                        onClick={() => copyColor(hex)}
                         sx={{
                           width: { xs: 40, sm: 56, md: 68 },
                           height: { xs: 40, sm: 56, md: 60 },
@@ -114,7 +110,8 @@ export default function MaterialColors() {
                             transform: 'scale(1.15)',
                             zIndex: 1,
                             boxShadow: `0 4px 12px ${alpha(hex, 0.5)}`
-                          }
+                          },
+                          position: 'relative'
                         }}
                       >
                         <Typography
@@ -137,6 +134,9 @@ export default function MaterialColors() {
                         >
                           {hex}
                         </Typography>
+                        <Box sx={{ position: 'absolute', top: -4, right: -4, opacity: 0, '&:hover': { opacity: 1 }, transition: 'opacity 150ms ease' }}>
+                          <CopyButton text={hex} size="small" />
+                        </Box>
                       </Box>
                     </Tooltip>
                   );
@@ -146,14 +146,6 @@ export default function MaterialColors() {
           );
         })}
       </Paper>
-
-      <Snackbar
-        open={!!snackbar}
-        autoHideDuration={1500}
-        onClose={() => setSnackbar('')}
-        message={`Скопировано: ${snackbar}`}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
     </Box>
   );
 }

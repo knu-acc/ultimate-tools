@@ -107,7 +107,7 @@ export default function GcdLcm() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha(theme.palette.primary.main, 0.04),
@@ -148,7 +148,7 @@ export default function GcdLcm() {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 3,
+                  p: { xs: 2, sm: 3 },
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha(theme.palette.success.main, 0.04),

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme
 } from '@mui/material';

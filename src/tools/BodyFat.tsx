@@ -109,12 +109,12 @@ export default function BodyFat() {
     n.toLocaleString('ru-RU', { maximumFractionDigits: 1 });
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -152,11 +152,10 @@ export default function BodyFat() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Вес (кг)"
+              placeholder="Вес, кг"
               type="number"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
-              placeholder="70"
               slotProps={{
                 input: { inputProps: { min: 20, max: 400, step: 0.1 } }
               }}
@@ -165,11 +164,10 @@ export default function BodyFat() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Рост (см)"
+              placeholder="Рост, см"
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
-              placeholder="175"
               slotProps={{
                 input: { inputProps: { min: 50, max: 300, step: 0.1 } }
               }}
@@ -178,11 +176,10 @@ export default function BodyFat() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Обхват шеи (см)"
+              placeholder="Обхват шеи, см"
               type="number"
               value={neck}
               onChange={(e) => setNeck(e.target.value)}
-              placeholder="38"
               slotProps={{
                 input: { inputProps: { min: 10, max: 100, step: 0.1 } }
               }}
@@ -191,11 +188,10 @@ export default function BodyFat() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Обхват талии (см)"
+              placeholder="Обхват талии, см"
               type="number"
               value={waist}
               onChange={(e) => setWaist(e.target.value)}
-              placeholder="85"
               slotProps={{
                 input: { inputProps: { min: 30, max: 250, step: 0.1 } }
               }}
@@ -205,11 +201,10 @@ export default function BodyFat() {
             <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
-                label="Обхват бёдер (см)"
+                placeholder="Обхват бёдер, см"
                 type="number"
                 value={hip}
                 onChange={(e) => setHip(e.target.value)}
-                placeholder="95"
                 slotProps={{
                   input: { inputProps: { min: 30, max: 250, step: 0.1 } }
                 }}
@@ -226,7 +221,7 @@ export default function BodyFat() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
               borderRadius: 3,
@@ -294,7 +289,7 @@ export default function BodyFat() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               borderRadius: 3
             }}
@@ -345,7 +340,7 @@ export default function BodyFat() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               borderRadius: 3
             }}
@@ -401,7 +396,7 @@ export default function BodyFat() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               background: theme.palette.surfaceContainerLow
             }}

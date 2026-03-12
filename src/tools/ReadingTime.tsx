@@ -105,7 +105,7 @@ export default function ReadingTime() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
@@ -139,7 +139,9 @@ export default function ReadingTime() {
                 p: 2,
                 textAlign: 'center',
                 borderRadius: 3,
-                backgroundColor: alpha(card.color, 0.06)
+                backgroundColor: alpha(card.color, 0.06),
+                transition: 'all 200ms ease',
+                '&:hover': { backgroundColor: alpha(card.color, 0.1) }
               }}
             >
               <Typography variant="h5" sx={{ fontWeight: 700, color: card.color, mb: 0.5 }}>
@@ -158,7 +160,7 @@ export default function ReadingTime() {
         ))}
       </Grid>
 
-      <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
           <Chip
             label={`Средняя длина слова: ${stats.avgWordLength.toFixed(1)} симв.`}

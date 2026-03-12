@@ -9,7 +9,8 @@ import {
   Grid,
   Chip,
   Button,
-  useTheme } from '@mui/material';
+  useTheme,
+  alpha } from '@mui/material';
 
 interface ParsedUA {
   browser: string;
@@ -221,15 +222,12 @@ export default function UserAgentParser() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow
         }}
       >
-        <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Строка User-Agent
-        </Typography>
         <TextField
           size="small"
           fullWidth
@@ -268,7 +266,7 @@ export default function UserAgentParser() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
           borderRadius: 3
         }}
@@ -310,7 +308,7 @@ export default function UserAgentParser() {
                   transition: 'all 200ms ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
-                    background: theme.palette.surfaceContainerLow
+                    background: alpha(theme.palette.primary.main, 0.04)
                   }
                 }}
               >

@@ -118,9 +118,8 @@ export default function TodoList() {
   ];
 
   return (
-    <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ }}>
-        <Box sx={{ p: 3 }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
           {/* Input */}
           <Box sx={{ display: 'flex', gap: 1.5, mb: 2 }}>
             <TextField
@@ -281,7 +280,6 @@ export default function TodoList() {
               </Box>
             </>
           )}
-        </Box>
       </Paper>
     </Box>
   );

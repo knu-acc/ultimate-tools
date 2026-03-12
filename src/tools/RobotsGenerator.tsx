@@ -9,7 +9,6 @@ import {
   Grid,
   Button,
   IconButton,
-  Tooltip,
   Chip,
   MenuItem,
   alpha,
@@ -111,9 +110,12 @@ export default function RobotsGenerator() {
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 3,
+          bgcolor: theme.palette.surfaceContainerLow,
+          transition: 'all 200ms ease',
+          '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
@@ -156,18 +158,17 @@ export default function RobotsGenerator() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
-              borderRadius: 3
+              p: { xs: 2, sm: 3 },
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Настройки
-            </Typography>
-
             <TextField
               fullWidth
               size="small"
-              label="User-agent"
+              placeholder="User-agent"
               value={userAgent}
               onChange={(e) => setUserAgent(e.target.value)}
               sx={{ mb: 2 }}
@@ -218,17 +219,16 @@ export default function RobotsGenerator() {
             <TextField
               fullWidth
               size="small"
-              label="Sitemap URL"
               value={sitemapUrl}
               onChange={(e) => setSitemapUrl(e.target.value)}
-              placeholder="https://example.com/sitemap.xml"
+              placeholder="Sitemap URL (https://example.com/sitemap.xml)"
               sx={{ mb: 2, '& .MuiInputBase-root': { fontFamily: 'monospace' } }}
             />
 
             <TextField
               fullWidth
               size="small"
-              label="Crawl-delay (секунды)"
+              placeholder="Crawl-delay (секунды)"
               type="number"
               value={crawlDelay}
               onChange={(e) => setCrawlDelay(e.target.value)}
@@ -242,8 +242,11 @@ export default function RobotsGenerator() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
-              borderRadius: 3
+              p: { xs: 2, sm: 3 },
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>

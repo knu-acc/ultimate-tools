@@ -3,9 +3,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Box, Typography, TextField, Button, Paper, Grid, Slider,
-  useTheme, Select, MenuItem, FormControl, InputLabel
+  useTheme, alpha
 } from '@mui/material';
-import { Download, QrCode2 } from '@mui/icons-material';
+import { Download } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
 
 
@@ -61,74 +61,85 @@ export default function QrGenerator() {
   };
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Содержимое QR-кода
-          </Typography>
-          <TextField
-            fullWidth
-            multiline
-            rows={3}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Введите текст или URL..."
-            sx={{ mb: 2 }}
-          />
+          <Paper
+            elevation={0}
+            sx={{
+              p: { xs: 2, sm: 3 },
+              mb: 2,
+              borderRadius: 3,
+              bgcolor: theme.palette.surfaceContainerLow,
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
+            }}
+          >
+            <TextField
+              fullWidth
+              multiline
+              rows={3}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Введите текст или URL..."
+              sx={{ mb: 2 }}
+            />
 
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Размер: {size}px
-          </Typography>
-          <Slider
-            value={size}
-            onChange={(_, v) => setSize(v as number)}
-            min={128}
-            max={512}
-            step={32}
-            sx={{ mb: 2 }}
-          />
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+              Размер: {size}px
+            </Typography>
+            <Slider
+              value={size}
+              onChange={(_, v) => setSize(v as number)}
+              min={128}
+              max={512}
+              step={32}
+              sx={{ mb: 2 }}
+            />
 
-          <Grid container spacing={2}>
-            <Grid size={6}>
-              <Typography variant="caption" color="text.secondary">Цвет QR</Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                <input
-                  type="color"
-                  value={fgColor}
-                  onChange={(e) => setFgColor(e.target.value)}
-                  style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }}
-                />
-                <Typography variant="body2">{fgColor}</Typography>
-              </Box>
+            <Grid container spacing={2}>
+              <Grid size={6}>
+                <Typography variant="caption" color="text.secondary">Цвет QR</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
+                  <input
+                    type="color"
+                    value={fgColor}
+                    onChange={(e) => setFgColor(e.target.value)}
+                    style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }}
+                  />
+                  <Typography variant="body2">{fgColor}</Typography>
+                </Box>
+              </Grid>
+              <Grid size={6}>
+                <Typography variant="caption" color="text.secondary">Цвет фона</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
+                  <input
+                    type="color"
+                    value={bgColor}
+                    onChange={(e) => setBgColor(e.target.value)}
+                    style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }}
+                  />
+                  <Typography variant="body2">{bgColor}</Typography>
+                </Box>
+              </Grid>
             </Grid>
-            <Grid size={6}>
-              <Typography variant="caption" color="text.secondary">Цвет фона</Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                <input
-                  type="color"
-                  value={bgColor}
-                  onChange={(e) => setBgColor(e.target.value)}
-                  style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }}
-                />
-                <Typography variant="body2">{bgColor}</Typography>
-              </Box>
-            </Grid>
-          </Grid>
 
-          <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-            Генератор создаёт полноценные сканируемые QR-коды стандарта ISO 18004.
-          </Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
+              Генератор создаёт полноценные сканируемые QR-коды стандарта ISO 18004.
+            </Typography>
+          </Paper>
         </Grid>
 
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
-              textAlign: 'center'
+              textAlign: 'center',
+              transition: 'all 200ms ease',
+              '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
             <canvas

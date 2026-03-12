@@ -108,7 +108,7 @@ export default function BmiCalculator() {
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
               borderRadius: 3,
@@ -263,7 +263,7 @@ export default function BmiCalculator() {
             <Paper
               elevation={0}
               sx={{
-                p: 3,
+                p: { xs: 2, sm: 3 },
                 borderRadius: 3,
                 background: alpha('#2e7d32', 0.04)
               }}
