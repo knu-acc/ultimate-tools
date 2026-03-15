@@ -11,16 +11,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const group = getGroupBySlug(slug);
   if (!group) return { title: 'Категория не найдена' };
   const groupTools = getToolsByGroup(group.id);
+  const toolNames = groupTools.slice(0, 5).map(t => t.name).join(', ');
+  const allKeywords = [...new Set(groupTools.flatMap(t => t.keywords))].slice(0, 15);
+
+  const title = `${group.name} онлайн — ${groupTools.length} бесплатных инструментов`;
+  const description = `${groupTools.length} бесплатных онлайн-инструментов: ${toolNames} и другие. ${group.description}. Без регистрации, работают в браузере.`;
+
   return {
-    title: `${group.name} — ${groupTools.length} бесплатных онлайн инструментов`,
-    description: `${group.description}. Инструменты: ${groupTools.slice(0, 3).map(t => t.name).join(', ')} и другие. Бесплатно.`,
-    keywords: [...new Set(groupTools.flatMap(t => t.keywords))].slice(0, 10),
+    title,
+    description,
+    keywords: allKeywords,
     openGraph: {
-      title: `${group.name} | Ultimate Tools`,
-      description: group.description,
+      title: `${group.name} — бесплатные онлайн-инструменты | Ultimate Tools`,
+      description,
       siteName: 'Ultimate Tools',
       locale: 'ru_RU',
+      type: 'website',
       url: `https://utools.app/group/${slug}`,
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
     },
     alternates: {
       canonical: `https://utools.app/group/${slug}`,

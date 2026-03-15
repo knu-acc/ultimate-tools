@@ -8,6 +8,20 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
   },
+  async redirects() {
+    return [
+      {
+        source: '/tools/qr-generator',
+        destination: '/tools/qr-code-gen',
+        permanent: true,
+      },
+      {
+        source: '/tools/barcode-generator',
+        destination: '/tools/barcode-gen',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

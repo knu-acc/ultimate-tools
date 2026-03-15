@@ -12,18 +12,26 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!tool) return { title: 'Инструмент не найден' };
   const group = toolGroups.find(g => g.id === tool.groupId);
 
-  // Use seoTitle/seoDescription if available, otherwise generate
   const title = (tool as any).seoTitle || `${tool.name} онлайн — бесплатный инструмент`;
   const description = (tool as any).seoDescription ||
     `${tool.description}. Бесплатно, без регистрации. Работает в браузере. Категория: ${group?.name}. Ultimate Tools — 150+ бесплатных онлайн-утилит.`;
 
+  const keywords = [
+    ...tool.keywords,
+    'онлайн',
+    'бесплатно',
+    'без регистрации',
+    group?.name || '',
+    'Ultimate Tools',
+  ].filter(Boolean);
+
   return {
     title,
     description,
-    keywords: [...tool.keywords, 'онлайн', 'бесплатно', 'без регистрации', group?.name || ''].filter(Boolean),
+    keywords,
     openGraph: {
-      title: `${tool.name} | Ultimate Tools`,
-      description: tool.description,
+      title: `${title} | Ultimate Tools`,
+      description,
       url: `https://utools.app/tools/${slug}`,
       type: 'website',
       locale: 'ru_RU',
@@ -31,8 +39,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: 'summary',
-      title: `${tool.name} | Ultimate Tools`,
-      description: tool.description,
+      title: `${title} | Ultimate Tools`,
+      description,
     },
     alternates: {
       canonical: `https://utools.app/tools/${slug}`,
