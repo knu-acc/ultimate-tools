@@ -93,13 +93,14 @@ export default function HomePage() {
               <Chip
                 key={tag.slug}
                 label={tag.name}
-                size="small"
                 component={Link}
                 href={`/tools/${tag.slug}`}
                 clickable
                 sx={{
                   bgcolor: theme.palette.surfaceContainerHigh,
                   '&:hover': { bgcolor: theme.palette.surfaceContainerHighest },
+                  height: 36,
+                  fontSize: '0.875rem',
                 }}
               />
             ))}

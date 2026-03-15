@@ -149,6 +149,23 @@ const commonComponents = {
         borderRadius: md3Shape.small,
         fontWeight: 500,
         letterSpacing: '0.1px',
+        transition: `all ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+      },
+      sizeSmall: {
+        height: 32,
+        '& .MuiChip-label': {
+          paddingLeft: 10,
+          paddingRight: 10,
+          fontSize: '0.8125rem',
+        },
+        '& .MuiChip-icon': {
+          fontSize: '1rem',
+          marginLeft: 6,
+        },
+        '& .MuiChip-deleteIcon': {
+          fontSize: '1rem',
+          marginRight: 6,
+        },
       },
     },
   },
@@ -353,9 +370,33 @@ const commonComponents = {
       root: {
         borderRadius: `${md3Shape.medium}px !important`,
         '&:before': { display: 'none' },
+        overflow: 'hidden',
+        transition: `border-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
         '&.Mui-expanded': {
           margin: '8px 0',
         },
+      },
+    },
+  },
+  MuiAccordionSummary: {
+    styleOverrides: {
+      root: {
+        minHeight: 56,
+        padding: '0 20px',
+        transition: `background-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+        '& .MuiAccordionSummary-content': {
+          margin: '16px 0',
+        },
+        '& .MuiAccordionSummary-expandIconWrapper': {
+          transition: `transform ${md3Motion.duration.medium2} ${md3Motion.easing.standard}`,
+        },
+      },
+    },
+  },
+  MuiAccordionDetails: {
+    styleOverrides: {
+      root: {
+        padding: '0 20px 20px',
       },
     },
   },

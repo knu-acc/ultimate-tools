@@ -282,7 +282,6 @@ export default function TextFormatterTool() {
             <Tooltip key={preset.label} title={preset.description}>
               <Chip
                 label={preset.label}
-                size="small"
                 onClick={() => handlePreset(preset.ops)}
                 variant="outlined"
                 sx={{ cursor: 'pointer' }}
@@ -421,7 +420,6 @@ export default function TextFormatterTool() {
                 <Tooltip key={id} title={op.description} placement="top">
                   <Chip
                     label={op.label}
-                    size="small"
                     onClick={() => {
                       const newOps = isSelected
                         ? selectedOps.filter(o => o !== id)
@@ -431,7 +429,7 @@ export default function TextFormatterTool() {
                     color={isSelected ? 'primary' : 'default'}
                     variant={isSelected ? 'filled' : 'outlined'}
                     sx={{ cursor: 'pointer', borderRadius: 2 }}
-                    icon={isSelected ? <CheckCircle sx={{ fontSize: '14px !important' }} /> : undefined}
+                    icon={isSelected ? <CheckCircle sx={{ fontSize: '16px !important' }} /> : undefined}
                   />
                 </Tooltip>
               );

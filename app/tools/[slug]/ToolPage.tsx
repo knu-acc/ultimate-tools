@@ -894,20 +894,37 @@ export default function ToolPage({ slug }: { slug: string }) {
                   disableGutters
                   sx={{
                     bgcolor: theme.palette.surfaceContainerLow,
-                    borderRadius: '12px !important',
                     mb: 1,
-                    '&:before': { display: 'none' },
-                    border: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
+                    border: `1px solid ${alpha(theme.palette.divider, 0.25)}`,
+                    '&.Mui-expanded': {
+                      borderColor: alpha(theme.palette.primary.main, 0.3),
+                    },
                   }}
                 >
                   <AccordionSummary
-                    expandIcon={<ExpandMore />}
-                    sx={{ borderRadius: 3 }}
+                    expandIcon={
+                      <Box sx={{
+                        width: 36, height: 36,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        borderRadius: '50%',
+                        transition: `background-color 200ms cubic-bezier(0.2,0,0,1)`,
+                        '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1) },
+                      }}>
+                        <ExpandMore sx={{ color: theme.palette.primary.main, fontSize: 22 }} />
+                      </Box>
+                    }
+                    sx={{
+                      '&:hover': { bgcolor: alpha(theme.palette.text.primary, 0.04) },
+                    }}
                   >
-                    <Typography variant="body2" fontWeight={500}>{faq.q}</Typography>
+                    <Typography variant="body1" fontWeight={500} color="text.primary">
+                      {faq.q}
+                    </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography variant="body2" color="text.secondary">{faq.a}</Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.75 }}>
+                      {faq.a}
+                    </Typography>
                   </AccordionDetails>
                 </Accordion>
               ))}
@@ -951,7 +968,6 @@ export default function ToolPage({ slug }: { slug: string }) {
                   component={Link}
                   href={`/group/${g.slug}`}
                   clickable
-                  size="small"
                   variant={g.id === group?.id ? 'filled' : 'outlined'}
                   color={g.id === group?.id ? 'primary' : 'default'}
                 />
