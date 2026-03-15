@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import {
   Box, Typography, Paper, Grid, TextField, Chip, alpha, useTheme
 } from '@mui/material';
+import ColorPickerInput from '@/src/components/ColorPickerInput';
 
 function hexToRgb(hex: string): [number, number, number] {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -55,13 +56,13 @@ export default function ContrastChecker() {
           <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={6}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }} />
+                <ColorPickerInput value={fgColor} onChange={setFgColor} label="Цвет текста" />
                 <TextField size="small" value={fgColor} onChange={(e) => setFgColor(e.target.value)} placeholder="Цвет текста" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
               </Box>
             </Grid>
             <Grid size={6}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }} />
+                <ColorPickerInput value={bgColor} onChange={setBgColor} label="Цвет фона" />
                 <TextField size="small" value={bgColor} onChange={(e) => setBgColor(e.target.value)} placeholder="Цвет фона" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
               </Box>
             </Grid>

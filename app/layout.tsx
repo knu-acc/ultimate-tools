@@ -30,14 +30,14 @@ export const metadata: Metadata = {
     'бесплатно без регистрации',
   ],
   applicationName: 'Ultimate Tools',
-  authors: [{ name: 'Ultimate Tools', url: 'https://utools.app' }],
+  authors: [{ name: 'Ultimate Tools', url: 'https://ulti-tools.com' }],
   creator: 'Ultimate Tools',
   publisher: 'Ultimate Tools',
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
     siteName: 'Ultimate Tools',
-    url: 'https://utools.app',
+    url: 'https://ulti-tools.com',
     title: `Ultimate Tools — ${stats.totalTools}+ бесплатных онлайн инструментов`,
     description: `Конвертеры, калькуляторы, генераторы, инструменты для разработчиков и многое другое. ${stats.totalTools}+ утилит — всё бесплатно, работает в браузере.`,
   },
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://utools.app',
-    languages: { 'ru': 'https://utools.app' },
+    canonical: 'https://ulti-tools.com',
+    languages: { 'ru': 'https://ulti-tools.com' },
   },
   verification: {
     yandex: 'placeholder',
@@ -87,14 +87,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               name: 'Ultimate Tools',
-              url: 'https://utools.app',
+              url: 'https://ulti-tools.com',
               description: `${stats.totalTools}+ бесплатных онлайн-инструментов`,
               inLanguage: 'ru',
               potentialAction: {
                 '@type': 'SearchAction',
                 target: {
                   '@type': 'EntryPoint',
-                  urlTemplate: 'https://utools.app/?search={search_term_string}',
+                  urlTemplate: 'https://ulti-tools.com/?search={search_term_string}',
                 },
                 'query-input': 'required name=search_term_string',
               },
@@ -109,11 +109,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'Ultimate Tools',
-              url: 'https://utools.app',
+              url: 'https://ulti-tools.com',
               description: `Сайт с ${stats.totalTools}+ бесплатными онлайн-инструментами`,
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://utools.app/favicon.ico',
+                url: 'https://ulti-tools.com/favicon.ico',
               },
             }),
           }}

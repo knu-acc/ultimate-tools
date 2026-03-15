@@ -18,6 +18,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DevicesIcon from '@mui/icons-material/Devices';
+import ColorPickerInput from '@/src/components/ColorPickerInput';
 
 type DeviceFrame = 'browser' | 'iphone' | 'macbook' | 'ipad';
 
@@ -347,25 +348,15 @@ export default function ScreenshotMockup() {
               <Grid size={{ xs: 6 }}>
                 <Typography variant="caption" color="text.secondary">Цвет фона (начало)</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                  <input
-                    type="color"
-                    value={bgColor}
-                    onChange={(e) => setBgColor(e.target.value)}
-                    style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }}
-                  />
-                  <Typography variant="body2">{bgColor}</Typography>
+                  <ColorPickerInput value={bgColor} onChange={setBgColor} label="Цвет фона" size="small" />
+                  <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{bgColor}</Typography>
                 </Box>
               </Grid>
               <Grid size={{ xs: 6 }}>
                 <Typography variant="caption" color="text.secondary">Цвет фона (конец)</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                  <input
-                    type="color"
-                    value={bgGradient}
-                    onChange={(e) => setBgGradient(e.target.value)}
-                    style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }}
-                  />
-                  <Typography variant="body2">{bgGradient}</Typography>
+                  <ColorPickerInput value={bgGradient} onChange={setBgGradient} label="Цвет фона (конец)" size="small" />
+                  <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{bgGradient}</Typography>
                 </Box>
               </Grid>
             </Grid>

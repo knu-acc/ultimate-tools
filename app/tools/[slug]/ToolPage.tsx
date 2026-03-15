@@ -988,11 +988,11 @@ export default function ToolPage({ slug }: { slug: string }) {
               applicationCategory: 'UtilitiesApplication',
               operatingSystem: 'Any',
               offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-              url: `https://utools.app/tools/${tool.slug}`,
+              url: `https://ulti-tools.com/tools/${tool.slug}`,
               inLanguage: 'ru',
               isAccessibleForFree: true,
               browserRequirements: 'Requires JavaScript',
-              author: { '@type': 'Organization', name: 'Ultimate Tools', url: 'https://utools.app' },
+              author: { '@type': 'Organization', name: 'Ultimate Tools', url: 'https://ulti-tools.com' },
               keywords: tool.keywords.join(', '),
             }),
           }}
@@ -1022,9 +1022,9 @@ export default function ToolPage({ slug }: { slug: string }) {
               '@context': 'https://schema.org',
               '@type': 'BreadcrumbList',
               itemListElement: [
-                { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://utools.app' },
-                { '@type': 'ListItem', position: 2, name: group?.name || 'Инструменты', item: `https://utools.app/group/${group?.slug}` },
-                { '@type': 'ListItem', position: 3, name: seoTitle, item: `https://utools.app/tools/${tool.slug}` },
+                { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://ulti-tools.com' },
+                { '@type': 'ListItem', position: 2, name: group?.name || 'Инструменты', item: `https://ulti-tools.com/group/${group?.slug}` },
+                { '@type': 'ListItem', position: 3, name: seoTitle, item: `https://ulti-tools.com/tools/${tool.slug}` },
               ],
             }),
           }}

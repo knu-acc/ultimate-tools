@@ -21,10 +21,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: article.date,
       siteName: 'Ultimate Tools',
       locale: 'ru_RU',
-      url: `https://utools.app/blog/${slug}`,
+      url: `https://ulti-tools.com/blog/${slug}`,
     },
     alternates: {
-      canonical: `https://utools.app/blog/${slug}`,
+      canonical: `https://ulti-tools.com/blog/${slug}`,
     },
     robots: { index: true, follow: true },
   };

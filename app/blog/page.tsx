@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     locale: 'ru_RU',
   },
   alternates: {
-    canonical: 'https://utools.app/blog',
+    canonical: 'https://ulti-tools.com/blog',
   },
   robots: { index: true, follow: true },
 };

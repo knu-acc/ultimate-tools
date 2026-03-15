@@ -13,6 +13,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import ColorPickerInput from '@/src/components/ColorPickerInput';
 
 
 interface RGB { r: number; g: number; b: number }
@@ -131,8 +132,7 @@ export default function ColorConverter() {
     if (parsed) updateFromRgb(parsed.r, parsed.g, parsed.b);
   };
 
-  const handlePickerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handlePickerChange = (value: string) => {
     setHex(value);
     const parsed = hexToRgb(value);
     if (parsed) updateFromRgb(parsed.r, parsed.g, parsed.b);
@@ -213,19 +213,16 @@ export default function ColorConverter() {
             <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
               Выбор цвета
             </Typography>
-            <input
-              type="color"
-              value={hex}
-              onChange={handlePickerChange}
-              style={{
-                width: '100%',
-                height: 48,
-                border: 'none',
-                borderRadius: 8,
-                cursor: 'pointer',
-                padding: 0
-              }}
-            />
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <ColorPickerInput value={hex} onChange={handlePickerChange} label="Выбор цвета" />
+              <Box
+                sx={{
+                  flex: 1, height: 40, borderRadius: 2,
+                  background: hex,
+                  border: '1px solid rgba(255,255,255,0.12)',
+                }}
+              />
+            </Box>
           </Box>
         </Box>
 

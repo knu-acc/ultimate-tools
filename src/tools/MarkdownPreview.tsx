@@ -32,7 +32,7 @@ function hello() {
 }
 \`\`\`
 
-[Ссылка на UTools](https://utools.app)
+[Ссылка на UTools](https://ulti-tools.com)
 
 ---
 

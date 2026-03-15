@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import ColorPickerInput from '@/src/components/ColorPickerInput';
 
 
 import { generateQR } from './qrcore';
@@ -18,7 +19,7 @@ function generateQRMatrix(text: string): boolean[][] {
 export default function QrGenerator() {
   const theme = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [text, setText] = useState('https://utools.app');
+  const [text, setText] = useState('https://ulti-tools.com');
   const [size, setSize] = useState(256);
   const [fgColor, setFgColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#FFFFFF');
@@ -101,25 +102,15 @@ export default function QrGenerator() {
               <Grid size={6}>
                 <Typography variant="caption" color="text.secondary">Цвет QR</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                  <input
-                    type="color"
-                    value={fgColor}
-                    onChange={(e) => setFgColor(e.target.value)}
-                    style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }}
-                  />
-                  <Typography variant="body2">{fgColor}</Typography>
+                  <ColorPickerInput value={fgColor} onChange={setFgColor} label="Цвет QR" size="small" />
+                  <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{fgColor}</Typography>
                 </Box>
               </Grid>
               <Grid size={6}>
                 <Typography variant="caption" color="text.secondary">Цвет фона</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                  <input
-                    type="color"
-                    value={bgColor}
-                    onChange={(e) => setBgColor(e.target.value)}
-                    style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }}
-                  />
-                  <Typography variant="body2">{bgColor}</Typography>
+                  <ColorPickerInput value={bgColor} onChange={setBgColor} label="Цвет фона" size="small" />
+                  <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{bgColor}</Typography>
                 </Box>
               </Grid>
             </Grid>

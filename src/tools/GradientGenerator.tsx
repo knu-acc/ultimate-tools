@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import { Refresh, Add } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import ColorPickerInput from '@/src/components/ColorPickerInput';
 
 export default function GradientGenerator() {
   const theme = useTheme();
@@ -119,15 +120,13 @@ export default function GradientGenerator() {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mb: 2 }}>
             {colors.map((color, i) => (
               <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <input
-                  type="color"
+                <ColorPickerInput
                   value={color}
-                  onChange={(e) => {
+                  onChange={(hex) => {
                     const newColors = [...colors];
-                    newColors[i] = e.target.value;
+                    newColors[i] = hex;
                     setColors(newColors);
                   }}
-                  style={{ width: 40, height: 32, border: 'none', cursor: 'pointer', borderRadius: 4 }}
                 />
                 <TextField
                   size="small"

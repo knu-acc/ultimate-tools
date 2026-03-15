@@ -14,6 +14,7 @@ import {
   useTheme
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import ColorPickerInput from '@/src/components/ColorPickerInput';
 
 
 interface RGB {
@@ -175,19 +176,7 @@ export default function ColorBlender() {
                   boxShadow: `0 2px 8px ${alpha(color1, 0.4)}`
                 }}
               />
-              <input
-                type="color"
-                value={color1}
-                onChange={(e) => setColor1(e.target.value)}
-                style={{
-                  width: 40,
-                  height: 40,
-                  border: 'none',
-                  cursor: 'pointer',
-                  borderRadius: 4,
-                  padding: 0
-                }}
-              />
+              <ColorPickerInput value={color1} onChange={setColor1} />
               <TextField
                 size="small"
                 value={color1}
@@ -211,19 +200,7 @@ export default function ColorBlender() {
                   boxShadow: `0 2px 8px ${alpha(color2, 0.4)}`
                 }}
               />
-              <input
-                type="color"
-                value={color2}
-                onChange={(e) => setColor2(e.target.value)}
-                style={{
-                  width: 40,
-                  height: 40,
-                  border: 'none',
-                  cursor: 'pointer',
-                  borderRadius: 4,
-                  padding: 0
-                }}
-              />
+              <ColorPickerInput value={color2} onChange={setColor2} />
               <TextField
                 size="small"
                 value={color2}

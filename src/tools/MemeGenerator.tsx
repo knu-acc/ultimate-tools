@@ -19,6 +19,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
+import ColorPickerInput from '@/src/components/ColorPickerInput';
 
 type TextPosition = 'top' | 'bottom' | 'center';
 
@@ -276,13 +277,8 @@ export default function MemeGenerator() {
                   Цвет текста
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <input
-                    type="color"
-                    value={textColor}
-                    onChange={(e) => setTextColor(e.target.value)}
-                    style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }}
-                  />
-                  <Typography variant="body2">{textColor}</Typography>
+                  <ColorPickerInput value={textColor} onChange={setTextColor} label="Цвет текста" size="small" />
+                  <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{textColor}</Typography>
                 </Box>
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>

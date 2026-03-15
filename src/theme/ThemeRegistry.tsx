@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useMemo, useState, useEffect, ReactNode } from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { lightTheme, darkTheme } from './theme';
+import { LanguageProvider } from '@/src/i18n/LanguageContext';
 
 type ThemeMode = 'light' | 'dark' | 'system';
 
@@ -58,7 +59,9 @@ export default function ThemeRegistry({ children }: { children: ReactNode }) {
     <ThemeContext.Provider value={{ mode, setMode, resolvedMode }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </ThemeProvider>
     </ThemeContext.Provider>
   );

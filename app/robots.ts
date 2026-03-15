@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'YandexBot', allow: '/' },
       { userAgent: 'YandexImages', allow: '/' },
     ],
-    sitemap: 'https://utools.app/sitemap.xml',
+    sitemap: 'https://ulti-tools.com/sitemap.xml',
   };
 }

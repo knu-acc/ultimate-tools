@@ -15,11 +15,14 @@ import { useThemeMode } from '@/src/theme/ThemeRegistry';
 import { toolGroups } from '@/src/data/tools';
 import DynamicIcon from './DynamicIcon';
 import SearchDialog from './SearchDialog';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function Header() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { mode, setMode } = useThemeMode();
+  const { t } = useLanguage();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -72,11 +75,11 @@ export default function Header() {
           {!isMobile && (
             <Box sx={{ display: 'flex', gap: 0.5, ml: 2 }}>
               {[
-                { label: 'Конвертеры', href: '/group/converters' },
-                { label: 'Калькуляторы', href: '/group/calculators' },
-                { label: 'Генераторы', href: '/group/generators' },
-                { label: 'Dev', href: '/group/developers' },
-                { label: 'Блог', href: '/blog' },
+                { label: t('nav.converters'), href: '/group/converters' },
+                { label: t('nav.calculators'), href: '/group/calculators' },
+                { label: t('nav.generators'), href: '/group/generators' },
+                { label: t('nav.dev'), href: '/group/developers' },
+                { label: t('nav.blog'), href: '/blog' },
               ].map(item => (
                 <Button
                   key={item.href}
@@ -118,7 +121,7 @@ export default function Header() {
           >
             <SearchIcon sx={{ color: theme.palette.text.secondary, fontSize: 20 }} />
             <Typography variant="body2" sx={{ color: theme.palette.text.secondary, display: { xs: 'none', sm: 'block' }, flexGrow: 1 }}>
-              Поиск...
+              {t('nav.search')}
             </Typography>
             <Typography
               variant="caption"
@@ -129,9 +132,11 @@ export default function Header() {
                 fontFamily: 'monospace', fontSize: '0.6875rem',
               }}
             >
-              Ctrl+K
+              {t('nav.searchShortcut')}
             </Typography>
           </Box>
+
+          <LanguageSwitcher />
 
           <IconButton onClick={toggleTheme} sx={{ ml: 0.5 }} size="large">
             {themeIcon}
@@ -149,7 +154,7 @@ export default function Header() {
         }}
       >
         <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="subtitle1" fontWeight={600}>Категории</Typography>
+          <Typography variant="subtitle1" fontWeight={600}>{t('nav.categories')}</Typography>
           <IconButton onClick={() => setDrawerOpen(false)} size="small"><Close /></IconButton>
         </Box>
         <Divider />
@@ -157,7 +162,7 @@ export default function Header() {
           <ListItem disablePadding sx={{ mb: 0.5 }}>
             <ListItemButton component={Link} href="/" onClick={() => setDrawerOpen(false)} sx={{ borderRadius: 7, py: 1 }}>
               <ListItemIcon sx={{ minWidth: 40 }}><Home sx={{ fontSize: 22 }} /></ListItemIcon>
-              <ListItemText primary="Главная" primaryTypographyProps={{ fontWeight: 500, fontSize: '0.875rem' }} />
+              <ListItemText primary={t('nav.drawer.home')} primaryTypographyProps={{ fontWeight: 500, fontSize: '0.875rem' }} />
             </ListItemButton>
           </ListItem>
           {toolGroups.map(group => (
@@ -179,7 +184,7 @@ export default function Header() {
           <ListItem disablePadding>
             <ListItemButton component={Link} href="/blog" onClick={() => setDrawerOpen(false)} sx={{ borderRadius: 7, py: 1 }}>
               <ListItemIcon sx={{ minWidth: 40 }}><Article sx={{ fontSize: 22 }} /></ListItemIcon>
-              <ListItemText primary="Блог" primaryTypographyProps={{ fontWeight: 500, fontSize: '0.875rem' }} />
+              <ListItemText primary={t('nav.blog')} primaryTypographyProps={{ fontWeight: 500, fontSize: '0.875rem' }} />
             </ListItemButton>
           </ListItem>
         </List>

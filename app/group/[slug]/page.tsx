@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       siteName: 'Ultimate Tools',
       locale: 'ru_RU',
       type: 'website',
-      url: `https://utools.app/group/${slug}`,
+      url: `https://ulti-tools.com/group/${slug}`,
     },
     twitter: {
       card: 'summary',
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description,
     },
     alternates: {
-      canonical: `https://utools.app/group/${slug}`,
+      canonical: `https://ulti-tools.com/group/${slug}`,
     },
     robots: { index: true, follow: true },
   };

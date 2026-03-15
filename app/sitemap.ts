@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { tools, toolGroups } from '@/src/data/tools';
 import { articles } from '@/src/data/articles';
 
-const BASE_URL = 'https://utools.app';
+const BASE_URL = 'https://ulti-tools.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();

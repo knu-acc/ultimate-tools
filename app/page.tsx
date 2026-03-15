@@ -256,7 +256,7 @@ export default function HomePage() {
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
             name: 'Ultimate Tools',
-            url: 'https://utools.app',
+            url: 'https://ulti-tools.com',
             description: `${stats.totalTools}+ бесплатных онлайн-инструментов`,
             applicationCategory: 'UtilitiesApplication',
             operatingSystem: 'Any',

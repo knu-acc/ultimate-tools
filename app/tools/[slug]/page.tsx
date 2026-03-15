@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${title} | Ultimate Tools`,
       description,
-      url: `https://utools.app/tools/${slug}`,
+      url: `https://ulti-tools.com/tools/${slug}`,
       type: 'website',
       locale: 'ru_RU',
       siteName: 'Ultimate Tools',
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description,
     },
     alternates: {
-      canonical: `https://utools.app/tools/${slug}`,
+      canonical: `https://ulti-tools.com/tools/${slug}`,
     },
     robots: { index: true, follow: true },
   };

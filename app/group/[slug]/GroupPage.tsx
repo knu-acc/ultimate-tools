@@ -430,13 +430,13 @@ export default function GroupPage({ slug }: { slug: string }) {
             '@type': 'CollectionPage',
             name: seoContent?.h1 || group.name,
             description: group.description,
-            url: `https://utools.app/group/${group.slug}`,
+            url: `https://ulti-tools.com/group/${group.slug}`,
             inLanguage: 'ru',
             numberOfItems: groupTools.length,
             hasPart: groupTools.slice(0, 10).map(t => ({
               '@type': 'SoftwareApplication',
               name: (t as any).seoTitle || t.name,
-              url: `https://utools.app/tools/${t.slug}`,
+              url: `https://ulti-tools.com/tools/${t.slug}`,
               applicationCategory: 'UtilitiesApplication',
               offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
             })),
@@ -452,8 +452,8 @@ export default function GroupPage({ slug }: { slug: string }) {
             '@context': 'https://schema.org',
             '@type': 'BreadcrumbList',
             itemListElement: [
-              { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://utools.app' },
-              { '@type': 'ListItem', position: 2, name: group.name, item: `https://utools.app/group/${group.slug}` },
+              { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://ulti-tools.com' },
+              { '@type': 'ListItem', position: 2, name: group.name, item: `https://ulti-tools.com/group/${group.slug}` },
             ],
           }),
         }}

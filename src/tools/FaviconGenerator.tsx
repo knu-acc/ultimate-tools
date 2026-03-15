@@ -5,6 +5,7 @@ import {
   Box, Typography, Paper, TextField, Grid, Button, Slider, useTheme, alpha
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
+import ColorPickerInput from '@/src/components/ColorPickerInput';
 
 export default function FaviconGenerator() {
   const theme = useTheme();
@@ -57,13 +58,13 @@ export default function FaviconGenerator() {
             <Grid container spacing={1} sx={{ mb: 2 }}>
               <Grid size={6}>
                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                  <input type="color" value={bgColor} onChange={e => setBgColor(e.target.value)} style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }} />
+                  <ColorPickerInput value={bgColor} onChange={setBgColor} label="Цвет фона" size="small" />
                   <TextField size="small" value={bgColor} onChange={e => setBgColor(e.target.value)} placeholder="#6750A4" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
                 </Box>
               </Grid>
               <Grid size={6}>
                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                  <input type="color" value={textColor} onChange={e => setTextColor(e.target.value)} style={{ width: 40, height: 32, border: 'none', cursor: 'pointer' }} />
+                  <ColorPickerInput value={textColor} onChange={setTextColor} label="Цвет текста" size="small" />
                   <TextField size="small" value={textColor} onChange={e => setTextColor(e.target.value)} placeholder="#FFFFFF" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
                 </Box>
               </Grid>

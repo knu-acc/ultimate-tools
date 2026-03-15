@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "home": "Ultimate Tools",
+    "search": "Поиск...",
+    "searchPlaceholder": "Поиск инструментов...",
+    "searchShortcut": "Ctrl+K",
+    "blog": "Блог",
+    "toggleTheme": "Переключить тему",
+    "switchLang": "EN",
+    "converters": "Конвертеры",
+    "calculators": "Калькуляторы",
+    "generators": "Генераторы",
+    "dev": "Dev",
+    "categories": "Категории",
+    "drawer": {
+      "home": "Главная"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Бесплатные онлайн-инструменты",
+      "subtitle": "{count}+ утилит прямо в браузере. Конвертеры, калькуляторы, генераторы и инструменты для разработчиков.",
+      "searchPlaceholder": "Поиск инструментов..."
+    },
+    "sections": {
+      "recentlyUsed": "Недавно использованные",
+      "categories": "Категории",
+      "featuredTools": "Популярные инструменты",
+      "allTools": "Все инструменты"
+    },
+    "meta": {
+      "title": "Ultimate Tools — {count}+ бесплатных онлайн инструментов",
+      "description": "Бесплатные онлайн-инструменты для работы в браузере: конвертеры, калькуляторы, генераторы, инструменты для разработчиков и многое другое."
+    }
+  },
+  "toolPage": {
+    "breadcrumb": {
+      "home": "Главная"
+    },
+    "underConstruction": "В разработке",
+    "underConstructionDesc": "Инструмент «{name}» скоро будет доступен. Следите за обновлениями!",
+    "seoSection": {
+      "whatIs": "Что такое «{name}»?",
+      "howToUse": "Как пользоваться инструментом",
+      "features": "Возможности «{name}»",
+      "whenToUse": "Когда использовать",
+      "advantages": "Преимущества онлайн-версии"
+    },
+    "faq": {
+      "title": "Часто задаваемые вопросы"
+    },
+    "sidebar": {
+      "relatedTools": "Похожие инструменты",
+      "categories": "Категории"
+    },
+    "relatedLinks": "Смотрите также другие инструменты в категории «{group}»:"
+  },
+  "groupPage": {
+    "toolCount": "{count} бесплатных инструментов",
+    "toolCountLabel": "инструментов",
+    "allToolsInGroup": "Все инструменты в категории",
+    "backToAll": "Все категории"
+  },
+  "common": {
+    "copy": "Копировать",
+    "copied": "Скопировано!",
+    "apply": "Применить",
+    "clear": "Очистить",
+    "download": "Скачать",
+    "upload": "Загрузить",
+    "generate": "Сгенерировать",
+    "reset": "Сбросить",
+    "calculate": "Рассчитать",
+    "convert": "Конвертировать",
+    "format": "Форматировать",
+    "preview": "Превью",
+    "livePreview": "Авто-превью",
+    "result": "Результат",
+    "input": "Ввод",
+    "output": "Вывод",
+    "free": "Бесплатно",
+    "noRegistration": "без регистрации",
+    "online": "онлайн",
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Готово",
+    "colorPicker": {
+      "quickSelect": "Быстрый выбор",
+      "copyColor": "Скопировать цвет"
+    }
+  },
+  "footer": {
+    "description": "Бесплатные онлайн-инструменты для конвертации, генерации, расчётов и многого другого. Более 150 утилит в одном месте.",
+    "popularCategories": "Популярные категории",
+    "moreCategories": "Ещё категории",
+    "tools": "Инструменты",
+    "copyright": "© {year} Ultimate Tools. Все инструменты бесплатны и работают в браузере.",
+    "madeWith": "Сделано с",
+    "forProductivity": "для продуктивности"
+  },
+  "blog": {
+    "title": "Блог",
+    "subtitle": "Гайды, советы и обзоры инструментов",
+    "readMore": "Читать",
+    "backToBlog": "Назад к блогу",
+    "publishedAt": "Опубликовано"
+  },
+  "seo": {
+    "siteName": "Ultimate Tools",
+    "siteUrl": "https://ulti-tools.com",
+    "locale": "ru_RU"
+  }
+}

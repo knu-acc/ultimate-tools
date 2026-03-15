@@ -1,0 +1,113 @@
+{
+  "nav": {
+    "home": "Ultimate Tools",
+    "search": "Search...",
+    "searchPlaceholder": "Search tools...",
+    "searchShortcut": "Ctrl+K",
+    "blog": "Blog",
+    "toggleTheme": "Toggle theme",
+    "switchLang": "RU",
+    "converters": "Converters",
+    "calculators": "Calculators",
+    "generators": "Generators",
+    "dev": "Dev",
+    "categories": "Categories",
+    "drawer": {
+      "home": "Home"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Free Online Tools",
+      "subtitle": "{count}+ utilities right in your browser. Converters, calculators, generators and developer tools.",
+      "searchPlaceholder": "Search tools..."
+    },
+    "sections": {
+      "recentlyUsed": "Recently Used",
+      "categories": "Categories",
+      "featuredTools": "Popular Tools",
+      "allTools": "All Tools"
+    },
+    "meta": {
+      "title": "Ultimate Tools — {count}+ Free Online Tools",
+      "description": "Free online tools for use in your browser: converters, calculators, generators, developer tools and much more."
+    }
+  },
+  "toolPage": {
+    "breadcrumb": {
+      "home": "Home"
+    },
+    "underConstruction": "Coming Soon",
+    "underConstructionDesc": "The tool \"{name}\" will be available soon. Stay tuned!",
+    "seoSection": {
+      "whatIs": "What is \"{name}\"?",
+      "howToUse": "How to use",
+      "features": "Features of \"{name}\"",
+      "whenToUse": "When to use",
+      "advantages": "Advantages of the online version"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions"
+    },
+    "sidebar": {
+      "relatedTools": "Similar tools",
+      "categories": "Categories"
+    },
+    "relatedLinks": "See also other tools in the \"{group}\" category:"
+  },
+  "groupPage": {
+    "toolCount": "{count} free tools",
+    "toolCountLabel": "tools",
+    "allToolsInGroup": "All tools in category",
+    "backToAll": "All categories"
+  },
+  "common": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "apply": "Apply",
+    "clear": "Clear",
+    "download": "Download",
+    "upload": "Upload",
+    "generate": "Generate",
+    "reset": "Reset",
+    "calculate": "Calculate",
+    "convert": "Convert",
+    "format": "Format",
+    "preview": "Preview",
+    "livePreview": "Live preview",
+    "result": "Result",
+    "input": "Input",
+    "output": "Output",
+    "free": "Free",
+    "noRegistration": "no registration",
+    "online": "online",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Done",
+    "colorPicker": {
+      "quickSelect": "Quick select",
+      "copyColor": "Copy color"
+    }
+  },
+  "footer": {
+    "description": "Free online tools for conversion, generation, calculations and more. Over 150 utilities in one place.",
+    "popularCategories": "Popular categories",
+    "moreCategories": "More categories",
+    "tools": "Tools",
+    "copyright": "© {year} Ultimate Tools. All tools are free and work in your browser.",
+    "madeWith": "Made with",
+    "forProductivity": "for productivity"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Guides, tips and tool reviews",
+    "readMore": "Read more",
+    "backToBlog": "Back to blog",
+    "publishedAt": "Published"
+  },
+  "seo": {
+    "siteName": "Ultimate Tools",
+    "siteUrl": "https://ulti-tools.com",
+    "locale": "en_US"
+  }
+}
