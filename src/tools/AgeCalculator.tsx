@@ -252,7 +252,7 @@ export default function AgeCalculator() {
                       textAlign: 'center',
                       borderRadius: 3,
                       background: alpha(item.color, 0.06),
-                      transition: 'all 200ms ease',
+                      transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                       '&:hover': {
                         background: alpha(item.color, 0.1)
                       }

@@ -191,7 +191,7 @@ export default function MemeGenerator() {
               backgroundColor: dragging
                 ? theme.palette.surfaceContainerLow
                 : alpha(theme.palette.background.default, 0.5),
-              transition: 'all 250ms ease',
+              transitionProperty: 'background-color', transitionDuration: '250ms', transitionTimingFunction: 'ease',
               mb: 2,
               '&:hover': {
                 borderColor: theme.palette.primary.main,

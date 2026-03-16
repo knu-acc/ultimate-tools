@@ -293,7 +293,7 @@ export default function UnicodeLookup() {
           borderRadius: 3,
           mb: 2,
           bgcolor: theme.palette.surfaceContainerLow,
-          transition: 'all 200ms ease',
+          transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
@@ -316,7 +316,7 @@ export default function UnicodeLookup() {
                     bgcolor: theme.palette.surfaceContainerHigh,
                     border: `1px solid ${theme.palette.primary.main}`
                   },
-                  transition: 'all 0.15s ease'
+                  transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease'
                 }}
               >
                 {info.char}

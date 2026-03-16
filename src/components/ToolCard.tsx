@@ -39,7 +39,9 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
           bgcolor: theme.palette.surfaceContainerLow,
           borderRadius: `${theme.shape?.large ?? 16}px`,
           border: `1px solid ${theme.palette.outlineVariant ?? alpha(theme.palette.divider, 0.5)}`,
-          transition: `background-color ${motionDuration} ${motionEasing}, border-color ${motionDuration} ${motionEasing}`,
+          transitionProperty: 'background-color, border-color',
+          transitionDuration: motionDuration,
+          transitionTimingFunction: motionEasing,
           '&:hover': {
             bgcolor: theme.palette.surfaceContainerHigh,
             borderColor: alpha(groupColor, 0.3),
@@ -71,7 +73,9 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
         sx={{
           bgcolor: 'transparent',
           // MD3: animate specific properties only
-          transition: `background-color ${motionDuration} ${motionEasing}`,
+          transitionProperty: 'background-color',
+          transitionDuration: motionDuration,
+          transitionTimingFunction: motionEasing,
           '&:hover': {
             bgcolor: theme.palette.surfaceContainerHigh,
           },
@@ -119,7 +123,9 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
         bgcolor: theme.palette.surfaceContainerLow,
         borderRadius: `${theme.shape?.large ?? 16}px`,
         border: `1px solid ${theme.palette.outlineVariant ?? alpha(theme.palette.divider, 0.5)}`,
-        transition: `background-color ${theme.md3?.motion.duration.medium1 ?? '250ms'} ${motionEasing}, border-color ${theme.md3?.motion.duration.medium1 ?? '250ms'} ${motionEasing}`,
+        transitionProperty: 'background-color, border-color',
+        transitionDuration: theme.md3?.motion.duration.medium1 ?? '250ms',
+        transitionTimingFunction: motionEasing,
         '&:hover': {
           bgcolor: theme.palette.surfaceContainerHighest,
           borderColor: alpha(groupColor, 0.3),

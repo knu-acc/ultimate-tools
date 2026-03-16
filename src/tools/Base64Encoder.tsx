@@ -124,7 +124,7 @@ export default function Base64Encoder() {
           mb: 2,
           borderRadius: 3,
           background: theme.palette.surfaceContainerLow,
-          transition: 'all 200ms ease',
+          transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
@@ -145,7 +145,7 @@ export default function Base64Encoder() {
             textAlign: 'center',
             cursor: 'pointer',
             background: dragOver ? theme.palette.surfaceContainerHigh : 'transparent',
-            transition: 'all 200ms ease',
+            transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
               background: theme.palette.surfaceContainerLow

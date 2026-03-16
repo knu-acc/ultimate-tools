@@ -89,7 +89,9 @@ export default function Header() {
           color: theme.palette.text.primary,
           // MD3: bottom border as subtle divider instead of shadow
           borderBottom: `1px solid ${theme.palette.divider}`,
-          transition: `background-color ${theme.md3?.motion.duration.medium2 ?? '300ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`,
+          transitionProperty: 'background-color',
+          transitionDuration: theme.md3?.motion.duration.medium2 ?? '300ms',
+          transitionTimingFunction: theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)',
         }}
       >
         {/* MD3 Top App Bar: height = 64dp (uniform across all breakpoints) */}
@@ -190,12 +192,10 @@ export default function Header() {
                 bgcolor: theme.palette.surfaceContainerHigh,
                 cursor: 'pointer',
                 minWidth: { sm: 180, md: 240 },
-                transition: `background-color ${theme.md3?.motion.duration.short4 ?? '200ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`,
+                transitionProperty: 'background-color',
+                transitionDuration: theme.md3?.motion.duration.short4 ?? '200ms',
+                transitionTimingFunction: theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)',
                 '&:hover': { bgcolor: theme.palette.surfaceContainerHighest },
-                '&:focus-visible': {
-                  outline: `3px solid ${theme.palette.primary.main}`,
-                  outlineOffset: 2,
-                },
               }}
             >
               <SearchIcon sx={{ color: theme.palette.text.secondary, fontSize: 20 }} />
@@ -293,7 +293,9 @@ export default function Header() {
                     // MD3 motion: max 500ms, standard easing (replaced 2.4s non-standard animation)
                     ...(isHighlighted && {
                       bgcolor: alpha(group.color, 0.12),
-                      transition: `background-color ${theme.md3?.motion.duration.medium4 ?? '400ms'} ${theme.md3?.motion.easing.emphasizedDecelerate ?? 'cubic-bezier(0.05, 0.7, 0.1, 1)'}`,
+                      transitionProperty: 'background-color',
+                      transitionDuration: theme.md3?.motion.duration.medium4 ?? '400ms',
+                      transitionTimingFunction: theme.md3?.motion.easing.emphasizedDecelerate ?? 'cubic-bezier(0.05, 0.7, 0.1, 1)',
                     }),
                   }}
                 >

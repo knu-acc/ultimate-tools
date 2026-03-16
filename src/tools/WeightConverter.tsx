@@ -127,7 +127,7 @@ export default function WeightConverter() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >

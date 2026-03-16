@@ -191,7 +191,7 @@ export default function WeekNumber() {
                     p: 2,
                     textAlign: 'center',
                     backgroundColor: theme.palette.surfaceContainerLow,
-                    transition: 'all 200ms ease',
+                    transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       backgroundColor: alpha(theme.palette.primary.main, 0.04)
                     }
@@ -219,7 +219,7 @@ export default function WeekNumber() {
                     borderRadius: 3,
                     p: 2,
                     textAlign: 'center',
-                    transition: 'all 200ms ease',
+                    transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       backgroundColor: alpha(theme.palette.primary.main, 0.04)
                     }
@@ -246,7 +246,7 @@ export default function WeekNumber() {
                     borderRadius: 3,
                     p: 2,
                     textAlign: 'center',
-                    transition: 'all 200ms ease',
+                    transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       backgroundColor: alpha(theme.palette.primary.main, 0.04)
                     }
@@ -273,7 +273,7 @@ export default function WeekNumber() {
                     borderRadius: 3,
                     p: 2,
                     textAlign: 'center',
-                    transition: 'all 200ms ease',
+                    transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       backgroundColor: alpha(theme.palette.primary.main, 0.04)
                     }

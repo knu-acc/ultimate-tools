@@ -212,7 +212,7 @@ export default function BgRemover() {
             backgroundColor: dragging
               ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
-            transition: 'all 250ms ease',
+            transitionProperty: 'background-color', transitionDuration: '250ms', transitionTimingFunction: 'ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
               backgroundColor: theme.palette.surfaceContainerLow
@@ -318,7 +318,7 @@ export default function BgRemover() {
             <Grid size={{ xs: 12, sm: 6 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
+                sx={{ p: 2, textAlign: 'center', borderRadius: 3, transitionProperty: 'background-color', transitionDuration: '200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
                 <Typography variant="caption" color="text.secondary">{isEn ? 'Image size' : 'Размер изображения'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>

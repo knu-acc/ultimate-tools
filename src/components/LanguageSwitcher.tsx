@@ -43,7 +43,9 @@ export default function LanguageSwitcher() {
               letterSpacing: '0.05em',
               color: isActive ? theme.palette.primary.main : theme.palette.text.secondary,
               bgcolor: isActive ? alpha(theme.palette.primary.main, 0.12) : 'transparent',
-              transition: `background-color ${motionDuration} ${motionEasing}, color ${motionDuration} ${motionEasing}`,
+              transitionProperty: 'background-color, color',
+              transitionDuration: motionDuration,
+              transitionTimingFunction: motionEasing,
               '&:hover': {
                 bgcolor: isActive
                   ? alpha(theme.palette.primary.main, 0.16)

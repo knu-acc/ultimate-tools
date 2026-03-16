@@ -531,7 +531,7 @@ export default function BarcodeGen() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              transition: 'all 200ms ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >

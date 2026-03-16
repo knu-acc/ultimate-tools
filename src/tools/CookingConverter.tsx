@@ -185,7 +185,7 @@ export default function CookingConverter() {
               size="small"
               sx={{
                 fontWeight: ingredient === ing ? 600 : 400,
-                transition: 'all 200ms ease'
+                transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease'
               }}
             />
           ))}
@@ -206,7 +206,7 @@ export default function CookingConverter() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 1,
-                    transition: 'all 200ms ease',
+                    transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                   }}
                 >

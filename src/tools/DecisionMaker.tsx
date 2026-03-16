@@ -70,9 +70,9 @@ export default function DecisionMaker() {
       </Box>
 
       {result && (
-        <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: theme.palette.surfaceContainerHigh, textAlign: 'center', border: `2px solid ${theme.palette.primary.main}`, transition: 'all 300ms' }}>
+        <Paper elevation={0} sx={{ p: 4, borderRadius: 3, bgcolor: theme.palette.surfaceContainerHigh, textAlign: 'center', border: `2px solid ${theme.palette.primary.main}`, transitionProperty: 'background-color', transitionDuration: '300ms' }}>
           <Typography variant="caption" color="text.secondary">{isAnimating ? (isEn ? 'Choosing...' : 'Выбираю...') : (isEn ? 'Result:' : 'Результат:')}</Typography>
-          <Typography variant="h3" fontWeight={700} color="primary" sx={{ mt: 1, transition: 'all 100ms' }}>
+          <Typography variant="h3" fontWeight={700} color="primary" sx={{ mt: 1, transitionProperty: 'background-color', transitionDuration: '100ms' }}>
             {result}
           </Typography>
         </Paper>

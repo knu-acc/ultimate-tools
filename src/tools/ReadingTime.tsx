@@ -143,7 +143,7 @@ export default function ReadingTime() {
                 textAlign: 'center',
                 borderRadius: 3,
                 backgroundColor: alpha(card.color, 0.06),
-                transition: 'all 200ms ease',
+                transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': { backgroundColor: alpha(card.color, 0.1) }
               }}
             >

@@ -1283,7 +1283,9 @@ export default function ToolPage({ slug }: { slug: string }) {
                         width: 36, height: 36,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         borderRadius: '50%',
-                        transition: `background-color ${theme.md3?.motion.duration.short4 ?? '200ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`,
+                        transitionProperty: 'background-color',
+                        transitionDuration: theme.md3?.motion.duration.short4 ?? '200ms',
+                        transitionTimingFunction: theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)',
                         '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1) },
                       }}>
                         <ExpandMore sx={{ color: theme.palette.primary.main, fontSize: 22 }} />

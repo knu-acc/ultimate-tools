@@ -231,7 +231,7 @@ export default function DateDifference() {
                     textAlign: 'center',
                     borderRadius: 3,
                     backgroundColor: theme.palette.surfaceContainerLow,
-                    transition: 'all 200ms ease',
+                    transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       backgroundColor: alpha(theme.palette.primary.main, 0.04)
                     }

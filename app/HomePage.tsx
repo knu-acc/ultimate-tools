@@ -128,15 +128,13 @@ export default function HomePage() {
               cursor: 'pointer',
               bgcolor: isDark ? theme.palette.surfaceContainerHigh : theme.palette.surfaceContainerLowest,
               border: `1px solid ${theme.palette.divider}`,
-              transition: `background-color ${dur} ${easing}, box-shadow ${dur} ${easing}, border-color ${dur} ${easing}`,
+              transitionProperty: 'background-color, box-shadow, border-color',
+              transitionDuration: dur,
+              transitionTimingFunction: easing,
               '&:hover': {
                 bgcolor: theme.palette.surfaceContainerHigh,
                 boxShadow: theme.shadows[2],
                 borderColor: 'transparent',
-              },
-              '&.Mui-focusVisible': {
-                outline: `3px solid ${theme.palette.primary.main}`,
-                outlineOffset: 2,
               },
             }}
           >
@@ -239,7 +237,9 @@ export default function HomePage() {
                     // Colored tint background per group!
                     bgcolor: alpha(group.color, isDark ? 0.08 : 0.06),
                     borderRadius: `${theme.shape?.medium ?? 12}px`,
-                    transition: `background-color ${dur} ${easing}, box-shadow ${dur} ${easing}, transform ${dur} ${easing}`,
+                    transitionProperty: 'background-color, box-shadow, transform',
+                    transitionDuration: dur,
+                    transitionTimingFunction: easing,
                     '&:hover': {
                       bgcolor: alpha(group.color, isDark ? 0.14 : 0.12),
                       boxShadow: theme.shadows[2],

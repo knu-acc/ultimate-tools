@@ -149,25 +149,25 @@ export default function TypingSpeed() {
       {/* Stats */}
       <Grid container spacing={1.5} sx={{ mb: 2 }}>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <Typography variant="h4" fontWeight={700} color="primary">{wpm}</Typography>
             <Typography variant="caption" color="text.secondary">{isEn ? 'Words/min (WPM)' : 'Слов/мин (WPM)'}</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.success.main, 0.06), textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.success.main, 0.1) } }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.success.main, 0.06), textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.success.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.success.main }}>{accuracy}%</Typography>
             <Typography variant="caption" color="text.secondary">{isEn ? 'Accuracy' : 'Точность'}</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.warning.main, 0.06), textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.warning.main, 0.1) } }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.warning.main, 0.06), textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.warning.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.warning.main }}>{cpm}</Typography>
             <Typography variant="caption" color="text.secondary">{isEn ? 'Chars/min (CPM)' : 'Симв/мин (CPM)'}</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.error.main, 0.06), textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.1) } }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.error.main, 0.06), textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.error.main }}>{errors}</Typography>
             <Typography variant="caption" color="text.secondary">{isEn ? 'Errors' : 'Ошибки'}</Typography>
           </Paper>

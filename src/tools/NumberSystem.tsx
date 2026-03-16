@@ -200,7 +200,7 @@ export default function NumberSystem() {
                       border: `1px solid ${isSource ? b.color : theme.palette.divider}`,
                       borderRadius: 3,
                       backgroundColor: isSource ? alpha(b.color, 0.04) : 'transparent',
-                      transition: 'all 200ms ease',
+                      transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                       '&:hover': {
                         borderColor: b.color,
                         backgroundColor: alpha(b.color, 0.04)

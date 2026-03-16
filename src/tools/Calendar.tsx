@@ -202,7 +202,7 @@ export default function Calendar() {
                       ? 'primary.dark'
                       : alpha(theme.palette.primary.main, 0.04)
                   },
-                  transition: 'background-color 0.15s'
+                  transitionProperty: 'background-color', transitionDuration: '150ms'
                 }}
               >
                 <Typography

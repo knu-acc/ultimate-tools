@@ -176,7 +176,7 @@ export default function ImageColors() {
             backgroundColor: dragging
               ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
-            transition: 'all 250ms ease',
+            transitionProperty: 'background-color', transitionDuration: '250ms', transitionTimingFunction: 'ease',
             '&:hover': {
               borderColor: theme.palette.primary.main,
               backgroundColor: theme.palette.surfaceContainerLow
@@ -207,7 +207,7 @@ export default function ImageColors() {
                   p: { xs: 2, sm: 3 },
                   borderRadius: 3,
                   bgcolor: theme.palette.surfaceContainerLow,
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
@@ -276,7 +276,7 @@ export default function ImageColors() {
                   p: { xs: 2, sm: 3 },
                   borderRadius: 3,
                   bgcolor: theme.palette.surfaceContainerLow,
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}
               >
@@ -293,7 +293,7 @@ export default function ImageColors() {
                         sx={{
                           p: 1.5,
                           borderRadius: 2,
-                          transition: 'all 150ms ease',
+                          transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                           '&:hover': {
                             borderColor: theme.palette.primary.main,
                             backgroundColor: theme.palette.surfaceContainerLow
@@ -341,7 +341,7 @@ export default function ImageColors() {
                 mt: 2,
                 borderRadius: 3,
                 bgcolor: theme.palette.surfaceContainerLow,
-                transition: 'all 200ms ease',
+                transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
               }}
             >

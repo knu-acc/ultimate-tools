@@ -83,14 +83,12 @@ export default function HomePage() {
               cursor: 'pointer',
               bgcolor: theme.palette.surfaceContainerHigh,
               // MD3: animate specific properties only
-              transition: `background-color ${motionShort4} ${motionEasing}, box-shadow ${motionShort4} ${motionEasing}`,
+              transitionProperty: 'background-color, box-shadow',
+              transitionDuration: motionShort4,
+              transitionTimingFunction: motionEasing,
               '&:hover': {
                 bgcolor: theme.palette.surfaceContainerHighest,
                 boxShadow: theme.shadows[2],
-              },
-              '&.Mui-focusVisible': {
-                outline: `3px solid ${theme.palette.primary.main}`,
-                outlineOffset: 2,
               },
             }}
           >
@@ -190,7 +188,9 @@ export default function HomePage() {
                   sx={{
                     bgcolor: theme.palette.surfaceContainerLow,
                     // MD3: animate specific properties only
-                    transition: `background-color ${motionShort4} ${motionEasing}, box-shadow ${motionShort4} ${motionEasing}`,
+                    transitionProperty: 'background-color, box-shadow',
+                    transitionDuration: motionShort4,
+                    transitionTimingFunction: motionEasing,
                     // MD3 hover: state layer (surface container level up) + elevation
                     '&:hover': {
                       bgcolor: theme.palette.surfaceContainerHigh,

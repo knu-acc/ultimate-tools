@@ -96,15 +96,13 @@ export default function ColorPickerInput({
             flexShrink: 0,
             outline: 'none',
             padding: 0,
-            transition: 'border-color 150ms cubic-bezier(0.2,0,0,1), transform 150ms cubic-bezier(0.2,0,0,1), box-shadow 150ms cubic-bezier(0.2,0,0,1)',
+            transitionProperty: 'border-color, transform, box-shadow',
+            transitionDuration: '150ms',
+            transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)',
             '&:hover:not(:disabled)': {
               border: `2px solid ${theme.palette.primary.main}`,
               transform: 'scale(1.08)',
               boxShadow: `0 2px 8px ${alpha(value, 0.5)}`,
-            },
-            '&.Mui-focusVisible': {
-              outline: `2px solid ${theme.palette.primary.main}`,
-              outlineOffset: 2,
             },
           }}
         />
@@ -207,7 +205,6 @@ export default function ColorPickerInput({
                       outline: 'none',
                       transition: 'transform 100ms',
                       '&:hover': { transform: 'scale(1.15)', zIndex: 1 },
-                      '&.Mui-focusVisible': { outline: `2px solid ${theme.palette.primary.main}` },
                     }}
                   />
                 </Tooltip>

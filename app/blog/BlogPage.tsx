@@ -75,7 +75,7 @@ export default function BlogPage() {
                 sx={{
                   height: '100%',
                   border: `1px solid ${theme.palette.divider}`,
-                  transition: 'all 250ms',
+                  transitionProperty: 'background-color', transitionDuration: '250ms',
                   '&:hover': {
                     borderColor: typeColors[article.type],
                     transform: 'translateY(-2px)',

@@ -220,7 +220,7 @@ export default function PasswordStrength() {
       {password && (
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
                 {isEn ? 'Characters' : 'Символы'}
               </Typography>
@@ -265,7 +265,7 @@ export default function PasswordStrength() {
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
                 {isEn ? 'Criteria' : 'Критерии'}
               </Typography>
@@ -309,7 +309,7 @@ export default function PasswordStrength() {
                   p: { xs: 2, sm: 3 },
                   borderRadius: 3,
                   bgcolor: alpha(theme.palette.warning.main, 0.04),
-                  transition: 'background-color 0.2s ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { bgcolor: alpha(theme.palette.warning.main, 0.07) }
                 }}
               >

@@ -273,7 +273,7 @@ export default function TimezoneConverter() {
                 p: 2,
                 mb: 2,
                 backgroundColor: theme.palette.surfaceContainerHigh,
-                transition: 'all 200ms ease',
+                transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': {
                   backgroundColor: alpha(theme.palette.primary.main, 0.04)
                 }

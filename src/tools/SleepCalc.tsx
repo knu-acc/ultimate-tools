@@ -164,7 +164,7 @@ export default function SleepCalc() {
                   background: isActive
                     ? theme.palette.surfaceContainerHigh
                     : 'transparent',
-                  transition: 'all 0.15s ease',
+                  transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
                     background: theme.palette.surfaceContainerLow
@@ -227,7 +227,7 @@ export default function SleepCalc() {
                     textAlign: 'center',
                     borderRadius: 3,
                     background: alpha(opt.color, 0.05),
-                    transition: 'transform 0.15s ease, box-shadow 0.15s ease',
+                    transitionProperty: 'transform, box-shadow', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       transform: 'translateY(-2px)',
                       boxShadow: `0 4px 16px ${alpha(opt.color, 0.15)}`

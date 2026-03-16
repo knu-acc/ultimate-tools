@@ -218,7 +218,7 @@ export default function TodoList() {
                     py: 0.5,
                     px: 1,
                     borderRadius: 2,
-                    transition: 'background-color 150ms ease',
+                    transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       backgroundColor: alpha(theme.palette.action.hover, 0.5)
                     }
@@ -250,7 +250,7 @@ export default function TodoList() {
                       color: todo.completed
                         ? theme.palette.text.disabled
                         : theme.palette.text.primary,
-                      transition: 'color 200ms ease, text-decoration 200ms ease',
+                      transitionProperty: 'color, text-decoration', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                       wordBreak: 'break-word',
                       flex: 1,
                       pr: 4

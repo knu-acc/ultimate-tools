@@ -64,7 +64,7 @@ export default function MaterialColors() {
           mb: 2,
           borderRadius: 3,
           bgcolor: theme.palette.surfaceContainerLow,
-          transition: 'all 200ms ease',
+          transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >

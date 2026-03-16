@@ -89,7 +89,7 @@ export default function HttpStatus() {
           const cat = CATEGORIES[info.category];
           return (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={code}>
-              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }, transition: 'all 200ms' }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }, transitionProperty: 'background-color', transitionDuration: '200ms' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
                   <Chip label={code} size="small" sx={{ fontWeight: 700, bgcolor: alpha(cat.color, 0.12), color: cat.color, fontFamily: 'monospace' }} />
                   <Typography variant="body2" fontWeight={600}>{info.text}</Typography>

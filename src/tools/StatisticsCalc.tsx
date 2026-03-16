@@ -176,7 +176,7 @@ export default function StatisticsCalc() {
                       textAlign: 'center',
                       borderRadius: 3,
                       background: alpha(item.color, 0.04),
-                      transition: 'all 200ms ease',
+                      transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                       '&:hover': {
                         borderColor: item.color,
                         background: alpha(item.color, 0.08)
@@ -211,7 +211,7 @@ export default function StatisticsCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha(theme.palette.secondary.dark, 0.04),
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     borderColor: theme.palette.secondary.dark,
                     background: alpha(theme.palette.secondary.dark, 0.08)

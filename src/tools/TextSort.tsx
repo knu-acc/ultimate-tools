@@ -133,7 +133,7 @@ export default function TextSort() {
                   backgroundColor: isActive ? alpha(option.color, 0.15) : 'transparent',
                   color: isActive ? option.color : 'text.secondary',
                   border: `1.5px solid ${isActive ? option.color : 'transparent'}`,
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     backgroundColor: alpha(option.color, 0.1),
                     borderColor: option.color

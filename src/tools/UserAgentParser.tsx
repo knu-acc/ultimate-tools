@@ -323,7 +323,7 @@ export default function UserAgentParser() {
                 sx={{
                   p: 2.5,
                   borderRadius: 3,
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
                     background: alpha(theme.palette.primary.main, 0.04)

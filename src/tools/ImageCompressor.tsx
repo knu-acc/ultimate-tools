@@ -371,7 +371,7 @@ export default function ImageCompressor() {
           backgroundColor: dragging
             ? theme.palette.surfaceContainerLow
             : alpha(theme.palette.background.default, 0.5),
-          transition: 'all 250ms ease',
+          transitionProperty: 'background-color', transitionDuration: '250ms', transitionTimingFunction: 'ease',
           mb: 2,
           '&:hover': {
             borderColor: theme.palette.primary.main,
@@ -600,7 +600,7 @@ export default function ImageCompressor() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: 2,
-                    transition: 'background-color 200ms',
+                    transitionProperty: 'background-color', transitionDuration: '200ms',
                     '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.03) },
                   }}
                 >

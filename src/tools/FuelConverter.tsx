@@ -70,7 +70,7 @@ export default function FuelConverter() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(r.color, 0.04) }
                 }}
               >

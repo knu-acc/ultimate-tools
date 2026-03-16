@@ -616,7 +616,7 @@ export default function ColorPicker() {
                   p: 2,
                   borderRadius: 2,
                   cursor: 'pointer',
-                  transition: 'all 150ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     bgcolor: alpha(theme.palette.primary.main, 0.04)
                   }

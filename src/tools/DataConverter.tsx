@@ -180,7 +180,7 @@ export default function DataConverter() {
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 0.5,
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
                     background: theme.palette.surfaceContainerLow

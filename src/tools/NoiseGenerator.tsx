@@ -202,7 +202,7 @@ export default function NoiseGenerator() {
                   backgroundColor: noiseType === opt.type
                     ? theme.palette.surfaceContainerHigh
                     : 'transparent',
-                  transition: 'all 200ms',
+                  transitionProperty: 'background-color', transitionDuration: '200ms',
                   '&:hover': !isPlaying ? {
                     borderColor: theme.palette.primary.main
                   } : {}

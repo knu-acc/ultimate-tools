@@ -189,7 +189,7 @@ export default function PaperSize() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      transition: 'all 300ms ease'
+                      transitionProperty: 'background-color', transitionDuration: '300ms', transitionTimingFunction: 'ease'
                     }}
                   >
                     <Typography variant="caption" sx={{ fontWeight: 600, fontSize: 10 }}>

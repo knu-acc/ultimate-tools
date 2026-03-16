@@ -244,7 +244,7 @@ export default function QrCodeGen() {
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
-              transition: 'all 200ms ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >

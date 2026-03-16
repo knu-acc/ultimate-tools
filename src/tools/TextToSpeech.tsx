@@ -174,7 +174,7 @@ export default function TextToSpeech() {
             borderRadius: 0.5,
             px: 0.3,
             py: 0.1,
-            transition: 'background-color 100ms ease'
+            transitionProperty: 'background-color', transitionDuration: '100ms', transitionTimingFunction: 'ease'
           }}
         >
           {word}

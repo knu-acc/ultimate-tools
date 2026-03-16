@@ -148,7 +148,7 @@ export default function ScientificCalc() {
     fontSize: '1.15rem',
     fontWeight: 600,
     py: 2,
-    transition: 'all 120ms ease'
+    transitionProperty: 'background-color', transitionDuration: '120ms', transitionTimingFunction: 'ease'
   };
 
   const btnNumber = {
@@ -309,7 +309,7 @@ export default function ScientificCalc() {
               textAlign: 'right',
               wordBreak: 'break-all',
               lineHeight: 1.2,
-              transition: 'font-size 200ms ease',
+              transitionProperty: 'font-size', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               color: theme.palette.common.white
             }}
           >
@@ -452,7 +452,7 @@ export default function ScientificCalc() {
                         backgroundColor: theme.palette.surfaceContainerHigh,
                         borderColor: theme.palette.primary.main
                       },
-                      transition: 'all 120ms ease'
+                      transitionProperty: 'background-color', transitionDuration: '120ms', transitionTimingFunction: 'ease'
                     }}
                   >
                     <Typography

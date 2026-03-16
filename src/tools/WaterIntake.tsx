@@ -261,7 +261,7 @@ export default function WaterIntake() {
                     width: `${progressPct}%`,
                     borderRadius: 8,
                     backgroundColor: progressColor,
-                    transition: 'width 0.3s ease, background-color 0.3s ease'
+                    transitionProperty: 'width, background-color', transitionDuration: '0.3s', transitionTimingFunction: 'ease'
                   }}
                 />
               </Box>
@@ -296,7 +296,7 @@ export default function WaterIntake() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      transition: 'all 0.15s ease',
+                      transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                       position: 'relative',
                       overflow: 'hidden',
                       '&:hover': {

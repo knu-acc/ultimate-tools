@@ -159,7 +159,7 @@ export default function RetirementCalc() {
         textAlign: 'center',
         borderRadius: 3,
         background: alpha(color, 0.06),
-        transition: 'background-color 0.2s ease',
+        transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
         '&:hover': { background: alpha(color, 0.1) }
       }}
     >
@@ -183,7 +183,7 @@ export default function RetirementCalc() {
           p: { xs: 2, sm: 3 },
           bgcolor: theme.palette.surfaceContainerLow,
           borderRadius: 3,
-          transition: 'background-color 0.2s ease',
+          transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
       >

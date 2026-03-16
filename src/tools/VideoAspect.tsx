@@ -249,7 +249,7 @@ export default function VideoAspect() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                transition: 'all 300ms ease'
+                transitionProperty: 'background-color', transitionDuration: '300ms', transitionTimingFunction: 'ease'
               }}
             >
               <Typography variant="caption" color="primary" sx={{ fontWeight: 600 }}>

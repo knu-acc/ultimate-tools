@@ -73,7 +73,7 @@ export default function CoinFlip() {
               ? alpha('#C0C0C0', 0.2)
               : theme.palette.surfaceContainerLow,
           border: `3px solid ${result === 'heads' ? '#FFD700' : result === 'tails' ? '#C0C0C0' : theme.palette.divider}`,
-          transition: 'all 0.3s ease',
+          transitionProperty: 'background-color', transitionDuration: '300ms', transitionTimingFunction: 'ease',
           transform: flipping ? 'rotateY(180deg)' : 'rotateY(0)',
           mb: 2
         }}

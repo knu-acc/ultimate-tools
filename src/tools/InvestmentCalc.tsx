@@ -113,7 +113,7 @@ export default function InvestmentCalc() {
           mb: 2,
           borderRadius: 3,
           bgcolor: theme.palette.surfaceContainerLow,
-          transition: 'background-color 0.2s ease',
+          transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
@@ -188,7 +188,7 @@ export default function InvestmentCalc() {
               textAlign: 'center',
               borderRadius: 3,
               bgcolor: alpha('#2e7d32', 0.04),
-              transition: 'background-color 0.2s ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { bgcolor: alpha('#2e7d32', 0.07) }
             }}
           >
@@ -211,7 +211,7 @@ export default function InvestmentCalc() {
                   borderRadius: 3,
                   border: `1px solid ${alpha('#1565c0', 0.3)}`,
                   bgcolor: alpha('#1565c0', 0.05),
-                  transition: 'background-color 0.2s ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { bgcolor: alpha('#1565c0', 0.08) }
                 }}
               >
@@ -242,7 +242,7 @@ export default function InvestmentCalc() {
                   borderRadius: 3,
                   border: `1px solid ${alpha('#2e7d32', 0.3)}`,
                   bgcolor: alpha('#2e7d32', 0.05),
-                  transition: 'background-color 0.2s ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { bgcolor: alpha('#2e7d32', 0.08) }
                 }}
               >
@@ -274,7 +274,7 @@ export default function InvestmentCalc() {
               mb: 2,
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
-              transition: 'background-color 0.2s ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
@@ -328,7 +328,7 @@ export default function InvestmentCalc() {
               p: { xs: 2, sm: 3 },
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
-              transition: 'background-color 0.2s ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
             }}
           >

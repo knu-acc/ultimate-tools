@@ -303,7 +303,7 @@ export default function ColorConverter() {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  transition: 'background-color 200ms cubic-bezier(0.2, 0, 0, 1)',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
                     background: theme.palette.surfaceContainerLow

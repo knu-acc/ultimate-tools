@@ -222,7 +222,7 @@ export default function ShoeSize() {
               px: 3,
               textTransform: 'none',
               fontWeight: 500,
-              transition: 'all 200ms ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&.Mui-selected': {
                 background: theme.palette.surfaceContainerHigh,
                 color: theme.palette.primary.main,
@@ -287,7 +287,7 @@ export default function ShoeSize() {
                   p: 2,
                   borderRadius: 3,
                   textAlign: 'center',
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
                     background: alpha(theme.palette.primary.main, 0.04)

@@ -192,7 +192,7 @@ export default function CalorieCalc() {
                   background: isActive
                     ? theme.palette.surfaceContainerLow
                     : 'transparent',
-                  transition: 'all 0.15s ease',
+                  transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
                     background: alpha(theme.palette.primary.main, 0.04)
@@ -386,7 +386,7 @@ export default function CalorieCalc() {
                           backgroundColor: isActive
                             ? theme.palette.primary.main
                             : alpha(theme.palette.primary.main, 0.3),
-                          transition: 'width 0.4s ease, background-color 0.2s ease'
+                          transitionProperty: 'width, background-color', transitionDuration: '0.4s, 0.2s', transitionTimingFunction: 'ease'
                         }}
                       />
                     </Box>

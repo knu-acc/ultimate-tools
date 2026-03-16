@@ -177,7 +177,7 @@ export default function IpCalculator() {
                     p: 2,
                     borderRadius: 3,
                     textAlign: 'center',
-                    transition: 'all 200ms ease',
+                    transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
                       background: alpha(theme.palette.primary.main, 0.04)

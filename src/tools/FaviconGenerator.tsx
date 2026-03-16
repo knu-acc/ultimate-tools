@@ -103,7 +103,7 @@ export default function FaviconGenerator() {
                   onClick={() => download(size)}
                   sx={{
                     borderRadius: 5,
-                    transition: 'background-color 200ms',
+                    transitionProperty: 'background-color', transitionDuration: '200ms',
                     '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) }
                   }}
                 >

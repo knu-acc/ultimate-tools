@@ -115,21 +115,13 @@ const commonComponents = {
   MuiCssBaseline: {
     styleOverrides: {
       body: {
-        transition: `background-color ${md3Motion.duration.medium2} ${md3Motion.easing.standard}, color ${md3Motion.duration.medium2} ${md3Motion.easing.standard}`,
+        transitionProperty: 'background-color, color',
+        transitionDuration: md3Motion.duration.medium2,
+        transitionTimingFunction: md3Motion.easing.standard,
       },
     },
   },
-  // MD3: focus-visible outline on all interactive elements
-  MuiButtonBase: {
-    styleOverrides: {
-      root: {
-        '&.Mui-focusVisible': {
-          outline: '3px solid',
-          outlineOffset: 2,
-        },
-      },
-    },
-  },
+  // MD3: focus-visible handled via globals.css :focus-visible rules
   MuiButton: {
     defaultProps: { disableElevation: true },
     styleOverrides: {
@@ -142,7 +134,9 @@ const commonComponents = {
         lineHeight: '20px',
         minHeight: 40,
         // MD3: animate only specific properties, never 'all'
-        transition: `background-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}, box-shadow ${md3Motion.duration.short4} ${md3Motion.easing.standard}, color ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+        transitionProperty: 'background-color, box-shadow, color',
+        transitionDuration: md3Motion.duration.short4,
+        transitionTimingFunction: md3Motion.easing.standard,
       },
       contained: {
         '&:hover': {
@@ -180,7 +174,9 @@ const commonComponents = {
       root: {
         borderRadius: md3Shape.large,
         // MD3: animate only specific properties, never 'all'
-        transition: `background-color ${md3Motion.duration.medium1} ${md3Motion.easing.standard}, box-shadow ${md3Motion.duration.medium1} ${md3Motion.easing.standard}`,
+        transitionProperty: 'background-color, box-shadow',
+        transitionDuration: md3Motion.duration.medium1,
+        transitionTimingFunction: md3Motion.easing.standard,
       },
     },
   },
@@ -191,7 +187,9 @@ const commonComponents = {
         fontWeight: 500,
         letterSpacing: '0.1px',
         // MD3: animate only specific properties, never 'all'
-        transition: `background-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}, color ${md3Motion.duration.short4} ${md3Motion.easing.standard}, border-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+        transitionProperty: 'background-color, color, border-color',
+        transitionDuration: md3Motion.duration.short4,
+        transitionTimingFunction: md3Motion.easing.standard,
       },
       // MD3 Chip spec: height = 32dp. Touch target handled via padding, not height inflation.
       sizeMedium: {
@@ -375,7 +373,9 @@ const commonComponents = {
     styleOverrides: {
       root: {
         borderRadius: md3Shape.full,
-        transition: `background-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+        transitionProperty: 'background-color',
+        transitionDuration: md3Motion.duration.short4,
+        transitionTimingFunction: md3Motion.easing.standard,
       },
     },
   },
@@ -385,7 +385,9 @@ const commonComponents = {
         borderRadius: md3Shape.full,
         minWidth: 48,
         minHeight: 48,
-        transition: `background-color ${md3Motion.duration.short3} ${md3Motion.easing.standard}`,
+        transitionProperty: 'background-color',
+        transitionDuration: md3Motion.duration.short3,
+        transitionTimingFunction: md3Motion.easing.standard,
       },
     },
   },
@@ -443,7 +445,9 @@ const commonComponents = {
         borderRadius: `${md3Shape.medium}px !important`,
         '&:before': { display: 'none' },
         overflow: 'hidden',
-        transition: `border-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+        transitionProperty: 'border-color',
+        transitionDuration: md3Motion.duration.short4,
+        transitionTimingFunction: md3Motion.easing.standard,
         '&.Mui-expanded': {
           margin: '8px 0',
         },
@@ -455,12 +459,16 @@ const commonComponents = {
       root: {
         minHeight: 56,
         padding: '0 20px',
-        transition: `background-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+        transitionProperty: 'background-color',
+        transitionDuration: md3Motion.duration.short4,
+        transitionTimingFunction: md3Motion.easing.standard,
         '& .MuiAccordionSummary-content': {
           margin: '16px 0',
         },
         '& .MuiAccordionSummary-expandIconWrapper': {
-          transition: `transform ${md3Motion.duration.medium2} ${md3Motion.easing.standard}`,
+          transitionProperty: 'transform',
+          transitionDuration: md3Motion.duration.medium2,
+          transitionTimingFunction: md3Motion.easing.standard,
         },
       },
     },

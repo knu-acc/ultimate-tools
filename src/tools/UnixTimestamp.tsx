@@ -216,7 +216,7 @@ export default function UnixTimestamp() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     background: alpha(accentColor, 0.06)
                   }

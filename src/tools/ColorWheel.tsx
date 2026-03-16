@@ -166,7 +166,7 @@ export default function ColorWheel() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              transition: 'all 200ms ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
@@ -214,7 +214,7 @@ export default function ColorWheel() {
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
               mb: 2,
-              transition: 'all 200ms ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
@@ -262,7 +262,7 @@ export default function ColorWheel() {
               p: { xs: 2, sm: 3 },
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
-              transition: 'all 200ms ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
@@ -308,7 +308,7 @@ export default function ColorWheel() {
                 p: { xs: 2, sm: 3 },
                 borderRadius: 3,
                 bgcolor: theme.palette.surfaceContainerLow,
-                transition: 'all 200ms ease',
+                transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
               }}
             >

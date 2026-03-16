@@ -114,7 +114,7 @@ export default function GcdLcm() {
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha(theme.palette.primary.main, 0.04),
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
                     background: alpha(theme.palette.primary.main, 0.08)
@@ -155,7 +155,7 @@ export default function GcdLcm() {
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha(theme.palette.success.main, 0.04),
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     borderColor: theme.palette.success.main,
                     background: alpha(theme.palette.success.main, 0.08)

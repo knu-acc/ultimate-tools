@@ -116,7 +116,7 @@ export default function BudgetPlanner() {
                 bgcolor: alpha(card.color, isDark ? 0.15 : 0.07),
                 border: `1px solid ${alpha(card.color, 0.2)}`,
                 textAlign: 'center',
-                transition: 'background-color 0.2s ease',
+                transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': { bgcolor: alpha(card.color, isDark ? 0.2 : 0.1) },
               }}
             >
@@ -136,7 +136,7 @@ export default function BudgetPlanner() {
       </Grid>
 
       {/* Income */}
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box sx={{ fontSize: '1.1rem' }}>💰</Box>
@@ -197,7 +197,7 @@ export default function BudgetPlanner() {
       </Paper>
 
       {/* Expenses */}
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box sx={{ fontSize: '1.1rem' }}>💸</Box>
@@ -280,7 +280,7 @@ export default function BudgetPlanner() {
         <>
           {/* Expense distribution bar */}
           {results.breakdown.length > 0 && (
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 1.5 }}>
                 {isEn ? 'Expense Distribution' : 'Распределение расходов'}
               </Typography>
@@ -313,7 +313,7 @@ export default function BudgetPlanner() {
 
           {/* Savings rate */}
           {results.totalIncome > 0 && (
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                 <Typography variant="subtitle2" fontWeight={600}>{isEn ? 'Savings Rate' : 'Норма сбережений'}</Typography>
                 <Chip
@@ -342,7 +342,7 @@ export default function BudgetPlanner() {
 
           {/* 50/30/20 rule */}
           {results.totalIncome > 0 && (
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>{isEn ? '50/30/20 Rule' : 'Правило 50/30/20'}</Typography>
               <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
                 {isEn ? `Recommended allocation of your income ${fmt(results.totalIncome)} ${sym}` : `Рекомендуемое распределение от вашего дохода ${fmt(results.totalIncome)} ${sym}`}

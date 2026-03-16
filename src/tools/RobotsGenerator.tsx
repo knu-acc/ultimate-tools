@@ -117,7 +117,7 @@ export default function RobotsGenerator() {
           mb: 2,
           borderRadius: 3,
           bgcolor: theme.palette.surfaceContainerLow,
-          transition: 'all 200ms ease',
+          transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
@@ -164,7 +164,7 @@ export default function RobotsGenerator() {
               p: { xs: 2, sm: 3 },
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
-              transition: 'all 200ms ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >
@@ -248,7 +248,7 @@ export default function RobotsGenerator() {
               p: { xs: 2, sm: 3 },
               borderRadius: 3,
               bgcolor: theme.palette.surfaceContainerLow,
-              transition: 'all 200ms ease',
+              transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}
           >

@@ -167,7 +167,7 @@ export default function SvgEditor() {
               variant="outlined"
               startIcon={<AddIcon />}
               onClick={() => insertTemplate(t.code)}
-              sx={{ transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
+              sx={{ transitionProperty: 'background-color', transitionDuration: '200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
             >
               {isEn ? t.labelEn : t.label}
             </Button>

@@ -109,7 +109,7 @@ export default function EmailValidator() {
       {/* Single Mode */}
       {tab === 0 && (
         <>
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <TextField
               fullWidth
               value={email}
@@ -143,7 +143,7 @@ export default function EmailValidator() {
 
           {/* Validation Checks */}
           {checks.length > 0 && (
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                 {isEn ? 'Validation results' : 'Результаты проверки'}
               </Typography>
@@ -186,7 +186,7 @@ export default function EmailValidator() {
       {/* Batch Mode */}
       {tab === 1 && (
         <>
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <TextField
               fullWidth
               multiline

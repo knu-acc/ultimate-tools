@@ -97,7 +97,7 @@ export default function SlugGenerator() {
                   sx={{
                     fontWeight: 600,
                     fontSize: '0.85rem',
-                    transition: 'all 0.15s ease'
+                    transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease'
                   }}
                 />
               );
@@ -119,7 +119,7 @@ export default function SlugGenerator() {
             background: slug
               ? alpha(theme.palette.primary.main, 0.04)
               : theme.palette.action.hover,
-            transition: 'all 0.2s ease'
+            transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease'
           }}
         >
           {slug ? (

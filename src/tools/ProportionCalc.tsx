@@ -301,7 +301,7 @@ export default function ProportionCalc() {
                   borderRadius: 3,
                   background: alpha(theme.palette.warning.main, 0.06),
                   position: 'relative',
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.warning.main, 0.12) }
                 }}
               >
@@ -327,7 +327,7 @@ export default function ProportionCalc() {
                   textAlign: 'center',
                   borderRadius: 3,
                   background: alpha(theme.palette.secondary.main, 0.06),
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.secondary.main, 0.12) }
                 }}
               >
@@ -351,7 +351,7 @@ export default function ProportionCalc() {
                   borderRadius: 3,
                   background: alpha(theme.palette.warning.main, 0.06),
                   position: 'relative',
-                  transition: 'all 200ms ease',
+                  transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.warning.main, 0.12) }
                 }}
               >

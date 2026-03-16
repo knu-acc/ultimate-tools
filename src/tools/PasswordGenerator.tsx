@@ -206,7 +206,7 @@ export default function PasswordGenerator() {
                   fontWeight: 600,
                   fontSize: '0.9rem',
                   px: 1,
-                  transition: 'background-color 150ms cubic-bezier(0.2, 0, 0, 1), color 150ms cubic-bezier(0.2, 0, 0, 1)'
+                  transitionProperty: 'background-color, color', transitionDuration: '150ms', transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)'
                 }}
               />
             );

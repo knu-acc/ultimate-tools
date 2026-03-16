@@ -297,7 +297,7 @@ export default function ClothingSize() {
                     borderRadius: 3,
                     background: sys === sizeSystem ? theme.palette.surfaceContainerHigh : 'transparent',
                     textAlign: 'center',
-                    transition: 'all 200ms ease',
+                    transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,
                       background: alpha(theme.palette.primary.main, 0.04)

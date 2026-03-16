@@ -221,7 +221,7 @@ export default function JsonDataGen() {
           p: { xs: 2, sm: 3 },
           bgcolor: theme.palette.surfaceContainerLow,
           borderRadius: 3,
-          transition: 'background-color 0.2s ease',
+          transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
       >
