@@ -18,6 +18,7 @@ import DataObjectIcon from '@mui/icons-material/DataObject';
 import CompressIcon from '@mui/icons-material/Compress';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface JsonError {
@@ -82,6 +83,8 @@ function syntaxHighlight(json: string): string {
 
 export default function JsonFormatter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState<JsonError | null>(null);
@@ -180,7 +183,7 @@ export default function JsonFormatter() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder='Вставьте JSON сюда...'
+          placeholder={isEn ? 'Paste JSON here...' : 'Вставьте JSON сюда...'}
           sx={{
             mb: 2.5,
             '& .MuiInputBase-root': {
@@ -203,7 +206,7 @@ export default function JsonFormatter() {
               disabled={!input}
               sx={{ textTransform: 'none', fontWeight: 600 }}
             >
-              Форматировать
+              {isEn ? 'Format' : 'Форматировать'}
             </Button>
             <Button
               startIcon={<CompressIcon />}
@@ -211,7 +214,7 @@ export default function JsonFormatter() {
               disabled={!input}
               sx={{ textTransform: 'none', fontWeight: 600 }}
             >
-              Минифицировать
+              {isEn ? 'Minify' : 'Минифицировать'}
             </Button>
             <Button
               startIcon={<VerifiedIcon />}
@@ -219,7 +222,7 @@ export default function JsonFormatter() {
               disabled={!input}
               sx={{ textTransform: 'none', fontWeight: 600 }}
             >
-              Валидировать
+              {isEn ? 'Validate' : 'Валидировать'}
             </Button>
           </ButtonGroup>
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -231,7 +234,7 @@ export default function JsonFormatter() {
               color="inherit"
               sx={{ textTransform: 'none', borderRadius: 2 }}
             >
-              Очистить
+              {isEn ? 'Clear' : 'Очистить'}
             </Button>
           </Box>
         </Box>
@@ -240,7 +243,7 @@ export default function JsonFormatter() {
         {error && (
           <Alert severity="error" sx={{ mb: 2.5, borderRadius: 2 }}>
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
-              Ошибка парсинга JSON
+              {isEn ? 'JSON parsing error' : 'Ошибка парсинга JSON'}
             </Typography>
             <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>
               {error.message}
@@ -250,9 +253,9 @@ export default function JsonFormatter() {
                 variant="caption"
                 sx={{ display: 'block', mt: 0.5, color: 'error.dark' }}
               >
-                {error.line && `Строка: ${error.line}`}
-                {error.column && `, Столбец: ${error.column}`}
-                {error.position !== undefined && ` (позиция: ${error.position})`}
+                {error.line && (isEn ? `Line: ${error.line}` : `Строка: ${error.line}`)}
+                {error.column && (isEn ? `, Column: ${error.column}` : `, Столбец: ${error.column}`)}
+                {error.position !== undefined && (isEn ? ` (position: ${error.position})` : ` (позиция: ${error.position})`)}
               </Typography>
             )}
           </Alert>
@@ -261,7 +264,7 @@ export default function JsonFormatter() {
         {/* Validation success */}
         {lastAction === 'validate' && !error && !output && (
           <Alert severity="success" sx={{ mb: 2.5, borderRadius: 2 }}>
-            JSON валиден!
+            {isEn ? 'JSON is valid!' : 'JSON валиден!'}
           </Alert>
         )}
 
@@ -332,19 +335,19 @@ export default function JsonFormatter() {
               <Box sx={{ display: 'flex', gap: 1, mt: 1.5, flexWrap: 'wrap' }}>
                 <Chip
                   size="small"
-                  label={`${stats.lines} строк`}
+                  label={isEn ? `${stats.lines} lines` : `${stats.lines} строк`}
                   variant="outlined"
                   sx={{ fontSize: '0.75rem' }}
                 />
                 <Chip
                   size="small"
-                  label={`${stats.bytes.toLocaleString()} байт`}
+                  label={isEn ? `${stats.bytes.toLocaleString()} bytes` : `${stats.bytes.toLocaleString()} байт`}
                   variant="outlined"
                   sx={{ fontSize: '0.75rem' }}
                 />
                 <Chip
                   size="small"
-                  label={`${stats.keys} ключей`}
+                  label={isEn ? `${stats.keys} keys` : `${stats.keys} ключей`}
                   variant="outlined"
                   sx={{ fontSize: '0.75rem' }}
                 />

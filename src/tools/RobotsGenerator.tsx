@@ -18,6 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface Rule {
@@ -28,6 +29,8 @@ interface Rule {
 
 export default function RobotsGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [userAgent, setUserAgent] = useState('*');
   const [rules, setRules] = useState<Rule[]>([{ id: 1, type: 'Disallow', path: '' }]);
   const [sitemapUrl, setSitemapUrl] = useState('');
@@ -119,11 +122,11 @@ export default function RobotsGenerator() {
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          Шаблоны
+          {isEn ? 'Templates' : 'Шаблоны'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           <Chip
-            label="Разрешить всё"
+            label={isEn ? "Allow all" : "Разрешить всё"}
             onClick={() => applyPreset('allow')}
             sx={{
               cursor: 'pointer',
@@ -132,7 +135,7 @@ export default function RobotsGenerator() {
             }}
           />
           <Chip
-            label="Запретить всё"
+            label={isEn ? "Disallow all" : "Запретить всё"}
             onClick={() => applyPreset('disallow')}
             sx={{
               cursor: 'pointer',
@@ -141,7 +144,7 @@ export default function RobotsGenerator() {
             }}
           />
           <Chip
-            label="Стандартный"
+            label={isEn ? "Standard" : "Стандартный"}
             onClick={() => applyPreset('standard')}
             sx={{
               cursor: 'pointer',
@@ -175,7 +178,7 @@ export default function RobotsGenerator() {
             />
 
             <Typography variant="body2" fontWeight={600} color="text.secondary" sx={{ mb: 1 }}>
-              Правила
+              {isEn ? 'Rules' : 'Правила'}
             </Typography>
             {rules.map((rule) => (
               <Box key={rule.id} sx={{ display: 'flex', gap: 1, mb: 1, alignItems: 'center' }}>
@@ -213,7 +216,7 @@ export default function RobotsGenerator() {
               onClick={addRule}
               sx={{ mb: 2, borderRadius: 4 }}
             >
-              Добавить правило
+              {isEn ? 'Add rule' : 'Добавить правило'}
             </Button>
 
             <TextField
@@ -228,7 +231,7 @@ export default function RobotsGenerator() {
             <TextField
               fullWidth
               size="small"
-              placeholder="Crawl-delay (секунды)"
+              placeholder={isEn ? "Crawl-delay (seconds)" : "Crawl-delay (секунды)"}
               type="number"
               value={crawlDelay}
               onChange={(e) => setCrawlDelay(e.target.value)}
@@ -251,7 +254,7 @@ export default function RobotsGenerator() {
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
               <Typography variant="subtitle2" fontWeight={600}>
-                Предпросмотр robots.txt
+                {isEn ? 'Preview robots.txt' : 'Предпросмотр robots.txt'}
               </Typography>
               <CopyButton text={content} />
             </Box>
@@ -286,7 +289,7 @@ export default function RobotsGenerator() {
                 onClick={downloadFile}
                 sx={{ borderRadius: 4 }}
               >
-                Скачать robots.txt
+                {isEn ? 'Download robots.txt' : 'Скачать robots.txt'}
               </Button>
             </Box>
           </Paper>

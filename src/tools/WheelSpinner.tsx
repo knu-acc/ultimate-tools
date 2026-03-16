@@ -5,6 +5,7 @@ import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme
 } from '@mui/material';
 import { Casino } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const WHEEL_COLORS = [
   '#E53935', '#1E88E5', '#43A047', '#FB8C00',
@@ -12,12 +13,15 @@ const WHEEL_COLORS = [
   '#7CB342', '#D81B60', '#00897B', '#6D4C41',
 ];
 
-const DEFAULT_ITEMS = 'Вариант 1\nВариант 2\nВариант 3\nВариант 4';
+const DEFAULT_ITEMS_RU = 'Вариант 1\nВариант 2\nВариант 3\nВариант 4';
+const DEFAULT_ITEMS_EN = 'Option 1\nOption 2\nOption 3\nOption 4';
 
 export default function WheelSpinner() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [text, setText] = useState(DEFAULT_ITEMS);
+  const [text, setText] = useState(isEn ? DEFAULT_ITEMS_EN : DEFAULT_ITEMS_RU);
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [history, setHistory] = useState<string[]>([]);
@@ -164,7 +168,7 @@ export default function WheelSpinner() {
             fullWidth
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Элементы (по одному на строку)..."
+            placeholder={isEn ? 'Items (one per line)...' : 'Элементы (по одному на строку)...'}
             disabled={spinning}
             sx={{
               mb: 2,
@@ -173,7 +177,7 @@ export default function WheelSpinner() {
           />
 
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Вариантов: {items.length}
+            {isEn ? `Options: ${items.length}` : `Вариантов: ${items.length}`}
           </Typography>
 
           <Button
@@ -185,12 +189,12 @@ export default function WheelSpinner() {
             disabled={spinning || items.length < 2}
             sx={{ borderRadius: 6, py: 1.2 }}
           >
-            {spinning ? 'Кручу...' : 'Крутить колесо'}
+            {spinning ? (isEn ? 'Spinning...' : 'Кручу...') : (isEn ? 'Spin the wheel' : 'Крутить колесо')}
           </Button>
 
           {items.length < 2 && (
             <Typography variant="caption" color="error" sx={{ mt: 1, display: 'block' }}>
-              Нужно минимум 2 варианта
+              {isEn ? 'At least 2 options required' : 'Нужно минимум 2 варианта'}
             </Typography>
           )}
         </Grid>
@@ -217,7 +221,7 @@ export default function WheelSpinner() {
               }}
             >
               <Typography variant="caption" color="text.secondary">
-                Результат
+                {isEn ? 'Result' : 'Результат'}
               </Typography>
               <Typography variant="h4" fontWeight={700} color="success.main">
                 {result}
@@ -237,7 +241,7 @@ export default function WheelSpinner() {
             >
               <Casino sx={{ fontSize: 40, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
-                Нажмите «Крутить колесо» для начала
+                {isEn ? 'Click "Spin the wheel" to start' : 'Нажмите «Крутить колесо» для начала'}
               </Typography>
             </Paper>
           )}
@@ -245,7 +249,7 @@ export default function WheelSpinner() {
           {history.length > 0 && (
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                История ({history.length})
+                {isEn ? `History (${history.length})` : `История (${history.length})`}
               </Typography>
               <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap' }}>
                 {history.map((h, i) => (

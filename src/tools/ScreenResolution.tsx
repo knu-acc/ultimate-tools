@@ -16,11 +16,13 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import TabletIcon from '@mui/icons-material/Tablet';
 import LaptopIcon from '@mui/icons-material/Laptop';
 import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Category = 'all' | 'desktop' | 'laptop' | 'tablet' | 'phone';
 
 interface ScreenInfo {
   name: string;
+  nameEn?: string;
   width: number;
   height: number;
   aspect: string;
@@ -43,17 +45,17 @@ const RESOLUTIONS: ScreenInfo[] = [
   { name: 'MacBook Air 13"', width: 2560, height: 1600, aspect: '16:10', ppi: 227, category: 'laptop' },
   { name: 'MacBook Pro 14"', width: 3024, height: 1964, aspect: '3:2', ppi: 254, category: 'laptop' },
   { name: 'MacBook Pro 16"', width: 3456, height: 2234, aspect: '3:2', ppi: 254, category: 'laptop' },
-  { name: 'Ноутбук HD', width: 1366, height: 768, aspect: '16:9', ppi: 112, category: 'laptop' },
-  { name: 'Ноутбук FHD 14"', width: 1920, height: 1080, aspect: '16:9', ppi: 157, category: 'laptop' },
-  { name: 'Ноутбук FHD 15.6"', width: 1920, height: 1080, aspect: '16:9', ppi: 141, category: 'laptop' },
-  { name: 'Ноутбук QHD 14"', width: 2560, height: 1440, aspect: '16:9', ppi: 210, category: 'laptop' },
+  { name: 'Ноутбук HD', nameEn: 'Laptop HD', width: 1366, height: 768, aspect: '16:9', ppi: 112, category: 'laptop' },
+  { name: 'Ноутбук FHD 14"', nameEn: 'Laptop FHD 14"', width: 1920, height: 1080, aspect: '16:9', ppi: 157, category: 'laptop' },
+  { name: 'Ноутбук FHD 15.6"', nameEn: 'Laptop FHD 15.6"', width: 1920, height: 1080, aspect: '16:9', ppi: 141, category: 'laptop' },
+  { name: 'Ноутбук QHD 14"', nameEn: 'Laptop QHD 14"', width: 2560, height: 1440, aspect: '16:9', ppi: 210, category: 'laptop' },
   // Tablet
   { name: 'iPad 10.9"', width: 2360, height: 1640, aspect: '3:2', ppi: 264, category: 'tablet' },
   { name: 'iPad Pro 11"', width: 2388, height: 1668, aspect: '3:2', ppi: 264, category: 'tablet' },
   { name: 'iPad Pro 12.9"', width: 2732, height: 2048, aspect: '4:3', ppi: 264, category: 'tablet' },
   { name: 'iPad Mini', width: 2266, height: 1488, aspect: '3:2', ppi: 326, category: 'tablet' },
   { name: 'Samsung Tab S9', width: 2560, height: 1600, aspect: '16:10', ppi: 274, category: 'tablet' },
-  { name: 'Android Планшет HD', width: 1280, height: 800, aspect: '16:10', ppi: 189, category: 'tablet' },
+  { name: 'Android Планшет HD', nameEn: 'Android Tablet HD', width: 1280, height: 800, aspect: '16:10', ppi: 189, category: 'tablet' },
   // Phone
   { name: 'iPhone 15 Pro Max', width: 2796, height: 1290, aspect: '19.5:9', ppi: 460, category: 'phone' },
   { name: 'iPhone 15 Pro', width: 2556, height: 1179, aspect: '19.5:9', ppi: 460, category: 'phone' },
@@ -65,24 +67,26 @@ const RESOLUTIONS: ScreenInfo[] = [
   { name: 'Pixel 8 Pro', width: 2992, height: 1344, aspect: '20:9', ppi: 489, category: 'phone' },
 ];
 
-const CATEGORY_LABELS: Record<Category, { label: string; icon: React.ReactNode }> = {
-  all: { label: 'Все', icon: <MonitorIcon fontSize="small" /> },
-  desktop: { label: 'Десктоп', icon: <DesktopWindowsIcon fontSize="small" /> },
-  laptop: { label: 'Ноутбук', icon: <LaptopIcon fontSize="small" /> },
-  tablet: { label: 'Планшет', icon: <TabletIcon fontSize="small" /> },
-  phone: { label: 'Телефон', icon: <PhoneAndroidIcon fontSize="small" /> }
-};
-
-function formatPixels(total: number): string {
-  if (total >= 1000000) return `${(total / 1000000).toFixed(2)} Мп`;
-  return `${(total / 1000).toFixed(0)} Кп`;
-}
-
 export default function ScreenResolution() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<Category>('all');
   const [screenInfo, setScreenInfo] = useState({ width: 0, height: 0, pixelRatio: 1, colorDepth: 0 });
+
+  const categoryLabels: Record<Category, { label: string; icon: React.ReactNode }> = {
+    all: { label: isEn ? 'All' : 'Все', icon: <MonitorIcon fontSize="small" /> },
+    desktop: { label: isEn ? 'Desktop' : 'Десктоп', icon: <DesktopWindowsIcon fontSize="small" /> },
+    laptop: { label: isEn ? 'Laptop' : 'Ноутбук', icon: <LaptopIcon fontSize="small" /> },
+    tablet: { label: isEn ? 'Tablet' : 'Планшет', icon: <TabletIcon fontSize="small" /> },
+    phone: { label: isEn ? 'Phone' : 'Телефон', icon: <PhoneAndroidIcon fontSize="small" /> }
+  };
+
+  function formatPixels(total: number): string {
+    if (total >= 1000000) return `${(total / 1000000).toFixed(2)} ${isEn ? 'MP' : 'Мп'}`;
+    return `${(total / 1000).toFixed(0)} ${isEn ? 'KP' : 'Кп'}`;
+  }
 
   useEffect(() => {
     setScreenInfo({
@@ -97,7 +101,9 @@ export default function ScreenResolution() {
     if (category !== 'all' && r.category !== category) return false;
     if (search) {
       const q = search.toLowerCase();
+      const displayName = isEn && r.nameEn ? r.nameEn : r.name;
       return (
+        displayName.toLowerCase().includes(q) ||
         r.name.toLowerCase().includes(q) ||
         `${r.width}x${r.height}`.includes(q) ||
         `${r.width} x ${r.height}`.includes(q) ||
@@ -106,6 +112,10 @@ export default function ScreenResolution() {
     }
     return true;
   });
+
+  const tableHeaders = isEn
+    ? ['Name', 'Resolution', 'Aspect', 'Pixels', 'PPI', 'Category']
+    : ['Название', 'Разрешение', 'Пропорции', 'Пиксели', 'PPI', 'Категория'];
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
@@ -117,7 +127,7 @@ export default function ScreenResolution() {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <MonitorIcon color="primary" />
           <Typography variant="body1" sx={{ fontWeight: 600 }}>
-            Ваш экран
+            {isEn ? 'Your screen' : 'Ваш экран'}
           </Typography>
         </Box>
         <Grid container spacing={2}>
@@ -126,7 +136,7 @@ export default function ScreenResolution() {
               elevation={0}
               sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'all 200ms ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
             >
-              <Typography variant="caption" color="text.secondary">Разрешение</Typography>
+              <Typography variant="caption" color="text.secondary">{isEn ? 'Resolution' : 'Разрешение'}</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
                 {screenInfo.width} x {screenInfo.height}
               </Typography>
@@ -137,7 +147,7 @@ export default function ScreenResolution() {
               elevation={0}
               sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'all 200ms ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
             >
-              <Typography variant="caption" color="text.secondary">Физическое</Typography>
+              <Typography variant="caption" color="text.secondary">{isEn ? 'Physical' : 'Физическое'}</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
                 {Math.round(screenInfo.width * screenInfo.pixelRatio)} x {Math.round(screenInfo.height * screenInfo.pixelRatio)}
               </Typography>
@@ -159,9 +169,9 @@ export default function ScreenResolution() {
               elevation={0}
               sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'all 200ms ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
             >
-              <Typography variant="caption" color="text.secondary">Глубина цвета</Typography>
+              <Typography variant="caption" color="text.secondary">{isEn ? 'Color depth' : 'Глубина цвета'}</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                {screenInfo.colorDepth} бит
+                {screenInfo.colorDepth} {isEn ? 'bit' : 'бит'}
               </Typography>
             </Paper>
           </Grid>
@@ -176,7 +186,7 @@ export default function ScreenResolution() {
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
-              placeholder="Поиск по названию или разрешению"
+              placeholder={isEn ? 'Search by name or resolution' : 'Поиск по названию или разрешению'}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               size="small"
@@ -185,11 +195,11 @@ export default function ScreenResolution() {
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {(Object.keys(CATEGORY_LABELS) as Category[]).map((cat) => (
+              {(Object.keys(categoryLabels) as Category[]).map((cat) => (
                 <Chip
                   key={cat}
-                  label={CATEGORY_LABELS[cat].label}
-                  icon={CATEGORY_LABELS[cat].icon as React.ReactElement}
+                  label={categoryLabels[cat].label}
+                  icon={categoryLabels[cat].icon as React.ReactElement}
                   onClick={() => setCategory(cat)}
                   variant={category === cat ? 'filled' : 'outlined'}
                   color={category === cat ? 'primary' : 'default'}
@@ -211,7 +221,7 @@ export default function ScreenResolution() {
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <Box component="tr" sx={{ borderBottom: `2px solid ${theme.palette.divider}` }}>
-                {['Название', 'Разрешение', 'Пропорции', 'Пиксели', 'PPI', 'Категория'].map((h) => (
+                {tableHeaders.map((h) => (
                   <Box component="th" key={h} sx={{ py: 1, px: 1.5, textAlign: 'left' }}>
                     <Typography variant="caption" sx={{ fontWeight: 600 }}>{h}</Typography>
                   </Box>
@@ -229,7 +239,7 @@ export default function ScreenResolution() {
                   }}
                 >
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
-                    <Typography variant="body2">{r.name}</Typography>
+                    <Typography variant="body2">{isEn && r.nameEn ? r.nameEn : r.name}</Typography>
                   </Box>
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
                     <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
@@ -247,7 +257,7 @@ export default function ScreenResolution() {
                   </Box>
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
                     <Chip
-                      label={CATEGORY_LABELS[r.category].label}
+                      label={categoryLabels[r.category].label}
                       size="small"
                       variant="outlined"
                     />
@@ -258,7 +268,7 @@ export default function ScreenResolution() {
                 <Box component="tr">
                   <Box component="td" colSpan={6} sx={{ py: 4, textAlign: 'center' }}>
                     <Typography variant="body2" color="text.secondary">
-                      Ничего не найдено
+                      {isEn ? 'Nothing found' : 'Ничего не найдено'}
                     </Typography>
                   </Box>
                 </Box>

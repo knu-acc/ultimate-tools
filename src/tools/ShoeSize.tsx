@@ -15,25 +15,10 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type SizeSystem = 'eu' | 'us_men' | 'us_women' | 'uk' | 'jp';
 type Gender = 'men' | 'women';
-
-const systemLabels: Record<SizeSystem, string> = {
-  eu: 'EU',
-  us_men: 'US (муж.)',
-  us_women: 'US (жен.)',
-  uk: 'UK',
-  jp: 'JP (см)'
-};
-
-const systemShort: Record<SizeSystem, string> = {
-  eu: 'EU',
-  us_men: 'US М',
-  us_women: 'US Ж',
-  uk: 'UK',
-  jp: 'см'
-};
 
 // All conversions go through EU as the common base
 // EU -> cm (foot length) formula: cm = (EU + 2) * 2/3
@@ -179,9 +164,27 @@ function formatSize(n: number): string {
 
 export default function ShoeSize() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState<string>('42');
   const [sourceSystem, setSourceSystem] = useState<SizeSystem>('eu');
   const [gender, setGender] = useState<Gender>('men');
+
+  const systemLabels: Record<SizeSystem, string> = {
+    eu: 'EU',
+    us_men: isEn ? 'US (men)' : 'US (муж.)',
+    us_women: isEn ? 'US (women)' : 'US (жен.)',
+    uk: 'UK',
+    jp: isEn ? 'JP (cm)' : 'JP (см)'
+  };
+
+  const systemShort: Record<SizeSystem, string> = {
+    eu: 'EU',
+    us_men: isEn ? 'US M' : 'US М',
+    us_women: isEn ? 'US W' : 'US Ж',
+    uk: 'UK',
+    jp: isEn ? 'cm' : 'см'
+  };
 
   const numericValue = parseFloat(input);
   const isValid = input !== '' && !isNaN(numericValue) && numericValue > 0;
@@ -195,7 +198,7 @@ export default function ShoeSize() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      {/* Ввод */}
+      {/* Input */}
       <Paper
         elevation={0}
         sx={{
@@ -231,8 +234,8 @@ export default function ShoeSize() {
             }
           }}
         >
-          <ToggleButton value="men">Мужской</ToggleButton>
-          <ToggleButton value="women">Женский</ToggleButton>
+          <ToggleButton value="men">{isEn ? 'Men' : 'Мужской'}</ToggleButton>
+          <ToggleButton value="women">{isEn ? 'Women' : 'Женский'}</ToggleButton>
         </ToggleButtonGroup>
 
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
@@ -241,7 +244,7 @@ export default function ShoeSize() {
             type="number"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Введите размер"
+            placeholder={isEn ? 'Enter size' : 'Введите размер'}
             slotProps={{ htmlInput: { min: 0, step: 0.5 } }}
             sx={{
               flex: 2,
@@ -268,12 +271,12 @@ export default function ShoeSize() {
         </Box>
         {input !== '' && !isValid && (
           <Typography variant="caption" color="error" sx={{ mt: 1, display: 'block' }}>
-            Введите корректное положительное число
+            {isEn ? 'Enter a valid positive number' : 'Введите корректное положительное число'}
           </Typography>
         )}
       </Paper>
 
-      {/* Результаты */}
+      {/* Results */}
       {converted ? (
         <Grid container spacing={2} sx={{ mb: 2 }}>
           {otherSystems.map((sys) => (
@@ -313,7 +316,7 @@ export default function ShoeSize() {
         </Grid>
       ) : null}
 
-      {/* Таблица размеров */}
+      {/* Size table */}
       <Paper
         elevation={0}
         sx={{
@@ -322,7 +325,9 @@ export default function ShoeSize() {
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
-          Таблица размеров ({gender === 'men' ? 'мужские' : 'женские'})
+          {isEn
+            ? `Size chart (${gender === 'men' ? 'men' : 'women'})`
+            : `Таблица размеров (${gender === 'men' ? 'мужские' : 'женские'})`}
         </Typography>
         <Box sx={{ overflowX: 'auto' }}>
           <Box
@@ -353,10 +358,10 @@ export default function ShoeSize() {
             <thead>
               <tr>
                 <th>EU</th>
-                <th>US (муж.)</th>
-                <th>US (жен.)</th>
+                <th>{isEn ? 'US (men)' : 'US (муж.)'}</th>
+                <th>{isEn ? 'US (women)' : 'US (жен.)'}</th>
                 <th>UK</th>
-                <th>JP (см)</th>
+                <th>{isEn ? 'JP (cm)' : 'JP (см)'}</th>
               </tr>
             </thead>
             <tbody>

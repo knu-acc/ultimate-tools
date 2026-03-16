@@ -14,21 +14,24 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface AngleUnit {
   key: string;
-  label: string;
+  labelRu: string;
+  labelEn: string;
   short: string;
+  shortEn: string;
   toDeg: number;
 }
 
 const units: AngleUnit[] = [
-  { key: 'deg', label: 'Градусы', short: '\u00B0', toDeg: 1 },
-  { key: 'rad', label: 'Радианы', short: 'рад', toDeg: 180 / Math.PI },
-  { key: 'grad', label: 'Грады', short: 'град', toDeg: 0.9 },
-  { key: 'turn', label: 'Обороты', short: 'об', toDeg: 360 },
-  { key: 'arcmin', label: 'Угловые минуты', short: '\u2032', toDeg: 1 / 60 },
-  { key: 'arcsec', label: 'Угловые секунды', short: '\u2033', toDeg: 1 / 3600 },
+  { key: 'deg', labelRu: 'Градусы', labelEn: 'Degrees', short: '\u00B0', shortEn: '\u00B0', toDeg: 1 },
+  { key: 'rad', labelRu: 'Радианы', labelEn: 'Radians', short: 'рад', shortEn: 'rad', toDeg: 180 / Math.PI },
+  { key: 'grad', labelRu: 'Грады', labelEn: 'Gradians', short: 'град', shortEn: 'grad', toDeg: 0.9 },
+  { key: 'turn', labelRu: 'Обороты', labelEn: 'Turns', short: 'об', shortEn: 'turn', toDeg: 360 },
+  { key: 'arcmin', labelRu: 'Угловые минуты', labelEn: 'Arc minutes', short: '\u2032', shortEn: '\u2032', toDeg: 1 / 60 },
+  { key: 'arcsec', labelRu: 'Угловые секунды', labelEn: 'Arc seconds', short: '\u2033', shortEn: '\u2033', toDeg: 1 / 3600 },
 ];
 
 const barColors = ['#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#f44336', '#00bcd4'];
@@ -43,6 +46,8 @@ function formatNumber(value: number): string {
 
 export default function AngleConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [inputValue, setInputValue] = useState('180');
   const [fromUnit, setFromUnit] = useState('deg');
 
@@ -55,8 +60,8 @@ export default function AngleConverter() {
     const converted = isValid ? (numericValue * sourceUnit.toDeg) / target.toDeg : 0;
     return {
       key: target.key,
-      label: target.label,
-      short: target.short,
+      label: isEn ? target.labelEn : target.labelRu,
+      short: isEn ? target.shortEn : target.short,
       value: converted,
       formatted: isValid ? formatNumber(converted) : '—'
     };
@@ -94,7 +99,7 @@ export default function AngleConverter() {
               input: {
                 endAdornment: (
                   <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
-                    {sourceUnit.short}
+                    {isEn ? sourceUnit.shortEn : sourceUnit.short}
                   </Typography>
                 )
               }
@@ -107,7 +112,7 @@ export default function AngleConverter() {
           >
             {units.map((u) => (
               <MenuItem key={u.key} value={u.key}>
-                {u.label} ({u.short})
+                {isEn ? u.labelEn : u.labelRu} ({isEn ? u.shortEn : u.short})
               </MenuItem>
             ))}
           </Select>
@@ -154,7 +159,7 @@ export default function AngleConverter() {
           {numericValue > 0 && (
             <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
               <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-                Сравнение
+                {isEn ? 'Comparison' : 'Сравнение'}
               </Typography>
               {allResults.map((r, idx) => {
                 const percent = maxValue > 0 ? (r.value / maxValue) * 100 : 0;

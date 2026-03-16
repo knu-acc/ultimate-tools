@@ -19,6 +19,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface MatchInfo {
@@ -29,6 +30,8 @@ interface MatchInfo {
 
 export default function RegexTester() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [pattern, setPattern] = useState('');
   const [testString, setTestString] = useState('');
   const [flags, setFlags] = useState({ g: true, i: false, m: false, s: false });
@@ -104,10 +107,10 @@ export default function RegexTester() {
   }
 
   const flagDescriptions: Record<string, string> = {
-    g: 'Глобальный поиск',
-    i: 'Без учёта регистра',
-    m: 'Многострочный',
-    s: 'Точка включает \\n'
+    g: isEn ? 'Global search' : 'Глобальный поиск',
+    i: isEn ? 'Case insensitive' : 'Без учёта регистра',
+    m: isEn ? 'Multiline' : 'Многострочный',
+    s: isEn ? 'Dot matches \\n' : 'Точка включает \\n'
   };
 
   return (
@@ -125,7 +128,7 @@ export default function RegexTester() {
             fullWidth
             value={pattern}
             onChange={(e) => setPattern(e.target.value)}
-            placeholder="Введите регулярное выражение..."
+            placeholder={isEn ? "Enter regular expression..." : "Введите регулярное выражение..."}
             variant="outlined"
             sx={{ '& .MuiInputBase-input': { fontFamily: 'monospace' } }}
           />
@@ -173,7 +176,7 @@ export default function RegexTester() {
           rows={5}
           value={testString}
           onChange={(e) => setTestString(e.target.value)}
-          placeholder="Введите текст для проверки..."
+          placeholder={isEn ? "Enter test string..." : "Введите текст для проверки..."}
           sx={{ '& .MuiInputBase-input': { fontFamily: 'monospace' } }}
         />
       </Paper>
@@ -186,10 +189,10 @@ export default function RegexTester() {
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-              Подсветка
+              {isEn ? 'Highlighting' : 'Подсветка'}
             </Typography>
             <Chip
-              label={`${matches.length} ${matches.length === 1 ? 'совпадение' : 'совпадений'}`}
+              label={isEn ? `${matches.length} ${matches.length === 1 ? 'match' : 'matches'}` : `${matches.length} ${matches.length === 1 ? 'совпадение' : 'совпадений'}`}
               color={matches.length > 0 ? 'primary' : 'default'}
               size="small"
             />
@@ -217,7 +220,7 @@ export default function RegexTester() {
           sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
         >
           <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
-            Совпадения
+            {isEn ? 'Matches' : 'Совпадения'}
           </Typography>
           <List disablePadding>
             {matches.map((m, i) => (
@@ -241,7 +244,7 @@ export default function RegexTester() {
                           {`"${m.match}"`}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
-                          позиция: {m.index}
+                          {isEn ? 'position' : 'позиция'}: {m.index}
                         </Typography>
                       </Box>
                     }
@@ -251,7 +254,7 @@ export default function RegexTester() {
                           {m.groups.map((g, gi) => (
                             <Chip
                               key={gi}
-                              label={`Группа ${gi + 1}: "${g}"`}
+                              label={isEn ? `Group ${gi + 1}: "${g}"` : `Группа ${gi + 1}: "${g}"`}
                               size="small"
                               variant="outlined"
                               sx={{ fontFamily: 'monospace', fontSize: '0.75rem' }}

@@ -17,6 +17,7 @@ import {
   alpha
 } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type BarcodeType = 'code128' | 'ean13' | 'code39';
 
@@ -193,6 +194,8 @@ function getCode39TotalWidth(bars: string, narrowW: number): number {
 // ── Component ────────────────────────────────────────────────────────────────
 export default function BarcodeGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [text, setText] = useState('123456789012');
   const [barcodeType, setBarcodeType] = useState<BarcodeType>('code128');
@@ -227,7 +230,7 @@ export default function BarcodeGenerator() {
       const { values, invalidChars } = encodeCode128(text);
 
       if (invalidChars.length > 0) {
-        setError(`Недопустимые символы для Code 128: ${invalidChars.map(c => `"${c}"`).join(', ')} (допустимы ASCII 32–126)`);
+        setError(isEn ? `Invalid characters for Code 128: ${invalidChars.map(c => `"${c}"`).join(', ')} (ASCII 32–126 allowed)` : `Недопустимые символы для Code 128: ${invalidChars.map(c => `"${c}"`).join(', ')} (допустимы ASCII 32–126)`);
       }
 
       let totalBars = 0;
@@ -264,7 +267,7 @@ export default function BarcodeGenerator() {
     } else if (barcodeType === 'ean13') {
       const clean = text.replace(/\D/g, '');
       if (clean.length < 12) {
-        setError('EAN-13 требует минимум 12 цифр');
+        setError(isEn ? 'EAN-13 requires at least 12 digits' : 'EAN-13 требует минимум 12 цифр');
         clearCanvas();
         return;
       }
@@ -296,7 +299,7 @@ export default function BarcodeGenerator() {
     } else if (barcodeType === 'code39') {
       const invalidChars = validateCode39(text);
       if (invalidChars.length > 0) {
-        setError(`Недопустимые символы для Code 39: ${invalidChars.map(c => `"${c}"`).join(', ')}`);
+        setError(isEn ? `Invalid characters for Code 39: ${invalidChars.map(c => `"${c}"`).join(', ')}` : `Недопустимые символы для Code 39: ${invalidChars.map(c => `"${c}"`).join(', ')}`);
         clearCanvas();
         return;
       }
@@ -340,9 +343,9 @@ export default function BarcodeGenerator() {
   };
 
   const types: { value: BarcodeType; label: string; hint: string }[] = [
-    { value: 'code128', label: 'Code 128', hint: 'ASCII 32–126, любая длина' },
-    { value: 'ean13',   label: 'EAN-13',   hint: '12–13 цифр' },
-    { value: 'code39',  label: 'Code 39',  hint: 'Цифры, A–Z, -. $/+%' },
+    { value: 'code128', label: 'Code 128', hint: isEn ? 'ASCII 32–126, any length' : 'ASCII 32–126, любая длина' },
+    { value: 'ean13',   label: 'EAN-13',   hint: isEn ? '12–13 digits' : '12–13 цифр' },
+    { value: 'code39',  label: 'Code 39',  hint: isEn ? 'Digits, A–Z, -. $/+%' : 'Цифры, A–Z, -. $/+%' },
   ];
 
   return (
@@ -361,7 +364,7 @@ export default function BarcodeGenerator() {
             }}
           >
             <Typography variant="subtitle2" sx={{ mb: 1.5, color: 'text.secondary', fontWeight: 600 }}>
-              Формат штрих-кода
+              {isEn ? 'Barcode format' : 'Формат штрих-кода'}
             </Typography>
             <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
               {types.map((t) => (
@@ -382,11 +385,11 @@ export default function BarcodeGenerator() {
 
             <TextField
               fullWidth
-              label="Данные"
+              label={isEn ? 'Data' : 'Данные'}
               value={text}
               onChange={(e) => { setText(e.target.value); setError(''); }}
               placeholder={
-                barcodeType === 'ean13' ? '12 или 13 цифр' :
+                barcodeType === 'ean13' ? (isEn ? '12 or 13 digits' : '12 или 13 цифр') :
                 barcodeType === 'code39' ? 'HELLO-WORLD' :
                 'Hello, World!'
               }
@@ -403,7 +406,7 @@ export default function BarcodeGenerator() {
 
             <Box sx={{ mb: 2 }}>
               <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-                Ширина линии: {barWidth}px
+                {isEn ? `Line width: ${barWidth}px` : `Ширина линии: ${barWidth}px`}
               </Typography>
               <Slider
                 value={barWidth}
@@ -416,7 +419,7 @@ export default function BarcodeGenerator() {
 
             <Box sx={{ mb: 2 }}>
               <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-                Высота: {barHeight}px
+                {isEn ? `Height: ${barHeight}px` : `Высота: ${barHeight}px`}
               </Typography>
               <Slider
                 value={barHeight}
@@ -429,7 +432,7 @@ export default function BarcodeGenerator() {
 
             <FormControlLabel
               control={<Switch checked={showText} onChange={(e) => setShowText(e.target.checked)} />}
-              label="Показать текст"
+              label={isEn ? 'Show text' : 'Показать текст'}
             />
           </Paper>
         </Grid>
@@ -471,7 +474,7 @@ export default function BarcodeGenerator() {
                 disabled={!text.trim() || !!error}
                 sx={{ borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
               >
-                Скачать PNG
+                {isEn ? 'Download PNG' : 'Скачать PNG'}
               </Button>
             </Box>
           </Paper>

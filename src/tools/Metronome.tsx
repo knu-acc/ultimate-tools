@@ -5,6 +5,7 @@ import {
   Box, Typography, Grid, Button, Chip, alpha, useTheme, IconButton, Slider, TextField
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type TimeSignature = '2/4' | '3/4' | '4/4' | '6/8';
 
@@ -22,6 +23,8 @@ function getBeatsPerMeasure(ts: TimeSignature): number {
 
 export default function Metronome() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [bpm, setBpm] = useState(120);
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeSignature, setTimeSignature] = useState<TimeSignature>('4/4');
@@ -204,7 +207,7 @@ export default function Metronome() {
           {bpm}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          уд/мин
+          {isEn ? 'BPM' : 'уд/мин'}
         </Typography>
       </Box>
 
@@ -274,7 +277,7 @@ export default function Metronome() {
 
       {/* Time Signature */}
       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1, textAlign: 'center' }}>
-        Размер
+        {isEn ? 'Time Signature' : 'Размер'}
       </Typography>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 2 }}>
         {TIME_SIGNATURES.map((ts) => (
@@ -313,7 +316,7 @@ export default function Metronome() {
               }
             }}
           >
-            {isPlaying ? 'Стоп' : 'Старт'}
+            {isPlaying ? (isEn ? 'Stop' : 'Стоп') : (isEn ? 'Start' : 'Старт')}
           </Button>
         </Grid>
         <Grid size={{ xs: 6 }}>
@@ -329,13 +332,13 @@ export default function Metronome() {
               fontSize: 16
             }}
           >
-            Тап темп
+            {isEn ? 'Tap Tempo' : 'Тап темп'}
           </Button>
         </Grid>
       </Grid>
 
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center', mt: 1 }}>
-        Нажимайте «Тап темп» в ритме для определения BPM
+        {isEn ? 'Tap "Tap Tempo" in rhythm to detect BPM' : 'Нажимайте «Тап темп» в ритме для определения BPM'}
       </Typography>
     </Box>
   );

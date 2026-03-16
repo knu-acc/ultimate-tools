@@ -5,6 +5,7 @@ import {
   Box, Typography, Paper, Grid, TextField, Chip, alpha, useTheme
 } from '@mui/material';
 import ColorPickerInput from '@/src/components/ColorPickerInput';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 function hexToRgb(hex: string): [number, number, number] {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -39,6 +40,8 @@ function getWCAGLevel(ratio: number, isLargeText: boolean): { aa: boolean; aaa: 
 
 export default function ContrastChecker() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [fgColor, setFgColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#FFFFFF');
 
@@ -46,7 +49,7 @@ export default function ContrastChecker() {
   const normalText = getWCAGLevel(ratio, false);
   const largeText = getWCAGLevel(ratio, true);
 
-  const ratingLabel = ratio >= 7 ? 'Отлично' : ratio >= 4.5 ? 'Хорошо' : ratio >= 3 ? 'Удовлетворительно' : 'Плохо';
+  const ratingLabel = ratio >= 7 ? (isEn ? 'Excellent' : 'Отлично') : ratio >= 4.5 ? (isEn ? 'Good' : 'Хорошо') : ratio >= 3 ? (isEn ? 'Acceptable' : 'Удовлетворительно') : (isEn ? 'Poor' : 'Плохо');
   const ratingColor = ratio >= 7 ? theme.palette.success.main : ratio >= 4.5 ? '#4CAF50' : ratio >= 3 ? theme.palette.warning.main : theme.palette.error.main;
 
   return (
@@ -56,14 +59,14 @@ export default function ContrastChecker() {
           <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={6}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <ColorPickerInput value={fgColor} onChange={setFgColor} label="Цвет текста" />
-                <TextField size="small" value={fgColor} onChange={(e) => setFgColor(e.target.value)} placeholder="Цвет текста" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
+                <ColorPickerInput value={fgColor} onChange={setFgColor} label={isEn ? 'Text color' : 'Цвет текста'} />
+                <TextField size="small" value={fgColor} onChange={(e) => setFgColor(e.target.value)} placeholder={isEn ? 'Text color' : 'Цвет текста'} sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
               </Box>
             </Grid>
             <Grid size={6}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <ColorPickerInput value={bgColor} onChange={setBgColor} label="Цвет фона" />
-                <TextField size="small" value={bgColor} onChange={(e) => setBgColor(e.target.value)} placeholder="Цвет фона" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
+                <ColorPickerInput value={bgColor} onChange={setBgColor} label={isEn ? 'Background color' : 'Цвет фона'} />
+                <TextField size="small" value={bgColor} onChange={(e) => setBgColor(e.target.value)} placeholder={isEn ? 'Background color' : 'Цвет фона'} sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
               </Box>
             </Grid>
           </Grid>
@@ -82,36 +85,36 @@ export default function ContrastChecker() {
           <Grid container spacing={1}>
             <Grid size={6}>
               <Paper elevation={0} sx={{ p: 2, borderRadius: 2, textAlign: 'center', bgcolor: normalText.aa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
-                <Typography variant="body2" fontWeight={600}>AA Обычный</Typography>
+                <Typography variant="body2" fontWeight={600}>{isEn ? 'AA Normal' : 'AA Обычный'}</Typography>
                 <Typography variant="h6" fontWeight={700} sx={{ color: normalText.aa ? '#4CAF50' : '#f44336' }}>
-                  {normalText.aa ? '✓ Пройден' : '✗ Не пройден'}
+                  {normalText.aa ? (isEn ? '✓ Pass' : '✓ Пройден') : (isEn ? '✗ Fail' : '✗ Не пройден')}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">≥ 4.5:1</Typography>
               </Paper>
             </Grid>
             <Grid size={6}>
               <Paper elevation={0} sx={{ p: 2, borderRadius: 2, textAlign: 'center', bgcolor: normalText.aaa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
-                <Typography variant="body2" fontWeight={600}>AAA Обычный</Typography>
+                <Typography variant="body2" fontWeight={600}>{isEn ? 'AAA Normal' : 'AAA Обычный'}</Typography>
                 <Typography variant="h6" fontWeight={700} sx={{ color: normalText.aaa ? '#4CAF50' : '#f44336' }}>
-                  {normalText.aaa ? '✓ Пройден' : '✗ Не пройден'}
+                  {normalText.aaa ? (isEn ? '✓ Pass' : '✓ Пройден') : (isEn ? '✗ Fail' : '✗ Не пройден')}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">≥ 7:1</Typography>
               </Paper>
             </Grid>
             <Grid size={6}>
               <Paper elevation={0} sx={{ p: 2, borderRadius: 2, textAlign: 'center', bgcolor: largeText.aa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
-                <Typography variant="body2" fontWeight={600}>AA Крупный</Typography>
+                <Typography variant="body2" fontWeight={600}>{isEn ? 'AA Large' : 'AA Крупный'}</Typography>
                 <Typography variant="h6" fontWeight={700} sx={{ color: largeText.aa ? '#4CAF50' : '#f44336' }}>
-                  {largeText.aa ? '✓ Пройден' : '✗ Не пройден'}
+                  {largeText.aa ? (isEn ? '✓ Pass' : '✓ Пройден') : (isEn ? '✗ Fail' : '✗ Не пройден')}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">≥ 3:1</Typography>
               </Paper>
             </Grid>
             <Grid size={6}>
               <Paper elevation={0} sx={{ p: 2, borderRadius: 2, textAlign: 'center', bgcolor: largeText.aaa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
-                <Typography variant="body2" fontWeight={600}>AAA Крупный</Typography>
+                <Typography variant="body2" fontWeight={600}>{isEn ? 'AAA Large' : 'AAA Крупный'}</Typography>
                 <Typography variant="h6" fontWeight={700} sx={{ color: largeText.aaa ? '#4CAF50' : '#f44336' }}>
-                  {largeText.aaa ? '✓ Пройден' : '✗ Не пройден'}
+                  {largeText.aaa ? (isEn ? '✓ Pass' : '✓ Пройден') : (isEn ? '✗ Fail' : '✗ Не пройден')}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">≥ 4.5:1</Typography>
               </Paper>
@@ -123,22 +126,22 @@ export default function ContrastChecker() {
           {/* Preview */}
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: bgColor, mb: 2 }}>
             <Typography variant="h4" sx={{ color: fgColor, fontWeight: 700, mb: 1 }}>
-              Заголовок страницы
+              {isEn ? 'Page Heading' : 'Заголовок страницы'}
             </Typography>
             <Typography variant="body1" sx={{ color: fgColor, mb: 2 }}>
-              Это пример обычного текста на выбранном фоне. Проверьте, насколько хорошо читается содержимое.
+              {isEn ? 'This is sample body text on the selected background. Check how readable the content is.' : 'Это пример обычного текста на выбранном фоне. Проверьте, насколько хорошо читается содержимое.'}
             </Typography>
             <Typography variant="body2" sx={{ color: fgColor, opacity: 0.8 }}>
-              Мелкий текст тоже должен быть читабельным для обеспечения доступности.
+              {isEn ? 'Small text should also be readable to ensure accessibility.' : 'Мелкий текст тоже должен быть читабельным для обеспечения доступности.'}
             </Typography>
           </Paper>
 
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: fgColor }}>
             <Typography variant="h4" sx={{ color: bgColor, fontWeight: 700, mb: 1 }}>
-              Инвертированный вариант
+              {isEn ? 'Inverted Variant' : 'Инвертированный вариант'}
             </Typography>
             <Typography variant="body1" sx={{ color: bgColor }}>
-              Тот же контраст в обратном порядке — текст и фон поменялись местами.
+              {isEn ? 'Same contrast in reverse — text and background are swapped.' : 'Тот же контраст в обратном порядке — текст и фон поменялись местами.'}
             </Typography>
           </Paper>
         </Grid>

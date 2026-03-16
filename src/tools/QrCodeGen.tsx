@@ -18,6 +18,7 @@ import {
   alpha
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type QrMode = 'url' | 'text' | 'wifi' | 'vcard';
 
@@ -41,6 +42,8 @@ export default function QrCodeGen() {
   const [vcardPhone, setVcardPhone] = useState('');
   const [vcardEmail, setVcardEmail] = useState('');
   const [vcardOrg, setVcardOrg] = useState('');
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const getQrContent = useCallback((): string => {
     switch (mode) {
@@ -78,7 +81,7 @@ export default function QrCodeGen() {
       ctx.fillStyle = '#999';
       ctx.font = '14px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Введите данные', size / 2, size / 2);
+      ctx.fillText(isEn ? 'Enter data' : 'Введите данные', size / 2, size / 2);
       return;
     }
 
@@ -99,7 +102,7 @@ export default function QrCodeGen() {
         }
       });
     });
-  }, [getQrContent, size]);
+  }, [getQrContent, size, isEn]);
 
   useEffect(() => {
     drawQR();
@@ -116,7 +119,7 @@ export default function QrCodeGen() {
 
   const modes: { value: QrMode; label: string }[] = [
     { value: 'url', label: 'URL' },
-    { value: 'text', label: 'Текст' },
+    { value: 'text', label: isEn ? 'Text' : 'Текст' },
     { value: 'wifi', label: 'WiFi' },
     { value: 'vcard', label: 'vCard' },
   ];
@@ -144,7 +147,7 @@ export default function QrCodeGen() {
               rows={3}
               value={urlText}
               onChange={(e) => setUrlText(e.target.value)}
-              placeholder={mode === 'url' ? 'https://example.com' : 'Введите текст...'}
+              placeholder={mode === 'url' ? 'https://example.com' : (isEn ? 'Enter text...' : 'Введите текст...')}
               sx={{ mb: 2 }}
             />
           )}
@@ -155,7 +158,7 @@ export default function QrCodeGen() {
                 fullWidth
                 value={wifiSsid}
                 onChange={(e) => setWifiSsid(e.target.value)}
-                placeholder="Название сети (SSID)"
+                placeholder={isEn ? 'Network name (SSID)' : 'Название сети (SSID)'}
                 size="small"
                 sx={{ mb: 2 }}
               />
@@ -163,20 +166,20 @@ export default function QrCodeGen() {
                 fullWidth
                 value={wifiPassword}
                 onChange={(e) => setWifiPassword(e.target.value)}
-                placeholder="Пароль"
+                placeholder={isEn ? 'Password' : 'Пароль'}
                 size="small"
                 sx={{ mb: 2 }}
               />
               <FormControl fullWidth size="small" sx={{ mb: 2 }}>
-                <InputLabel>Шифрование</InputLabel>
+                <InputLabel>{isEn ? 'Encryption' : 'Шифрование'}</InputLabel>
                 <Select
                   value={wifiEncryption}
-                  label="Шифрование"
+                  label={isEn ? 'Encryption' : 'Шифрование'}
                   onChange={(e) => setWifiEncryption(e.target.value as 'WPA' | 'WEP' | 'nopass')}
                 >
                   <MenuItem value="WPA">WPA/WPA2</MenuItem>
                   <MenuItem value="WEP">WEP</MenuItem>
-                  <MenuItem value="nopass">Без пароля</MenuItem>
+                  <MenuItem value="nopass">{isEn ? 'No password' : 'Без пароля'}</MenuItem>
                 </Select>
               </FormControl>
             </>
@@ -188,7 +191,7 @@ export default function QrCodeGen() {
                 fullWidth
                 value={vcardName}
                 onChange={(e) => setVcardName(e.target.value)}
-                placeholder="Имя"
+                placeholder={isEn ? 'Name' : 'Имя'}
                 size="small"
                 sx={{ mb: 2 }}
               />
@@ -212,7 +215,7 @@ export default function QrCodeGen() {
                 fullWidth
                 value={vcardOrg}
                 onChange={(e) => setVcardOrg(e.target.value)}
-                placeholder="Организация"
+                placeholder={isEn ? 'Organization' : 'Организация'}
                 size="small"
                 sx={{ mb: 2 }}
               />
@@ -221,7 +224,7 @@ export default function QrCodeGen() {
 
           <Box sx={{ mb: 2 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-              Размер: {size}px
+              {isEn ? 'Size' : 'Размер'}: {size}px
             </Typography>
             <Slider
               value={size}
@@ -261,7 +264,7 @@ export default function QrCodeGen() {
                 onClick={handleDownload}
                 sx={{ borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
               >
-                Скачать PNG
+                {isEn ? 'Download PNG' : 'Скачать PNG'}
               </Button>
             </Box>
           </Paper>

@@ -5,30 +5,45 @@ import {
   Box, Typography, Button, Chip, alpha, useTheme, Slider, TextField
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type WaveformType = 'sine' | 'square' | 'triangle' | 'sawtooth';
 
-const WAVEFORMS: { type: WaveformType; label: string }[] = [
-  { type: 'sine', label: 'Синус' },
-  { type: 'square', label: 'Квадрат' },
-  { type: 'triangle', label: 'Треугольник' },
-  { type: 'sawtooth', label: 'Пила' },
-];
-
-const QUICK_FREQUENCIES = [
-  { freq: 261.63, label: 'C4 (До)' },
-  { freq: 329.63, label: 'E4 (Ми)' },
-  { freq: 392, label: 'G4 (Соль)' },
-  { freq: 440, label: 'A4 (Ля)' },
-];
-
-function formatFrequency(freq: number): string {
-  if (freq >= 1000) return `${(freq / 1000).toFixed(2)} кГц`;
-  return `${freq.toFixed(2)} Гц`;
+interface WaveformOption {
+  type: WaveformType;
+  label: string;
+  labelEn: string;
 }
 
-function getNoteName(freq: number): string | null {
-  const noteNames = ['До', 'До#', 'Ре', 'Ре#', 'Ми', 'Фа', 'Фа#', 'Соль', 'Соль#', 'Ля', 'Ля#', 'Си'];
+const WAVEFORMS: WaveformOption[] = [
+  { type: 'sine', label: 'Синус', labelEn: 'Sine' },
+  { type: 'square', label: 'Квадрат', labelEn: 'Square' },
+  { type: 'triangle', label: 'Треугольник', labelEn: 'Triangle' },
+  { type: 'sawtooth', label: 'Пила', labelEn: 'Sawtooth' },
+];
+
+interface QuickFreq {
+  freq: number;
+  label: string;
+  labelEn: string;
+}
+
+const QUICK_FREQUENCIES: QuickFreq[] = [
+  { freq: 261.63, label: 'C4 (До)', labelEn: 'C4 (Do)' },
+  { freq: 329.63, label: 'E4 (Ми)', labelEn: 'E4 (Mi)' },
+  { freq: 392, label: 'G4 (Соль)', labelEn: 'G4 (Sol)' },
+  { freq: 440, label: 'A4 (Ля)', labelEn: 'A4 (La)' },
+];
+
+function formatFrequency(freq: number, isEn: boolean): string {
+  if (freq >= 1000) return isEn ? `${(freq / 1000).toFixed(2)} kHz` : `${(freq / 1000).toFixed(2)} кГц`;
+  return isEn ? `${freq.toFixed(2)} Hz` : `${freq.toFixed(2)} Гц`;
+}
+
+function getNoteName(freq: number, isEn: boolean): string | null {
+  const noteNamesRu = ['До', 'До#', 'Ре', 'Ре#', 'Ми', 'Фа', 'Фа#', 'Соль', 'Соль#', 'Ля', 'Ля#', 'Си'];
+  const noteNamesEn = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+  const noteNames = isEn ? noteNamesEn : noteNamesRu;
   const semitones = 12 * Math.log2(freq / 440);
   const rounded = Math.round(semitones);
   if (Math.abs(semitones - rounded) > 0.15) return null;
@@ -43,6 +58,8 @@ export default function ToneGenerator() {
   const [waveform, setWaveform] = useState<WaveformType>('sine');
   const [volume, setVolume] = useState(50);
   const [isPlaying, setIsPlaying] = useState(false);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const oscillatorRef = useRef<OscillatorNode | null>(null);
@@ -143,7 +160,8 @@ export default function ToneGenerator() {
   }, []);
 
   const primaryColor = theme.palette.primary.main;
-  const noteName = getNoteName(frequency);
+  const noteName = getNoteName(frequency, isEn);
+  const currentWaveformLabel = WAVEFORMS.find(w => w.type === waveform);
 
   return (
     <Box sx={{
@@ -168,7 +186,7 @@ export default function ToneGenerator() {
         }}
       >
         <Typography variant="h3" fontWeight={800} sx={{ color: primaryColor }}>
-          {formatFrequency(frequency)}
+          {formatFrequency(frequency, isEn)}
         </Typography>
         {noteName && (
           <Typography variant="h6" sx={{ color: alpha(primaryColor, 0.7), mt: 0.5 }}>
@@ -176,13 +194,13 @@ export default function ToneGenerator() {
           </Typography>
         )}
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-          Форма волны: {WAVEFORMS.find(w => w.type === waveform)?.label}
+          {isEn ? 'Waveform' : 'Форма волны'}: {isEn ? currentWaveformLabel?.labelEn : currentWaveformLabel?.label}
         </Typography>
       </Box>
 
       {/* Frequency Input */}
       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-        Частота (Гц)
+        {isEn ? 'Frequency (Hz)' : 'Частота (Гц)'}
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
         <TextField
@@ -197,7 +215,7 @@ export default function ToneGenerator() {
           sx={{ width: 130 }}
         />
         <Typography variant="caption" color="text.secondary">
-          20 — 20 000 Гц
+          {isEn ? '20 — 20,000 Hz' : '20 — 20 000 Гц'}
         </Typography>
       </Box>
 
@@ -215,8 +233,8 @@ export default function ToneGenerator() {
           sx={{ color: primaryColor }}
         />
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="caption" color="text.secondary">20 Гц</Typography>
-          <Typography variant="caption" color="text.secondary">20 кГц</Typography>
+          <Typography variant="caption" color="text.secondary">{isEn ? '20 Hz' : '20 Гц'}</Typography>
+          <Typography variant="caption" color="text.secondary">{isEn ? '20 kHz' : '20 кГц'}</Typography>
         </Box>
       </Box>
 
@@ -225,7 +243,7 @@ export default function ToneGenerator() {
         {QUICK_FREQUENCIES.map((f) => (
           <Chip
             key={f.freq}
-            label={f.label}
+            label={isEn ? f.labelEn : f.label}
             onClick={() => handleFrequencyChange(f.freq)}
             variant={frequency === f.freq ? 'filled' : 'outlined'}
             color={frequency === f.freq ? 'primary' : 'default'}
@@ -236,13 +254,13 @@ export default function ToneGenerator() {
 
       {/* Waveform Selector */}
       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-        Форма волны
+        {isEn ? 'Waveform' : 'Форма волны'}
       </Typography>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center', mb: 2 }}>
         {WAVEFORMS.map((w) => (
           <Chip
             key={w.type}
-            label={w.label}
+            label={isEn ? w.labelEn : w.label}
             onClick={() => setWaveform(w.type)}
             variant={waveform === w.type ? 'filled' : 'outlined'}
             color={waveform === w.type ? 'primary' : 'default'}
@@ -253,7 +271,7 @@ export default function ToneGenerator() {
 
       {/* Volume Slider */}
       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-        Громкость: {volume}%
+        {isEn ? 'Volume' : 'Громкость'}: {volume}%
       </Typography>
       <Box sx={{ px: 1, mb: 2 }}>
         <Slider
@@ -283,11 +301,11 @@ export default function ToneGenerator() {
           }
         }}
       >
-        {isPlaying ? 'Остановить' : 'Воспроизвести'}
+        {isPlaying ? (isEn ? 'Stop' : 'Остановить') : (isEn ? 'Play' : 'Воспроизвести')}
       </Button>
 
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center', mt: 2 }}>
-        Используется Web Audio API для генерации звука
+        {isEn ? 'Uses Web Audio API for sound generation' : 'Используется Web Audio API для генерации звука'}
       </Typography>
     </Box>
   );

@@ -16,6 +16,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import PaletteIcon from '@mui/icons-material/Palette';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface ColorInfo {
@@ -76,6 +77,8 @@ function extractColors(imageData: ImageData, maxColors: number = 12): ColorInfo[
 
 export default function ImageColors() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [colors, setColors] = useState<ColorInfo[]>([]);
   const [imageUrl, setImageUrl] = useState('');
   const [dragging, setDragging] = useState(false);
@@ -182,10 +185,10 @@ export default function ImageColors() {
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
           <Typography variant="h6" sx={{ mb: 1 }}>
-            Перетащите изображение сюда
+            {isEn ? 'Drop an image here' : 'Перетащите изображение сюда'}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            или нажмите для выбора файла
+            {isEn ? 'or click to select a file' : 'или нажмите для выбора файла'}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
             <Chip label="PNG" size="small" variant="outlined" />
@@ -210,7 +213,7 @@ export default function ImageColors() {
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                    Изображение
+                    {isEn ? 'Image' : 'Изображение'}
                   </Typography>
                   <Button
                     size="small"
@@ -219,7 +222,7 @@ export default function ImageColors() {
                     startIcon={<DeleteIcon />}
                     onClick={clearAll}
                   >
-                    Очистить
+                    {isEn ? 'Clear' : 'Очистить'}
                   </Button>
                 </Box>
                 <Box
@@ -279,7 +282,7 @@ export default function ImageColors() {
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="subtitle2" sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <PaletteIcon fontSize="small" /> Доминирующие цвета ({colors.length})
+                    <PaletteIcon fontSize="small" /> {isEn ? `Dominant colors (${colors.length})` : `Доминирующие цвета (${colors.length})`}
                   </Typography>
                 </Box>
                 <Grid container spacing={1.5}>
@@ -344,7 +347,7 @@ export default function ImageColors() {
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                  Экспорт как CSS переменные
+                  {isEn ? 'Export as CSS variables' : 'Экспорт как CSS переменные'}
                 </Typography>
                 <CopyButton text={`:root {\n${generateCssVariables()}\n}`} />
               </Box>

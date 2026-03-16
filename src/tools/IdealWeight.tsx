@@ -13,6 +13,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Gender = 'male' | 'female';
 
@@ -61,6 +62,8 @@ function calcHamwi(heightCm: number, gender: Gender): number {
 
 export default function IdealWeight() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [height, setHeight] = useState('');
   const [gender, setGender] = useState<Gender>('male');
 
@@ -70,31 +73,31 @@ export default function IdealWeight() {
 
     return [
       {
-        name: 'Девайн',
-        description: 'Наиболее распространённая формула, часто используется в медицине и фармакологии',
+        name: isEn ? 'Devine' : 'Девайн',
+        description: isEn ? 'Most common formula, widely used in medicine and pharmacology' : 'Наиболее распространённая формула, часто используется в медицине и фармакологии',
         weight: calcDevine(h, gender),
         color: '#1976d2'
       },
       {
-        name: 'Робинсон',
-        description: 'Модификация формулы Девайна 1983 года, считается более точной',
+        name: isEn ? 'Robinson' : 'Робинсон',
+        description: isEn ? 'Modification of Devine formula (1983), considered more accurate' : 'Модификация формулы Девайна 1983 года, считается более точной',
         weight: calcRobinson(h, gender),
         color: '#2e7d32'
       },
       {
-        name: 'Миллер',
-        description: 'Формула 1983 года, даёт несколько более высокие значения',
+        name: isEn ? 'Miller' : 'Миллер',
+        description: isEn ? 'Formula from 1983, gives slightly higher values' : 'Формула 1983 года, даёт несколько более высокие значения',
         weight: calcMiller(h, gender),
         color: '#7b1fa2'
       },
       {
-        name: 'Хамви',
-        description: 'Одна из первых формул (1964), основа для многих последующих',
+        name: isEn ? 'Hamwi' : 'Хамви',
+        description: isEn ? 'One of the first formulas (1964), basis for many subsequent ones' : 'Одна из первых формул (1964), основа для многих последующих',
         weight: calcHamwi(h, gender),
         color: '#e65100'
       },
     ];
-  }, [height, gender]);
+  }, [height, gender, isEn]);
 
   const average = useMemo(() => {
     if (!results) return null;
@@ -103,7 +106,7 @@ export default function IdealWeight() {
   }, [results]);
 
   const fmt = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
@@ -112,7 +115,7 @@ export default function IdealWeight() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Рост, см"
+              placeholder={isEn ? "Height, cm" : "Рост, см"}
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
@@ -131,10 +134,10 @@ export default function IdealWeight() {
               fullWidth
             >
               <ToggleButton value="male" sx={{ textTransform: 'none', py: 1.5 }}>
-                Мужчина
+                {isEn ? 'Male' : 'Мужчина'}
               </ToggleButton>
               <ToggleButton value="female" sx={{ textTransform: 'none', py: 1.5 }}>
-                Женщина
+                {isEn ? 'Female' : 'Женщина'}
               </ToggleButton>
             </ToggleButtonGroup>
           </Grid>
@@ -155,16 +158,16 @@ export default function IdealWeight() {
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-              Среднее значение по всем формулам
+              {isEn ? 'Average across all formulas' : 'Среднее значение по всем формулам'}
             </Typography>
             <Typography
               variant="h3"
               sx={{ fontWeight: 700, color: theme.palette.primary.main, mb: 1 }}
             >
-              {fmt(average)} кг
+              {fmt(average)} {isEn ? 'kg' : 'кг'}
             </Typography>
             <Chip
-              label={`Диапазон: ${fmt(Math.min(...results.map((r) => r.weight)))} — ${fmt(Math.max(...results.map((r) => r.weight)))} кг`}
+              label={isEn ? `Range: ${fmt(Math.min(...results.map((r) => r.weight)))} — ${fmt(Math.max(...results.map((r) => r.weight)))} kg` : `Диапазон: ${fmt(Math.min(...results.map((r) => r.weight)))} — ${fmt(Math.max(...results.map((r) => r.weight)))} кг`}
               variant="outlined"
               sx={{ fontWeight: 500 }}
             />
@@ -173,7 +176,7 @@ export default function IdealWeight() {
           {/* Визуальная шкала сравнения */}
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-              Сравнение формул
+              {isEn ? 'Formula comparison' : 'Сравнение формул'}
             </Typography>
 
             {(() => {
@@ -193,7 +196,7 @@ export default function IdealWeight() {
                             {r.name}
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 700, color: r.color }}>
-                            {fmt(r.weight)} кг
+                            {fmt(r.weight)} {isEn ? 'kg' : 'кг'}
                           </Typography>
                         </Box>
                         <Box
@@ -240,10 +243,10 @@ export default function IdealWeight() {
                   <Box sx={{ mt: 1, pt: 2, borderTop: `1px dashed ${theme.palette.divider}` }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                       <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
-                        Среднее
+                        {isEn ? 'Average' : 'Среднее'}
                       </Typography>
                       <Typography variant="body2" sx={{ fontWeight: 700, color: theme.palette.primary.main }}>
-                        {fmt(average)} кг
+                        {fmt(average)} {isEn ? 'kg' : 'кг'}
                       </Typography>
                     </Box>
                   </Box>
@@ -266,13 +269,13 @@ export default function IdealWeight() {
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 0.5, color: r.color }}>
-                    Формула {r.name}
+                    {isEn ? `${r.name} Formula` : `Формула ${r.name}`}
                   </Typography>
                   <Typography
                     variant="h4"
                     sx={{ fontWeight: 700, mb: 1 }}
                   >
-                    {fmt(r.weight)} кг
+                    {fmt(r.weight)} {isEn ? 'kg' : 'кг'}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
                     {r.description}
@@ -281,10 +284,10 @@ export default function IdealWeight() {
                     <Chip
                       label={
                         r.weight > average
-                          ? `+${fmt(r.weight - average)} кг от среднего`
+                          ? `+${fmt(r.weight - average)} ${isEn ? 'kg from average' : 'кг от среднего'}`
                           : r.weight < average
-                            ? `${fmt(r.weight - average)} кг от среднего`
-                            : 'Совпадает со средним'
+                            ? `${fmt(r.weight - average)} ${isEn ? 'kg from average' : 'кг от среднего'}`
+                            : isEn ? 'Matches average' : 'Совпадает со средним'
                       }
                       size="small"
                       sx={{

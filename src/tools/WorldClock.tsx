@@ -16,25 +16,32 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface CityInfo {
   name: string;
   offset: number;
 }
 
-const ALL_CITIES: CityInfo[] = [
-  { name: 'Москва', offset: 3 },
-  { name: 'Лондон', offset: 0 },
-  { name: 'Нью-Йорк', offset: -5 },
-  { name: 'Токио', offset: 9 },
-  { name: 'Сидней', offset: 11 },
-  { name: 'Берлин', offset: 1 },
-  { name: 'Дубай', offset: 4 },
-  { name: 'Пекин', offset: 8 },
-  { name: 'Лос-Анджелес', offset: -8 },
-  { name: 'Стамбул', offset: 3 },
-  { name: 'Сингапур', offset: 8 },
-  { name: 'Мумбаи', offset: 5.5 },
+interface CityData {
+  nameRu: string;
+  nameEn: string;
+  offset: number;
+}
+
+const ALL_CITIES_DATA: CityData[] = [
+  { nameRu: 'Москва', nameEn: 'Moscow', offset: 3 },
+  { nameRu: 'Лондон', nameEn: 'London', offset: 0 },
+  { nameRu: 'Нью-Йорк', nameEn: 'New York', offset: -5 },
+  { nameRu: 'Токио', nameEn: 'Tokyo', offset: 9 },
+  { nameRu: 'Сидней', nameEn: 'Sydney', offset: 11 },
+  { nameRu: 'Берлин', nameEn: 'Berlin', offset: 1 },
+  { nameRu: 'Дубай', nameEn: 'Dubai', offset: 4 },
+  { nameRu: 'Пекин', nameEn: 'Beijing', offset: 8 },
+  { nameRu: 'Лос-Анджелес', nameEn: 'Los Angeles', offset: -8 },
+  { nameRu: 'Стамбул', nameEn: 'Istanbul', offset: 3 },
+  { nameRu: 'Сингапур', nameEn: 'Singapore', offset: 8 },
+  { nameRu: 'Мумбаи', nameEn: 'Mumbai', offset: 5.5 },
 ];
 
 function getTimeForOffset(offset: number): Date {
@@ -43,8 +50,8 @@ function getTimeForOffset(offset: number): Date {
   return new Date(utc + offset * 3600000);
 }
 
-function formatTime(date: Date): string {
-  return date.toLocaleTimeString('ru-RU', {
+function formatTime(date: Date, isEn: boolean): string {
+  return date.toLocaleTimeString(isEn ? 'en-US' : 'ru-RU', {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
@@ -52,7 +59,12 @@ function formatTime(date: Date): string {
   });
 }
 
-function formatDate(date: Date): string {
+function formatDate(date: Date, isEn: boolean): string {
+  if (isEn) {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  }
   const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
   const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
   return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
@@ -72,7 +84,17 @@ function formatOffset(offset: number): string {
 
 export default function WorldClock() {
   const theme = useTheme();
-  const [selected, setSelected] = useState<string[]>(['Москва', 'Лондон', 'Нью-Йорк', 'Токио', 'Дубай', 'Пекин']);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const ALL_CITIES: CityInfo[] = ALL_CITIES_DATA.map(c => ({
+    name: isEn ? c.nameEn : c.nameRu,
+    offset: c.offset
+  }));
+
+  const defaultCitiesRu = ['Москва', 'Лондон', 'Нью-Йорк', 'Токио', 'Дубай', 'Пекин'];
+  const defaultCitiesEn = ['Moscow', 'London', 'New York', 'Tokyo', 'Dubai', 'Beijing'];
+  const [selected, setSelected] = useState<string[]>(isEn ? defaultCitiesEn : defaultCitiesRu);
   const [search, setSearch] = useState('');
   const [, setTick] = useState(0);
 
@@ -105,7 +127,7 @@ export default function WorldClock() {
         {/* Search and add */}
         <Box sx={{ mb: 2 }}>
           <TextField
-            placeholder="Поиск города..."
+            placeholder={isEn ? 'Search city...' : 'Поиск города...'}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             fullWidth
@@ -141,7 +163,7 @@ export default function WorldClock() {
           )}
           {search && availableCities.length === 0 && (
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              Город не найден
+              {isEn ? 'City not found' : 'Город не найден'}
             </Typography>
           )}
         </Box>
@@ -207,15 +229,15 @@ export default function WorldClock() {
                       color: 'text.primary'
                     }}
                   >
-                    {formatTime(time)}
+                    {formatTime(time, isEn)}
                   </Typography>
 
                   <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                    {formatDate(time)}
+                    {formatDate(time, isEn)}
                   </Typography>
 
                   <Chip
-                    label={isDay ? 'День' : 'Ночь'}
+                    label={isDay ? (isEn ? 'Day' : 'День') : (isEn ? 'Night' : 'Ночь')}
                     size="small"
                     sx={{
                       mt: 1,
@@ -236,7 +258,7 @@ export default function WorldClock() {
         {selectedCities.length === 0 && (
           <Box sx={{ textAlign: 'center', py: 4 }}>
             <Typography color="text.secondary">
-              Добавьте города через поиск выше
+              {isEn ? 'Add cities using the search above' : 'Добавьте города через поиск выше'}
             </Typography>
           </Box>
         )}

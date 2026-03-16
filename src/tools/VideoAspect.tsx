@@ -8,6 +8,7 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface AspectPreset {
   label: string;
@@ -37,13 +38,13 @@ const COMMON_RESOLUTIONS: Resolution[] = [
   { name: 'QHD (1440p)', width: 2560, height: 1440, aspect: '16:9' },
   { name: '4K UHD', width: 3840, height: 2160, aspect: '16:9' },
   { name: '8K UHD', width: 7680, height: 4320, aspect: '16:9' },
-  { name: 'Instagram Пост', width: 1080, height: 1080, aspect: '1:1' },
+  { name: 'Instagram Post', width: 1080, height: 1080, aspect: '1:1' },
   { name: 'Instagram Reels', width: 1080, height: 1920, aspect: '9:16' },
   { name: 'YouTube Shorts', width: 1080, height: 1920, aspect: '9:16' },
   { name: 'TikTok', width: 1080, height: 1920, aspect: '9:16' },
   { name: 'Ultrawide', width: 2560, height: 1080, aspect: '21:9' },
   { name: 'Super Ultrawide', width: 3440, height: 1440, aspect: '21:9' },
-  { name: 'DCI 4K (Кино)', width: 4096, height: 2160, aspect: '256:135' },
+  { name: 'DCI 4K (Cinema)', width: 4096, height: 2160, aspect: '256:135' },
   { name: 'Cinemascope', width: 2560, height: 1080, aspect: '21:9' },
 ];
 
@@ -66,6 +67,8 @@ function getAspectRatio(w: number, h: number): string {
 
 export default function VideoAspect() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [width, setWidth] = useState('1920');
   const [height, setHeight] = useState('1080');
   const [locked, setLocked] = useState(false);
@@ -160,7 +163,7 @@ export default function VideoAspect() {
               onChange={(e) => handleWidthChange(e.target.value)}
               fullWidth
               size="small"
-              placeholder="Ширина (px)"
+              placeholder={isEn ? 'Width (px)' : 'Ширина (px)'}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 1 }}>
@@ -180,17 +183,17 @@ export default function VideoAspect() {
               onChange={(e) => handleHeightChange(e.target.value)}
               fullWidth
               size="small"
-              placeholder="Высота (px)"
+              placeholder={isEn ? 'Height (px)' : 'Высота (px)'}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 3 }}>
-            <CopyButton text={`${w}x${h} (${ratio})`} tooltip="Копировать" />
+            <CopyButton text={`${w}x${h} (${ratio})`} tooltip={isEn ? 'Copy' : 'Копировать'} />
           </Grid>
         </Grid>
 
         {locked && (
           <Typography variant="caption" color="primary" sx={{ mt: 1, display: 'block' }}>
-            Пропорции заблокированы. Изменение одного значения автоматически пересчитает другое.
+            {isEn ? 'Aspect ratio locked. Changing one value will automatically recalculate the other.' : 'Пропорции заблокированы. Изменение одного значения автоматически пересчитает другое.'}
           </Typography>
         )}
       </Paper>
@@ -215,11 +218,11 @@ export default function VideoAspect() {
               {ratio}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              {w > 0 && h > 0 ? `${w} x ${h} пикселей` : 'Введите размеры'}
+              {w > 0 && h > 0 ? `${w} x ${h} ${isEn ? 'pixels' : 'пикселей'}` : (isEn ? 'Enter dimensions' : 'Введите размеры')}
             </Typography>
             {w > 0 && h > 0 && (
               <Typography variant="caption" color="text.secondary">
-                {(w * h / 1000000).toFixed(2)} мегапикселей
+                {(w * h / 1000000).toFixed(2)} {isEn ? 'megapixels' : 'мегапикселей'}
               </Typography>
             )}
           </Paper>
@@ -263,7 +266,7 @@ export default function VideoAspect() {
         sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
-          Пропорции
+          {isEn ? 'Aspect ratios' : 'Пропорции'}
         </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
           {PRESETS.map((p) => (
@@ -285,23 +288,23 @@ export default function VideoAspect() {
         sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
-          Распространённые разрешения
+          {isEn ? 'Common resolutions' : 'Распространённые разрешения'}
         </Typography>
         <Box sx={{ overflowX: 'auto' }}>
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <Box component="tr" sx={{ borderBottom: `2px solid ${theme.palette.divider}` }}>
                 <Box component="th" sx={{ py: 1, px: 1.5, textAlign: 'left' }}>
-                  <Typography variant="caption" sx={{ fontWeight: 600 }}>Название</Typography>
+                  <Typography variant="caption" sx={{ fontWeight: 600 }}>{isEn ? 'Name' : 'Название'}</Typography>
                 </Box>
                 <Box component="th" sx={{ py: 1, px: 1.5, textAlign: 'left' }}>
-                  <Typography variant="caption" sx={{ fontWeight: 600 }}>Разрешение</Typography>
+                  <Typography variant="caption" sx={{ fontWeight: 600 }}>{isEn ? 'Resolution' : 'Разрешение'}</Typography>
                 </Box>
                 <Box component="th" sx={{ py: 1, px: 1.5, textAlign: 'left' }}>
-                  <Typography variant="caption" sx={{ fontWeight: 600 }}>Пропорции</Typography>
+                  <Typography variant="caption" sx={{ fontWeight: 600 }}>{isEn ? 'Aspect ratio' : 'Пропорции'}</Typography>
                 </Box>
                 <Box component="th" sx={{ py: 1, px: 1.5, textAlign: 'right' }}>
-                  <Typography variant="caption" sx={{ fontWeight: 600 }}>Действие</Typography>
+                  <Typography variant="caption" sx={{ fontWeight: 600 }}>{isEn ? 'Action' : 'Действие'}</Typography>
                 </Box>
               </Box>
             </thead>
@@ -328,7 +331,7 @@ export default function VideoAspect() {
                   </Box>
                   <Box component="td" sx={{ py: 1.2, px: 1.5, textAlign: 'right' }}>
                     <Button size="small" onClick={() => applyResolution(res)}>
-                      Применить
+                      {isEn ? 'Apply' : 'Применить'}
                     </Button>
                   </Box>
                 </Box>

@@ -12,6 +12,7 @@ import {
   useTheme
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 const SQL_KEYWORDS = [
@@ -104,6 +105,8 @@ function minifySql(sql: string): string {
 
 export default function SqlFormatter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
 
@@ -145,7 +148,7 @@ export default function SqlFormatter() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Вставьте SQL запрос сюда..."
+          placeholder={isEn ? 'Paste your SQL query here...' : 'Вставьте SQL запрос сюда...'}
           sx={{
             mb: 2.5,
             '& .MuiInputBase-root': {
@@ -167,7 +170,7 @@ export default function SqlFormatter() {
             disabled={!input.trim()}
             sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
           >
-            Форматировать
+            {isEn ? 'Format' : 'Форматировать'}
           </Button>
           <Button
             variant="contained"
@@ -175,7 +178,7 @@ export default function SqlFormatter() {
             disabled={!input.trim()}
             sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
           >
-            Минифицировать
+            {isEn ? 'Minify' : 'Минифицировать'}
           </Button>
           <Button
             variant="outlined"
@@ -183,7 +186,7 @@ export default function SqlFormatter() {
             color="inherit"
             sx={{ textTransform: 'none', borderRadius: 2, px: 3 }}
           >
-            Очистить
+            {isEn ? 'Clear' : 'Очистить'}
           </Button>
         </Box>
 
@@ -192,13 +195,13 @@ export default function SqlFormatter() {
           <Box sx={{ display: 'flex', gap: 1, mb: 2.5, flexWrap: 'wrap', justifyContent: 'center' }}>
             <Chip
               size="small"
-              label={`${stats.lines} строк`}
+              label={isEn ? `${stats.lines} lines` : `${stats.lines} строк`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />
             <Chip
               size="small"
-              label={`${stats.bytes.toLocaleString()} байт`}
+              label={isEn ? `${stats.bytes.toLocaleString('en-US')} bytes` : `${stats.bytes.toLocaleString('ru-RU')} байт`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />

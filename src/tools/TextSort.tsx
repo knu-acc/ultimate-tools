@@ -11,6 +11,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 type SortMode = 'az' | 'za' | 'num-asc' | 'num-desc' | 'length' | 'shuffle';
@@ -18,16 +19,17 @@ type SortMode = 'az' | 'za' | 'num-asc' | 'num-desc' | 'length' | 'shuffle';
 interface SortOption {
   key: SortMode;
   label: string;
+  labelEn: string;
   color: string;
 }
 
 const SORT_OPTIONS: SortOption[] = [
-  { key: 'az', label: 'А → Я', color: '#2196f3' },
-  { key: 'za', label: 'Я → А', color: '#9c27b0' },
-  { key: 'num-asc', label: 'По числу ↑', color: '#4caf50' },
-  { key: 'num-desc', label: 'По числу ↓', color: '#ff9800' },
-  { key: 'length', label: 'По длине', color: '#e91e63' },
-  { key: 'shuffle', label: 'Перемешать', color: '#607d8b' },
+  { key: 'az', label: 'А → Я', labelEn: 'A → Z', color: '#2196f3' },
+  { key: 'za', label: 'Я → А', labelEn: 'Z → A', color: '#9c27b0' },
+  { key: 'num-asc', label: 'По числу ↑', labelEn: 'By number ↑', color: '#4caf50' },
+  { key: 'num-desc', label: 'По числу ↓', labelEn: 'By number ↓', color: '#ff9800' },
+  { key: 'length', label: 'По длине', labelEn: 'By length', color: '#e91e63' },
+  { key: 'shuffle', label: 'Перемешать', labelEn: 'Shuffle', color: '#607d8b' },
 ];
 
 function extractNumber(line: string): number {
@@ -44,14 +46,16 @@ function shuffleArray<T>(arr: T[]): T[] {
   return result;
 }
 
-function sortLines(lines: string[], mode: SortMode): string[] {
+function sortLines(lines: string[], mode: SortMode, locale: string): string[] {
   if (lines.length === 0) return [];
+
+  const sortLocale = locale === 'en' ? 'en' : 'ru';
 
   switch (mode) {
     case 'az':
-      return [...lines].sort((a, b) => a.localeCompare(b, 'ru'));
+      return [...lines].sort((a, b) => a.localeCompare(b, sortLocale));
     case 'za':
-      return [...lines].sort((a, b) => b.localeCompare(a, 'ru'));
+      return [...lines].sort((a, b) => b.localeCompare(a, sortLocale));
     case 'num-asc':
       return [...lines].sort((a, b) => extractNumber(a) - extractNumber(b));
     case 'num-desc':
@@ -70,13 +74,15 @@ export default function TextSort() {
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<SortMode>('az');
   const [shuffleKey, setShuffleKey] = useState(0);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const lines = useMemo(() => {
     return input.split('\n').filter((line) => line.trim().length > 0);
   }, [input]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const sorted = useMemo(() => sortLines(lines, mode), [lines, mode, shuffleKey]);
+  const sorted = useMemo(() => sortLines(lines, mode, locale), [lines, mode, shuffleKey, locale]);
 
   const outputText = sorted.join('\n');
 
@@ -100,7 +106,7 @@ export default function TextSort() {
           maxRows={16}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={'Яблоко\nБанан\nВишня\nАпельсин'}
+          placeholder={isEn ? 'Apple\nBanana\nCherry\nOrange' : 'Яблоко\nБанан\nВишня\nАпельсин'}
           sx={{
             '& .MuiInputBase-input': {
               fontFamily: 'monospace',
@@ -118,7 +124,7 @@ export default function TextSort() {
             return (
               <Chip
                 key={option.key}
-                label={option.label}
+                label={isEn ? option.labelEn : option.label}
                 onClick={() => handleModeChange(option.key)}
                 sx={{
                   fontWeight: 600,
@@ -152,7 +158,7 @@ export default function TextSort() {
           }}
         >
           <Chip
-            label={`${lines.length} ${getLineWord(lines.length)}`}
+            label={isEn ? `${lines.length} ${getLineWordEn(lines.length)}` : `${lines.length} ${getLineWord(lines.length)}`}
             size="small"
             sx={{
               fontWeight: 600,
@@ -162,7 +168,7 @@ export default function TextSort() {
             }}
           />
           <Typography variant="body2" color="text.secondary">
-            Сортировка: {activeOption?.label}
+            {isEn ? 'Sort: ' : 'Сортировка: '}{isEn ? activeOption?.labelEn : activeOption?.label}
           </Typography>
         </Paper>
       )}
@@ -203,4 +209,8 @@ function getLineWord(count: number): string {
   if (mod10 === 1) return 'строка';
   if (mod10 >= 2 && mod10 <= 4) return 'строки';
   return 'строк';
+}
+
+function getLineWordEn(count: number): string {
+  return count === 1 ? 'line' : 'lines';
 }

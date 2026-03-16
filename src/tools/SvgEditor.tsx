@@ -16,39 +16,53 @@ import DownloadIcon from '@mui/icons-material/Download';
 import AddIcon from '@mui/icons-material/Add';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
-const DEFAULT_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+const DEFAULT_SVG_RU = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
   <rect x="10" y="10" width="180" height="180" rx="20" fill="#4A90D9" stroke="#2C5F8A" stroke-width="3"/>
   <circle cx="100" cy="85" r="35" fill="#FFD93D"/>
   <text x="100" y="160" text-anchor="middle" font-size="18" fill="white" font-family="sans-serif">Привет SVG!</text>
 </svg>`;
 
-const SVG_TEMPLATES: { label: string; code: string }[] = [
+const DEFAULT_SVG_EN = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <rect x="10" y="10" width="180" height="180" rx="20" fill="#4A90D9" stroke="#2C5F8A" stroke-width="3"/>
+  <circle cx="100" cy="85" r="35" fill="#FFD93D"/>
+  <text x="100" y="160" text-anchor="middle" font-size="18" fill="white" font-family="sans-serif">Hello SVG!</text>
+</svg>`;
+
+const SVG_TEMPLATES: { label: string; labelEn: string; code: string }[] = [
   {
     label: 'Прямоугольник',
+    labelEn: 'Rectangle',
     code: '  <rect x="50" y="50" width="100" height="60" rx="5" fill="#4CAF50" stroke="#388E3C" stroke-width="2"/>'
   },
   {
     label: 'Круг',
+    labelEn: 'Circle',
     code: '  <circle cx="100" cy="100" r="40" fill="#2196F3" stroke="#1565C0" stroke-width="2"/>'
   },
   {
     label: 'Линия',
+    labelEn: 'Line',
     code: '  <line x1="20" y1="20" x2="180" y2="180" stroke="#F44336" stroke-width="3" stroke-linecap="round"/>'
   },
   {
     label: 'Текст',
-    code: '  <text x="100" y="100" text-anchor="middle" font-size="16" fill="#333" font-family="sans-serif">Текст</text>'
+    labelEn: 'Text',
+    code: '  <text x="100" y="100" text-anchor="middle" font-size="16" fill="#333" font-family="sans-serif">Text</text>'
   },
   {
     label: 'Путь',
+    labelEn: 'Path',
     code: '  <path d="M50 150 Q100 50 150 150" fill="none" stroke="#9C27B0" stroke-width="3"/>'
   },
 ];
 
 export default function SvgEditor() {
   const theme = useTheme();
-  const [svgCode, setSvgCode] = useState(DEFAULT_SVG);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const [svgCode, setSvgCode] = useState(isEn ? DEFAULT_SVG_EN : DEFAULT_SVG_RU);
   const [error, setError] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -58,13 +72,13 @@ export default function SvgEditor() {
       const doc = parser.parseFromString(code, 'image/svg+xml');
       const parseError = doc.querySelector('parsererror');
       if (parseError) {
-        setError(parseError.textContent?.slice(0, 200) || 'Ошибка парсинга SVG');
+        setError(parseError.textContent?.slice(0, 200) || (isEn ? 'SVG parsing error' : 'Ошибка парсинга SVG'));
         return false;
       }
       setError('');
       return true;
     } catch {
-      setError('Невозможно разобрать SVG код');
+      setError(isEn ? 'Unable to parse SVG code' : 'Невозможно разобрать SVG код');
       return false;
     }
   }, []);
@@ -128,7 +142,7 @@ export default function SvgEditor() {
       return {
         width: svgEl.getAttribute('width') || 'auto',
         height: svgEl.getAttribute('height') || 'auto',
-        viewBox: svgEl.getAttribute('viewBox') || 'нет',
+        viewBox: svgEl.getAttribute('viewBox') || (isEn ? 'none' : 'нет'),
         elements: svgEl.children.length
       };
     } catch {
@@ -155,7 +169,7 @@ export default function SvgEditor() {
               onClick={() => insertTemplate(t.code)}
               sx={{ transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
             >
-              {t.label}
+              {isEn ? t.labelEn : t.label}
             </Button>
           ))}
         </Box>
@@ -180,7 +194,7 @@ export default function SvgEditor() {
                   startIcon={<DownloadIcon />}
                   onClick={downloadSvg}
                 >
-                  Скачать
+                  {isEn ? 'Download' : 'Скачать'}
                 </Button>
               </Box>
             </Box>
@@ -219,7 +233,7 @@ export default function SvgEditor() {
             sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, height: '100%' }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-              Предпросмотр
+              {isEn ? 'Preview' : 'Предпросмотр'}
             </Typography>
             <Box
               sx={{
@@ -248,7 +262,7 @@ export default function SvgEditor() {
               )}
               {error && (
                 <Typography variant="body2" color="text.secondary">
-                  Исправьте ошибки в SVG коде
+                  {isEn ? 'Fix errors in SVG code' : 'Исправьте ошибки в SVG коде'}
                 </Typography>
               )}
             </Box>
@@ -256,11 +270,11 @@ export default function SvgEditor() {
             {/* SVG Info */}
             {svgInfo && (
               <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                <Chip label={`Ширина: ${svgInfo.width}`} size="small" variant="outlined" />
-                <Chip label={`Высота: ${svgInfo.height}`} size="small" variant="outlined" />
+                <Chip label={`${isEn ? 'Width' : 'Ширина'}: ${svgInfo.width}`} size="small" variant="outlined" />
+                <Chip label={`${isEn ? 'Height' : 'Высота'}: ${svgInfo.height}`} size="small" variant="outlined" />
                 <Chip label={`viewBox: ${svgInfo.viewBox}`} size="small" variant="outlined" />
-                <Chip label={`Элементов: ${svgInfo.elements}`} size="small" variant="outlined" />
-                <Chip label={`Размер: ${new Blob([svgCode]).size} Б`} size="small" variant="outlined" />
+                <Chip label={`${isEn ? 'Elements' : 'Элементов'}: ${svgInfo.elements}`} size="small" variant="outlined" />
+                <Chip label={`${isEn ? 'Size' : 'Размер'}: ${new Blob([svgCode]).size} ${isEn ? 'B' : 'Б'}`} size="small" variant="outlined" />
               </Box>
             )}
           </Paper>

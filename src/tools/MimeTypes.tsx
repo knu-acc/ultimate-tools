@@ -12,6 +12,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 type MimeCategory = 'all' | 'text' | 'image' | 'audio' | 'video' | 'application' | 'font';
@@ -111,8 +112,48 @@ const CATEGORY_LABELS: Record<MimeCategory, string> = {
 
 export default function MimeTypes() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<MimeCategory>('all');
+
+  const CATEGORY_LABELS_I18N: Record<MimeCategory, string> = {
+    all: isEn ? 'All' : 'Все',
+    text: isEn ? 'Text' : 'Текст',
+    image: isEn ? 'Images' : 'Изображения',
+    audio: isEn ? 'Audio' : 'Аудио',
+    video: isEn ? 'Video' : 'Видео',
+    application: isEn ? 'Application' : 'Приложения',
+    font: isEn ? 'Fonts' : 'Шрифты'
+  };
+
+  const MIME_DESCRIPTIONS_EN: Record<string, string> = {
+    'HTML-документ': 'HTML Document', 'Таблица стилей CSS': 'CSS Stylesheet', 'Файл CSV': 'CSV File',
+    'Текстовый файл': 'Text File', 'Документ XML': 'XML Document', 'JavaScript': 'JavaScript',
+    'JavaScript модуль': 'JavaScript Module', 'Markdown': 'Markdown', 'Календарь iCalendar': 'iCalendar',
+    'Изображение JPEG': 'JPEG Image', 'Изображение PNG': 'PNG Image', 'Анимация GIF': 'GIF Animation',
+    'Изображение WebP': 'WebP Image', 'Векторная графика SVG': 'SVG Vector Graphics',
+    'Иконка': 'Icon', 'Растровый BMP': 'BMP Bitmap', 'Изображение TIFF': 'TIFF Image',
+    'Изображение AVIF': 'AVIF Image', 'Изображение HEIC': 'HEIC Image',
+    'Аудио MP3': 'MP3 Audio', 'Аудио WAV': 'WAV Audio', 'Аудио OGG': 'OGG Audio',
+    'Аудио FLAC': 'FLAC Audio', 'Аудио AAC': 'AAC Audio', 'Аудио M4A': 'M4A Audio',
+    'Аудио WebM': 'WebM Audio', 'Аудио Opus': 'Opus Audio', 'MIDI файл': 'MIDI File',
+    'Видео MP4': 'MP4 Video', 'Видео WebM': 'WebM Video', 'Видео AVI': 'AVI Video',
+    'Видео QuickTime': 'QuickTime Video', 'Видео MKV': 'MKV Video', 'Видео WMV': 'WMV Video',
+    'Видео FLV': 'FLV Video', 'Видео MPEG': 'MPEG Video', 'Видео 3GP': '3GP Video',
+    'Данные JSON': 'JSON Data', 'Документ PDF': 'PDF Document', 'Архив ZIP': 'ZIP Archive',
+    'Архив GZIP': 'GZIP Archive', 'Архив TAR': 'TAR Archive', 'Архив RAR': 'RAR Archive',
+    'Архив 7-Zip': '7-Zip Archive', 'Документ Word': 'Word Document',
+    'Документ Word (OOXML)': 'Word Document (OOXML)', 'Таблица Excel': 'Excel Spreadsheet',
+    'Таблица Excel (OOXML)': 'Excel Spreadsheet (OOXML)', 'Презентация PowerPoint': 'PowerPoint Presentation',
+    'Презентация PowerPoint (OOXML)': 'PowerPoint Presentation (OOXML)',
+    'Документ OpenDocument': 'OpenDocument', 'Таблица OpenDocument': 'OpenDocument Spreadsheet',
+    'Исполняемый файл Windows': 'Windows Executable', 'Образ диска macOS': 'macOS Disk Image',
+    'Пакет Android': 'Android Package', 'Образ ISO': 'ISO Image', 'Flash SWF': 'Flash SWF',
+    'WebAssembly': 'WebAssembly', 'SQL-скрипт': 'SQL Script', 'Файл YAML': 'YAML File',
+    'Бинарные данные': 'Binary Data', 'Шрифт WOFF': 'WOFF Font', 'Шрифт WOFF2': 'WOFF2 Font',
+    'Шрифт TrueType': 'TrueType Font', 'Шрифт OpenType': 'OpenType Font', 'Шрифт EOT': 'EOT Font',
+  };
 
   const filtered = useMemo(() => {
     return MIME_DATA.filter((m) => {
@@ -157,10 +198,10 @@ export default function MimeTypes() {
           </Grid>
           <Grid size={{ xs: 12, sm: 7 }}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {(Object.keys(CATEGORY_LABELS) as MimeCategory[]).map((cat) => (
+              {(Object.keys(CATEGORY_LABELS_I18N) as MimeCategory[]).map((cat) => (
                 <Chip
                   key={cat}
-                  label={`${CATEGORY_LABELS[cat]}${cat !== 'all' ? ` (${categoryCounts[cat] || 0})` : ''}`}
+                  label={`${CATEGORY_LABELS_I18N[cat]}${cat !== 'all' ? ` (${categoryCounts[cat] || 0})` : ''}`}
                   onClick={() => setCategory(cat)}
                   variant={category === cat ? 'filled' : 'outlined'}
                   color={category === cat ? 'primary' : 'default'}
@@ -175,7 +216,7 @@ export default function MimeTypes() {
 
       {/* Results count */}
       <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-        Найдено: {filtered.length} из {MIME_DATA.length}
+        {isEn ? `Found: ${filtered.length} of ${MIME_DATA.length}` : `Найдено: ${filtered.length} из ${MIME_DATA.length}`}
       </Typography>
 
       {/* Table */}
@@ -187,7 +228,7 @@ export default function MimeTypes() {
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <Box component="tr" sx={{ borderBottom: `2px solid ${theme.palette.divider}` }}>
-                {['Расширение', 'MIME тип', 'Описание', 'Категория', ''].map((h, i) => (
+                {(isEn ? ['Extension', 'MIME Type', 'Description', 'Category', ''] : ['Расширение', 'MIME тип', 'Описание', 'Категория', '']).map((h, i) => (
                   <Box component="th" key={i} sx={{ py: 1, px: 1.5, textAlign: 'left' }}>
                     <Typography variant="caption" sx={{ fontWeight: 600 }}>{h}</Typography>
                   </Box>
@@ -219,10 +260,10 @@ export default function MimeTypes() {
                     </Typography>
                   </Box>
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
-                    <Typography variant="body2">{m.description}</Typography>
+                    <Typography variant="body2">{isEn ? (MIME_DESCRIPTIONS_EN[m.description] || m.description) : m.description}</Typography>
                   </Box>
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
-                    <Chip label={CATEGORY_LABELS[m.category]} size="small" variant="outlined" />
+                    <Chip label={CATEGORY_LABELS_I18N[m.category]} size="small" variant="outlined" />
                   </Box>
                   <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
                     <CopyButton text={m.mime} />
@@ -233,7 +274,7 @@ export default function MimeTypes() {
                 <Box component="tr">
                   <Box component="td" colSpan={5} sx={{ py: 4, textAlign: 'center' }}>
                     <Typography variant="body2" color="text.secondary">
-                      Ничего не найдено
+                      {isEn ? 'Nothing found' : 'Ничего не найдено'}
                     </Typography>
                   </Box>
                 </Box>

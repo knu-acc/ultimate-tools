@@ -14,6 +14,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type ActivityLevel = 'low' | 'medium' | 'high';
 type Climate = 'normal' | 'hot';
@@ -36,6 +37,8 @@ function calcWaterMl(weightKg: number, activity: ActivityLevel, climate: Climate
 
 export default function WaterIntake() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [weight, setWeight] = useState('');
   const [activity, setActivity] = useState<ActivityLevel>('medium');
   const [climate, setClimate] = useState<Climate>('normal');
@@ -88,7 +91,7 @@ export default function WaterIntake() {
       >
         <TextField
           fullWidth
-          placeholder="Вес, кг"
+          placeholder={isEn ? 'Weight, kg' : 'Вес, кг'}
           type="number"
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
@@ -122,14 +125,14 @@ export default function WaterIntake() {
               }
             }}
           >
-            <ToggleButton value="low">Низкая</ToggleButton>
-            <ToggleButton value="medium">Средняя</ToggleButton>
-            <ToggleButton value="high">Высокая</ToggleButton>
+            <ToggleButton value="low">{isEn ? 'Low' : 'Низкая'}</ToggleButton>
+            <ToggleButton value="medium">{isEn ? 'Medium' : 'Средняя'}</ToggleButton>
+            <ToggleButton value="high">{isEn ? 'High' : 'Высокая'}</ToggleButton>
           </ToggleButtonGroup>
           <Typography variant="caption" color="text.disabled" sx={{ mt: 0.5, display: 'block' }}>
-            {activity === 'low' && 'Сидячая работа, минимум движения'}
-            {activity === 'medium' && 'Умеренные тренировки 2–4 раза в неделю'}
-            {activity === 'high' && 'Интенсивные тренировки или физический труд'}
+            {activity === 'low' && (isEn ? 'Sedentary work, minimal movement' : 'Сидячая работа, минимум движения')}
+            {activity === 'medium' && (isEn ? 'Moderate exercise 2-4 times a week' : 'Умеренные тренировки 2–4 раза в неделю')}
+            {activity === 'high' && (isEn ? 'Intense training or physical labor' : 'Интенсивные тренировки или физический труд')}
           </Typography>
         </Box>
 
@@ -157,11 +160,11 @@ export default function WaterIntake() {
               }
             }}
           >
-            <ToggleButton value="normal">Обычный</ToggleButton>
-            <ToggleButton value="hot">Жаркий</ToggleButton>
+            <ToggleButton value="normal">{isEn ? 'Normal' : 'Обычный'}</ToggleButton>
+            <ToggleButton value="hot">{isEn ? 'Hot' : 'Жаркий'}</ToggleButton>
           </ToggleButtonGroup>
           <Typography variant="caption" color="text.disabled" sx={{ mt: 0.5, display: 'block' }}>
-            {climate === 'normal' ? 'Умеренная температура' : 'Жаркая погода или сухой климат (+500 мл)'}
+            {climate === 'normal' ? (isEn ? 'Moderate temperature' : 'Умеренная температура') : (isEn ? 'Hot weather or dry climate (+500 ml)' : 'Жаркая погода или сухой климат (+500 мл)')}
           </Typography>
         </Box>
       </Paper>
@@ -182,13 +185,13 @@ export default function WaterIntake() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                  Суточная норма
+                  {isEn ? 'Daily intake' : 'Суточная норма'}
                 </Typography>
                 <Typography variant="h4" sx={{ fontWeight: 700, color: '#1976d2', my: 0.5 }}>
-                  {waterLiters} л
+                  {waterLiters} {isEn ? 'L' : 'л'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {waterMl} мл в день
+                  {waterMl} {isEn ? 'ml per day' : 'мл в день'}
                 </Typography>
               </Paper>
             </Grid>
@@ -203,13 +206,13 @@ export default function WaterIntake() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                  Стаканов (250 мл)
+                  {isEn ? 'Glasses (250 ml)' : 'Стаканов (250 мл)'}
                 </Typography>
                 <Typography variant="h4" sx={{ fontWeight: 700, color: '#2e7d32', my: 0.5 }}>
                   {totalGlasses}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {totalGlasses === 1 ? 'стакан' : totalGlasses < 5 ? 'стакана' : 'стаканов'}
+                  {isEn ? (totalGlasses === 1 ? 'glass' : 'glasses') : (totalGlasses === 1 ? 'стакан' : totalGlasses < 5 ? 'стакана' : 'стаканов')}
                 </Typography>
               </Paper>
             </Grid>
@@ -226,11 +229,11 @@ export default function WaterIntake() {
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                Трекер на сегодня
+                {isEn ? 'Today\'s tracker' : 'Трекер на сегодня'}
               </Typography>
               {isGoalReached && (
                 <Chip
-                  label="Цель достигнута!"
+                  label={isEn ? 'Goal reached!' : 'Цель достигнута!'}
                   size="small"
                   sx={{
                     fontWeight: 600,
@@ -264,13 +267,13 @@ export default function WaterIntake() {
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
                 <Typography variant="caption" color="text.disabled">
-                  {drunkMl} мл
+                  {drunkMl} {isEn ? 'ml' : 'мл'}
                 </Typography>
                 <Typography variant="caption" sx={{ fontWeight: 600, color: progressColor }}>
                   {Math.round(progressPct)}%
                 </Typography>
                 <Typography variant="caption" color="text.disabled">
-                  {waterMl} мл
+                  {waterMl} {isEn ? 'ml' : 'мл'}
                 </Typography>
               </Box>
             </Box>
@@ -345,7 +348,7 @@ export default function WaterIntake() {
                   px: 3
                 }}
               >
-                + 1 стакан (250 мл)
+                {isEn ? '+ 1 glass (250 ml)' : '+ 1 стакан (250 мл)'}
               </Button>
               <Button
                 variant="outlined"
@@ -358,7 +361,7 @@ export default function WaterIntake() {
                   px: 3
                 }}
               >
-                Убрать стакан
+                {isEn ? 'Remove glass' : 'Убрать стакан'}
               </Button>
               <Button
                 variant="outlined"
@@ -372,7 +375,7 @@ export default function WaterIntake() {
                   px: 3
                 }}
               >
-                Сбросить
+                {isEn ? 'Reset' : 'Сбросить'}
               </Button>
             </Box>
           </Paper>
@@ -387,24 +390,24 @@ export default function WaterIntake() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
-              Расчёт нормы
+              {isEn ? 'Intake calculation' : 'Расчёт нормы'}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {[
                 {
-                  label: 'Базовая потребность',
-                  value: `${weight} кг x 30 мл = ${Math.round(parseFloat(weight) * 30)} мл`
+                  label: isEn ? 'Base need' : 'Базовая потребность',
+                  value: isEn ? `${weight} kg x 30 ml = ${Math.round(parseFloat(weight) * 30)} ml` : `${weight} кг x 30 мл = ${Math.round(parseFloat(weight) * 30)} мл`
                 },
                 ...(activity !== 'low'
                   ? [{
-                      label: 'Активность',
-                      value: `+${activity === 'medium' ? 500 : 1000} мл`
+                      label: isEn ? 'Activity' : 'Активность',
+                      value: `+${activity === 'medium' ? 500 : 1000} ${isEn ? 'ml' : 'мл'}`
                     }]
                   : []),
                 ...(climate === 'hot'
-                  ? [{ label: 'Жаркий климат', value: '+500 мл' }]
+                  ? [{ label: isEn ? 'Hot climate' : 'Жаркий климат', value: `+500 ${isEn ? 'ml' : 'мл'}` }]
                   : []),
-                { label: 'Итого', value: `${waterMl} мл (${waterLiters} л)` },
+                { label: isEn ? 'Total' : 'Итого', value: `${waterMl} ${isEn ? 'ml' : 'мл'} (${waterLiters} ${isEn ? 'L' : 'л'})` },
               ].map((row) => (
                 <Box
                   key={row.label}
@@ -413,7 +416,7 @@ export default function WaterIntake() {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     py: 0.5,
-                    borderBottom: row.label === 'Итого'
+                    borderBottom: (row.label === 'Итого' || row.label === 'Total')
                       ? 'none'
                       : `1px solid ${alpha(theme.palette.divider, 0.5)}`
                   }}
@@ -421,8 +424,8 @@ export default function WaterIntake() {
                   <Typography
                     variant="body2"
                     sx={{
-                      color: row.label === 'Итого' ? 'primary.main' : 'text.secondary',
-                      fontWeight: row.label === 'Итого' ? 700 : 400
+                      color: (row.label === 'Итого' || row.label === 'Total') ? 'primary.main' : 'text.secondary',
+                      fontWeight: (row.label === 'Итого' || row.label === 'Total') ? 700 : 400
                     }}
                   >
                     {row.label}
@@ -432,7 +435,7 @@ export default function WaterIntake() {
                     sx={{
                       fontWeight: 600,
                       fontFamily: 'monospace',
-                      color: row.label === 'Итого' ? 'primary.main' : 'text.primary'
+                      color: (row.label === 'Итого' || row.label === 'Total') ? 'primary.main' : 'text.primary'
                     }}
                   >
                     {row.value}

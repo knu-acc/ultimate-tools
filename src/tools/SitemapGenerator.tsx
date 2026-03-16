@@ -19,6 +19,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface SitemapEntry {
@@ -31,6 +32,8 @@ interface SitemapEntry {
 
 export default function SitemapGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [entries, setEntries] = useState<SitemapEntry[]>([]);
   const [loc, setLoc] = useState('');
   const [lastmod, setLastmod] = useState('');
@@ -142,7 +145,7 @@ export default function SitemapGenerator() {
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          {editingId !== null ? 'Редактирование URL' : 'Добавить URL'}
+          {editingId !== null ? (isEn ? 'Edit URL' : 'Редактирование URL') : (isEn ? 'Add URL' : 'Добавить URL')}
         </Typography>
 
         <Grid container spacing={2}>
@@ -160,7 +163,7 @@ export default function SitemapGenerator() {
             <TextField
               fullWidth
               size="small"
-              label="Дата изменения (lastmod)"
+              label={isEn ? 'Last modified (lastmod)' : 'Дата изменения (lastmod)'}
               type="date"
               value={lastmod}
               onChange={(e) => setLastmod(e.target.value)}
@@ -172,7 +175,7 @@ export default function SitemapGenerator() {
               fullWidth
               size="small"
               select
-              label="Частота обновления"
+              label={isEn ? 'Change frequency' : 'Частота обновления'}
               value={changefreq}
               onChange={(e) => setChangefreq(e.target.value)}
             >
@@ -187,7 +190,7 @@ export default function SitemapGenerator() {
           </Grid>
           <Grid size={{ xs: 12, sm: 4 }}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-              Приоритет: {priority.toFixed(1)}
+              {isEn ? 'Priority' : 'Приоритет'}: {priority.toFixed(1)}
             </Typography>
             <Slider
               value={priority}
@@ -214,7 +217,7 @@ export default function SitemapGenerator() {
             disabled={!loc.trim()}
             sx={{ borderRadius: 4 }}
           >
-            {editingId !== null ? 'Сохранить' : 'Добавить'}
+            {editingId !== null ? (isEn ? 'Save' : 'Сохранить') : (isEn ? 'Add' : 'Добавить')}
           </Button>
           {editingId !== null && (
             <Button
@@ -228,7 +231,7 @@ export default function SitemapGenerator() {
               }}
               sx={{ borderRadius: 4 }}
             >
-              Отмена
+              {isEn ? 'Cancel' : 'Отмена'}
             </Button>
           )}
         </Box>
@@ -247,10 +250,10 @@ export default function SitemapGenerator() {
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          Массовое добавление
+          {isEn ? 'Bulk add' : 'Массовое добавление'}
         </Typography>
         <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
-          Вставьте URL-адреса, по одному на строку
+          {isEn ? 'Paste URLs, one per line' : 'Вставьте URL-адреса, по одному на строку'}
         </Typography>
         <TextField
           fullWidth
@@ -269,7 +272,7 @@ export default function SitemapGenerator() {
           disabled={!bulkText.trim()}
           sx={{ borderRadius: 4 }}
         >
-          Добавить все
+          {isEn ? 'Add all' : 'Добавить все'}
         </Button>
       </Paper>
 
@@ -285,7 +288,7 @@ export default function SitemapGenerator() {
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="subtitle2" fontWeight={600}>
-              Список URL
+              {isEn ? 'URL list' : 'Список URL'}
             </Typography>
             <Chip
               label={`${entries.length} URL`}
@@ -357,7 +360,7 @@ export default function SitemapGenerator() {
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
           <Typography variant="subtitle2" fontWeight={600}>
-            XML Предпросмотр
+            {isEn ? 'XML Preview' : 'XML Предпросмотр'}
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Chip

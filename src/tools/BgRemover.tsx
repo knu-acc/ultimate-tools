@@ -17,9 +17,12 @@ import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function BgRemover() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [originalUrl, setOriginalUrl] = useState('');
   const [resultUrl, setResultUrl] = useState('');
@@ -218,10 +221,10 @@ export default function BgRemover() {
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
           <Typography variant="h6" sx={{ mb: 1 }}>
-            Перетащите изображение сюда
+            {isEn ? 'Drag and drop an image here' : 'Перетащите изображение сюда'}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            или нажмите для выбора файла
+            {isEn ? 'or click to select a file' : 'или нажмите для выбора файла'}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
             <Chip label="JPEG" size="small" variant="outlined" />
@@ -235,13 +238,13 @@ export default function BgRemover() {
         <>
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-              <ColorLensIcon /> Настройки удаления фона
+              <ColorLensIcon /> {isEn ? 'Background removal settings' : 'Настройки удаления фона'}
             </Typography>
 
             <Grid container spacing={3} alignItems="center">
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
-                  Допуск цвета: {tolerance}
+                  {isEn ? `Color tolerance: ${tolerance}` : `Допуск цвета: ${tolerance}`}
                 </Typography>
                 <Slider
                   value={tolerance}
@@ -251,14 +254,14 @@ export default function BgRemover() {
                   valueLabelDisplay="auto"
                 />
                 <Typography variant="caption" color="text.secondary">
-                  Чем выше значение, тем больше похожих цветов будет удалено
+                  {isEn ? 'Higher values remove more similar colors' : 'Чем выше значение, тем больше похожих цветов будет удалено'}
                 </Typography>
               </Grid>
 
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
                   <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-                    Выбранный цвет:
+                    {isEn ? 'Selected color:' : 'Выбранный цвет:'}
                   </Typography>
                   {selectedColor ? (
                     <Box
@@ -271,12 +274,12 @@ export default function BgRemover() {
                     />
                   ) : (
                     <Typography variant="body2" color="text.secondary">
-                      Кликните на изображение
+                      {isEn ? 'Click on the image' : 'Кликните на изображение'}
                     </Typography>
                   )}
                 </Box>
                 <Typography variant="caption" color="text.secondary">
-                  Кликните по цвету на изображении, который нужно удалить
+                  {isEn ? 'Click the color in the image you want to remove' : 'Кликните по цвету на изображении, который нужно удалить'}
                 </Typography>
               </Grid>
             </Grid>
@@ -287,7 +290,7 @@ export default function BgRemover() {
                 onClick={removeBackground}
                 disabled={!selectedColor}
               >
-                Удалить фон
+                {isEn ? 'Remove background' : 'Удалить фон'}
               </Button>
               <Button
                 variant="contained"
@@ -295,14 +298,14 @@ export default function BgRemover() {
                 onClick={handleDownload}
                 disabled={!resultUrl}
               >
-                Скачать PNG
+                {isEn ? 'Download PNG' : 'Скачать PNG'}
               </Button>
               <Button
                 variant="outlined"
                 startIcon={<RestartAltIcon />}
                 onClick={resetResult}
               >
-                Сбросить
+                {isEn ? 'Reset' : 'Сбросить'}
               </Button>
               <Button variant="outlined" onClick={clearImage} color="error" sx={{ minWidth: 48 }}>
                 <DeleteIcon />
@@ -317,7 +320,7 @@ export default function BgRemover() {
                 elevation={0}
                 sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
-                <Typography variant="caption" color="text.secondary">Размер изображения</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Image size' : 'Размер изображения'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
                   {imgWidth} x {imgHeight}
                 </Typography>
@@ -333,9 +336,9 @@ export default function BgRemover() {
                   background: resultUrl ? alpha(theme.palette.success.main, 0.06) : undefined
                 }}
               >
-                <Typography variant="caption" color="text.secondary">Статус</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Status' : 'Статус'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: resultUrl ? 'success.main' : 'text.disabled' }}>
-                  {resultUrl ? 'Готово' : 'Ожидание'}
+                  {resultUrl ? (isEn ? 'Done' : 'Готово') : (isEn ? 'Waiting' : 'Ожидание')}
                 </Typography>
               </Paper>
             </Grid>
@@ -344,7 +347,7 @@ export default function BgRemover() {
           {/* Source canvas - clickable */}
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Исходное изображение (кликните для выбора цвета фона)
+              {isEn ? 'Source image (click to select background color)' : 'Исходное изображение (кликните для выбора цвета фона)'}
             </Typography>
             <Box
               sx={{
@@ -367,7 +370,7 @@ export default function BgRemover() {
           {resultUrl && (
             <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                Результат (прозрачный фон)
+                {isEn ? 'Result (transparent background)' : 'Результат (прозрачный фон)'}
               </Typography>
               <Box
                 sx={{
@@ -386,7 +389,7 @@ export default function BgRemover() {
           )}
 
           <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-            Это простой инструмент удаления фона на основе цвета. Для сложных изображений используйте специализированные AI-сервисы.
+            {isEn ? 'This is a simple color-based background removal tool. For complex images, use specialized AI services.' : 'Это простой инструмент удаления фона на основе цвета. Для сложных изображений используйте специализированные AI-сервисы.'}
           </Typography>
         </>
       )}

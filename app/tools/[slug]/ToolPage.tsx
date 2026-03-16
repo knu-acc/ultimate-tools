@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { getToolBySlug, getToolsByGroup, toolGroups, Tool } from '@/src/data/tools';
 import ToolCard from '@/src/components/ToolCard';
 import { useRecentTools } from '@/src/hooks/useRecentTools';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 // Import implemented tools
 import PasswordGeneratorTool from '@/src/tools/PasswordGenerator';
@@ -655,6 +656,313 @@ function getToolSeoContent(tool: Tool, groupName: string): SeoContent {
 }
 
 // ============================================================
+// SEO Content Generator (English)
+// ============================================================
+
+function getToolSeoContentEn(tool: Tool, groupName: string): SeoContent {
+  const name = tool.nameEn || tool.name;
+  const desc = tool.descriptionEn || tool.description;
+  const keys = tool.keywords.slice(0, 4).join(', ');
+
+  const byGroup: Record<string, SeoContent> = {
+    converters: {
+      intro: `"${name}" is a precise online converter for instant conversion of ${desc.toLowerCase()}. Simply enter the source value — the result appears in the desired units without extra steps. The tool works entirely in your browser: no data is sent to any server.`,
+      howTo: `Enter a value in the input field. The converter automatically calculates the result in all supported formats. Copy the desired value with one click. For precise calculations, use decimal numbers.`,
+      features: [
+        'Instant results without delay',
+        `Support for key formats: ${keys}`,
+        'High precision to several decimal places',
+        'Fully browser-based — no data transmission',
+        'Clean Material Design 3 interface',
+        'Free and no registration required',
+      ],
+      useCases: `"${name}" is essential for students, engineers, developers and anyone working with international data. Especially handy when working with documents, recipes, technical documentation and while traveling.`,
+      advantages: `Unlike bulky apps and programs, ${name} works right in your browser. No downloads, installations or registration — just open the page and use it. Data is processed locally: no information leaks.`,
+    },
+    calculators: {
+      intro: `"${name}" is a convenient online calculator for precise computation of ${desc.toLowerCase()}. Enter your data and get instant results. Perfect for quick calculations at work, school and everyday life without installing additional software.`,
+      howTo: `Fill in the input fields with the required values. The calculator automatically performs the computation and displays the result. You can modify parameters and recalculate as needed. All computations happen instantly in your browser.`,
+      features: [
+        'Instant precise calculations',
+        `Calculation parameters: ${keys}`,
+        'Clear interface with no unnecessary settings',
+        'Works offline after first page load',
+        'No ads and no registration',
+        'Mobile-friendly design',
+      ],
+      useCases: `"${name}" is useful for students solving problems, professionals at work, and in everyday life. Available 24/7 from any device with a browser — computer, phone or tablet.`,
+      advantages: `The online calculator "${name}" delivers accurate results without software installation or registration. Your data stays with you — nothing is sent to a server. Works even without stable internet after the first load.`,
+    },
+    text: {
+      intro: `"${name}" is a convenient online tool for working with text. ${desc}. Paste text into the field — the tool instantly performs the desired operation. Perfect for copywriters, editors, developers and anyone who frequently works with text data.`,
+      howTo: `Paste or type text in the input field. Click the process button or adjust parameters — the result appears immediately. Copy the processed text with one click. The tool handles texts of any size right in the browser.`,
+      features: [
+        'Instant text processing of any size',
+        `Works with ${keys}`,
+        'One-click result copying',
+        'Data never leaves your browser',
+        'Supports Latin and Cyrillic',
+        'Free and no registration required',
+      ],
+      useCases: `"${name}" is essential for SEO specialists, copywriters, editors, developers and students. Saves time on routine text operations that are difficult to do manually.`,
+      advantages: `The online tool "${name}" requires no installation and works in any browser. Your texts are processed locally — privacy guaranteed. Free and available 24/7.`,
+    },
+    generators: {
+      intro: `"${name}" is a reliable online generator for creating ${desc.toLowerCase()}. Configure parameters for your needs and click generate — the result is ready instantly. The tool works entirely in the browser, without registration and without limits.`,
+      howTo: `Set the desired generation parameters (length, quantity, type, etc.). Click "Generate" — the result appears immediately. Generate multiple variants and choose the best one. Copy the result with one click.`,
+      features: [
+        'Instant generation without waiting',
+        `Customizable parameters: ${keys}`,
+        'Generate multiple variants at once',
+        'One-click copying',
+        'Secure browser-based processing',
+        'Free with no limits',
+      ],
+      useCases: `"${name}" is essential for developers, designers, testers and anyone who regularly generates data. Saves time on routine tasks and reduces human error when creating data manually.`,
+      advantages: `The generator "${name}" is available online without download or installation. Data is generated locally in the browser — no leaks. Free with no limits on operations.`,
+    },
+    developers: {
+      intro: `"${name}" is a professional online tool for developers. ${desc}. Works right in the browser without installing extensions. Boosts productivity when working with code and technical data.`,
+      howTo: `Paste code or data into the input field. The tool automatically processes it and delivers the result. Use copy buttons for quick transfer to your editor. Supports processing large volumes of data.`,
+      features: [
+        'Fast code and data processing',
+        `Format support: ${keys}`,
+        'Syntax highlighting and validation',
+        'Works without browser extensions',
+        'One-click result copying',
+        'Free developer tool',
+      ],
+      useCases: `"${name}" is used daily by frontend and backend developers, DevOps engineers and QA testers. Especially useful for debugging, API development, working with config files and code optimization.`,
+      advantages: `Unlike IDE plugins, "${name}" works in the browser on any computer without environment setup. Ideal for quick tasks during work. Data stays in the browser — safe for sensitive data.`,
+    },
+    images: {
+      intro: `"${name}" is a convenient online editor for working with images. ${desc}. Upload a photo — processing happens right in the browser in seconds. No installations or registrations — just results.`,
+      howTo: `Upload an image via the button or drag and drop a file into the upload area. Adjust processing parameters. Click the process button and download the result. The tool supports popular image formats.`,
+      features: [
+        'Image processing right in the browser',
+        'Support for JPEG, PNG, WebP, GIF',
+        `Operations: ${keys}`,
+        'Download results in a few clicks',
+        'Images are never sent to a server',
+        'Free with no limits',
+      ],
+      useCases: `"${name}" is used by designers, bloggers, social media managers and anyone working with visual content. Perfect for quick photo editing without Photoshop or other heavy editors.`,
+      advantages: `The online tool "${name}" doesn't require Photoshop or other expensive software. Works in the browser on any device. Your images are processed locally — no personal photo leaks.`,
+    },
+    security: {
+      intro: `"${name}" is a reliable online tool for data and security. ${desc}. All operations are performed in your browser — data never leaves your device. Free and no registration required.`,
+      howTo: `Enter data in the tool field. Click the process button — the result appears instantly. For security, avoid using the tool with real production passwords or keys on shared devices.`,
+      features: [
+        'Data processing only in the browser',
+        'No data transmitted to servers',
+        `Support: ${keys}`,
+        'Meets modern security standards',
+        'Suitable for sensitive data',
+        'Free with no limits',
+      ],
+      useCases: `"${name}" is used by developers, security administrators, IT professionals and regular users who value data security. Suitable for auditing, checking and generating secure data.`,
+      advantages: `The key advantage of "${name}" is complete privacy. All computations happen client-side. Neither your passwords nor other sensitive data is transmitted to anyone. Open browser code — maximum transparency.`,
+    },
+    health: {
+      intro: `"${name}" is a convenient online health and fitness calculator. ${desc}. Enter your data — the tool provides a personalized result based on proven formulas. Fast, free and no registration required.`,
+      howTo: `Enter your parameters (age, weight, height, activity level, etc.) in the appropriate fields. Click "Calculate" — the result appears with explanations and recommendations. Results are for informational purposes.`,
+      features: [
+        'Calculations based on scientifically proven formulas',
+        `Parameters considered: ${keys}`,
+        'Personalized results',
+        'Clear explanations of results',
+        'Works in browser without data collection',
+        'Free and no registration required',
+      ],
+      useCases: `"${name}" is useful for health-conscious individuals, athletes, fitness trainers and anyone looking to improve their lifestyle. Use the tool as a supplementary guide for approximate calculations.`,
+      advantages: `The online calculator "${name}" is available anytime and works without registration. No need to install apps — a browser is enough. Important: results are for informational purposes and do not replace medical consultation.`,
+    },
+    finance: {
+      intro: `"${name}" is a free online calculator for financial computations. ${desc}. Enter data — the tool instantly performs calculations using financial formulas. Helps make informed financial decisions.`,
+      howTo: `Enter financial parameters in the appropriate fields: amounts, rates, terms. Click "Calculate" — the tool shows a detailed result with breakdown. Change parameters to compare different scenarios.`,
+      features: [
+        'Precise calculations using financial formulas',
+        `Parameters: ${keys}`,
+        'Detailed result breakdown',
+        'Compare different scenarios',
+        'Data stays in the browser',
+        'Free with no limits',
+      ],
+      useCases: `"${name}" helps when planning major purchases, mortgages, deposits and investments. Essential for comparing bank offers and analyzing financial decisions before making them.`,
+      advantages: `The online calculator "${name}" provides approximate calculations for self-analysis. Your financial data never leaves the browser. Important: for official financial decisions, consult a financial professional.`,
+    },
+    math: {
+      intro: `"${name}" is a powerful online calculator for mathematical computations. ${desc}. Enter data — the tool instantly provides an accurate answer with detailed solution. Essential for study and work.`,
+      howTo: `Enter numbers or mathematical expressions in the input fields. Click "Calculate" or "Solve" — the result appears with step-by-step explanation when possible. Supports floating-point and large numbers.`,
+      features: [
+        'Precise mathematical calculations',
+        `Supported operations: ${keys}`,
+        'Step-by-step solution (where applicable)',
+        'Works with large numbers',
+        'High calculation precision',
+        'Free with no limits',
+      ],
+      useCases: `"${name}" is used by students, teachers, engineers and researchers. Helps with problem solving, verifying calculations and studying mathematics.`,
+      advantages: `The online calculator "${name}" is available without installation or registration. Works in the browser on any device. A free alternative to paid math packages for everyday tasks.`,
+    },
+    encoding: {
+      intro: `"${name}" is a convenient online tool for encoding and decoding data. ${desc}. Paste data — conversion happens instantly in your browser without sending data to a server.`,
+      howTo: `Paste source data in the input field. Choose the direction: encode or decode. Click the button — the result appears immediately. Copy the converted data with one click.`,
+      features: [
+        'One-click encoding and decoding',
+        `Formats: ${keys}`,
+        'Instant processing without delay',
+        'No data sent to servers',
+        'Unicode and multilingual support',
+        'Free and no registration required',
+      ],
+      useCases: `"${name}" is essential for developers when debugging, testing APIs, working with config files and data transmission. Also used for educational purposes when learning encoding formats.`,
+      advantages: `The tool "${name}" processes data locally — no leaks. Requires no installation or authorization. Supports large data volumes right in the browser.`,
+    },
+    color: {
+      intro: `"${name}" is a professional online tool for working with colors. ${desc}. Built for designers, developers and anyone working with visual content. Works in the browser without graphic editors.`,
+      howTo: `Select or enter a color using the available tools. The tool automatically shows related values and options. Copy the desired format with one click for use in design or code.`,
+      features: [
+        `Works with formats: ${keys}`,
+        'Visual color preview',
+        'One-click value copying',
+        'Suitable for web design and development',
+        'Works without Photoshop or other software',
+        'Free with no limits',
+      ],
+      useCases: `"${name}" is used by web designers creating interfaces, developers writing CSS, UX specialists selecting color schemes, and marketers creating brand materials.`,
+      advantages: `The online tool "${name}" replaces expensive software for professional color work. Available in any browser without registration. Results can be used directly in CSS, HTML or graphic editors.`,
+    },
+    seo: {
+      intro: `"${name}" is a professional SEO tool for website optimization. ${desc}. Helps improve visibility in Google and other search engines without specialized knowledge. Works in the browser — no installation needed.`,
+      howTo: `Enter the website URL or text data in the tool field. Click the analyze or generate button — the result appears instantly. Use the generated data to optimize your website.`,
+      features: [
+        'Quick SEO analysis and generation',
+        `Works with: ${keys}`,
+        'Optimization recommendations',
+        'Meets Google requirements',
+        'No registration or paid plans',
+        'Data processed in the browser',
+      ],
+      useCases: `"${name}" is used by SEO specialists, website owners, copywriters and marketers. Helps optimize pages for search engines, improve rankings and attract more organic traffic.`,
+      advantages: `The SEO tool "${name}" is available for free without registration. No need to pay for expensive SEO services for basic tasks. Fast and accurate results right in the browser.`,
+    },
+    network: {
+      intro: `"${name}" is a specialized online tool for working with network data. ${desc}. Designed for system administrators, network engineers and developers. Works in the browser without installing utilities.`,
+      howTo: `Enter network data (IP address, mask, MAC address, etc.) in the input field. Click the analyze button — the tool provides a detailed result. Various network data formats are supported.`,
+      features: [
+        `Works with formats: ${keys}`,
+        'Precise network parameter calculation',
+        'Detailed output',
+        'IPv4 and IPv6 support',
+        'Works without command-line utilities',
+        'Free for network engineers',
+      ],
+      useCases: `"${name}" is used daily by sysadmins configuring networks, DevOps engineers deploying infrastructure, and developers working with network applications.`,
+      advantages: `The online tool "${name}" is accessible from any computer without installing specialized software. Replaces command-line utilities for quick calculations right in the browser.`,
+    },
+    productivity: {
+      intro: `"${name}" is a convenient online tool for boosting productivity. ${desc}. Helps organize work and focus on what matters. Available in the browser without installation — always at hand.`,
+      howTo: `Open the tool in your browser. Configure parameters for your tasks. All data is saved in your browser automatically — it will be there next time you open it. Works offline after the first load.`,
+      features: [
+        'Data saved in browser (localStorage)',
+        `Features: ${keys}`,
+        'Works offline',
+        'No sync required',
+        'Clean interface without distractions',
+        'Free and no account needed',
+      ],
+      useCases: `"${name}" is used by freelancers, students, managers and anyone who wants to better manage their time and tasks. Ideal for quick notes, timers and daily planning right in the browser.`,
+      advantages: `"${name}" is a simple and fast tool without unnecessary features. Data is stored locally in the browser — no cloud or registration. Works instantly from any device.`,
+    },
+    entertainment: {
+      intro: `"${name}" is a fun online tool for entertainment and random decision-making. ${desc}. Use for games, contests, team events or when you simply can't decide. Works instantly and for free.`,
+      howTo: `Configure parameters (options, participant lists, etc.) and click the button — the tool makes its random selection. The result is completely random and cannot be manipulated. Repeat as many times as you want.`,
+      features: [
+        'Completely random results',
+        `Features: ${keys}`,
+        'Customizable parameters',
+        'Animation and visual effects',
+        'Fair randomization using browser crypto',
+        'Free with no limits',
+      ],
+      useCases: `"${name}" is perfect for parties, family games, contests, team drafts and any situation requiring an unbiased random selection. Also used by teachers for class polls.`,
+      advantages: `"${name}" is a fast and fair way to make a random decision. No hidden algorithms — standard browser cryptographic randomization. Open to everyone without registration.`,
+    },
+    media: {
+      intro: `"${name}" is an online tool for working with audio and video. ${desc}. Works right in the browser using the Web Audio API. No software installation or registration needed.`,
+      howTo: `Launch the tool in your browser. Adjust parameters (frequency, tempo, duration, etc.) using sliders or input fields. Use control buttons to start and stop. Works with the browser's built-in audio.`,
+      features: [
+        'Works via browser Web Audio API',
+        `Features: ${keys}`,
+        'Precise parameter tuning',
+        'No codec installation required',
+        'Supports all modern browsers',
+        'Free for musicians and audiophiles',
+      ],
+      useCases: `"${name}" is used by musicians, sound engineers, audiophiles and anyone working with sound. Handy for practice, instrument tuning and audio work without specialized software.`,
+      advantages: `"${name}" works right in the browser using modern web technologies. No need to download a DAW or other software for simple audio tasks. Available anytime on any device.`,
+    },
+    datetime: {
+      intro: `"${name}" is a precise online tool for working with dates and time. ${desc}. Works with timezone awareness and international standards. Free and no registration required.`,
+      howTo: `Enter the desired dates or times in the appropriate fields. The tool automatically performs the calculation or conversion. Select a timezone or date format if needed. Results appear instantly.`,
+      features: [
+        'Precise calculations with timezone awareness',
+        `Works with: ${keys}`,
+        'International date format support',
+        'Daylight saving time handling',
+        'Instant results',
+        'Free with no limits',
+      ],
+      useCases: `"${name}" is used by travelers, remote teams, developers and anyone working across different time zones. Essential for planning meetings, flights and international projects.`,
+      advantages: `"${name}" accounts for all nuances of working with time, including daylight saving and time zones. Requires no installation and works in any browser. More accurate than manual calculations.`,
+    },
+    qrbarcode: {
+      intro: `"${name}" is a professional online generator for creating ${desc.toLowerCase()}. Create codes instantly and download in high quality. Suitable for business, marketing and personal use.`,
+      howTo: `Enter the data to encode (URL, text, Wi-Fi data, etc.) in the input field. Adjust parameters (size, color) if needed. Click "Create" — the code appears instantly. Download in PNG or SVG format.`,
+      features: [
+        `Formats: ${keys}`,
+        'PNG and SVG download',
+        'Size and color customization',
+        'High quality output',
+        'Generation right in the browser',
+        'Free without watermarks',
+      ],
+      useCases: `"${name}" is used by marketers, social media managers, business owners, event managers and developers. Codes are used on printed materials, packaging, in advertising and on websites.`,
+      advantages: `"${name}" creates professional quality codes without registration or watermarks. Works in the browser — no installations. Download in SVG for scaling without quality loss.`,
+    },
+    units: {
+      intro: `"${name}" is a handy reference and unit converter. ${desc}. Find the value you need or perform a quick conversion right in the browser without downloading references.`,
+      howTo: `Enter a value or find the desired unit via search. The tool shows a correspondence table or performs the conversion. Use tables for quick comparison of standards across countries.`,
+      features: [
+        `Formats and standards: ${keys}`,
+        'Complete correspondence table',
+        'Quick search by standard',
+        'Data for men and women',
+        'International standards',
+        'Free online reference',
+      ],
+      useCases: `"${name}" is essential when shopping at foreign stores, in international shipping and while traveling. Helps choose the right size or form factor without ordering mistakes.`,
+      advantages: `"${name}" replaces paper tables and outdated references. Always up-to-date data available in any browser without downloading. Convenient on mobile devices while shopping.`,
+    },
+  };
+
+  return byGroup[tool.groupId] || {
+    intro: `"${name}" is a free online tool. ${desc}. Works right in your browser without installation or registration. All data is processed locally — privacy guaranteed.`,
+    howTo: `Open the tool in the browser, enter the required data and click the process button. The result appears instantly. Copy it with one click.`,
+    features: [
+      'Works in the browser, no installation',
+      'Free with no limits',
+      'No registration or account needed',
+      'No data sent to servers',
+      `Key features: ${keys}`,
+    ],
+    useCases: `"${name}" is suitable for work, study and everyday tasks. Available 24/7 from any device.`,
+    advantages: `The online tool "${name}" requires no installation or registration. Free and always available in the browser.`,
+  };
+}
+
+// ============================================================
 // FAQ Generator
 // ============================================================
 
@@ -721,11 +1029,80 @@ function getToolFAQ(tool: Tool): Array<{ q: string; a: string }> {
 }
 
 // ============================================================
+// FAQ Generator (English)
+// ============================================================
+
+function getToolFAQEn(tool: Tool): Array<{ q: string; a: string }> {
+  const name = tool.nameEn || tool.name;
+  const base = [
+    {
+      q: `How do I use "${name}"?`,
+      a: `Open the "${name}" tool page on Ultimate Tools. Enter data in the appropriate fields — the result appears automatically. The tool works entirely in the browser: no downloads or registration required.`,
+    },
+    {
+      q: `Is "${name}" free to use?`,
+      a: `Yes, "${name}" is completely free and requires no registration. All tools on Ultimate Tools are available without limits or hidden fees.`,
+    },
+    {
+      q: `Is it safe to use "${name}"?`,
+      a: `Yes, all data is processed locally in your browser. No information is sent to servers — your data remains completely private.`,
+    },
+    {
+      q: `Does "${name}" work on smartphones?`,
+      a: `Yes, "${name}" is fully responsive and works in any modern browser on iOS and Android.`,
+    },
+  ];
+
+  const groupFAQs: Record<string, Array<{ q: string; a: string }>> = {
+    converters: [{
+      q: `How accurate is "${name}"?`,
+      a: `The converter uses standard conversion coefficients with high precision. Results comply with international measurement standards.`,
+    }],
+    calculators: [{
+      q: `Can I trust the calculations from "${name}"?`,
+      a: `Yes, "${name}" uses proven formulas and algorithms. However, for important financial decisions, we recommend verifying results with a specialist.`,
+    }],
+    developers: [{
+      q: `Does "${name}" support large data volumes?`,
+      a: `"${name}" processes data right in the browser, ensuring high-speed operation. For very large files, we recommend splitting data into parts.`,
+    }],
+    images: [{
+      q: `What image formats does "${name}" support?`,
+      a: `"${name}" works with popular formats: JPEG, PNG, WebP, GIF, SVG. Processing happens in the browser without uploading files to a server.`,
+    }],
+    security: [{
+      q: `Is my data stored when using "${name}"?`,
+      a: `No. All data is processed exclusively in your browser. Passwords, hashes and other sensitive information is never transmitted or stored on servers.`,
+    }],
+    health: [{
+      q: `Does "${name}" replace medical consultation?`,
+      a: `No, "${name}" is intended for informational purposes only. For medical decisions, always consult a qualified professional.`,
+    }],
+    finance: [{
+      q: `How accurate are the financial calculations in "${name}"?`,
+      a: `"${name}" performs calculations using standard financial formulas. For official financial decisions, we recommend consulting a financial advisor.`,
+    }],
+    generators: [{
+      q: `Can I use data from "${name}" in production?`,
+      a: `Yes, data is generated using the browser's cryptographically secure random number generator. For password generators and UUIDs, the data is reliable for real-world use.`,
+    }],
+    text: [{
+      q: `Are there text size limits in "${name}"?`,
+      a: `"${name}" processes large texts right in the browser. The limit depends on your device's RAM, but typically works with texts up to several megabytes.`,
+    }],
+  };
+
+  return [...base, ...(groupFAQs[tool.groupId] || [])];
+}
+
+// ============================================================
 // Main Component
 // ============================================================
 
 export default function ToolPage({ slug }: { slug: string }) {
   const theme = useTheme();
+  const { locale, t, lHref } = useLanguage();
+  const isEn = locale === 'en';
   const tool = getToolBySlug(slug);
   const { addRecentTool } = useRecentTools();
 
@@ -736,8 +1113,8 @@ export default function ToolPage({ slug }: { slug: string }) {
   if (!tool) {
     return (
       <Container maxWidth="lg" sx={{ py: 6, textAlign: 'center' }}>
-        <Typography variant="h4">Инструмент не найден</Typography>
-        <Button component={Link} href="/" sx={{ mt: 2 }}>На главную</Button>
+        <Typography variant="h4">{isEn ? 'Tool not found' : 'Инструмент не найден'}</Typography>
+        <Button component={Link} href={lHref('/')} sx={{ mt: 2 }}>{isEn ? 'Home' : 'На главную'}</Button>
       </Container>
     );
   }
@@ -746,21 +1123,21 @@ export default function ToolPage({ slug }: { slug: string }) {
   const relatedTools = getToolsByGroup(tool.groupId).filter(t => t.id !== tool.id).slice(0, 4);
   const ToolComponent = toolComponents[tool.slug];
   const seoTitle = (tool as any).seoTitle || tool.name;
-  const seoContent = getToolSeoContent(tool, group?.name || '');
-  const faqItems = getToolFAQ(tool);
+  const seoContent = isEn ? getToolSeoContentEn(tool, group?.name || '') : getToolSeoContent(tool, group?.name || '');
+  const faqItems = isEn ? getToolFAQEn(tool) : getToolFAQ(tool);
 
   return (
     <>
       <Container maxWidth="lg" sx={{ py: 4 }}>
         {/* Breadcrumbs */}
         <Breadcrumbs separator={<NavigateNext fontSize="small" />} sx={{ mb: 3 }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none' }}>
-            <Home sx={{ mr: 0.5, fontSize: 18 }} /> Главная
+          <Link href={lHref('/')} style={{ display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none' }}>
+            <Home sx={{ mr: 0.5, fontSize: 18 }} /> {t('toolPage.breadcrumb.home')}
           </Link>
-          <Link href={`/group/${group?.slug}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-            {group?.name}
+          <Link href={lHref(`/group/${group?.slug}`)} style={{ color: 'inherit', textDecoration: 'none' }}>
+            {isEn ? ((group as any)?.nameEn || group?.name) : group?.name}
           </Link>
-          <Typography color="text.primary" fontWeight={500}>{tool.name}</Typography>
+          <Typography color="text.primary" fontWeight={500}>{isEn ? ((tool as any).nameEn || tool.name) : tool.name}</Typography>
         </Breadcrumbs>
 
         <Grid container spacing={4}>
@@ -773,29 +1150,29 @@ export default function ToolPage({ slug }: { slug: string }) {
                   sx={{
                     width: 48,
                     height: 48,
-                    borderRadius: 3,
-                    bgcolor: theme.palette.primaryContainer,
+                    borderRadius: theme.shape?.medium ?? 12,
+                    bgcolor: alpha(group?.color ?? theme.palette.primary.main, 0.12),
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0,
                   }}
                 >
-                  <DynamicIcon name={tool.icon} sx={{ color: theme.palette.onPrimaryContainer, fontSize: 24 }} />
+                  <DynamicIcon name={tool.icon} sx={{ color: group?.color ?? theme.palette.primary.main, fontSize: 24 }} />
                 </Box>
                 <Box>
                   {/* SEO-оптимизированный H1 */}
                   <Typography variant="h4" component="h1" fontWeight={700} sx={{ lineHeight: 1.2 }}>
-                    {seoTitle}
+                    {isEn ? ((tool as any).nameEn || seoTitle) : seoTitle}
                   </Typography>
                   <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
-                    {tool.description}
+                    {isEn ? ((tool as any).descriptionEn || tool.description) : tool.description}
                   </Typography>
                 </Box>
               </Box>
               <Box sx={{ display: 'flex', gap: 1, mt: 1.5, flexWrap: 'wrap' }}>
                 {tool.keywords.slice(0, 5).map(kw => (
-                  <Chip key={kw} label={kw} size="small" sx={{ bgcolor: theme.palette.surfaceContainerHigh }} />
+                  <Chip key={kw} label={kw} size="small" sx={{ bgcolor: alpha(group?.color ?? theme.palette.primary.main, 0.08) }} />
                 ))}
               </Box>
             </Box>
@@ -805,7 +1182,7 @@ export default function ToolPage({ slug }: { slug: string }) {
               elevation={1}
               sx={{
                 p: { xs: 2, md: 3 },
-                borderRadius: 3,
+                borderRadius: theme.shape?.medium ?? 12,
                 bgcolor: theme.palette.surfaceContainerLowest,
                 minHeight: 300,
               }}
@@ -816,11 +1193,10 @@ export default function ToolPage({ slug }: { slug: string }) {
                 <Box sx={{ textAlign: 'center', py: 8 }}>
                   <Construction sx={{ fontSize: 64, color: theme.palette.text.secondary, mb: 2 }} />
                   <Typography variant="h5" gutterBottom fontWeight={600}>
-                    В разработке
+                    {t('toolPage.underConstruction')}
                   </Typography>
                   <Typography variant="body1" color="text.secondary">
-                    Инструмент &laquo;{tool.name}&raquo; скоро будет доступен.
-                    Следите за обновлениями!
+                    {t('toolPage.underConstructionDesc', { name: isEn ? ((tool as any).nameEn || tool.name) : tool.name })}
                   </Typography>
                 </Box>
               )}
@@ -829,11 +1205,11 @@ export default function ToolPage({ slug }: { slug: string }) {
             {/* SEO Content Block */}
             <Paper
               elevation={0}
-              sx={{ mt: 3, p: { xs: 2, md: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
+              sx={{ mt: 3, p: { xs: 2, md: 3 }, borderRadius: theme.shape?.medium ?? 12, bgcolor: theme.palette.surfaceContainerLow }}
             >
               {/* What is */}
               <Typography variant="h5" component="h2" fontWeight={600} gutterBottom>
-                Что такое «{tool.name}»?
+                {t('toolPage.seoSection.whatIs', { name: isEn ? ((tool as any).nameEn || tool.name) : tool.name })}
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
                 {seoContent.intro}
@@ -841,7 +1217,7 @@ export default function ToolPage({ slug }: { slug: string }) {
 
               {/* How to use */}
               <Typography variant="h6" component="h3" fontWeight={600} gutterBottom sx={{ mt: 2 }}>
-                Как пользоваться инструментом
+                {t('toolPage.seoSection.howToUse')}
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
                 {seoContent.howTo}
@@ -849,7 +1225,7 @@ export default function ToolPage({ slug }: { slug: string }) {
 
               {/* Features */}
               <Typography variant="h6" component="h3" fontWeight={600} gutterBottom sx={{ mt: 2 }}>
-                Возможности «{tool.name}»
+                {t('toolPage.seoSection.features', { name: isEn ? ((tool as any).nameEn || tool.name) : tool.name })}
               </Typography>
               <List dense disablePadding>
                 {seoContent.features.map((feat, i) => (
@@ -867,7 +1243,7 @@ export default function ToolPage({ slug }: { slug: string }) {
 
               {/* When to use */}
               <Typography variant="h6" component="h3" fontWeight={600} gutterBottom sx={{ mt: 2 }}>
-                Когда использовать
+                {t('toolPage.seoSection.whenToUse')}
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
                 {seoContent.useCases}
@@ -875,7 +1251,7 @@ export default function ToolPage({ slug }: { slug: string }) {
 
               {/* Advantages */}
               <Typography variant="h6" component="h3" fontWeight={600} gutterBottom sx={{ mt: 2 }}>
-                Преимущества онлайн-версии
+                {t('toolPage.seoSection.advantages')}
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph sx={{ mb: 0 }}>
                 {seoContent.advantages}
@@ -885,7 +1261,7 @@ export default function ToolPage({ slug }: { slug: string }) {
             {/* Visible FAQ */}
             <Box sx={{ mt: 3 }}>
               <Typography variant="h5" component="h2" fontWeight={600} sx={{ mb: 2 }}>
-                Часто задаваемые вопросы
+                {t('toolPage.faq.title')}
               </Typography>
               {faqItems.map((faq, i) => (
                 <Accordion
@@ -907,7 +1283,7 @@ export default function ToolPage({ slug }: { slug: string }) {
                         width: 36, height: 36,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         borderRadius: '50%',
-                        transition: `background-color 200ms cubic-bezier(0.2,0,0,1)`,
+                        transition: `background-color ${theme.md3?.motion.duration.short4 ?? '200ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`,
                         '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.1) },
                       }}>
                         <ExpandMore sx={{ color: theme.palette.primary.main, fontSize: 22 }} />
@@ -934,10 +1310,10 @@ export default function ToolPage({ slug }: { slug: string }) {
             {relatedTools.length > 0 && (
               <Box sx={{ mt: 3 }}>
                 <Typography variant="body2" color="text.secondary">
-                  Смотрите также другие инструменты в категории «{group?.name}»:{' '}
-                  {relatedTools.map((t, i) => (
-                    <React.Fragment key={t.id}>
-                      <Link href={`/tools/${t.slug}`} style={{ color: 'inherit' }}>{t.name}</Link>
+                  {t('toolPage.relatedLinks', { group: isEn ? ((group as any)?.nameEn || group?.name) : group?.name })}{' '}
+                  {relatedTools.map((rt, i) => (
+                    <React.Fragment key={rt.id}>
+                      <Link href={lHref(`/tools/${rt.slug}`)} style={{ color: 'inherit' }}>{isEn ? ((rt as any).nameEn || rt.name) : rt.name}</Link>
                       {i < relatedTools.length - 1 ? ', ' : '.'}
                     </React.Fragment>
                   ))}
@@ -949,7 +1325,7 @@ export default function ToolPage({ slug }: { slug: string }) {
           {/* Sidebar */}
           <Grid size={{ xs: 12, md: 4, lg: 3 }}>
             <Typography variant="h6" fontWeight={600} sx={{ mb: 2 }}>
-              Похожие инструменты
+              {t('toolPage.sidebar.relatedTools')}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {relatedTools.map(t => (
@@ -958,15 +1334,15 @@ export default function ToolPage({ slug }: { slug: string }) {
             </Box>
 
             <Typography variant="h6" fontWeight={600} sx={{ mt: 4, mb: 2 }}>
-              Категории
+              {t('toolPage.sidebar.categories')}
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
               {toolGroups.slice(0, 8).map(g => (
                 <Chip
                   key={g.id}
-                  label={g.name}
+                  label={isEn ? ((g as any).nameEn || g.name) : g.name}
                   component={Link}
-                  href={`/group/${g.slug}`}
+                  href={lHref(`/group/${g.slug}`)}
                   clickable
                   variant={g.id === group?.id ? 'filled' : 'outlined'}
                   color={g.id === group?.id ? 'primary' : 'default'}
@@ -988,8 +1364,8 @@ export default function ToolPage({ slug }: { slug: string }) {
               applicationCategory: 'UtilitiesApplication',
               operatingSystem: 'Any',
               offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-              url: `https://ulti-tools.com/tools/${tool.slug}`,
-              inLanguage: 'ru',
+              url: `https://ulti-tools.com/${locale}/tools/${tool.slug}`,
+              inLanguage: locale,
               isAccessibleForFree: true,
               browserRequirements: 'Requires JavaScript',
               author: { '@type': 'Organization', name: 'Ultimate Tools', url: 'https://ulti-tools.com' },
@@ -1022,9 +1398,9 @@ export default function ToolPage({ slug }: { slug: string }) {
               '@context': 'https://schema.org',
               '@type': 'BreadcrumbList',
               itemListElement: [
-                { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://ulti-tools.com' },
-                { '@type': 'ListItem', position: 2, name: group?.name || 'Инструменты', item: `https://ulti-tools.com/group/${group?.slug}` },
-                { '@type': 'ListItem', position: 3, name: seoTitle, item: `https://ulti-tools.com/tools/${tool.slug}` },
+                { '@type': 'ListItem', position: 1, name: isEn ? 'Home' : 'Главная', item: `https://ulti-tools.com/${locale}` },
+                { '@type': 'ListItem', position: 2, name: isEn ? ((group as any)?.nameEn || group?.name || 'Tools') : (group?.name || 'Инструменты'), item: `https://ulti-tools.com/${locale}/group/${group?.slug}` },
+                { '@type': 'ListItem', position: 3, name: isEn ? ((tool as any).nameEn || seoTitle) : seoTitle, item: `https://ulti-tools.com/${locale}/tools/${tool.slug}` },
               ],
             }),
           }}

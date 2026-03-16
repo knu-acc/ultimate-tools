@@ -5,11 +5,14 @@ import {
   Box, Typography, Paper, Button, Chip, alpha, useTheme, IconButton, Slider
 } from '@mui/material';
 import { PlayArrow, Pause, Refresh, SkipNext, Settings } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Phase = 'work' | 'break' | 'longBreak';
 
 export default function PomodoroTimer() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [workDuration, setWorkDuration] = useState(25);
   const [breakDuration, setBreakDuration] = useState(5);
   const [longBreakDuration, setLongBreakDuration] = useState(15);
@@ -24,9 +27,9 @@ export default function PomodoroTimer() {
 
   const getPhaseLabel = (p: Phase): string => {
     switch (p) {
-      case 'work': return 'Работа';
-      case 'break': return 'Перерыв';
-      case 'longBreak': return 'Длинный перерыв';
+      case 'work': return isEn ? 'Work' : 'Работа';
+      case 'break': return isEn ? 'Break' : 'Перерыв';
+      case 'longBreak': return isEn ? 'Long break' : 'Длинный перерыв';
     }
   };
 
@@ -193,7 +196,7 @@ export default function PomodoroTimer() {
             '&:hover': { bgcolor: alpha(getPhaseColor(phase), 0.85) }
           }}
         >
-          {isRunning ? 'Пауза' : 'Старт'}
+          {isRunning ? (isEn ? 'Pause' : 'Пауза') : (isEn ? 'Start' : 'Старт')}
         </Button>
         <IconButton onClick={skipPhase} sx={{ }}>
           <SkipNext />
@@ -223,7 +226,7 @@ export default function PomodoroTimer() {
           />
         ))}
         <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-          {completedPomodoros} помодоро
+          {completedPomodoros} {isEn ? 'pomodoros' : 'помодоро'}
         </Typography>
       </Box>
 
@@ -233,25 +236,25 @@ export default function PomodoroTimer() {
           elevation={0}
           sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, maxWidth: 400, mx: 'auto' }}
         >
-          <Typography variant="subtitle2" fontWeight={600} gutterBottom>Настройки</Typography>
+          <Typography variant="subtitle2" fontWeight={600} gutterBottom>{isEn ? 'Settings' : 'Настройки'}</Typography>
 
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            Работа: {workDuration} мин
+            {isEn ? 'Work' : 'Работа'}: {workDuration} {isEn ? 'min' : 'мин'}
           </Typography>
           <Slider value={workDuration} onChange={(_, v) => { setWorkDuration(v as number); if (phase === 'work') setSecondsLeft((v as number) * 60); }} min={1} max={60} sx={{ mb: 1 }} />
 
           <Typography variant="body2" color="text.secondary">
-            Перерыв: {breakDuration} мин
+            {isEn ? 'Break' : 'Перерыв'}: {breakDuration} {isEn ? 'min' : 'мин'}
           </Typography>
           <Slider value={breakDuration} onChange={(_, v) => { setBreakDuration(v as number); if (phase === 'break') setSecondsLeft((v as number) * 60); }} min={1} max={30} sx={{ mb: 1 }} />
 
           <Typography variant="body2" color="text.secondary">
-            Длинный перерыв: {longBreakDuration} мин
+            {isEn ? 'Long break' : 'Длинный перерыв'}: {longBreakDuration} {isEn ? 'min' : 'мин'}
           </Typography>
           <Slider value={longBreakDuration} onChange={(_, v) => { setLongBreakDuration(v as number); if (phase === 'longBreak') setSecondsLeft((v as number) * 60); }} min={5} max={45} sx={{ mb: 1 }} />
 
           <Typography variant="body2" color="text.secondary">
-            Длинный перерыв каждые: {longBreakInterval} помодоро
+            {isEn ? 'Long break every' : 'Длинный перерыв каждые'}: {longBreakInterval} {isEn ? 'pomodoros' : 'помодоро'}
           </Typography>
           <Slider value={longBreakInterval} onChange={(_, v) => setLongBreakInterval(v as number)} min={2} max={8} />
         </Paper>

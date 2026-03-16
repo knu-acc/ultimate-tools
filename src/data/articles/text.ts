@@ -5,7 +5,9 @@ export const textArticles: Article[] = [
   {
     slug: 'word-counter-guide',
     title: 'Счётчик слов: как быстро узнать количество слов и символов',
+    titleEn: 'Word Counter: How to Quickly Count Words and Characters',
     description: 'Руководство по использованию счётчика слов. Подсчёт слов, символов, предложений и абзацев в тексте онлайн.',
+    descriptionEn: 'Guide to using the word counter. Count words, characters, sentences, and paragraphs in text online.',
     toolSlug: 'word-counter',
     type: 'guide',
     keywords: ['счётчик слов', 'подсчёт символов', 'количество слов', 'длина текста', 'статистика текста'],
@@ -49,11 +51,51 @@ export const textArticles: Article[] = [
 
 Смотрите также: [Конвертер регистра](/tools/case-converter), [Найти и заменить](/tools/text-replace), [Markdown превью](/tools/markdown-preview)
     `.trim(),
+    contentEn: `
+## Why Count Words?
+
+Counting words and characters is an important task for copywriters, students, journalists, and SMM specialists. Many platforms limit text length, and clients often pay for character count.
+
+## What the Counter Shows
+
+Our tool analyzes text and provides full statistics:
+
+| Metric | Description |
+|---|---|
+| Words | Total number of words in the text |
+| Characters | Number of characters with and without spaces |
+| Sentences | Number of sentences |
+| Paragraphs | Number of paragraphs |
+| Reading time | Estimated reading time |
+
+## How to Use
+
+1. Paste or type text into the input field
+2. Statistics update automatically in real time
+3. Copy the data you need
+
+### Popular Platform Requirements
+
+- **Twitter/X**: up to 280 characters
+- **Meta description**: 150-160 characters
+- **SEO title**: 50-60 characters
+- **SMS**: 160 characters (Latin) or 70 (Cyrillic)
+
+## Usage Tips
+
+- Check meta tag length before publishing
+- Monitor article volume for SEO (optimal 1500-3000 words)
+- Track the ratio of unique words to total count
+
+See also: [Case Converter](/tools/case-converter), [Find and Replace](/tools/text-replace), [Markdown Preview](/tools/markdown-preview)
+    `.trim(),
   },
   {
     slug: 'word-counter-tips',
     title: '7 советов по работе с текстом и подсчёту слов',
+    titleEn: '7 Tips for Working with Text and Word Counting',
     description: 'Практические советы для авторов: как контролировать объём текста, оптимальная длина для SEO и соцсетей.',
+    descriptionEn: 'Practical tips for authors: how to control text volume, optimal length for SEO and social media.',
     toolSlug: 'word-counter',
     type: 'tips',
     keywords: ['советы копирайтеру', 'длина статьи', 'SEO текст', 'оптимальный объём'],

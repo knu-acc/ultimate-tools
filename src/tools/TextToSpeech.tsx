@@ -18,6 +18,7 @@ import {
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import StopIcon from '@mui/icons-material/Stop';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function TextToSpeech() {
   const theme = useTheme();
@@ -33,6 +34,8 @@ export default function TextToSpeech() {
   const [highlightLength, setHighlightLength] = useState(0);
   const [supported, setSupported] = useState(true);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   // Load voices
   useEffect(() => {
@@ -144,7 +147,7 @@ export default function TextToSpeech() {
             lineHeight: 1.8
           }}
         >
-          {text || 'Текст для озвучивания появится здесь...'}
+          {text || (isEn ? 'Text for speech will appear here...' : 'Текст для озвучивания появится здесь...')}
         </Typography>
       );
     }
@@ -191,11 +194,12 @@ export default function TextToSpeech() {
       <Box sx={{ maxWidth: 800, mx: 'auto' }}>
         <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, textAlign: 'center', borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
           <Typography variant="h6" color="error" gutterBottom>
-            Синтез речи не поддерживается
+            {isEn ? 'Speech synthesis is not supported' : 'Синтез речи не поддерживается'}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Ваш браузер не поддерживает Web Speech API. Попробуйте использовать
-            Google Chrome или Microsoft Edge.
+            {isEn
+              ? 'Your browser does not support the Web Speech API. Try using Google Chrome or Microsoft Edge.'
+              : 'Ваш браузер не поддерживает Web Speech API. Попробуйте использовать Google Chrome или Microsoft Edge.'}
           </Typography>
         </Paper>
       </Box>
@@ -212,7 +216,7 @@ export default function TextToSpeech() {
             multiline
             minRows={4}
             maxRows={10}
-            placeholder="Введите текст для озвучивания..."
+            placeholder={isEn ? 'Enter text to speak...' : 'Введите текст для озвучивания...'}
             value={text}
             onChange={(e) => setText(e.target.value)}
             disabled={isPlaying || isPaused}
@@ -245,7 +249,7 @@ export default function TextToSpeech() {
                   fontWeight: 600
                 }}
               >
-                Воспроизведение
+                {isEn ? 'Playback' : 'Воспроизведение'}
               </Typography>
               {renderHighlightedText()}
             </Paper>
@@ -262,7 +266,7 @@ export default function TextToSpeech() {
                 disabled={!text.trim()}
                 sx={{ px: 4, borderRadius: 3, textTransform: 'none' }}
               >
-                {isPaused ? 'Продолжить' : 'Воспроизвести'}
+                {isPaused ? (isEn ? 'Resume' : 'Продолжить') : (isEn ? 'Play' : 'Воспроизвести')}
               </Button>
             ) : (
               <Button
@@ -272,7 +276,7 @@ export default function TextToSpeech() {
                 onClick={pause}
                 sx={{ px: 4, borderRadius: 3, textTransform: 'none' }}
               >
-                Пауза
+                {isEn ? 'Pause' : 'Пауза'}
               </Button>
             )}
             <IconButton
@@ -302,7 +306,7 @@ export default function TextToSpeech() {
             >
               {voices.length === 0 ? (
                 <MenuItem value="" disabled>
-                  Голоса не найдены
+                  {isEn ? 'No voices found' : 'Голоса не найдены'}
                 </MenuItem>
               ) : (
                 voices.map((v) => (
@@ -318,7 +322,7 @@ export default function TextToSpeech() {
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-                Скорость: {rate.toFixed(1)}x
+                {isEn ? 'Speed' : 'Скорость'}: {rate.toFixed(1)}x
               </Typography>
               <Slider
                 value={rate}
@@ -333,7 +337,7 @@ export default function TextToSpeech() {
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-                Тон: {pitch.toFixed(1)}
+                {isEn ? 'Pitch' : 'Тон'}: {pitch.toFixed(1)}
               </Typography>
               <Slider
                 value={pitch}
@@ -348,7 +352,7 @@ export default function TextToSpeech() {
             </Grid>
             <Grid size={{ xs: 12, sm: 4 }}>
               <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-                Громкость: {Math.round(volume * 100)}%
+                {isEn ? 'Volume' : 'Громкость'}: {Math.round(volume * 100)}%
               </Typography>
               <Slider
                 value={volume}
@@ -378,13 +382,13 @@ export default function TextToSpeech() {
             }}
           >
             <Typography variant="body2" color="text.secondary">
-              Символов: <strong>{text.length}</strong>
+              {isEn ? 'Characters' : 'Символов'}: <strong>{text.length}</strong>
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Слов: <strong>{text.trim() ? text.trim().split(/\s+/).length : 0}</strong>
+              {isEn ? 'Words' : 'Слов'}: <strong>{text.trim() ? text.trim().split(/\s+/).length : 0}</strong>
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Доступно голосов: <strong>{voices.length}</strong>
+              {isEn ? 'Available voices' : 'Доступно голосов'}: <strong>{voices.length}</strong>
             </Typography>
           </Box>
         </Box>

@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
 import ColorPickerInput from '@/src/components/ColorPickerInput';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface RGB { r: number; g: number; b: number }
@@ -111,6 +112,8 @@ function cmykToRgb(c: number, m: number, y: number, k: number): RGB {
 
 export default function ColorConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [hex, setHex] = useState('#3b82f6');
   const [rgb, setRgb] = useState<RGB>({ r: 59, g: 130, b: 246 });
   const [hsl, setHsl] = useState<HSL>({ h: 217, s: 91, l: 60 });
@@ -196,33 +199,33 @@ export default function ColorConverter() {
           background: theme.palette.surfaceContainerLow
         }}
       >
-        {/* Color preview + picker */}
-        <Box sx={{ display: 'flex', gap: 3, mb: 2, flexWrap: 'wrap', alignItems: 'center' }}>
-          <Box
-            sx={{
-              width: 120,
-              height: 120,
-              borderRadius: 4,
-              backgroundColor: hex,
-              border: `2px solid ${theme.palette.divider}`,
-              boxShadow: `0 4px 20px ${alpha(hex, 0.4)}`,
-              flexShrink: 0
-            }}
-          />
-          <Box sx={{ flex: 1, minWidth: 200 }}>
-            <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-              Выбор цвета
+        {/* Color: 2 squares — picker + preview */}
+        <Box sx={{ display: 'flex', gap: 3, mb: 3, alignItems: 'flex-end' }}>
+          {/* Square 1: Color picker */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+            <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
+              {isEn ? 'Pick color' : 'Выбор'}
             </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-              <ColorPickerInput value={hex} onChange={handlePickerChange} label="Выбор цвета" />
-              <Box
-                sx={{
-                  flex: 1, height: 40, borderRadius: 2,
-                  background: hex,
-                  border: '1px solid rgba(255,255,255,0.12)',
-                }}
-              />
+            <Box sx={{ position: 'relative' }}>
+              <ColorPickerInput value={hex} onChange={handlePickerChange} label={isEn ? 'Pick a color' : 'Выбор цвета'} />
             </Box>
+          </Box>
+          {/* Square 2: Preview */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, flex: 1 }}>
+            <Typography variant="caption" sx={{ fontWeight: 600, color: 'text.secondary' }}>
+              {isEn ? 'Preview' : 'Просмотр'}
+            </Typography>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: 200,
+                height: 80,
+                borderRadius: `${theme.shape?.medium ?? 12}px`,
+                backgroundColor: hex,
+                border: `2px solid ${theme.palette.divider}`,
+                boxShadow: `0 4px 16px ${alpha(hex, 0.3)}`,
+              }}
+            />
           </Box>
         </Box>
 
@@ -300,7 +303,7 @@ export default function ColorConverter() {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  transition: 'all 200ms ease',
+                  transition: 'background-color 200ms cubic-bezier(0.2, 0, 0, 1)',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
                     background: theme.palette.surfaceContainerLow

@@ -4,9 +4,12 @@ import { useState, useEffect } from 'react';
 import {
   Box, Typography, Paper, TextField, Grid, alpha, useTheme,
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function Countdown() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [targetDate, setTargetDate] = useState('');
   const [targetName, setTargetName] = useState('');
   const [now, setNow] = useState(Date.now());
@@ -44,7 +47,7 @@ export default function Countdown() {
       <Paper elevation={0} sx={{ p: 3, borderRadius: 3, mb: 2 }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <TextField fullWidth value={targetName} onChange={e => setTargetName(e.target.value)} placeholder="Новый год, День рождения..." size="small" />
+            <TextField fullWidth value={targetName} onChange={e => setTargetName(e.target.value)} placeholder={isEn ? 'New Year, Birthday...' : 'Новый год, День рождения...'} size="small" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField fullWidth type="datetime-local" value={targetDate} onChange={e => setTargetDate(e.target.value)} size="small" />
@@ -55,15 +58,15 @@ export default function Countdown() {
       {target > 0 && (
         <>
           <Typography variant="h6" textAlign="center" gutterBottom fontWeight={600}>
-            {targetName || 'Обратный отсчёт'} {isPast ? '(прошло)' : ''}
+            {targetName || (isEn ? 'Countdown' : 'Обратный отсчёт')} {isPast ? (isEn ? '(elapsed)' : '(прошло)') : ''}
           </Typography>
 
           <Grid container spacing={2} sx={{ mb: 2 }}>
             {[
-              { label: 'Дней', value: days, color: theme.palette.primary.main },
-              { label: 'Часов', value: hours, color: theme.palette.success.main },
-              { label: 'Минут', value: minutes, color: theme.palette.warning.main },
-              { label: 'Секунд', value: seconds, color: theme.palette.error.main },
+              { label: isEn ? 'Days' : 'Дней', value: days, color: theme.palette.primary.main },
+              { label: isEn ? 'Hours' : 'Часов', value: hours, color: theme.palette.success.main },
+              { label: isEn ? 'Minutes' : 'Минут', value: minutes, color: theme.palette.warning.main },
+              { label: isEn ? 'Seconds' : 'Секунд', value: seconds, color: theme.palette.error.main },
             ].map(item => (
               <Grid size={{ xs: 6, sm: 3 }} key={item.label}>
                 <Paper elevation={0} sx={{ p: 3, borderRadius: 3, bgcolor: alpha(item.color, 0.08), textAlign: 'center' }}>
@@ -77,9 +80,9 @@ export default function Countdown() {
           </Grid>
 
           <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
-            <Typography variant="subtitle2" fontWeight={600} gutterBottom>Также это:</Typography>
+            <Typography variant="subtitle2" fontWeight={600} gutterBottom>{isEn ? 'Also equals:' : 'Также это:'}</Typography>
             <Typography variant="body2" color="text.secondary">
-              {totalHours.toLocaleString('ru-RU')} часов • {totalMinutes.toLocaleString('ru-RU')} минут • {totalSeconds.toLocaleString('ru-RU')} секунд
+              {totalHours.toLocaleString(isEn ? 'en-US' : 'ru-RU')} {isEn ? 'hours' : 'часов'} • {totalMinutes.toLocaleString(isEn ? 'en-US' : 'ru-RU')} {isEn ? 'minutes' : 'минут'} • {totalSeconds.toLocaleString(isEn ? 'en-US' : 'ru-RU')} {isEn ? 'seconds' : 'секунд'}
             </Typography>
           </Paper>
         </>

@@ -12,6 +12,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 function minifyCss(css: string): string {
@@ -88,6 +89,8 @@ function getByteSize(str: string): number {
 
 export default function CssMinifier() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [lastAction, setLastAction] = useState<string>('');
@@ -130,7 +133,7 @@ export default function CssMinifier() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Вставьте CSS код сюда..."
+          placeholder={isEn ? 'Paste CSS code here...' : 'Вставьте CSS код сюда...'}
           sx={{
             mb: 2.5,
             '& .MuiInputBase-root': {
@@ -152,7 +155,7 @@ export default function CssMinifier() {
             disabled={!input.trim()}
             sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
           >
-            Минифицировать
+            {isEn ? 'Minify' : 'Минифицировать'}
           </Button>
           <Button
             variant="contained"
@@ -160,7 +163,7 @@ export default function CssMinifier() {
             disabled={!input.trim()}
             sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
           >
-            Форматировать
+            {isEn ? 'Beautify' : 'Форматировать'}
           </Button>
         </Box>
 
@@ -169,13 +172,13 @@ export default function CssMinifier() {
           <Box sx={{ display: 'flex', gap: 1, mb: 2.5, flexWrap: 'wrap', justifyContent: 'center' }}>
             <Chip
               size="small"
-              label={`Исходный: ${stats.originalSize.toLocaleString()} байт`}
+              label={`${isEn ? 'Original' : 'Исходный'}: ${stats.originalSize.toLocaleString()} ${isEn ? 'bytes' : 'байт'}`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />
             <Chip
               size="small"
-              label={`Результат: ${stats.resultSize.toLocaleString()} байт`}
+              label={`${isEn ? 'Result' : 'Результат'}: ${stats.resultSize.toLocaleString()} ${isEn ? 'bytes' : 'байт'}`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />
@@ -183,8 +186,8 @@ export default function CssMinifier() {
               size="small"
               label={
                 lastAction === 'minify'
-                  ? `Экономия: ${stats.savings}%`
-                  : `Разница: ${stats.savings}%`
+                  ? `${isEn ? 'Savings' : 'Экономия'}: ${stats.savings}%`
+                  : `${isEn ? 'Difference' : 'Разница'}: ${stats.savings}%`
               }
               variant="outlined"
               color={lastAction === 'minify' && parseFloat(stats.savings) > 0 ? 'success' : 'default'}

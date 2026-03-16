@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface CountryInfo {
   code: string;
@@ -161,7 +162,18 @@ function detectCountry(input: string): { country: CountryInfo | null; digits: st
 
 export default function PhoneValidator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [phone, setPhone] = useState('');
+
+  const getCountryName = (code: string, fallbackRu: string) => {
+    if (isEn) {
+      try {
+        return new Intl.DisplayNames(['en'], { type: 'region' }).of(code) ?? fallbackRu;
+      } catch { return fallbackRu; }
+    }
+    return fallbackRu;
+  };
 
   const result = useMemo(() => {
     const trimmed = phone.trim();
@@ -176,7 +188,7 @@ export default function PhoneValidator() {
         valid: false,
         digits: digitsOnly,
         formatted: null,
-        reason: 'Не удалось определить страну. Проверьте код страны.'
+        reason: isEn ? 'Could not detect country. Please check the country code.' : 'Не удалось определить страну. Проверьте код страны.'
       };
     }
 
@@ -184,30 +196,33 @@ export default function PhoneValidator() {
 
     const formatted = valid ? country.format(digitsOnly) : null;
 
+    const countryDisplayName = getCountryName(country.code, country.name);
     const reason = valid
       ? null
-      : `Ожидается ${country.length.join(' или ')} цифр для ${country.name} (${country.prefix}), получено ${digitsOnly.length}`;
+      : isEn
+        ? `Expected ${country.length.join(' or ')} digits for ${countryDisplayName} (${country.prefix}), got ${digitsOnly.length}`
+        : `Ожидается ${country.length.join(' или ')} цифр для ${country.name} (${country.prefix}), получено ${digitsOnly.length}`;
 
     return { country, valid, digits: digitsOnly, formatted, reason };
-  }, [phone]);
+  }, [phone, isEn]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const commonCodes = [
-    { country: 'Россия', prefix: '+7', flag: 'RU' },
-    { country: 'Казахстан', prefix: '+7', flag: 'KZ' },
-    { country: 'США / Канада', prefix: '+1', flag: 'US' },
-    { country: 'Украина', prefix: '+380', flag: 'UA' },
-    { country: 'Беларусь', prefix: '+375', flag: 'BY' },
-    { country: 'Германия', prefix: '+49', flag: 'DE' },
-    { country: 'Великобритания', prefix: '+44', flag: 'GB' },
-    { country: 'Франция', prefix: '+33', flag: 'FR' },
-    { country: 'Италия', prefix: '+39', flag: 'IT' },
-    { country: 'Испания', prefix: '+34', flag: 'ES' },
-    { country: 'Китай', prefix: '+86', flag: 'CN' },
-    { country: 'Япония', prefix: '+81', flag: 'JP' },
-    { country: 'Индия', prefix: '+91', flag: 'IN' },
-    { country: 'Бразилия', prefix: '+55', flag: 'BR' },
-    { country: 'Турция', prefix: '+90', flag: 'TR' },
-    { country: 'Польша', prefix: '+48', flag: 'PL' },
+    { countryRu: 'Россия', countryEn: 'Russia', prefix: '+7', flag: 'RU' },
+    { countryRu: 'Казахстан', countryEn: 'Kazakhstan', prefix: '+7', flag: 'KZ' },
+    { countryRu: 'США / Канада', countryEn: 'USA / Canada', prefix: '+1', flag: 'US' },
+    { countryRu: 'Украина', countryEn: 'Ukraine', prefix: '+380', flag: 'UA' },
+    { countryRu: 'Беларусь', countryEn: 'Belarus', prefix: '+375', flag: 'BY' },
+    { countryRu: 'Германия', countryEn: 'Germany', prefix: '+49', flag: 'DE' },
+    { countryRu: 'Великобритания', countryEn: 'United Kingdom', prefix: '+44', flag: 'GB' },
+    { countryRu: 'Франция', countryEn: 'France', prefix: '+33', flag: 'FR' },
+    { countryRu: 'Италия', countryEn: 'Italy', prefix: '+39', flag: 'IT' },
+    { countryRu: 'Испания', countryEn: 'Spain', prefix: '+34', flag: 'ES' },
+    { countryRu: 'Китай', countryEn: 'China', prefix: '+86', flag: 'CN' },
+    { countryRu: 'Япония', countryEn: 'Japan', prefix: '+81', flag: 'JP' },
+    { countryRu: 'Индия', countryEn: 'India', prefix: '+91', flag: 'IN' },
+    { countryRu: 'Бразилия', countryEn: 'Brazil', prefix: '+55', flag: 'BR' },
+    { countryRu: 'Турция', countryEn: 'Turkey', prefix: '+90', flag: 'TR' },
+    { countryRu: 'Польша', countryEn: 'Poland', prefix: '+48', flag: 'PL' },
   ];
 
   return (
@@ -227,7 +242,7 @@ export default function PhoneValidator() {
             {result.valid ? (
               <Chip
                 icon={<CheckCircleIcon />}
-                label="Номер валиден"
+                label={isEn ? 'Valid number' : 'Номер валиден'}
                 color="success"
                 variant="outlined"
                 sx={{ fontWeight: 600 }}
@@ -235,7 +250,7 @@ export default function PhoneValidator() {
             ) : (
               <Chip
                 icon={<CancelIcon />}
-                label="Номер невалиден"
+                label={isEn ? 'Invalid number' : 'Номер невалиден'}
                 color="error"
                 variant="outlined"
                 sx={{ fontWeight: 600 }}
@@ -243,7 +258,7 @@ export default function PhoneValidator() {
             )}
             {result.country && (
               <Chip
-                label={`${result.country.name} (${result.country.prefix})`}
+                label={`${getCountryName(result.country.code, result.country.name)} (${result.country.prefix})`}
                 variant="outlined"
                 sx={{ fontWeight: 500 }}
               />
@@ -264,12 +279,12 @@ export default function PhoneValidator() {
           <Grid size={12}>
             <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-                Форматированные версии
+                {isEn ? 'Formatted versions' : 'Форматированные версии'}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                 {[
-                  { label: 'Международный', value: result.formatted.international },
-                  { label: 'Национальный', value: result.formatted.national },
+                  { label: isEn ? 'International' : 'Международный', value: result.formatted.international },
+                  { label: isEn ? 'National' : 'Национальный', value: result.formatted.national },
                   { label: 'E.164', value: result.formatted.e164 },
                 ].map((item) => (
                   <Box
@@ -300,13 +315,13 @@ export default function PhoneValidator() {
           <Grid size={12}>
             <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-                Информация
+                {isEn ? 'Details' : 'Информация'}
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                <Chip label={`Страна: ${result.country!.name}`} variant="outlined" />
-                <Chip label={`Код: ${result.country!.prefix}`} variant="outlined" />
-                <Chip label={`Цифр: ${result.digits.length}`} variant="outlined" />
-                <Chip label={`Код страны: ${result.country!.code}`} variant="outlined" />
+                <Chip label={`${isEn ? 'Country' : 'Страна'}: ${getCountryName(result.country!.code, result.country!.name)}`} variant="outlined" />
+                <Chip label={`${isEn ? 'Code' : 'Код'}: ${result.country!.prefix}`} variant="outlined" />
+                <Chip label={`${isEn ? 'Digits' : 'Цифр'}: ${result.digits.length}`} variant="outlined" />
+                <Chip label={`${isEn ? 'Country code' : 'Код страны'}: ${result.country!.code}`} variant="outlined" />
               </Box>
             </Paper>
           </Grid>
@@ -316,7 +331,7 @@ export default function PhoneValidator() {
       {/* Common Country Codes */}
       <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-          Справочник кодов стран
+          {isEn ? 'Country codes reference' : 'Справочник кодов стран'}
         </Typography>
         <Grid container spacing={1}>
           {commonCodes.map((item) => (
@@ -338,7 +353,7 @@ export default function PhoneValidator() {
                 onClick={() => setPhone(item.prefix + ' ')}
               >
                 <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.8rem' }} noWrap>
-                  {item.country}
+                  {isEn ? item.countryEn : item.countryRu}
                 </Typography>
                 <Typography
                   variant="body2"

@@ -5,10 +5,13 @@ import {
   Box, Typography, TextField, Paper, Grid, useTheme, alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 export default function MetaTagGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [keywords, setKeywords] = useState('');
@@ -20,7 +23,7 @@ export default function MetaTagGenerator() {
 
   const generateMeta = (): string => {
     const lines: string[] = [];
-    lines.push('<!-- Основные мета-теги -->');
+    lines.push(isEn ? '<!-- Basic meta tags -->' : '<!-- Основные мета-теги -->');
     lines.push('<meta charset="UTF-8">');
     lines.push('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
     if (title) lines.push(`<title>${title}</title>`);
@@ -78,8 +81,8 @@ export default function MetaTagGenerator() {
               fullWidth
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Заголовок страницы"
-              helperText={`${titleLength}/60 символов${titleLength > 60 ? ' — рекомендуется до 60' : ''}`}
+              placeholder={isEn ? 'Page title' : 'Заголовок страницы'}
+              helperText={`${titleLength}/60 ${isEn ? 'characters' : 'символов'}${titleLength > 60 ? (isEn ? ' — recommended up to 60' : ' — рекомендуется до 60') : ''}`}
               sx={{ mb: 2 }}
             />
 
@@ -89,8 +92,8 @@ export default function MetaTagGenerator() {
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Краткое описание страницы для поисковых систем"
-              helperText={`${descLength}/160 символов${descLength > 160 ? ' — рекомендуется до 160' : ''}`}
+              placeholder={isEn ? 'Brief page description for search engines' : 'Краткое описание страницы для поисковых систем'}
+              helperText={`${descLength}/160 ${isEn ? 'characters' : 'символов'}${descLength > 160 ? (isEn ? ' — recommended up to 160' : ' — рекомендуется до 160') : ''}`}
               sx={{ mb: 2 }}
             />
 
@@ -98,13 +101,13 @@ export default function MetaTagGenerator() {
               fullWidth
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
-              placeholder="Ключевые слова через запятую"
+              placeholder={isEn ? 'Keywords separated by commas' : 'Ключевые слова через запятую'}
               sx={{ mb: 2 }}
             />
 
             <Grid container spacing={2}>
               <Grid size={6}>
-                <TextField fullWidth size="small" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Автор" />
+                <TextField fullWidth size="small" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder={isEn ? 'Author' : 'Автор'} />
               </Grid>
               <Grid size={6}>
                 <TextField fullWidth size="small" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://example.com" />
@@ -113,7 +116,7 @@ export default function MetaTagGenerator() {
                 <TextField fullWidth size="small" value={image} onChange={(e) => setImage(e.target.value)} placeholder="https://example.com/og.jpg" />
               </Grid>
               <Grid size={6}>
-                <TextField fullWidth size="small" value={siteName} onChange={(e) => setSiteName(e.target.value)} placeholder="Имя сайта" />
+                <TextField fullWidth size="small" value={siteName} onChange={(e) => setSiteName(e.target.value)} placeholder={isEn ? 'Site name' : 'Имя сайта'} />
               </Grid>
             </Grid>
           </Paper>
@@ -133,13 +136,13 @@ export default function MetaTagGenerator() {
             }}
           >
             <Typography variant="body1" sx={{ color: '#1a0dab', fontWeight: 400, fontSize: '1.1rem', mb: 0.5 }}>
-              {title || 'Заголовок страницы'}
+              {title || (isEn ? 'Page title' : 'Заголовок страницы')}
             </Typography>
             <Typography variant="body2" sx={{ color: '#006621', fontSize: '0.8rem', mb: 0.5 }}>
               {url || 'https://example.com'}
             </Typography>
             <Typography variant="body2" sx={{ color: '#545454', fontSize: '0.85rem' }}>
-              {description || 'Описание страницы будет отображаться здесь...'}
+              {description || (isEn ? 'Page description will be displayed here...' : 'Описание страницы будет отображаться здесь...')}
             </Typography>
           </Paper>
 
@@ -156,7 +159,7 @@ export default function MetaTagGenerator() {
           >
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
               <Typography variant="subtitle2" fontWeight={600}>
-                HTML-код
+                {isEn ? 'HTML Code' : 'HTML-код'}
               </Typography>
               <CopyButton text={output} />
             </Box>

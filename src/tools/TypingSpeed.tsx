@@ -5,6 +5,7 @@ import {
   Box, Typography, Paper, Grid, Button, alpha, useTheme
 } from '@mui/material';
 import { Refresh } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const TEXTS_RU = [
   'Быстрая коричневая лиса перепрыгнула через ленивую собаку. Этот текст содержит все буквы алфавита.',
@@ -14,9 +15,20 @@ const TEXTS_RU = [
   'Лучший способ предсказать будущее — это создать его своими руками и умом.',
 ];
 
+const TEXTS_EN = [
+  'The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.',
+  'Programming is the art of telling a computer exactly what it should do.',
+  'Every day brings new opportunities for those who are ready to seize them and move forward.',
+  'Technology never stands still, and every year brings ever more amazing inventions.',
+  'The best way to predict the future is to create it with your own hands and mind.',
+];
+
 export default function TypingSpeed() {
   const theme = useTheme();
-  const [text, setText] = useState(TEXTS_RU[0]);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const TEXTS = isEn ? TEXTS_EN : TEXTS_RU;
+  const [text, setText] = useState(TEXTS[0]);
   const [typed, setTyped] = useState('');
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -26,7 +38,7 @@ export default function TypingSpeed() {
   const inputRef = useRef<HTMLDivElement>(null);
 
   const reset = useCallback(() => {
-    const newText = TEXTS_RU[Math.floor(Math.random() * TEXTS_RU.length)];
+    const newText = TEXTS[Math.floor(Math.random() * TEXTS.length)];
     setText(newText);
     setTyped('');
     setStarted(false);
@@ -139,48 +151,48 @@ export default function TypingSpeed() {
         <Grid size={{ xs: 6, sm: 3 }}>
           <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <Typography variant="h4" fontWeight={700} color="primary">{wpm}</Typography>
-            <Typography variant="caption" color="text.secondary">Слов/мин (WPM)</Typography>
+            <Typography variant="caption" color="text.secondary">{isEn ? 'Words/min (WPM)' : 'Слов/мин (WPM)'}</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
           <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.success.main, 0.06), textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.success.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.success.main }}>{accuracy}%</Typography>
-            <Typography variant="caption" color="text.secondary">Точность</Typography>
+            <Typography variant="caption" color="text.secondary">{isEn ? 'Accuracy' : 'Точность'}</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
           <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.warning.main, 0.06), textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.warning.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.warning.main }}>{cpm}</Typography>
-            <Typography variant="caption" color="text.secondary">Симв/мин (CPM)</Typography>
+            <Typography variant="caption" color="text.secondary">{isEn ? 'Chars/min (CPM)' : 'Симв/мин (CPM)'}</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
           <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.error.main, 0.06), textAlign: 'center', transition: 'all 200ms ease', '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.error.main }}>{errors}</Typography>
-            <Typography variant="caption" color="text.secondary">Ошибки</Typography>
+            <Typography variant="caption" color="text.secondary">{isEn ? 'Errors' : 'Ошибки'}</Typography>
           </Paper>
         </Grid>
       </Grid>
 
       <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
         <Button variant="outlined" startIcon={<Refresh />} onClick={reset} sx={{ borderRadius: 5 }}>
-          Заново (Esc)
+          {isEn ? 'Restart (Esc)' : 'Заново (Esc)'}
         </Button>
       </Box>
 
       {!started && (
         <Typography variant="body2" color="text.secondary" sx={{ mt: 2, textAlign: 'center' }}>
-          Начните печатать, чтобы запустить тест
+          {isEn ? 'Start typing to begin the test' : 'Начните печатать, чтобы запустить тест'}
         </Typography>
       )}
 
       {finished && (
         <Paper elevation={0} sx={{ mt: 2, p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: alpha(theme.palette.success.main, 0.08), textAlign: 'center' }}>
           <Typography variant="h6" fontWeight={600} color="success.main">
-            Готово! {wpm} WPM с точностью {accuracy}%
+            {isEn ? `Done! ${wpm} WPM with ${accuracy}% accuracy` : `Готово! ${wpm} WPM с точностью ${accuracy}%`}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Время: {elapsed.toFixed(1)} сек
+            {isEn ? `Time: ${elapsed.toFixed(1)} sec` : `Время: ${elapsed.toFixed(1)} сек`}
           </Typography>
         </Paper>
       )}

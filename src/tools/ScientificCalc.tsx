@@ -19,9 +19,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import FunctionsIcon from '@mui/icons-material/Functions';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function ScientificCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [display, setDisplay] = useState('0');
   const [expression, setExpression] = useState('');
   const [history, setHistory] = useState<{ expr: string; result: string }[]>([]);
@@ -110,6 +113,8 @@ export default function ScientificCalc() {
     return sanitized;
   };
 
+  const errorText = isEn ? 'Error' : 'Ошибка';
+
   const calculate = useCallback(() => {
     try {
       const sanitized = sanitizeExpression(display);
@@ -120,7 +125,7 @@ export default function ScientificCalc() {
       const result = Function(`"use strict"; return (${balanced})`)();
 
       if (typeof result !== 'number' || !isFinite(result)) {
-        setDisplay('Ошибка');
+        setDisplay(errorText);
         return;
       }
 
@@ -132,9 +137,9 @@ export default function ScientificCalc() {
       setDisplay(formatted);
       setLastResult(formatted);
     } catch {
-      setDisplay('Ошибка');
+      setDisplay(errorText);
     }
-  }, [display]);
+  }, [display, errorText]);
 
   const btnBase = {
     borderRadius: 2.5,
@@ -333,7 +338,7 @@ export default function ScientificCalc() {
               py: 0.75
             }}
           >
-            Научный режим
+            {isEn ? 'Scientific mode' : 'Научный режим'}
           </Button>
         </Box>
 
@@ -397,7 +402,7 @@ export default function ScientificCalc() {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <HistoryIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-              История ({history.length})
+              {isEn ? 'History' : 'История'} ({history.length})
             </Typography>
           </Box>
           {showHistory ? (
@@ -424,7 +429,7 @@ export default function ScientificCalc() {
                 color="text.secondary"
                 sx={{ textAlign: 'center', py: 2 }}
               >
-                История пуста
+                {isEn ? 'History is empty' : 'История пуста'}
               </Typography>
             ) : (
               <Box sx={{ maxHeight: 240, overflow: 'auto', display: 'flex', flexDirection: 'column', gap: 0.5 }}>

@@ -20,18 +20,19 @@ import {
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 const fieldTypes = [
-  { value: 'string', label: 'Строка' },
-  { value: 'number', label: 'Число' },
-  { value: 'boolean', label: 'Булево' },
-  { value: 'email', label: 'Email' },
-  { value: 'name', label: 'Имя' },
-  { value: 'date', label: 'Дата' },
-  { value: 'uuid', label: 'UUID' },
-  { value: 'phone', label: 'Телефон' },
-  { value: 'address', label: 'Адрес' },
+  { value: 'string', labelRu: 'Строка', labelEn: 'String' },
+  { value: 'number', labelRu: 'Число', labelEn: 'Number' },
+  { value: 'boolean', labelRu: 'Булево', labelEn: 'Boolean' },
+  { value: 'email', labelRu: 'Email', labelEn: 'Email' },
+  { value: 'name', labelRu: 'Имя', labelEn: 'Name' },
+  { value: 'date', labelRu: 'Дата', labelEn: 'Date' },
+  { value: 'uuid', labelRu: 'UUID', labelEn: 'UUID' },
+  { value: 'phone', labelRu: 'Телефон', labelEn: 'Phone' },
+  { value: 'address', labelRu: 'Адрес', labelEn: 'Address' },
 ];
 
 interface SchemaField {
@@ -159,6 +160,8 @@ let nextFieldId = 100;
 
 export default function JsonDataGen() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const [fields, setFields] = useState<SchemaField[]>([
     { id: 1, name: 'id', type: 'uuid' },
@@ -224,17 +227,17 @@ export default function JsonDataGen() {
       >
         {/* Presets */}
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, color: 'text.secondary' }}>
-          Шаблоны
+          {isEn ? 'Templates' : 'Шаблоны'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
-          <Chip label="Пользователи" size="small" onClick={() => loadPreset('users')} variant="outlined" sx={{ cursor: 'pointer' }} />
-          <Chip label="Товары" size="small" onClick={() => loadPreset('products')} variant="outlined" sx={{ cursor: 'pointer' }} />
-          <Chip label="Заказы" size="small" onClick={() => loadPreset('orders')} variant="outlined" sx={{ cursor: 'pointer' }} />
+          <Chip label={isEn ? 'Users' : 'Пользователи'} size="small" onClick={() => loadPreset('users')} variant="outlined" sx={{ cursor: 'pointer' }} />
+          <Chip label={isEn ? 'Products' : 'Товары'} size="small" onClick={() => loadPreset('products')} variant="outlined" sx={{ cursor: 'pointer' }} />
+          <Chip label={isEn ? 'Orders' : 'Заказы'} size="small" onClick={() => loadPreset('orders')} variant="outlined" sx={{ cursor: 'pointer' }} />
         </Box>
 
         {/* Schema builder */}
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, color: 'text.secondary' }}>
-          Схема данных
+          {isEn ? 'Data schema' : 'Схема данных'}
         </Typography>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mb: 2 }}>
@@ -242,7 +245,7 @@ export default function JsonDataGen() {
             <Box key={field.id} sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
               <TextField
                 size="small"
-                placeholder="Имя поля"
+                placeholder={isEn ? "Field name" : "Имя поля"}
                 value={field.name}
                 onChange={(e) => updateField(field.id, 'name', e.target.value)}
                 sx={{ flex: 1 }}
@@ -250,18 +253,18 @@ export default function JsonDataGen() {
               <TextField
                 size="small"
                 select
-                placeholder="Тип"
+                placeholder={isEn ? "Type" : "Тип"}
                 value={field.type}
                 onChange={(e) => updateField(field.id, 'type', e.target.value)}
                 sx={{ minWidth: 140 }}
               >
                 {fieldTypes.map((t) => (
                   <MenuItem key={t.value} value={t.value}>
-                    {t.label}
+                    {isEn ? t.labelEn : t.labelRu}
                   </MenuItem>
                 ))}
               </TextField>
-              <Tooltip title="Удалить поле">
+              <Tooltip title={isEn ? "Remove field" : "Удалить поле"}>
                 <IconButton size="small" onClick={() => removeField(field.id)} color="error">
                   <DeleteOutlineIcon fontSize="small" />
                 </IconButton>
@@ -277,7 +280,7 @@ export default function JsonDataGen() {
           onClick={addField}
           sx={{ textTransform: 'none', mb: 2 }}
         >
-          Добавить поле
+          {isEn ? 'Add field' : 'Добавить поле'}
         </Button>
 
         <Divider sx={{ my: 2 }} />
@@ -286,7 +289,7 @@ export default function JsonDataGen() {
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-              Количество записей: {count}
+              {isEn ? `Number of records: ${count}` : `Количество записей: ${count}`}
             </Typography>
             <Slider
               value={count}
@@ -305,7 +308,7 @@ export default function JsonDataGen() {
 
           <Grid size={{ xs: 12, sm: 6 }}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-              Формат вывода
+              {isEn ? 'Output format' : 'Формат вывода'}
             </Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <Chip
@@ -333,7 +336,7 @@ export default function JsonDataGen() {
             disabled={fields.filter((f) => f.name.trim()).length === 0}
             sx={{ textTransform: 'none', fontWeight: 600 }}
           >
-            Сгенерировать
+            {isEn ? 'Generate' : 'Сгенерировать'}
           </Button>
           {output && (
             <CopyButton text={output} />
@@ -344,7 +347,7 @@ export default function JsonDataGen() {
         {output && (
           <Box>
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, color: 'text.secondary' }}>
-              Результат ({format.toUpperCase()})
+              {isEn ? 'Result' : 'Результат'} ({format.toUpperCase()})
             </Typography>
             <TextField
               multiline
@@ -370,7 +373,7 @@ export default function JsonDataGen() {
             <Box sx={{ mt: 1 }}>
               <Chip
                 size="small"
-                label={`${count} записей`}
+                label={isEn ? `${count} records` : `${count} записей`}
                 variant="outlined"
                 sx={{ fontSize: '0.75rem' }}
               />

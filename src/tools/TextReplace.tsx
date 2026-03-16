@@ -14,6 +14,7 @@ import {
   useTheme,
   alpha,
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface MatchInfo {
   index: number;
@@ -74,6 +75,8 @@ export default function TextReplace() {
   const [wholeWord, setWholeWord] = useState(false);
   const [regexMode, setRegexMode] = useState(false);
   const [regexError, setRegexError] = useState('');
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const regex = useMemo(() => {
     setRegexError('');
@@ -81,10 +84,10 @@ export default function TextReplace() {
     try {
       return buildRegex(search, caseSensitive, wholeWord, regexMode);
     } catch (e) {
-      setRegexError(e instanceof Error ? e.message : 'Ошибка регулярного выражения');
+      setRegexError(e instanceof Error ? e.message : (isEn ? 'Regex error' : 'Ошибка регулярного выражения'));
       return null;
     }
-  }, [search, caseSensitive, wholeWord, regexMode]);
+  }, [search, caseSensitive, wholeWord, regexMode, isEn]);
 
   const matches = useMemo(() => findMatches(input, regex), [input, regex]);
 
@@ -160,7 +163,7 @@ export default function TextReplace() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Текст..."
+          placeholder={isEn ? 'Text...' : 'Текст...'}
           sx={{ mb: 2 }}
         />
 
@@ -170,7 +173,7 @@ export default function TextReplace() {
               fullWidth
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Найти..."
+              placeholder={isEn ? 'Find...' : 'Найти...'}
               error={!!regexError}
               helperText={regexError || undefined}
               size="small"
@@ -181,7 +184,7 @@ export default function TextReplace() {
               fullWidth
               value={replace}
               onChange={(e) => setReplace(e.target.value)}
-              placeholder="Заменить на..."
+              placeholder={isEn ? 'Replace with...' : 'Заменить на...'}
               size="small"
             />
           </Grid>
@@ -189,14 +192,14 @@ export default function TextReplace() {
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2, alignItems: 'center' }}>
           <Chip
-            label="Учитывать регистр"
+            label={isEn ? 'Case sensitive' : 'Учитывать регистр'}
             variant={caseSensitive ? 'filled' : 'outlined'}
             color={caseSensitive ? 'primary' : 'default'}
             onClick={() => setCaseSensitive(!caseSensitive)}
             sx={{ borderRadius: 2 }}
           />
           <Chip
-            label="Слово целиком"
+            label={isEn ? 'Whole word' : 'Слово целиком'}
             variant={wholeWord ? 'filled' : 'outlined'}
             color={wholeWord ? 'primary' : 'default'}
             onClick={() => {
@@ -218,7 +221,7 @@ export default function TextReplace() {
             }
             label={
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Регулярные выражения
+                {isEn ? 'Regular expressions' : 'Регулярные выражения'}
               </Typography>
             }
           />
@@ -239,8 +242,8 @@ export default function TextReplace() {
           >
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
               {matches.length > 0
-                ? `Найдено совпадений: ${matches.length}`
-                : 'Совпадений не найдено'}
+                ? (isEn ? `Matches found: ${matches.length}` : `Найдено совпадений: ${matches.length}`)
+                : (isEn ? 'No matches found' : 'Совпадений не найдено')}
             </Typography>
           </Box>
         )}
@@ -252,7 +255,7 @@ export default function TextReplace() {
             disabled={!search || !input || matches.length === 0}
             sx={{ textTransform: 'none', borderRadius: 2 }}
           >
-            Заменить первое
+            {isEn ? 'Replace first' : 'Заменить первое'}
           </Button>
           <Button
             variant="contained"
@@ -260,14 +263,14 @@ export default function TextReplace() {
             disabled={!search || !input || matches.length === 0}
             sx={{ textTransform: 'none', borderRadius: 2 }}
           >
-            Заменить все
+            {isEn ? 'Replace all' : 'Заменить все'}
           </Button>
           <Button
             variant="text"
             onClick={handleClear}
             sx={{ textTransform: 'none', borderRadius: 2, ml: 'auto' }}
           >
-            Очистить
+            {isEn ? 'Clear' : 'Очистить'}
           </Button>
         </Box>
 

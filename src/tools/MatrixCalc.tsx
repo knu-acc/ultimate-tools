@@ -14,6 +14,7 @@ import {
   useTheme,
   alpha } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type MatrixSize = 2 | 3 | 4;
 type Matrix = number[][];
@@ -61,6 +62,8 @@ function transpose(m: Matrix): Matrix {
 
 export default function MatrixCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [size, setSize] = useState<MatrixSize>(2);
   const [matA, setMatA] = useState<string[][]>(createEmpty(2));
   const [matB, setMatB] = useState<string[][]>(createEmpty(2));
@@ -124,7 +127,7 @@ export default function MatrixCalc() {
 
   const formatNum = (n: number) => {
     if (Number.isInteger(n)) return n.toString();
-    return n.toLocaleString('ru-RU', { maximumFractionDigits: 4 });
+    return n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 4 });
   };
 
   const MatrixInput = ({
@@ -209,10 +212,10 @@ export default function MatrixCalc() {
       {/* Matrix inputs */}
       <Grid container spacing={2} sx={{ mb: 2 }}>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <MatrixInput label="\u041c\u0430\u0442\u0440\u0438\u0446\u0430 A" matrix={matA} setter={setMatA} />
+          <MatrixInput label={isEn ? 'Matrix A' : '\u041c\u0430\u0442\u0440\u0438\u0446\u0430 A'} matrix={matA} setter={setMatA} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <MatrixInput label="\u041c\u0430\u0442\u0440\u0438\u0446\u0430 B" matrix={matB} setter={setMatB} />
+          <MatrixInput label={isEn ? 'Matrix B' : '\u041c\u0430\u0442\u0440\u0438\u0446\u0430 B'} matrix={matB} setter={setMatB} />
         </Grid>
       </Grid>
 

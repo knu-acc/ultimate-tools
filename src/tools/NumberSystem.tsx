@@ -15,6 +15,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface BaseInfo {
@@ -34,6 +35,15 @@ const bases: BaseInfo[] = [
 
 export default function NumberSystem() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const basesI18n: BaseInfo[] = [
+    { name: isEn ? 'Binary' : 'Двоичная', short: 'BIN', base: 2, prefix: '0b', color: '#e91e63' },
+    { name: isEn ? 'Octal' : 'Восьмеричная', short: 'OCT', base: 8, prefix: '0o', color: '#9c27b0' },
+    { name: isEn ? 'Decimal' : 'Десятичная', short: 'DEC', base: 10, prefix: '', color: '#2196f3' },
+    { name: isEn ? 'Hexadecimal' : 'Шестнадцатеричная', short: 'HEX', base: 16, prefix: '0x', color: '#4caf50' },
+  ];
   const [input, setInput] = useState('');
   const [inputBase, setInputBase] = useState(10);
 
@@ -98,7 +108,7 @@ export default function NumberSystem() {
           error={!!input && !isValid}
           helperText={
             input && !isValid
-              ? `Недопустимые символы для системы с основанием ${inputBase}`
+              ? (isEn ? `Invalid characters for base-${inputBase} system` : `Недопустимые символы для системы с основанием ${inputBase}`)
               : undefined
           }
           sx={{
@@ -119,7 +129,7 @@ export default function NumberSystem() {
                     fontWeight: 600
                   }}
                 >
-                  {bases.find((b) => b.base === inputBase)?.prefix || ''}
+                  {basesI18n.find((b) => b.base === inputBase)?.prefix || ''}
                 </Typography>
               )
             }
@@ -135,7 +145,7 @@ export default function NumberSystem() {
               setInput('');
             }}
           >
-            {bases.map((b) => (
+            {basesI18n.map((b) => (
               <FormControlLabel
                 key={b.base}
                 value={b.base}
@@ -168,7 +178,7 @@ export default function NumberSystem() {
           <Box sx={{ mb: 2 }} />
 
           <Grid container spacing={2}>
-            {bases.map((b) => {
+            {basesI18n.map((b) => {
               const value = conversions[b.base as keyof typeof conversions];
               const displayValue =
                 b.base === 2
@@ -210,8 +220,8 @@ export default function NumberSystem() {
                     />
                     <Box sx={{ flex: 1, minWidth: 0 }}>
                       <Typography variant="caption" color="text.secondary">
-                        {b.name} (основание {b.base})
-                        {isSource && ' — исходное'}
+                        {b.name} ({isEn ? 'base' : 'основание'} {b.base})
+                        {isSource && (isEn ? ' — source' : ' — исходное')}
                       </Typography>
                       <Typography
                         variant="body1"

@@ -5,6 +5,7 @@ import { Card, CardActionArea, CardContent, Typography, Box, alpha, useTheme } f
 import Link from 'next/link';
 import { Tool, toolGroups } from '@/src/data/tools';
 import DynamicIcon from './DynamicIcon';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface Props {
   tool: Tool;
@@ -14,25 +15,45 @@ interface Props {
 
 export default function ToolCard({ tool, showGroup = false, variant = 'default' }: Props) {
   const theme = useTheme();
+  const { lHref, locale } = useLanguage();
   const group = toolGroups.find(g => g.id === tool.groupId);
+  const toolName = locale === 'en' ? ((tool as any).nameEn || tool.name) : tool.name;
+  const toolDesc = locale === 'en' ? ((tool as any).descriptionEn || tool.description) : tool.description;
+  const groupName = group ? (locale === 'en' ? ((group as any).nameEn || group.name) : group.name) : '';
+
+  const groupColor = group?.color ?? theme.palette.primary.main;
+  const motionDuration = theme.md3?.motion.duration.short4 ?? '200ms';
+  const motionEasing = theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)';
 
   if (variant === 'compact') {
     return (
+      /*
+        MD3 Filled Card — Compact
+        Spec: https://m3.material.io/components/cards/specs
+        Hover: MD3 state layer = 8% onSurface overlay (no translateY/scale)
+        State layer implemented via background-color change (surfaceContainerLow → High)
+      */
       <Card
         elevation={0}
         sx={{
           bgcolor: theme.palette.surfaceContainerLow,
-          transition: 'all 200ms cubic-bezier(0.2, 0, 0, 1)',
+          borderRadius: `${theme.shape?.large ?? 16}px`,
+          border: `1px solid ${theme.palette.outlineVariant ?? alpha(theme.palette.divider, 0.5)}`,
+          transition: `background-color ${motionDuration} ${motionEasing}, border-color ${motionDuration} ${motionEasing}`,
           '&:hover': {
             bgcolor: theme.palette.surfaceContainerHigh,
-            transform: 'scale(1.02)',
+            borderColor: alpha(groupColor, 0.3),
           },
         }}
       >
-        <CardActionArea component={Link} href={`/tools/${tool.slug}`} sx={{ p: 2, textAlign: 'center' }}>
-          <DynamicIcon name={tool.icon} sx={{ color: theme.palette.onPrimaryContainer, fontSize: 32, mb: 1 }} />
+        <CardActionArea
+          component={Link}
+          href={lHref(`/tools/${tool.slug}`)}
+          sx={{ p: 2, textAlign: 'center' }}
+        >
+          <DynamicIcon name={tool.icon} sx={{ color: groupColor, fontSize: 32, mb: 1 }} />
           <Typography variant="body2" fontWeight={500} noWrap>
-            {tool.name}
+            {toolName}
           </Typography>
         </CardActionArea>
       </Card>
@@ -41,11 +62,16 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
 
   if (variant === 'horizontal') {
     return (
+      /*
+        MD3 Filled Card — Horizontal
+        Hover: state layer 8% via surfaceContainerHigh background
+      */
       <Card
         elevation={0}
         sx={{
           bgcolor: 'transparent',
-          transition: `all 200ms cubic-bezier(0.2, 0, 0, 1)`,
+          // MD3: animate specific properties only
+          transition: `background-color ${motionDuration} ${motionEasing}`,
           '&:hover': {
             bgcolor: theme.palette.surfaceContainerHigh,
           },
@@ -53,29 +79,29 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
       >
         <CardActionArea
           component={Link}
-          href={`/tools/${tool.slug}`}
+          href={lHref(`/tools/${tool.slug}`)}
           sx={{ display: 'flex', alignItems: 'center', p: 1.5, gap: 2 }}
         >
           <Box
             sx={{
               width: 40,
               height: 40,
-              borderRadius: 3,
+              borderRadius: `${theme.shape?.medium ?? 12}px`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              bgcolor: alpha(theme.palette.primaryContainer, 0.6),
+              bgcolor: alpha(groupColor, 0.12),
               flexShrink: 0,
             }}
           >
-            <DynamicIcon name={tool.icon} sx={{ color: theme.palette.onPrimaryContainer, fontSize: 20 }} />
+            <DynamicIcon name={tool.icon} sx={{ color: groupColor, fontSize: 20 }} />
           </Box>
           <Box sx={{ minWidth: 0, flexGrow: 1 }}>
             <Typography variant="body2" fontWeight={500} noWrap>
-              {tool.name}
+              {toolName}
             </Typography>
             <Typography variant="caption" color="text.secondary" noWrap>
-              {tool.description}
+              {toolDesc}
             </Typography>
           </Box>
         </CardActionArea>
@@ -83,23 +109,26 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
     );
   }
 
-  // Default variant — MD3 filled card
+  // Default variant — MD3 Filled Card
+  // Spec: https://m3.material.io/components/cards/specs
   return (
     <Card
-      elevation={1}
+      elevation={0}
       sx={{
         height: '100%',
         bgcolor: theme.palette.surfaceContainerLow,
-        transition: 'all 250ms cubic-bezier(0.2, 0, 0, 1)',
+        borderRadius: `${theme.shape?.large ?? 16}px`,
+        border: `1px solid ${theme.palette.outlineVariant ?? alpha(theme.palette.divider, 0.5)}`,
+        transition: `background-color ${theme.md3?.motion.duration.medium1 ?? '250ms'} ${motionEasing}, border-color ${theme.md3?.motion.duration.medium1 ?? '250ms'} ${motionEasing}`,
         '&:hover': {
-          bgcolor: theme.palette.surfaceContainerHigh,
-          boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)',
+          bgcolor: theme.palette.surfaceContainerHighest,
+          borderColor: alpha(groupColor, 0.3),
         },
       }}
     >
       <CardActionArea
         component={Link}
-        href={`/tools/${tool.slug}`}
+        href={lHref(`/tools/${tool.slug}`)}
         sx={{
           height: '100%',
           display: 'flex',
@@ -109,34 +138,34 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
         }}
       >
         <CardContent sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 1.5, p: 2.5 }}>
-          {/* Icon */}
+          {/* MD3 Icon Container: 48×48dp, medium (12dp) border-radius, group-color tinted */}
           <Box
             sx={{
               width: 48,
               height: 48,
-              borderRadius: 3,
+              borderRadius: `${theme.shape?.medium ?? 12}px`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              bgcolor: theme.palette.primaryContainer,
+              bgcolor: alpha(groupColor, 0.12),
             }}
           >
-            <DynamicIcon name={tool.icon} sx={{ color: theme.palette.onPrimaryContainer, fontSize: 24 }} />
+            <DynamicIcon name={tool.icon} sx={{ color: groupColor, fontSize: 24 }} />
           </Box>
 
           {/* Title + group */}
           <Box>
             <Typography variant="subtitle1" fontWeight={500} sx={{ lineHeight: 1.3, mb: 0.3 }}>
-              {tool.name}
+              {toolName}
             </Typography>
             {showGroup && group && (
-              <Typography variant="caption" color="text.secondary">
-                {group.name}
+              <Typography variant="caption" sx={{ color: groupColor }}>
+                {groupName}
               </Typography>
             )}
           </Box>
 
-          {/* Description */}
+          {/* Description — MD3 Body Medium, 2-line clamp */}
           <Typography
             variant="body2"
             color="text.secondary"
@@ -148,7 +177,7 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
               lineHeight: 1.5,
             }}
           >
-            {tool.description}
+            {toolDesc}
           </Typography>
         </CardContent>
       </CardActionArea>

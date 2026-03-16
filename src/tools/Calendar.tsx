@@ -17,32 +17,43 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TodayIcon from '@mui/icons-material/Today';
 import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import GridViewIcon from '@mui/icons-material/GridView';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
-const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-const MONTHS = [
+const WEEKDAYS_RU = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+const WEEKDAYS_EN = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const MONTHS_RU = [
   'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
   'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
 ];
-const MONTHS_SHORT = [
+const MONTHS_EN = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+const MONTHS_SHORT_RU = [
   'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
   'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек',
+];
+const MONTHS_SHORT_EN = [
+  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
 ];
 
 interface Holiday {
   month: number;
   day: number;
-  name: string;
+  nameRu: string;
+  nameEn: string;
 }
 
 const HOLIDAYS: Holiday[] = [
-  { month: 1, day: 1, name: 'Новый год' },
-  { month: 2, day: 23, name: 'День защитника Отечества' },
-  { month: 3, day: 8, name: 'Международный женский день' },
-  { month: 5, day: 1, name: 'Праздник Весны и Труда' },
-  { month: 5, day: 9, name: 'День Победы' },
-  { month: 6, day: 12, name: 'День России' },
-  { month: 11, day: 4, name: 'День народного единства' },
-  { month: 12, day: 31, name: 'Канун Нового года' },
+  { month: 1, day: 1, nameRu: 'Новый год', nameEn: 'New Year' },
+  { month: 2, day: 23, nameRu: 'День защитника Отечества', nameEn: 'Defender of the Fatherland Day' },
+  { month: 3, day: 8, nameRu: 'Международный женский день', nameEn: 'International Women\'s Day' },
+  { month: 5, day: 1, nameRu: 'Праздник Весны и Труда', nameEn: 'Spring and Labour Day' },
+  { month: 5, day: 9, nameRu: 'День Победы', nameEn: 'Victory Day' },
+  { month: 6, day: 12, nameRu: 'День России', nameEn: 'Russia Day' },
+  { month: 11, day: 4, nameRu: 'День народного единства', nameEn: 'Unity Day' },
+  { month: 12, day: 31, nameRu: 'Канун Нового года', nameEn: 'New Year\'s Eve' },
 ];
 
 function getHoliday(month: number, day: number): Holiday | undefined {
@@ -80,6 +91,12 @@ function daysBetween(a: Date, b: Date): number {
 
 export default function Calendar() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const WEEKDAYS = isEn ? WEEKDAYS_EN : WEEKDAYS_RU;
+  const MONTHS = isEn ? MONTHS_EN : MONTHS_RU;
+  const MONTHS_SHORT = isEn ? MONTHS_SHORT_EN : MONTHS_SHORT_RU;
+  const holidayName = (h: Holiday) => isEn ? h.nameEn : h.nameRu;
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
@@ -232,9 +249,9 @@ export default function Calendar() {
     const diff = daysBetween(today, selectedDate);
     const holiday = getHoliday(selectedDate.getMonth(), selectedDate.getDate());
 
-    let diffText = 'Сегодня';
-    if (diff > 0) diffText = `через ${diff} дн.`;
-    else if (diff < 0) diffText = `${Math.abs(diff)} дн. назад`;
+    let diffText = isEn ? 'Today' : 'Сегодня';
+    if (diff > 0) diffText = isEn ? `in ${diff} days` : `через ${diff} дн.`;
+    else if (diff < 0) diffText = isEn ? `${Math.abs(diff)} days ago` : `${Math.abs(diff)} дн. назад`;
 
     return (
       <Paper
@@ -251,15 +268,15 @@ export default function Calendar() {
         </Typography>
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-          <Chip label={`День года: ${dayOfYear}`} size="small" variant="outlined" />
-          <Chip label={`Неделя: ${weekNumber}`} size="small" variant="outlined" />
+          <Chip label={isEn ? `Day of year: ${dayOfYear}` : `День года: ${dayOfYear}`} size="small" variant="outlined" />
+          <Chip label={isEn ? `Week: ${weekNumber}` : `Неделя: ${weekNumber}`} size="small" variant="outlined" />
           <Chip
             label={diffText}
             size="small"
             color={diff === 0 ? 'primary' : diff > 0 ? 'info' : 'default'}
           />
           {holiday && (
-            <Chip label={holiday.name} size="small" color="error" />
+            <Chip label={holidayName(holiday)} size="small" color="error" />
           )}
         </Box>
       </Paper>
@@ -313,7 +330,7 @@ export default function Calendar() {
               startIcon={<TodayIcon />}
               onClick={goToToday}
             >
-              Сегодня
+              {isEn ? 'Today' : 'Сегодня'}
             </Button>
             <IconButton
               onClick={() => setYearView(!yearView)}
@@ -332,7 +349,7 @@ export default function Calendar() {
             {HOLIDAYS.filter((h) => h.month === month + 1).map((h) => (
               <Chip
                 key={`${h.month}-${h.day}`}
-                label={`${h.day}: ${h.name}`}
+                label={`${h.day}: ${holidayName(h)}`}
                 size="small"
                 color="error"
                 variant="outlined"

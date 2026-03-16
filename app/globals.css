@@ -1,4 +1,4 @@
-/* Ultimate Tools - Global Styles */
+/* Ultimate Tools - Global Styles (MD3) */
 * {
   margin: 0;
   padding: 0;
@@ -11,15 +11,102 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  font-family: 'Roboto', 'Noto Sans', Arial, sans-serif;
-}
+/* body font is set by MUI CssBaseline from theme.typography.fontFamily */
 
 ::selection {
   background-color: rgba(103, 80, 164, 0.2);
 }
 
-/* Scrollbar styling */
+/* ──────────────────────────────────────────
+   MD3 Accessibility: Skip-to-content link
+   WCAG 2.1 SC 2.4.1 — Bypass Blocks
+   ────────────────────────────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -9999px;
+  left: 8px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: #6750A4;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  letter-spacing: 0.1px;
+  transition: top 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.skip-to-content:focus-visible {
+  top: 0;
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* ──────────────────────────────────────────
+   MD3 Accessibility: Global Focus-Visible
+   WCAG 2.1 SC 2.4.7 — Focus Visible
+   ────────────────────────────────────────── */
+
+/* Keyboard focus for all non-MUI interactive elements */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #6750A4;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove focus ring from mouse clicks — only show for keyboard */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* MUI Chips with focus-visible */
+.MuiChip-root.Mui-focusVisible {
+  outline: 3px solid #6750A4;
+  outline-offset: 2px;
+}
+
+/* MUI Cards with focus-visible (CardActionArea) */
+.MuiCardActionArea-root.Mui-focusVisible {
+  outline: 3px solid #6750A4;
+  outline-offset: -3px;
+}
+
+/* Dark mode focus color — uses higher contrast */
+[data-theme="dark"] a:focus-visible,
+[data-theme="dark"] button:focus-visible,
+[data-theme="dark"] [role="button"]:focus-visible,
+[data-theme="dark"] [tabindex]:focus-visible {
+  outline-color: #D0BCFF;
+}
+
+[data-theme="dark"] .MuiChip-root.Mui-focusVisible,
+[data-theme="dark"] .MuiCardActionArea-root.Mui-focusVisible {
+  outline-color: #D0BCFF;
+}
+
+/* ──────────────────────────────────────────
+   MD3 Touch Targets: Chips minimum 48dp
+   MD3 spec: chip height = 32dp,
+   but touch target must be ≥ 48dp.
+   Achieved via invisible hit-area padding.
+   ────────────────────────────────────────── */
+.MuiChip-root {
+  /* The visible chip stays 32px; padding expands the clickable area */
+  margin-block: 8px;
+}
+
+/* ──────────────────────────────────────────
+   Scrollbar styling (MD3 surface-aware)
+   ────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -38,6 +125,16 @@ body {
   background: rgba(0, 0, 0, 0.3);
 }
 
+/* Dark mode scrollbar via data-theme attribute (set by ThemeRegistry) */
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Fallback: system dark preference */
 @media (prefers-color-scheme: dark) {
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);

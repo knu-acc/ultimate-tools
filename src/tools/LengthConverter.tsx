@@ -13,11 +13,12 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 type LengthUnit = 'meters' | 'kilometers' | 'centimeters' | 'millimeters' | 'miles' | 'yards' | 'feet' | 'inches';
 
-const unitLabels: Record<LengthUnit, string> = {
+const unitLabelsRu: Record<LengthUnit, string> = {
   meters: 'Метры (м)',
   kilometers: 'Километры (км)',
   centimeters: 'Сантиметры (см)',
@@ -28,11 +29,33 @@ const unitLabels: Record<LengthUnit, string> = {
   inches: 'Дюймы (in)'
 };
 
-const unitShort: Record<LengthUnit, string> = {
+const unitLabelsEn: Record<LengthUnit, string> = {
+  meters: 'Meters (m)',
+  kilometers: 'Kilometers (km)',
+  centimeters: 'Centimeters (cm)',
+  millimeters: 'Millimeters (mm)',
+  miles: 'Miles (mi)',
+  yards: 'Yards (yd)',
+  feet: 'Feet (ft)',
+  inches: 'Inches (in)'
+};
+
+const unitShortRu: Record<LengthUnit, string> = {
   meters: 'м',
   kilometers: 'км',
   centimeters: 'см',
   millimeters: 'мм',
+  miles: 'mi',
+  yards: 'yd',
+  feet: 'ft',
+  inches: 'in'
+};
+
+const unitShortEn: Record<LengthUnit, string> = {
+  meters: 'm',
+  kilometers: 'km',
+  centimeters: 'cm',
+  millimeters: 'mm',
   miles: 'mi',
   yards: 'yd',
   feet: 'ft',
@@ -69,7 +92,7 @@ function formatNumber(n: number): string {
   return parseFloat(n.toFixed(8)).toString();
 }
 
-const commonConversions = [
+const commonConversionsRu = [
   { from: '1 км', to: '1000 м' },
   { from: '1 миля', to: '1.609 км' },
   { from: '1 ярд', to: '0.9144 м' },
@@ -80,8 +103,24 @@ const commonConversions = [
   { from: '1 м', to: '39.37 дюймов' },
 ];
 
+const commonConversionsEn = [
+  { from: '1 km', to: '1000 m' },
+  { from: '1 mile', to: '1.609 km' },
+  { from: '1 yard', to: '0.9144 m' },
+  { from: '1 foot', to: '30.48 cm' },
+  { from: '1 inch', to: '2.54 cm' },
+  { from: '1 m', to: '3.281 feet' },
+  { from: '1 km', to: '0.6214 miles' },
+  { from: '1 m', to: '39.37 inches' },
+];
+
 export default function LengthConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const unitLabels = isEn ? unitLabelsEn : unitLabelsRu;
+  const unitShort = isEn ? unitShortEn : unitShortRu;
+  const commonConversions = isEn ? commonConversionsEn : commonConversionsRu;
   const [input, setInput] = useState<string>('1');
   const [sourceUnit, setSourceUnit] = useState<LengthUnit>('meters');
   const numericValue = parseFloat(input);
@@ -183,7 +222,7 @@ export default function LengthConverter() {
 
       <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Справочник
+          {isEn ? 'Reference' : 'Справочник'}
         </Typography>
         <Grid container spacing={1.5}>
           {commonConversions.map((item, idx) => (

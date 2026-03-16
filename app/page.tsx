@@ -21,9 +21,12 @@ export default function HomePage() {
   const { recentSlugs } = useRecentTools();
   const recentTools = recentSlugs.map(s => getToolBySlug(s)).filter(Boolean) as NonNullable<ReturnType<typeof getToolBySlug>>[];
 
+  const motionEasing = theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)';
+  const motionShort4 = theme.md3?.motion.duration.short4 ?? '200ms';
+
   return (
-    <>
-      {/* Hero — clean, minimal */}
+    <main id="main-content">
+      {/* Hero */}
       <Box
         sx={{
           background: theme.palette.mode === 'dark'
@@ -53,24 +56,41 @@ export default function HomePage() {
             инструменты для разработчиков.
           </Typography>
 
-          {/* MD3 Search bar */}
+          {/*
+            MD3 Search Bar
+            Spec: https://m3.material.io/components/search/specs
+            - Height: 56dp
+            - Border-radius: 28dp (half of height = full rounded)
+            - Container color: surfaceContainerHigh
+          */}
           <Paper
             onClick={() => setSearchOpen(true)}
             elevation={0}
+            role="button"
+            tabIndex={0}
+            aria-label="Открыть поиск инструментов"
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSearchOpen(true); } }}
             sx={{
               display: 'flex',
               alignItems: 'center',
               px: 2,
-              height: 48,
-              borderRadius: 7,
+              // MD3 Search Bar height = 56dp
+              height: 56,
+              // MD3 Search Bar border-radius = 28dp (extraLarge = half of 56dp)
+              borderRadius: 7, // 7 * theme.shape.borderRadius(4) = 28px = extraLarge
               maxWidth: 480,
               mx: 'auto',
               cursor: 'pointer',
               bgcolor: theme.palette.surfaceContainerHigh,
-              transition: 'all 200ms cubic-bezier(0.2, 0, 0, 1)',
+              // MD3: animate specific properties only
+              transition: `background-color ${motionShort4} ${motionEasing}, box-shadow ${motionShort4} ${motionEasing}`,
               '&:hover': {
                 bgcolor: theme.palette.surfaceContainerHighest,
-                boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)',
+                boxShadow: theme.shadows[2],
+              },
+              '&.Mui-focusVisible': {
+                outline: `3px solid ${theme.palette.primary.main}`,
+                outlineOffset: 2,
               },
             }}
           >
@@ -78,10 +98,19 @@ export default function HomePage() {
             <Typography variant="body1" sx={{ color: theme.palette.text.secondary, flexGrow: 1, textAlign: 'left' }}>
               Поиск инструментов...
             </Typography>
-            <Chip label="Ctrl+K" size="small" sx={{ height: 24, fontSize: '0.6875rem', bgcolor: alpha(theme.palette.text.primary, 0.06) }} />
+            {/* MD3 Chip: height = 32dp */}
+            <Chip
+              label="Ctrl+K"
+              size="small"
+              sx={{
+                height: 32,
+                fontSize: '0.6875rem',
+                bgcolor: alpha(theme.palette.text.primary, 0.06),
+              }}
+            />
           </Paper>
 
-          {/* Quick access tags */}
+          {/* Quick access tags — MD3 Chips: 32dp height, proper touch target via margin */}
           <Box sx={{ mt: 2.5, display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
             {[
               { name: 'Генератор паролей', slug: 'password-generator' },
@@ -98,8 +127,10 @@ export default function HomePage() {
                 clickable
                 sx={{
                   bgcolor: theme.palette.surfaceContainerHigh,
+                  // MD3 state layer: background change on hover
                   '&:hover': { bgcolor: theme.palette.surfaceContainerHighest },
-                  height: 36,
+                  // MD3 Chip height = 32dp (set globally in theme, but explicit here too)
+                  height: 32,
                   fontSize: '0.875rem',
                 }}
               />
@@ -131,7 +162,8 @@ export default function HomePage() {
                   sx={{
                     bgcolor: theme.palette.surfaceContainerHigh,
                     '&:hover': { bgcolor: theme.palette.surfaceContainerHighest },
-                    height: 36,
+                    // MD3 Chip height = 32dp
+                    height: 32,
                     fontSize: '0.8125rem',
                   }}
                 />
@@ -140,11 +172,15 @@ export default function HomePage() {
           </Box>
         )}
 
-        {/* Categories — MD3 filled cards */}
+        {/* Categories — MD3 Filled Cards */}
         <Typography variant="h5" component="h2" sx={{ mb: 3, fontWeight: 400 }}>
           Категории
         </Typography>
-        <Grid container spacing={1.5} sx={{ mb: 6 }}>
+        {/*
+          MD3 Grid spacing: 16dp (2 × 8dp base)
+          Previously was 12dp (1.5 × 8dp) — not aligned to 8dp grid
+        */}
+        <Grid container spacing={2} sx={{ mb: 6 }}>
           {toolGroups.map(group => {
             const groupTools = getToolsByGroup(group.id);
             return (
@@ -153,10 +189,12 @@ export default function HomePage() {
                   elevation={0}
                   sx={{
                     bgcolor: theme.palette.surfaceContainerLow,
-                    transition: 'all 200ms cubic-bezier(0.2, 0, 0, 1)',
+                    // MD3: animate specific properties only
+                    transition: `background-color ${motionShort4} ${motionEasing}, box-shadow ${motionShort4} ${motionEasing}`,
+                    // MD3 hover: state layer (surface container level up) + elevation
                     '&:hover': {
                       bgcolor: theme.palette.surfaceContainerHigh,
-                      boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)',
+                      boxShadow: theme.shadows[1],
                     },
                   }}
                 >
@@ -201,12 +239,13 @@ export default function HomePage() {
                     {group.name}
                   </Typography>
                 </Box>
+                {/* MD3 Button: borderRadius full, show count for UX clarity */}
                 <Button
                   component={Link}
                   href={`/group/${group.slug}`}
                   endIcon={<ArrowForward />}
                   size="small"
-                  sx={{ borderRadius: 5 }}
+                  sx={{ borderRadius: 9999 }}
                 >
                   Все {groupTools.length}
                 </Button>
@@ -222,13 +261,18 @@ export default function HomePage() {
           );
         })}
 
-        {/* SEO block */}
+        {/*
+          SEO Block
+          MD3 Shape: extraLarge = 28dp
+          borderRadius: 7 = 7 * 4 = 28px = extraLarge ✓
+        */}
         <Paper
           elevation={0}
           sx={{
             p: { xs: 3, md: 4 },
             bgcolor: theme.palette.surfaceContainerLow,
-            borderRadius: 4,
+            // MD3 extraLarge shape token = 28dp
+            borderRadius: 7,
           }}
         >
           <Typography variant="h6" component="h2" fontWeight={500} gutterBottom>
@@ -264,6 +308,6 @@ export default function HomePage() {
           }),
         }}
       />
-    </>
+    </main>
   );
 }

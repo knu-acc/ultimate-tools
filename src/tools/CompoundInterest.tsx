@@ -15,17 +15,20 @@ import {
   alpha
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
-
-const frequencies = [
-  { value: 1, label: 'Ежегодно' },
-  { value: 2, label: 'Раз в полгода' },
-  { value: 4, label: 'Ежеквартально' },
-  { value: 12, label: 'Ежемесячно' },
-  { value: 365, label: 'Ежедневно' },
-];
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function CompoundInterest() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const frequencies = [
+    { value: 1, label: isEn ? 'Annually' : 'Ежегодно' },
+    { value: 2, label: isEn ? 'Semi-annually' : 'Раз в полгода' },
+    { value: 4, label: isEn ? 'Quarterly' : 'Ежеквартально' },
+    { value: 12, label: isEn ? 'Monthly' : 'Ежемесячно' },
+    { value: 365, label: isEn ? 'Daily' : 'Ежедневно' },
+  ];
 
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
@@ -117,10 +120,10 @@ export default function CompoundInterest() {
   }, [principal, rate, years, frequency, monthlyAdd]);
 
   const fmt = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const fmtInt = (n: number) =>
-    n.toLocaleString('ru-RU', { maximumFractionDigits: 0 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 0 });
 
   const handleReset = () => {
     setPrincipal('');
@@ -168,11 +171,11 @@ export default function CompoundInterest() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label={`Начальная сумма (${sym})`}
+              label={isEn ? `Initial amount (${sym})` : `Начальная сумма (${sym})`}
               type="number"
               value={principal}
               onChange={(e) => setPrincipal(e.target.value)}
-              placeholder="Например: 100000"
+              placeholder={isEn ? 'e.g. 100000' : 'Например: 100000'}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -188,11 +191,11 @@ export default function CompoundInterest() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Годовая ставка"
+              label={isEn ? 'Annual rate' : 'Годовая ставка'}
               type="number"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
-              placeholder="Например: 10"
+              placeholder={isEn ? 'e.g. 10' : 'Например: 10'}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -208,11 +211,11 @@ export default function CompoundInterest() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label="Срок (лет)"
+              label={isEn ? 'Term (years)' : 'Срок (лет)'}
               type="number"
               value={years}
               onChange={(e) => setYears(e.target.value)}
-              placeholder="Например: 5"
+              placeholder={isEn ? 'e.g. 5' : 'Например: 5'}
             />
           </Grid>
 
@@ -220,7 +223,7 @@ export default function CompoundInterest() {
             <TextField
               fullWidth
               select
-              label="Капитализация"
+              label={isEn ? 'Compounding' : 'Капитализация'}
               value={frequency}
               onChange={(e) => setFrequency(Number(e.target.value))}
             >
@@ -235,7 +238,7 @@ export default function CompoundInterest() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              label={`Ежемесячное пополнение (${sym})`}
+              label={isEn ? `Monthly contribution (${sym})` : `Ежемесячное пополнение (${sym})`}
               type="number"
               value={monthlyAdd}
               onChange={(e) => setMonthlyAdd(e.target.value)}
@@ -259,7 +262,7 @@ export default function CompoundInterest() {
               size="small"
               sx={{ textTransform: 'none' }}
             >
-              Сбросить
+              {isEn ? 'Reset' : 'Сбросить'}
             </Button>
           </Grid>
         </Grid>
@@ -269,27 +272,27 @@ export default function CompoundInterest() {
             <Divider sx={{ my: 2 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Результаты
+              {isEn ? 'Results' : 'Результаты'}
             </Typography>
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Итоговая сумма"
+                  label={isEn ? 'Final amount' : 'Итоговая сумма'}
                   value={`${fmt(results.finalAmount)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Всего внесено"
+                  label={isEn ? 'Total contributed' : 'Всего внесено'}
                   value={`${fmt(results.totalContributions)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Заработано на процентах"
+                  label={isEn ? 'Interest earned' : 'Заработано на процентах'}
                   value={`${fmt(results.totalInterest)} ${sym}`}
                   color="#2e7d32"
                 />
@@ -298,7 +301,7 @@ export default function CompoundInterest() {
 
             <Box sx={{ mt: 2, display: 'flex', gap: 1, alignItems: 'center' }}>
               <Chip
-                label={`Доходность: +${results.growthPercent.toFixed(1)}%`}
+                label={`${isEn ? 'Return' : 'Доходность'}: +${results.growthPercent.toFixed(1)}%`}
                 size="small"
                 color="success"
                 variant="outlined"
@@ -331,7 +334,7 @@ export default function CompoundInterest() {
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
-                    Вложения
+                    {isEn ? 'Contributions' : 'Вложения'}
                   </Typography>
                 </Box>
                 <Box
@@ -345,7 +348,7 @@ export default function CompoundInterest() {
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
-                    Проценты
+                    {isEn ? 'Interest' : 'Проценты'}
                   </Typography>
                 </Box>
               </Box>
@@ -365,7 +368,7 @@ export default function CompoundInterest() {
                 <Divider sx={{ my: 2 }} />
 
                 <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-                  Рост по годам
+                  {isEn ? 'Growth by Year' : 'Рост по годам'}
                 </Typography>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -385,7 +388,7 @@ export default function CompoundInterest() {
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 80 }}>
                         <Chip
-                          label={`${row.year} год`}
+                          label={isEn ? `Year ${row.year}` : `${row.year} год`}
                           size="small"
                           sx={{
                             bgcolor: alpha(theme.palette.primary.main, 0.1),
@@ -397,7 +400,7 @@ export default function CompoundInterest() {
                       <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                         <Box sx={{ textAlign: 'right' }}>
                           <Typography variant="caption" color="text.secondary">
-                            Баланс
+                            {isEn ? 'Balance' : 'Баланс'}
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
                             {fmtInt(row.balance)} {sym}
@@ -405,7 +408,7 @@ export default function CompoundInterest() {
                         </Box>
                         <Box sx={{ textAlign: 'right' }}>
                           <Typography variant="caption" color="text.secondary">
-                            Внесено
+                            {isEn ? 'Contributed' : 'Внесено'}
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600, color: '#1565c0' }}>
                             {fmtInt(row.contributed)} {sym}
@@ -413,7 +416,7 @@ export default function CompoundInterest() {
                         </Box>
                         <Box sx={{ textAlign: 'right' }}>
                           <Typography variant="caption" color="text.secondary">
-                            Проценты за год
+                            {isEn ? 'Interest per year' : 'Проценты за год'}
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
                             +{fmtInt(row.interestEarned)} {sym}

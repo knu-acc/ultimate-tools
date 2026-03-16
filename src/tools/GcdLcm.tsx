@@ -12,6 +12,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface EuclidStep {
   a: number;
@@ -29,6 +30,8 @@ interface GcdResult {
 
 export default function GcdLcm() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
 
   const parseNumbers = (str: string): number[] => {
@@ -79,7 +82,7 @@ export default function GcdLcm() {
   }, [input]);
 
   const formatNum = (n: number): string => {
-    return n.toLocaleString('ru-RU');
+    return n.toLocaleString(isEn ? 'en-US' : 'ru-RU');
   };
 
   return (
@@ -119,7 +122,7 @@ export default function GcdLcm() {
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                  НОД (наибольший общий делитель)
+                  {isEn ? 'GCD (Greatest Common Divisor)' : 'НОД (наибольший общий делитель)'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                   <Typography
@@ -132,7 +135,7 @@ export default function GcdLcm() {
                 </Box>
                 <Box sx={{ mt: 1 }}>
                   <Chip
-                    label={`НОД(${result.numbers.join(', ')})`}
+                    label={`${isEn ? 'GCD' : 'НОД'}(${result.numbers.join(', ')})`}
                     size="small"
                     sx={{
                       fontFamily: 'monospace',
@@ -160,7 +163,7 @@ export default function GcdLcm() {
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                  НОК (наименьшее общее кратное)
+                  {isEn ? 'LCM (Least Common Multiple)' : 'НОК (наименьшее общее кратное)'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                   <Typography
@@ -173,7 +176,7 @@ export default function GcdLcm() {
                 </Box>
                 <Box sx={{ mt: 1 }}>
                   <Chip
-                    label={`НОК(${result.numbers.join(', ')})`}
+                    label={`${isEn ? 'LCM' : 'НОК'}(${result.numbers.join(', ')})`}
                     size="small"
                     sx={{
                       fontFamily: 'monospace',
@@ -189,7 +192,7 @@ export default function GcdLcm() {
 
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
-              Алгоритм Евклида (пошагово)
+              {isEn ? 'Euclidean algorithm (step by step)' : 'Алгоритм Евклида (пошагово)'}
             </Typography>
 
             {result.steps.map((pairSteps, pairIdx) => (
@@ -197,8 +200,8 @@ export default function GcdLcm() {
                 {result.numbers.length > 2 && (
                   <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5, color: 'text.secondary' }}>
                     {pairIdx === 0
-                      ? `НОД(${result.numbers[0]}, ${result.numbers[1]})`
-                      : `НОД(${formatNum(result.steps[pairIdx - 1][result.steps[pairIdx - 1].length - 1]?.b === 0
+                      ? `${isEn ? 'GCD' : 'НОД'}(${result.numbers[0]}, ${result.numbers[1]})`
+                      : `${isEn ? 'GCD' : 'НОД'}(${formatNum(result.steps[pairIdx - 1][result.steps[pairIdx - 1].length - 1]?.b === 0
                           ? result.steps[pairIdx - 1][result.steps[pairIdx - 1].length - 1].a
                           : pairSteps[0]?.a ?? 0)}, ${result.numbers[pairIdx + 1]})`}
                   </Typography>
@@ -235,7 +238,7 @@ export default function GcdLcm() {
                     </Typography>
                     {step.r === 0 && (
                       <Chip
-                        label={`НОД = ${formatNum(step.b)}`}
+                        label={`${isEn ? 'GCD' : 'НОД'} = ${formatNum(step.b)}`}
                         size="small"
                         variant="outlined"
                         color="success"
@@ -258,7 +261,7 @@ export default function GcdLcm() {
                 }}
               >
                 <Typography variant="body2" sx={{ fontFamily: 'monospace', color: 'text.secondary' }}>
-                  НОК(a, b) = |a × b| / НОД(a, b)
+                  {isEn ? 'LCM(a, b) = |a × b| / GCD(a, b)' : 'НОК(a, b) = |a × b| / НОД(a, b)'}
                 </Typography>
               </Paper>
             )}

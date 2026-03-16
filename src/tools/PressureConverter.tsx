@@ -14,6 +14,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface PressureUnit {
   key: string;
@@ -22,13 +23,22 @@ interface PressureUnit {
   toPa: number;
 }
 
-const units: PressureUnit[] = [
+const unitsRu: PressureUnit[] = [
   { key: 'pa', label: 'Паскали', short: 'Па', toPa: 1 },
   { key: 'kpa', label: 'Килопаскали', short: 'кПа', toPa: 1000 },
   { key: 'atm', label: 'Атмосферы', short: 'атм', toPa: 101325 },
   { key: 'bar', label: 'Бары', short: 'бар', toPa: 100000 },
   { key: 'mmhg', label: 'Миллиметры рт. ст.', short: 'мм рт. ст.', toPa: 133.322 },
   { key: 'psi', label: 'Фунты на кв. дюйм', short: 'psi', toPa: 6894.757 },
+];
+
+const unitsEn: PressureUnit[] = [
+  { key: 'pa', label: 'Pascals', short: 'Pa', toPa: 1 },
+  { key: 'kpa', label: 'Kilopascals', short: 'kPa', toPa: 1000 },
+  { key: 'atm', label: 'Atmospheres', short: 'atm', toPa: 101325 },
+  { key: 'bar', label: 'Bars', short: 'bar', toPa: 100000 },
+  { key: 'mmhg', label: 'mmHg', short: 'mmHg', toPa: 133.322 },
+  { key: 'psi', label: 'Pounds per sq. inch', short: 'psi', toPa: 6894.757 },
 ];
 
 const barColors = ['#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#f44336', '#00bcd4'];
@@ -43,6 +53,9 @@ function formatNumber(value: number): string {
 
 export default function PressureConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const units = isEn ? unitsEn : unitsRu;
   const [inputValue, setInputValue] = useState('1');
   const [fromUnit, setFromUnit] = useState('atm');
 
@@ -154,7 +167,7 @@ export default function PressureConverter() {
           {numericValue > 0 && (
             <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
               <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-                Сравнение
+                {isEn ? 'Comparison' : 'Сравнение'}
               </Typography>
               {allResults.map((r, idx) => {
                 const percent = maxValue > 0 ? (r.value / maxValue) * 100 : 0;

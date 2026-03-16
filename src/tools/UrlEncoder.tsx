@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 function looksEncoded(str: string): boolean {
@@ -32,6 +33,8 @@ function tryDecode(str: string): { success: boolean; result: string } {
 
 export default function UrlEncoder() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode' | null>(null);
@@ -64,7 +67,7 @@ export default function UrlEncoder() {
       setEncodeURIComponentResult(encoded);
       setShowComparison(true);
     } catch (e) {
-      setError(`Ошибка кодирования: ${(e as Error).message}`);
+      setError(isEn ? `Encoding error: ${(e as Error).message}` : `Ошибка кодирования: ${(e as Error).message}`);
       setOutput('');
       setShowComparison(false);
     }
@@ -79,7 +82,7 @@ export default function UrlEncoder() {
       setError('');
       setShowComparison(false);
     } catch (e) {
-      setError(`Ошибка декодирования: некорректная URL-строка. ${(e as Error).message}`);
+      setError(isEn ? `Decoding error: invalid URL string. ${(e as Error).message}` : `Ошибка декодирования: некорректная URL-строка. ${(e as Error).message}`);
       setOutput('');
       setShowComparison(false);
     }
@@ -119,7 +122,7 @@ export default function UrlEncoder() {
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mb: 1 }}>
           {suggestion === 'decode' && (
             <Chip
-              label="Обнаружена закодированная строка"
+              label={isEn ? 'Encoded string detected' : 'Обнаружена закодированная строка'}
               size="small"
               color="info"
               variant="outlined"
@@ -140,7 +143,7 @@ export default function UrlEncoder() {
             setError('');
             setShowComparison(false);
           }}
-          placeholder="Текст или URL..."
+          placeholder={isEn ? 'Text or URL...' : 'Текст или URL...'}
           sx={{
             mb: 2,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
@@ -150,12 +153,12 @@ export default function UrlEncoder() {
         {/* Action buttons */}
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center', mb: 2 }}>
           <Button variant="contained" onClick={handleEncode} disabled={!input.trim()}>
-            Кодировать
+            {isEn ? 'Encode' : 'Кодировать'}
           </Button>
           <Button variant="contained" onClick={handleDecode} disabled={!input.trim()}>
-            Декодировать
+            {isEn ? 'Decode' : 'Декодировать'}
           </Button>
-          <Tooltip title="Поменять местами ввод и вывод">
+          <Tooltip title={isEn ? 'Swap input and output' : 'Поменять местами ввод и вывод'}>
             <span>
               <IconButton onClick={swapInputOutput} disabled={!output} color="primary">
                 <SwapVertIcon />
@@ -163,7 +166,7 @@ export default function UrlEncoder() {
             </span>
           </Tooltip>
           <Button variant="outlined" onClick={clear} color="inherit">
-            Очистить
+            {isEn ? 'Clear' : 'Очистить'}
           </Button>
         </Box>
 
@@ -218,10 +221,10 @@ export default function UrlEncoder() {
             }}
           >
             <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
-              Сравнение: encodeURI и encodeURIComponent
+              {isEn ? 'Comparison: encodeURI vs encodeURIComponent' : 'Сравнение: encodeURI и encodeURIComponent'}
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
-              encodeURI не кодирует спецсимволы URL (: / ? # и др.), а encodeURIComponent кодирует всё, кроме букв, цифр и - _ . ~
+              {isEn ? 'encodeURI does not encode URL special characters (: / ? # etc.), while encodeURIComponent encodes everything except letters, digits, and - _ . ~' : 'encodeURI не кодирует спецсимволы URL (: / ? # и др.), а encodeURIComponent кодирует всё, кроме букв, цифр и - _ . ~'}
             </Typography>
 
             {/* encodeURI */}
@@ -278,7 +281,7 @@ export default function UrlEncoder() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
-                  Результаты отличаются. encodeURIComponent безопаснее для кодирования отдельных параметров, а encodeURI подходит для полных URL-адресов.
+                  {isEn ? 'Results differ. encodeURIComponent is safer for encoding individual parameters, while encodeURI is suitable for complete URLs.' : 'Результаты отличаются. encodeURIComponent безопаснее для кодирования отдельных параметров, а encodeURI подходит для полных URL-адресов.'}
                 </Typography>
               </Paper>
             )}

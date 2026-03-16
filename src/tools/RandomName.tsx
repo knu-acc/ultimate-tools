@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { Casino, Person } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const RUSSIAN_MALE_FIRST = [
   'Александр', 'Дмитрий', 'Максим', 'Иван', 'Артём', 'Михаил', 'Даниил', 'Матвей',
@@ -74,6 +75,8 @@ export default function RandomName() {
   const [nationality, setNationality] = useState<Nationality>('russian');
   const [count, setCount] = useState(5);
   const [results, setResults] = useState<string[]>([]);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const generateName = useCallback((): string => {
     const isMale = gender === 'any' ? Math.random() > 0.5 : gender === 'male';
@@ -111,20 +114,20 @@ export default function RandomName() {
   };
 
   const genderOptions: { value: Gender; label: string }[] = [
-    { value: 'male', label: 'Мужские' },
-    { value: 'female', label: 'Женские' },
-    { value: 'any', label: 'Любые' },
+    { value: 'male', label: isEn ? 'Male' : 'Мужские' },
+    { value: 'female', label: isEn ? 'Female' : 'Женские' },
+    { value: 'any', label: isEn ? 'Any' : 'Любые' },
   ];
 
   const typeOptions: { value: NameType; label: string }[] = [
-    { value: 'first', label: 'Имя' },
-    { value: 'last', label: 'Фамилия' },
-    { value: 'full', label: 'Полное имя' },
+    { value: 'first', label: isEn ? 'First name' : 'Имя' },
+    { value: 'last', label: isEn ? 'Last name' : 'Фамилия' },
+    { value: 'full', label: isEn ? 'Full name' : 'Полное имя' },
   ];
 
   const natOptions: { value: Nationality; label: string }[] = [
-    { value: 'russian', label: 'Русские' },
-    { value: 'english', label: 'Английские' },
+    { value: 'russian', label: isEn ? 'Russian' : 'Русские' },
+    { value: 'english', label: isEn ? 'English' : 'Английские' },
   ];
 
   return (
@@ -172,7 +175,7 @@ export default function RandomName() {
 
           <Box sx={{ mb: 2 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-              Количество: {count}
+              {isEn ? 'Count' : 'Количество'}: {count}
             </Typography>
             <Slider
               value={count}
@@ -199,7 +202,7 @@ export default function RandomName() {
             onClick={handleGenerate}
             sx={{ borderRadius: 3, py: 1.2, textTransform: 'none', fontWeight: 600 }}
           >
-            Сгенерировать
+            {isEn ? 'Generate' : 'Сгенерировать'}
           </Button>
         </Grid>
 
@@ -208,7 +211,7 @@ export default function RandomName() {
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
                 <Typography variant="subtitle2" fontWeight={600}>
-                  Результат ({results.length})
+                  {isEn ? 'Result' : 'Результат'} ({results.length})
                 </Typography>
                 <CopyButton text={results.join('\n')} />
               </Box>
@@ -250,7 +253,7 @@ export default function RandomName() {
             >
               <Person sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
-                Выберите параметры и нажмите «Сгенерировать»
+                {isEn ? 'Choose parameters and click "Generate"' : 'Выберите параметры и нажмите «Сгенерировать»'}
               </Typography>
             </Paper>
           )}

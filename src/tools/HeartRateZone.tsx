@@ -11,25 +11,30 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface Zone {
   name: string;
+  nameEn: string;
   description: string;
+  descriptionEn: string;
   minPct: number;
   maxPct: number;
   color: string;
 }
 
 const ZONES: Zone[] = [
-  { name: 'Зона 1', description: 'Разминка', minPct: 50, maxPct: 60, color: '#1976d2' },
-  { name: 'Зона 2', description: 'Жиросжигание', minPct: 60, maxPct: 70, color: '#2e7d32' },
-  { name: 'Зона 3', description: 'Аэробная', minPct: 70, maxPct: 80, color: '#f9a825' },
-  { name: 'Зона 4', description: 'Анаэробная', minPct: 80, maxPct: 90, color: '#ef6c00' },
-  { name: 'Зона 5', description: 'Максимальная', minPct: 90, maxPct: 100, color: '#c62828' },
+  { name: 'Зона 1', nameEn: 'Zone 1', description: 'Разминка', descriptionEn: 'Warm-up', minPct: 50, maxPct: 60, color: '#1976d2' },
+  { name: 'Зона 2', nameEn: 'Zone 2', description: 'Жиросжигание', descriptionEn: 'Fat burn', minPct: 60, maxPct: 70, color: '#2e7d32' },
+  { name: 'Зона 3', nameEn: 'Zone 3', description: 'Аэробная', descriptionEn: 'Aerobic', minPct: 70, maxPct: 80, color: '#f9a825' },
+  { name: 'Зона 4', nameEn: 'Zone 4', description: 'Анаэробная', descriptionEn: 'Anaerobic', minPct: 80, maxPct: 90, color: '#ef6c00' },
+  { name: 'Зона 5', nameEn: 'Zone 5', description: 'Максимальная', descriptionEn: 'Maximum', minPct: 90, maxPct: 100, color: '#c62828' },
 ];
 
 export default function HeartRateZone() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [age, setAge] = useState('');
   const [restingHR, setRestingHR] = useState('');
 
@@ -77,7 +82,7 @@ export default function HeartRateZone() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Возраст, лет"
+              placeholder={isEn ? "Age, years" : "Возраст, лет"}
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
@@ -89,7 +94,7 @@ export default function HeartRateZone() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="ЧСС в покое, уд/мин (необязательно)"
+              placeholder={isEn ? "Resting HR, bpm (optional)" : "ЧСС в покое, уд/мин (необязательно)"}
               type="number"
               value={restingHR}
               onChange={(e) => setRestingHR(e.target.value)}
@@ -116,14 +121,14 @@ export default function HeartRateZone() {
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-              Максимальная ЧСС (220 - возраст)
+              {isEn ? 'Maximum HR (220 - age)' : 'Максимальная ЧСС (220 - возраст)'}
             </Typography>
             <Typography variant="h3" sx={{ fontWeight: 700, color: '#c62828', mb: 0.5 }}>
-              {results.maxHR} <Typography component="span" variant="h6" color="text.secondary">уд/мин</Typography>
+              {results.maxHR} <Typography component="span" variant="h6" color="text.secondary">{isEn ? 'bpm' : 'уд/мин'}</Typography>
             </Typography>
             {results.hasResting && (
               <Chip
-                label={`Формула Карвонена (ЧСС покоя: ${results.rhr} уд/мин)`}
+                label={isEn ? `Karvonen formula (resting HR: ${results.rhr} bpm)` : `Формула Карвонена (ЧСС покоя: ${results.rhr} уд/мин)`}
                 size="small"
                 sx={{
                   mt: 1,
@@ -135,7 +140,7 @@ export default function HeartRateZone() {
             )}
             {!results.hasResting && (
               <Typography variant="caption" color="text.disabled">
-                Укажите ЧСС покоя для расчёта по формуле Карвонена
+                {isEn ? 'Enter resting HR for Karvonen formula calculation' : 'Укажите ЧСС покоя для расчёта по формуле Карвонена'}
               </Typography>
             )}
           </Paper>
@@ -158,10 +163,10 @@ export default function HeartRateZone() {
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
                     <Box>
                       <Typography variant="body1" sx={{ fontWeight: 700, color: zone.color }}>
-                        {zone.name}
+                        {isEn ? zone.nameEn : zone.name}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {zone.description}
+                        {isEn ? zone.descriptionEn : zone.description}
                       </Typography>
                     </Box>
                     <Chip
@@ -201,7 +206,7 @@ export default function HeartRateZone() {
                       variant="body1"
                       sx={{ fontWeight: 700, color: zone.color, whiteSpace: 'nowrap', minWidth: 120, textAlign: 'right' }}
                     >
-                      {zone.minBpm} — {zone.maxBpm} уд/мин
+                      {zone.minBpm} — {zone.maxBpm} {isEn ? 'bpm' : 'уд/мин'}
                     </Typography>
                   </Box>
                 </Paper>
@@ -219,7 +224,7 @@ export default function HeartRateZone() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
-              Обзор
+              {isEn ? 'Overview' : 'Обзор'}
             </Typography>
             <Box
               sx={{
@@ -250,7 +255,7 @@ export default function HeartRateZone() {
               {results.zones.map((zone) => (
                 <Box key={zone.name} sx={{ flex: 1, textAlign: 'center' }}>
                   <Typography variant="caption" sx={{ color: zone.color, fontWeight: 600, fontSize: '0.6rem' }}>
-                    {zone.description}
+                    {isEn ? zone.descriptionEn : zone.description}
                   </Typography>
                 </Box>
               ))}

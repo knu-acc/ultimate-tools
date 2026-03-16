@@ -14,6 +14,7 @@ import {
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import PlaceIcon from '@mui/icons-material/Place';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface Coordinate {
@@ -40,12 +41,7 @@ interface Preset {
   lon: number;
 }
 
-const PRESETS: Preset[] = [
-  { label: 'Москва', lat: 55.7558, lon: 37.6173 },
-  { label: 'Лондон', lat: 51.5074, lon: -0.1278 },
-  { label: 'Нью-Йорк', lat: 40.7128, lon: -74.006 },
-  { label: 'Токио', lat: 35.6762, lon: 139.6503 },
-];
+// PRESETS moved inside component for i18n
 
 function ddToDms(dd: number, isLat: boolean): DMS {
   const dir = isLat ? (dd >= 0 ? 'N' : 'S') : (dd >= 0 ? 'E' : 'W');
@@ -79,6 +75,15 @@ function formatDD(val: number): string {
 
 export default function CoordinateConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const PRESETS: Preset[] = [
+    { label: isEn ? 'Moscow' : 'Москва', lat: 55.7558, lon: 37.6173 },
+    { label: isEn ? 'London' : 'Лондон', lat: 51.5074, lon: -0.1278 },
+    { label: isEn ? 'New York' : 'Нью-Йорк', lat: 40.7128, lon: -74.006 },
+    { label: isEn ? 'Tokyo' : 'Токио', lat: 35.6762, lon: 139.6503 },
+  ];
   const [latInput, setLatInput] = useState('55.7558');
   const [lonInput, setLonInput] = useState('37.6173');
   const lat = parseFloat(latInput);
@@ -116,19 +121,19 @@ export default function CoordinateConverter() {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <MyLocationIcon color="primary" fontSize="small" />
           <Typography variant="body1" sx={{ fontWeight: 600 }}>
-            Введите координаты (десятичные градусы)
+            {isEn ? 'Enter coordinates (decimal degrees)' : 'Введите координаты (десятичные градусы)'}
           </Typography>
         </Box>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
-              label="Широта (Latitude)"
+              label={isEn ? 'Latitude' : 'Широта (Latitude)'}
               value={latInput}
               onChange={(e) => setLatInput(e.target.value)}
               fullWidth
               size="small"
               error={!!latError}
-              helperText={latError ? 'Диапазон: -90 до 90' : ' '}
+              helperText={latError ? (isEn ? 'Range: -90 to 90' : 'Диапазон: -90 до 90') : ' '}
               placeholder="-90 ... 90"
               slotProps={{
                 input: {
@@ -139,13 +144,13 @@ export default function CoordinateConverter() {
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
-              label="Долгота (Longitude)"
+              label={isEn ? 'Longitude' : 'Долгота (Longitude)'}
               value={lonInput}
               onChange={(e) => setLonInput(e.target.value)}
               fullWidth
               size="small"
               error={!!lonError}
-              helperText={lonError ? 'Диапазон: -180 до 180' : ' '}
+              helperText={lonError ? (isEn ? 'Range: -180 to 180' : 'Диапазон: -180 до 180') : ' '}
               placeholder="-180 ... 180"
               slotProps={{
                 input: {
@@ -163,7 +168,7 @@ export default function CoordinateConverter() {
         sx={{ p: 2, mb: 2, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
-          Быстрый выбор
+          {isEn ? 'Quick Select' : 'Быстрый выбор'}
         </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
           {PRESETS.map((p) => (
@@ -190,7 +195,7 @@ export default function CoordinateConverter() {
             >
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  DD (Десятичные градусы)
+                  {isEn ? 'DD (Decimal Degrees)' : 'DD (Десятичные градусы)'}
                 </Typography>
                 <CopyButton text={ddString} />
               </Box>
@@ -217,7 +222,7 @@ export default function CoordinateConverter() {
             >
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  DMS (Градусы, минуты, секунды)
+                  {isEn ? 'DMS (Degrees, Minutes, Seconds)' : 'DMS (Градусы, минуты, секунды)'}
                 </Typography>
                 <CopyButton text={dmsString} />
               </Box>
@@ -244,7 +249,7 @@ export default function CoordinateConverter() {
             >
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  DDM (Градусы, десятичные минуты)
+                  {isEn ? 'DDM (Degrees, Decimal Minutes)' : 'DDM (Градусы, десятичные минуты)'}
                 </Typography>
                 <CopyButton text={ddmString} />
               </Box>
@@ -270,75 +275,75 @@ export default function CoordinateConverter() {
               sx={{ p: 2, borderRadius: 3 }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
-                Подробная информация
+                {isEn ? 'Detailed Information' : 'Подробная информация'}
               </Typography>
               <Grid container spacing={2}>
                 <Grid size={{ xs: 12, sm: 6 }}>
                   <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
-                    Широта
+                    {isEn ? 'Latitude' : 'Широта'}
                   </Typography>
                   <Box sx={{ mt: 1 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                      <Typography variant="body2" color="text.secondary">Десятичные градусы:</Typography>
+                      <Typography variant="body2" color="text.secondary">{isEn ? 'Decimal degrees:' : 'Десятичные градусы:'}</Typography>
                       <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{formatDD(lat)}</Typography>
                     </Box>
                     {latDms && (
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                        <Typography variant="body2" color="text.secondary">Градусы:</Typography>
+                        <Typography variant="body2" color="text.secondary">{isEn ? 'Degrees:' : 'Градусы:'}</Typography>
                         <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{latDms.degrees}°</Typography>
                       </Box>
                     )}
                     {latDms && (
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                        <Typography variant="body2" color="text.secondary">Минуты:</Typography>
+                        <Typography variant="body2" color="text.secondary">{isEn ? 'Minutes:' : 'Минуты:'}</Typography>
                         <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{latDms.minutes}'</Typography>
                       </Box>
                     )}
                     {latDms && (
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                        <Typography variant="body2" color="text.secondary">Секунды:</Typography>
+                        <Typography variant="body2" color="text.secondary">{isEn ? 'Seconds:' : 'Секунды:'}</Typography>
                         <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{latDms.seconds}"</Typography>
                       </Box>
                     )}
                     {latDms && (
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                        <Typography variant="body2" color="text.secondary">Направление:</Typography>
-                        <Chip label={latDms.direction === 'N' ? 'Северная' : 'Южная'} size="small" variant="outlined" />
+                        <Typography variant="body2" color="text.secondary">{isEn ? 'Direction:' : 'Направление:'}</Typography>
+                        <Chip label={latDms.direction === 'N' ? (isEn ? 'North' : 'Северная') : (isEn ? 'South' : 'Южная')} size="small" variant="outlined" />
                       </Box>
                     )}
                   </Box>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>
                   <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600 }}>
-                    Долгота
+                    {isEn ? 'Longitude' : 'Долгота'}
                   </Typography>
                   <Box sx={{ mt: 1 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                      <Typography variant="body2" color="text.secondary">Десятичные градусы:</Typography>
+                      <Typography variant="body2" color="text.secondary">{isEn ? 'Decimal degrees:' : 'Десятичные градусы:'}</Typography>
                       <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{formatDD(lon)}</Typography>
                     </Box>
                     {lonDms && (
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                        <Typography variant="body2" color="text.secondary">Градусы:</Typography>
+                        <Typography variant="body2" color="text.secondary">{isEn ? 'Degrees:' : 'Градусы:'}</Typography>
                         <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{lonDms.degrees}°</Typography>
                       </Box>
                     )}
                     {lonDms && (
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                        <Typography variant="body2" color="text.secondary">Минуты:</Typography>
+                        <Typography variant="body2" color="text.secondary">{isEn ? 'Minutes:' : 'Минуты:'}</Typography>
                         <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{lonDms.minutes}'</Typography>
                       </Box>
                     )}
                     {lonDms && (
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                        <Typography variant="body2" color="text.secondary">Секунды:</Typography>
+                        <Typography variant="body2" color="text.secondary">{isEn ? 'Seconds:' : 'Секунды:'}</Typography>
                         <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{lonDms.seconds}"</Typography>
                       </Box>
                     )}
                     {lonDms && (
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 0.5 }}>
-                        <Typography variant="body2" color="text.secondary">Направление:</Typography>
-                        <Chip label={lonDms.direction === 'E' ? 'Восточная' : 'Западная'} size="small" variant="outlined" />
+                        <Typography variant="body2" color="text.secondary">{isEn ? 'Direction:' : 'Направление:'}</Typography>
+                        <Chip label={lonDms.direction === 'E' ? (isEn ? 'East' : 'Восточная') : (isEn ? 'West' : 'Западная')} size="small" variant="outlined" />
                       </Box>
                     )}
                   </Box>
@@ -355,7 +360,7 @@ export default function CoordinateConverter() {
           sx={{ p: 3, textAlign: 'center', borderRadius: 3 }}
         >
           <Typography variant="body2" color="text.secondary">
-            Введите корректные координаты для конвертации
+            {isEn ? 'Enter valid coordinates for conversion' : 'Введите корректные координаты для конвертации'}
           </Typography>
         </Paper>
       )}

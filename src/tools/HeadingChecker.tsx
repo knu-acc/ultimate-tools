@@ -16,6 +16,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import ErrorIcon from '@mui/icons-material/Error';
 import TitleIcon from '@mui/icons-material/Title';
 import InfoIcon from '@mui/icons-material/Info';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface HeadingEntry {
   level: number;
@@ -42,27 +43,27 @@ function parseHeadings(html: string): HeadingEntry[] {
   return headings;
 }
 
-function analyzeHeadings(headings: HeadingEntry[]): AnalysisIssue[] {
+function analyzeHeadings(headings: HeadingEntry[], isEn: boolean): AnalysisIssue[] {
   const issues: AnalysisIssue[] = [];
 
   if (headings.length === 0) {
-    issues.push({ type: 'warning', message: 'Заголовки не найдены в HTML' });
+    issues.push({ type: 'warning', message: isEn ? 'No headings found in HTML' : 'Заголовки не найдены в HTML' });
     return issues;
   }
 
   // Check for H1
   const h1Count = headings.filter((h) => h.level === 1).length;
   if (h1Count === 0) {
-    issues.push({ type: 'error', message: 'Отсутствует H1 — каждая страница должна иметь один заголовок H1' });
+    issues.push({ type: 'error', message: isEn ? 'Missing H1 — every page should have one H1 heading' : 'Отсутствует H1 — каждая страница должна иметь один заголовок H1' });
   } else if (h1Count > 1) {
-    issues.push({ type: 'error', message: `Найдено ${h1Count} заголовков H1 — рекомендуется только один H1 на страницу` });
+    issues.push({ type: 'error', message: isEn ? `Found ${h1Count} H1 headings — only one H1 per page is recommended` : `Найдено ${h1Count} заголовков H1 — рекомендуется только один H1 на страницу` });
   } else {
-    issues.push({ type: 'success', message: 'Ровно один H1 — отлично' });
+    issues.push({ type: 'success', message: isEn ? 'Exactly one H1 — great' : 'Ровно один H1 — отлично' });
   }
 
   // Check if H1 is first
   if (headings.length > 0 && headings[0].level !== 1) {
-    issues.push({ type: 'warning', message: 'Первый заголовок — не H1. Рекомендуется начинать с H1' });
+    issues.push({ type: 'warning', message: isEn ? 'First heading is not H1. It is recommended to start with H1' : 'Первый заголовок — не H1. Рекомендуется начинать с H1' });
   }
 
   // Check for skipped levels
@@ -71,7 +72,9 @@ function analyzeHeadings(headings: HeadingEntry[]): AnalysisIssue[] {
     if (diff > 1) {
       issues.push({
         type: 'warning',
-        message: `Пропущен уровень: H${headings[i - 1].level} → H${headings[i].level} (строка ${headings[i].line}). Не пропускайте уровни заголовков`
+        message: isEn
+          ? `Skipped level: H${headings[i - 1].level} → H${headings[i].level} (line ${headings[i].line}). Do not skip heading levels`
+          : `Пропущен уровень: H${headings[i - 1].level} → H${headings[i].level} (строка ${headings[i].line}). Не пропускайте уровни заголовков`
       });
     }
   }
@@ -79,18 +82,18 @@ function analyzeHeadings(headings: HeadingEntry[]): AnalysisIssue[] {
   // Check for empty headings
   const empty = headings.filter((h) => !h.text);
   if (empty.length > 0) {
-    issues.push({ type: 'error', message: `Найдено пустых заголовков: ${empty.length}` });
+    issues.push({ type: 'error', message: isEn ? `Empty headings found: ${empty.length}` : `Найдено пустых заголовков: ${empty.length}` });
   }
 
   // SEO recommendations
   const h1 = headings.find((h) => h.level === 1);
   if (h1 && h1.text.length > 70) {
-    issues.push({ type: 'warning', message: 'H1 слишком длинный (>70 символов). Рекомендуется до 60-70 символов' });
+    issues.push({ type: 'warning', message: isEn ? 'H1 is too long (>70 characters). Recommended up to 60-70 characters' : 'H1 слишком длинный (>70 символов). Рекомендуется до 60-70 символов' });
   }
 
   if (h1Count === 1 && headings[0].level === 1 && !headings.some((h, i) => i > 0 && h.level - headings[i - 1].level > 1)) {
     if (!empty.length) {
-      issues.push({ type: 'success', message: 'Структура заголовков корректна' });
+      issues.push({ type: 'success', message: isEn ? 'Heading structure is correct' : 'Структура заголовков корректна' });
     }
   }
 
@@ -101,10 +104,12 @@ const LEVEL_COLORS = ['', '#1976d2', '#2e7d32', '#ed6c02', '#d32f2f', '#7b1fa2',
 
 export default function HeadingChecker() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [html, setHtml] = useState('');
 
   const headings = useMemo(() => parseHeadings(html), [html]);
-  const issues = useMemo(() => analyzeHeadings(headings), [headings]);
+  const issues = useMemo(() => analyzeHeadings(headings, isEn), [headings, isEn]);
 
   const errorCount = issues.filter((i) => i.type === 'error').length;
   const warningCount = issues.filter((i) => i.type === 'warning').length;
@@ -134,7 +139,7 @@ export default function HeadingChecker() {
         }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
-          Вставьте HTML-код
+          {isEn ? 'Paste HTML code' : 'Вставьте HTML-код'}
         </Typography>
         <TextField
           multiline
@@ -142,7 +147,10 @@ export default function HeadingChecker() {
           value={html}
           onChange={(e) => setHtml(e.target.value)}
           fullWidth
-          placeholder={'<h1>Заголовок страницы</h1>\n<h2>Подзаголовок</h2>\n<h3>Секция</h3>'}
+          placeholder={isEn
+            ? '<h1>Page Title</h1>\n<h2>Subtitle</h2>\n<h3>Section</h3>'
+            : '<h1>Заголовок страницы</h1>\n<h2>Подзаголовок</h2>\n<h3>Секция</h3>'
+          }
           slotProps={{
             input: {
               sx: { fontFamily: 'monospace', fontSize: 13 }
@@ -168,7 +176,7 @@ export default function HeadingChecker() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                 <TitleIcon color="primary" fontSize="small" />
                 <Typography variant="body1" sx={{ fontWeight: 600 }}>
-                  Структура заголовков
+                  {isEn ? 'Heading structure' : 'Структура заголовков'}
                 </Typography>
                 <Chip label={`${headings.length}`} size="small" variant="outlined" sx={{ ml: 'auto' }} />
               </Box>
@@ -208,10 +216,10 @@ export default function HeadingChecker() {
                       whiteSpace: 'nowrap'
                     }}
                   >
-                    {h.text || <em style={{ color: theme.palette.text.secondary }}>пусто</em>}
+                    {h.text || <em style={{ color: theme.palette.text.secondary }}>{isEn ? 'empty' : 'пусто'}</em>}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    стр. {h.line}
+                    {isEn ? 'line' : 'стр.'} {h.line}
                   </Typography>
                 </Box>
               ))}
@@ -235,7 +243,7 @@ export default function HeadingChecker() {
                   <Typography variant="h6" color={errorCount > 0 ? 'error' : 'text.primary'} sx={{ fontWeight: 700 }}>
                     {errorCount}
                   </Typography>
-                  <Typography variant="caption" color="text.secondary">Ошибки</Typography>
+                  <Typography variant="caption" color="text.secondary">{isEn ? 'Errors' : 'Ошибки'}</Typography>
                 </Paper>
               </Grid>
               <Grid size={{ xs: 4 }}>
@@ -251,7 +259,7 @@ export default function HeadingChecker() {
                   <Typography variant="h6" color={warningCount > 0 ? 'warning.main' : 'text.primary'} sx={{ fontWeight: 700 }}>
                     {warningCount}
                   </Typography>
-                  <Typography variant="caption" color="text.secondary">Предупреждения</Typography>
+                  <Typography variant="caption" color="text.secondary">{isEn ? 'Warnings' : 'Предупреждения'}</Typography>
                 </Paper>
               </Grid>
               <Grid size={{ xs: 4 }}>
@@ -267,7 +275,7 @@ export default function HeadingChecker() {
                   <Typography variant="h6" color={successCount > 0 ? 'success.main' : 'text.primary'} sx={{ fontWeight: 700 }}>
                     {successCount}
                   </Typography>
-                  <Typography variant="caption" color="text.secondary">Успешно</Typography>
+                  <Typography variant="caption" color="text.secondary">{isEn ? 'Passed' : 'Успешно'}</Typography>
                 </Paper>
               </Grid>
             </Grid>
@@ -285,7 +293,7 @@ export default function HeadingChecker() {
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
-                Результаты анализа
+                {isEn ? 'Analysis results' : 'Результаты анализа'}
               </Typography>
               {issues.map((issue, i) => (
                 <Box
@@ -321,17 +329,17 @@ export default function HeadingChecker() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                 <InfoIcon fontSize="small" color="primary" />
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  SEO рекомендации
+                  {isEn ? 'SEO recommendations' : 'SEO рекомендации'}
                 </Typography>
               </Box>
               <Typography variant="caption" color="text.secondary" component="div">
                 <Box component="ul" sx={{ pl: 2, m: 0, '& li': { mb: 0.5 } }}>
-                  <li>Используйте один H1 на страницу — это главный заголовок</li>
-                  <li>Не пропускайте уровни (H1 → H2 → H3, не H1 → H3)</li>
-                  <li>H1 должен содержать основное ключевое слово</li>
-                  <li>Длина H1 — до 60-70 символов</li>
-                  <li>Заголовки должны быть осмысленными и описывать содержимое</li>
-                  <li>Не используйте заголовки только для стилизации текста</li>
+                  <li>{isEn ? 'Use one H1 per page — it is the main heading' : 'Используйте один H1 на страницу — это главный заголовок'}</li>
+                  <li>{isEn ? 'Do not skip levels (H1 → H2 → H3, not H1 → H3)' : 'Не пропускайте уровни (H1 → H2 → H3, не H1 → H3)'}</li>
+                  <li>{isEn ? 'H1 should contain the main keyword' : 'H1 должен содержать основное ключевое слово'}</li>
+                  <li>{isEn ? 'H1 length — up to 60-70 characters' : 'Длина H1 — до 60-70 символов'}</li>
+                  <li>{isEn ? 'Headings should be meaningful and describe the content' : 'Заголовки должны быть осмысленными и описывать содержимое'}</li>
+                  <li>{isEn ? 'Do not use headings only for text styling' : 'Не используйте заголовки только для стилизации текста'}</li>
                 </Box>
               </Typography>
             </Paper>
@@ -351,10 +359,10 @@ export default function HeadingChecker() {
         >
           <WarningIcon sx={{ fontSize: 48, color: 'warning.main', mb: 1 }} />
           <Typography variant="body1" sx={{ fontWeight: 500 }}>
-            Заголовки не найдены
+            {isEn ? 'No headings found' : 'Заголовки не найдены'}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Убедитесь, что HTML содержит теги &lt;h1&gt; — &lt;h6&gt;
+            {isEn ? 'Make sure the HTML contains <h1> — <h6> tags' : 'Убедитесь, что HTML содержит теги <h1> — <h6>'}
           </Typography>
         </Paper>
       )}

@@ -15,8 +15,10 @@ import {
 } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface ValidationCheck {
+  labelEn: string;
   label: string;
   passed: boolean;
 }
@@ -46,12 +48,12 @@ function validateEmail(email: string): ValidationCheck[] {
   const formatValid = hasAt && parts.length === 2 && localValid && domainValid && tldValid;
 
   return [
-    { label: 'Корректный формат', passed: formatValid },
-    { label: 'Содержит символ @', passed: hasAt && parts.length === 2 },
-    { label: 'Валидный домен', passed: domainValid },
-    { label: 'Валидный TLD (домен верхнего уровня)', passed: tldValid },
-    { label: 'Валидная локальная часть', passed: localValid },
-    { label: 'Нет двойных точек', passed: !trimmed.includes('..') },
+    { label: 'Корректный формат', labelEn: 'Valid format', passed: formatValid },
+    { label: 'Содержит символ @', labelEn: 'Contains @ symbol', passed: hasAt && parts.length === 2 },
+    { label: 'Валидный домен', labelEn: 'Valid domain', passed: domainValid },
+    { label: 'Валидный TLD (домен верхнего уровня)', labelEn: 'Valid TLD (top-level domain)', passed: tldValid },
+    { label: 'Валидная локальная часть', labelEn: 'Valid local part', passed: localValid },
+    { label: 'Нет двойных точек', labelEn: 'No double dots', passed: !trimmed.includes('..') },
   ];
 }
 
@@ -62,6 +64,8 @@ function isEmailValid(email: string): boolean {
 
 export default function EmailValidator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [tab, setTab] = useState(0);
   const [email, setEmail] = useState('');
   const [batchText, setBatchText] = useState('');
@@ -97,8 +101,8 @@ export default function EmailValidator() {
             }
           }}
         >
-          <Tab label="Одиночная проверка" />
-          <Tab label="Пакетная проверка" />
+          <Tab label={isEn ? 'Single check' : 'Одиночная проверка'} />
+          <Tab label={isEn ? 'Batch check' : 'Пакетная проверка'} />
         </Tabs>
       </Paper>
 
@@ -119,7 +123,7 @@ export default function EmailValidator() {
                 {allPassed ? (
                   <Chip
                     icon={<CheckCircleIcon />}
-                    label="Email валиден"
+                    label={isEn ? 'Email is valid' : 'Email валиден'}
                     color="success"
                     variant="outlined"
                     sx={{ fontWeight: 600 }}
@@ -127,7 +131,7 @@ export default function EmailValidator() {
                 ) : (
                   <Chip
                     icon={<CancelIcon />}
-                    label="Email невалиден"
+                    label={isEn ? 'Email is invalid' : 'Email невалиден'}
                     color="error"
                     variant="outlined"
                     sx={{ fontWeight: 600 }}
@@ -141,7 +145,7 @@ export default function EmailValidator() {
           {checks.length > 0 && (
             <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-                Результаты проверки
+                {isEn ? 'Validation results' : 'Результаты проверки'}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                 {checks.map((check, i) => (
@@ -169,7 +173,7 @@ export default function EmailValidator() {
                       <CancelIcon sx={{ color: 'error.main', fontSize: 22 }} />
                     )}
                     <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                      {check.label}
+                      {isEn ? check.labelEn : check.label}
                     </Typography>
                   </Box>
                 ))}
@@ -201,24 +205,24 @@ export default function EmailValidator() {
               <Grid size={12}>
                 <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
                   <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-                    Итоги проверки
+                    {isEn ? 'Summary' : 'Итоги проверки'}
                   </Typography>
                   <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                     <Chip
-                      label={`Всего: ${batchResults.length}`}
+                      label={`${isEn ? 'Total' : 'Всего'}: ${batchResults.length}`}
                       variant="outlined"
                       sx={{ fontWeight: 600 }}
                     />
                     <Chip
                       icon={<CheckCircleIcon />}
-                      label={`Валидных: ${validCount}`}
+                      label={`${isEn ? 'Valid' : 'Валидных'}: ${validCount}`}
                       color="success"
                       variant="outlined"
                       sx={{ fontWeight: 600 }}
                     />
                     <Chip
                       icon={<CancelIcon />}
-                      label={`Невалидных: ${invalidCount}`}
+                      label={`${isEn ? 'Invalid' : 'Невалидных'}: ${invalidCount}`}
                       color="error"
                       variant="outlined"
                       sx={{ fontWeight: 600 }}
@@ -231,7 +235,7 @@ export default function EmailValidator() {
               <Grid size={12}>
                 <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
                   <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-                    Детальные результаты
+                    {isEn ? 'Detailed results' : 'Детальные результаты'}
                   </Typography>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     {batchResults.map((result, i) => (
@@ -265,7 +269,7 @@ export default function EmailValidator() {
                           {result.email}
                         </Typography>
                         <Chip
-                          label={result.valid ? 'Валиден' : 'Невалиден'}
+                          label={result.valid ? (isEn ? 'Valid' : 'Валиден') : (isEn ? 'Invalid' : 'Невалиден')}
                           size="small"
                           color={result.valid ? 'success' : 'error'}
                           variant="outlined"

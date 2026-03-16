@@ -14,6 +14,7 @@ import {
   alpha } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 function isBase64(str: string): boolean {
@@ -27,6 +28,8 @@ function isBase64(str: string): boolean {
 
 export default function Base64Encoder() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -47,7 +50,7 @@ export default function Base64Encoder() {
       setError('');
       setMode('encode');
     } catch (e) {
-      setError(`Ошибка кодирования: ${(e as Error).message}`);
+      setError(isEn ? `Encoding error: ${(e as Error).message}` : `Ошибка кодирования: ${(e as Error).message}`);
       setOutput('');
     }
   }, [input]);
@@ -63,7 +66,7 @@ export default function Base64Encoder() {
       setError('');
       setMode('decode');
     } catch (e) {
-      setError(`Ошибка декодирования: ${(e as Error).message}`);
+      setError(isEn ? `Decoding error: ${(e as Error).message}` : `Ошибка декодирования: ${(e as Error).message}`);
       setOutput('');
     }
   }, [input]);
@@ -151,7 +154,7 @@ export default function Base64Encoder() {
         >
           <UploadFileIcon sx={{ fontSize: 32, color: 'text.secondary', mb: 1 }} />
           <Typography variant="body2" color="text.secondary">
-            Перетащите файл или нажмите для выбора
+            {isEn ? 'Drag and drop a file or click to select' : 'Перетащите файл или нажмите для выбора'}
           </Typography>
           {fileName && (
             <Chip label={fileName} size="small" sx={{ mt: 1 }} onDelete={() => setFileName('')} />
@@ -174,7 +177,7 @@ export default function Base64Encoder() {
             setInput(e.target.value);
             setFileName('');
           }}
-          placeholder="Текст или Base64..."
+          placeholder={isEn ? 'Text or Base64...' : 'Текст или Base64...'}
           sx={{
             mb: 2,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
@@ -185,17 +188,17 @@ export default function Base64Encoder() {
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center', mb: 2 }}>
           <ButtonGroup variant="contained">
             <Button onClick={encode} disabled={!input}>
-              Кодировать
+              {isEn ? 'Encode' : 'Кодировать'}
             </Button>
             <Button onClick={decode} disabled={!input}>
-              Декодировать
+              {isEn ? 'Decode' : 'Декодировать'}
             </Button>
             <Button onClick={autoDetect} disabled={!input}>
-              Авто
+              {isEn ? 'Auto' : 'Авто'}
             </Button>
           </ButtonGroup>
           <Button variant="outlined" onClick={clear} color="inherit">
-            Очистить
+            {isEn ? 'Clear' : 'Очистить'}
           </Button>
         </Box>
 

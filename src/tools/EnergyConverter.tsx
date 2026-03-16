@@ -14,22 +14,25 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface EnergyUnit {
   key: string;
-  label: string;
-  short: string;
+  labelRu: string;
+  labelEn: string;
+  shortRu: string;
+  shortEn: string;
   toJoule: number;
 }
 
 const units: EnergyUnit[] = [
-  { key: 'joule', label: 'Джоули', short: 'Дж', toJoule: 1 },
-  { key: 'calorie', label: 'Калории', short: 'кал', toJoule: 4.184 },
-  { key: 'kcal', label: 'Килокалории', short: 'ккал', toJoule: 4184 },
-  { key: 'kwh', label: 'Киловатт-часы', short: 'кВт·ч', toJoule: 3_600_000 },
-  { key: 'btu', label: 'Британские тепловые единицы', short: 'BTU', toJoule: 1055.06 },
-  { key: 'ev', label: 'Электронвольты', short: 'эВ', toJoule: 1.602176634e-19 },
-  { key: 'erg', label: 'Эрги', short: 'эрг', toJoule: 1e-7 },
+  { key: 'joule', labelRu: 'Джоули', labelEn: 'Joules', shortRu: 'Дж', shortEn: 'J', toJoule: 1 },
+  { key: 'calorie', labelRu: 'Калории', labelEn: 'Calories', shortRu: 'кал', shortEn: 'cal', toJoule: 4.184 },
+  { key: 'kcal', labelRu: 'Килокалории', labelEn: 'Kilocalories', shortRu: 'ккал', shortEn: 'kcal', toJoule: 4184 },
+  { key: 'kwh', labelRu: 'Киловатт-часы', labelEn: 'Kilowatt-hours', shortRu: 'кВт·ч', shortEn: 'kWh', toJoule: 3_600_000 },
+  { key: 'btu', labelRu: 'Британские тепловые единицы', labelEn: 'British thermal units', shortRu: 'BTU', shortEn: 'BTU', toJoule: 1055.06 },
+  { key: 'ev', labelRu: 'Электронвольты', labelEn: 'Electronvolts', shortRu: 'эВ', shortEn: 'eV', toJoule: 1.602176634e-19 },
+  { key: 'erg', labelRu: 'Эрги', labelEn: 'Ergs', shortRu: 'эрг', shortEn: 'erg', toJoule: 1e-7 },
 ];
 
 const barColors = ['#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#f44336', '#00bcd4', '#e91e63'];
@@ -44,6 +47,8 @@ function formatNumber(value: number): string {
 
 export default function EnergyConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [inputValue, setInputValue] = useState('1');
   const [fromUnit, setFromUnit] = useState('joule');
 
@@ -56,8 +61,8 @@ export default function EnergyConverter() {
     const converted = isValid ? (numericValue * sourceUnit.toJoule) / target.toJoule : 0;
     return {
       key: target.key,
-      label: target.label,
-      short: target.short,
+      label: isEn ? target.labelEn : target.labelRu,
+      short: isEn ? target.shortEn : target.shortRu,
       value: converted,
       formatted: isValid ? formatNumber(converted) : '—'
     };
@@ -95,7 +100,7 @@ export default function EnergyConverter() {
               input: {
                 endAdornment: (
                   <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
-                    {sourceUnit.short}
+                    {isEn ? sourceUnit.shortEn : sourceUnit.shortRu}
                   </Typography>
                 )
               }
@@ -108,7 +113,7 @@ export default function EnergyConverter() {
           >
             {units.map((u) => (
               <MenuItem key={u.key} value={u.key}>
-                {u.label} ({u.short})
+                {isEn ? u.labelEn : u.labelRu} ({isEn ? u.shortEn : u.shortRu})
               </MenuItem>
             ))}
           </Select>

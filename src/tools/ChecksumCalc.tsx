@@ -16,6 +16,7 @@ import {
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 // --- MD5 implementation (Web Crypto does not support MD5) ---
@@ -188,6 +189,8 @@ interface HashResult {
 
 export default function ChecksumCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const [input, setInput] = useState('');
   const [hashes, setHashes] = useState<HashResult[]>([]);
@@ -251,7 +254,7 @@ export default function ChecksumCalc() {
             setInput(e.target.value);
             setHashes([]);
           }}
-          placeholder="Текст для вычисления контрольных сумм..."
+          placeholder={isEn ? 'Text for checksum calculation...' : 'Текст для вычисления контрольных сумм...'}
           sx={{
             mb: 2,
             '& .MuiInputBase-root': {
@@ -269,7 +272,7 @@ export default function ChecksumCalc() {
             disabled={!input.trim() || loading}
             sx={{ textTransform: 'none', fontWeight: 600 }}
           >
-            {loading ? 'Вычисление...' : 'Вычислить хеши'}
+            {loading ? (isEn ? 'Computing...' : 'Вычисление...') : (isEn ? 'Compute hashes' : 'Вычислить хеши')}
           </Button>
         </Box>
 
@@ -277,13 +280,13 @@ export default function ChecksumCalc() {
           <Box sx={{ mb: 2 }}>
             <Chip
               size="small"
-              label={`${new TextEncoder().encode(input).length} байт`}
+              label={`${new TextEncoder().encode(input).length} ${isEn ? 'bytes' : 'байт'}`}
               variant="outlined"
               sx={{ fontSize: '0.75rem', mr: 1 }}
             />
             <Chip
               size="small"
-              label={`${input.length} символов`}
+              label={`${input.length} ${isEn ? 'chars' : 'символов'}`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />
@@ -296,7 +299,7 @@ export default function ChecksumCalc() {
             <Divider sx={{ my: 2 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-              Контрольные суммы
+              {isEn ? 'Checksums' : 'Контрольные суммы'}
             </Typography>
 
             <Grid container spacing={2}>
@@ -344,7 +347,7 @@ export default function ChecksumCalc() {
                               fontWeight: 500
                             }}
                           >
-                            {hash.bits} бит
+                            {hash.bits} {isEn ? 'bit' : 'бит'}
                           </Typography>
                           {match === true && (
                             <CheckCircleIcon sx={{ fontSize: 18, color: '#2e7d32' }} />
@@ -378,7 +381,7 @@ export default function ChecksumCalc() {
             <Divider sx={{ my: 3 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Сравнение
+              {isEn ? 'Comparison' : 'Сравнение'}
             </Typography>
 
             <TextField
@@ -386,7 +389,7 @@ export default function ChecksumCalc() {
               size="small"
               value={compareHash}
               onChange={(e) => setCompareHash(e.target.value)}
-              placeholder="Ожидаемый хеш..."
+              placeholder={isEn ? 'Expected hash...' : 'Ожидаемый хеш...'}
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", monospace',
@@ -400,7 +403,7 @@ export default function ChecksumCalc() {
                 {anyMatch ? (
                   <Chip
                     icon={<CheckCircleIcon />}
-                    label="Совпадение найдено"
+                    label={isEn ? 'Match found' : 'Совпадение найдено'}
                     size="small"
                     color="success"
                     variant="outlined"
@@ -408,7 +411,7 @@ export default function ChecksumCalc() {
                 ) : (
                   <Chip
                     icon={<CancelIcon />}
-                    label="Совпадений не найдено"
+                    label={isEn ? 'No match found' : 'Совпадений не найдено'}
                     size="small"
                     color="error"
                     variant="outlined"

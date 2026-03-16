@@ -6,10 +6,13 @@ import {
 } from '@mui/material';
 import { SwapVert } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 export default function HtmlEncoder() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
 
@@ -39,7 +42,7 @@ export default function HtmlEncoder() {
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
         <Chip
-          label="Кодировать"
+          label={isEn ? 'Encode' : 'Кодировать'}
           onClick={() => setMode('encode')}
           sx={{
             fontWeight: mode === 'encode' ? 700 : 400,
@@ -47,7 +50,7 @@ export default function HtmlEncoder() {
           }}
         />
         <Chip
-          label="Декодировать"
+          label={isEn ? 'Decode' : 'Декодировать'}
           onClick={() => setMode('decode')}
           sx={{
             fontWeight: mode === 'decode' ? 700 : 400,
@@ -72,7 +75,7 @@ export default function HtmlEncoder() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', mb: 1 }}>
             <Box sx={{ display: 'flex', gap: 0.5 }}>
-              <IconButton size="small" onClick={swap} title="Поменять местами">
+              <IconButton size="small" onClick={swap} title={isEn ? 'Swap' : 'Поменять местами'}>
                 <SwapVert fontSize="small" />
               </IconButton>
               <CopyButton text={output} />

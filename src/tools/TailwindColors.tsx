@@ -11,6 +11,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
 
@@ -49,6 +50,8 @@ function getContrastColor(hex: string): string {
 
 export default function TailwindColors() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [search, setSearch] = useState('');
 
   const filteredColors = Object.entries(tailwindColors).filter(([name]) =>
@@ -71,7 +74,7 @@ export default function TailwindColors() {
         <TextField
           fullWidth
           size="small"
-          placeholder="Поиск по названию цвета..."
+          placeholder={isEn ? "Search by color name..." : "Поиск по названию цвета..."}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           sx={{ mb: 2 }}

@@ -11,6 +11,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Protocol = 'TCP' | 'UDP' | 'TCP/UDP';
 type Category = 'web' | 'email' | 'database' | 'file' | 'remote' | 'messaging' | 'other';
@@ -23,7 +24,7 @@ interface PortEntry {
   category: Category;
 }
 
-const categoryLabels: Record<Category, string> = {
+const categoryLabelsRu: Record<Category, string> = {
   web: 'Веб',
   email: 'Почта',
   database: 'Базы данных',
@@ -31,6 +32,16 @@ const categoryLabels: Record<Category, string> = {
   remote: 'Удалённый доступ',
   messaging: 'Сообщения',
   other: 'Другое'
+};
+
+const categoryLabelsEn: Record<Category, string> = {
+  web: 'Web',
+  email: 'Email',
+  database: 'Databases',
+  file: 'File Transfer',
+  remote: 'Remote Access',
+  messaging: 'Messaging',
+  other: 'Other'
 };
 
 const ports: PortEntry[] = [
@@ -104,10 +115,38 @@ const ports: PortEntry[] = [
   { port: 2222, protocol: 'TCP', service: 'SSH-Alt', description: 'Альтернативный SSH', category: 'remote' },
 ];
 
+const portDescEn: Record<number, string> = {
+  20: 'FTP Data Transfer', 21: 'FTP Control', 22: 'Secure Shell', 23: 'Telnet (insecure)',
+  25: 'Mail Sending', 43: 'WHOIS Service', 53: 'Domain Name System', 67: 'DHCP Server',
+  68: 'DHCP Client', 69: 'Simple FTP', 80: 'Web Server', 88: 'Kerberos Authentication',
+  110: 'POP3 Mail Retrieval', 119: 'News Groups', 123: 'Time Synchronization',
+  135: 'Microsoft RPC', 137: 'NetBIOS Name Service', 138: 'NetBIOS Datagram',
+  139: 'NetBIOS Session', 143: 'IMAP Mail Retrieval', 161: 'Network Monitoring',
+  162: 'SNMP Notifications', 179: 'BGP Protocol', 194: 'IRC Internet Chat',
+  389: 'LDAP Directory', 443: 'Web Server (SSL/TLS)', 445: 'Windows File Sharing',
+  465: 'SMTP over SSL', 514: 'System Logs', 515: 'LPD Printing',
+  587: 'Mail Sending (STARTTLS)', 636: 'LDAP over SSL', 993: 'IMAP over SSL',
+  995: 'POP3 over SSL', 1080: 'SOCKS Proxy', 1433: 'Microsoft SQL Server',
+  1434: 'MS SQL Browser', 1521: 'Oracle Database', 1723: 'VPN PPTP',
+  1883: 'IoT Protocol MQTT', 2049: 'Network File System', 2082: 'cPanel HTTP',
+  2083: 'cPanel HTTPS', 3306: 'MySQL / MariaDB', 3389: 'Remote Desktop',
+  5432: 'PostgreSQL', 5672: 'RabbitMQ / AMQP', 5900: 'VNC Remote Screen',
+  6379: 'Redis', 6667: 'IRC (alt.)', 8080: 'Alternative HTTP',
+  8443: 'Alternative HTTPS', 8883: 'MQTT over SSL', 9090: 'Prometheus',
+  9200: 'Elasticsearch HTTP', 9300: 'Elasticsearch Transport', 11211: 'Memcached',
+  27017: 'MongoDB', 5601: 'Kibana', 8888: 'Jupyter Notebook',
+  3000: 'Node.js / React Dev', 4200: 'Angular Dev Server', 5000: 'Flask / ASP.NET',
+  8000: 'Django Dev Server', 1194: 'VPN OpenVPN', 51820: 'VPN WireGuard',
+  873: 'File Synchronization', 2222: 'Alternative SSH',
+};
+
 type ProtocolFilter = 'all' | 'TCP' | 'UDP';
 
 export default function PortList() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const categoryLabels = isEn ? categoryLabelsEn : categoryLabelsRu;
   const [search, setSearch] = useState('');
   const [protocolFilter, setProtocolFilter] = useState<ProtocolFilter>('all');
   const [categoryFilter, setCategoryFilter] = useState<Category | 'all'>('all');
@@ -152,19 +191,19 @@ export default function PortList() {
           fullWidth
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Поиск по номеру порта или названию сервиса..."
+          placeholder={isEn ? "Search by port number or service name..." : "Поиск по номеру порта или названию сервиса..."}
           slotProps={{ htmlInput: { style: { fontSize: '1rem' } } }}
           sx={{ mb: 2 }}
         />
 
         <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Протокол
+          {isEn ? 'Protocol' : 'Протокол'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
           {(['all', 'TCP', 'UDP'] as ProtocolFilter[]).map((pf) => (
             <Chip
               key={pf}
-              label={pf === 'all' ? 'Все' : pf}
+              label={pf === 'all' ? (isEn ? 'All' : 'Все') : pf}
               size="small"
               variant={protocolFilter === pf ? 'filled' : 'outlined'}
               color={protocolFilter === pf ? 'primary' : 'default'}
@@ -175,11 +214,11 @@ export default function PortList() {
         </Box>
 
         <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Категория
+          {isEn ? 'Category' : 'Категория'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           <Chip
-            label="Все"
+            label={isEn ? 'All' : 'Все'}
             size="small"
             variant={categoryFilter === 'all' ? 'filled' : 'outlined'}
             color={categoryFilter === 'all' ? 'primary' : 'default'}
@@ -209,7 +248,7 @@ export default function PortList() {
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          Найдено: {sortedFiltered.length} портов
+          {isEn ? `Found: ${sortedFiltered.length} ports` : `Найдено: ${sortedFiltered.length} портов`}
         </Typography>
         <Box sx={{ overflowX: 'auto' }}>
           <Box
@@ -235,11 +274,11 @@ export default function PortList() {
           >
             <thead>
               <tr>
-                <th>Порт</th>
-                <th>Протокол</th>
-                <th>Сервис</th>
-                <th>Описание</th>
-                <th>Категория</th>
+                <th>{isEn ? 'Port' : 'Порт'}</th>
+                <th>{isEn ? 'Protocol' : 'Протокол'}</th>
+                <th>{isEn ? 'Service' : 'Сервис'}</th>
+                <th>{isEn ? 'Description' : 'Описание'}</th>
+                <th>{isEn ? 'Category' : 'Категория'}</th>
               </tr>
             </thead>
             <tbody>
@@ -272,7 +311,7 @@ export default function PortList() {
                       {p.service}
                     </Typography>
                   </td>
-                  <td>{p.description}</td>
+                  <td>{isEn ? (portDescEn[p.port] || p.description) : p.description}</td>
                   <td>
                     <Chip
                       label={categoryLabels[p.category]}
@@ -288,7 +327,7 @@ export default function PortList() {
         </Box>
         {sortedFiltered.length === 0 && (
           <Typography sx={{ textAlign: 'center', py: 3, color: 'text.secondary' }}>
-            Ничего не найдено. Попробуйте изменить фильтры.
+            {isEn ? 'Nothing found. Try changing filters.' : 'Ничего не найдено. Попробуйте изменить фильтры.'}
           </Typography>
         )}
       </Paper>

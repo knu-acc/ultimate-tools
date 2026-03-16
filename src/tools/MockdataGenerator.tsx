@@ -20,6 +20,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type FieldType = 'firstName' | 'lastName' | 'email' | 'phone' | 'number' | 'boolean' | 'date' | 'uuid' | 'city' | 'country' | 'company';
 
@@ -162,6 +163,22 @@ function toCSV(data: Record<string, string | number | boolean>[]): string {
 
 export default function MockdataGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const FIELD_TYPES_I18N: { value: FieldType; label: string }[] = [
+    { value: 'firstName', label: isEn ? 'First Name' : 'Имя' },
+    { value: 'lastName', label: isEn ? 'Last Name' : 'Фамилия' },
+    { value: 'email', label: 'Email' },
+    { value: 'phone', label: isEn ? 'Phone' : 'Телефон' },
+    { value: 'number', label: isEn ? 'Number' : 'Число' },
+    { value: 'boolean', label: isEn ? 'Boolean' : 'Булево' },
+    { value: 'date', label: isEn ? 'Date' : 'Дата' },
+    { value: 'uuid', label: 'UUID' },
+    { value: 'city', label: isEn ? 'City' : 'Город' },
+    { value: 'country', label: isEn ? 'Country' : 'Страна' },
+    { value: 'company', label: isEn ? 'Company' : 'Компания' },
+  ];
   const [fields, setFields] = useState<FieldDef[]>([
     { id: 1, name: 'id', type: 'uuid' },
     { id: 2, name: 'firstName', type: 'firstName' },
@@ -216,7 +233,7 @@ export default function MockdataGenerator() {
         }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-          Схема данных
+          {isEn ? 'Data Schema' : 'Схема данных'}
         </Typography>
 
         {fields.map((field) => (
@@ -225,7 +242,7 @@ export default function MockdataGenerator() {
               size="small"
               value={field.name}
               onChange={(e) => updateField(field.id, { name: e.target.value })}
-              placeholder="Имя поля"
+              placeholder={isEn ? 'Field name' : 'Имя поля'}
               sx={{ flex: 1 }}
               slotProps={{
                 htmlInput: { style: { fontFamily: 'monospace' } }
@@ -238,7 +255,7 @@ export default function MockdataGenerator() {
               onChange={(e) => updateField(field.id, { type: e.target.value as FieldType })}
               sx={{ minWidth: 150 }}
             >
-              {FIELD_TYPES.map((ft) => (
+              {FIELD_TYPES_I18N.map((ft) => (
                 <MenuItem key={ft.value} value={ft.value}>
                   {ft.label}
                 </MenuItem>
@@ -251,7 +268,7 @@ export default function MockdataGenerator() {
                   type="number"
                   value={field.min ?? 0}
                   onChange={(e) => updateField(field.id, { min: parseInt(e.target.value) || 0 })}
-                  placeholder="Мин"
+                  placeholder={isEn ? 'Min' : 'Мин'}
                   sx={{ width: 80 }}
                 />
                 <TextField
@@ -259,7 +276,7 @@ export default function MockdataGenerator() {
                   type="number"
                   value={field.max ?? 1000}
                   onChange={(e) => updateField(field.id, { max: parseInt(e.target.value) || 1000 })}
-                  placeholder="Макс"
+                  placeholder={isEn ? 'Max' : 'Макс'}
                   sx={{ width: 80 }}
                 />
               </>
@@ -276,7 +293,7 @@ export default function MockdataGenerator() {
           onClick={addField}
           sx={{ mt: 1, borderRadius: 3 }}
         >
-          Добавить поле
+          {isEn ? 'Add field' : 'Добавить поле'}
         </Button>
       </Paper>
 
@@ -292,7 +309,7 @@ export default function MockdataGenerator() {
         <Grid container spacing={2} sx={{ alignItems: 'center' }}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <Typography variant="body2" sx={{ mb: 1, color: 'text.secondary' }}>
-              Количество записей: {count}
+              {isEn ? `Number of records: ${count}` : `Количество записей: ${count}`}
             </Typography>
             <Slider
               value={count}
@@ -322,7 +339,7 @@ export default function MockdataGenerator() {
               onClick={generate}
               sx={{ borderRadius: 3, height: 40, textTransform: 'none', fontWeight: 600 }}
             >
-              Сгенерировать
+              {isEn ? 'Generate' : 'Сгенерировать'}
             </Button>
           </Grid>
         </Grid>
@@ -339,7 +356,7 @@ export default function MockdataGenerator() {
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-              Результат
+              {isEn ? 'Result' : 'Результат'}
             </Typography>
             <CopyButton text={output} />
           </Box>

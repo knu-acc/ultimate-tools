@@ -28,6 +28,7 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import CloseIcon from '@mui/icons-material/Close';
 import FolderZipIcon from '@mui/icons-material/FolderZip';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type OutputFormat = 'image/jpeg' | 'image/png' | 'image/webp' | 'original';
 
@@ -45,9 +46,9 @@ interface ImageItem {
   done: boolean;
 }
 
-function formatFileSize(bytes: number): string {
-  if (bytes === 0) return '0 Б';
-  const units = ['Б', 'КБ', 'МБ', 'ГБ'];
+function formatFileSize(bytes: number, isEn: boolean = false): string {
+  if (bytes === 0) return isEn ? '0 B' : '0 Б';
+  const units = isEn ? ['B', 'KB', 'MB', 'GB'] : ['Б', 'КБ', 'МБ', 'ГБ'];
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${units[i]}`;
 }
@@ -75,6 +76,8 @@ let idCounter = 0;
 
 export default function ImageCompressor() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [images, setImages] = useState<ImageItem[]>([]);
   const [quality, setQuality] = useState(80);
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('image/jpeg');
@@ -325,7 +328,7 @@ export default function ImageCompressor() {
   const doneCount = images.filter(i => i.done).length;
 
   const scalePresets = [
-    { label: 'Оригинал', value: 100 },
+    { label: isEn ? 'Original' : 'Оригинал', value: 100 },
     { label: '-10%', value: 90 },
     { label: '-20%', value: 80 },
     { label: '-30%', value: 70 },
@@ -378,10 +381,10 @@ export default function ImageCompressor() {
       >
         <CloudUploadIcon sx={{ fontSize: images.length > 0 ? 36 : 64, color: 'text.secondary', mb: 1, opacity: 0.6 }} />
         <Typography variant={images.length > 0 ? 'body1' : 'h6'} sx={{ mb: 0.5 }}>
-          {images.length > 0 ? 'Добавить ещё изображения' : 'Перетащите изображения сюда'}
+          {images.length > 0 ? (isEn ? 'Add more images' : 'Добавить ещё изображения') : (isEn ? 'Drop images here' : 'Перетащите изображения сюда')}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-          или нажмите для выбора • Ctrl+V для вставки из буфера
+          {isEn ? 'or click to select \u2022 Ctrl+V to paste from clipboard' : 'или нажмите для выбора • Ctrl+V для вставки из буфера'}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, flexWrap: 'wrap' }}>
           <Chip label="JPEG" size="small" variant="outlined" />
@@ -404,10 +407,10 @@ export default function ImageCompressor() {
               {/* Compression */}
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography variant="subtitle2" sx={{ mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <CompressIcon fontSize="small" /> Сжатие
+                  <CompressIcon fontSize="small" /> {isEn ? 'Compression' : 'Сжатие'}
                 </Typography>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 0.5, color: 'text.secondary' }}>
-                  Качество: {quality}%
+                  {isEn ? 'Quality' : 'Качество'}: {quality}%
                 </Typography>
                 <Slider
                   value={quality}
@@ -418,13 +421,13 @@ export default function ImageCompressor() {
                   sx={{ mx: 1 }}
                 />
                 <FormControl fullWidth size="small" sx={{ mt: 1 }}>
-                  <InputLabel>Формат</InputLabel>
+                  <InputLabel>{isEn ? 'Format' : 'Формат'}</InputLabel>
                   <Select
                     value={outputFormat}
-                    label="Формат"
+                    label={isEn ? 'Format' : 'Формат'}
                     onChange={(e) => setOutputFormat(e.target.value as OutputFormat)}
                   >
-                    <MenuItem value="original">Оригинальный</MenuItem>
+                    <MenuItem value="original">{isEn ? 'Original' : 'Оригинальный'}</MenuItem>
                     <MenuItem value="image/jpeg">JPEG</MenuItem>
                     <MenuItem value="image/png">PNG</MenuItem>
                     <MenuItem value="image/webp">WebP</MenuItem>
@@ -435,7 +438,7 @@ export default function ImageCompressor() {
               {/* Resize */}
               <Grid size={{ xs: 12, md: 6 }}>
                 <Typography variant="subtitle2" sx={{ mb: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <AspectRatioIcon fontSize="small" /> Размер: {scalePercent}%
+                  <AspectRatioIcon fontSize="small" /> {isEn ? 'Size' : 'Размер'}: {scalePercent}%
                 </Typography>
 
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75, mb: 2 }}>
@@ -455,7 +458,7 @@ export default function ImageCompressor() {
                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                   <TextField
                     size="small"
-                    label="Свой %"
+                    label={isEn ? "Custom %" : "Свой %"}
                     type="number"
                     value={customScale}
                     onChange={(e) => setCustomScale(e.target.value)}
@@ -469,7 +472,7 @@ export default function ImageCompressor() {
                     onClick={applyCustomScale}
                     disabled={!customScale || parseInt(customScale) < 1 || parseInt(customScale) > 100}
                   >
-                    Применить
+                    {isEn ? 'Apply' : 'Применить'}
                   </Button>
                   {scalePercent < 100 && images.length > 0 && images[0].originalWidth > 0 && (
                     <Typography variant="caption" color="text.secondary">
@@ -485,21 +488,21 @@ export default function ImageCompressor() {
           <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 6, sm: 3 }}>
               <Paper elevation={0} sx={{ p: 1.5, textAlign: 'center', borderRadius: 3 }}>
-                <Typography variant="caption" color="text.secondary">Файлов</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Files' : 'Файлов'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>{images.length}</Typography>
               </Paper>
             </Grid>
             <Grid size={{ xs: 6, sm: 3 }}>
               <Paper elevation={0} sx={{ p: 1.5, textAlign: 'center', borderRadius: 3 }}>
-                <Typography variant="caption" color="text.secondary">До</Typography>
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>{formatFileSize(totalOriginal)}</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Before' : 'До'}</Typography>
+                <Typography variant="h6" sx={{ fontWeight: 700 }}>{formatFileSize(totalOriginal, isEn)}</Typography>
               </Paper>
             </Grid>
             <Grid size={{ xs: 6, sm: 3 }}>
               <Paper elevation={0} sx={{ p: 1.5, textAlign: 'center', borderRadius: 3 }}>
-                <Typography variant="caption" color="text.secondary">После</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'After' : 'После'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
-                  {formatFileSize(totalResult)}
+                  {formatFileSize(totalResult, isEn)}
                 </Typography>
               </Paper>
             </Grid>
@@ -515,7 +518,7 @@ export default function ImageCompressor() {
                     : totalResult > 0 ? alpha(theme.palette.error.main, 0.06) : undefined,
                 }}
               >
-                <Typography variant="caption" color="text.secondary">Сжатие</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Compression' : 'Сжатие'}</Typography>
                 <Typography
                   variant="h6"
                   sx={{
@@ -538,10 +541,10 @@ export default function ImageCompressor() {
               disabled={doneCount === 0 || downloading}
             >
               {downloading
-                ? 'Упаковка...'
+                ? (isEn ? 'Packing...' : 'Упаковка...')
                 : images.length > 1
-                  ? `Скачать все (${doneCount} шт.) ZIP`
-                  : 'Скачать'
+                  ? (isEn ? `Download all (${doneCount}) ZIP` : `Скачать все (${doneCount} шт.) ZIP`)
+                  : (isEn ? 'Download' : 'Скачать')
               }
             </Button>
             <Button
@@ -549,9 +552,9 @@ export default function ImageCompressor() {
               onClick={() => fileInputRef.current?.click()}
               startIcon={<CloudUploadIcon />}
             >
-              Добавить
+              {isEn ? 'Add' : 'Добавить'}
             </Button>
-            <Tooltip title="Вставить из буфера (Ctrl+V)">
+            <Tooltip title={isEn ? "Paste from clipboard (Ctrl+V)" : "Вставить из буфера (Ctrl+V)"}>
               <Button variant="outlined" startIcon={<ContentPasteIcon />} onClick={() => {
                 navigator.clipboard.read?.().then(async (clipboardItems) => {
                   const files: File[] = [];
@@ -566,11 +569,11 @@ export default function ImageCompressor() {
                   if (files.length > 0) addFiles(files);
                 }).catch(() => {});
               }}>
-                Вставить
+                {isEn ? 'Paste' : 'Вставить'}
               </Button>
             </Tooltip>
             <Button variant="outlined" color="error" onClick={clearAll} startIcon={<DeleteIcon />}>
-              Очистить
+              {isEn ? 'Clear' : 'Очистить'}
             </Button>
           </Box>
 
@@ -637,12 +640,12 @@ export default function ImageCompressor() {
                       {item.file.name}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      {item.originalWidth}×{item.originalHeight} • {formatFileSize(item.originalSize)}
+                      {item.originalWidth}×{item.originalHeight} • {formatFileSize(item.originalSize, isEn)}
                       {item.done && (
                         <>
                           {' → '}
                           <Box component="span" sx={{ color: 'primary.main', fontWeight: 600 }}>
-                            {formatFileSize(item.resultSize)}
+                            {formatFileSize(item.resultSize, isEn)}
                           </Box>
                           {scalePercent < 100 && ` • ${newW}×${newH}`}
                         </>
@@ -669,7 +672,7 @@ export default function ImageCompressor() {
 
                   {/* Actions */}
                   <Box sx={{ display: 'flex', gap: 0.5, flexShrink: 0 }}>
-                    <Tooltip title="Скачать">
+                    <Tooltip title={isEn ? "Download" : "Скачать"}>
                       <span>
                         <IconButton
                           size="small"
@@ -680,7 +683,7 @@ export default function ImageCompressor() {
                         </IconButton>
                       </span>
                     </Tooltip>
-                    <Tooltip title="Удалить">
+                    <Tooltip title={isEn ? "Remove" : "Удалить"}>
                       <IconButton size="small" onClick={() => removeImage(item.id)} color="error">
                         <CloseIcon fontSize="small" />
                       </IconButton>

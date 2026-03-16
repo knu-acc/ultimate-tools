@@ -15,16 +15,19 @@ import {
   alpha
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
-
-const capitalizationOptions = [
-  { value: 'monthly', label: 'Ежемесячно', periods: 12 },
-  { value: 'quarterly', label: 'Ежеквартально', periods: 4 },
-  { value: 'annually', label: 'Ежегодно', periods: 1 },
-  { value: 'end', label: 'В конце срока', periods: 0 },
-];
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function DepositCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const capitalizationOptions = [
+    { value: 'monthly', label: isEn ? 'Monthly' : 'Ежемесячно', periods: 12 },
+    { value: 'quarterly', label: isEn ? 'Quarterly' : 'Ежеквартально', periods: 4 },
+    { value: 'annually', label: isEn ? 'Annually' : 'Ежегодно', periods: 1 },
+    { value: 'end', label: isEn ? 'At maturity' : 'В конце срока', periods: 0 },
+  ];
 
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
@@ -147,10 +150,10 @@ export default function DepositCalc() {
   }, [deposit, rate, termMonths, capitalization, monthlyAddition]);
 
   const fmt = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const fmtInt = (n: number) =>
-    n.toLocaleString('ru-RU', { maximumFractionDigits: 0 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 0 });
 
   const handleReset = () => {
     setDeposit('');
@@ -200,7 +203,7 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder={`Сумма вклада, ${sym}`}
+              placeholder={isEn ? `Deposit amount, ${sym}` : `Сумма вклада, ${sym}`}
               type="number"
               value={deposit}
               onChange={(e) => setDeposit(e.target.value)}
@@ -219,7 +222,7 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Годовая ставка, %"
+              placeholder={isEn ? 'Annual rate, %' : 'Годовая ставка, %'}
               type="number"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
@@ -238,7 +241,7 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              placeholder="Срок, месяцев"
+              placeholder={isEn ? 'Term, months' : 'Срок, месяцев'}
               type="number"
               value={termMonths}
               onChange={(e) => setTermMonths(e.target.value)}
@@ -246,7 +249,7 @@ export default function DepositCalc() {
                 input: {
                   endAdornment: (
                     <Typography variant="body2" color="text.disabled">
-                      мес
+                      {isEn ? 'mo' : 'мес'}
                     </Typography>
                   )
                 }
@@ -258,7 +261,7 @@ export default function DepositCalc() {
             <TextField
               fullWidth
               select
-              placeholder="Капитализация"
+              placeholder={isEn ? 'Compounding' : 'Капитализация'}
               value={capitalization}
               onChange={(e) => setCapitalization(e.target.value)}
             >
@@ -273,7 +276,7 @@ export default function DepositCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              placeholder={`Ежемесячное пополнение, ${sym}`}
+              placeholder={isEn ? `Monthly addition, ${sym}` : `Ежемесячное пополнение, ${sym}`}
               type="number"
               value={monthlyAddition}
               onChange={(e) => setMonthlyAddition(e.target.value)}
@@ -296,7 +299,7 @@ export default function DepositCalc() {
               size="small"
               sx={{ textTransform: 'none' }}
             >
-              Сбросить
+              {isEn ? 'Reset' : 'Сбросить'}
             </Button>
           </Grid>
         </Grid>
@@ -306,27 +309,27 @@ export default function DepositCalc() {
             <Divider sx={{ my: 3 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-              Результаты (с капитализацией)
+              {isEn ? 'Results (with compounding)' : 'Результаты (с капитализацией)'}
             </Typography>
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Итоговая сумма"
+                  label={isEn ? 'Final amount' : 'Итоговая сумма'}
                   value={`${fmt(results.finalWithCap)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Начислено процентов"
+                  label={isEn ? 'Interest accrued' : 'Начислено процентов'}
                   value={`${fmt(results.totalInterestWithCap)} ${sym}`}
                   color="#2e7d32"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Эффективная ставка"
+                  label={isEn ? 'Effective rate' : 'Эффективная ставка'}
                   value={`${results.effectiveRate.toFixed(2)}%`}
                   color="#e65100"
                 />
@@ -337,7 +340,7 @@ export default function DepositCalc() {
             <Divider sx={{ my: 3 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-              Сравнение: с капитализацией vs без
+              {isEn ? 'Comparison: with vs without compounding' : 'Сравнение: с капитализацией vs без'}
             </Typography>
 
             <Grid container spacing={2}>
@@ -351,11 +354,11 @@ export default function DepositCalc() {
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
-                    С капитализацией
+                    {isEn ? 'With compounding' : 'С капитализацией'}
                   </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                     <Typography variant="body2" color="text.secondary">
-                      Итого:
+                      {isEn ? 'Total:' : 'Итого:'}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
                       {fmt(results.finalWithCap)} {sym}
@@ -363,7 +366,7 @@ export default function DepositCalc() {
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="body2" color="text.secondary">
-                      Проценты:
+                      {isEn ? 'Interest:' : 'Проценты:'}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
                       {fmt(results.totalInterestWithCap)} {sym}
@@ -382,11 +385,11 @@ export default function DepositCalc() {
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
-                    Без капитализации (простой %)
+                    {isEn ? 'Without compounding (simple %)' : 'Без капитализации (простой %)'}
                   </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                     <Typography variant="body2" color="text.secondary">
-                      Итого:
+                      {isEn ? 'Total:' : 'Итого:'}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#1565c0' }}>
                       {fmt(results.finalNoCap)} {sym}
@@ -394,7 +397,7 @@ export default function DepositCalc() {
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="body2" color="text.secondary">
-                      Проценты:
+                      {isEn ? 'Interest:' : 'Проценты:'}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#1565c0' }}>
                       {fmt(results.totalInterestNoCap)} {sym}
@@ -407,7 +410,7 @@ export default function DepositCalc() {
             {results.capBenefit > 0 && (
               <Box sx={{ mt: 2 }}>
                 <Chip
-                  label={`Выгода от капитализации: +${fmt(results.capBenefit)} ${sym}`}
+                  label={`${isEn ? 'Compounding benefit' : 'Выгода от капитализации'}: +${fmt(results.capBenefit)} ${sym}`}
                   size="small"
                   color="success"
                   variant="outlined"
@@ -426,7 +429,7 @@ export default function DepositCalc() {
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-                Структура итоговой суммы
+                {isEn ? 'Final amount breakdown' : 'Структура итоговой суммы'}
               </Typography>
               <Box sx={{ display: 'flex', height: 28, borderRadius: 2, overflow: 'hidden' }}>
                 <Box
@@ -440,7 +443,7 @@ export default function DepositCalc() {
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
-                    Вклад
+                    {isEn ? 'Deposit' : 'Вклад'}
                   </Typography>
                 </Box>
                 {results.totalAdditions > 0 && (
@@ -455,7 +458,7 @@ export default function DepositCalc() {
                     }}
                   >
                     <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
-                      Пополнения
+                      {isEn ? 'Additions' : 'Пополнения'}
                     </Typography>
                   </Box>
                 )}
@@ -470,7 +473,7 @@ export default function DepositCalc() {
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
-                    Проценты
+                    {isEn ? 'Interest' : 'Проценты'}
                   </Typography>
                 </Box>
               </Box>
@@ -482,7 +485,7 @@ export default function DepositCalc() {
                 <Divider sx={{ my: 3 }} />
 
                 <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-                  Помесячная таблица
+                  {isEn ? 'Monthly breakdown' : 'Помесячная таблица'}
                 </Typography>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -502,7 +505,7 @@ export default function DepositCalc() {
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 80 }}>
                         <Chip
-                          label={`${row.month} мес`}
+                          label={isEn ? `Month ${row.month}` : `${row.month} мес`}
                           size="small"
                           sx={{
                             bgcolor: alpha(theme.palette.primary.main, 0.1),
@@ -514,7 +517,7 @@ export default function DepositCalc() {
                       <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                         <Box sx={{ textAlign: 'right' }}>
                           <Typography variant="caption" color="text.secondary">
-                            Баланс
+                            {isEn ? 'Balance' : 'Баланс'}
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
                             {fmtInt(row.balance)} {sym}
@@ -522,7 +525,7 @@ export default function DepositCalc() {
                         </Box>
                         <Box sx={{ textAlign: 'right' }}>
                           <Typography variant="caption" color="text.secondary">
-                            Проценты
+                            {isEn ? 'Interest' : 'Проценты'}
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
                             +{fmtInt(row.interest)} {sym}

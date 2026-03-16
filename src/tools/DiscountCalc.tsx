@@ -6,9 +6,12 @@ import {
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
 import { LocalOffer } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function DiscountCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
   const [price, setPrice] = useState('');
@@ -31,26 +34,26 @@ export default function DiscountCalc() {
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
-            label={`Исходная цена (${sym})`}
+            label={isEn ? `Original price (${sym})` : `Исходная цена (${sym})`}
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            placeholder="Например: 5000"
+            placeholder={isEn ? 'e.g.: 5000' : 'Например: 5000'}
             sx={{ mb: 2 }}
           />
 
           <TextField
             fullWidth
-            label="Скидка (%)"
+            label={isEn ? 'Discount (%)' : 'Скидка (%)'}
             type="number"
             value={discount}
             onChange={(e) => setDiscount(e.target.value)}
-            placeholder="Например: 20"
+            placeholder={isEn ? 'e.g.: 20' : 'Например: 20'}
             sx={{ mb: 2 }}
           />
 
           <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block' }}>
-            Быстрый выбор:
+            {isEn ? 'Quick select:' : 'Быстрый выбор:'}
           </Typography>
           <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap' }}>
             {quickDiscounts.map((d) => (
@@ -85,10 +88,10 @@ export default function DiscountCalc() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
-                  Цена со скидкой
+                  {isEn ? 'Discounted price' : 'Цена со скидкой'}
                 </Typography>
                 <Typography variant="h3" fontWeight={700} sx={{ color: theme.palette.success.main }}>
-                  {finalPrice.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} {sym}
+                  {finalPrice.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2 })} {sym}
                 </Typography>
               </Paper>
 
@@ -105,9 +108,9 @@ export default function DiscountCalc() {
                       '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.10) }
                     }}
                   >
-                    <Typography variant="caption" color="text.secondary">Вы экономите</Typography>
+                    <Typography variant="caption" color="text.secondary">{isEn ? 'You save' : 'Вы экономите'}</Typography>
                     <Typography variant="h6" fontWeight={600} color="error">
-                      {savings.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} {sym}
+                      {savings.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2 })} {sym}
                     </Typography>
                   </Paper>
                 </Grid>
@@ -123,9 +126,9 @@ export default function DiscountCalc() {
                       '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
                     }}
                   >
-                    <Typography variant="caption" color="text.secondary">Исходная цена</Typography>
+                    <Typography variant="caption" color="text.secondary">{isEn ? 'Original price' : 'Исходная цена'}</Typography>
                     <Typography variant="h6" fontWeight={600} sx={{ textDecoration: 'line-through', opacity: 0.6 }}>
-                      {priceNum.toLocaleString('ru-RU', { minimumFractionDigits: 2 })} {sym}
+                      {priceNum.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2 })} {sym}
                     </Typography>
                   </Paper>
                 </Grid>
@@ -167,8 +170,8 @@ export default function DiscountCalc() {
                   </Box>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
-                  <Typography variant="caption" color="text.secondary">Оплата</Typography>
-                  <Typography variant="caption" color="text.secondary">Скидка</Typography>
+                  <Typography variant="caption" color="text.secondary">{isEn ? 'Payment' : 'Оплата'}</Typography>
+                  <Typography variant="caption" color="text.secondary">{isEn ? 'Discount' : 'Скидка'}</Typography>
                 </Box>
               </Paper>
             </Box>
@@ -186,7 +189,7 @@ export default function DiscountCalc() {
             >
               <LocalOffer sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
-                Введите цену и скидку для расчёта
+                {isEn ? 'Enter price and discount to calculate' : 'Введите цену и скидку для расчёта'}
               </Typography>
             </Paper>
           )}

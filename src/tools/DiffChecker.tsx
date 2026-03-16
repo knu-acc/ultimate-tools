@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface DiffLine {
   type: 'added' | 'removed' | 'unchanged';
@@ -64,6 +65,8 @@ function computeDiff(original: string, modified: string): DiffLine[] {
 
 export default function DiffChecker() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [original, setOriginal] = useState('');
   const [modified, setModified] = useState('');
   const [diffResult, setDiffResult] = useState<DiffLine[] | null>(null);
@@ -132,7 +135,7 @@ export default function DiffChecker() {
               fullWidth
               value={original}
               onChange={(e) => setOriginal(e.target.value)}
-              placeholder="Оригинальный текст..."
+              placeholder={isEn ? 'Original text...' : 'Оригинальный текст...'}
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
@@ -150,7 +153,7 @@ export default function DiffChecker() {
               fullWidth
               value={modified}
               onChange={(e) => setModified(e.target.value)}
-              placeholder="Изменённый текст..."
+              placeholder={isEn ? 'Modified text...' : 'Изменённый текст...'}
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
@@ -172,7 +175,7 @@ export default function DiffChecker() {
             disabled={!original && !modified}
             sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
           >
-            Сравнить
+            {isEn ? 'Compare' : 'Сравнить'}
           </Button>
           <Button
             variant="outlined"
@@ -181,7 +184,7 @@ export default function DiffChecker() {
             color="inherit"
             sx={{ textTransform: 'none', borderRadius: 2 }}
           >
-            Очистить
+            {isEn ? 'Clear' : 'Очистить'}
           </Button>
         </Box>
 
@@ -190,7 +193,7 @@ export default function DiffChecker() {
           <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mb: 2, flexWrap: 'wrap' }}>
             <Chip
               size="small"
-              label={`+${stats.added} добавлено`}
+              label={`+${stats.added} ${isEn ? 'added' : 'добавлено'}`}
               sx={{
                 fontSize: '0.75rem',
                 bgcolor: alpha(theme.palette.success.main, 0.1),
@@ -200,7 +203,7 @@ export default function DiffChecker() {
             />
             <Chip
               size="small"
-              label={`-${stats.removed} удалено`}
+              label={`-${stats.removed} ${isEn ? 'removed' : 'удалено'}`}
               sx={{
                 fontSize: '0.75rem',
                 bgcolor: alpha(theme.palette.error.main, 0.1),
@@ -210,7 +213,7 @@ export default function DiffChecker() {
             />
             <Chip
               size="small"
-              label={`${stats.unchanged} без изменений`}
+              label={`${stats.unchanged} ${isEn ? 'unchanged' : 'без изменений'}`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />

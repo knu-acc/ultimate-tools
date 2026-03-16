@@ -13,22 +13,25 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Gender = 'male' | 'female';
 
 interface ActivityLevel {
   key: string;
-  label: string;
-  description: string;
+  labelRu: string;
+  labelEn: string;
+  descRu: string;
+  descEn: string;
   multiplier: number;
 }
 
 const ACTIVITY_LEVELS: ActivityLevel[] = [
-  { key: 'sedentary', label: 'Минимальная', description: 'Сидячий образ жизни, без тренировок', multiplier: 1.2 },
-  { key: 'light', label: 'Низкая', description: '1–3 тренировки в неделю', multiplier: 1.375 },
-  { key: 'moderate', label: 'Средняя', description: '3–5 тренировок в неделю', multiplier: 1.55 },
-  { key: 'high', label: 'Высокая', description: '6–7 тренировок в неделю', multiplier: 1.725 },
-  { key: 'extreme', label: 'Очень высокая', description: 'Ежедневные интенсивные тренировки', multiplier: 1.9 },
+  { key: 'sedentary', labelRu: 'Минимальная', labelEn: 'Sedentary', descRu: 'Сидячий образ жизни, без тренировок', descEn: 'Sedentary lifestyle, no exercise', multiplier: 1.2 },
+  { key: 'light', labelRu: 'Низкая', labelEn: 'Light', descRu: '1–3 тренировки в неделю', descEn: '1–3 workouts per week', multiplier: 1.375 },
+  { key: 'moderate', labelRu: 'Средняя', labelEn: 'Moderate', descRu: '3–5 тренировок в неделю', descEn: '3–5 workouts per week', multiplier: 1.55 },
+  { key: 'high', labelRu: 'Высокая', labelEn: 'High', descRu: '6–7 тренировок в неделю', descEn: '6–7 workouts per week', multiplier: 1.725 },
+  { key: 'extreme', labelRu: 'Очень высокая', labelEn: 'Very high', descRu: 'Ежедневные интенсивные тренировки', descEn: 'Daily intense training', multiplier: 1.9 },
 ];
 
 function calcBMR(weight: number, height: number, age: number, gender: Gender): number {
@@ -51,11 +54,13 @@ function calcMacros(calories: number) {
   };
 }
 
-const formatNum = (n: number) =>
-  n.toLocaleString('ru-RU', { maximumFractionDigits: 0 });
-
 export default function CalorieCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const formatNum = (n: number) =>
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 0 });
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [age, setAge] = useState('');
@@ -113,8 +118,8 @@ export default function CalorieCalc() {
               }
             }}
           >
-            <ToggleButton value="male">Мужской</ToggleButton>
-            <ToggleButton value="female">Женский</ToggleButton>
+            <ToggleButton value="male">{isEn ? 'Male' : 'Мужской'}</ToggleButton>
+            <ToggleButton value="female">{isEn ? 'Female' : 'Женский'}</ToggleButton>
           </ToggleButtonGroup>
         </Box>
 
@@ -122,7 +127,7 @@ export default function CalorieCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              placeholder="Вес, кг"
+              placeholder={isEn ? 'Weight, kg' : 'Вес, кг'}
               type="number"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
@@ -134,7 +139,7 @@ export default function CalorieCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              placeholder="Рост, см"
+              placeholder={isEn ? 'Height, cm' : 'Рост, см'}
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
@@ -146,7 +151,7 @@ export default function CalorieCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              placeholder="Возраст"
+              placeholder={isEn ? 'Age' : 'Возраст'}
               type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
@@ -169,7 +174,7 @@ export default function CalorieCalc() {
         }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 1.5 }}>
-          Активность
+          {isEn ? 'Activity' : 'Активность'}
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           {ACTIVITY_LEVELS.map((level) => {
@@ -203,10 +208,10 @@ export default function CalorieCalc() {
                         color: isActive ? 'primary.main' : 'text.primary'
                       }}
                     >
-                      {level.label}
+                      {isEn ? level.labelEn : level.labelRu}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      {level.description}
+                      {isEn ? level.descEn : level.descRu}
                     </Typography>
                   </Box>
                   <Chip
@@ -239,13 +244,13 @@ export default function CalorieCalc() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                  Базовый обмен (BMR)
+                  {isEn ? 'Basal Metabolic Rate (BMR)' : 'Базовый обмен (BMR)'}
                 </Typography>
                 <Typography variant="h4" sx={{ fontWeight: 700, color: '#1976d2', my: 0.5 }}>
                   {formatNum(Math.round(bmr))}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  ккал / день
+                  {isEn ? 'kcal / day' : 'ккал / день'}
                 </Typography>
               </Paper>
             </Grid>
@@ -260,13 +265,13 @@ export default function CalorieCalc() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                  Суточная норма (TDEE)
+                  {isEn ? 'Daily Allowance (TDEE)' : 'Суточная норма (TDEE)'}
                 </Typography>
                 <Typography variant="h4" sx={{ fontWeight: 700, color: '#2e7d32', my: 0.5 }}>
                   {formatNum(tdee)}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  ккал / день
+                  {isEn ? 'kcal / day' : 'ккал / день'}
                 </Typography>
               </Paper>
             </Grid>
@@ -283,13 +288,13 @@ export default function CalorieCalc() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
-              Макронутриенты
+              {isEn ? 'Macronutrients' : 'Макронутриенты'}
             </Typography>
             <Grid container spacing={2}>
               {[
-                { label: 'Белки', value: macros.protein, unit: 'г', color: '#e53935', pct: '30%' },
-                { label: 'Углеводы', value: macros.carbs, unit: 'г', color: '#fb8c00', pct: '40%' },
-                { label: 'Жиры', value: macros.fat, unit: 'г', color: '#43a047', pct: '30%' },
+                { label: isEn ? 'Protein' : 'Белки', value: macros.protein, unit: isEn ? 'g' : 'г', color: '#e53935', pct: '30%' },
+                { label: isEn ? 'Carbs' : 'Углеводы', value: macros.carbs, unit: isEn ? 'g' : 'г', color: '#fb8c00', pct: '40%' },
+                { label: isEn ? 'Fats' : 'Жиры', value: macros.fat, unit: isEn ? 'g' : 'г', color: '#43a047', pct: '30%' },
               ].map((m) => (
                 <Grid key={m.label} size={{ xs: 12, sm: 4 }}>
                   <Paper
@@ -333,7 +338,7 @@ export default function CalorieCalc() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
-              TDEE по уровням активности
+              {isEn ? 'TDEE by activity level' : 'TDEE по уровням активности'}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {ACTIVITY_LEVELS.map((level) => {
@@ -351,7 +356,7 @@ export default function CalorieCalc() {
                           color: isActive ? 'primary.main' : 'text.secondary'
                         }}
                       >
-                        {level.label}
+                        {isEn ? level.labelEn : level.labelRu}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -361,7 +366,7 @@ export default function CalorieCalc() {
                           color: isActive ? 'primary.main' : 'text.primary'
                         }}
                       >
-                        {formatNum(levelTdee)} ккал
+                        {formatNum(levelTdee)} {isEn ? 'kcal' : 'ккал'}
                       </Typography>
                     </Box>
                     <Box
@@ -402,13 +407,13 @@ export default function CalorieCalc() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
-              Рекомендации по целям
+              {isEn ? 'Goal-based recommendations' : 'Рекомендации по целям'}
             </Typography>
             <Grid container spacing={2}>
               {[
-                { label: 'Похудение', delta: -500, color: '#e53935', desc: '−500 ккал' },
-                { label: 'Поддержание', delta: 0, color: '#2e7d32', desc: '±0 ккал' },
-                { label: 'Набор массы', delta: 500, color: '#1565c0', desc: '+500 ккал' },
+                { label: isEn ? 'Weight loss' : 'Похудение', delta: -500, color: '#e53935', desc: isEn ? '−500 kcal' : '−500 ккал' },
+                { label: isEn ? 'Maintenance' : 'Поддержание', delta: 0, color: '#2e7d32', desc: isEn ? '±0 kcal' : '±0 ккал' },
+                { label: isEn ? 'Weight gain' : 'Набор массы', delta: 500, color: '#1565c0', desc: isEn ? '+500 kcal' : '+500 ккал' },
               ].map((goal) => (
                 <Grid key={goal.label} size={{ xs: 12, sm: 4 }}>
                   <Paper
@@ -424,7 +429,7 @@ export default function CalorieCalc() {
                       {goal.label}
                     </Typography>
                     <Typography variant="h6" sx={{ fontWeight: 700, color: goal.color }}>
-                      {formatNum(Math.max(tdee + goal.delta, 1200))} ккал
+                      {formatNum(Math.max(tdee + goal.delta, 1200))} {isEn ? 'kcal' : 'ккал'}
                     </Typography>
                     <Typography variant="caption" color="text.disabled">
                       {goal.desc}

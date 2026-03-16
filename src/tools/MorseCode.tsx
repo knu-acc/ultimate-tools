@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { SwapVert } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 const MORSE_MAP: Record<string, string> = {
@@ -49,6 +50,8 @@ function morseToText(morse: string): string {
 
 export default function MorseCode() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
 
@@ -63,7 +66,7 @@ export default function MorseCode() {
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
         <Chip
-          label="Текст → Морзе"
+          label={isEn ? 'Text → Morse' : 'Текст → Морзе'}
           onClick={() => setMode('encode')}
           sx={{
             fontWeight: mode === 'encode' ? 700 : 400,
@@ -71,7 +74,7 @@ export default function MorseCode() {
           }}
         />
         <Chip
-          label="Морзе → Текст"
+          label={isEn ? 'Morse → Text' : 'Морзе → Текст'}
           onClick={() => setMode('decode')}
           sx={{
             fontWeight: mode === 'decode' ? 700 : 400,
@@ -88,7 +91,7 @@ export default function MorseCode() {
             rows={5}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={mode === 'encode' ? 'Текст...' : 'Код Морзе...'}
+            placeholder={mode === 'encode' ? (isEn ? 'Text...' : 'Текст...') : (isEn ? 'Morse code...' : 'Код Морзе...')}
             sx={{ '& .MuiOutlinedInput-root': { fontFamily: mode === 'decode' ? 'monospace' : 'inherit' } }}
           />
         </Grid>

@@ -15,6 +15,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface TabPanelProps {
   children: React.ReactNode;
@@ -57,6 +58,8 @@ function isError(v: LinearOutcome | QuadraticOutcome): v is { error: string } {
 
 export default function EquationSolver() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [tab, setTab] = useState(0);
 
   const [linA, setLinA] = useState('');
@@ -82,10 +85,10 @@ export default function EquationSolver() {
 
     if (a === 0) {
       if (b === 0) {
-        steps.push('0 = 0 -- тождество');
+        steps.push(isEn ? '0 = 0 -- identity' : '0 = 0 -- тождество');
         return { x: NaN, steps, identity: true };
       }
-      return { error: 'Уравнение не имеет решений (a = 0, b \u2260 0)' };
+      return { error: isEn ? 'No solution (a = 0, b \u2260 0)' : 'Уравнение не имеет решений (a = 0, b \u2260 0)' };
     }
 
     steps.push(`${formatNum(a)}x = ${formatNum(-b)}`);
@@ -93,7 +96,7 @@ export default function EquationSolver() {
     steps.push(`x = ${formatNum(-b)} / ${formatNum(a)}`);
     steps.push(`x = ${formatNum(x)}`);
     return { x, steps };
-  }, [linA, linB]);
+  }, [linA, linB, isEn]);
 
   const quadraticResult = useMemo<QuadraticOutcome>(() => {
     if (quadA === '' && quadB === '' && quadC === '') return null;
@@ -101,7 +104,7 @@ export default function EquationSolver() {
     const b = parseFloat(quadB);
     const c = parseFloat(quadC);
     if (isNaN(a) || isNaN(b) || isNaN(c)) return null;
-    if (a === 0) return { error: 'Коэффициент a не может быть равен 0 (это линейное уравнение)' };
+    if (a === 0) return { error: isEn ? 'Coefficient a cannot be 0 (this is a linear equation)' : 'Коэффициент a не может быть равен 0 (это линейное уравнение)' };
 
     const steps: string[] = [];
     steps.push(`${formatNum(a)}x\u00B2 + ${formatNum(b)}x + ${formatNum(c)} = 0`);
@@ -110,13 +113,13 @@ export default function EquationSolver() {
     steps.push(`D = b\u00B2 \u2212 4ac = ${formatNum(b)}\u00B2 \u2212 4\u00B7${formatNum(a)}\u00B7${formatNum(c)} = ${formatNum(D)}`);
 
     if (D < 0) {
-      steps.push('D < 0 \u2014 уравнение не имеет действительных корней');
+      steps.push(isEn ? 'D < 0 \u2014 no real roots' : 'D < 0 \u2014 уравнение не имеет действительных корней');
       return { discriminant: D, roots: [], steps, type: 'none' };
     }
 
     if (D === 0) {
       const x = -b / (2 * a);
-      steps.push('D = 0 \u2014 один корень (два совпадающих)');
+      steps.push(isEn ? 'D = 0 \u2014 one root (two coinciding)' : 'D = 0 \u2014 один корень (два совпадающих)');
       steps.push(`x = \u2212b / (2a) = ${formatNum(-b)} / ${formatNum(2 * a)} = ${formatNum(x)}`);
       return { discriminant: D, roots: [x], steps, type: 'one' };
     }
@@ -130,21 +133,21 @@ export default function EquationSolver() {
     steps.push(`x\u2082 = (\u2212b \u2212 \u221AD) / (2a) = (${formatNum(-b)} \u2212 ${formatNum(sqrtD)}) / ${formatNum(2 * a)} = ${formatNum(x2)}`);
 
     return { discriminant: D, roots: [x1, x2], steps, type: 'two' };
-  }, [quadA, quadB, quadC]);
+  }, [quadA, quadB, quadC, isEn]);
 
   const linearCopyText = useMemo(() => {
     if (!isLinearResult(linearResult)) return '';
-    if (linearResult.identity) return 'Тождество: 0 = 0';
+    if (linearResult.identity) return isEn ? 'Identity: 0 = 0' : 'Тождество: 0 = 0';
     if (isNaN(linearResult.x)) return '';
     return `x = ${formatNum(linearResult.x)}`;
-  }, [linearResult]);
+  }, [linearResult, isEn]);
 
   const quadraticCopyText = useMemo(() => {
     if (!isQuadraticResult(quadraticResult)) return '';
-    if (quadraticResult.type === 'none') return 'Нет действительных корней';
+    if (quadraticResult.type === 'none') return isEn ? 'No real roots' : 'Нет действительных корней';
     if (quadraticResult.type === 'one') return `x = ${formatNum(quadraticResult.roots[0])}`;
     return `x\u2081 = ${formatNum(quadraticResult.roots[0])}, x\u2082 = ${formatNum(quadraticResult.roots[1])}`;
-  }, [quadraticResult]);
+  }, [quadraticResult, isEn]);
 
   const StepsList = ({ steps }: { steps: string[] }) => (
     <Paper
@@ -157,7 +160,7 @@ export default function EquationSolver() {
       }}
     >
       <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5, color: 'text.secondary' }}>
-        Пошаговое решение
+        {isEn ? 'Step-by-step solution' : 'Пошаговое решение'}
       </Typography>
       {steps.map((step, i) => (
         <Box key={i} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, mb: 1 }}>
@@ -226,8 +229,8 @@ export default function EquationSolver() {
             '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' }
           }}
         >
-          <Tab label="Линейное (ax + b = 0)" />
-          <Tab label="Квадратное (ax\u00B2 + bx + c = 0)" />
+          <Tab label={isEn ? "Linear (ax + b = 0)" : "Линейное (ax + b = 0)"} />
+          <Tab label={isEn ? "Quadratic (ax\u00B2 + bx + c = 0)" : "Квадратное (ax\u00B2 + bx + c = 0)"} />
         </Tabs>
 
         <Divider />
@@ -281,10 +284,10 @@ export default function EquationSolver() {
           {isLinearResult(linearResult) && linearResult.identity && (
             <ResultCard copyText={linearCopyText}>
               <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main' }}>
-                Тождество: 0 = 0
+                {isEn ? 'Identity: 0 = 0' : 'Тождество: 0 = 0'}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                Верно при любом x
+                {isEn ? 'True for any x' : 'Верно при любом x'}
               </Typography>
             </ResultCard>
           )}
@@ -293,7 +296,7 @@ export default function EquationSolver() {
             <>
               <ResultCard copyText={linearCopyText}>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                  Решение
+                  {isEn ? 'Solution' : 'Решение'}
                 </Typography>
                 <Typography variant="h4" sx={{ fontWeight: 700, color: 'primary.main' }}>
                   x = {formatNum(linearResult.x)}
@@ -381,7 +384,7 @@ export default function EquationSolver() {
                 </Box>
                 {quadraticResult.type === 'none' && (
                   <Typography variant="h6" sx={{ color: 'error.main', fontWeight: 600 }}>
-                    Нет действительных корней
+                    {isEn ? 'No real roots' : 'Нет действительных корней'}
                   </Typography>
                 )}
                 {quadraticResult.type === 'one' && (

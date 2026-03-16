@@ -8,24 +8,36 @@ import { Home, NavigateNext, Schedule, ArrowForward } from '@mui/icons-material'
 import Link from 'next/link';
 import { getArticleBySlug, getArticlesByTool } from '@/src/data/articles';
 import { getToolBySlug } from '@/src/data/tools';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function ArticlePage({ slug }: { slug: string }) {
   const theme = useTheme();
+  const { locale, t, lHref } = useLanguage();
+  const isEn = locale === 'en';
   const article = getArticleBySlug(slug);
 
   if (!article) {
     return (
       <Container maxWidth="md" sx={{ py: 6, textAlign: 'center' }}>
-        <Typography variant="h4">Статья не найдена</Typography>
-        <Button component={Link} href="/blog" sx={{ mt: 2 }}>К блогу</Button>
+        <Typography variant="h4">{isEn ? 'Article not found' : 'Статья не найдена'}</Typography>
+        <Button component={Link} href={lHref('/blog')} sx={{ mt: 2 }}>{isEn ? 'Back to blog' : 'К блогу'}</Button>
       </Container>
     );
   }
 
   const tool = getToolBySlug(article.toolSlug);
   const relatedArticles = getArticlesByTool(article.toolSlug).filter(a => a.slug !== article.slug);
+  const articleTitle = isEn ? (article.titleEn || article.title) : article.title;
+  const articleDesc = isEn ? (article.descriptionEn || article.description) : article.description;
+  const articleContent = isEn ? (article.contentEn || article.content) : article.content;
+  const toolName = tool ? (isEn ? ((tool as any).nameEn || tool.name) : tool.name) : '';
+  const toolDesc = tool ? (isEn ? ((tool as any).descriptionEn || tool.description) : tool.description) : '';
 
-  const typeLabels: Record<string, string> = {
+  const typeLabels: Record<string, string> = isEn ? {
+    guide: 'Guide',
+    tips: 'Tips',
+    'use-cases': 'Use Cases',
+  } : {
     guide: 'Руководство',
     tips: 'Советы',
     'use-cases': 'Кейсы',
@@ -163,11 +175,11 @@ export default function ArticlePage({ slug }: { slug: string }) {
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Breadcrumbs separator={<NavigateNext fontSize="small" />} sx={{ mb: 3 }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none' }}>
-          <Home sx={{ mr: 0.5, fontSize: 18 }} /> Главная
+        <Link href={lHref('/')} style={{ display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none' }}>
+          <Home sx={{ mr: 0.5, fontSize: 18 }} /> {isEn ? 'Home' : 'Главная'}
         </Link>
-        <Link href="/blog" style={{ color: 'inherit', textDecoration: 'none' }}>Блог</Link>
-        <Typography color="text.primary" fontWeight={500} noWrap sx={{ maxWidth: 250 }}>{article.title}</Typography>
+        <Link href={lHref('/blog')} style={{ color: 'inherit', textDecoration: 'none' }}>{isEn ? 'Blog' : 'Блог'}</Link>
+        <Typography color="text.primary" fontWeight={500} noWrap sx={{ maxWidth: 250 }}>{articleTitle}</Typography>
       </Breadcrumbs>
 
       <Box sx={{ mb: 4 }}>
@@ -175,25 +187,25 @@ export default function ArticlePage({ slug }: { slug: string }) {
           <Chip label={typeLabels[article.type]} size="small" color="primary" />
           {tool && (
             <Chip
-              label={tool.name}
+              label={toolName}
               size="small"
               variant="outlined"
               component={Link}
-              href={`/tools/${tool.slug}`}
+              href={lHref(`/tools/${tool.slug}`)}
               clickable
             />
           )}
         </Box>
 
         <Typography variant="h3" component="h1" fontWeight={700} sx={{ mb: 2 }}>
-          {article.title}
+          {articleTitle}
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
             <Schedule sx={{ fontSize: 16, color: 'text.secondary' }} />
             <Typography variant="body2" color="text.secondary">
-              {article.readTime} мин чтения
+              {article.readTime} {isEn ? 'min read' : 'мин чтения'}
             </Typography>
           </Box>
           <Typography variant="body2" color="text.secondary">
@@ -202,7 +214,7 @@ export default function ArticlePage({ slug }: { slug: string }) {
         </Box>
 
         <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 2 }}>
-          {article.description}
+          {articleDesc}
         </Typography>
       </Box>
 
@@ -210,7 +222,7 @@ export default function ArticlePage({ slug }: { slug: string }) {
 
       {/* Article Content */}
       <Box sx={{ mb: 6 }}>
-        {renderContent(article.content)}
+        {renderContent(articleContent)}
       </Box>
 
       {/* Tool CTA */}
@@ -227,18 +239,18 @@ export default function ArticlePage({ slug }: { slug: string }) {
           }}
         >
           <Typography variant="h6" fontWeight={600} gutterBottom>
-            Попробуйте {tool.name}
+            {isEn ? `Try ${toolName}` : `Попробуйте ${tool.name}`}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            {tool.description}
+            {toolDesc}
           </Typography>
           <Button
             component={Link}
-            href={`/tools/${tool.slug}`}
+            href={lHref(`/tools/${tool.slug}`)}
             variant="contained"
             endIcon={<ArrowForward />}
           >
-            Открыть инструмент
+            {isEn ? 'Open tool' : 'Открыть инструмент'}
           </Button>
         </Paper>
       )}
@@ -247,18 +259,18 @@ export default function ArticlePage({ slug }: { slug: string }) {
       {relatedArticles.length > 0 && (
         <Box>
           <Typography variant="h6" fontWeight={600} sx={{ mb: 2 }}>
-            Связанные статьи
+            {isEn ? 'Related articles' : 'Связанные статьи'}
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             {relatedArticles.map(a => (
               <Button
                 key={a.slug}
                 component={Link}
-                href={`/blog/${a.slug}`}
+                href={lHref(`/blog/${a.slug}`)}
                 sx={{ justifyContent: 'flex-start', textTransform: 'none' }}
                 endIcon={<ArrowForward />}
               >
-                {a.title}
+                {isEn ? (a.titleEn || a.title) : a.title}
               </Button>
             ))}
           </Box>
@@ -272,9 +284,10 @@ export default function ArticlePage({ slug }: { slug: string }) {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'Article',
-            headline: article.title,
-            description: article.description,
+            headline: articleTitle,
+            description: articleDesc,
             datePublished: article.date,
+            inLanguage: locale,
             author: { '@type': 'Organization', name: 'Ultimate Tools' },
             publisher: { '@type': 'Organization', name: 'Ultimate Tools' },
           }),

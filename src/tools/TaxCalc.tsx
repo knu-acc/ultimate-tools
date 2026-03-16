@@ -16,9 +16,12 @@ import {
   alpha
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function TaxCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
@@ -100,10 +103,10 @@ export default function TaxCalc() {
   }, [salary, isMonthly, deductionStandard, childrenCount, deductionProperty, propertyAmount, deductionEducation, educationAmount]);
 
   const fmt = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const fmtInt = (n: number) =>
-    n.toLocaleString('ru-RU', { maximumFractionDigits: 0 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 0 });
 
   const handleReset = () => {
     setSalary('');
@@ -153,11 +156,11 @@ export default function TaxCalc() {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label={isMonthly ? 'Зарплата в месяц (до вычета НДФЛ)' : 'Годовой доход (до вычета НДФЛ)'}
+              label={isMonthly ? (isEn ? 'Monthly salary (before income tax)' : 'Зарплата в месяц (до вычета НДФЛ)') : (isEn ? 'Annual income (before income tax)' : 'Годовой доход (до вычета НДФЛ)')}
               type="number"
               value={salary}
               onChange={(e) => setSalary(e.target.value)}
-              placeholder={isMonthly ? 'Например: 100000' : 'Например: 1200000'}
+              placeholder={isMonthly ? (isEn ? 'e.g.: 100000' : 'Например: 100000') : (isEn ? 'e.g.: 1200000' : 'Например: 1200000')}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -173,7 +176,7 @@ export default function TaxCalc() {
           <Grid size={{ xs: 12 }}>
             <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
               <Chip
-                label="В месяц"
+                label={isEn ? 'Monthly' : 'В месяц'}
                 size="small"
                 onClick={() => setIsMonthly(true)}
                 sx={{
@@ -186,7 +189,7 @@ export default function TaxCalc() {
                 }}
               />
               <Chip
-                label="В год"
+                label={isEn ? 'Annual' : 'В год'}
                 size="small"
                 onClick={() => setIsMonthly(false)}
                 sx={{
@@ -205,7 +208,7 @@ export default function TaxCalc() {
         <Divider sx={{ my: 3 }} />
 
         <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-          Налоговые вычеты
+          {isEn ? 'Tax deductions' : 'Налоговые вычеты'}
         </Typography>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
@@ -227,13 +230,13 @@ export default function TaxCalc() {
               }
               label={
                 <Typography variant="body2">
-                  Стандартный вычет на детей (1 400 {sym}/мес за 1-2 ребёнка, 3 000 {sym} за 3+)
+                  {isEn ? `Standard child deduction (1,400 ${sym}/mo for 1-2 children, 3,000 ${sym} for 3+)` : `Стандартный вычет на детей (1 400 ${sym}/мес за 1-2 ребёнка, 3 000 ${sym} за 3+)`}
                 </Typography>
               }
             />
             {deductionStandard && (
               <TextField
-                label="Количество детей"
+                label={isEn ? 'Number of children' : 'Количество детей'}
                 type="number"
                 size="small"
                 value={childrenCount}
@@ -261,18 +264,18 @@ export default function TaxCalc() {
               }
               label={
                 <Typography variant="body2">
-                  Имущественный вычет (макс. 2 000 000 {sym})
+                  {isEn ? `Property deduction (max 2,000,000 ${sym})` : `Имущественный вычет (макс. 2 000 000 ${sym})`}
                 </Typography>
               }
             />
             {deductionProperty && (
               <TextField
-                label={`Сумма расходов (${sym})`}
+                label={isEn ? `Expenses (${sym})` : `Сумма расходов (${sym})`}
                 type="number"
                 size="small"
                 value={propertyAmount}
                 onChange={(e) => setPropertyAmount(e.target.value)}
-                placeholder="Например: 2000000"
+                placeholder={isEn ? 'e.g.: 2000000' : 'Например: 2000000'}
                 sx={{ ml: 4, mt: 1, width: 220 }}
               />
             )}
@@ -296,18 +299,18 @@ export default function TaxCalc() {
               }
               label={
                 <Typography variant="body2">
-                  Вычет за обучение (макс. 150 000 {sym}/год)
+                  {isEn ? `Education deduction (max 150,000 ${sym}/year)` : `Вычет за обучение (макс. 150 000 ${sym}/год)`}
                 </Typography>
               }
             />
             {deductionEducation && (
               <TextField
-                label={`Сумма расходов (${sym})`}
+                label={isEn ? `Expenses (${sym})` : `Сумма расходов (${sym})`}
                 type="number"
                 size="small"
                 value={educationAmount}
                 onChange={(e) => setEducationAmount(e.target.value)}
-                placeholder="Например: 100000"
+                placeholder={isEn ? 'e.g.: 100000' : 'Например: 100000'}
                 sx={{ ml: 4, mt: 1, width: 220 }}
               />
             )}
@@ -321,7 +324,7 @@ export default function TaxCalc() {
             size="small"
             sx={{ textTransform: 'none' }}
           >
-            Сбросить
+            {isEn ? 'Reset' : 'Сбросить'}
           </Button>
         </Box>
 
@@ -331,10 +334,10 @@ export default function TaxCalc() {
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
               <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                Результаты
+                {isEn ? 'Results' : 'Результаты'}
               </Typography>
               <Chip
-                label={results.isHighRate ? 'НДФЛ 13% + 15%' : 'НДФЛ 13%'}
+                label={results.isHighRate ? (isEn ? 'Income tax 13% + 15%' : 'НДФЛ 13% + 15%') : (isEn ? 'Income tax 13%' : 'НДФЛ 13%')}
                 size="small"
                 color={results.isHighRate ? 'warning' : 'default'}
                 variant="outlined"
@@ -342,27 +345,27 @@ export default function TaxCalc() {
             </Box>
 
             <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1.5, color: 'text.secondary' }}>
-              В месяц
+              {isEn ? 'Monthly' : 'В месяц'}
             </Typography>
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Начислено (гросс)"
+                  label={isEn ? 'Gross' : 'Начислено (гросс)'}
                   value={`${fmt(results.monthlyGross)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="НДФЛ"
+                  label={isEn ? 'Income tax' : 'НДФЛ'}
                   value={`${fmt(results.monthlyTax)} ${sym}`}
                   color="#c62828"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="На руки (нетто)"
+                  label={isEn ? 'Net' : 'На руки (нетто)'}
                   value={`${fmt(results.monthlyNet)} ${sym}`}
                   color="#2e7d32"
                 />
@@ -370,27 +373,27 @@ export default function TaxCalc() {
             </Grid>
 
             <Typography variant="subtitle2" sx={{ fontWeight: 600, mt: 3, mb: 1.5, color: 'text.secondary' }}>
-              В год
+              {isEn ? 'Annual' : 'В год'}
             </Typography>
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Годовой доход"
+                  label={isEn ? 'Annual income' : 'Годовой доход'}
                   value={`${fmtInt(results.annualGross)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="НДФЛ за год"
+                  label={isEn ? 'Annual tax' : 'НДФЛ за год'}
                   value={`${fmtInt(results.annualTax)} ${sym}`}
                   color="#c62828"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="На руки за год"
+                  label={isEn ? 'Annual net' : 'На руки за год'}
                   value={`${fmtInt(results.annualNet)} ${sym}`}
                   color="#2e7d32"
                 />
@@ -413,7 +416,7 @@ export default function TaxCalc() {
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                    Эффективная ставка
+                    {isEn ? 'Effective rate' : 'Эффективная ставка'}
                   </Typography>
                   <Typography variant="h6" sx={{ fontWeight: 600, color: '#e65100' }}>
                     {results.effectiveRate.toFixed(2)}%
@@ -433,7 +436,7 @@ export default function TaxCalc() {
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                    Налогооблагаемая база
+                    {isEn ? 'Taxable income' : 'Налогооблагаемая база'}
                   </Typography>
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
                     {fmtInt(results.taxableIncome)} {sym}
@@ -453,7 +456,7 @@ export default function TaxCalc() {
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                    Сумма вычетов
+                    {isEn ? 'Total deductions' : 'Сумма вычетов'}
                   </Typography>
                   <Typography variant="h6" sx={{ fontWeight: 600, color: '#2e7d32' }}>
                     {fmtInt(results.totalDeductions)} {sym}
@@ -465,7 +468,7 @@ export default function TaxCalc() {
             {results.isHighRate && (
               <Box sx={{ mt: 2 }}>
                 <Typography variant="body2" color="text.secondary">
-                  Доход превышает 5 000 000 {sym} в год. Сумма свыше облагается по ставке 15%.
+                  {isEn ? `Income exceeds 5,000,000 ${sym} per year. Amount above is taxed at 15%.` : `Доход превышает 5 000 000 ${sym} в год. Сумма свыше облагается по ставке 15%.`}
                 </Typography>
               </Box>
             )}

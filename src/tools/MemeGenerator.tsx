@@ -20,11 +20,14 @@ import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorPickerInput from '@/src/components/ColorPickerInput';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type TextPosition = 'top' | 'bottom' | 'center';
 
 export default function MemeGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState('');
   const [pasteUrl, setPasteUrl] = useState('');
@@ -198,16 +201,16 @@ export default function MemeGenerator() {
           >
             <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
             <Typography variant="h6" sx={{ mb: 1 }}>
-              Перетащите изображение сюда
+              {isEn ? 'Drag and drop an image here' : 'Перетащите изображение сюда'}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              или нажмите для выбора файла
+              {isEn ? 'or click to select a file' : 'или нажмите для выбора файла'}
             </Typography>
           </Paper>
 
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Или вставьте URL изображения
+              {isEn ? 'Or paste an image URL' : 'Или вставьте URL изображения'}
             </Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <TextField
@@ -218,7 +221,7 @@ export default function MemeGenerator() {
                 placeholder="https://example.com/image.jpg"
               />
               <Button variant="contained" onClick={handlePasteUrl} disabled={!pasteUrl.trim()}>
-                Загрузить
+                {isEn ? 'Load' : 'Загрузить'}
               </Button>
             </Box>
           </Paper>
@@ -229,31 +232,31 @@ export default function MemeGenerator() {
         <>
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-              <TextFieldsIcon /> Настройки мема
+              <TextFieldsIcon /> {isEn ? 'Meme Settings' : 'Настройки мема'}
             </Typography>
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
-                  label="Верхний текст"
+                  label={isEn ? 'Top text' : 'Верхний текст'}
                   value={topText}
                   onChange={(e) => setTopText(e.target.value)}
                   multiline
                   rows={2}
-                  placeholder="КОГДА ТЫ..."
+                  placeholder={isEn ? 'WHEN YOU...' : 'КОГДА ТЫ...'}
                   sx={{ mb: 2 }}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
-                  label="Нижний текст"
+                  label={isEn ? 'Bottom text' : 'Нижний текст'}
                   value={bottomText}
                   onChange={(e) => setBottomText(e.target.value)}
                   multiline
                   rows={2}
-                  placeholder="НО ПОТОМ..."
+                  placeholder={isEn ? 'BUT THEN...' : 'НО ПОТОМ...'}
                   sx={{ mb: 2 }}
                 />
               </Grid>
@@ -262,7 +265,7 @@ export default function MemeGenerator() {
             <Grid container spacing={2} alignItems="center">
               <Grid size={{ xs: 12, sm: 4 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
-                  Размер шрифта: {fontSize}px
+                  {isEn ? 'Font size' : 'Размер шрифта'}: {fontSize}px
                 </Typography>
                 <Slider
                   value={fontSize}
@@ -274,10 +277,10 @@ export default function MemeGenerator() {
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
-                  Цвет текста
+                  {isEn ? 'Text color' : 'Цвет текста'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <ColorPickerInput value={textColor} onChange={setTextColor} label="Цвет текста" size="small" />
+                  <ColorPickerInput value={textColor} onChange={setTextColor} label={isEn ? 'Text color' : 'Цвет текста'} size="small" />
                   <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{textColor}</Typography>
                 </Box>
               </Grid>
@@ -289,16 +292,16 @@ export default function MemeGenerator() {
                       onChange={(e) => setStrokeEnabled(e.target.checked)}
                     />
                   }
-                  label="Обводка текста"
+                  label={isEn ? 'Text stroke' : 'Обводка текста'}
                 />
               </Grid>
             </Grid>
 
             <Box sx={{ display: 'flex', gap: 1, mt: 2, mb: 2 }}>
               {([
-                { value: 'top', label: 'Сверху' },
-                { value: 'bottom', label: 'Снизу' },
-                { value: 'center', label: 'По центру' },
+                { value: 'top', label: isEn ? 'Top' : 'Сверху' },
+                { value: 'bottom', label: isEn ? 'Bottom' : 'Снизу' },
+                { value: 'center', label: isEn ? 'Center' : 'По центру' },
               ] as { value: TextPosition; label: string }[]).map((pos) => (
                 <Chip
                   key={pos.value}
@@ -316,7 +319,7 @@ export default function MemeGenerator() {
                 startIcon={<DownloadIcon />}
                 onClick={handleDownload}
               >
-                Скачать мем
+                {isEn ? 'Download meme' : 'Скачать мем'}
               </Button>
               <Button variant="outlined" onClick={clearAll} color="error" sx={{ minWidth: 48 }}>
                 <DeleteIcon />
@@ -327,7 +330,7 @@ export default function MemeGenerator() {
           {/* Preview */}
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Предпросмотр
+              {isEn ? 'Preview' : 'Предпросмотр'}
             </Typography>
             <Box
               sx={{

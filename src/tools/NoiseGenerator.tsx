@@ -7,6 +7,7 @@ import {
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import TimerIcon from '@mui/icons-material/Timer';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type NoiseType = 'white' | 'pink' | 'brown';
 
@@ -27,6 +28,14 @@ const BAR_COUNT = 24;
 
 export default function NoiseGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const NOISE_OPTIONS_I18N: NoiseOption[] = [
+    { type: 'white', label: isEn ? 'White Noise' : 'Белый шум', description: isEn ? 'Uniform noise across all frequencies' : 'Равномерный шум на всех частотах' },
+    { type: 'pink', label: isEn ? 'Pink Noise' : 'Розовый шум', description: isEn ? '3 dB decrease per octave' : 'Убывание 3 дБ на октаву' },
+    { type: 'brown', label: isEn ? 'Brown Noise' : 'Коричневый шум', description: isEn ? '6 dB decrease per octave' : 'Убывание 6 дБ на октаву' },
+  ];
   const [noiseType, setNoiseType] = useState<NoiseType>('white');
   const [volume, setVolume] = useState(50);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -176,10 +185,10 @@ export default function NoiseGenerator() {
         sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
-          Тип шума
+          {isEn ? 'Noise Type' : 'Тип шума'}
         </Typography>
         <Grid container spacing={2}>
-          {NOISE_OPTIONS.map((opt) => (
+          {NOISE_OPTIONS_I18N.map((opt) => (
             <Grid key={opt.type} size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
@@ -246,7 +255,7 @@ export default function NoiseGenerator() {
         </Box>
         {timeRemaining !== null && (
           <Typography variant="body2" sx={{ textAlign: 'center', mt: 2, fontWeight: 600 }}>
-            Осталось: {formatTime(timeRemaining)}
+            {isEn ? 'Remaining' : 'Осталось'}: {formatTime(timeRemaining)}
           </Typography>
         )}
       </Paper>
@@ -259,7 +268,7 @@ export default function NoiseGenerator() {
         <Grid container spacing={3} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
-              Громкость: {volume}%
+              {isEn ? 'Volume' : 'Громкость'}: {volume}%
             </Typography>
             <Slider
               value={volume}
@@ -275,7 +284,7 @@ export default function NoiseGenerator() {
               onChange={(e) => setTimerMinutes(e.target.value.replace(/\D/g, ''))}
               size="small"
               fullWidth
-              placeholder="Таймер (мин)"
+              placeholder={isEn ? 'Timer (min)' : 'Таймер (мин)'}
               disabled={isPlaying}
               slotProps={{
                 input: {
@@ -293,7 +302,7 @@ export default function NoiseGenerator() {
               color={isPlaying ? 'error' : 'primary'}
               sx={{ height: 40 }}
             >
-              {isPlaying ? 'Стоп' : 'Играть'}
+              {isPlaying ? (isEn ? 'Stop' : 'Стоп') : (isEn ? 'Play' : 'Играть')}
             </Button>
           </Grid>
         </Grid>
@@ -305,9 +314,9 @@ export default function NoiseGenerator() {
         sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
       >
         <Typography variant="caption" color="text.secondary">
-          Генератор использует Web Audio API. Белый шум содержит равномерные частоты.
-          Розовый шум уменьшается на 3 дБ/октаву и помогает при засыпании.
-          Коричневый шум ещё более глубокий, с убыванием 6 дБ/октаву.
+          {isEn
+            ? 'The generator uses the Web Audio API. White noise contains uniform frequencies. Pink noise decreases by 3 dB/octave and helps with sleep. Brown noise is even deeper, decreasing by 6 dB/octave.'
+            : 'Генератор использует Web Audio API. Белый шум содержит равномерные частоты. Розовый шум уменьшается на 3 дБ/октаву и помогает при засыпании. Коричневый шум ещё более глубокий, с убыванием 6 дБ/октаву.'}
         </Typography>
       </Paper>
     </Box>

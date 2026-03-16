@@ -19,16 +19,19 @@ import ImageIcon from '@mui/icons-material/Image';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
-function formatFileSize(bytes: number): string {
-  if (bytes === 0) return '0 Б';
-  const units = ['Б', 'КБ', 'МБ', 'ГБ'];
+function formatFileSize(bytes: number, isEn: boolean): string {
+  if (bytes === 0) return isEn ? '0 B' : '0 Б';
+  const units = isEn ? ['B', 'KB', 'MB', 'GB'] : ['Б', 'КБ', 'МБ', 'ГБ'];
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${units[i]}`;
 }
 
 export default function ImageToBase64() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [mode, setMode] = useState(0); // 0 = image->base64, 1 = base64->image
   const [base64String, setBase64String] = useState('');
   const [dataUri, setDataUri] = useState('');
@@ -103,11 +106,11 @@ export default function ImageToBase64() {
       setReverseError('');
     };
     img.onerror = () => {
-      setReverseError('Невозможно декодировать изображение. Проверьте строку Base64.');
+      setReverseError(isEn ? 'Unable to decode image. Check the Base64 string.' : 'Невозможно декодировать изображение. Проверьте строку Base64.');
       setReversePreview('');
     };
     img.src = src;
-  }, []);
+  }, [isEn]);
 
   const getRawBase64 = () => base64String;
   const getHtmlTag = () => `<img src="${dataUri}" alt="image" />`;
@@ -139,8 +142,8 @@ export default function ImageToBase64() {
           onChange={(_, v) => setMode(v)}
           sx={{ borderBottom: `1px solid ${theme.palette.divider}` }}
         >
-          <Tab icon={<ImageIcon />} label="Изображение → Base64" iconPosition="start" />
-          <Tab icon={<SwapHorizIcon />} label="Base64 → Изображение" iconPosition="start" />
+          <Tab icon={<ImageIcon />} label={isEn ? 'Image → Base64' : 'Изображение → Base64'} iconPosition="start" />
+          <Tab icon={<SwapHorizIcon />} label={isEn ? 'Base64 → Image' : 'Base64 → Изображение'} iconPosition="start" />
         </Tabs>
       </Paper>
 
@@ -171,10 +174,10 @@ export default function ImageToBase64() {
             >
               <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
               <Typography variant="h6" sx={{ mb: 1 }}>
-                Перетащите изображение сюда
+                {isEn ? 'Drag and drop an image here' : 'Перетащите изображение сюда'}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                или нажмите для выбора файла
+                {isEn ? 'or click to select a file' : 'или нажмите для выбора файла'}
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
                 <Chip label="PNG" size="small" variant="outlined" />
@@ -192,7 +195,7 @@ export default function ImageToBase64() {
                 sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                  <Typography variant="h6">Информация о файле</Typography>
+                  <Typography variant="h6">{isEn ? 'File Information' : 'Информация о файле'}</Typography>
                   <Button
                     variant="outlined"
                     color="error"
@@ -200,7 +203,7 @@ export default function ImageToBase64() {
                     startIcon={<DeleteIcon />}
                     onClick={clearAll}
                   >
-                    Очистить
+                    {isEn ? 'Clear' : 'Очистить'}
                   </Button>
                 </Box>
                 <Grid container spacing={2}>
@@ -227,19 +230,19 @@ export default function ImageToBase64() {
                   <Grid size={{ xs: 12, sm: 8 }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                       <Typography variant="body2">
-                        <strong>Имя:</strong> {fileInfo.name}
+                        <strong>{isEn ? 'Name:' : 'Имя:'}</strong> {fileInfo.name}
                       </Typography>
                       <Typography variant="body2">
-                        <strong>Тип:</strong> {fileInfo.type}
+                        <strong>{isEn ? 'Type:' : 'Тип:'}</strong> {fileInfo.type}
                       </Typography>
                       <Typography variant="body2">
-                        <strong>Размер:</strong> {formatFileSize(fileInfo.size)}
+                        <strong>{isEn ? 'Size:' : 'Размер:'}</strong> {formatFileSize(fileInfo.size, isEn)}
                       </Typography>
                       <Typography variant="body2">
-                        <strong>Размеры:</strong> {fileInfo.width} × {fileInfo.height} пикселей
+                        <strong>{isEn ? 'Dimensions:' : 'Размеры:'}</strong> {fileInfo.width} × {fileInfo.height} {isEn ? 'pixels' : 'пикселей'}
                       </Typography>
                       <Typography variant="body2">
-                        <strong>Длина Base64:</strong> {base64String.length.toLocaleString()} символов
+                        <strong>{isEn ? 'Base64 Length:' : 'Длина Base64:'}</strong> {base64String.length.toLocaleString()} {isEn ? 'characters' : 'символов'}
                       </Typography>
                     </Box>
                   </Grid>
@@ -286,13 +289,13 @@ export default function ImageToBase64() {
             sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
           >
             <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
-              Вставьте строку Base64 или Data URI
+              {isEn ? 'Paste a Base64 string or Data URI' : 'Вставьте строку Base64 или Data URI'}
             </Typography>
             <TextField
               fullWidth
               multiline
               rows={6}
-              placeholder="data:image/png;base64,iVBORw0KGgo... или просто iVBORw0KGgo..."
+              placeholder={isEn ? 'data:image/png;base64,iVBORw0KGgo... or just iVBORw0KGgo...' : 'data:image/png;base64,iVBORw0KGgo... или просто iVBORw0KGgo...'}
               value={reverseBase64}
               onChange={(e) => handleReverseBase64(e.target.value)}
               slotProps={{
@@ -314,7 +317,7 @@ export default function ImageToBase64() {
               sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
             >
               <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                Предпросмотр изображения
+                {isEn ? 'Image Preview' : 'Предпросмотр изображения'}
               </Typography>
               <Box
                 sx={{

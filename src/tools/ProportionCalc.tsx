@@ -13,11 +13,14 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const PHI = (1 + Math.sqrt(5)) / 2;
 
 export default function ProportionCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const [a, setA] = useState('');
   const [b, setB] = useState('');
@@ -42,8 +45,8 @@ export default function ProportionCalc() {
     let missing: number;
     let missingLabel: string;
 
-    steps.push(`Пропорция: A/B = C/D`);
-    steps.push(`Перекрёстное умножение: A \u00d7 D = B \u00d7 C`);
+    steps.push(isEn ? `Proportion: A/B = C/D` : `Пропорция: A/B = C/D`);
+    steps.push(isEn ? `Cross multiplication: A \u00d7 D = B \u00d7 C` : `Перекрёстное умножение: A \u00d7 D = B \u00d7 C`);
 
     if (va === null && vb !== null && vc !== null && vd !== null) {
       if (vd === 0) return null;
@@ -97,28 +100,29 @@ export default function ProportionCalc() {
     if (origSize !== '' && scaleFactor !== '' && newSize === '') {
       if (isNaN(orig) || isNaN(factor)) return null;
       const result = orig * factor;
-      steps.push(`Новый размер = Исходный \u00d7 Масштаб`);
+      steps.push(isEn ? `New size = Original \u00d7 Scale` : `Новый размер = Исходный \u00d7 Масштаб`);
       steps.push(`= ${orig} \u00d7 ${factor} = ${result}`);
-      return { label: 'Новый размер', value: result, steps };
+      return { label: isEn ? 'New size' : 'Новый размер', value: result, steps };
     } else if (origSize !== '' && scaleFactor === '' && newSize !== '') {
       if (isNaN(orig) || isNaN(target) || orig === 0) return null;
       const result = target / orig;
-      steps.push(`Масштаб = Новый / Исходный`);
+      steps.push(isEn ? `Scale = New / Original` : `Масштаб = Новый / Исходный`);
       steps.push(`= ${target} / ${orig} = ${result}`);
-      return { label: 'Масштаб', value: result, steps };
+      return { label: isEn ? 'Scale' : 'Масштаб', value: result, steps };
     } else if (origSize === '' && scaleFactor !== '' && newSize !== '') {
       if (isNaN(factor) || isNaN(target) || factor === 0) return null;
       const result = target / factor;
-      steps.push(`Исходный = Новый / Масштаб`);
+      steps.push(isEn ? `Original = New / Scale` : `Исходный = Новый / Масштаб`);
       steps.push(`= ${target} / ${factor} = ${result}`);
-      return { label: 'Исходный размер', value: result, steps };
+      return { label: isEn ? 'Original size' : 'Исходный размер', value: result, steps };
     }
     return null;
   }, [origSize, scaleFactor, newSize]);
 
   const formatNum = (n: number) => {
-    if (Number.isInteger(n)) return n.toLocaleString('ru-RU');
-    return n.toLocaleString('ru-RU', { maximumFractionDigits: 6 });
+    const loc = isEn ? 'en-US' : 'ru-RU';
+    if (Number.isInteger(n)) return n.toLocaleString(loc);
+    return n.toLocaleString(loc, { maximumFractionDigits: 6 });
   };
 
   return (
@@ -134,7 +138,7 @@ export default function ProportionCalc() {
         }}
       >
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-          Пропорция
+          {isEn ? 'Proportion' : 'Пропорция'}
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, flexWrap: 'wrap' }}>
@@ -379,14 +383,14 @@ export default function ProportionCalc() {
         }}
       >
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-          Калькулятор масштаба
+          {isEn ? 'Scale calculator' : 'Калькулятор масштаба'}
         </Typography>
 
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              placeholder="Исходный"
+              placeholder={isEn ? 'Original' : 'Исходный'}
               type="number"
               value={origSize}
               onChange={(e) => setOrigSize(e.target.value)}
@@ -396,7 +400,7 @@ export default function ProportionCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              placeholder="Масштаб"
+              placeholder={isEn ? 'Scale' : 'Масштаб'}
               type="number"
               value={scaleFactor}
               onChange={(e) => setScaleFactor(e.target.value)}
@@ -406,7 +410,7 @@ export default function ProportionCalc() {
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               fullWidth
-              placeholder="Новый"
+              placeholder={isEn ? 'New' : 'Новый'}
               type="number"
               value={newSize}
               onChange={(e) => setNewSize(e.target.value)}

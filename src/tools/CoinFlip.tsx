@@ -5,9 +5,12 @@ import {
   Box, Typography, Paper, Grid, Button, Chip, alpha, useTheme
 } from '@mui/material';
 import { Toll, Refresh } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function CoinFlip() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [result, setResult] = useState<'heads' | 'tails' | null>(null);
   const [flipping, setFlipping] = useState(false);
   const [stats, setStats] = useState({ heads: 0, tails: 0 });
@@ -78,10 +81,10 @@ export default function CoinFlip() {
         {result ? (
           <Box>
             <Typography variant="h3" fontWeight={700} sx={{ color: result === 'heads' ? '#B8860B' : '#708090' }}>
-              {result === 'heads' ? 'О' : 'Р'}
+              {result === 'heads' ? (isEn ? 'H' : 'О') : (isEn ? 'T' : 'Р')}
             </Typography>
             <Typography variant="body2" fontWeight={600} sx={{ color: result === 'heads' ? '#B8860B' : '#708090' }}>
-              {result === 'heads' ? 'Орёл' : 'Решка'}
+              {result === 'heads' ? (isEn ? 'Heads' : 'Орёл') : (isEn ? 'Tails' : 'Решка')}
             </Typography>
           </Box>
         ) : (
@@ -97,7 +100,7 @@ export default function CoinFlip() {
           disabled={flipping}
           sx={{ borderRadius: 6, px: 4 }}
         >
-          {flipping ? 'Подбрасываю...' : 'Подбросить'}
+          {flipping ? (isEn ? 'Flipping...' : 'Подбрасываю...') : (isEn ? 'Flip' : 'Подбросить')}
         </Button>
         {total > 0 && (
           <Button
@@ -106,7 +109,7 @@ export default function CoinFlip() {
             startIcon={<Refresh />}
             sx={{ borderRadius: 6 }}
           >
-            Сброс
+            {isEn ? 'Reset' : 'Сброс'}
           </Button>
         )}
       </Box>
@@ -126,7 +129,7 @@ export default function CoinFlip() {
                 {stats.heads}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                Орёл ({headsPercent}%)
+                {isEn ? `Heads (${headsPercent}%)` : `Орёл (${headsPercent}%)`}
               </Typography>
             </Paper>
           </Grid>
@@ -143,7 +146,7 @@ export default function CoinFlip() {
                 {total}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                Всего
+                {isEn ? 'Total' : 'Всего'}
               </Typography>
             </Paper>
           </Grid>
@@ -160,7 +163,7 @@ export default function CoinFlip() {
                 {stats.tails}
               </Typography>
               <Typography variant="caption" color="text.secondary">
-                Решка ({tailsPercent}%)
+                {isEn ? `Tails (${tailsPercent}%)` : `Решка (${tailsPercent}%)`}
               </Typography>
             </Paper>
           </Grid>
@@ -179,13 +182,13 @@ export default function CoinFlip() {
       {history.length > 0 && (
         <Box sx={{ mt: 3, maxWidth: 500, mx: 'auto' }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            История
+            {isEn ? 'History' : 'История'}
           </Typography>
           <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', justifyContent: 'center' }}>
             {history.map((r, i) => (
               <Chip
                 key={i}
-                label={r === 'heads' ? 'О' : 'Р'}
+                label={r === 'heads' ? (isEn ? 'H' : 'О') : (isEn ? 'T' : 'Р')}
                 size="small"
                 sx={{
                   width: 28,

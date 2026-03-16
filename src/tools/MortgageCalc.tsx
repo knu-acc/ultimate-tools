@@ -15,9 +15,12 @@ import {
   alpha
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function MortgageCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
 
@@ -74,10 +77,10 @@ export default function MortgageCalc() {
   }, [amount, rate, term, termUnit]);
 
   const fmt = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const fmtPct = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
   const handleReset = () => {
     setAmount('');
@@ -129,11 +132,11 @@ export default function MortgageCalc() {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label={`Сумма кредита (${sym})`}
+              label={isEn ? `Loan amount (${sym})` : `Сумма кредита (${sym})`}
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="Например: 3000000"
+              placeholder={isEn ? 'e.g.: 3000000' : 'Например: 3000000'}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -149,11 +152,11 @@ export default function MortgageCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Процентная ставка"
+              label={isEn ? 'Interest rate' : 'Процентная ставка'}
               type="number"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
-              placeholder="Например: 12"
+              placeholder={isEn ? 'e.g.: 12' : 'Например: 12'}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -170,11 +173,11 @@ export default function MortgageCalc() {
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
               <TextField
                 fullWidth
-                label={termUnit === 'years' ? 'Срок (лет)' : 'Срок (месяцев)'}
+                label={termUnit === 'years' ? (isEn ? 'Term (years)' : 'Срок (лет)') : (isEn ? 'Term (months)' : 'Срок (месяцев)')}
                 type="number"
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
-                placeholder={termUnit === 'years' ? 'Например: 15' : 'Например: 180'}
+                placeholder={termUnit === 'years' ? (isEn ? 'e.g.: 15' : 'Например: 15') : (isEn ? 'e.g.: 180' : 'Например: 180')}
               />
               <ToggleButtonGroup
                 value={termUnit}
@@ -184,10 +187,10 @@ export default function MortgageCalc() {
                 sx={{ mt: 0.5, flexShrink: 0 }}
               >
                 <ToggleButton value="years" sx={{ textTransform: 'none', px: 1.5 }}>
-                  Лет
+                  {isEn ? 'Years' : 'Лет'}
                 </ToggleButton>
                 <ToggleButton value="months" sx={{ textTransform: 'none', px: 1.5 }}>
-                  Мес
+                  {isEn ? 'Mo.' : 'Мес'}
                 </ToggleButton>
               </ToggleButtonGroup>
             </Box>
@@ -200,7 +203,7 @@ export default function MortgageCalc() {
               size="small"
               sx={{ textTransform: 'none' }}
             >
-              Сбросить
+              {isEn ? 'Reset' : 'Сбросить'}
             </Button>
           </Grid>
         </Grid>
@@ -210,34 +213,34 @@ export default function MortgageCalc() {
             <Divider sx={{ my: 2 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Результаты расчёта
+              {isEn ? 'Calculation Results' : 'Результаты расчёта'}
             </Typography>
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <StatCard
-                  label="Ежемесячный платёж"
+                  label={isEn ? 'Monthly payment' : 'Ежемесячный платёж'}
                   value={`${fmt(results.monthlyPayment)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <StatCard
-                  label="Общая сумма выплат"
+                  label={isEn ? 'Total payments' : 'Общая сумма выплат'}
                   value={`${fmt(results.totalPayment)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <StatCard
-                  label="Переплата (проценты)"
+                  label={isEn ? 'Overpayment (interest)' : 'Переплата (проценты)'}
                   value={`${fmt(results.totalInterest)} ${sym}`}
                   color="#c62828"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <StatCard
-                  label="Процент переплаты"
+                  label={isEn ? 'Overpayment rate' : 'Процент переплаты'}
                   value={`${fmtPct(results.overpaymentPct)}%`}
                   color="#e65100"
                 />
@@ -247,7 +250,7 @@ export default function MortgageCalc() {
             <Divider sx={{ my: 2 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Структура платежей
+              {isEn ? 'Payment Structure' : 'Структура платежей'}
             </Typography>
 
             <Grid container spacing={2}>
@@ -261,11 +264,11 @@ export default function MortgageCalc() {
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
-                    Первый платёж
+                    {isEn ? 'First payment' : 'Первый платёж'}
                   </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                     <Typography variant="body2" color="text.secondary">
-                      Основной долг:
+                      {isEn ? 'Principal:' : 'Основной долг:'}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
                       {fmt(results.firstPrincipal)} {sym}
@@ -273,7 +276,7 @@ export default function MortgageCalc() {
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="body2" color="text.secondary">
-                      Проценты:
+                      {isEn ? 'Interest:' : 'Проценты:'}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#c62828' }}>
                       {fmt(results.firstInterest)} {sym}
@@ -292,11 +295,11 @@ export default function MortgageCalc() {
                   }}
                 >
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
-                    Последний платёж
+                    {isEn ? 'Last payment' : 'Последний платёж'}
                   </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                     <Typography variant="body2" color="text.secondary">
-                      Основной долг:
+                      {isEn ? 'Principal:' : 'Основной долг:'}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#2e7d32' }}>
                       {fmt(results.lastPrincipal)} {sym}
@@ -304,7 +307,7 @@ export default function MortgageCalc() {
                   </Box>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="body2" color="text.secondary">
-                      Проценты:
+                      {isEn ? 'Interest:' : 'Проценты:'}
                     </Typography>
                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#c62828' }}>
                       {fmt(results.lastInterest)} {sym}
@@ -316,7 +319,7 @@ export default function MortgageCalc() {
 
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2" color="text.secondary">
-                Срок кредита: {results.months} мес. ({(results.months / 12).toFixed(1)} лет)
+                {isEn ? `Loan term: ${results.months} mo. (${(results.months / 12).toFixed(1)} years)` : `Срок кредита: ${results.months} мес. (${(results.months / 12).toFixed(1)} лет)`}
               </Typography>
             </Box>
           </>

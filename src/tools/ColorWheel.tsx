@@ -5,6 +5,7 @@ import {
   Box, Typography, Paper, Grid, Chip, TextField, useTheme, alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 function hslToRgb(h: number, s: number, l: number): [number, number, number] {
@@ -95,6 +96,8 @@ function getColorFromPosition(x: number, y: number, size: number): [number, numb
 
 export default function ColorWheel() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [selectedHsl, setSelectedHsl] = useState<[number, number, number]>([0, 100, 50]);
   const wheelSize = 280;
@@ -144,9 +147,9 @@ export default function ColorWheel() {
   }, [wheelSize]);
 
   const colorSchemes = [
-    { label: 'Комплементарный', colors: [hex, complementary] },
-    { label: 'Триадный', colors: [hex, triadic1, triadic2] },
-    { label: 'Аналоговый', colors: [analogous1, hex, analogous2] },
+    { label: isEn ? 'Complementary' : 'Комплементарный', colors: [hex, complementary] },
+    { label: isEn ? 'Triadic' : 'Триадный', colors: [hex, triadic1, triadic2] },
+    { label: isEn ? 'Analogous' : 'Аналоговый', colors: [analogous1, hex, analogous2] },
   ];
 
   return (
@@ -197,7 +200,7 @@ export default function ColorWheel() {
               />
             </Box>
             <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
-              Нажмите на колесо для выбора цвета
+              {isEn ? 'Click the wheel to pick a color' : 'Нажмите на колесо для выбора цвета'}
             </Typography>
           </Paper>
         </Grid>
@@ -265,9 +268,9 @@ export default function ColorWheel() {
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               {[
-                { label: 'Оттенок (H)', val: h, max: 360, idx: 0 as const },
-                { label: 'Насыщенность (S)', val: s, max: 100, idx: 1 as const },
-                { label: 'Яркость (L)', val: l, max: 100, idx: 2 as const },
+                { label: isEn ? 'Hue (H)' : 'Оттенок (H)', val: h, max: 360, idx: 0 as const },
+                { label: isEn ? 'Saturation (S)' : 'Насыщенность (S)', val: s, max: 100, idx: 1 as const },
+                { label: isEn ? 'Lightness (L)' : 'Яркость (L)', val: l, max: 100, idx: 2 as const },
               ].map(({ label, val, max, idx }) => (
                 <Box key={label}>
                   <Typography variant="caption" color="text.secondary">
@@ -294,7 +297,7 @@ export default function ColorWheel() {
 
       {/* Color Harmonies */}
       <Typography variant="subtitle2" fontWeight={600} sx={{ mt: 3, mb: 1.5 }}>
-        Цветовые гармонии
+        {isEn ? 'Color Harmonies' : 'Цветовые гармонии'}
       </Typography>
       <Grid container spacing={2}>
         {colorSchemes.map(({ label, colors }) => (

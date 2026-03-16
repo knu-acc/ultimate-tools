@@ -12,13 +12,20 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type TempUnit = 'celsius' | 'fahrenheit' | 'kelvin';
 
-const unitLabels: Record<TempUnit, string> = {
+const unitLabelsRu: Record<TempUnit, string> = {
   celsius: 'Цельсий',
   fahrenheit: 'Фаренгейт',
   kelvin: 'Кельвин'
+};
+
+const unitLabelsEn: Record<TempUnit, string> = {
+  celsius: 'Celsius',
+  fahrenheit: 'Fahrenheit',
+  kelvin: 'Kelvin'
 };
 
 const unitSymbols: Record<TempUnit, string> = {
@@ -42,15 +49,18 @@ function convert(value: number, from: TempUnit): Record<TempUnit, number> {
 }
 
 const commonTemps = [
-  { name: 'Абсолютный ноль', celsius: -273.15, fahrenheit: -459.67, kelvin: 0 },
-  { name: 'Замерзание воды', celsius: 0, fahrenheit: 32, kelvin: 273.15 },
-  { name: 'Комнатная', celsius: 20, fahrenheit: 68, kelvin: 293.15 },
-  { name: 'Тело человека', celsius: 36.6, fahrenheit: 97.88, kelvin: 309.75 },
-  { name: 'Кипение воды', celsius: 100, fahrenheit: 212, kelvin: 373.15 },
+  { name: 'Абсолютный ноль', nameEn: 'Absolute zero', celsius: -273.15, fahrenheit: -459.67, kelvin: 0 },
+  { name: 'Замерзание воды', nameEn: 'Water freezing', celsius: 0, fahrenheit: 32, kelvin: 273.15 },
+  { name: 'Комнатная', nameEn: 'Room temperature', celsius: 20, fahrenheit: 68, kelvin: 293.15 },
+  { name: 'Тело человека', nameEn: 'Human body', celsius: 36.6, fahrenheit: 97.88, kelvin: 309.75 },
+  { name: 'Кипение воды', nameEn: 'Water boiling', celsius: 100, fahrenheit: 212, kelvin: 373.15 },
 ];
 
 export default function TemperatureConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const unitLabels = isEn ? unitLabelsEn : unitLabelsRu;
   const [input, setInput] = useState('0');
   const [sourceUnit, setSourceUnit] = useState<TempUnit>('celsius');
 
@@ -142,7 +152,7 @@ export default function TemperatureConverter() {
 
       <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Справочник
+          {isEn ? 'Reference' : 'Справочник'}
         </Typography>
         <Box sx={{ overflowX: 'auto' }}>
           <Box
@@ -162,12 +172,12 @@ export default function TemperatureConverter() {
             }}
           >
             <thead>
-              <tr><th>Описание</th><th>°C</th><th>°F</th><th>K</th></tr>
+              <tr><th>{isEn ? 'Description' : 'Описание'}</th><th>°C</th><th>°F</th><th>K</th></tr>
             </thead>
             <tbody>
               {commonTemps.map((row) => (
                 <tr key={row.name}>
-                  <td>{row.name}</td>
+                  <td>{isEn ? row.nameEn : row.name}</td>
                   <td>{row.celsius}</td>
                   <td>{row.fahrenheit}</td>
                   <td>{row.kelvin}</td>

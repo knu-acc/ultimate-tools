@@ -26,6 +26,7 @@ import FlagIcon from '@mui/icons-material/Flag';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AlarmIcon from '@mui/icons-material/Alarm';
 import TimerIcon from '@mui/icons-material/Timer';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 function formatTime(ms: number): string {
   const totalSeconds = Math.floor(ms / 1000);
@@ -54,6 +55,8 @@ interface Lap {
 export default function TimerComponent() {
   const theme = useTheme();
   const [tab, setTab] = useState(0);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   // Timer state
   const [timerHours, setTimerHours] = useState('0');
@@ -206,8 +209,8 @@ export default function TimerComponent() {
           variant="fullWidth"
           sx={{ borderBottom: `1px solid ${theme.palette.divider}` }}
         >
-          <Tab icon={<AlarmIcon />} label="Таймер" />
-          <Tab icon={<TimerIcon />} label="Секундомер" />
+          <Tab icon={<AlarmIcon />} label={isEn ? 'Timer' : 'Таймер'} />
+          <Tab icon={<TimerIcon />} label={isEn ? 'Stopwatch' : 'Секундомер'} />
         </Tabs>
 
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
@@ -240,7 +243,7 @@ export default function TimerComponent() {
                 </Typography>
 
                 {timerFinished && (
-                  <Chip label="Время вышло!" color="error" sx={{ mt: 1, fontSize: '1rem', py: 2 }} />
+                  <Chip label={isEn ? "Time's up!" : 'Время вышло!'} color="error" sx={{ mt: 1, fontSize: '1rem', py: 2 }} />
                 )}
 
                 {/* Progress bar */}
@@ -272,7 +275,7 @@ export default function TimerComponent() {
                 <Grid container spacing={2} sx={{ mb: 2, justifyContent: 'center' }}>
                   <Grid size={{ xs: 4 }}>
                     <TextField
-                      label="Часы"
+                      label={isEn ? 'Hours' : 'Часы'}
                       type="number"
                       value={timerHours}
                       onChange={(e) => setTimerHours(e.target.value)}
@@ -283,7 +286,7 @@ export default function TimerComponent() {
                   </Grid>
                   <Grid size={{ xs: 4 }}>
                     <TextField
-                      label="Минуты"
+                      label={isEn ? 'Minutes' : 'Минуты'}
                       type="number"
                       value={timerMinutes}
                       onChange={(e) => setTimerMinutes(e.target.value)}
@@ -294,7 +297,7 @@ export default function TimerComponent() {
                   </Grid>
                   <Grid size={{ xs: 4 }}>
                     <TextField
-                      label="Секунды"
+                      label={isEn ? 'Seconds' : 'Секунды'}
                       type="number"
                       value={timerSeconds}
                       onChange={(e) => setTimerSeconds(e.target.value)}
@@ -316,7 +319,7 @@ export default function TimerComponent() {
                     onClick={startTimer}
                     sx={{ px: 4 }}
                   >
-                    {timerRemaining > 0 ? 'Продолжить' : 'Старт'}
+                    {timerRemaining > 0 ? (isEn ? 'Resume' : 'Продолжить') : (isEn ? 'Start' : 'Старт')}
                   </Button>
                 ) : (
                   <Button
@@ -326,7 +329,7 @@ export default function TimerComponent() {
                     onClick={pauseTimer}
                     sx={{ px: 4 }}
                   >
-                    Пауза
+                    {isEn ? 'Pause' : 'Пауза'}
                   </Button>
                 )}
                 <Button
@@ -336,7 +339,7 @@ export default function TimerComponent() {
                   onClick={resetTimer}
                   color="secondary"
                 >
-                  Сброс
+                  {isEn ? 'Reset' : 'Сброс'}
                 </Button>
               </Box>
 
@@ -344,12 +347,12 @@ export default function TimerComponent() {
               {!timerRunning && timerRemaining === 0 && (
                 <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 1, flexWrap: 'wrap' }}>
                   {[
-                    { label: '1 мин', h: '0', m: '1', s: '0' },
-                    { label: '5 мин', h: '0', m: '5', s: '0' },
-                    { label: '10 мин', h: '0', m: '10', s: '0' },
-                    { label: '15 мин', h: '0', m: '15', s: '0' },
-                    { label: '30 мин', h: '0', m: '30', s: '0' },
-                    { label: '1 час', h: '1', m: '0', s: '0' },
+                    { label: isEn ? '1 min' : '1 мин', h: '0', m: '1', s: '0' },
+                    { label: isEn ? '5 min' : '5 мин', h: '0', m: '5', s: '0' },
+                    { label: isEn ? '10 min' : '10 мин', h: '0', m: '10', s: '0' },
+                    { label: isEn ? '15 min' : '15 мин', h: '0', m: '15', s: '0' },
+                    { label: isEn ? '30 min' : '30 мин', h: '0', m: '30', s: '0' },
+                    { label: isEn ? '1 hour' : '1 час', h: '1', m: '0', s: '0' },
                   ].map((preset) => (
                     <Chip
                       key={preset.label}
@@ -397,7 +400,7 @@ export default function TimerComponent() {
                     onClick={startStopwatch}
                     sx={{ px: 4 }}
                   >
-                    {swElapsed > 0 ? 'Продолжить' : 'Старт'}
+                    {swElapsed > 0 ? (isEn ? 'Resume' : 'Продолжить') : (isEn ? 'Start' : 'Старт')}
                   </Button>
                 ) : (
                   <>
@@ -408,7 +411,7 @@ export default function TimerComponent() {
                       onClick={pauseStopwatch}
                       sx={{ px: 4 }}
                     >
-                      Пауза
+                      {isEn ? 'Pause' : 'Пауза'}
                     </Button>
                     <Button
                       variant="outlined"
@@ -417,7 +420,7 @@ export default function TimerComponent() {
                       onClick={addLap}
                       color="secondary"
                     >
-                      Круг
+                      {isEn ? 'Lap' : 'Круг'}
                     </Button>
                   </>
                 )}
@@ -446,7 +449,7 @@ export default function TimerComponent() {
                     }}
                   >
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      Круги ({laps.length})
+                      {isEn ? `Laps (${laps.length})` : `Круги (${laps.length})`}
                     </Typography>
                     <IconButton size="small" onClick={() => setLaps([])}>
                       <DeleteIcon fontSize="small" />
@@ -478,8 +481,8 @@ export default function TimerComponent() {
                               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                   <Chip label={`#${lap.number}`} size="small" variant="outlined" />
-                                  {isBest && <Chip label="Лучший" size="small" color="success" />}
-                                  {isWorst && <Chip label="Худший" size="small" color="error" />}
+                                  {isBest && <Chip label={isEn ? 'Best' : 'Лучший'} size="small" color="success" />}
+                                  {isWorst && <Chip label={isEn ? 'Worst' : 'Худший'} size="small" color="error" />}
                                 </Box>
                                 <Box sx={{ textAlign: 'right' }}>
                                   <Typography

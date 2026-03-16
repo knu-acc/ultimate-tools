@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 type CaseType =
@@ -28,16 +29,16 @@ type CaseType =
   | 'kebab'
   | 'constant';
 
-const CASE_OPTIONS: { type: CaseType; label: string; example: string }[] = [
-  { type: 'upper', label: 'ВЕРХНИЙ РЕГИСТР', example: 'ПРИМЕР ТЕКСТА' },
-  { type: 'lower', label: 'нижний регистр', example: 'пример текста' },
-  { type: 'title', label: 'Каждое Слово С Заглавной', example: 'Пример Текста' },
-  { type: 'sentence', label: 'Как в предложении', example: 'Пример текста' },
-  { type: 'camel', label: 'camelCase', example: 'exampleText' },
-  { type: 'pascal', label: 'PascalCase', example: 'ExampleText' },
-  { type: 'snake', label: 'snake_case', example: 'example_text' },
-  { type: 'kebab', label: 'kebab-case', example: 'example-text' },
-  { type: 'constant', label: 'CONSTANT_CASE', example: 'EXAMPLE_TEXT' },
+const CASE_OPTIONS: { type: CaseType; labelRu: string; labelEn: string; example: string }[] = [
+  { type: 'upper', labelRu: 'ВЕРХНИЙ РЕГИСТР', labelEn: 'UPPER CASE', example: 'EXAMPLE TEXT' },
+  { type: 'lower', labelRu: 'нижний регистр', labelEn: 'lower case', example: 'example text' },
+  { type: 'title', labelRu: 'Каждое Слово С Заглавной', labelEn: 'Title Case', example: 'Example Text' },
+  { type: 'sentence', labelRu: 'Как в предложении', labelEn: 'Sentence case', example: 'Example text' },
+  { type: 'camel', labelRu: 'camelCase', labelEn: 'camelCase', example: 'exampleText' },
+  { type: 'pascal', labelRu: 'PascalCase', labelEn: 'PascalCase', example: 'ExampleText' },
+  { type: 'snake', labelRu: 'snake_case', labelEn: 'snake_case', example: 'example_text' },
+  { type: 'kebab', labelRu: 'kebab-case', labelEn: 'kebab-case', example: 'example-text' },
+  { type: 'constant', labelRu: 'CONSTANT_CASE', labelEn: 'CONSTANT_CASE', example: 'EXAMPLE_TEXT' },
 ];
 
 function splitWords(text: string): string[] {
@@ -100,6 +101,8 @@ function convertCase(text: string, type: CaseType): string {
 
 export default function CaseConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [activeCase, setActiveCase] = useState<CaseType | null>(null);
@@ -135,7 +138,7 @@ export default function CaseConverter() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Текст..."
+          placeholder={isEn ? 'Text...' : 'Текст...'}
           sx={{ mb: 2 }}
         />
 
@@ -155,7 +158,7 @@ export default function CaseConverter() {
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '0.8rem' }}>
-                  {opt.label}
+                  {isEn ? opt.labelEn : opt.labelRu}
                 </Typography>
                 <Typography
                   variant="caption"
@@ -171,7 +174,7 @@ export default function CaseConverter() {
         {output && (
           <Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 0.5, mb: 1 }}>
-              <Tooltip title="Использовать как вход">
+              <Tooltip title={isEn ? 'Use as input' : 'Использовать как вход'}>
                 <IconButton onClick={useAsInput} size="small">
                   <SwapVertIcon />
                 </IconButton>

@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import { Shuffle, Groups, Replay, Delete } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const TEAM_COLORS = [
   'primary', 'secondary', 'success', 'warning', 'error', 'info',
@@ -25,6 +26,8 @@ interface HistoryEntry {
 
 export default function TeamGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [text, setText] = useState('');
   const [teamCount, setTeamCount] = useState(2);
   const [mode, setMode] = useState<'count' | 'size'>('count');
@@ -54,7 +57,7 @@ export default function TeamGenerator() {
     if (mode === 'count') {
       const count = Math.min(teamCount, shuffled.length);
       for (let i = 0; i < count; i++) {
-        result.push({ name: `Команда ${i + 1}`, members: [] });
+        result.push({ name: `${isEn ? 'Team' : 'Команда'} ${i + 1}`, members: [] });
       }
       shuffled.forEach((p, i) => {
         result[i % count].members.push(p);
@@ -65,14 +68,14 @@ export default function TeamGenerator() {
       for (let i = 0; i < shuffled.length; i += size) {
         teamIdx++;
         result.push({
-          name: `Команда ${teamIdx}`,
+          name: `${isEn ? 'Team' : 'Команда'} ${teamIdx}`,
           members: shuffled.slice(i, i + size)
         });
       }
     }
 
     return result;
-  }, [mode, teamCount, teamSize]);
+  }, [mode, teamCount, teamSize, isEn]);
 
   const handleSplit = useCallback(() => {
     const participants = getParticipants();
@@ -95,7 +98,7 @@ export default function TeamGenerator() {
         setAnimating(false);
 
         const now = new Date();
-        const timeStr = now.toLocaleTimeString('ru-RU', {
+        const timeStr = now.toLocaleTimeString(isEn ? 'en-US' : 'ru-RU', {
           hour: '2-digit', minute: '2-digit', second: '2-digit'
         });
         setHistory(prev => [{
@@ -140,7 +143,7 @@ export default function TeamGenerator() {
             fullWidth
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder={'Участники (по одному на строку):\nИван\nМария\nАлексей\nОльга'}
+            placeholder={isEn ? 'Participants (one per line):\nJohn\nMary\nAlex\nOlga' : 'Участники (по одному на строку):\nИван\nМария\nАлексей\nОльга'}
             disabled={animating}
             sx={{
               mb: 2,
@@ -149,12 +152,12 @@ export default function TeamGenerator() {
           />
 
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Участников: {participants.length}
+            {isEn ? `Participants: ${participants.length}` : `Участников: ${participants.length}`}
           </Typography>
 
           <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <Chip
-              label="По количеству команд"
+              label={isEn ? 'By number of teams' : 'По количеству команд'}
               onClick={() => setMode('count')}
               sx={{
                 fontWeight: 600,
@@ -166,7 +169,7 @@ export default function TeamGenerator() {
               }}
             />
             <Chip
-              label="По размеру команды"
+              label={isEn ? 'By team size' : 'По размеру команды'}
               onClick={() => setMode('size')}
               sx={{
                 fontWeight: 600,
@@ -235,11 +238,11 @@ export default function TeamGenerator() {
             <Box>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
                 <Typography variant="subtitle2" fontWeight={600}>
-                  Результат: {teams.length} {teams.length === 1 ? 'команда' : teams.length < 5 ? 'команды' : 'команд'}
+                  {isEn ? `Result: ${teams.length} ${teams.length === 1 ? 'team' : 'teams'}` : `Результат: ${teams.length} ${teams.length === 1 ? 'команда' : teams.length < 5 ? 'команды' : 'команд'}`}
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 1 }}>
                   <CopyButton text={getTeamsText(teams)} />
-                  <Tooltip title="Перемешать заново">
+                  <Tooltip title={isEn ? 'Reshuffle' : 'Перемешать заново'}>
                     <IconButton size="small" onClick={handleSplit} disabled={animating}>
                       <Replay fontSize="small" />
                     </IconButton>
@@ -323,9 +326,9 @@ export default function TeamGenerator() {
             <Box sx={{ mt: 3 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="subtitle2" fontWeight={600}>
-                  История ({history.length})
+                  {isEn ? `History (${history.length})` : `История (${history.length})`}
                 </Typography>
-                <Tooltip title="Очистить историю">
+                <Tooltip title={isEn ? 'Clear history' : 'Очистить историю'}>
                   <IconButton size="small" onClick={() => setHistory([])}>
                     <Delete fontSize="small" />
                   </IconButton>

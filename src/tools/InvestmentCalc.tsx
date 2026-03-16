@@ -12,6 +12,7 @@ import {
   alpha
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface YearData {
   year: number;
@@ -25,6 +26,8 @@ interface YearData {
 
 export default function InvestmentCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
   const [initial, setInitial] = useState('');
@@ -92,10 +95,10 @@ export default function InvestmentCalc() {
   }, [initial, monthly, rate, years]);
 
   const fmt = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
   const fmtPct = (n: number) =>
-    n.toLocaleString('ru-RU', { maximumFractionDigits: 1 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 1 });
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
@@ -118,7 +121,7 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder={`Начальная сумма, ${sym}`}
+              placeholder={isEn ? `Initial amount, ${sym}` : `Начальная сумма, ${sym}`}
               type="number"
               value={initial}
               onChange={(e) => setInitial(e.target.value)}
@@ -130,7 +133,7 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder={`Ежемесячное пополнение, ${sym}`}
+              placeholder={isEn ? `Monthly contribution, ${sym}` : `Ежемесячное пополнение, ${sym}`}
               type="number"
               value={monthly}
               onChange={(e) => setMonthly(e.target.value)}
@@ -142,7 +145,7 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Годовая доходность, %"
+              placeholder={isEn ? 'Annual return, %' : 'Годовая доходность, %'}
               type="number"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
@@ -161,7 +164,7 @@ export default function InvestmentCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Срок, лет"
+              placeholder={isEn ? 'Term, years' : 'Срок, лет'}
               type="number"
               value={years}
               onChange={(e) => setYears(e.target.value)}
@@ -190,7 +193,7 @@ export default function InvestmentCalc() {
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-              Итоговая сумма
+              {isEn ? 'Final amount' : 'Итоговая сумма'}
             </Typography>
             <Typography variant="h3" sx={{ fontWeight: 700, color: '#2e7d32', mb: 1 }}>
               {fmt(results.finalAmount)} {sym}
@@ -213,7 +216,7 @@ export default function InvestmentCalc() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
-                  Ваши взносы
+                  {isEn ? 'Your contributions' : 'Ваши взносы'}
                 </Typography>
                 <Typography variant="h5" sx={{ fontWeight: 700, color: '#1565c0' }}>
                   {fmt(results.totalContributions)} {sym}
@@ -244,7 +247,7 @@ export default function InvestmentCalc() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
-                  Доход от инвестиций
+                  {isEn ? 'Investment income' : 'Доход от инвестиций'}
                 </Typography>
                 <Typography variant="h5" sx={{ fontWeight: 700, color: '#2e7d32' }}>
                   {fmt(results.totalEarnings)} {sym}
@@ -276,7 +279,7 @@ export default function InvestmentCalc() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
-              Соотношение взносов и дохода
+              {isEn ? 'Contributions vs income ratio' : 'Соотношение взносов и дохода'}
             </Typography>
             <Box
               sx={{
@@ -298,7 +301,7 @@ export default function InvestmentCalc() {
                 }}
               >
                 <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.65rem' }}>
-                  Взносы {fmtPct(results.contributionsPct)}%
+                  {isEn ? `Contributions ${fmtPct(results.contributionsPct)}%` : `Взносы ${fmtPct(results.contributionsPct)}%`}
                 </Typography>
               </Box>
               <Box
@@ -312,7 +315,7 @@ export default function InvestmentCalc() {
                 }}
               >
                 <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.65rem' }}>
-                  Доход {fmtPct(results.earningsPct)}%
+                  {isEn ? `Income ${fmtPct(results.earningsPct)}%` : `Доход ${fmtPct(results.earningsPct)}%`}
                 </Typography>
               </Box>
             </Box>
@@ -330,7 +333,7 @@ export default function InvestmentCalc() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
-              Рост по годам
+              {isEn ? 'Growth by year' : 'Рост по годам'}
             </Typography>
 
             {/* Table header */}
@@ -344,16 +347,16 @@ export default function InvestmentCalc() {
               }}
             >
               <Typography variant="caption" sx={{ fontWeight: 700, width: 40, color: 'text.secondary' }}>
-                Год
+                {isEn ? 'Year' : 'Год'}
               </Typography>
               <Typography variant="caption" sx={{ fontWeight: 700, flex: 1, color: 'text.secondary', textAlign: 'right' }}>
-                Взносы за год
+                {isEn ? 'Annual contributions' : 'Взносы за год'}
               </Typography>
               <Typography variant="caption" sx={{ fontWeight: 700, flex: 1, color: 'text.secondary', textAlign: 'right' }}>
-                Доход за год
+                {isEn ? 'Annual income' : 'Доход за год'}
               </Typography>
               <Typography variant="caption" sx={{ fontWeight: 700, flex: 1.2, color: 'text.secondary', textAlign: 'right' }}>
-                Итого
+                {isEn ? 'Total' : 'Итого'}
               </Typography>
             </Box>
 

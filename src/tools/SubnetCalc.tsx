@@ -14,6 +14,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 function isValidCidrNotation(input: string): boolean {
   const match = input.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\/(\d{1,2})$/);
@@ -166,6 +167,8 @@ type Mode = 'subnets' | 'hosts' | 'vlsm';
 
 export default function SubnetCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [network, setNetwork] = useState('192.168.1.0/24');
   const [mode, setMode] = useState<Mode>('subnets');
   const [numSubnets, setNumSubnets] = useState('4');
@@ -193,7 +196,7 @@ export default function SubnetCalc() {
         .split(',')
         .map((s) => s.trim())
         .filter((s) => s)
-        .map((s, i) => ({ hosts: parseInt(s), name: `Подсеть ${i + 1}` }))
+        .map((s, i) => ({ hosts: parseInt(s), name: isEn ? `Subnet ${i + 1}` : `Подсеть ${i + 1}` }))
         .filter((r) => !isNaN(r.hosts) && r.hosts > 0);
       if (hostsList.length === 0) return;
       res = vlsmDivide(ip, cidr, hostsList);
@@ -216,7 +219,7 @@ export default function SubnetCalc() {
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Режим деления
+          {isEn ? 'Division mode' : 'Режим деления'}
         </Typography>
         <ToggleButtonGroup
           value={mode}
@@ -246,8 +249,8 @@ export default function SubnetCalc() {
             }
           }}
         >
-          <ToggleButton value="subnets">По количеству подсетей</ToggleButton>
-          <ToggleButton value="hosts">По количеству хостов</ToggleButton>
+          <ToggleButton value="subnets">{isEn ? 'By number of subnets' : 'По количеству подсетей'}</ToggleButton>
+          <ToggleButton value="hosts">{isEn ? 'By number of hosts' : 'По количеству хостов'}</ToggleButton>
           <ToggleButton value="vlsm">VLSM</ToggleButton>
         </ToggleButtonGroup>
 
@@ -261,9 +264,9 @@ export default function SubnetCalc() {
                 setNetwork(e.target.value);
                 setCalculated(false);
               }}
-              placeholder="Адрес сети с CIDR (192.168.1.0/24)"
+              placeholder={isEn ? "Network address with CIDR (192.168.1.0/24)" : "Адрес сети с CIDR (192.168.1.0/24)"}
               error={!validNetwork}
-              helperText={!validNetwork ? 'Формат: IP/CIDR (например, 192.168.1.0/24)' : ''}
+              helperText={!validNetwork ? (isEn ? 'Format: IP/CIDR (e.g., 192.168.1.0/24)' : 'Формат: IP/CIDR (например, 192.168.1.0/24)') : ''}
               slotProps={{ htmlInput: { style: { fontFamily: 'monospace' } } }}
             />
           </Grid>
@@ -278,7 +281,7 @@ export default function SubnetCalc() {
                   setNumSubnets(e.target.value);
                   setCalculated(false);
                 }}
-                placeholder="Количество подсетей"
+                placeholder={isEn ? "Number of subnets" : "Количество подсетей"}
                 slotProps={{ htmlInput: { min: 1, max: 256 } }}
               />
             )}
@@ -292,7 +295,7 @@ export default function SubnetCalc() {
                   setNumHosts(e.target.value);
                   setCalculated(false);
                 }}
-                placeholder="Хостов на подсеть"
+                placeholder={isEn ? "Hosts per subnet" : "Хостов на подсеть"}
                 slotProps={{ htmlInput: { min: 1 } }}
               />
             )}
@@ -305,7 +308,7 @@ export default function SubnetCalc() {
                   setVlsmInput(e.target.value);
                   setCalculated(false);
                 }}
-                placeholder="Количество хостов через запятую (100, 50, 25, 10)"
+                placeholder={isEn ? "Hosts separated by comma (100, 50, 25, 10)" : "Количество хостов через запятую (100, 50, 25, 10)"}
               />
             )}
           </Grid>
@@ -316,7 +319,7 @@ export default function SubnetCalc() {
           disabled={!validNetwork || network === ''}
           sx={{ mt: 2, borderRadius: 2, textTransform: 'none' }}
         >
-          Рассчитать
+          {isEn ? 'Calculate' : 'Рассчитать'}
         </Button>
       </Paper>
 
@@ -330,7 +333,7 @@ export default function SubnetCalc() {
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
             <Typography variant="body1" sx={{ fontWeight: 600 }}>
-              Результат: {results.length} подсетей
+              {isEn ? `Result: ${results.length} subnets` : `Результат: ${results.length} подсетей`}
             </Typography>
             {mode === 'vlsm' && (
               <Chip label="VLSM" size="small" color="primary" variant="outlined" sx={{ borderRadius: 2 }} />
@@ -365,11 +368,11 @@ export default function SubnetCalc() {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Подсеть</th>
-                  <th>Диапазон хостов</th>
-                  <th>Широковещательный</th>
-                  <th>Маска</th>
-                  <th>Хостов</th>
+                  <th>{isEn ? 'Subnet' : 'Подсеть'}</th>
+                  <th>{isEn ? 'Host range' : 'Диапазон хостов'}</th>
+                  <th>{isEn ? 'Broadcast' : 'Широковещательный'}</th>
+                  <th>{isEn ? 'Mask' : 'Маска'}</th>
+                  <th>{isEn ? 'Hosts' : 'Хостов'}</th>
                 </tr>
               </thead>
               <tbody>
@@ -382,7 +385,7 @@ export default function SubnetCalc() {
                     </td>
                     <td>{r.broadcast}</td>
                     <td>{r.mask}</td>
-                    <td>{r.hosts.toLocaleString('ru-RU')}</td>
+                    <td>{r.hosts.toLocaleString(isEn ? 'en-US' : 'ru-RU')}</td>
                   </tr>
                 ))}
               </tbody>
@@ -401,7 +404,7 @@ export default function SubnetCalc() {
           }}
         >
           <Typography color="text.secondary">
-            Невозможно разделить сеть с заданными параметрами. Проверьте входные данные.
+            {isEn ? 'Cannot divide the network with the given parameters. Check the input data.' : 'Невозможно разделить сеть с заданными параметрами. Проверьте входные данные.'}
           </Typography>
         </Paper>
       )}

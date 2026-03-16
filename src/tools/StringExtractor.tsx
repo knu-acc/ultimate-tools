@@ -15,6 +15,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 type ExtractionType = 'emails' | 'urls' | 'phones' | 'ips' | 'numbers';
@@ -22,7 +23,9 @@ type ExtractionType = 'emails' | 'urls' | 'phones' | 'ips' | 'numbers';
 interface ExtractionOption {
   type: ExtractionType;
   label: string;
+  labelEn: string;
   description: string;
+  descriptionEn: string;
   pattern: RegExp;
 }
 
@@ -30,31 +33,41 @@ const EXTRACTION_OPTIONS: ExtractionOption[] = [
   {
     type: 'emails',
     label: 'Email',
+    labelEn: 'Email',
     description: 'Адреса электронной почты',
+    descriptionEn: 'Email addresses',
     pattern: /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2}/g
   },
   {
     type: 'urls',
     label: 'URL',
+    labelEn: 'URL',
     description: 'Ссылки и веб-адреса',
+    descriptionEn: 'Links and web addresses',
     pattern: /https?:\/\/[^\s<>"{}|\\^`[\]]+/g
   },
   {
     type: 'phones',
     label: 'Телефоны',
+    labelEn: 'Phones',
     description: 'Номера телефонов',
+    descriptionEn: 'Phone numbers',
     pattern: /(?:\+?\d{1,3}[\s\-.]?)?\(?\d{2,4}\)?[\s\-.]?\d{2,4}[\s\-.]?\d{2,4}(?:[\s\-.]?\d{2,4})?/g
   },
   {
     type: 'ips',
     label: 'IP-адреса',
+    labelEn: 'IP addresses',
     description: 'IPv4 адреса',
+    descriptionEn: 'IPv4 addresses',
     pattern: /\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b/g
   },
   {
     type: 'numbers',
     label: 'Числа',
+    labelEn: 'Numbers',
     description: 'Числовые значения',
+    descriptionEn: 'Numeric values',
     pattern: /-?\d+(?:[.,]\d+)?(?:\s?%)?/g
   },
 ];
@@ -68,6 +81,8 @@ function extractUnique(text: string, pattern: RegExp): string[] {
 
 export default function StringExtractor() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [activeTypes, setActiveTypes] = useState<ExtractionType[]>(['emails']);
 
@@ -83,11 +98,11 @@ export default function StringExtractor() {
       if (!activeTypes.includes(opt.type)) continue;
       const found = extractUnique(input, opt.pattern);
       for (const val of found) {
-        allResults.push({ type: opt.type, label: opt.label, value: val });
+        allResults.push({ type: opt.type, label: isEn ? opt.labelEn : opt.label, value: val });
       }
     }
     return allResults;
-  }, [input, activeTypes]);
+  }, [input, activeTypes, isEn]);
 
   const totalCount = results.length;
 
@@ -123,14 +138,14 @@ export default function StringExtractor() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Текст для извлечения данных..."
+          placeholder={isEn ? 'Text to extract data from...' : 'Текст для извлечения данных...'}
           sx={{ mb: 2 }}
         />
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
           {EXTRACTION_OPTIONS.map((opt) => (
             <Chip
               key={opt.type}
-              label={opt.label}
+              label={isEn ? opt.labelEn : opt.label}
               variant={activeTypes.includes(opt.type) ? 'filled' : 'outlined'}
               color={activeTypes.includes(opt.type) ? getChipColor(opt.type) : 'default'}
               onClick={() => toggleType(opt.type)}
@@ -157,10 +172,10 @@ export default function StringExtractor() {
           >
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
               {totalCount > 0
-                ? `Найдено: ${totalCount}`
+                ? (isEn ? `Found: ${totalCount}` : `Найдено: ${totalCount}`)
                 : input.trim()
-                  ? 'Ничего не найдено'
-                  : 'Введите текст для анализа'}
+                  ? (isEn ? 'Nothing found' : 'Ничего не найдено')
+                  : (isEn ? 'Enter text to analyze' : 'Введите текст для анализа')}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: 1 }}>
@@ -171,7 +186,7 @@ export default function StringExtractor() {
               onClick={handleClear}
               sx={{ textTransform: 'none', borderRadius: 2 }}
             >
-              Очистить
+              {isEn ? 'Clear' : 'Очистить'}
             </Button>
           </Box>
         </Box>
@@ -240,10 +255,10 @@ export default function StringExtractor() {
             }}
           >
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Не удалось найти данные выбранных типов в тексте.
+              {isEn ? 'Could not find data of the selected types in the text.' : 'Не удалось найти данные выбранных типов в тексте.'}
             </Typography>
             <Typography variant="caption" sx={{ color: 'text.disabled', mt: 0.5, display: 'block' }}>
-              Попробуйте выбрать другой тип извлечения или проверьте текст.
+              {isEn ? 'Try selecting a different extraction type or check the text.' : 'Попробуйте выбрать другой тип извлечения или проверьте текст.'}
             </Typography>
           </Box>
         )}

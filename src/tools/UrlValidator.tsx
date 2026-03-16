@@ -15,6 +15,7 @@ import {
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface UrlParts {
@@ -65,18 +66,20 @@ function parseUrl(input: string): UrlParts | null {
 
 export default function UrlValidator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [url, setUrl] = useState('');
 
   const result = useMemo(() => parseUrl(url), [url]);
 
   const parts: { label: string; value: string; key: string }[] = result && result.valid
     ? [
-        { label: 'Протокол', value: result.protocol, key: 'protocol' },
-        { label: 'Хост', value: result.hostname, key: 'hostname' },
-        { label: 'Порт', value: result.port || '(по умолчанию)', key: 'port' },
-        { label: 'Путь', value: result.pathname, key: 'pathname' },
-        { label: 'Строка запроса', value: result.search || '(отсутствует)', key: 'search' },
-        { label: 'Хэш (фрагмент)', value: result.hash || '(отсутствует)', key: 'hash' },
+        { label: isEn ? 'Protocol' : 'Протокол', value: result.protocol, key: 'protocol' },
+        { label: isEn ? 'Host' : 'Хост', value: result.hostname, key: 'hostname' },
+        { label: isEn ? 'Port' : 'Порт', value: result.port || (isEn ? '(default)' : '(по умолчанию)'), key: 'port' },
+        { label: isEn ? 'Path' : 'Путь', value: result.pathname, key: 'pathname' },
+        { label: isEn ? 'Query string' : 'Строка запроса', value: result.search || (isEn ? '(none)' : '(отсутствует)'), key: 'search' },
+        { label: isEn ? 'Hash (fragment)' : 'Хэш (фрагмент)', value: result.hash || (isEn ? '(none)' : '(отсутствует)'), key: 'hash' },
         { label: 'Origin', value: result.origin, key: 'origin' },
       ]
     : [];
@@ -107,7 +110,7 @@ export default function UrlValidator() {
             {result.valid ? (
               <Chip
                 icon={<CheckCircleIcon />}
-                label="URL валиден"
+                label={isEn ? 'URL is valid' : 'URL валиден'}
                 color="success"
                 variant="outlined"
                 sx={{ fontWeight: 600 }}
@@ -115,7 +118,7 @@ export default function UrlValidator() {
             ) : (
               <Chip
                 icon={<CancelIcon />}
-                label="URL невалиден"
+                label={isEn ? 'URL is invalid' : 'URL невалиден'}
                 color="error"
                 variant="outlined"
                 sx={{ fontWeight: 600 }}
@@ -129,7 +132,7 @@ export default function UrlValidator() {
       {result && result.valid && (
         <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
           <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-            Компоненты URL
+            {isEn ? 'URL components' : 'Компоненты URL'}
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
             {parts.map((part) => (
@@ -170,7 +173,7 @@ export default function UrlValidator() {
       {result && result.valid && result.searchParams.length > 0 && (
         <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
           <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-            Параметры запроса
+            {isEn ? 'Query parameters' : 'Параметры запроса'}
           </Typography>
           <Grid container spacing={1}>
             {/* Header */}
@@ -183,7 +186,7 @@ export default function UrlValidator() {
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                  Ключ
+                  {isEn ? 'Key' : 'Ключ'}
                 </Typography>
               </Box>
             </Grid>
@@ -196,7 +199,7 @@ export default function UrlValidator() {
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                  Значение
+                  {isEn ? 'Value' : 'Значение'}
                 </Typography>
               </Box>
             </Grid>

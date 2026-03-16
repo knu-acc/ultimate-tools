@@ -13,8 +13,9 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
-const UNITS = [
+const UNITS_RU = [
   { id: 'watt', name: 'Ватты', short: 'Вт', factor: 1 },
   { id: 'kw', name: 'Киловатты', short: 'кВт', factor: 1000 },
   { id: 'mw', name: 'Мегаватты', short: 'МВт', factor: 1e6 },
@@ -22,6 +23,16 @@ const UNITS = [
   { id: 'btu_h', name: 'BTU/час', short: 'BTU/ч', factor: 0.293071 },
   { id: 'cal_s', name: 'Калории/сек', short: 'кал/с', factor: 4.184 },
   { id: 'ft_lbs', name: 'Фут-фунты/сек', short: 'ft·lbf/s', factor: 1.35582 },
+];
+
+const UNITS_EN = [
+  { id: 'watt', name: 'Watts', short: 'W', factor: 1 },
+  { id: 'kw', name: 'Kilowatts', short: 'kW', factor: 1000 },
+  { id: 'mw', name: 'Megawatts', short: 'MW', factor: 1e6 },
+  { id: 'hp', name: 'Horsepower', short: 'hp', factor: 745.7 },
+  { id: 'btu_h', name: 'BTU/hour', short: 'BTU/h', factor: 0.293071 },
+  { id: 'cal_s', name: 'Calories/sec', short: 'cal/s', factor: 4.184 },
+  { id: 'ft_lbs', name: 'Foot-pounds/sec', short: 'ft·lbf/s', factor: 1.35582 },
 ];
 
 function fmt(v: number): string {
@@ -32,6 +43,9 @@ function fmt(v: number): string {
 
 export default function PowerConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const UNITS = isEn ? UNITS_EN : UNITS_RU;
   const [value, setValue] = useState('1');
   const [fromUnit, setFromUnit] = useState('kw');
 

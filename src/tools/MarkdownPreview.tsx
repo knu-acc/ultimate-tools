@@ -6,9 +6,10 @@ import {
 } from '@mui/material';
 import { FormatBold, FormatItalic, Code, FormatListBulleted, Title } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
-const defaultMd = `# Заголовок 1
+const defaultMdRu = `# Заголовок 1
 ## Заголовок 2
 ### Заголовок 3
 
@@ -40,6 +41,40 @@ function hello() {
 |-----------|-----------|-----------|
 | Ячейка 1  | Ячейка 2  | Ячейка 3  |
 | Ячейка 4  | Ячейка 5  | Ячейка 6  |
+`;
+
+const defaultMdEn = `# Heading 1
+## Heading 2
+### Heading 3
+
+This is **bold** text and *italic* text.
+
+- List item 1
+- List item 2
+- List item 3
+
+1. Numbered item
+2. Second item
+3. Third item
+
+> This is a blockquote. Markdown is a simple markup language.
+
+\`inline code\` and code block:
+
+\`\`\`
+function hello() {
+  console.log("Hello world!");
+}
+\`\`\`
+
+[Link to UTools](https://ulti-tools.com)
+
+---
+
+| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| Cell 1   | Cell 2   | Cell 3   |
+| Cell 4   | Cell 5   | Cell 6   |
 `;
 
 function parseMarkdown(md: string): string {
@@ -87,7 +122,9 @@ function parseMarkdown(md: string): string {
 
 export default function MarkdownPreview() {
   const theme = useTheme();
-  const [markdown, setMarkdown] = useState(defaultMd);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const [markdown, setMarkdown] = useState(isEn ? defaultMdEn : defaultMdRu);
 
   const insertAtCursor = (before: string, after: string = '') => {
     setMarkdown(prev => prev + before + after);
@@ -112,30 +149,30 @@ export default function MarkdownPreview() {
       >
         {/* Toolbar */}
         <Box sx={{ display: 'flex', gap: 0.5, mb: 2, flexWrap: 'wrap' }}>
-          <IconButton size="small" onClick={() => insertAtCursor('**', '**')} title="Жирный"
+          <IconButton size="small" onClick={() => insertAtCursor('**', '**')} title={isEn ? 'Bold' : 'Жирный'}
             sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
             <FormatBold fontSize="small" />
           </IconButton>
-          <IconButton size="small" onClick={() => insertAtCursor('*', '*')} title="Курсив"
+          <IconButton size="small" onClick={() => insertAtCursor('*', '*')} title={isEn ? 'Italic' : 'Курсив'}
             sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
             <FormatItalic fontSize="small" />
           </IconButton>
-          <IconButton size="small" onClick={() => insertAtCursor('`', '`')} title="Код"
+          <IconButton size="small" onClick={() => insertAtCursor('`', '`')} title={isEn ? 'Code' : 'Код'}
             sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
             <Code fontSize="small" />
           </IconButton>
-          <IconButton size="small" onClick={() => insertAtCursor('\n- ')} title="Список"
+          <IconButton size="small" onClick={() => insertAtCursor('\n- ')} title={isEn ? 'List' : 'Список'}
             sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
             <FormatListBulleted fontSize="small" />
           </IconButton>
-          <IconButton size="small" onClick={() => insertAtCursor('\n## ')} title="Заголовок"
+          <IconButton size="small" onClick={() => insertAtCursor('\n## ')} title={isEn ? 'Heading' : 'Заголовок'}
             sx={{ '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}>
             <Title fontSize="small" />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
-          <Chip label={`${stats.chars} символов`} size="small" />
-          <Chip label={`${stats.words} слов`} size="small" />
-          <Chip label={`${stats.lines} строк`} size="small" />
+          <Chip label={`${stats.chars} ${isEn ? 'chars' : 'символов'}`} size="small" />
+          <Chip label={`${stats.words} ${isEn ? 'words' : 'слов'}`} size="small" />
+          <Chip label={`${stats.lines} ${isEn ? 'lines' : 'строк'}`} size="small" />
         </Box>
 
         <Grid container spacing={2}>

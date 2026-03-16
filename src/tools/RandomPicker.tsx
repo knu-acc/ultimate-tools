@@ -5,12 +5,16 @@ import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider
 } from '@mui/material';
 import { Casino } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
-const DEFAULT_ITEMS = 'Вариант 1\nВариант 2\nВариант 3\nВариант 4\nВариант 5';
+const DEFAULT_ITEMS_RU = 'Вариант 1\nВариант 2\nВариант 3\nВариант 4\nВариант 5';
+const DEFAULT_ITEMS_EN = 'Option 1\nOption 2\nOption 3\nOption 4\nOption 5';
 
 export default function RandomPicker() {
   const theme = useTheme();
-  const [text, setText] = useState(DEFAULT_ITEMS);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const [text, setText] = useState(isEn ? DEFAULT_ITEMS_EN : DEFAULT_ITEMS_RU);
   const [pickCount, setPickCount] = useState(1);
   const [removePicked, setRemovePicked] = useState(false);
   const [result, setResult] = useState<string[]>([]);
@@ -50,7 +54,7 @@ export default function RandomPicker() {
         setAnimating(false);
 
         const now = new Date();
-        const timeStr = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const timeStr = now.toLocaleTimeString(isEn ? 'en-US' : 'ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         setHistory(prev => [{ items: picked, time: timeStr }, ...prev].slice(0, 20));
 
         if (removePicked) {
@@ -59,7 +63,7 @@ export default function RandomPicker() {
         }
       }
     }, 60);
-  }, [getItems, pickCount, animating, removePicked]);
+  }, [getItems, pickCount, animating, removePicked, isEn]);
 
   const items = getItems();
 
@@ -83,7 +87,7 @@ export default function RandomPicker() {
             fullWidth
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Элементы (по одному на строку)..."
+            placeholder={isEn ? 'Items (one per line)...' : 'Элементы (по одному на строку)...'}
             disabled={animating}
             sx={{
               mb: 2,
@@ -92,12 +96,12 @@ export default function RandomPicker() {
           />
 
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            Элементов: {items.length}
+            {isEn ? 'Items' : 'Элементов'}: {items.length}
           </Typography>
 
           <Box sx={{ mb: 2 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Выбрать: {pickCount}
+              {isEn ? 'Pick' : 'Выбрать'}: {pickCount}
             </Typography>
             <Slider
               value={pickCount}
@@ -113,7 +117,9 @@ export default function RandomPicker() {
 
           <Box sx={{ mb: 2 }}>
             <Chip
-              label={removePicked ? 'Удалять выбранные: Вкл' : 'Удалять выбранные: Выкл'}
+              label={removePicked
+                ? (isEn ? 'Remove picked: On' : 'Удалять выбранные: Вкл')
+                : (isEn ? 'Remove picked: Off' : 'Удалять выбранные: Выкл')}
               onClick={() => setRemovePicked(!removePicked)}
               sx={{
                 fontWeight: 600,
@@ -136,15 +142,15 @@ export default function RandomPicker() {
             sx={{ borderRadius: 6, py: 1.2 }}
           >
             {animating
-              ? 'Выбираю...'
+              ? (isEn ? 'Picking...' : 'Выбираю...')
               : pickCount === 1
-                ? 'Выбрать один'
-                : `Выбрать ${pickCount}`}
+                ? (isEn ? 'Pick one' : 'Выбрать один')
+                : (isEn ? `Pick ${pickCount}` : `Выбрать ${pickCount}`)}
           </Button>
 
           {items.length === 0 && (
             <Typography variant="caption" color="error" sx={{ mt: 1, display: 'block' }}>
-              Список пуст. Добавьте элементы.
+              {isEn ? 'List is empty. Add items.' : 'Список пуст. Добавьте элементы.'}
             </Typography>
           )}
         </Grid>
@@ -191,7 +197,9 @@ export default function RandomPicker() {
               }}
             >
               <Typography variant="caption" color="text.secondary">
-                {result.length === 1 ? 'Результат' : `Выбрано: ${result.length}`}
+                {result.length === 1
+                  ? (isEn ? 'Result' : 'Результат')
+                  : (isEn ? `Picked: ${result.length}` : `Выбрано: ${result.length}`)}
               </Typography>
               {result.length === 1 ? (
                 <Typography variant="h3" fontWeight={700} color="success.main">
@@ -230,7 +238,7 @@ export default function RandomPicker() {
             >
               <Casino sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
-                Нажмите кнопку, чтобы выбрать случайный элемент
+                {isEn ? 'Click the button to pick a random item' : 'Нажмите кнопку, чтобы выбрать случайный элемент'}
               </Typography>
             </Paper>
           )}
@@ -238,7 +246,7 @@ export default function RandomPicker() {
           {history.length > 0 && (
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                История выбора ({history.length})
+                {isEn ? 'Pick history' : 'История выбора'} ({history.length})
               </Typography>
               {history.map((h, i) => (
                 <Box

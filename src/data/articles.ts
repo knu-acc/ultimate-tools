@@ -22,13 +22,16 @@ import { productivityArticles } from './articles/productivity';
 export interface Article {
   slug: string;
   title: string;
+  titleEn?: string;
   description: string;
+  descriptionEn?: string;
   toolSlug: string;
   type: 'guide' | 'tips' | 'use-cases';
   keywords: string[];
   date: string;
   readTime: number;
   content: string;
+  contentEn?: string;
 }
 
 const baseArticles: Article[] = [
@@ -36,7 +39,9 @@ const baseArticles: Article[] = [
   {
     slug: 'password-generator-guide',
     title: 'Как создать надёжный пароль — полное руководство',
+    titleEn: 'How to Create a Strong Password — Complete Guide',
     description: 'Подробное руководство по созданию надёжных паролей. Узнайте, какие пароли безопасны, какой длины должен быть пароль и как использовать генератор.',
+    descriptionEn: 'A detailed guide to creating strong passwords. Learn what makes a password secure, the ideal length, and how to use a password generator.',
     toolSlug: 'password-generator',
     type: 'guide',
     keywords: ['генератор паролей', 'надёжный пароль', 'безопасность', 'создание пароля'],
@@ -90,11 +95,61 @@ const baseArticles: Article[] = [
 
 Смотрите также: [Проверка надёжности пароля](/tools/password-strength), [Генератор UUID](/tools/uuid-generator), [Base64 кодирование](/tools/base64-encoder)
     `.trim(),
+    contentEn: `
+## Why Do You Need a Password Generator?
+
+In the digital age, the security of your accounts directly depends on password strength. Statistics show that over 80% of data breaches occur due to weak or reused passwords.
+
+## What Makes a Password Strong?
+
+A strong password must meet several criteria:
+
+- **Length** — at least 12 characters, ideally 16-20
+- **Complexity** — uppercase and lowercase letters, numbers, special characters
+- **Uniqueness** — not reused across different sites
+- **Unpredictability** — does not contain dictionary words, dates, or names
+
+## How to Use Our Generator
+
+### Step 1: Choose Password Length
+We recommend at least 16 characters for important accounts (banking, email) and at least 12 for others.
+
+### Step 2: Configure Composition
+Enable all character types for maximum security:
+| Character Type | Example | Number of Variants |
+|---|---|---|
+| Lowercase letters | a-z | 26 |
+| Uppercase letters | A-Z | 26 |
+| Digits | 0-9 | 10 |
+| Special characters | !@#$%^&* | 32 |
+
+### Step 3: Generate and Save
+Click the generate button, copy the password, and save it in a password manager.
+
+## Common Password Mistakes
+
+1. Using the same password everywhere
+2. Passwords that are too short (fewer than 8 characters)
+3. Using personal information (date of birth, pet's name)
+4. Simple patterns (qwerty, 12345, password)
+5. Replacing letters with similar symbols (p@ssw0rd) — this has long been ineffective
+
+## Expert Recommendations
+
+- Use a password manager for storage
+- Enable two-factor authentication wherever possible
+- Change passwords after data breaches
+- Use a unique password for each service
+
+See also: [Password Strength Checker](/tools/password-strength), [UUID Generator](/tools/uuid-generator), [Base64 Encoder](/tools/base64-encoder)
+    `.trim(),
   },
   {
     slug: 'password-generator-tips',
     title: '10 советов по безопасности паролей в 2026 году',
+    titleEn: '10 Password Security Tips for 2026',
     description: 'Актуальные советы по защите ваших аккаунтов. Как создавать, хранить и управлять паролями безопасно.',
+    descriptionEn: 'Up-to-date tips for protecting your accounts. How to create, store, and manage passwords securely.',
     toolSlug: 'password-generator',
     type: 'tips',
     keywords: ['советы по паролям', 'безопасность аккаунтов', 'менеджер паролей', 'защита'],
@@ -135,11 +190,48 @@ const baseArticles: Article[] = [
 
 Смотрите также: [Проверка надёжности пароля](/tools/password-strength), [Конвертер цветов](/tools/color-converter)
     `.trim(),
+    contentEn: `
+## 10 Password Security Tips
+
+### 1. Use Passwords at Least 16 Characters Long
+Each additional character increases cracking time exponentially. A 16-character random password is virtually impossible to brute-force.
+
+### 2. Never Reuse a Password
+If one service gets hacked, attackers will try the same password on other sites. This is called credential stuffing.
+
+### 3. Use a Password Manager
+Modern password managers encrypt your data and sync across devices.
+
+### 4. Enable Two-Factor Authentication (2FA)
+Even if a password leaks, 2FA will protect your account.
+
+### 5. Check for Data Breaches
+Regularly check whether your credentials have appeared in data breaches.
+
+### 6. Don't Store Passwords in the Browser Without a Master Password
+Built-in browser vaults are less secure than dedicated password managers.
+
+### 7. Use Passphrases for Memorization
+A random combination of 4-5 words can be both secure and memorable: "cow blue jump lamp ocean."
+
+### 8. Don't Transmit Passwords Over Insecure Channels
+Don't send passwords via SMS, email, or unencrypted messengers.
+
+### 9. Update Passwords After Suspicious Activity
+If you notice anything unusual in your account — change your password immediately.
+
+### 10. Use Our Password Generator
+[Password Generator](/tools/password-generator) creates cryptographically secure passwords right in your browser.
+
+See also: [Password Strength Checker](/tools/password-strength), [Color Converter](/tools/color-converter)
+    `.trim(),
   },
   {
     slug: 'password-generator-use-cases',
     title: 'Генератор паролей: 7 сценариев использования',
+    titleEn: 'Password Generator: 7 Use Cases',
     description: 'Когда и зачем нужен генератор паролей. Реальные сценарии: регистрация, Wi-Fi, API-ключи, временные аккаунты.',
+    descriptionEn: 'When and why you need a password generator. Real-world scenarios: registration, Wi-Fi, API keys, temporary accounts.',
     toolSlug: 'password-generator',
     type: 'use-cases',
     keywords: ['использование генератора', 'сценарии', 'пароли для Wi-Fi', 'API ключи'],
@@ -171,13 +263,41 @@ IT-администраторы могут массово генерироват
 
 Используйте наш [Генератор паролей](/tools/password-generator) для всех этих сценариев. Также полезно: [Генератор UUID](/tools/uuid-generator), [JSON Formatter](/tools/json-formatter).
     `.trim(),
+    contentEn: `
+## 7 Use Cases for a Password Generator
+
+### 1. Signing Up on a New Website
+Every time you create an account, use a unique generated password.
+
+### 2. Setting Up a Wi-Fi Router
+Create a strong password for your home network. Recommended length — 20+ characters.
+
+### 3. API Keys and Tokens
+For developers: generate secure keys for APIs, webhooks, and integrations.
+
+### 4. Temporary Accounts
+For one-time registrations, use random passwords without the need to memorize them.
+
+### 5. Corporate Security
+IT administrators can bulk-generate passwords for new employees.
+
+### 6. File Encryption
+When creating encrypted archives or documents — use the most complex password possible.
+
+### 7. Backup Codes
+Generate recovery codes for two-factor authentication.
+
+Use our [Password Generator](/tools/password-generator) for all these scenarios. Also useful: [UUID Generator](/tools/uuid-generator), [JSON Formatter](/tools/json-formatter).
+    `.trim(),
   },
 
   // === JSON Formatter ===
   {
     slug: 'json-formatter-guide',
     title: 'JSON Formatter: как форматировать и валидировать JSON',
+    titleEn: 'JSON Formatter: How to Format and Validate JSON',
     description: 'Руководство по форматированию JSON данных. Как читать, валидировать и минифицировать JSON онлайн.',
+    descriptionEn: 'A guide to formatting JSON data. How to read, validate, and minify JSON online.',
     toolSlug: 'json-formatter',
     type: 'guide',
     keywords: ['json', 'форматирование', 'валидация', 'prettify', 'минификация'],
@@ -232,11 +352,62 @@ JSON (JavaScript Object Notation) — это текстовый формат о�
 
 Смотрите также: [Regex тестер](/tools/regex-tester), [Base64 кодирование](/tools/base64-encoder), [Конвертер регистра](/tools/case-converter)
     `.trim(),
+    contentEn: `
+## What Is JSON?
+
+JSON (JavaScript Object Notation) is a text-based data interchange format based on JavaScript. It is used in virtually every web application for transferring data between client and server.
+
+## Why Format JSON?
+
+Minified JSON saves bandwidth but is impossible to read:
+
+\`\`\`
+{"name":"Ivan","age":25,"skills":["JS","Python"],"address":{"city":"Moscow"}}
+\`\`\`
+
+Formatted JSON is easy to read and debug:
+\`\`\`json
+{
+  "name": "Ivan",
+  "age": 25,
+  "skills": ["JS", "Python"],
+  "address": {
+    "city": "Moscow"
+  }
+}
+\`\`\`
+
+## How to Use JSON Formatter
+
+### Formatting
+1. Paste JSON into the input field
+2. Click "Format"
+3. Get indented, readable JSON
+
+### Minification
+Removes all whitespace and line breaks to reduce size.
+
+### Validation
+Checks JSON correctness and shows errors with line numbers.
+
+## Common JSON Errors
+
+| Error | Example | Fix |
+|---|---|---|
+| Trailing comma | {"a": 1,} | {"a": 1} |
+| Single quotes | {'a': 1} | {"a": 1} |
+| Unquoted keys | {a: 1} | {"a": 1} |
+| Trailing comma | [1, 2, 3,] | [1, 2, 3] |
+
+See also: [Regex Tester](/tools/regex-tester), [Base64 Encoder](/tools/base64-encoder), [Case Converter](/tools/case-converter)
+    `.trim(),
   },
   {
     slug: 'json-formatter-tips',
     title: '5 советов по работе с JSON для разработчиков',
+    titleEn: '5 JSON Tips for Developers',
     description: 'Практические советы по работе с JSON: валидация, отладка, безопасность и производительность.',
+    descriptionEn: 'Practical tips for working with JSON: validation, debugging, security, and performance.',
     toolSlug: 'json-formatter',
     type: 'tips',
     keywords: ['json советы', 'api', 'разработка', 'отладка json'],
@@ -264,11 +435,35 @@ JSON Schema описывает ожидаемую структуру данны�
 
 Полезные инструменты: [Regex тестер](/tools/regex-tester), [Генератор UUID](/tools/uuid-generator), [Счётчик слов](/tools/word-counter)
     `.trim(),
+    contentEn: `
+## 5 Tips for Working with JSON
+
+### 1. Always Validate JSON Before Use
+Invalid JSON can break your application. Use [JSON Formatter](/tools/json-formatter) for quick validation.
+
+### 2. Use JSON Schema for Structure Validation
+JSON Schema describes the expected data structure and allows automatic validation of incoming data.
+
+### 3. Minify JSON for Production
+Minification reduces data size by 20-40%, which speeds up API loading.
+
+### 4. Use the Correct Data Types
+- Numbers without quotes: \`"age": 25\` (not \`"age": "25"\`)
+- Booleans without quotes: \`"active": true\`
+- Null for empty values: \`"email": null\`
+
+### 5. Security: Sanitize JSON
+Never use \`eval()\` to parse JSON. Use \`JSON.parse()\`.
+
+Useful tools: [Regex Tester](/tools/regex-tester), [UUID Generator](/tools/uuid-generator), [Word Counter](/tools/word-counter)
+    `.trim(),
   },
   {
     slug: 'json-formatter-use-cases',
     title: 'JSON Formatter: когда и зачем использовать',
+    titleEn: 'JSON Formatter: When and Why to Use It',
     description: 'Реальные сценарии использования JSON Formatter: отладка API, конфигурация, анализ данных.',
+    descriptionEn: 'Real-world use cases for JSON Formatter: API debugging, configuration, data analysis.',
     toolSlug: 'json-formatter',
     type: 'use-cases',
     keywords: ['json использование', 'api отладка', 'конфигурация', 'данные'],
@@ -294,13 +489,35 @@ package.json, tsconfig.json, .eslintrc — все эти файлы можно �
 
 Другие инструменты для разработчиков: [Regex тестер](/tools/regex-tester), [Base64 кодирование](/tools/base64-encoder), [Конвертер цветов](/tools/color-converter)
     `.trim(),
+    contentEn: `
+## When to Use JSON Formatter
+
+### 1. Debugging API Responses
+Copy an API response and paste it into the formatter for a convenient view of the data structure.
+
+### 2. Editing Configuration Files
+package.json, tsconfig.json, .eslintrc — all these files can be checked for correctness.
+
+### 3. Analyzing Database Data
+Data exported from MongoDB or other NoSQL databases often comes in JSON format.
+
+### 4. Preparing Test Data
+Create and format test JSON objects for unit tests.
+
+### 5. Documenting APIs
+Formatted JSON examples make API documentation more understandable.
+
+Other developer tools: [Regex Tester](/tools/regex-tester), [Base64 Encoder](/tools/base64-encoder), [Color Converter](/tools/color-converter)
+    `.trim(),
   },
 
   // === BMI Калькулятор ===
   {
     slug: 'bmi-calculator-guide',
     title: 'Индекс массы тела (BMI): полное руководство',
+    titleEn: 'Body Mass Index (BMI): Complete Guide',
     description: 'Что такое BMI, как его рассчитать, нормы ВОЗ и ограничения показателя.',
+    descriptionEn: 'What is BMI, how to calculate it, WHO standards, and limitations of the metric.',
     toolSlug: 'bmi-calc',
     type: 'guide',
     keywords: ['bmi', 'индекс массы тела', 'калькулятор bmi', 'вес', 'здоровье'],
@@ -334,13 +551,43 @@ BMI не учитывает мышечную массу, возраст и по�
 
 Смотрите также: [Калькулятор калорий](/tools/calorie-calc), [Калькулятор сна](/tools/sleep-calc)
     `.trim(),
+    contentEn: `
+## What Is BMI (Body Mass Index)?
+
+BMI is a metric that helps assess the correspondence between a person's weight and height. The formula is simple: weight (kg) divided by height (m) squared.
+
+## BMI Categories According to WHO
+
+| BMI | Category |
+|---|---|
+| Below 18.5 | Underweight |
+| 18.5 — 24.9 | Normal weight |
+| 25.0 — 29.9 | Overweight |
+| 30.0 and above | Obesity |
+
+## How to Use the Calculator
+
+1. Enter your height in centimeters
+2. Enter your weight in kilograms
+3. Get the result with an explanation
+
+Use our [BMI Calculator](/tools/bmi-calc) for instant calculation.
+
+## Limitations of BMI
+
+BMI does not account for muscle mass, age, or sex. Athletes may have a high BMI while having a normal body fat percentage.
+
+See also: [Calorie Calculator](/tools/calorie-calc), [Sleep Calculator](/tools/sleep-calc)
+    `.trim(),
   },
 
   // === Конвертер температуры ===
   {
     slug: 'temperature-converter-guide',
     title: 'Конвертер температуры: Цельсий, Фаренгейт, Кельвин',
+    titleEn: 'Temperature Converter: Celsius, Fahrenheit, Kelvin',
     description: 'Как переводить температуру между шкалами. Формулы, таблицы и онлайн-конвертер.',
+    descriptionEn: 'How to convert temperature between scales. Formulas, tables, and an online converter.',
     toolSlug: 'temperature-converter',
     type: 'guide',
     keywords: ['температура', 'конвертер', 'цельсий', 'фаренгейт', 'кельвин'],
@@ -377,13 +624,46 @@ BMI не учитывает мышечную массу, возраст и по�
 
 Смотрите также: [Конвертер длины](/tools/length-converter), [Конвертер веса](/tools/weight-converter)
     `.trim(),
+    contentEn: `
+## Temperature Scales
+
+### Celsius (°C)
+The most widely used scale in the world. 0°C is the freezing point of water, 100°C is the boiling point.
+
+### Fahrenheit (°F)
+Used in the United States. 32°F is the freezing point of water, 212°F is the boiling point.
+
+### Kelvin (K)
+The absolute scale for science. 0K = -273.15°C (absolute zero).
+
+## Conversion Formulas
+
+- °F = °C × 9/5 + 32
+- °C = (°F − 32) × 5/9
+- K = °C + 273.15
+
+## Commonly Used Values
+
+| Description | °C | °F | K |
+|---|---|---|---|
+| Absolute zero | −273.15 | −459.67 | 0 |
+| Freezing point of water | 0 | 32 | 273.15 |
+| Body temperature | 36.6 | 97.9 | 309.75 |
+| Boiling point of water | 100 | 212 | 373.15 |
+
+Use our [Temperature Converter](/tools/temperature-converter) for instant conversion.
+
+See also: [Length Converter](/tools/length-converter), [Weight Converter](/tools/weight-converter)
+    `.trim(),
   },
 
   // === Regex тестер ===
   {
     slug: 'regex-tester-guide',
     title: 'Регулярные выражения: полное руководство для начинающих',
+    titleEn: 'Regular Expressions: A Complete Beginner\'s Guide',
     description: 'Основы регулярных выражений с примерами. Как писать regex для поиска email, телефонов, URL.',
+    descriptionEn: 'Regex basics with examples. How to write regular expressions for finding emails, phone numbers, and URLs.',
     toolSlug: 'regex-tester',
     type: 'guide',
     keywords: ['regex', 'регулярные выражения', 'паттерн', 'поиск', 'javascript'],
@@ -423,13 +703,49 @@ BMI не учитывает мышечную массу, возраст и по�
 
 Смотрите также: [JSON Formatter](/tools/json-formatter), [Найти и заменить](/tools/text-replace)
     `.trim(),
+    contentEn: `
+## What Are Regular Expressions?
+
+Regular expressions (regex) are a powerful tool for searching and replacing text using patterns.
+
+## Basic Characters
+
+| Character | Meaning |
+|---|---|
+| . | Any character |
+| \\d | Digit (0-9) |
+| \\w | Letter, digit, _ |
+| \\s | Whitespace character |
+| ^ | Start of line |
+| $ | End of line |
+| * | 0 or more repetitions |
+| + | 1 or more repetitions |
+| ? | 0 or 1 repetition |
+
+## Examples
+
+### Email
+\`[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\`
+
+### Phone (Russia)
+\`\\+7[\\s-]?\\(?\\d{3}\\)?[\\s-]?\\d{3}[\\s-]?\\d{2}[\\s-]?\\d{2}\`
+
+### URL
+\`https?:\\/\\/[\\w.-]+\\.[a-z]{2,}[\\/\\w.-]*\`
+
+Test your expressions in the [Regex Tester](/tools/regex-tester).
+
+See also: [JSON Formatter](/tools/json-formatter), [Find and Replace](/tools/text-replace)
+    `.trim(),
   },
 
   // === Помодоро ===
   {
     slug: 'pomodoro-guide',
     title: 'Техника Помодоро: как повысить продуктивность',
+    titleEn: 'The Pomodoro Technique: How to Boost Productivity',
     description: 'Что такое метод Помодоро, как его применять и почему он работает.',
+    descriptionEn: 'What is the Pomodoro method, how to apply it, and why it works.',
     toolSlug: 'pomodoro',
     type: 'guide',
     keywords: ['помодоро', 'продуктивность', 'таймер', 'тайм-менеджмент', 'фокус'],
@@ -459,13 +775,39 @@ BMI не учитывает мышечную массу, возраст и по�
 
 Смотрите также: [Таймер и Секундомер](/tools/timer), [Список задач](/tools/todo-list)
     `.trim(),
+    contentEn: `
+## What Is the Pomodoro Technique?
+
+Pomodoro is a time management method developed by Francesco Cirillo. The idea: work for 25 minutes, then rest for 5 minutes. After 4 cycles, take a longer break of 15-30 minutes.
+
+## How to Apply It
+
+1. Choose a task
+2. Set a timer for 25 minutes
+3. Work without distractions
+4. Take a 5-minute break
+5. Every 4 pomodoros — take a long break
+
+## Why It Works
+
+- Focus: 25 minutes is an optimal concentration interval
+- Rest: regular breaks prevent burnout
+- Motivation: small goals are easier to achieve
+- Tracking: you can see how many pomodoros you spent on a task
+
+Try our [Pomodoro Timer](/tools/pomodoro) right now.
+
+See also: [Timer and Stopwatch](/tools/timer), [To-Do List](/tools/todo-list)
+    `.trim(),
   },
 
   // === Конвертер цветов ===
   {
     slug: 'color-converter-guide',
     title: 'Цветовые модели: HEX, RGB, HSL, CMYK — полный гид',
+    titleEn: 'Color Models: HEX, RGB, HSL, CMYK — Complete Guide',
     description: 'Разница между цветовыми моделями и как переводить цвета между форматами.',
+    descriptionEn: 'The difference between color models and how to convert colors between formats.',
     toolSlug: 'color-converter',
     type: 'guide',
     keywords: ['цвет', 'hex', 'rgb', 'hsl', 'cmyk', 'конвертер'],
@@ -499,13 +841,43 @@ Cyan, Magenta, Yellow, Key (чёрный). Для полиграфии и печ
 
 Смотрите также: [Генератор палитр](/tools/palette-generator), [Генератор градиентов](/tools/gradient-generator), [Проверка контраста](/tools/contrast-checker)
     `.trim(),
+    contentEn: `
+## Color Models
+
+### HEX
+Hexadecimal notation: #RRGGBB. Used in CSS and web design.
+
+### RGB
+Red, Green, Blue — 3 channels from 0 to 255. rgb(255, 0, 0) = red.
+
+### HSL
+Hue, Saturation, Lightness. Convenient for designers.
+
+### CMYK
+Cyan, Magenta, Yellow, Key (black). For printing and publishing.
+
+## When to Use Which
+
+| Model | Application |
+|---|---|
+| HEX | CSS, web design |
+| RGB | Screen graphics |
+| HSL | Choosing shades |
+| CMYK | Printing |
+
+Convert colors in the [Color Converter](/tools/color-converter).
+
+See also: [Palette Generator](/tools/palette-generator), [Gradient Generator](/tools/gradient-generator), [Contrast Checker](/tools/contrast-checker)
+    `.trim(),
   },
 
   // === Markdown ===
   {
     slug: 'markdown-preview-guide',
     title: 'Markdown: синтаксис и примеры использования',
+    titleEn: 'Markdown: Syntax and Usage Examples',
     description: 'Полное руководство по Markdown: заголовки, списки, ссылки, таблицы, код.',
+    descriptionEn: 'A complete Markdown guide: headings, lists, links, tables, and code.',
     toolSlug: 'markdown-preview',
     type: 'guide',
     keywords: ['markdown', 'синтаксис', 'форматирование', 'md', 'github'],
@@ -545,13 +917,49 @@ Markdown — лёгкий язык разметки для форматиров�
 
 Смотрите также: [Счётчик слов](/tools/word-counter), [Конвертер регистра](/tools/case-converter)
     `.trim(),
+    contentEn: `
+## What Is Markdown?
+
+Markdown is a lightweight markup language for formatting text. It is widely used on GitHub, in documentation, and in blogs.
+
+## Basic Syntax
+
+### Headings
+\`# H1\`, \`## H2\`, \`### H3\`
+
+### Emphasis
+- **Bold**: \`**text**\`
+- *Italic*: \`*text*\`
+- ~~Strikethrough~~: \`~~text~~\`
+
+### Lists
+- Unordered: \`- item\`
+- Ordered: \`1. item\`
+
+### Links and Images
+- Link: \`[text](url)\`
+- Image: \`![alt](url)\`
+
+### Code
+- Inline: backticks
+- Block: triple backticks with language specification
+
+### Tables
+Use | to separate columns.
+
+Try the editor in [Markdown Preview](/tools/markdown-preview).
+
+See also: [Word Counter](/tools/word-counter), [Case Converter](/tools/case-converter)
+    `.trim(),
   },
 
   // === Калькулятор скидок ===
   {
     slug: 'discount-calc-tips',
     title: '5 советов по расчёту скидок и экономии',
+    titleEn: '5 Tips for Calculating Discounts and Saving Money',
     description: 'Как правильно считать скидки, сравнивать предложения и экономить на покупках.',
+    descriptionEn: 'How to correctly calculate discounts, compare offers, and save on purchases.',
     toolSlug: 'discount-calc',
     type: 'tips',
     keywords: ['скидка', 'расчёт', 'экономия', 'распродажа', 'калькулятор'],

@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 function generateUuidV4(): string {
   const bytes = new Uint8Array(16);
@@ -33,6 +34,8 @@ function generateUuidV4(): string {
 
 export default function UuidGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [count, setCount] = useState(1);
   const [uuids, setUuids] = useState<string[]>([]);
   const [uppercase, setUppercase] = useState(false);
@@ -64,7 +67,7 @@ export default function UuidGenerator() {
         <Box sx={{ mb: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary' }}>
-              Количество
+              {isEn ? 'Count' : 'Количество'}
             </Typography>
             <Typography variant="body2" sx={{ fontWeight: 700, color: 'primary.main' }}>
               {count}
@@ -84,20 +87,20 @@ export default function UuidGenerator() {
           <Grid size={{ xs: 6 }}>
             <FormControlLabel
               control={<Checkbox checked={uppercase} onChange={(e) => setUppercase(e.target.checked)} />}
-              label={<Typography variant="body2">ВЕРХНИЙ РЕГИСТР</Typography>}
+              label={<Typography variant="body2">{isEn ? 'UPPERCASE' : 'ВЕРХНИЙ РЕГИСТР'}</Typography>}
             />
           </Grid>
           <Grid size={{ xs: 6 }}>
             <FormControlLabel
               control={<Checkbox checked={withDashes} onChange={(e) => setWithDashes(e.target.checked)} />}
-              label={<Typography variant="body2">С дефисами</Typography>}
+              label={<Typography variant="body2">{isEn ? 'With dashes' : 'С дефисами'}</Typography>}
             />
           </Grid>
         </Grid>
 
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button variant="contained" startIcon={<RefreshIcon />} onClick={generate} sx={{ px: 4, textTransform: 'none', fontWeight: 600, borderRadius: 3 }}>
-            Сгенерировать
+            {isEn ? 'Generate' : 'Сгенерировать'}
           </Button>
         </Box>
       </Paper>

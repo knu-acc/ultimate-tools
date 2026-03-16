@@ -5,7 +5,9 @@ export const financeArticles: Article[] = [
   {
     slug: 'budget-planner-guide',
     title: 'Планировщик бюджета: как взять финансы под контроль',
+    titleEn: 'Budget Planner: How to Take Control of Your Finances',
     description: 'Полное руководство по планированию личного и семейного бюджета. Методы, категории расходов и практические шаги.',
+    descriptionEn: 'A complete guide to personal and family budget planning. Methods, expense categories, and practical steps.',
     toolSlug: 'budget-planner',
     type: 'guide',
     keywords: ['бюджет', 'планирование', 'финансы', 'расходы', 'доходы'],
@@ -45,11 +47,47 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Инвестиционный калькулятор](/tools/investment-calc), [Депозитный калькулятор](/tools/deposit-calc)
     `.trim(),
+    contentEn: `
+## Why Plan a Budget?
+
+Without a clear plan, money slips away unnoticed. Studies show that people who maintain a budget save on average 20% more than those who don't.
+
+## Main Budgeting Methods
+
+### The 50/30/20 Method
+Distribute your income as follows:
+
+| Category | Share | Examples |
+|---|---|---|
+| Needs | 50% | Housing, food, transportation |
+| Wants | 30% | Entertainment, hobbies, restaurants |
+| Savings | 20% | Savings, investments, debts |
+
+### The Envelope Method
+Distribute cash into envelopes by category. When an envelope is empty — spending in that category stops.
+
+### Zero-Based Budget
+Every dollar of income is allocated in advance. Income minus expenses = 0.
+
+## How to Start Planning
+
+1. Record all sources of income
+2. List mandatory expenses
+3. Identify discretionary spending categories
+4. Set limits for each category
+5. Track expenses daily
+
+Start right now with our [Budget Planner](/tools/budget-planner).
+
+See also: [Investment Calculator](/tools/investment-calc), [Deposit Calculator](/tools/deposit-calc)
+    `.trim(),
   },
   {
     slug: 'budget-planner-tips',
     title: '8 советов по ведению личного бюджета',
+    titleEn: '8 Tips for Managing a Personal Budget',
     description: 'Практические советы по управлению деньгами: как сократить расходы, увеличить сбережения и избежать типичных ошибок.',
+    descriptionEn: 'Practical money management tips: how to cut expenses, increase savings, and avoid common mistakes.',
     toolSlug: 'budget-planner',
     type: 'tips',
     keywords: ['советы по бюджету', 'экономия', 'личные финансы', 'сбережения'],
@@ -86,11 +124,44 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Калькулятор инфляции](/tools/inflation-calc), [Пенсионный калькулятор](/tools/retirement-calc)
     `.trim(),
+    contentEn: `
+## 8 Budget Management Tips
+
+### 1. Record All Expenses
+Even small purchases like coffee and snacks add up to significant amounts over a month.
+
+### 2. Pay Yourself First
+Set aside 10-20% of your income right after receiving your paycheck, before any spending.
+
+### 3. Use the 24-Hour Rule
+Before an unplanned purchase, wait a day — the desire often passes.
+
+### 4. Automate Savings
+Set up an automatic transfer to a savings account on payday.
+
+### 5. Review Subscriptions
+Once a quarter, check all subscriptions and cancel unused ones.
+
+### 6. Build an Emergency Fund
+A minimum of 3-6 months of expenses for unforeseen situations.
+
+### 7. Don't Increase Spending with Income Growth
+When you get a raise, direct the difference into savings.
+
+### 8. Analyze Spending Monthly
+Compare your plan with actual results and adjust categories.
+
+Manage your budget conveniently with the [Budget Planner](/tools/budget-planner).
+
+See also: [Inflation Calculator](/tools/inflation-calc), [Retirement Calculator](/tools/retirement-calc)
+    `.trim(),
   },
   {
     slug: 'budget-planner-use-cases',
     title: 'Планировщик бюджета: 6 сценариев использования',
+    titleEn: 'Budget Planner: 6 Use Cases',
     description: 'Когда и как использовать планировщик бюджета: семья, студенты, фрилансеры, бизнес.',
+    descriptionEn: 'When and how to use the budget planner: family, students, freelancers, business.',
     toolSlug: 'budget-planner',
     type: 'use-cases',
     keywords: ['сценарии бюджета', 'семейный бюджет', 'бюджет студента', 'фриланс'],
@@ -121,13 +192,40 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Инвестиционный калькулятор](/tools/investment-calc), [Депозитный калькулятор](/tools/deposit-calc), [Калькулятор инфляции](/tools/inflation-calc)
     `.trim(),
+    contentEn: `
+## 6 Use Cases for the Budget Planner
+
+### 1. Family Budget
+Distribute the family's total income across categories: groceries, utilities, children, entertainment. Account for both partners' incomes.
+
+### 2. Student Budget
+Limited income requires strict control. Track scholarships, part-time work, and education expenses.
+
+### 3. Planning a Major Purchase
+Calculate how much to save monthly for a car, electronics, or travel.
+
+### 4. Freelancing and Irregular Income
+With fluctuating income, plan from the minimum amount and create a buffer for lean months.
+
+### 5. Paying Off Debts
+Include loan payments in your budget and track repayment progress.
+
+### 6. Vacation Preparation
+Create a separate category and save for vacation 3-6 months before the trip.
+
+Try all scenarios in the [Budget Planner](/tools/budget-planner).
+
+See also: [Investment Calculator](/tools/investment-calc), [Deposit Calculator](/tools/deposit-calc), [Inflation Calculator](/tools/inflation-calc)
+    `.trim(),
   },
 
   // === Инвестиционный калькулятор ===
   {
     slug: 'investment-calc-guide',
     title: 'Инвестиционный калькулятор: руководство по расчёту доходности',
+    titleEn: 'Investment Calculator: Guide to Calculating Returns',
     description: 'Как рассчитать доходность инвестиций, сложный процент и срок достижения финансовых целей.',
+    descriptionEn: 'How to calculate investment returns, compound interest, and the timeline to reach financial goals.',
     toolSlug: 'investment-calc',
     type: 'guide',
     keywords: ['инвестиции', 'доходность', 'сложный процент', 'портфель', 'калькулятор'],
@@ -167,11 +265,47 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Калькулятор инфляции](/tools/inflation-calc), [Пенсионный калькулятор](/tools/retirement-calc), [Депозитный калькулятор](/tools/deposit-calc)
     `.trim(),
+    contentEn: `
+## Investment Calculation Basics
+
+Sound calculation is the foundation of successful investing. Understanding returns and risks helps make informed decisions.
+
+## Compound Interest — The Eighth Wonder of the World
+
+Compound interest is the accrual of interest not only on the initial amount but also on the accumulated interest. Formula: **FV = PV x (1 + r)^n**, where FV is future value, PV is present value, r is the rate, n is the number of periods.
+
+### Example: Growth of $1,000 at 10% Annual Rate
+
+| Year | Simple Interest | Compound Interest |
+|---|---|---|
+| 5 | $1,500 | $1,611 |
+| 10 | $2,000 | $2,594 |
+| 20 | $3,000 | $6,728 |
+| 30 | $4,000 | $17,449 |
+
+## How to Use the Calculator
+
+1. Enter the initial investment amount
+2. Specify monthly contributions
+3. Set the expected annual return rate
+4. Choose the investment period
+5. Get a capital growth forecast
+
+Calculate your portfolio with the [Investment Calculator](/tools/investment-calc).
+
+## Important to Remember
+
+Past returns do not guarantee future performance. Diversify your investments and account for inflation.
+
+See also: [Inflation Calculator](/tools/inflation-calc), [Retirement Calculator](/tools/retirement-calc), [Deposit Calculator](/tools/deposit-calc)
+    `.trim(),
   },
   {
     slug: 'investment-calc-tips',
     title: '7 советов начинающему инвестору',
+    titleEn: '7 Tips for Beginning Investors',
     description: 'Практические рекомендации для тех, кто начинает инвестировать: стратегии, ошибки, диверсификация.',
+    descriptionEn: 'Practical advice for those starting to invest: strategies, mistakes, and diversification.',
     toolSlug: 'investment-calc',
     type: 'tips',
     keywords: ['советы инвестору', 'стратегия', 'диверсификация', 'риски', 'начинающий'],
@@ -203,11 +337,39 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Планировщик бюджета](/tools/budget-planner), [Калькулятор инфляции](/tools/inflation-calc)
     `.trim(),
+    contentEn: `
+## 7 Tips for Beginning Investors
+
+### 1. Start with an Emergency Fund
+Before investing, accumulate a reserve for 3-6 months of expenses. Investments are not an emergency fund.
+
+### 2. Invest Regularly
+Dollar-cost averaging (DCA) reduces the impact of volatility. Invest a fixed amount every month.
+
+### 3. Diversify Your Portfolio
+Don't put all your eggs in one basket. Spread funds across stocks, bonds, and other assets.
+
+### 4. Account for Inflation
+Real return = nominal return minus inflation. A 10% return with 8% inflation is only 2% real growth.
+
+### 5. Don't Try to Time the Market
+Time in the market matters more than timing the market. Long-term investors earn more than speculators.
+
+### 6. Reinvest Dividends
+Reinvesting dividends multiplies the final result through compound interest.
+
+### 7. Calculate Before Making Decisions
+Use the [Investment Calculator](/tools/investment-calc) to model different scenarios.
+
+See also: [Budget Planner](/tools/budget-planner), [Inflation Calculator](/tools/inflation-calc)
+    `.trim(),
   },
   {
     slug: 'investment-calc-use-cases',
     title: 'Инвестиционный калькулятор: 5 сценариев применения',
+    titleEn: 'Investment Calculator: 5 Use Cases',
     description: 'Практические сценарии: пенсия, образование детей, первый взнос на жильё, финансовая независимость.',
+    descriptionEn: 'Practical scenarios: retirement, children\'s education, first home down payment, financial independence.',
     toolSlug: 'investment-calc',
     type: 'use-cases',
     keywords: ['сценарии инвестирования', 'пенсия', 'образование', 'финансовая цель'],
@@ -235,13 +397,37 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Пенсионный калькулятор](/tools/retirement-calc), [Депозитный калькулятор](/tools/deposit-calc)
     `.trim(),
+    contentEn: `
+## 5 Use Cases for the Investment Calculator
+
+### 1. Saving for Retirement
+Calculate how much you need to set aside monthly to have sufficient capital by age 60. Even $50 per month at 10% annual return over 30 years turns into a significant amount.
+
+### 2. Children's Education
+The cost of higher education is rising. Start saving from your child's birth — over 18 years, compound interest will do its work.
+
+### 3. Down Payment on a Home
+Determine how many years it will take to save for a down payment at a given monthly contribution.
+
+### 4. Financial Independence (FIRE)
+Calculate the capital at which passive income covers expenses. Typically this is 25-30 times annual expenses.
+
+### 5. Comparing Strategies
+Compare the results of aggressive and conservative portfolios over the same time horizon.
+
+Model scenarios with the [Investment Calculator](/tools/investment-calc).
+
+See also: [Retirement Calculator](/tools/retirement-calc), [Deposit Calculator](/tools/deposit-calc)
+    `.trim(),
   },
 
   // === Калькулятор инфляции ===
   {
     slug: 'inflation-calc-guide',
     title: 'Калькулятор инфляции: как понять реальную стоимость денег',
+    titleEn: 'Inflation Calculator: Understanding the Real Value of Money',
     description: 'Что такое инфляция, как она влияет на сбережения и как рассчитать покупательную способность денег.',
+    descriptionEn: 'What inflation is, how it affects savings, and how to calculate the purchasing power of money.',
     toolSlug: 'inflation-calc',
     type: 'guide',
     keywords: ['инфляция', 'покупательная способность', 'обесценивание', 'цены', 'экономика'],
@@ -284,11 +470,50 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Инвестиционный калькулятор](/tools/investment-calc), [Депозитный калькулятор](/tools/deposit-calc)
     `.trim(),
+    contentEn: `
+## What Is Inflation?
+
+Inflation is a sustained increase in the general price level, which reduces the purchasing power of money. If inflation is 8% per year, then in a year $1,000 will buy only as much as $926 does today.
+
+## How the Inflation Calculator Works
+
+The calculator shows how the real value of money changes with inflation:
+
+### Key Calculations
+- **Future value** — how much your money will be worth in N years
+- **Past value** — the equivalent of a sum in the past
+- **Loss of purchasing power** — the percentage of devaluation
+
+### Calculation Formula
+Real value = Nominal amount / (1 + inflation)^n
+
+## Impact of Inflation on Savings
+
+| Inflation | After 5 Years | After 10 Years | After 20 Years |
+|---|---|---|---|
+| 5% | $784 | $614 | $377 |
+| 8% | $681 | $463 | $215 |
+| 12% | $567 | $322 | $104 |
+
+*Real value of $1,000 at different inflation levels*
+
+## How to Protect Savings
+
+- Invest at returns above inflation
+- Diversify assets
+- Consider protective instruments
+
+Calculate the impact of inflation with the [Inflation Calculator](/tools/inflation-calc).
+
+See also: [Investment Calculator](/tools/investment-calc), [Deposit Calculator](/tools/deposit-calc)
+    `.trim(),
   },
   {
     slug: 'inflation-calc-tips',
     title: '5 способов защитить деньги от инфляции',
+    titleEn: '5 Ways to Protect Your Money from Inflation',
     description: 'Стратегии сохранения покупательной способности: депозиты, облигации, акции, недвижимость.',
+    descriptionEn: 'Strategies for preserving purchasing power: deposits, bonds, stocks, real estate.',
     toolSlug: 'inflation-calc',
     type: 'tips',
     keywords: ['защита от инфляции', 'сбережения', 'обесценивание денег', 'стратегии'],
@@ -322,11 +547,41 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Планировщик бюджета](/tools/budget-planner), [Инвестиционный калькулятор](/tools/investment-calc)
     `.trim(),
+    contentEn: `
+## 5 Ways to Protect Your Money from Inflation
+
+### 1. Bank Deposits with Compounding
+Choose deposits with rates above current inflation. Interest compounding amplifies the effect.
+
+### 2. Inflation-Protected Bonds (TIPS)
+Government bonds with principal indexed to inflation protect your capital.
+
+### 3. Stocks and Stock Funds
+Historically, stocks outpace inflation over long horizons. Companies raise prices, which is reflected in profits.
+
+### 4. Real Estate
+Property values and rental income typically grow alongside inflation.
+
+### 5. Currency Diversification
+Holding part of your savings in stable currencies reduces risk from local inflation.
+
+## What to Avoid
+
+- Keeping large sums in cash
+- Deposits with rates below inflation
+- Ignoring inflation in long-term planning
+
+Estimate your losses with the [Inflation Calculator](/tools/inflation-calc).
+
+See also: [Budget Planner](/tools/budget-planner), [Investment Calculator](/tools/investment-calc)
+    `.trim(),
   },
   {
     slug: 'inflation-calc-use-cases',
     title: 'Калькулятор инфляции: 4 практических сценария',
+    titleEn: 'Inflation Calculator: 4 Practical Scenarios',
     description: 'Как использовать калькулятор инфляции для планирования пенсии, оценки зарплаты и анализа цен.',
+    descriptionEn: 'How to use the inflation calculator for retirement planning, salary evaluation, and price analysis.',
     toolSlug: 'inflation-calc',
     type: 'use-cases',
     keywords: ['применение калькулятора', 'реальная зарплата', 'цены', 'планирование'],
@@ -358,13 +613,41 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Пенсионный калькулятор](/tools/retirement-calc), [Планировщик бюджета](/tools/budget-planner), [Депозитный калькулятор](/tools/deposit-calc)
     `.trim(),
+    contentEn: `
+## 4 Scenarios for Using the Inflation Calculator
+
+### 1. Evaluating Real Salary Growth
+Your salary increased by 10% over the year, but inflation was 8%. The real growth is only 2%. The calculator helps assess the true trajectory of your income.
+
+### 2. Planning Future Expenses
+Calculate how much your child's education will cost in 10 years or a home renovation in 3 years, accounting for inflation.
+
+### 3. Comparing Prices Across Different Years
+Find out what a $10 product from 2010 would cost in 2026 prices. Useful for analyzing historical data.
+
+### 4. Checking Investment Returns
+Determine the real return on your investments after subtracting inflation. Nominal profit is often misleading.
+
+## How to Calculate
+
+1. Enter the amount and starting period
+2. Set the inflation rate or use central bank data
+3. Choose the ending period
+4. Get the result in real prices
+
+Try the [Inflation Calculator](/tools/inflation-calc) for your calculations.
+
+See also: [Retirement Calculator](/tools/retirement-calc), [Budget Planner](/tools/budget-planner), [Deposit Calculator](/tools/deposit-calc)
+    `.trim(),
   },
 
   // === Пенсионный калькулятор ===
   {
     slug: 'retirement-calc-guide',
     title: 'Пенсионный калькулятор: как рассчитать накопления на пенсию',
+    titleEn: 'Retirement Calculator: How to Calculate Your Pension Savings',
     description: 'Руководство по расчёту пенсионных накоплений: сколько копить, какая доходность нужна, стратегии выхода на пенсию.',
+    descriptionEn: 'A guide to calculating retirement savings: how much to save, what returns are needed, and retirement strategies.',
     toolSlug: 'retirement-calc',
     type: 'guide',
     keywords: ['пенсия', 'накопления', 'пенсионный калькулятор', 'финансовая независимость', 'выход на пенсию'],
@@ -402,11 +685,45 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Инвестиционный калькулятор](/tools/investment-calc), [Калькулятор инфляции](/tools/inflation-calc)
     `.trim(),
+    contentEn: `
+## Why Calculate Retirement in Advance?
+
+Government pensions cover only basic needs. To maintain your accustomed standard of living, personal savings are necessary. The earlier you start, the easier the journey.
+
+## How Much Do You Need to Save?
+
+The 25x rule: multiply your desired annual retirement income by 25. If you want $2,000 per month ($24,000 per year), you need capital of $600,000.
+
+### The 4% Rule
+The safe withdrawal rate is 4% of capital per year. At this spending rate, savings will last 25-30 years.
+
+## Key Calculation Parameters
+
+| Parameter | What It Affects |
+|---|---|
+| Current age | Accumulation period |
+| Desired retirement age | Investment horizon |
+| Monthly contributions | Accumulation speed |
+| Return rate | Capital growth |
+| Inflation | Real value of savings |
+
+## Strategies by Age
+
+- **20-30 years**: aggressive portfolio, maximum stocks, time is on your side
+- **30-45 years**: balanced approach, gradually increasing bond allocation
+- **45-60 years**: conservative portfolio, protecting accumulated capital
+
+Calculate your plan with the [Retirement Calculator](/tools/retirement-calc).
+
+See also: [Investment Calculator](/tools/investment-calc), [Inflation Calculator](/tools/inflation-calc)
+    `.trim(),
   },
   {
     slug: 'retirement-calc-tips',
     title: '6 советов для успешного пенсионного планирования',
+    titleEn: '6 Tips for Successful Retirement Planning',
     description: 'Как эффективно копить на пенсию: ранний старт, автоматизация, налоговые льготы и типичные ошибки.',
+    descriptionEn: 'How to effectively save for retirement: early start, automation, tax benefits, and common mistakes.',
     toolSlug: 'retirement-calc',
     type: 'tips',
     keywords: ['советы пенсионные', 'накопления', 'ранний старт', 'пенсионный план'],
@@ -437,11 +754,38 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Планировщик бюджета](/tools/budget-planner), [Калькулятор инфляции](/tools/inflation-calc), [Депозитный калькулятор](/tools/deposit-calc)
     `.trim(),
+    contentEn: `
+## 6 Tips for Retirement Planning
+
+### 1. Start as Early as Possible
+The difference between starting at 25 and 35 is enormous. 10 extra years of compound interest doubles the final capital.
+
+### 2. Increase Contributions with Income Growth
+Every time you get a raise, increase retirement contributions by at least 1-2%.
+
+### 3. Take Advantage of Tax Benefits
+Tax-advantaged retirement accounts like 401(k) or IRA offer tax deductions. This is essentially free money.
+
+### 4. Don't Touch Retirement Savings
+Withdrawing funds before retirement destroys the compound interest effect. Use a separate fund for emergencies.
+
+### 5. Review Your Plan Annually
+Life circumstances change. Update your calculations and adjust your strategy.
+
+### 6. Account for Inflation
+An amount that seems sufficient today will lose a significant portion of its purchasing power in 20 years.
+
+Check your plan with the [Retirement Calculator](/tools/retirement-calc).
+
+See also: [Budget Planner](/tools/budget-planner), [Inflation Calculator](/tools/inflation-calc), [Deposit Calculator](/tools/deposit-calc)
+    `.trim(),
   },
   {
     slug: 'retirement-calc-use-cases',
     title: 'Пенсионный калькулятор: 4 сценария планирования',
+    titleEn: 'Retirement Calculator: 4 Planning Scenarios',
     description: 'Сценарии использования пенсионного калькулятора: ранняя пенсия, семейное планирование, догоняющие взносы.',
+    descriptionEn: 'Retirement calculator use cases: early retirement, family planning, catch-up contributions.',
     toolSlug: 'retirement-calc',
     type: 'use-cases',
     keywords: ['ранняя пенсия', 'FIRE', 'семейное планирование', 'догоняющие взносы'],
@@ -473,13 +817,41 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Инвестиционный калькулятор](/tools/investment-calc), [Планировщик бюджета](/tools/budget-planner)
     `.trim(),
+    contentEn: `
+## 4 Retirement Planning Scenarios
+
+### 1. Early Retirement (FIRE Movement)
+The goal is to retire at 40-45. This requires an aggressive savings strategy: saving 50-70% of income and investing at maximum returns.
+
+### 2. Classic Retirement at 60
+A standard scenario with gradual accumulation. Starting at 30, it's enough to save 15-20% of income.
+
+### 3. Late Start: Catch-Up Contributions
+Starting to save after 45? Increase contribution amounts and use a moderately aggressive strategy. Every year counts.
+
+### 4. Family Retirement Planning
+Calculate retirement for two people. Keep in mind that family needs in retirement are typically 70-80% of current expenses.
+
+## How to Use the Calculator
+
+1. Enter your current age and desired retirement age
+2. Specify current savings and monthly contribution
+3. Set expected returns and inflation
+4. Assess whether your savings are sufficient for a comfortable life
+
+Plan your future with the [Retirement Calculator](/tools/retirement-calc).
+
+See also: [Investment Calculator](/tools/investment-calc), [Budget Planner](/tools/budget-planner)
+    `.trim(),
   },
 
   // === Депозитный калькулятор ===
   {
     slug: 'deposit-calc-guide',
     title: 'Депозитный калькулятор: как рассчитать доход по вкладу',
+    titleEn: 'Deposit Calculator: How to Calculate Savings Account Returns',
     description: 'Руководство по расчёту доходности банковского вклада: капитализация, пополнение, налоги.',
+    descriptionEn: 'Guide to calculating bank deposit returns: compounding, top-ups, and taxes.',
     toolSlug: 'deposit-calc',
     type: 'guide',
     keywords: ['депозит', 'вклад', 'банк', 'проценты', 'капитализация'],
@@ -521,11 +893,49 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Инвестиционный калькулятор](/tools/investment-calc), [Калькулятор инфляции](/tools/inflation-calc)
     `.trim(),
+    contentEn: `
+## How Does a Bank Deposit Work?
+
+A deposit is placing money in a bank at a fixed interest rate. The bank uses your money and pays interest for it.
+
+## Types of Interest Accrual
+
+### Simple Interest
+Interest is accrued only on the initial amount. Formula: Income = Amount x Rate x Term.
+
+### Compound Interest (Compounding)
+Interest is added to the deposit balance and in the next period, interest is accrued on the increased amount.
+
+| Compounding | Accruals per Year | Effective Rate at 12% |
+|---|---|---|
+| Annual | 1 | 12.00% |
+| Quarterly | 4 | 12.55% |
+| Monthly | 12 | 12.68% |
+| Daily | 365 | 12.75% |
+
+## Calculator Parameters
+
+1. **Deposit amount** — initial sum placed
+2. **Interest rate** — the bank's annual rate
+3. **Term** — deposit duration
+4. **Compounding** — frequency of interest accrual
+5. **Top-ups** — regular additional contributions
+
+## Deposit Taxation
+
+Interest income on deposits above a certain threshold is subject to income tax. The calculator accounts for this automatically.
+
+Calculate your deposit income with the [Deposit Calculator](/tools/deposit-calc).
+
+See also: [Investment Calculator](/tools/investment-calc), [Inflation Calculator](/tools/inflation-calc)
+    `.trim(),
   },
   {
     slug: 'deposit-calc-tips',
     title: '5 советов по выбору банковского вклада',
+    titleEn: '5 Tips for Choosing a Bank Deposit',
     description: 'Как выбрать лучший депозит: ставки, условия, страхование и подводные камни.',
+    descriptionEn: 'How to choose the best deposit: rates, conditions, insurance, and pitfalls.',
     toolSlug: 'deposit-calc',
     type: 'tips',
     keywords: ['выбор вклада', 'советы по депозиту', 'страхование вкладов', 'ставки'],
@@ -553,11 +963,35 @@ export const financeArticles: Article[] = [
 
 Смотрите также: [Планировщик бюджета](/tools/budget-planner), [Калькулятор инфляции](/tools/inflation-calc)
     `.trim(),
+    contentEn: `
+## 5 Tips for Choosing a Deposit
+
+### 1. Compare the Effective Rate
+The nominal rate doesn't account for compounding frequency. A deposit at 11% with monthly compounding is more profitable than one at 11.5% with end-of-term payout.
+
+### 2. Verify Deposit Insurance
+Deposit insurance guarantees returns up to a certain amount per bank (e.g., $250,000 FDIC in the US). If your sum exceeds the limit, spread it across multiple banks.
+
+### 3. Consider Early Withdrawal Terms
+Some banks forfeit all interest on early termination. Choose deposits with partial interest preservation.
+
+### 4. Pay Attention to Top-Up Options
+Deposits that allow additional contributions let you grow the sum, though they may have a slightly lower rate.
+
+### 5. Monitor the Central Bank Key Rate
+Deposit rates follow the key rate. When rate cuts are expected, lock in a high rate for a longer term.
+
+Compare options with the [Deposit Calculator](/tools/deposit-calc).
+
+See also: [Budget Planner](/tools/budget-planner), [Inflation Calculator](/tools/inflation-calc)
+    `.trim(),
   },
   {
     slug: 'deposit-calc-use-cases',
     title: 'Депозитный калькулятор: 5 сценариев использования',
+    titleEn: 'Deposit Calculator: 5 Use Cases',
     description: 'Практические сценарии: краткосрочные и долгосрочные вклады, лестница депозитов, сравнение банков.',
+    descriptionEn: 'Practical scenarios: short-term and long-term deposits, deposit laddering, bank comparison.',
     toolSlug: 'deposit-calc',
     type: 'use-cases',
     keywords: ['сценарии депозита', 'лестница вкладов', 'сравнение банков', 'накопления'],
@@ -584,6 +1018,28 @@ export const financeArticles: Article[] = [
 Попробуйте все сценарии в [Депозитном калькуляторе](/tools/deposit-calc).
 
 Смотрите также: [Инвестиционный калькулятор](/tools/investment-calc), [Пенсионный калькулятор](/tools/retirement-calc), [Планировщик бюджета](/tools/budget-planner)
+    `.trim(),
+    contentEn: `
+## 5 Use Cases for the Deposit Calculator
+
+### 1. Emergency Fund
+Place your emergency fund in a deposit with withdrawal options. Calculate how much income your reserve will earn over 6-12 months.
+
+### 2. Saving for a Major Purchase
+Determine the timeline and monthly contribution amount to accumulate the needed sum by a specific date.
+
+### 3. Deposit Laddering
+Split the sum into several deposits with different terms (3, 6, 9, 12 months). Calculate the combined income from this strategy.
+
+### 4. Comparing Bank Offers
+Enter the conditions from different banks and compare the final returns accounting for compounding and top-ups.
+
+### 5. Assessing Real Returns
+Calculate the deposit income and compare it with inflation. A positive real rate means your money is actually growing.
+
+Try all scenarios with the [Deposit Calculator](/tools/deposit-calc).
+
+See also: [Investment Calculator](/tools/investment-calc), [Retirement Calculator](/tools/retirement-calc), [Budget Planner](/tools/budget-planner)
     `.trim(),
   },
 ];

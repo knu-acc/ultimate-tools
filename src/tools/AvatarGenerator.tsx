@@ -5,6 +5,7 @@ import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme
 } from '@mui/material';
 import { Download, Refresh } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type AvatarStyle = 'geometric' | 'pixel' | 'gradient';
 
@@ -154,6 +155,8 @@ function drawGradient(ctx: CanvasRenderingContext2D, size: number, seed: string,
 
 export default function AvatarGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [seed, setSeed] = useState('Привет мир');
   const [size, setSize] = useState(256);
@@ -208,9 +211,9 @@ export default function AvatarGenerator() {
 
   const sizeOptions = [64, 128, 256, 512];
   const styleOptions: { value: AvatarStyle; label: string }[] = [
-    { value: 'geometric', label: 'Геометрический' },
-    { value: 'pixel', label: 'Пиксельный' },
-    { value: 'gradient', label: 'Градиент' },
+    { value: 'geometric', label: isEn ? 'Geometric' : 'Геометрический' },
+    { value: 'pixel', label: isEn ? 'Pixel' : 'Пиксельный' },
+    { value: 'gradient', label: isEn ? 'Gradient' : 'Градиент' },
   ];
 
   return (
@@ -222,7 +225,7 @@ export default function AvatarGenerator() {
               fullWidth
               value={seed}
               onChange={(e) => setSeed(e.target.value)}
-              placeholder="Текст (seed)..."
+              placeholder={isEn ? 'Text (seed)...' : 'Текст (seed)...'}
               sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
               slotProps={{
                 input: {
@@ -264,14 +267,14 @@ export default function AvatarGenerator() {
 
           <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <Chip
-              label="Белый фон"
+              label={isEn ? 'White background' : 'Белый фон'}
               onClick={() => setBgWhite(true)}
               variant={bgWhite ? 'filled' : 'outlined'}
               color={bgWhite ? 'primary' : 'default'}
               sx={{ fontWeight: 600, cursor: 'pointer' }}
             />
             <Chip
-              label="Прозрачный"
+              label={isEn ? 'Transparent' : 'Прозрачный'}
               onClick={() => setBgWhite(false)}
               variant={!bgWhite ? 'filled' : 'outlined'}
               color={!bgWhite ? 'primary' : 'default'}
@@ -287,7 +290,7 @@ export default function AvatarGenerator() {
             onClick={handleDownload}
             sx={{ borderRadius: 3, py: 1.2, textTransform: 'none', fontWeight: 600 }}
           >
-            Скачать PNG
+            {isEn ? 'Download PNG' : 'Скачать PNG'}
           </Button>
         </Grid>
 

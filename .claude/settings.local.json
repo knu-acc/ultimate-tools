@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/Овсянка/Desktop/ulti-neeew -maxdepth 2 -type f -name package.json -o -name *.config.* -o -name .env*)"
+    ]
+  }
+}

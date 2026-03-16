@@ -1,6 +1,7 @@
 'use client';
 
-import { createTheme } from '@mui/material/styles';
+import { createTheme, alpha } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 
 // MD3 Motion tokens
 const md3Motion = {
@@ -47,7 +48,7 @@ const md3Elevation = {
   level5: '0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.3)',
 };
 
-// ----- MUI module augmentation for MD3 surface colors -----
+// ----- MUI module augmentation for MD3 -----
 declare module '@mui/material/styles' {
   interface Palette {
     surfaceContainerLowest: string;
@@ -61,6 +62,12 @@ declare module '@mui/material/styles' {
     onPrimaryContainer: string;
     secondaryContainer: string;
     onSecondaryContainer: string;
+    tertiary?: string;
+    onTertiary?: string;
+    tertiaryContainer?: string;
+    onTertiaryContainer?: string;
+    outline?: string;
+    outlineVariant?: string;
   }
   interface PaletteOptions {
     surfaceContainerLowest?: string;
@@ -74,6 +81,27 @@ declare module '@mui/material/styles' {
     onPrimaryContainer?: string;
     secondaryContainer?: string;
     onSecondaryContainer?: string;
+    tertiary?: string;
+    onTertiary?: string;
+    tertiaryContainer?: string;
+    onTertiaryContainer?: string;
+    outline?: string;
+    outlineVariant?: string;
+  }
+  interface Shape {
+    borderRadius: number;
+    extraSmall?: number;
+    small?: number;
+    medium?: number;
+    large?: number;
+    extraLarge?: number;
+    full?: number;
+  }
+  interface Theme {
+    md3: { shape: typeof md3Shape; motion: typeof md3Motion; elevation: typeof md3Elevation };
+  }
+  interface ThemeOptions {
+    md3?: { shape: typeof md3Shape; motion: typeof md3Motion; elevation: typeof md3Elevation };
   }
   interface TypographyVariants {
     fontFamilyMono: string;
@@ -91,6 +119,17 @@ const commonComponents = {
       },
     },
   },
+  // MD3: focus-visible outline on all interactive elements
+  MuiButtonBase: {
+    styleOverrides: {
+      root: {
+        '&.Mui-focusVisible': {
+          outline: '3px solid',
+          outlineOffset: 2,
+        },
+      },
+    },
+  },
   MuiButton: {
     defaultProps: { disableElevation: true },
     styleOverrides: {
@@ -102,7 +141,8 @@ const commonComponents = {
         letterSpacing: '0.1px',
         lineHeight: '20px',
         minHeight: 40,
-        transition: `all ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+        // MD3: animate only specific properties, never 'all'
+        transition: `background-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}, box-shadow ${md3Motion.duration.short4} ${md3Motion.easing.standard}, color ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
       },
       contained: {
         '&:hover': {
@@ -138,8 +178,9 @@ const commonComponents = {
   MuiCard: {
     styleOverrides: {
       root: {
-        borderRadius: md3Shape.medium,
-        transition: `all ${md3Motion.duration.medium1} ${md3Motion.easing.standard}`,
+        borderRadius: md3Shape.large,
+        // MD3: animate only specific properties, never 'all'
+        transition: `background-color ${md3Motion.duration.medium1} ${md3Motion.easing.standard}, box-shadow ${md3Motion.duration.medium1} ${md3Motion.easing.standard}`,
       },
     },
   },
@@ -149,7 +190,16 @@ const commonComponents = {
         borderRadius: md3Shape.small,
         fontWeight: 500,
         letterSpacing: '0.1px',
-        transition: `all ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+        // MD3: animate only specific properties, never 'all'
+        transition: `background-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}, color ${md3Motion.duration.short4} ${md3Motion.easing.standard}, border-color ${md3Motion.duration.short4} ${md3Motion.easing.standard}`,
+      },
+      // MD3 Chip spec: height = 32dp. Touch target handled via padding, not height inflation.
+      sizeMedium: {
+        height: 32,
+        '& .MuiChip-label': {
+          paddingLeft: 12,
+          paddingRight: 12,
+        },
       },
       sizeSmall: {
         height: 32,
@@ -174,8 +224,9 @@ const commonComponents = {
       root: {
         '& .MuiOutlinedInput-root': {
           borderRadius: md3Shape.extraSmall,
+          // MD3: border stays 1px on hover, only color changes; 2px only on focus
           '& fieldset': { borderWidth: 1 },
-          '&:hover fieldset': { borderWidth: 2 },
+          '&:hover fieldset': { borderWidth: 1 },
           '&.Mui-focused fieldset': { borderWidth: 2 },
         },
         '& .MuiFilledInput-root': {
@@ -194,9 +245,28 @@ const commonComponents = {
         boxShadow: 'none',
         border: 'none',
       },
-      elevation1: { boxShadow: md3Elevation.level1 },
-      elevation2: { boxShadow: md3Elevation.level2 },
-      elevation3: { boxShadow: md3Elevation.level3 },
+      // MD3 Tonal Elevation: primary color overlay at increasing opacity levels
+      // Uses backgroundImage gradient (same technique MUI uses for dark mode elevation)
+      elevation1: ({ theme }: { theme: Theme }) => ({
+        boxShadow: md3Elevation.level1,
+        backgroundImage: `linear-gradient(${alpha(theme.palette.primary.main, 0.05)}, ${alpha(theme.palette.primary.main, 0.05)})`,
+      }),
+      elevation2: ({ theme }: { theme: Theme }) => ({
+        boxShadow: md3Elevation.level2,
+        backgroundImage: `linear-gradient(${alpha(theme.palette.primary.main, 0.08)}, ${alpha(theme.palette.primary.main, 0.08)})`,
+      }),
+      elevation3: ({ theme }: { theme: Theme }) => ({
+        boxShadow: md3Elevation.level3,
+        backgroundImage: `linear-gradient(${alpha(theme.palette.primary.main, 0.11)}, ${alpha(theme.palette.primary.main, 0.11)})`,
+      }),
+      elevation4: ({ theme }: { theme: Theme }) => ({
+        boxShadow: md3Elevation.level4,
+        backgroundImage: `linear-gradient(${alpha(theme.palette.primary.main, 0.12)}, ${alpha(theme.palette.primary.main, 0.12)})`,
+      }),
+      elevation5: ({ theme }: { theme: Theme }) => ({
+        boxShadow: md3Elevation.level5,
+        backgroundImage: `linear-gradient(${alpha(theme.palette.primary.main, 0.14)}, ${alpha(theme.palette.primary.main, 0.14)})`,
+      }),
     },
   },
   MuiAppBar: {
@@ -261,7 +331,7 @@ const commonComponents = {
   MuiTabs: {
     styleOverrides: {
       indicator: {
-        borderRadius: '3px 3px 0 0',
+        borderRadius: `${md3Shape.extraSmall}px ${md3Shape.extraSmall}px 0 0`,
         height: 3,
       },
     },
@@ -283,9 +353,9 @@ const commonComponents = {
         width: 20,
         height: 20,
         '&:before': { boxShadow: 'none' },
-        '&:hover, &.Mui-focusVisible': {
-          boxShadow: '0 0 0 8px rgba(103, 80, 164, 0.16)',
-        },
+        '&:hover, &.Mui-focusVisible': (props: { theme: Theme }) => ({
+          boxShadow: `0 0 0 8px ${props.theme.palette.action.focus}`,
+        }),
       },
       track: { borderRadius: 2 },
       rail: { borderRadius: 2, opacity: 0.3 },
@@ -313,6 +383,8 @@ const commonComponents = {
     styleOverrides: {
       root: {
         borderRadius: md3Shape.full,
+        minWidth: 48,
+        minHeight: 48,
         transition: `background-color ${md3Motion.duration.short3} ${md3Motion.easing.standard}`,
       },
     },
@@ -431,26 +503,56 @@ const commonComponents = {
 };
 
 const typography = {
-  fontFamily: '"Google Sans", "Roboto", "Noto Sans", -apple-system, BlinkMacSystemFont, sans-serif',
+  fontFamily: '"Roboto", "Noto Sans", -apple-system, BlinkMacSystemFont, sans-serif',
   fontFamilyMono: '"JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace',
-  h1: { fontSize: '2.25rem', fontWeight: 400, lineHeight: 1.22, letterSpacing: 0 },
-  h2: { fontSize: '1.75rem', fontWeight: 400, lineHeight: 1.29, letterSpacing: 0 },
-  h3: { fontSize: '1.5rem', fontWeight: 400, lineHeight: 1.33, letterSpacing: 0 },
-  h4: { fontSize: '1.25rem', fontWeight: 500, lineHeight: 1.4, letterSpacing: '0.15px' },
-  h5: { fontSize: '1.125rem', fontWeight: 500, lineHeight: 1.44, letterSpacing: '0.15px' },
-  h6: { fontSize: '1rem', fontWeight: 500, lineHeight: 1.5, letterSpacing: '0.15px' },
-  subtitle1: { fontSize: '1rem', fontWeight: 500, lineHeight: 1.5, letterSpacing: '0.15px' },
-  subtitle2: { fontSize: '0.875rem', fontWeight: 500, lineHeight: 1.43, letterSpacing: '0.1px' },
-  body1: { fontSize: '1rem', fontWeight: 400, lineHeight: 1.5, letterSpacing: '0.5px' },
-  body2: { fontSize: '0.875rem', fontWeight: 400, lineHeight: 1.43, letterSpacing: '0.25px' },
-  button: { textTransform: 'none' as const, fontWeight: 500, fontSize: '0.875rem', letterSpacing: '0.1px' },
-  caption: { fontSize: '0.75rem', fontWeight: 400, lineHeight: 1.33, letterSpacing: '0.4px' },
-  overline: { fontSize: '0.6875rem', fontWeight: 500, lineHeight: 1.45, letterSpacing: '0.5px', textTransform: 'uppercase' as const },
+  h1: { fontSize: '3.5rem', fontWeight: 400, lineHeight: 1.12, letterSpacing: '-0.25px' }, // Display Large
+  h2: { fontSize: '2.8125rem', fontWeight: 400, lineHeight: 1.15, letterSpacing: '0px' }, // Display Medium
+  h3: { fontSize: '2.25rem', fontWeight: 400, lineHeight: 1.22, letterSpacing: '0px' }, // Display Small
+  h4: { fontSize: '2rem', fontWeight: 400, lineHeight: 1.25, letterSpacing: '0px' }, // Headline Large
+  h5: { fontSize: '1.75rem', fontWeight: 400, lineHeight: 1.29, letterSpacing: '0px' }, // Headline Medium
+  h6: { fontSize: '1.375rem', fontWeight: 400, lineHeight: 1.27, letterSpacing: '0px' }, // Title Large
+  subtitle1: { fontSize: '1rem', fontWeight: 500, lineHeight: 1.5, letterSpacing: '0.15px' }, // Title Medium
+  subtitle2: { fontSize: '0.875rem', fontWeight: 500, lineHeight: 1.43, letterSpacing: '0.1px' }, // Title Small
+  body1: { fontSize: '1rem', fontWeight: 400, lineHeight: 1.5, letterSpacing: '0.5px' }, // Body Large
+  body2: { fontSize: '0.875rem', fontWeight: 400, lineHeight: 1.43, letterSpacing: '0.25px' }, // Body Medium
+  button: { textTransform: 'none' as const, fontWeight: 500, fontSize: '0.875rem', letterSpacing: '0.1px' }, // Label Large
+  caption: { fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.33, letterSpacing: '0.5px' }, // Label Medium
+  overline: { fontSize: '0.6875rem', fontWeight: 500, lineHeight: 1.45, letterSpacing: '0.5px', textTransform: 'uppercase' as const }, // Label Small
 };
 
-export const lightTheme = createTheme({
+const baseLightTheme = createTheme({
   typography,
-  shape: { borderRadius: md3Shape.extraSmall },
+  shape: {
+    borderRadius: md3Shape.extraSmall,
+    ...md3Shape,
+  },
+  shadows: [
+    md3Elevation.level0,
+    md3Elevation.level1,
+    md3Elevation.level2,
+    md3Elevation.level3,
+    md3Elevation.level4,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+  ] as Theme['shadows'],
   components: commonComponents as any,
   palette: {
     mode: 'light',
@@ -503,12 +605,53 @@ export const lightTheme = createTheme({
     onPrimaryContainer: '#21005D',
     secondaryContainer: '#E8DEF8',
     onSecondaryContainer: '#1D192B',
+    tertiary: '#7D5260',
+    onTertiary: '#FFFFFF',
+    tertiaryContainer: '#FFD8E4',
+    onTertiaryContainer: '#31111D',
+    outline: '#79747E',
+    outlineVariant: '#E7E0EC',
   },
 });
 
-export const darkTheme = createTheme({
+export const lightTheme = {
+  ...baseLightTheme,
+  md3: { shape: md3Shape, motion: md3Motion, elevation: md3Elevation },
+} as typeof baseLightTheme;
+
+const baseDarkTheme = createTheme({
   typography,
-  shape: { borderRadius: md3Shape.extraSmall },
+  shape: {
+    borderRadius: md3Shape.extraSmall,
+    ...md3Shape,
+  },
+  shadows: [
+    md3Elevation.level0,
+    md3Elevation.level1,
+    md3Elevation.level2,
+    md3Elevation.level3,
+    md3Elevation.level4,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+    md3Elevation.level5,
+  ] as Theme['shadows'],
   components: commonComponents as any,
   palette: {
     mode: 'dark',
@@ -561,7 +704,18 @@ export const darkTheme = createTheme({
     onPrimaryContainer: '#EADDFF',
     secondaryContainer: '#4A4458',
     onSecondaryContainer: '#E8DEF8',
+    tertiary: '#EFB8C8',
+    onTertiary: '#492532',
+    tertiaryContainer: '#633B48',
+    onTertiaryContainer: '#FFD8E4',
+    outline: '#938F99',
+    outlineVariant: '#49454F',
   },
 });
+
+export const darkTheme = {
+  ...baseDarkTheme,
+  md3: { shape: md3Shape, motion: md3Motion, elevation: md3Elevation },
+} as typeof baseDarkTheme;
 
 export { md3Shape, md3Motion, md3Elevation };

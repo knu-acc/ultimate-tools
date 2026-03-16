@@ -12,6 +12,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface Stats {
   count: number;
@@ -28,6 +29,8 @@ interface Stats {
 
 export default function StatisticsCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
 
   const parseNumbers = (str: string): number[] => {
@@ -76,30 +79,30 @@ export default function StatisticsCalc() {
   }, [input]);
 
   const formatNum = (n: number): string => {
-    if (Number.isInteger(n)) return n.toLocaleString('ru-RU');
-    return parseFloat(n.toFixed(6)).toLocaleString('ru-RU', { maximumFractionDigits: 6 });
+    if (Number.isInteger(n)) return n.toLocaleString(isEn ? 'en-US' : 'ru-RU');
+    return parseFloat(n.toFixed(6)).toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 6 });
   };
+
+  const statItems: { label: string; key: keyof Stats; color: string }[] = [
+    { label: isEn ? 'Count' : 'Количество', key: 'count', color: theme.palette.primary.main },
+    { label: isEn ? 'Sum' : 'Сумма', key: 'sum', color: theme.palette.success.main },
+    { label: isEn ? 'Mean' : 'Среднее', key: 'mean', color: theme.palette.warning.main },
+    { label: isEn ? 'Median' : 'Медиана', key: 'median', color: theme.palette.secondary.main },
+    { label: isEn ? 'Minimum' : 'Минимум', key: 'min', color: theme.palette.info.main },
+    { label: isEn ? 'Maximum' : 'Максимум', key: 'max', color: theme.palette.error.main },
+    { label: isEn ? 'Range' : 'Размах', key: 'range', color: theme.palette.warning.dark },
+    { label: isEn ? 'Variance' : 'Дисперсия', key: 'variance', color: theme.palette.info.dark },
+    { label: isEn ? 'Std. deviation' : 'Стд. отклонение', key: 'stdDev', color: theme.palette.error.light },
+  ];
 
   const buildCopyText = (): string => {
     if (!stats) return '';
     const lines = statItems.map((item) => `${item.label}: ${formatNum(stats[item.key] as number)}`);
     const modeStr = stats.mode.length === 0
-      ? 'Мода: нет (все значения уникальны)'
-      : `Мода: ${stats.mode.map(formatNum).join(', ')}`;
+      ? (isEn ? 'Mode: none (all values are unique)' : 'Мода: нет (все значения уникальны)')
+      : `${isEn ? 'Mode' : 'Мода'}: ${stats.mode.map(formatNum).join(', ')}`;
     return [...lines, modeStr].join('\n');
   };
-
-  const statItems: { label: string; key: keyof Stats; color: string }[] = [
-    { label: 'Количество', key: 'count', color: theme.palette.primary.main },
-    { label: 'Сумма', key: 'sum', color: theme.palette.success.main },
-    { label: 'Среднее', key: 'mean', color: theme.palette.warning.main },
-    { label: 'Медиана', key: 'median', color: theme.palette.secondary.main },
-    { label: 'Минимум', key: 'min', color: theme.palette.info.main },
-    { label: 'Максимум', key: 'max', color: theme.palette.error.main },
-    { label: 'Размах', key: 'range', color: theme.palette.warning.dark },
-    { label: 'Дисперсия', key: 'variance', color: theme.palette.info.dark },
-    { label: 'Стд. отклонение', key: 'stdDev', color: theme.palette.error.light },
-  ];
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
@@ -129,9 +132,9 @@ export default function StatisticsCalc() {
         {stats && (
           <Box sx={{ mt: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
             <Typography variant="body2" color="text.secondary">
-              Распознано чисел: {stats.count}
+              {isEn ? `Numbers recognized: ${stats.count}` : `Распознано чисел: ${stats.count}`}
             </Typography>
-            <CopyButton text={buildCopyText()} tooltip="Копировать все результаты" />
+            <CopyButton text={buildCopyText()} tooltip={isEn ? 'Copy all results' : 'Копировать все результаты'} />
           </Box>
         )}
       </Paper>
@@ -147,7 +150,7 @@ export default function StatisticsCalc() {
           }}
         >
           <Typography variant="body1" sx={{ color: 'error.main', fontWeight: 600 }}>
-            Не удалось распознать числа. Проверьте ввод.
+            {isEn ? 'Could not recognize numbers. Check your input.' : 'Не удалось распознать числа. Проверьте ввод.'}
           </Typography>
         </Paper>
       )}
@@ -216,12 +219,12 @@ export default function StatisticsCalc() {
                 }}
               >
                 <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
-                  Мода
+                  {isEn ? 'Mode' : 'Мода'}
                 </Typography>
                 <Box sx={{ mt: 0.5 }}>
                   {stats.mode.length === 0 ? (
                     <Typography variant="body2" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
-                      Нет (все значения уникальны)
+                      {isEn ? 'None (all values are unique)' : 'Нет (все значения уникальны)'}
                     </Typography>
                   ) : (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, justifyContent: 'center' }}>

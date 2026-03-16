@@ -1,71 +1,16 @@
-import type { Metadata } from 'next';
 import './globals.css';
-import ThemeRegistry from '@/src/theme/ThemeRegistry';
-import Header from '@/src/components/Header';
-import Footer from '@/src/components/Footer';
+import { Roboto } from 'next/font/google';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { getStats } from '@/src/data/tools';
+import ThemeRegistry from '@/src/theme/ThemeRegistry';
+
+const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin', 'cyrillic'],
+  display: 'swap',
+});
 
 const stats = getStats();
-
-export const metadata: Metadata = {
-  title: {
-    default: `Ultimate Tools — ${stats.totalTools}+ бесплатных онлайн инструментов`,
-    template: '%s | Ultimate Tools',
-  },
-  description: `${stats.totalTools}+ бесплатных онлайн-инструментов: конвертеры единиц, калькуляторы, генератор паролей, JSON formatter, счётчик слов, QR-коды и многое другое. Работают прямо в браузере без регистрации.`,
-  keywords: [
-    'бесплатные онлайн инструменты',
-    'онлайн калькулятор',
-    'конвертер единиц онлайн',
-    'генератор паролей онлайн',
-    'JSON форматирование онлайн',
-    'счётчик слов онлайн',
-    'QR код генератор',
-    'base64 кодирование',
-    'regex тестер онлайн',
-    'конвертер температуры',
-    'ипотечный калькулятор',
-    'SEO инструменты',
-    'инструменты для разработчиков',
-    'бесплатно без регистрации',
-  ],
-  applicationName: 'Ultimate Tools',
-  authors: [{ name: 'Ultimate Tools', url: 'https://ulti-tools.com' }],
-  creator: 'Ultimate Tools',
-  publisher: 'Ultimate Tools',
-  openGraph: {
-    type: 'website',
-    locale: 'ru_RU',
-    siteName: 'Ultimate Tools',
-    url: 'https://ulti-tools.com',
-    title: `Ultimate Tools — ${stats.totalTools}+ бесплатных онлайн инструментов`,
-    description: `Конвертеры, калькуляторы, генераторы, инструменты для разработчиков и многое другое. ${stats.totalTools}+ утилит — всё бесплатно, работает в браузере.`,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `Ultimate Tools — ${stats.totalTools}+ бесплатных онлайн-инструментов`,
-    description: `${stats.totalTools}+ бесплатных онлайн-утилит в одном месте. Конвертеры, калькуляторы, генераторы, SEO, разработка.`,
-    site: '@ultimatetools',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  alternates: {
-    canonical: 'https://ulti-tools.com',
-    languages: { 'ru': 'https://ulti-tools.com' },
-  },
-  verification: {
-    yandex: 'placeholder',
-  },
-};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -74,12 +19,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#6750A4" />
         <meta name="geo.region" content="RU" />
         <meta name="geo.placename" content="Russia" />
-        {/* WebSite JSON-LD с SearchAction для Rich Snippet */}
+        {/* WebSite JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -89,13 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               name: 'Ultimate Tools',
               url: 'https://ulti-tools.com',
               description: `${stats.totalTools}+ бесплатных онлайн-инструментов`,
-              inLanguage: 'ru',
+              inLanguage: ['ru', 'en'],
               potentialAction: {
                 '@type': 'SearchAction',
-                target: {
-                  '@type': 'EntryPoint',
-                  urlTemplate: 'https://ulti-tools.com/?search={search_term_string}',
-                },
+                target: { '@type': 'EntryPoint', urlTemplate: 'https://ulti-tools.com/?search={search_term_string}' },
                 'query-input': 'required name=search_term_string',
               },
             }),
@@ -111,22 +52,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               name: 'Ultimate Tools',
               url: 'https://ulti-tools.com',
               description: `Сайт с ${stats.totalTools}+ бесплатными онлайн-инструментами`,
-              logo: {
-                '@type': 'ImageObject',
-                url: 'https://ulti-tools.com/favicon.ico',
-              },
+              logo: { '@type': 'ImageObject', url: 'https://ulti-tools.com/favicon.ico' },
             }),
           }}
         />
       </head>
-      <body>
-        <ThemeRegistry>
-          <Header />
-          <main style={{ minHeight: 'calc(100vh - 200px)' }}>
-            {children}
-          </main>
-          <Footer />
-        </ThemeRegistry>
+      <body className={roboto.className}>
+        {/* MD3 Accessibility: Skip-to-content link (WCAG 2.1 SC 2.4.1) */}
+        <a href="#main-content" className="skip-to-content">
+          Перейти к содержимому
+        </a>
+        <AppRouterCacheProvider>
+          <ThemeRegistry>{children}</ThemeRegistry>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

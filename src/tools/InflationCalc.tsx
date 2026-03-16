@@ -15,19 +15,22 @@ import {
   alpha
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const presets = [
-  { label: 'РФ среднее (~7.5%)', value: 7.5 },
-  { label: 'РФ 2023 (~7.4%)', value: 7.4 },
-  { label: 'РФ 2022 (~11.9%)', value: 11.9 },
-  { label: 'Умеренная (5%)', value: 5 },
-  { label: 'Низкая (3%)', value: 3 },
+  { labelRu: 'РФ среднее (~7.5%)', labelEn: 'RU avg (~7.5%)', value: 7.5 },
+  { labelRu: 'РФ 2023 (~7.4%)', labelEn: 'RU 2023 (~7.4%)', value: 7.4 },
+  { labelRu: 'РФ 2022 (~11.9%)', labelEn: 'RU 2022 (~11.9%)', value: 11.9 },
+  { labelRu: 'Умеренная (5%)', labelEn: 'Moderate (5%)', value: 5 },
+  { labelRu: 'Низкая (3%)', labelEn: 'Low (3%)', value: 3 },
 ];
 
 const currentYear = new Date().getFullYear();
 
 export default function InflationCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
@@ -80,7 +83,7 @@ export default function InflationCalc() {
   }, [amount, rate, effectiveStartYear, effectiveEndYear]);
 
   const fmt = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const handleReset = () => {
     setAmount('');
@@ -130,7 +133,7 @@ export default function InflationCalc() {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              placeholder={`Сумма, ${sym}`}
+              placeholder={isEn ? `Amount, ${sym}` : `Сумма, ${sym}`}
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
@@ -149,14 +152,14 @@ export default function InflationCalc() {
           <Grid size={{ xs: 12 }}>
             <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
               <Chip
-                label="По годам"
+                label={isEn ? 'By years' : 'По годам'}
                 size="small"
                 onClick={() => setMode('years')}
                 variant={mode === 'years' ? 'filled' : 'outlined'}
                 color={mode === 'years' ? 'primary' : 'default'}
               />
               <Chip
-                label="Лет назад"
+                label={isEn ? 'Years ago' : 'Лет назад'}
                 size="small"
                 onClick={() => setMode('slider')}
                 variant={mode === 'slider' ? 'filled' : 'outlined'}
@@ -170,7 +173,7 @@ export default function InflationCalc() {
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
-                  placeholder="Начальный год"
+                  placeholder={isEn ? 'Start year' : 'Начальный год'}
                   type="number"
                   value={startYear}
                   onChange={(e) => setStartYear(e.target.value)}
@@ -179,7 +182,7 @@ export default function InflationCalc() {
               <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField
                   fullWidth
-                  placeholder="Конечный год"
+                  placeholder={isEn ? 'End year' : 'Конечный год'}
                   type="number"
                   value={endYear}
                   onChange={(e) => setEndYear(e.target.value)}
@@ -189,7 +192,7 @@ export default function InflationCalc() {
           ) : (
             <Grid size={{ xs: 12 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                Лет назад: {yearsAgo}
+                {isEn ? `Years ago: ${yearsAgo}` : `Лет назад: ${yearsAgo}`}
               </Typography>
               <Slider
                 value={yearsAgo}
@@ -211,7 +214,7 @@ export default function InflationCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Годовая инфляция, %"
+              placeholder={isEn ? 'Annual inflation, %' : 'Годовая инфляция, %'}
               type="number"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
@@ -232,7 +235,7 @@ export default function InflationCalc() {
               {presets.map((p) => (
                 <Chip
                   key={p.value}
-                  label={p.label}
+                  label={isEn ? p.labelEn : p.labelRu}
                   size="small"
                   variant="outlined"
                   onClick={() => setRate(String(p.value))}
@@ -253,7 +256,7 @@ export default function InflationCalc() {
               size="small"
               sx={{ textTransform: 'none' }}
             >
-              Сбросить
+              {isEn ? 'Reset' : 'Сбросить'}
             </Button>
           </Grid>
         </Grid>
@@ -263,27 +266,27 @@ export default function InflationCalc() {
             <Divider sx={{ my: 3 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-              Результаты
+              {isEn ? 'Results' : 'Результаты'}
             </Typography>
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Эквивалентная сумма"
+                  label={isEn ? 'Equivalent amount' : 'Эквивалентная сумма'}
                   value={`${fmt(results.equivalentAmount)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Потеря покупательной способности"
+                  label={isEn ? 'Purchasing power loss' : 'Потеря покупательной способности'}
                   value={`${results.purchasingPowerLoss.toFixed(1)}%`}
                   color="#c62828"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Множитель цен"
+                  label={isEn ? 'Price multiplier' : 'Множитель цен'}
                   value={`x${results.multiplier.toFixed(2)}`}
                   color="#e65100"
                 />
@@ -292,7 +295,9 @@ export default function InflationCalc() {
 
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                {fmt(parseFloat(amount))} {sym} в {effectiveStartYear} году эквивалентны {fmt(results.equivalentAmount)} {sym} в {effectiveEndYear} году
+                {isEn
+                  ? `${fmt(parseFloat(amount))} ${sym} in ${effectiveStartYear} is equivalent to ${fmt(results.equivalentAmount)} ${sym} in ${effectiveEndYear}`
+                  : `${fmt(parseFloat(amount))} ${sym} в ${effectiveStartYear} году эквивалентны ${fmt(results.equivalentAmount)} ${sym} в ${effectiveEndYear} году`}
               </Typography>
             </Box>
 
@@ -307,7 +312,7 @@ export default function InflationCalc() {
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-                Обесценивание
+                {isEn ? 'Depreciation' : 'Обесценивание'}
               </Typography>
               <Box sx={{ display: 'flex', height: 28, borderRadius: 2, overflow: 'hidden' }}>
                 <Box
@@ -322,7 +327,7 @@ export default function InflationCalc() {
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
-                    Сохранено
+                    {isEn ? 'Preserved' : 'Сохранено'}
                   </Typography>
                 </Box>
                 <Box
@@ -337,7 +342,7 @@ export default function InflationCalc() {
                   }}
                 >
                   <Typography variant="caption" sx={{ color: '#fff', fontWeight: 600, fontSize: 10 }}>
-                    Потеряно
+                    {isEn ? 'Lost' : 'Потеряно'}
                   </Typography>
                 </Box>
               </Box>
@@ -357,7 +362,7 @@ export default function InflationCalc() {
                 <Divider sx={{ my: 3 }} />
 
                 <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-                  Разбивка по годам
+                  {isEn ? 'Year-by-year breakdown' : 'Разбивка по годам'}
                 </Typography>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -389,7 +394,7 @@ export default function InflationCalc() {
                       <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                         <Box sx={{ textAlign: 'right' }}>
                           <Typography variant="caption" color="text.secondary">
-                            Ставка
+                            {isEn ? 'Rate' : 'Ставка'}
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600, color: '#c62828' }}>
                             {row.rate > 0 ? `${row.rate}%` : '—'}
@@ -397,7 +402,7 @@ export default function InflationCalc() {
                         </Box>
                         <Box sx={{ textAlign: 'right' }}>
                           <Typography variant="caption" color="text.secondary">
-                            Сумма
+                            {isEn ? 'Amount' : 'Сумма'}
                           </Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
                             {fmt(row.amount)} {sym}

@@ -14,6 +14,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 type IndentType = '2' | '4' | 'tab';
@@ -136,6 +137,8 @@ function getByteSize(str: string): number {
 
 export default function HtmlFormatter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [indentType, setIndentType] = useState<IndentType>('2');
@@ -177,7 +180,7 @@ export default function HtmlFormatter() {
         {/* Indent options */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2.5 }}>
           <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
-            Отступ:
+            {isEn ? 'Indent:' : 'Отступ:'}
           </Typography>
           <ToggleButtonGroup
             value={indentType}
@@ -186,13 +189,13 @@ export default function HtmlFormatter() {
             size="small"
           >
             <ToggleButton value="2" sx={{ textTransform: 'none', px: 2 }}>
-              2 пробела
+              {isEn ? '2 spaces' : '2 пробела'}
             </ToggleButton>
             <ToggleButton value="4" sx={{ textTransform: 'none', px: 2 }}>
-              4 пробела
+              {isEn ? '4 spaces' : '4 пробела'}
             </ToggleButton>
             <ToggleButton value="tab" sx={{ textTransform: 'none', px: 2 }}>
-              Табуляция
+              {isEn ? 'Tab' : 'Табуляция'}
             </ToggleButton>
           </ToggleButtonGroup>
         </Box>
@@ -203,7 +206,7 @@ export default function HtmlFormatter() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Вставьте HTML код сюда..."
+          placeholder={isEn ? "Paste HTML code here..." : "Вставьте HTML код сюда..."}
           sx={{
             mb: 2.5,
             '& .MuiInputBase-root': {
@@ -225,7 +228,7 @@ export default function HtmlFormatter() {
             disabled={!input.trim()}
             sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
           >
-            Форматировать
+            {isEn ? 'Format' : 'Форматировать'}
           </Button>
           <Button
             variant="contained"
@@ -233,7 +236,7 @@ export default function HtmlFormatter() {
             disabled={!input.trim()}
             sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
           >
-            Минифицировать
+            {isEn ? 'Minify' : 'Минифицировать'}
           </Button>
         </Box>
 
@@ -242,26 +245,26 @@ export default function HtmlFormatter() {
           <Box sx={{ display: 'flex', gap: 1, mb: 2.5, flexWrap: 'wrap', justifyContent: 'center' }}>
             <Chip
               size="small"
-              label={`${stats.lines} строк`}
+              label={isEn ? `${stats.lines} lines` : `${stats.lines} строк`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />
             <Chip
               size="small"
-              label={`Исходный: ${stats.originalSize.toLocaleString()} байт`}
+              label={isEn ? `Original: ${stats.originalSize.toLocaleString()} bytes` : `Исходный: ${stats.originalSize.toLocaleString()} байт`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />
             <Chip
               size="small"
-              label={`Результат: ${stats.resultSize.toLocaleString()} байт`}
+              label={isEn ? `Result: ${stats.resultSize.toLocaleString()} bytes` : `Результат: ${stats.resultSize.toLocaleString()} байт`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />
             {lastAction === 'minify' && parseFloat(stats.savings) > 0 && (
               <Chip
                 size="small"
-                label={`Экономия: ${stats.savings}%`}
+                label={isEn ? `Savings: ${stats.savings}%` : `Экономия: ${stats.savings}%`}
                 variant="outlined"
                 color="success"
                 sx={{ fontSize: '0.75rem' }}

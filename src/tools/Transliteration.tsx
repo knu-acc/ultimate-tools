@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 const CYR_TO_LAT: Record<string, string> = {
@@ -83,6 +84,8 @@ type Mode = 'cyr-to-lat' | 'lat-to-cyr';
 
 export default function Transliteration() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<Mode>('cyr-to-lat');
 
@@ -109,7 +112,7 @@ export default function Transliteration() {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5, mb: 2 }}>
           <Chip
-            label="Кириллица"
+            label={isEn ? 'Cyrillic' : 'Кириллица'}
             color={mode === 'cyr-to-lat' ? 'primary' : 'default'}
             variant={mode === 'cyr-to-lat' ? 'filled' : 'outlined'}
             sx={{ fontWeight: 600, fontSize: '0.85rem', px: 1 }}
@@ -127,7 +130,7 @@ export default function Transliteration() {
             <SwapVertIcon />
           </IconButton>
           <Chip
-            label="Латиница"
+            label={isEn ? 'Latin' : 'Латиница'}
             color={mode === 'lat-to-cyr' ? 'primary' : 'default'}
             variant={mode === 'lat-to-cyr' ? 'filled' : 'outlined'}
             sx={{ fontWeight: 600, fontSize: '0.85rem', px: 1 }}
@@ -140,7 +143,7 @@ export default function Transliteration() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={mode === 'cyr-to-lat' ? 'Кириллица...' : 'Latinitsa...'}
+          placeholder={mode === 'cyr-to-lat' ? (isEn ? 'Cyrillic...' : 'Кириллица...') : 'Latinitsa...'}
           sx={{
             mb: 1,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }

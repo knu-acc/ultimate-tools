@@ -16,6 +16,7 @@ import {
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface DateResult {
   days: number;
@@ -30,6 +31,8 @@ interface DateResult {
 
 export default function DateDifference() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const [result, setResult] = useState<DateResult | null>(null);
@@ -68,11 +71,19 @@ export default function DateDifference() {
 
     // Build readable string
     const parts: string[] = [];
-    if (years > 0) parts.push(`${years} ${declension(years, 'год', 'года', 'лет')}`);
-    if (months > 0) parts.push(`${months % 12} ${declension(months % 12, 'месяц', 'месяца', 'месяцев')}`);
-    const remainingDays = totalDays - Math.floor(totalMonths * 30.4375);
-    if (remainingDays > 0 && remainingDays < 31)
-      parts.push(`${remainingDays} ${declension(remainingDays, 'день', 'дня', 'дней')}`);
+    if (isEn) {
+      if (years > 0) parts.push(`${years} ${years === 1 ? 'year' : 'years'}`);
+      if (months > 0) parts.push(`${months % 12} ${months % 12 === 1 ? 'month' : 'months'}`);
+      const remainingDays = totalDays - Math.floor(totalMonths * 30.4375);
+      if (remainingDays > 0 && remainingDays < 31)
+        parts.push(`${remainingDays} ${remainingDays === 1 ? 'day' : 'days'}`);
+    } else {
+      if (years > 0) parts.push(`${years} ${declension(years, 'год', 'года', 'лет')}`);
+      if (months > 0) parts.push(`${months % 12} ${declension(months % 12, 'месяц', 'месяца', 'месяцев')}`);
+      const remainingDays = totalDays - Math.floor(totalMonths * 30.4375);
+      if (remainingDays > 0 && remainingDays < 31)
+        parts.push(`${remainingDays} ${declension(remainingDays, 'день', 'дня', 'дней')}`);
+    }
 
     setResult({
       days: totalDays,
@@ -82,7 +93,7 @@ export default function DateDifference() {
       hours: totalHours,
       minutes: totalMinutes,
       seconds: totalSeconds,
-      readable: parts.length > 0 ? parts.join(', ') : '0 дней'
+      readable: parts.length > 0 ? parts.join(', ') : (isEn ? '0 days' : '0 дней')
     });
   }, [dateFrom, dateTo]);
 
@@ -104,15 +115,16 @@ export default function DateDifference() {
     return many;
   }
 
+  const loc = isEn ? 'en-US' : 'ru-RU';
   const resultItems = result
     ? [
-        { label: 'Дни', value: result.days.toLocaleString('ru-RU') },
-        { label: 'Недели', value: result.weeks.toLocaleString('ru-RU') },
-        { label: 'Месяцы', value: result.months.toLocaleString('ru-RU') },
-        { label: 'Годы', value: result.years.toLocaleString('ru-RU') },
-        { label: 'Часы', value: result.hours.toLocaleString('ru-RU') },
-        { label: 'Минуты', value: result.minutes.toLocaleString('ru-RU') },
-        { label: 'Секунды', value: result.seconds.toLocaleString('ru-RU') },
+        { label: isEn ? 'Days' : 'Дни', value: result.days.toLocaleString(loc) },
+        { label: isEn ? 'Weeks' : 'Недели', value: result.weeks.toLocaleString(loc) },
+        { label: isEn ? 'Months' : 'Месяцы', value: result.months.toLocaleString(loc) },
+        { label: isEn ? 'Years' : 'Годы', value: result.years.toLocaleString(loc) },
+        { label: isEn ? 'Hours' : 'Часы', value: result.hours.toLocaleString(loc) },
+        { label: isEn ? 'Minutes' : 'Минуты', value: result.minutes.toLocaleString(loc) },
+        { label: isEn ? 'Seconds' : 'Секунды', value: result.seconds.toLocaleString(loc) },
       ]
     : [];
 
@@ -130,7 +142,7 @@ export default function DateDifference() {
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, md: 5 }}>
             <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-              Начальная дата
+              {isEn ? 'Start date' : 'Начальная дата'}
             </Typography>
             <TextField
               type="date"
@@ -146,7 +158,7 @@ export default function DateDifference() {
               }}
             />
             <Button size="small" onClick={() => setToday(setDateFrom)} sx={{ mt: 0.5 }}>
-              Сегодня
+              {isEn ? 'Today' : 'Сегодня'}
             </Button>
           </Grid>
 
@@ -162,7 +174,7 @@ export default function DateDifference() {
 
           <Grid size={{ xs: 12, md: 5 }}>
             <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-              Конечная дата
+              {isEn ? 'End date' : 'Конечная дата'}
             </Typography>
             <TextField
               type="date"
@@ -178,7 +190,7 @@ export default function DateDifference() {
               }}
             />
             <Button size="small" onClick={() => setToday(setDateTo)} sx={{ mt: 0.5 }}>
-              Сегодня
+              {isEn ? 'Today' : 'Сегодня'}
             </Button>
           </Grid>
         </Grid>
@@ -192,7 +204,7 @@ export default function DateDifference() {
             disabled={!dateFrom || !dateTo}
             sx={{ px: 5 }}
           >
-            Рассчитать
+            {isEn ? 'Calculate' : 'Рассчитать'}
           </Button>
         </Box>
       </Paper>

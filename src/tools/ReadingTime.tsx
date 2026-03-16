@@ -11,6 +11,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface StatCard {
   label: string;
@@ -21,6 +22,8 @@ interface StatCard {
 
 export default function ReadingTime() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [text, setText] = useState('');
 
   const stats = useMemo(() => {
@@ -56,46 +59,46 @@ export default function ReadingTime() {
   }, [text]);
 
   function formatTime(seconds: number): string {
-    if (seconds === 0) return '0 сек';
+    if (seconds === 0) return isEn ? '0 sec' : '0 сек';
     const m = Math.floor(seconds / 60);
     const s = Math.round(seconds % 60);
-    if (m === 0) return `${s} сек`;
-    if (s === 0) return `${m} мин`;
-    return `${m} мин ${s} сек`;
+    if (m === 0) return `${s} ${isEn ? 'sec' : 'сек'}`;
+    if (s === 0) return `${m} ${isEn ? 'min' : 'мин'}`;
+    return `${m} ${isEn ? 'min' : 'мин'} ${s} ${isEn ? 'sec' : 'сек'}`;
   }
 
   const statCards: StatCard[] = [
     {
-      label: 'Время чтения',
+      label: isEn ? 'Reading time' : 'Время чтения',
       value: formatTime(stats.readingTimeSec),
-      suffix: '~200 сл/мин',
+      suffix: isEn ? '~200 w/min' : '~200 сл/мин',
       color: theme.palette.primary.main
     },
     {
-      label: 'Время речи',
+      label: isEn ? 'Speaking time' : 'Время речи',
       value: formatTime(stats.speakingTimeSec),
-      suffix: '~130 сл/мин',
+      suffix: isEn ? '~130 w/min' : '~130 сл/мин',
       color: theme.palette.secondary.main
     },
     {
-      label: 'Слова',
-      value: stats.wordCount.toLocaleString('ru-RU'),
+      label: isEn ? 'Words' : 'Слова',
+      value: stats.wordCount.toLocaleString(isEn ? 'en-US' : 'ru-RU'),
       color: theme.palette.info.main
     },
     {
-      label: 'Символы',
-      value: stats.charCount.toLocaleString('ru-RU'),
-      suffix: `без пробелов: ${stats.charNoSpaces.toLocaleString('ru-RU')}`,
+      label: isEn ? 'Characters' : 'Символы',
+      value: stats.charCount.toLocaleString(isEn ? 'en-US' : 'ru-RU'),
+      suffix: isEn ? `no spaces: ${stats.charNoSpaces.toLocaleString('en-US')}` : `без пробелов: ${stats.charNoSpaces.toLocaleString('ru-RU')}`,
       color: theme.palette.success.main
     },
     {
-      label: 'Предложения',
-      value: stats.sentenceCount.toLocaleString('ru-RU'),
+      label: isEn ? 'Sentences' : 'Предложения',
+      value: stats.sentenceCount.toLocaleString(isEn ? 'en-US' : 'ru-RU'),
       color: theme.palette.warning.main
     },
     {
-      label: 'Абзацы',
-      value: stats.paragraphCount.toLocaleString('ru-RU'),
+      label: isEn ? 'Paragraphs' : 'Абзацы',
+      value: stats.paragraphCount.toLocaleString(isEn ? 'en-US' : 'ru-RU'),
       color: theme.palette.error.main
     },
   ];
@@ -118,7 +121,7 @@ export default function ReadingTime() {
           fullWidth
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Текст..."
+          placeholder={isEn ? "Text..." : "Текст..."}
           variant="outlined"
           sx={{
             '& .MuiOutlinedInput-root': {
@@ -163,7 +166,7 @@ export default function ReadingTime() {
       <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
           <Chip
-            label={`Средняя длина слова: ${stats.avgWordLength.toFixed(1)} симв.`}
+            label={isEn ? `Avg word length: ${stats.avgWordLength.toFixed(1)} chars` : `Средняя длина слова: ${stats.avgWordLength.toFixed(1)} симв.`}
             sx={{
               borderRadius: 2,
               fontWeight: 600,
@@ -172,7 +175,7 @@ export default function ReadingTime() {
             }}
           />
           <Chip
-            label={`Символов без пробелов: ${stats.charNoSpaces.toLocaleString('ru-RU')}`}
+            label={isEn ? `Characters without spaces: ${stats.charNoSpaces.toLocaleString('en-US')}` : `Символов без пробелов: ${stats.charNoSpaces.toLocaleString('ru-RU')}`}
             sx={{
               borderRadius: 2,
               fontWeight: 600,
@@ -181,7 +184,7 @@ export default function ReadingTime() {
             }}
           />
           <Chip
-            label={`Слов в предложении: ${stats.sentenceCount > 0 ? (stats.wordCount / stats.sentenceCount).toFixed(1) : '0'}`}
+            label={isEn ? `Words per sentence: ${stats.sentenceCount > 0 ? (stats.wordCount / stats.sentenceCount).toFixed(1) : '0'}` : `Слов в предложении: ${stats.sentenceCount > 0 ? (stats.wordCount / stats.sentenceCount).toFixed(1) : '0'}`}
             sx={{
               borderRadius: 2,
               fontWeight: 600,

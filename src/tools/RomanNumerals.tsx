@@ -11,6 +11,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface ConversionEntry {
   input: string;
@@ -76,6 +77,8 @@ function detectMode(value: string): 'arabic' | 'roman' | 'unknown' {
 
 export default function RomanNumerals() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<ConversionEntry[]>([]);
 
@@ -90,18 +93,18 @@ export default function RomanNumerals() {
       const roman = arabicToRoman(num);
       return roman
         ? { output: roman, direction: 'toRoman' as const, label: `${num} → ${roman}` }
-        : { output: null, error: 'Число должно быть от 1 до 3999' };
+        : { output: null, error: isEn ? 'Number must be from 1 to 3999' : 'Число должно быть от 1 до 3999' };
     }
 
     if (mode === 'roman') {
       const num = romanToArabic(trimmed);
       return num !== null
         ? { output: String(num), direction: 'toArabic' as const, label: `${trimmed.toUpperCase()} → ${num}` }
-        : { output: null, error: 'Некорректное римское число' };
+        : { output: null, error: isEn ? 'Invalid Roman numeral' : 'Некорректное римское число' };
     }
 
-    return { output: null, error: 'Введите арабское число или римские цифры' };
-  }, [input, mode]);
+    return { output: null, error: isEn ? 'Enter an Arabic number or Roman numerals' : 'Введите арабское число или римские цифры' };
+  }, [input, mode, isEn]);
 
   const handleInputChange = (value: string) => {
     // Save previous valid result to history before changing
@@ -121,21 +124,21 @@ export default function RomanNumerals() {
   };
 
   const modeLabel = mode === 'arabic'
-    ? 'Арабское → Римское'
+    ? (isEn ? 'Arabic → Roman' : 'Арабское → Римское')
     : mode === 'roman'
-      ? 'Римское → Арабское'
-      : 'Автоопределение';
+      ? (isEn ? 'Roman → Arabic' : 'Римское → Арабское')
+      : (isEn ? 'Auto-detect' : 'Автоопределение');
 
   const modeColor = mode === 'arabic'
-    ? '#2196f3'
+    ? theme.palette.primary.main
     : mode === 'roman'
-      ? '#9c27b0'
+      ? theme.palette.secondary.main
       : theme.palette.text.secondary;
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: theme.shape?.medium ?? 12, background: theme.palette.surfaceContainerLow }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
           <Chip
             label={modeLabel}
@@ -153,13 +156,13 @@ export default function RomanNumerals() {
           fullWidth
           value={input}
           onChange={(e) => handleInputChange(e.target.value)}
-          placeholder="42 или XLII"
+          placeholder={isEn ? '42 or XLII' : '42 или XLII'}
           error={!!input.trim() && result !== null && result.output === null}
           helperText={
             input.trim() && result && result.output === null
               ? ('error' in result ? result.error : undefined)
               : mode === 'unknown' && input.trim()
-                ? 'Не удалось определить тип ввода'
+                ? (isEn ? 'Could not determine input type' : 'Не удалось определить тип ввода')
                 : undefined
           }
           sx={{
@@ -181,11 +184,11 @@ export default function RomanNumerals() {
             mb: 2,
             border: `1px solid ${modeColor}`,
             backgroundColor: alpha(modeColor, 0.04),
-            borderRadius: 3
+            borderRadius: theme.shape?.medium ?? 12
           }}
         >
           <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-            Результат
+            {isEn ? 'Result' : 'Результат'}
           </Typography>
           <Typography
             variant="h4"
@@ -205,9 +208,9 @@ export default function RomanNumerals() {
       )}
 
       {/* Reference Table */}
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: theme.shape?.medium ?? 12, background: theme.palette.surfaceContainerLow }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Справочная таблица
+          {isEn ? 'Reference table' : 'Справочная таблица'}
         </Typography>
         <Grid container spacing={1}>
           {REFERENCE_VALUES.map(([num, roman]) => (
@@ -217,9 +220,9 @@ export default function RomanNumerals() {
                 sx={{
                   p: 1,
                   textAlign: 'center',
-                  borderRadius: 2,
+                  borderRadius: theme.shape?.small ?? 8,
                   cursor: 'pointer',
-                  transition: 'all 200ms ease',
+                  transition: `all ${theme.md3?.motion.duration.short4 ?? '200ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`,
                   '&:hover': {
                     borderColor: theme.palette.primary.main,
                     backgroundColor: alpha(theme.palette.primary.main, 0.04)
@@ -229,7 +232,7 @@ export default function RomanNumerals() {
               >
                 <Typography
                   variant="body2"
-                  sx={{ fontFamily: 'monospace', fontWeight: 700, color: '#9c27b0' }}
+                  sx={{ fontFamily: 'monospace', fontWeight: 700, color: theme.palette.secondary.main }}
                 >
                   {roman}
                 </Typography>
@@ -244,13 +247,13 @@ export default function RomanNumerals() {
 
       {/* History */}
       {history.length > 0 && (
-        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: theme.shape?.medium ?? 12, background: theme.palette.surfaceContainerLow }}>
           <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-            История конвертаций
+            {isEn ? 'Conversion history' : 'История конвертаций'}
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {history.map((entry, i) => {
-              const color = entry.direction === 'toRoman' ? '#2196f3' : '#9c27b0';
+              const color = entry.direction === 'toRoman' ? theme.palette.primary.main : theme.palette.secondary.main;
               return (
                 <Chip
                   key={`${entry.input}-${entry.direction}-${i}`}

@@ -5,12 +5,46 @@ export const calculatorArticles: Article[] = [
   {
     slug: 'scientific-calc-guide',
     title: 'Научный калькулятор онлайн — полное руководство',
+    titleEn: 'Online Scientific Calculator — Complete Guide',
     description: 'Подробное руководство по использованию научного калькулятора. Тригонометрия, логарифмы, степени и другие функции.',
+    descriptionEn: 'A detailed guide on using the scientific calculator. Trigonometry, logarithms, exponents, and other functions.',
     toolSlug: 'scientific-calc',
     type: 'guide',
     keywords: ['научный калькулятор', 'тригонометрия', 'логарифмы', 'математические функции'],
     date: '2026-02-10',
     readTime: 7,
+    contentEn: `
+## What is a scientific calculator?
+
+A scientific calculator is a tool for performing complex mathematical computations. Unlike a basic calculator, it supports trigonometric, logarithmic, and statistical functions.
+
+## Key Features
+
+### Trigonometric Functions
+
+| Function | Description | Example |
+|----------|------------|---------|
+| sin(x) | Sine of an angle | sin(30°) = 0.5 |
+| cos(x) | Cosine of an angle | cos(60°) = 0.5 |
+| tan(x) | Tangent of an angle | tan(45°) = 1 |
+
+### Logarithms and Exponents
+
+- **ln(x)** — natural logarithm
+- **log(x)** — common (base-10) logarithm
+- **x^n** — exponentiation
+- **√x** — square root
+
+## Operating Modes
+
+The calculator supports working in degrees (DEG) and radians (RAD). Make sure the correct mode is selected before computing trigonometric functions.
+
+## Order of Operations
+
+The calculator follows the standard order: parentheses → exponents → multiplication and division → addition and subtraction.
+
+See also: [Percentage Calculator](/tools/percentage-calc), [Compound Interest](/tools/compound-interest)
+    `.trim(),
     content: `
 ## Что такое научный калькулятор?
 
@@ -47,12 +81,49 @@ export const calculatorArticles: Article[] = [
   {
     slug: 'scientific-calc-tips',
     title: '7 советов по работе с научным калькулятором',
+    titleEn: '7 Tips for Using the Scientific Calculator',
     description: 'Полезные советы и приёмы для эффективной работы с научным калькулятором. Горячие клавиши и скрытые функции.',
+    descriptionEn: 'Useful tips and tricks for working efficiently with the scientific calculator. Keyboard shortcuts and hidden features.',
     toolSlug: 'scientific-calc',
     type: 'tips',
     keywords: ['советы', 'научный калькулятор', 'горячие клавиши', 'лайфхаки'],
     date: '2026-02-18',
     readTime: 5,
+    contentEn: `
+## Tips for Efficient Work
+
+### 1. Use the calculator memory
+
+Save intermediate results to memory (M+) so you don't have to write them down separately. This significantly speeds up multi-step calculations.
+
+### 2. Check the angle mode
+
+A common mistake is computing trigonometric functions in the wrong mode. Always check whether DEG or RAD is selected.
+
+### 3. Use parentheses
+
+Parentheses help control the order of operations and avoid errors:
+- \`2 + 3 × 4 = 14\` (standard order)
+- \`(2 + 3) × 4 = 20\` (correct if you need the sum first)
+
+### 4. Constants
+
+Use the built-in constants π and e instead of manually entering approximate values.
+
+### 5. Inverse functions
+
+Press the "Shift" or "2nd" button to access inverse functions: arcsin, arccos, arctan.
+
+### 6. Scientific notation
+
+For large numbers, use scientific notation: 3.5 × 10⁸ is entered as 3.5E8.
+
+### 7. Calculation history
+
+Review previous results to track the course of solving a problem.
+
+See also: [Percentage Calculator](/tools/percentage-calc), [Discount Calculator](/tools/discount-calc)
+    `.trim(),
     content: `
 ## Советы для эффективной работы
 

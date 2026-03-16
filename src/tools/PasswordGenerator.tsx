@@ -15,6 +15,7 @@ import {
 import RefreshIcon from '@mui/icons-material/Refresh';
 import LockIcon from '@mui/icons-material/Lock';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const CHARSETS: Record<string, string> = {
   'A-Z': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
@@ -25,7 +26,9 @@ const CHARSETS: Record<string, string> = {
 
 const SLIDER_MARKS = [8, 12, 16, 24, 32].map((v) => ({ value: v, label: String(v) }));
 
-function getStrength(password: string): { label: string; value: number; color: string } {
+type PaletteKey = 'success' | 'warning' | 'error';
+
+function getStrength(password: string): { label: string; value: number; paletteKey: PaletteKey } {
   let score = 0;
   if (password.length >= 8) score += 10;
   if (password.length >= 12) score += 15;
@@ -36,11 +39,11 @@ function getStrength(password: string): { label: string; value: number; color: s
   if (/[0-9]/.test(password)) score += 15;
   if (/[^a-zA-Z0-9]/.test(password)) score += 20;
 
-  if (score >= 80) return { label: 'Отличный', value: 100, color: '#2e7d32' };
-  if (score >= 60) return { label: 'Надёжный', value: 75, color: '#66bb6a' };
-  if (score >= 40) return { label: 'Средний', value: 50, color: '#ffa726' };
-  if (score >= 20) return { label: 'Слабый', value: 25, color: '#ef6c00' };
-  return { label: 'Очень слабый', value: 10, color: '#d32f2f' };
+  if (score >= 80) return { label: 'Отличный', value: 100, paletteKey: 'success' };
+  if (score >= 60) return { label: 'Надёжный', value: 75, paletteKey: 'success' };
+  if (score >= 40) return { label: 'Средний', value: 50, paletteKey: 'warning' };
+  if (score >= 20) return { label: 'Слабый', value: 25, paletteKey: 'warning' };
+  return { label: 'Очень слабый', value: 10, paletteKey: 'error' };
 }
 
 export default function PasswordGenerator() {
@@ -91,14 +94,14 @@ export default function PasswordGenerator() {
           alignItems: 'center',
           justifyContent: 'center',
           gap: 1.5,
-          borderRadius: 3,
+          borderRadius: theme.shape?.medium ?? 12,
           background: password
             ? theme.palette.surfaceContainerLow
             : theme.palette.action.hover,
-          transition: 'all 0.2s ease',
+          transition: `all ${theme.md3?.motion.duration.short4 ?? '200ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`,
           '&:hover': {
-            background: alpha(theme.palette.primary.main, 0.04)
-          }
+            background: alpha(theme.palette.primary.main, 0.04),
+          },
         }}
       >
         {password ? (
@@ -130,7 +133,7 @@ export default function PasswordGenerator() {
             <Typography variant="body2" color="text.secondary">
               Надёжность
             </Typography>
-            <Typography variant="body2" sx={{ color: strength.color, fontWeight: 700 }}>
+            <Typography variant="body2" sx={{ color: theme.palette[strength.paletteKey].main, fontWeight: 700 }}>
               {strength.label}
             </Typography>
           </Box>
@@ -139,14 +142,14 @@ export default function PasswordGenerator() {
             value={strength.value}
             sx={{
               height: 10,
-              borderRadius: 5,
+              borderRadius: theme.shape?.full ?? 9999,
               backgroundColor: alpha(theme.palette.text.primary, 0.08),
               transition: 'none',
               '& .MuiLinearProgress-bar': {
-                borderRadius: 5,
-                backgroundColor: strength.color,
-                transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease'
-              }
+                borderRadius: theme.shape?.full ?? 9999,
+                backgroundColor: theme.palette[strength.paletteKey].main,
+                transition: `width ${theme.md3?.motion.duration.medium4 ?? '400ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}, background-color ${theme.md3?.motion.duration.medium4 ?? '400ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`,
+              },
             }}
           />
         </Box>
@@ -203,7 +206,7 @@ export default function PasswordGenerator() {
                   fontWeight: 600,
                   fontSize: '0.9rem',
                   px: 1,
-                  transition: 'all 0.15s ease'
+                  transition: 'background-color 150ms cubic-bezier(0.2, 0, 0, 1), color 150ms cubic-bezier(0.2, 0, 0, 1)'
                 }}
               />
             );

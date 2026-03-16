@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
 import ColorPickerInput from '@/src/components/ColorPickerInput';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface RGB {
@@ -125,6 +126,8 @@ function blendHSL(c1: RGB, c2: RGB, t: number): RGB {
 
 export default function ColorBlender() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [color1, setColor1] = useState('#3b82f6');
   const [color2, setColor2] = useState('#ef4444');
   const [steps, setSteps] = useState(5);
@@ -214,7 +217,7 @@ export default function ColorBlender() {
         {/* Steps slider */}
         <Box sx={{ mt: 3 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Промежуточные шаги: {steps}
+            {isEn ? `Intermediate steps: ${steps}` : `Промежуточные шаги: ${steps}`}
           </Typography>
           <Slider
             value={steps}
@@ -234,7 +237,7 @@ export default function ColorBlender() {
         {/* Blend mode */}
         <Box sx={{ mt: 2 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Режим смешивания
+            {isEn ? 'Blend mode' : 'Режим смешивания'}
           </Typography>
           <ToggleButtonGroup
             value={mode}
@@ -243,7 +246,7 @@ export default function ColorBlender() {
             size="small"
           >
             <ToggleButton value="rgb" sx={{ px: 3 }}>
-              RGB линейный
+              {isEn ? 'RGB Linear' : 'RGB линейный'}
             </ToggleButton>
             <ToggleButton value="hsl" sx={{ px: 3 }}>
               HSL
@@ -265,7 +268,7 @@ export default function ColorBlender() {
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          Результат ({blendedColors.length} цветов)
+          {isEn ? `Result (${blendedColors.length} colors)` : `Результат (${blendedColors.length} цветов)`}
         </Typography>
 
         {/* Gradient preview */}
@@ -324,7 +327,7 @@ export default function ColorBlender() {
 
         {/* CSS Gradient code */}
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          CSS градиент
+          {isEn ? 'CSS Gradient' : 'CSS градиент'}
         </Typography>
         <Paper
           elevation={0}

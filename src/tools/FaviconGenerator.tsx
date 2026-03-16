@@ -6,9 +6,12 @@ import {
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
 import ColorPickerInput from '@/src/components/ColorPickerInput';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function FaviconGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [text, setText] = useState('U');
   const [bgColor, setBgColor] = useState('#6750A4');
   const [textColor, setTextColor] = useState('#FFFFFF');
@@ -53,27 +56,27 @@ export default function FaviconGenerator() {
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
-            <TextField fullWidth value={text} onChange={e => setText(e.target.value.slice(0, 3))} placeholder="U" label="Текст (1-3)" size="small" sx={{ mb: 2 }} />
+            <TextField fullWidth value={text} onChange={e => setText(e.target.value.slice(0, 3))} placeholder="U" label={isEn ? "Text (1-3)" : "Текст (1-3)"} size="small" sx={{ mb: 2 }} />
 
             <Grid container spacing={1} sx={{ mb: 2 }}>
               <Grid size={6}>
                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                  <ColorPickerInput value={bgColor} onChange={setBgColor} label="Цвет фона" size="small" />
+                  <ColorPickerInput value={bgColor} onChange={setBgColor} label={isEn ? "Background color" : "Цвет фона"} size="small" />
                   <TextField size="small" value={bgColor} onChange={e => setBgColor(e.target.value)} placeholder="#6750A4" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
                 </Box>
               </Grid>
               <Grid size={6}>
                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                  <ColorPickerInput value={textColor} onChange={setTextColor} label="Цвет текста" size="small" />
+                  <ColorPickerInput value={textColor} onChange={setTextColor} label={isEn ? "Text color" : "Цвет текста"} size="small" />
                   <TextField size="small" value={textColor} onChange={e => setTextColor(e.target.value)} placeholder="#FFFFFF" sx={{ flex: 1, '& .MuiOutlinedInput-root': { fontFamily: 'monospace' } }} />
                 </Box>
               </Grid>
             </Grid>
 
-            <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>Размер шрифта: {fontSize}%</Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>{isEn ? 'Font size' : 'Размер шрифта'}: {fontSize}%</Typography>
             <Slider value={fontSize} onChange={(_, v) => setFontSize(v as number)} min={20} max={90} sx={{ mb: 1 }} />
 
-            <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>Скругление: {borderRadius}%</Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>{isEn ? 'Border radius' : 'Скругление'}: {borderRadius}%</Typography>
             <Slider value={borderRadius} onChange={(_, v) => setBorderRadius(v as number)} min={0} max={50} />
           </Paper>
         </Grid>

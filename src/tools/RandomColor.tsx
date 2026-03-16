@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { Palette, Delete } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type ColorMode = 'any' | 'pastel' | 'dark' | 'vibrant';
 
@@ -74,6 +75,8 @@ export default function RandomColor() {
   const [mode, setMode] = useState<ColorMode>('any');
   const [current, setCurrent] = useState<GeneratedColor | null>(null);
   const [history, setHistory] = useState<GeneratedColor[]>([]);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const generate = () => {
     const color = generateRandomColor(mode);
@@ -82,10 +85,10 @@ export default function RandomColor() {
   };
 
   const modes: { key: ColorMode; label: string }[] = [
-    { key: 'any', label: 'Любой' },
-    { key: 'pastel', label: 'Пастельный' },
-    { key: 'dark', label: 'Тёмный' },
-    { key: 'vibrant', label: 'Яркий' },
+    { key: 'any', label: isEn ? 'Any' : 'Любой' },
+    { key: 'pastel', label: isEn ? 'Pastel' : 'Пастельный' },
+    { key: 'dark', label: isEn ? 'Dark' : 'Тёмный' },
+    { key: 'vibrant', label: isEn ? 'Vibrant' : 'Яркий' },
   ];
 
   return (
@@ -102,7 +105,7 @@ export default function RandomColor() {
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Тип цвета
+            {isEn ? 'Color type' : 'Тип цвета'}
           </Typography>
           <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap', mb: 2 }}>
             {modes.map((m) => (
@@ -130,7 +133,7 @@ export default function RandomColor() {
             onClick={generate}
             sx={{ borderRadius: 5, py: 1.2, mb: 2 }}
           >
-            Генерировать цвет
+            {isEn ? 'Generate color' : 'Генерировать цвет'}
           </Button>
 
           {current && (
@@ -196,7 +199,7 @@ export default function RandomColor() {
             >
               <Palette sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
-                Нажмите «Генерировать цвет»
+                {isEn ? 'Click "Generate color"' : 'Нажмите «Генерировать цвет»'}
               </Typography>
             </Paper>
           )}
@@ -204,7 +207,7 @@ export default function RandomColor() {
 
         <Grid size={{ xs: 12, md: 7 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            История ({history.length})
+            {isEn ? 'History' : 'История'} ({history.length})
           </Typography>
 
           {history.length === 0 ? (
@@ -213,7 +216,7 @@ export default function RandomColor() {
               sx={{ p: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
             >
               <Typography variant="body2" color="text.secondary">
-                История пока пуста
+                {isEn ? 'History is empty' : 'История пока пуста'}
               </Typography>
             </Paper>
           ) : (
@@ -249,7 +252,7 @@ export default function RandomColor() {
                 onClick={() => setHistory([])}
                 sx={{ mt: 1.5, borderRadius: 4 }}
               >
-                Очистить историю
+                {isEn ? 'Clear history' : 'Очистить историю'}
               </Button>
             </>
           )}

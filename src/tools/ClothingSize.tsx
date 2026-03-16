@@ -14,23 +14,38 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Gender = 'male' | 'female';
 type ClothingCategory = 'outerwear' | 'pants' | 'shirts';
 type SizeSystem = 'RU' | 'EU' | 'US' | 'UK' | 'INT';
 
-const categoryLabels: Record<ClothingCategory, string> = {
+const categoryLabelsRu: Record<ClothingCategory, string> = {
   outerwear: 'Верхняя одежда',
   pants: 'Брюки',
   shirts: 'Рубашки'
 };
 
-const sizeSystemLabels: Record<SizeSystem, string> = {
+const categoryLabelsEn: Record<ClothingCategory, string> = {
+  outerwear: 'Outerwear',
+  pants: 'Pants',
+  shirts: 'Shirts'
+};
+
+const sizeSystemLabelsRu: Record<SizeSystem, string> = {
   RU: 'Россия (RU)',
   EU: 'Европа (EU)',
   US: 'США (US)',
   UK: 'Великобритания (UK)',
   INT: 'Международный'
+};
+
+const sizeSystemLabelsEn: Record<SizeSystem, string> = {
+  RU: 'Russia (RU)',
+  EU: 'Europe (EU)',
+  US: 'USA (US)',
+  UK: 'United Kingdom (UK)',
+  INT: 'International'
 };
 
 // Size data: [RU, EU, US, UK, INT, chest_cm, waist_cm, hips_cm]
@@ -145,6 +160,10 @@ function getAllSizesForSystem(table: SizeRow[], system: SizeSystem): string[] {
 
 export default function ClothingSize() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const categoryLabels = isEn ? categoryLabelsEn : categoryLabelsRu;
+  const sizeSystemLabels = isEn ? sizeSystemLabelsEn : sizeSystemLabelsRu;
   const [gender, setGender] = useState<Gender>('male');
   const [category, setCategory] = useState<ClothingCategory>('outerwear');
   const [sizeSystem, setSizeSystem] = useState<SizeSystem>('RU');
@@ -205,12 +224,12 @@ export default function ClothingSize() {
             }
           }}
         >
-          <ToggleButton value="male">Мужчина</ToggleButton>
-          <ToggleButton value="female">Женщина</ToggleButton>
+          <ToggleButton value="male">{isEn ? 'Male' : 'Мужчина'}</ToggleButton>
+          <ToggleButton value="female">{isEn ? 'Female' : 'Женщина'}</ToggleButton>
         </ToggleButtonGroup>
 
         <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-          Категория
+          {isEn ? 'Category' : 'Категория'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2.5 }}>
           {(Object.keys(categoryLabels) as ClothingCategory[]).map((cat) => (
@@ -254,7 +273,7 @@ export default function ClothingSize() {
               displayEmpty
               sx={{ borderRadius: 2 }}
             >
-              <MenuItem value="">Выберите размер</MenuItem>
+              <MenuItem value="">{isEn ? 'Select size' : 'Выберите размер'}</MenuItem>
               {availableSizes.map((size) => (
                 <MenuItem key={size} value={size}>
                   {size}
@@ -312,13 +331,13 @@ export default function ClothingSize() {
             }}
           >
             <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
-              Мерки тела (см)
+              {isEn ? 'Body measurements (cm)' : 'Мерки тела (см)'}
             </Typography>
             <Grid container spacing={2}>
               {[
-                { label: 'Обхват груди', value: matchedRow.chest },
-                { label: 'Обхват талии', value: matchedRow.waist },
-                { label: 'Обхват бёдер', value: matchedRow.hips },
+                { label: isEn ? 'Chest' : 'Обхват груди', value: matchedRow.chest },
+                { label: isEn ? 'Waist' : 'Обхват талии', value: matchedRow.waist },
+                { label: isEn ? 'Hips' : 'Обхват бёдер', value: matchedRow.hips },
               ]
                 .filter((m) => m.value !== '—')
                 .map((m) => (
@@ -335,7 +354,7 @@ export default function ClothingSize() {
                         {m.label}
                       </Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700, fontFamily: 'monospace', mt: 0.5 }}>
-                        {m.value} см
+                        {m.value} {isEn ? 'cm' : 'см'}
                       </Typography>
                     </Box>
                   </Grid>
@@ -354,7 +373,7 @@ export default function ClothingSize() {
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
-          Полная таблица размеров — {categoryLabels[category]} ({gender === 'male' ? 'мужские' : 'женские'})
+          {isEn ? `Full size chart — ${categoryLabels[category]} (${gender === 'male' ? 'men' : 'women'})` : `Полная таблица размеров — ${categoryLabels[category]} (${gender === 'male' ? 'мужские' : 'женские'})`}
         </Typography>
         <Box sx={{ overflowX: 'auto' }}>
           <Box
@@ -389,9 +408,9 @@ export default function ClothingSize() {
                 <th>US</th>
                 <th>UK</th>
                 <th>INT</th>
-                <th>Грудь (см)</th>
-                <th>Талия (см)</th>
-                <th>Бёдра (см)</th>
+                <th>{isEn ? 'Chest (cm)' : 'Грудь (см)'}</th>
+                <th>{isEn ? 'Waist (cm)' : 'Талия (см)'}</th>
+                <th>{isEn ? 'Hips (cm)' : 'Бёдра (см)'}</th>
               </tr>
             </thead>
             <tbody>

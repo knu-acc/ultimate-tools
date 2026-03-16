@@ -17,6 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface FuncEntry {
   id: number;
@@ -158,6 +159,8 @@ function compileExpr(expr: string): ((x: number) => number) | null {
 
 export default function GraphPlotter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [functions, setFunctions] = useState<FuncEntry[]>([
     { id: 1, expr: 'sin(x)', color: COLORS[0] },
@@ -383,7 +386,7 @@ export default function GraphPlotter() {
           onClick={addFunction}
           sx={{ mt: 1, borderRadius: 2 }}
         >
-          Добавить функцию
+          {isEn ? 'Add function' : 'Добавить функцию'}
         </Button>
       </Paper>
 
@@ -401,7 +404,7 @@ export default function GraphPlotter() {
             <TextField
               fullWidth
               size="small"
-              placeholder="X мин"
+              placeholder={isEn ? "X min" : "X мин"}
               type="number"
               value={xMin}
               onChange={(e) => setXMin(parseFloat(e.target.value) || -10)}
@@ -411,7 +414,7 @@ export default function GraphPlotter() {
             <TextField
               fullWidth
               size="small"
-              placeholder="X макс"
+              placeholder={isEn ? "X max" : "X макс"}
               type="number"
               value={xMax}
               onChange={(e) => setXMax(parseFloat(e.target.value) || 10)}
@@ -421,7 +424,7 @@ export default function GraphPlotter() {
             <TextField
               fullWidth
               size="small"
-              placeholder="Y мин"
+              placeholder={isEn ? "Y min" : "Y мин"}
               type="number"
               value={yMin}
               onChange={(e) => setYMin(parseFloat(e.target.value) || -10)}
@@ -431,7 +434,7 @@ export default function GraphPlotter() {
             <TextField
               fullWidth
               size="small"
-              placeholder="Y макс"
+              placeholder={isEn ? "Y max" : "Y макс"}
               type="number"
               value={yMax}
               onChange={(e) => setYMax(parseFloat(e.target.value) || 10)}
@@ -441,13 +444,13 @@ export default function GraphPlotter() {
 
         <Box sx={{ display: 'flex', gap: 1, mt: 1.5 }}>
           <Button size="small" variant="outlined" startIcon={<ZoomInIcon />} onClick={() => zoom(0.5)} sx={{ borderRadius: 2 }}>
-            Приблизить
+            {isEn ? 'Zoom in' : 'Приблизить'}
           </Button>
           <Button size="small" variant="outlined" startIcon={<ZoomOutIcon />} onClick={() => zoom(2)} sx={{ borderRadius: 2 }}>
-            Отдалить
+            {isEn ? 'Zoom out' : 'Отдалить'}
           </Button>
           <Button size="small" variant="outlined" startIcon={<RestartAltIcon />} onClick={resetView} sx={{ borderRadius: 2 }}>
-            Сброс
+            {isEn ? 'Reset' : 'Сброс'}
           </Button>
         </Box>
       </Paper>

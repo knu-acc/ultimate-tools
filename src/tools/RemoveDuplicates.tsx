@@ -14,6 +14,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface Stats {
@@ -60,6 +61,8 @@ function removeDuplicateLines(
 
 export default function RemoveDuplicates() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [caseSensitive, setCaseSensitive] = useState(true);
   const [trimWhitespace, setTrimWhitespace] = useState(true);
@@ -86,7 +89,7 @@ export default function RemoveDuplicates() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Текст..."
+          placeholder={isEn ? "Text..." : "Текст..."}
           sx={{
             mb: 2,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
@@ -104,7 +107,7 @@ export default function RemoveDuplicates() {
             }
             label={
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                Учитывать регистр
+                {isEn ? 'Case sensitive' : 'Учитывать регистр'}
               </Typography>
             }
           />
@@ -118,7 +121,7 @@ export default function RemoveDuplicates() {
             }
             label={
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                Убирать пробелы по краям
+                {isEn ? 'Trim whitespace' : 'Убирать пробелы по краям'}
               </Typography>
             }
           />
@@ -142,7 +145,7 @@ export default function RemoveDuplicates() {
                   {stats.total}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  Всего строк
+                  {isEn ? 'Total lines' : 'Всего строк'}
                 </Typography>
               </Box>
             </Grid>
@@ -162,7 +165,7 @@ export default function RemoveDuplicates() {
                   {stats.unique}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  Уникальных
+                  {isEn ? 'Unique' : 'Уникальных'}
                 </Typography>
               </Box>
             </Grid>
@@ -182,7 +185,7 @@ export default function RemoveDuplicates() {
                   {stats.removed}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  Удалено дублей
+                  {isEn ? 'Duplicates removed' : 'Удалено дублей'}
                 </Typography>
               </Box>
             </Grid>

@@ -8,9 +8,12 @@ import {
 import { Refresh, Add } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
 import ColorPickerInput from '@/src/components/ColorPickerInput';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function GradientGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [colors, setColors] = useState(['#6750A4', '#D0BCFF']);
   const [angle, setAngle] = useState(135);
   const [type, setType] = useState<'linear' | 'radial'>('linear');
@@ -40,12 +43,12 @@ export default function GradientGenerator() {
   };
 
   const presets = [
-    { name: 'Закат', colors: ['#FF6B6B', '#FFA07A', '#FFD700'] },
-    { name: 'Океан', colors: ['#0077B6', '#00B4D8', '#90E0EF'] },
-    { name: 'Лес', colors: ['#2D6A4F', '#52B788', '#B7E4C7'] },
-    { name: 'Фиолетовый', colors: ['#7B2FF7', '#C084FC', '#F0ABFC'] },
-    { name: 'Огонь', colors: ['#DC2626', '#F97316', '#FACC15'] },
-    { name: 'Ночь', colors: ['#1E1B4B', '#312E81', '#4338CA'] },
+    { name: isEn ? 'Sunset' : 'Закат', colors: ['#FF6B6B', '#FFA07A', '#FFD700'] },
+    { name: isEn ? 'Ocean' : 'Океан', colors: ['#0077B6', '#00B4D8', '#90E0EF'] },
+    { name: isEn ? 'Forest' : 'Лес', colors: ['#2D6A4F', '#52B788', '#B7E4C7'] },
+    { name: isEn ? 'Purple' : 'Фиолетовый', colors: ['#7B2FF7', '#C084FC', '#F0ABFC'] },
+    { name: isEn ? 'Fire' : 'Огонь', colors: ['#DC2626', '#F97316', '#FACC15'] },
+    { name: isEn ? 'Night' : 'Ночь', colors: ['#1E1B4B', '#312E81', '#4338CA'] },
   ];
 
   return (
@@ -84,15 +87,15 @@ export default function GradientGenerator() {
             size="small"
             sx={{ mb: 2 }}
           >
-            <ToggleButton value="linear" sx={{ borderRadius: '16px 0 0 16px', px: 3 }}>Линейный</ToggleButton>
-            <ToggleButton value="radial" sx={{ borderRadius: '0 16px 16px 0', px: 3 }}>Радиальный</ToggleButton>
+            <ToggleButton value="linear" sx={{ borderRadius: '16px 0 0 16px', px: 3 }}>{isEn ? 'Linear' : 'Линейный'}</ToggleButton>
+            <ToggleButton value="radial" sx={{ borderRadius: '0 16px 16px 0', px: 3 }}>{isEn ? 'Radial' : 'Радиальный'}</ToggleButton>
           </ToggleButtonGroup>
 
           {type === 'linear' && (
             <>
               <Box sx={{ mb: 2 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-                  Угол: {angle}°
+                  {isEn ? 'Angle' : 'Угол'}: {angle}°
                 </Typography>
                 <Slider
                   value={angle}
@@ -153,7 +156,7 @@ export default function GradientGenerator() {
           <Box sx={{ display: 'flex', gap: 1 }}>
             {colors.length < 5 && (
               <Button size="small" startIcon={<Add />} onClick={addColor} sx={{ borderRadius: 3 }}>
-                Добавить цвет
+                {isEn ? 'Add color' : 'Добавить цвет'}
               </Button>
             )}
             <Button size="small" startIcon={<Refresh />} onClick={randomize} sx={{ borderRadius: 3 }}>

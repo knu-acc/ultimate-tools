@@ -11,15 +11,24 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 type ReverseMode = 'chars' | 'words' | 'lines' | 'mirror';
 
-const MODES: { mode: ReverseMode; label: string; description: string }[] = [
-  { mode: 'chars', label: 'Символы', description: 'Перевернуть символы' },
-  { mode: 'words', label: 'Слова', description: 'Перевернуть порядок слов' },
-  { mode: 'lines', label: 'Строки', description: 'Перевернуть порядок строк' },
-  { mode: 'mirror', label: 'Зеркало', description: 'Перевернуть вверх ногами' },
+interface ModeOption {
+  mode: ReverseMode;
+  label: string;
+  labelEn: string;
+  description: string;
+  descriptionEn: string;
+}
+
+const MODES: ModeOption[] = [
+  { mode: 'chars', label: 'Символы', labelEn: 'Characters', description: 'Перевернуть символы', descriptionEn: 'Reverse characters' },
+  { mode: 'words', label: 'Слова', labelEn: 'Words', description: 'Перевернуть порядок слов', descriptionEn: 'Reverse word order' },
+  { mode: 'lines', label: 'Строки', labelEn: 'Lines', description: 'Перевернуть порядок строк', descriptionEn: 'Reverse line order' },
+  { mode: 'mirror', label: 'Зеркало', labelEn: 'Mirror', description: 'Перевернуть вверх ногами', descriptionEn: 'Flip upside down' },
 ];
 
 // Unicode flip map for mirror mode
@@ -87,6 +96,8 @@ export default function TextReverse() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [activeMode, setActiveMode] = useState<ReverseMode>('chars');
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const handleModeChange = (mode: ReverseMode) => {
     setActiveMode(mode);
@@ -121,7 +132,7 @@ export default function TextReverse() {
           fullWidth
           value={input}
           onChange={(e) => handleInputChange(e.target.value)}
-          placeholder="Текст..."
+          placeholder={isEn ? 'Text...' : 'Текст...'}
           sx={{ mb: 2 }}
         />
 
@@ -129,7 +140,7 @@ export default function TextReverse() {
           {MODES.map((m) => (
             <Chip
               key={m.mode}
-              label={m.label}
+              label={isEn ? m.labelEn : m.label}
               onClick={() => handleModeChange(m.mode)}
               variant={activeMode === m.mode ? 'filled' : 'outlined'}
               color={activeMode === m.mode ? 'primary' : 'default'}

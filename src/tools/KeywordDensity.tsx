@@ -15,6 +15,7 @@ import {
   alpha,
   useTheme
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const STOP_WORDS = new Set([
   'и', 'в', 'на', 'с', 'по', 'за', 'к', 'от', 'из', 'у', 'о', 'об',
@@ -76,6 +77,8 @@ function countFrequency(items: string[]): Map<string, number> {
 
 export default function KeywordDensity() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [text, setText] = useState('');
   const [minLength, setMinLength] = useState(2);
   const [excludeStopWords, setExcludeStopWords] = useState(true);
@@ -151,7 +154,7 @@ export default function KeywordDensity() {
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          Текст для анализа
+          {isEn ? 'Text for analysis' : 'Текст для анализа'}
         </Typography>
         <TextField
           fullWidth
@@ -159,12 +162,12 @@ export default function KeywordDensity() {
           rows={8}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Вставьте текст для анализа плотности ключевых слов..."
+          placeholder={isEn ? "Paste text for keyword density analysis..." : "Вставьте текст для анализа плотности ключевых слов..."}
           size="small"
         />
         {analysis.totalWords > 0 && (
           <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-            Всего слов: {analysis.totalWords}
+            {isEn ? 'Total words' : 'Всего слов'}: {analysis.totalWords}
           </Typography>
         )}
       </Paper>
@@ -182,13 +185,13 @@ export default function KeywordDensity() {
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          Настройки фильтрации
+          {isEn ? 'Filter settings' : 'Настройки фильтрации'}
         </Typography>
 
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, sm: 4 }}>
             <Typography variant="body2" color="text.secondary" gutterBottom>
-              Минимальная длина слова: {minLength}
+              {isEn ? `Minimum word length: ${minLength}` : `Минимальная длина слова: ${minLength}`}
             </Typography>
             <Slider
               value={minLength}
@@ -205,7 +208,7 @@ export default function KeywordDensity() {
           </Grid>
           <Grid size={{ xs: 12, sm: 4 }}>
             <Typography variant="body2" color="text.secondary" gutterBottom>
-              Топ слов: {topN}
+              {isEn ? `Top words: ${topN}` : `Топ слов: ${topN}`}
             </Typography>
             <Slider
               value={topN}
@@ -229,7 +232,7 @@ export default function KeywordDensity() {
                 size="small"
               />
               <Typography variant="body2" color="text.secondary">
-                Исключить стоп-слова
+                {isEn ? 'Exclude stop words' : 'Исключить стоп-слова'}
               </Typography>
             </Box>
             {excludeStopWords && (
@@ -275,7 +278,7 @@ export default function KeywordDensity() {
           }}
         >
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Результаты анализа
+            {isEn ? 'Analysis results' : 'Результаты анализа'}
           </Typography>
 
           <Tabs
@@ -283,14 +286,14 @@ export default function KeywordDensity() {
             onChange={(_, v) => setNgramTab(v)}
             sx={{ mb: 2, borderBottom: `1px solid ${theme.palette.divider}` }}
           >
-            <Tab label="Слова" />
-            <Tab label="2-граммы" />
-            <Tab label="3-граммы" />
+            <Tab label={isEn ? 'Words' : 'Слова'} />
+            <Tab label={isEn ? '2-grams' : '2-граммы'} />
+            <Tab label={isEn ? '3-grams' : '3-граммы'} />
           </Tabs>
 
           {currentData.length === 0 ? (
             <Typography variant="body2" color="text.secondary" sx={{ py: 4, textAlign: 'center' }}>
-              Нет данных для отображения. Попробуйте изменить настройки фильтрации.
+              {isEn ? 'No data to display. Try changing filter settings.' : 'Нет данных для отображения. Попробуйте изменить настройки фильтрации.'}
             </Typography>
           ) : (
             <>
@@ -320,7 +323,7 @@ export default function KeywordDensity() {
                   color="text.secondary"
                   sx={{ flex: 1, minWidth: 100 }}
                 >
-                  Слово
+                  {isEn ? 'Word' : 'Слово'}
                 </Typography>
                 <Typography
                   variant="caption"
@@ -328,7 +331,7 @@ export default function KeywordDensity() {
                   color="text.secondary"
                   sx={{ width: 60, textAlign: 'center' }}
                 >
-                  Кол-во
+                  {isEn ? 'Count' : 'Кол-во'}
                 </Typography>
                 <Typography
                   variant="caption"
@@ -336,7 +339,7 @@ export default function KeywordDensity() {
                   color="text.secondary"
                   sx={{ width: 70, textAlign: 'center' }}
                 >
-                  Плотность
+                  {isEn ? 'Density' : 'Плотность'}
                 </Typography>
                 <Box sx={{ flex: 1, minWidth: 100 }} />
               </Box>

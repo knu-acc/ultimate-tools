@@ -12,26 +12,31 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface BmiCategory {
-  label: string;
-  description: string;
+  labelRu: string;
+  labelEn: string;
+  descriptionRu: string;
+  descriptionEn: string;
   color: string;
   min: number;
   max: number;
 }
 
 const categories: BmiCategory[] = [
-  { label: 'Дефицит массы', description: 'Рекомендуется набрать вес для улучшения здоровья', color: '#1976d2', min: 0, max: 18.5 },
-  { label: 'Норма', description: 'Ваш вес находится в здоровом диапазоне', color: '#2e7d32', min: 18.5, max: 25 },
-  { label: 'Избыточный вес', description: 'Рекомендуется скорректировать питание и увеличить активность', color: '#f57c00', min: 25, max: 30 },
-  { label: 'Ожирение I степени', description: 'Повышенный риск для здоровья, рекомендуется консультация врача', color: '#d32f2f', min: 30, max: 35 },
-  { label: 'Ожирение II степени', description: 'Высокий риск для здоровья, необходима консультация специалиста', color: '#b71c1c', min: 35, max: 40 },
-  { label: 'Ожирение III степени', description: 'Крайне высокий риск, требуется медицинская помощь', color: '#880e4f', min: 40, max: 100 },
+  { labelRu: 'Дефицит массы', labelEn: 'Underweight', descriptionRu: 'Рекомендуется набрать вес для улучшения здоровья', descriptionEn: 'It is recommended to gain weight for better health', color: '#1976d2', min: 0, max: 18.5 },
+  { labelRu: 'Норма', labelEn: 'Normal', descriptionRu: 'Ваш вес находится в здоровом диапазоне', descriptionEn: 'Your weight is within a healthy range', color: '#2e7d32', min: 18.5, max: 25 },
+  { labelRu: 'Избыточный вес', labelEn: 'Overweight', descriptionRu: 'Рекомендуется скорректировать питание и увеличить активность', descriptionEn: 'Consider adjusting diet and increasing physical activity', color: '#f57c00', min: 25, max: 30 },
+  { labelRu: 'Ожирение I степени', labelEn: 'Obesity class I', descriptionRu: 'Повышенный риск для здоровья, рекомендуется консультация врача', descriptionEn: 'Increased health risk, medical consultation recommended', color: '#d32f2f', min: 30, max: 35 },
+  { labelRu: 'Ожирение II степени', labelEn: 'Obesity class II', descriptionRu: 'Высокий риск для здоровья, необходима консультация специалиста', descriptionEn: 'High health risk, specialist consultation needed', color: '#b71c1c', min: 35, max: 40 },
+  { labelRu: 'Ожирение III степени', labelEn: 'Obesity class III', descriptionRu: 'Крайне высокий риск, требуется медицинская помощь', descriptionEn: 'Extremely high risk, medical attention required', color: '#880e4f', min: 40, max: 100 },
 ];
 
 export default function BmiCalculator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
 
@@ -65,7 +70,7 @@ export default function BmiCalculator() {
   }, [bmi]);
 
   const formatNum = (n: number) =>
-    n.toLocaleString('ru-RU', { maximumFractionDigits: 1 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 1 });
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
@@ -74,7 +79,7 @@ export default function BmiCalculator() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Рост, см"
+              placeholder={isEn ? 'Height, cm' : 'Рост, см'}
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
@@ -88,7 +93,7 @@ export default function BmiCalculator() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Вес, кг"
+              placeholder={isEn ? 'Weight, kg' : 'Вес, кг'}
               type="number"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
@@ -116,7 +121,7 @@ export default function BmiCalculator() {
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-              Ваш индекс массы тела
+              {isEn ? 'Your body mass index' : 'Ваш индекс массы тела'}
             </Typography>
             <Typography
               variant="h3"
@@ -125,7 +130,7 @@ export default function BmiCalculator() {
               {formatNum(bmi)}
             </Typography>
             <Chip
-              label={category.label}
+              label={isEn ? category.labelEn : category.labelRu}
               sx={{
                 fontWeight: 600,
                 color: '#fff',
@@ -135,13 +140,13 @@ export default function BmiCalculator() {
               }}
             />
             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              {category.description}
+              {isEn ? category.descriptionEn : category.descriptionRu}
             </Typography>
           </Paper>
 
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-              Шкала ИМТ
+              {isEn ? 'BMI Scale' : 'Шкала ИМТ'}
             </Typography>
 
             {/* Gradient bar */}
@@ -182,11 +187,11 @@ export default function BmiCalculator() {
             <Box sx={{ display: 'flex', justifyContent: 'space-between', px: 0.5 }}>
               {[
                 { value: '10', label: '' },
-                { value: '18.5', label: 'Дефицит' },
-                { value: '25', label: 'Норма' },
-                { value: '30', label: 'Избыток' },
-                { value: '35', label: 'Ожир. I' },
-                { value: '40+', label: 'Ожир. II+' },
+                { value: '18.5', label: isEn ? 'Under' : 'Дефицит' },
+                { value: '25', label: isEn ? 'Normal' : 'Норма' },
+                { value: '30', label: isEn ? 'Over' : 'Избыток' },
+                { value: '35', label: isEn ? 'Obese I' : 'Ожир. I' },
+                { value: '40+', label: isEn ? 'Obese II+' : 'Ожир. II+' },
               ].map((item) => (
                 <Box key={item.value} sx={{ textAlign: 'center' }}>
                   <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, fontSize: '0.65rem' }}>
@@ -204,16 +209,16 @@ export default function BmiCalculator() {
 
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-              Категории ИМТ
+              {isEn ? 'BMI Categories' : 'Категории ИМТ'}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
               {categories.map((cat) => {
-                const isActive = category.label === cat.label;
+                const isActive = category.labelRu === cat.labelRu;
                 const barValue = bmi !== null && isActive
                   ? Math.min(((bmi - cat.min) / (cat.max - cat.min)) * 100, 100)
                   : 0;
                 return (
-                  <Box key={cat.label}>
+                  <Box key={cat.labelRu}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Box
@@ -232,7 +237,7 @@ export default function BmiCalculator() {
                             color: isActive ? cat.color : 'text.secondary'
                           }}
                         >
-                          {cat.label}
+                          {isEn ? cat.labelEn : cat.labelRu}
                         </Typography>
                       </Box>
                       <Typography variant="caption" color="text.disabled">
@@ -269,7 +274,7 @@ export default function BmiCalculator() {
               }}
             >
               <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-                Здоровый диапазон ({height} см)
+                {isEn ? `Healthy range (${height} cm)` : `Здоровый диапазон (${height} см)`}
               </Typography>
               <Grid container spacing={2}>
                 <Grid size={{ xs: 6 }}>
@@ -283,10 +288,10 @@ export default function BmiCalculator() {
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">
-                      Минимум
+                      {isEn ? 'Minimum' : 'Минимум'}
                     </Typography>
                     <Typography variant="h5" sx={{ fontWeight: 700, color: '#2e7d32' }}>
-                      {formatNum(healthyRange.min)} кг
+                      {formatNum(healthyRange.min)} {isEn ? 'kg' : 'кг'}
                     </Typography>
                   </Paper>
                 </Grid>
@@ -301,24 +306,24 @@ export default function BmiCalculator() {
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">
-                      Максимум
+                      {isEn ? 'Maximum' : 'Максимум'}
                     </Typography>
                     <Typography variant="h5" sx={{ fontWeight: 700, color: '#2e7d32' }}>
-                      {formatNum(healthyRange.max)} кг
+                      {formatNum(healthyRange.max)} {isEn ? 'kg' : 'кг'}
                     </Typography>
                   </Paper>
                 </Grid>
               </Grid>
               {bmi < 18.5 && (
                 <Chip
-                  label={`Вам нужно набрать ~${formatNum(healthyRange.min - parseFloat(weight))} кг`}
+                  label={isEn ? `You need to gain ~${formatNum(healthyRange.min - parseFloat(weight))} kg` : `Вам нужно набрать ~${formatNum(healthyRange.min - parseFloat(weight))} кг`}
                   variant="outlined"
                   sx={{ mt: 2, color: '#1976d2', borderColor: '#1976d2' }}
                 />
               )}
               {bmi >= 25 && (
                 <Chip
-                  label={`Рекомендуется снизить вес на ~${formatNum(parseFloat(weight) - healthyRange.max)} кг`}
+                  label={isEn ? `Recommended to lose ~${formatNum(parseFloat(weight) - healthyRange.max)} kg` : `Рекомендуется снизить вес на ~${formatNum(parseFloat(weight) - healthyRange.max)} кг`}
                   variant="outlined"
                   sx={{ mt: 2, color: '#f57c00', borderColor: '#f57c00' }}
                 />

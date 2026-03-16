@@ -11,6 +11,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 const ITEM_COLORS = ['#1976d2', '#388e3c', '#f57c00', '#7b1fa2', '#c62828', '#00838f'];
@@ -20,19 +21,22 @@ const ALIGN_ITEMS = ['start', 'end', 'center', 'stretch'] as const;
 
 interface Preset {
   label: string;
+  labelEn: string;
   columns: string;
   rows: string;
 }
 
 const PRESETS: Preset[] = [
-  { label: '2 колонки', columns: '1fr 1fr', rows: 'auto' },
-  { label: '3 колонки', columns: '1fr 1fr 1fr', rows: 'auto' },
-  { label: 'Holy Grail', columns: '200px 1fr 200px', rows: 'auto 1fr auto' },
-  { label: 'Сайдбар', columns: '250px 1fr', rows: 'auto' },
+  { label: '2 колонки', labelEn: '2 columns', columns: '1fr 1fr', rows: 'auto' },
+  { label: '3 колонки', labelEn: '3 columns', columns: '1fr 1fr 1fr', rows: 'auto' },
+  { label: 'Holy Grail', labelEn: 'Holy Grail', columns: '200px 1fr 200px', rows: 'auto 1fr auto' },
+  { label: 'Сайдбар', labelEn: 'Sidebar', columns: '250px 1fr', rows: 'auto' },
 ];
 
 export default function GridPlayground() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [columns, setColumns] = useState('1fr 1fr 1fr');
   const [rows, setRows] = useState('auto');
   const [gap, setGap] = useState('8');
@@ -90,12 +94,12 @@ export default function GridPlayground() {
             variant="body2"
             sx={{ fontWeight: 600, color: 'text.secondary', minWidth: 130, flexShrink: 0 }}
           >
-            Пресеты:
+            {isEn ? 'Presets' : 'Пресеты'}:
           </Typography>
           {PRESETS.map((preset) => (
             <Chip
               key={preset.label}
-              label={preset.label}
+              label={isEn ? preset.labelEn : preset.label}
               size="small"
               onClick={() => applyPreset(preset)}
               variant="outlined"
@@ -106,7 +110,7 @@ export default function GridPlayground() {
 
         {/* Grid controls */}
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 700, color: 'text.primary' }}>
-          Свойства контейнера
+          {isEn ? 'Container properties' : 'Свойства контейнера'}
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5, flexWrap: 'wrap' }}>
@@ -183,7 +187,7 @@ export default function GridPlayground() {
 
         {/* Preview */}
         <Typography variant="subtitle2" sx={{ mt: 2.5, mb: 1, fontWeight: 700, color: 'text.primary' }}>
-          Предварительный просмотр
+          {isEn ? 'Preview' : 'Предварительный просмотр'}
         </Typography>
         <Paper
           elevation={0}
@@ -226,7 +230,7 @@ export default function GridPlayground() {
         {/* Generated CSS */}
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
-            Сгенерированный CSS
+            {isEn ? 'Generated CSS' : 'Сгенерированный CSS'}
           </Typography>
           <CopyButton text={generateCss()} />
         </Box>

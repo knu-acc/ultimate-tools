@@ -12,6 +12,7 @@ import {
   Button,
   useTheme,
   alpha } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 function isValidIp(ip: string): boolean {
   const parts = ip.split('.');
@@ -71,13 +72,13 @@ function calcSubnet(ip: string, cidr: number) {
   };
 }
 
-function getIpClass(ipNum: number): string {
+function getIpClass(ipNum: number): { ru: string; en: string } {
   const first = (ipNum >>> 24) & 255;
-  if (first < 128) return 'A';
-  if (first < 192) return 'B';
-  if (first < 224) return 'C';
-  if (first < 240) return 'D (мультикаст)';
-  return 'E (зарезервирован)';
+  if (first < 128) return { ru: 'A', en: 'A' };
+  if (first < 192) return { ru: 'B', en: 'B' };
+  if (first < 224) return { ru: 'C', en: 'C' };
+  if (first < 240) return { ru: 'D (мультикаст)', en: 'D (multicast)' };
+  return { ru: 'E (зарезервирован)', en: 'E (reserved)' };
 }
 
 function isPrivateIp(ipNum: number): boolean {
@@ -91,6 +92,8 @@ function isPrivateIp(ipNum: number): boolean {
 
 export default function IpCalculator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [ip, setIp] = useState('192.168.1.100');
   const [cidr, setCidr] = useState(24);
 
@@ -99,21 +102,21 @@ export default function IpCalculator() {
 
   const resultCards = result
     ? [
-        { label: 'Адрес сети', value: result.network },
-        { label: 'Широковещательный адрес', value: result.broadcast },
-        { label: 'Маска подсети', value: result.mask },
-        { label: 'Обратная маска (Wildcard)', value: result.wildcard },
-        { label: 'Первый хост', value: result.firstHost },
-        { label: 'Последний хост', value: result.lastHost },
-        { label: 'Количество хостов', value: result.totalHosts.toLocaleString('ru-RU') },
-        { label: 'Класс IP', value: result.ipClass },
-        { label: 'Частный адрес', value: result.isPrivate ? 'Да' : 'Нет' },
+        { label: isEn ? 'Network Address' : 'Адрес сети', value: result.network },
+        { label: isEn ? 'Broadcast Address' : 'Широковещательный адрес', value: result.broadcast },
+        { label: isEn ? 'Subnet Mask' : 'Маска подсети', value: result.mask },
+        { label: isEn ? 'Wildcard Mask' : 'Обратная маска (Wildcard)', value: result.wildcard },
+        { label: isEn ? 'First Host' : 'Первый хост', value: result.firstHost },
+        { label: isEn ? 'Last Host' : 'Последний хост', value: result.lastHost },
+        { label: isEn ? 'Total Hosts' : 'Количество хостов', value: result.totalHosts.toLocaleString(isEn ? 'en-US' : 'ru-RU') },
+        { label: isEn ? 'IP Class' : 'Класс IP', value: isEn ? result.ipClass.en : result.ipClass.ru },
+        { label: isEn ? 'Private Address' : 'Частный адрес', value: result.isPrivate ? (isEn ? 'Yes' : 'Да') : (isEn ? 'No' : 'Нет') },
       ]
     : [];
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      {/* Ввод */}
+      {/* Input */}
       <Paper
         elevation={0}
         sx={{
@@ -124,7 +127,7 @@ export default function IpCalculator() {
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Введите IP-адрес и префикс CIDR
+          {isEn ? 'Enter IP address and CIDR prefix' : 'Введите IP-адрес и префикс CIDR'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
           <TextField
@@ -133,7 +136,7 @@ export default function IpCalculator() {
             onChange={(e) => setIp(e.target.value)}
             placeholder="192.168.1.0"
             error={ip !== '' && !valid}
-            helperText={ip !== '' && !valid ? 'Некорректный IP-адрес' : ''}
+            helperText={ip !== '' && !valid ? (isEn ? 'Invalid IP address' : 'Некорректный IP-адрес') : ''}
             slotProps={{ htmlInput: { style: { fontFamily: 'monospace', fontSize: '1.1rem' } } }}
             sx={{ flex: 2, minWidth: 200 }}
           />
@@ -157,12 +160,12 @@ export default function IpCalculator() {
             }}
             sx={{ borderRadius: 2, textTransform: 'none' }}
           >
-            Сбросить
+            {isEn ? 'Reset' : 'Сбросить'}
           </Button>
         </Box>
       </Paper>
 
-      {/* Результаты */}
+      {/* Results */}
       {result && (
         <>
           <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -198,7 +201,7 @@ export default function IpCalculator() {
             ))}
           </Grid>
 
-          {/* Двоичное представление */}
+          {/* Binary representation */}
           <Paper
             elevation={0}
             sx={{
@@ -207,12 +210,12 @@ export default function IpCalculator() {
             }}
           >
             <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
-              Двоичное представление
+              {isEn ? 'Binary Representation' : 'Двоичное представление'}
             </Typography>
             {[
-              { label: 'IP-адрес', value: result.ipBinary },
-              { label: 'Маска подсети', value: result.maskBinary },
-              { label: 'Адрес сети', value: result.networkBinary },
+              { label: isEn ? 'IP Address' : 'IP-адрес', value: result.ipBinary },
+              { label: isEn ? 'Subnet Mask' : 'Маска подсети', value: result.maskBinary },
+              { label: isEn ? 'Network Address' : 'Адрес сети', value: result.networkBinary },
             ].map((row) => (
               <Box
                 key={row.label}

@@ -17,6 +17,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface YamlError {
@@ -315,6 +316,8 @@ function toYaml(value: unknown, indent: number = 0): string {
 
 export default function YamlJson() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [yaml, setYaml] = useState('');
   const [json, setJson] = useState('');
   const [error, setError] = useState<YamlError | null>(null);
@@ -322,7 +325,7 @@ export default function YamlJson() {
   const yamlToJson = () => {
     try {
       if (!yaml.trim()) {
-        setError({ message: 'Введите YAML для конвертации' });
+        setError({ message: isEn ? 'Enter YAML to convert' : 'Введите YAML для конвертации' });
         return;
       }
       const parsed = parseYaml(yaml);
@@ -332,7 +335,7 @@ export default function YamlJson() {
       const msg = (e as Error).message;
       const lineMatch = msg.match(/line\s+(\d+)/i);
       setError({
-        message: `Ошибка парсинга YAML: ${msg}`,
+        message: isEn ? `YAML parsing error: ${msg}` : `Ошибка парсинга YAML: ${msg}`,
         line: lineMatch ? parseInt(lineMatch[1]) : undefined
       });
     }
@@ -341,7 +344,7 @@ export default function YamlJson() {
   const jsonToYaml = () => {
     try {
       if (!json.trim()) {
-        setError({ message: 'Введите JSON для конвертации' });
+        setError({ message: isEn ? 'Enter JSON to convert' : 'Введите JSON для конвертации' });
         return;
       }
       const parsed = JSON.parse(json);
@@ -349,7 +352,7 @@ export default function YamlJson() {
       setError(null);
     } catch (e) {
       const msg = (e as Error).message;
-      setError({ message: `Ошибка парсинга JSON: ${msg}` });
+      setError({ message: isEn ? `JSON parsing error: ${msg}` : `Ошибка парсинга JSON: ${msg}` });
     }
   };
 
@@ -376,7 +379,7 @@ export default function YamlJson() {
             </Typography>
             {error.line && (
               <Typography variant="caption" sx={{ color: 'error.dark' }}>
-                Строка: {error.line}
+                {isEn ? 'Line' : 'Строка'}: {error.line}
               </Typography>
             )}
           </Alert>
@@ -388,7 +391,7 @@ export default function YamlJson() {
               <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                 YAML
               </Typography>
-              <CopyButton text={yaml} tooltip="Копировать" />
+              <CopyButton text={yaml} tooltip={isEn ? 'Copy' : 'Копировать'} />
             </Box>
             <TextField
               multiline
@@ -396,7 +399,7 @@ export default function YamlJson() {
               fullWidth
               value={yaml}
               onChange={(e) => setYaml(e.target.value)}
-              placeholder={'name: Пример\nage: 25\nitems:\n  - яблоко\n  - банан'}
+              placeholder={isEn ? 'name: Example\nage: 25\nitems:\n  - apple\n  - banana' : 'name: Пример\nage: 25\nitems:\n  - яблоко\n  - банан'}
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
@@ -445,7 +448,7 @@ export default function YamlJson() {
                 color="inherit"
                 sx={{ textTransform: 'none', borderRadius: 2, mt: 1 }}
               >
-                Очистить
+                {isEn ? 'Clear' : 'Очистить'}
               </Button>
             </Box>
           </Grid>
@@ -455,7 +458,7 @@ export default function YamlJson() {
               <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
                 JSON
               </Typography>
-              <CopyButton text={json} tooltip="Копировать" />
+              <CopyButton text={json} tooltip={isEn ? 'Copy' : 'Копировать'} />
             </Box>
             <TextField
               multiline
@@ -463,7 +466,7 @@ export default function YamlJson() {
               fullWidth
               value={json}
               onChange={(e) => setJson(e.target.value)}
-              placeholder={'{\n  "name": "Пример",\n  "age": 25,\n  "items": ["яблоко", "банан"]\n}'}
+              placeholder={isEn ? '{\n  "name": "Example",\n  "age": 25,\n  "items": ["apple", "banana"]\n}' : '{\n  "name": "Пример",\n  "age": 25,\n  "items": ["яблоко", "банан"]\n}'}
               sx={{
                 '& .MuiInputBase-root': {
                   fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
@@ -481,7 +484,7 @@ export default function YamlJson() {
           {yaml && (
             <Chip
               size="small"
-              label={`YAML: ${yaml.split('\n').length} строк, ${new TextEncoder().encode(yaml).length} байт`}
+              label={`YAML: ${yaml.split('\n').length} ${isEn ? 'lines' : 'строк'}, ${new TextEncoder().encode(yaml).length} ${isEn ? 'bytes' : 'байт'}`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />
@@ -489,7 +492,7 @@ export default function YamlJson() {
           {json && (
             <Chip
               size="small"
-              label={`JSON: ${json.split('\n').length} строк, ${new TextEncoder().encode(json).length} байт`}
+              label={`JSON: ${json.split('\n').length} ${isEn ? 'lines' : 'строк'}, ${new TextEncoder().encode(json).length} ${isEn ? 'bytes' : 'байт'}`}
               variant="outlined"
               sx={{ fontSize: '0.75rem' }}
             />

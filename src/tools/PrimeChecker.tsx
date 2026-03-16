@@ -12,6 +12,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 function isPrime(n: number): boolean {
   if (n < 2) return false;
@@ -92,6 +93,8 @@ function toSuperscript(n: number): string {
 
 export default function PrimeChecker() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
 
   const quickNumbers = [2, 7, 13, 17, 23, 42, 97, 100, 127, 256, 997, 1009];
@@ -139,7 +142,7 @@ export default function PrimeChecker() {
 
         <Box sx={{ mt: 2 }}>
           <Typography variant="caption" sx={{ color: 'text.secondary', mb: 1, display: 'block' }}>
-            Быстрая проверка
+            {isEn ? 'Quick check' : 'Быстрая проверка'}
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {quickNumbers.map((num) => (
@@ -178,10 +181,10 @@ export default function PrimeChecker() {
             }}
           >
             <Typography variant="h4" sx={{ fontFamily: 'monospace', fontWeight: 700, mb: 1 }}>
-              {result.n.toLocaleString('ru-RU')}
+              {result.n.toLocaleString(isEn ? 'en-US' : 'ru-RU')}
             </Typography>
             <Chip
-              label={result.prime ? 'Простое число' : 'Составное число'}
+              label={result.prime ? (isEn ? 'Prime number' : 'Простое число') : (isEn ? 'Composite number' : 'Составное число')}
               color={result.prime ? 'success' : 'error'}
               sx={{ fontWeight: 700, fontSize: '0.95rem', px: 2, py: 0.5 }}
             />
@@ -199,7 +202,7 @@ export default function PrimeChecker() {
               }}
             >
               <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                Разложение на простые множители
+                {isEn ? 'Prime factorization' : 'Разложение на простые множители'}
               </Typography>
               <Paper
                 elevation={0}
@@ -250,10 +253,10 @@ export default function PrimeChecker() {
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
               <Typography variant="h6" sx={{ fontWeight: 600 }}>
-                Делители
+                {isEn ? 'Divisors' : 'Делители'}
               </Typography>
               <Chip
-                label={`${result.divisors.length} шт.`}
+                label={isEn ? `${result.divisors.length} total` : `${result.divisors.length} шт.`}
                 size="small"
                 sx={{
                   fontWeight: 600,
@@ -261,13 +264,13 @@ export default function PrimeChecker() {
                   color: 'primary.main'
                 }}
               />
-              <CopyButton text={result.divisors.join(', ')} tooltip="Копировать делители" />
+              <CopyButton text={result.divisors.join(', ')} tooltip={isEn ? "Copy divisors" : "Копировать делители"} />
             </Box>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {result.divisors.map((d) => (
                 <Chip
                   key={d}
-                  label={d.toLocaleString('ru-RU')}
+                  label={d.toLocaleString(isEn ? 'en-US' : 'ru-RU')}
                   size="small"
                   variant="outlined"
                   sx={{ fontFamily: 'monospace', fontWeight: 500 }}
@@ -291,14 +294,14 @@ export default function PrimeChecker() {
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                  Предыдущее простое
+                  {isEn ? 'Previous prime' : 'Предыдущее простое'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                   <Typography
                     variant="h4"
                     sx={{ fontWeight: 700, fontFamily: 'monospace', color: theme.palette.primary.main }}
                   >
-                    {result.prev !== null ? result.prev.toLocaleString('ru-RU') : '\u2014'}
+                    {result.prev !== null ? result.prev.toLocaleString(isEn ? 'en-US' : 'ru-RU') : '\u2014'}
                   </Typography>
                   {result.prev !== null && (
                     <CopyButton text={result.prev.toString()} />
@@ -319,14 +322,14 @@ export default function PrimeChecker() {
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-                  Следующее простое
+                  {isEn ? 'Next prime' : 'Следующее простое'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                   <Typography
                     variant="h4"
                     sx={{ fontWeight: 700, fontFamily: 'monospace', color: theme.palette.success.main }}
                   >
-                    {result.next.toLocaleString('ru-RU')}
+                    {result.next.toLocaleString(isEn ? 'en-US' : 'ru-RU')}
                   </Typography>
                   <CopyButton text={result.next.toString()} />
                 </Box>

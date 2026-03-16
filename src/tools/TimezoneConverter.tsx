@@ -18,6 +18,7 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface TimezoneOption {
   label: string;
@@ -103,20 +104,22 @@ function convertTime(
   };
 }
 
-function formatDiff(sourceOffset: number, targetOffset: number): string {
+function formatDiff(sourceOffset: number, targetOffset: number, isEn: boolean): string {
   const diff = targetOffset - sourceOffset;
   const absDiff = Math.abs(diff);
   const hours = Math.floor(absDiff);
   const minutes = (absDiff % 1) * 60;
   const sign = diff >= 0 ? '+' : '-';
   if (minutes > 0) {
-    return `${sign}${hours} ч ${minutes} мин`;
+    return isEn ? `${sign}${hours}h ${minutes}min` : `${sign}${hours} ч ${minutes} мин`;
   }
-  return `${sign}${hours} ч`;
+  return isEn ? `${sign}${hours}h` : `${sign}${hours} ч`;
 }
 
 export default function TimezoneConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const localOffset = getLocalUtcOffset();
   const closestIdx = TIMEZONES.findIndex((tz) => tz.offset === localOffset);
@@ -178,14 +181,14 @@ export default function TimezoneConverter() {
       >
         {/* Source */}
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-          Исходное время
+          {isEn ? 'Source time' : 'Исходное время'}
         </Typography>
 
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
               select
-              label="Часовой пояс"
+              label={isEn ? 'Timezone' : 'Часовой пояс'}
               value={sourceIdx}
               onChange={(e) => setSourceIdx(Number(e.target.value))}
               fullWidth
@@ -200,7 +203,7 @@ export default function TimezoneConverter() {
           </Grid>
           <Grid size={{ xs: 6, sm: 3 }}>
             <TextField
-              label="Дата"
+              label={isEn ? 'Date' : 'Дата'}
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
@@ -211,7 +214,7 @@ export default function TimezoneConverter() {
           </Grid>
           <Grid size={{ xs: 6, sm: 3 }}>
             <TextField
-              label="Время"
+              label={isEn ? 'Time' : 'Время'}
               type="time"
               value={time}
               onChange={(e) => setTime(e.target.value)}
@@ -228,7 +231,7 @@ export default function TimezoneConverter() {
               startIcon={<AccessTimeIcon />}
               sx={{ height: '100%' }}
             >
-              Сейчас
+              {isEn ? 'Now' : 'Сейчас'}
             </Button>
           </Grid>
         </Grid>
@@ -250,16 +253,16 @@ export default function TimezoneConverter() {
         {/* Targets */}
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-            Целевые часовые пояса
+            {isEn ? 'Target timezones' : 'Целевые часовые пояса'}
           </Typography>
           <Button size="small" startIcon={<AddIcon />} onClick={addTarget}>
-            Добавить
+            {isEn ? 'Add' : 'Добавить'}
           </Button>
         </Box>
 
         {targetIndices.map((tIdx, pos) => {
           const result = convertTime(date, time, TIMEZONES[sourceIdx].offset, TIMEZONES[tIdx].offset);
-          const diff = formatDiff(TIMEZONES[sourceIdx].offset, TIMEZONES[tIdx].offset);
+          const diff = formatDiff(TIMEZONES[sourceIdx].offset, TIMEZONES[tIdx].offset, isEn);
 
           return (
             <Paper
@@ -280,7 +283,7 @@ export default function TimezoneConverter() {
                 <Grid size={{ xs: 12, sm: 4 }}>
                   <TextField
                     select
-                    label="Часовой пояс"
+                    label={isEn ? 'Timezone' : 'Часовой пояс'}
                     value={tIdx}
                     onChange={(e) => updateTarget(pos, Number(e.target.value))}
                     fullWidth
@@ -296,7 +299,7 @@ export default function TimezoneConverter() {
                 <Grid size={{ xs: 6, sm: 3 }}>
                   <Box>
                     <Typography variant="caption" color="text.secondary">
-                      Дата
+                      {isEn ? 'Date' : 'Дата'}
                     </Typography>
                     <Typography
                       sx={{
@@ -309,7 +312,9 @@ export default function TimezoneConverter() {
                     </Typography>
                     {result.dayShift !== 0 && (
                       <Chip
-                        label={result.dayShift > 0 ? `+${result.dayShift} дн.` : `${result.dayShift} дн.`}
+                        label={result.dayShift > 0
+                          ? (isEn ? `+${result.dayShift} d` : `+${result.dayShift} дн.`)
+                          : (isEn ? `${result.dayShift} d` : `${result.dayShift} дн.`)}
                         size="small"
                         color={result.dayShift > 0 ? 'info' : 'warning'}
                         sx={{ mt: 0.5 }}
@@ -320,7 +325,7 @@ export default function TimezoneConverter() {
                 <Grid size={{ xs: 4, sm: 3 }}>
                   <Box>
                     <Typography variant="caption" color="text.secondary">
-                      Время
+                      {isEn ? 'Time' : 'Время'}
                     </Typography>
                     <Typography
                       sx={{
@@ -350,7 +355,7 @@ export default function TimezoneConverter() {
         {targetIndices.length === 0 && (
           <Box sx={{ textAlign: 'center', py: 4 }}>
             <Typography color="text.secondary">
-              Добавьте целевой часовой пояс для конвертации
+              {isEn ? 'Add a target timezone to convert' : 'Добавьте целевой часовой пояс для конвертации'}
             </Typography>
           </Box>
         )}

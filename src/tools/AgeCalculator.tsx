@@ -11,6 +11,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const DAYS_RU = [
   'Воскресенье',
@@ -22,12 +23,27 @@ const DAYS_RU = [
   'Суббота',
 ];
 
+const DAYS_EN = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
 const MONTHS_RU = [
   'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
   'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
 ];
 
-function pluralize(n: number, one: string, few: string, many: string): string {
+const MONTHS_EN = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+function pluralizeRu(n: number, one: string, few: string, many: string): string {
   const abs = Math.abs(n);
   const mod10 = abs % 10;
   const mod100 = abs % 100;
@@ -35,6 +51,10 @@ function pluralize(n: number, one: string, few: string, many: string): string {
   if (mod10 === 1) return `${n} ${one}`;
   if (mod10 >= 2 && mod10 <= 4) return `${n} ${few}`;
   return `${n} ${many}`;
+}
+
+function pluralizeEn(n: number, one: string, many: string): string {
+  return n === 1 ? `${n} ${one}` : `${n} ${many}`;
 }
 
 function calcAge(birthDate: Date, now: Date) {
@@ -67,6 +87,8 @@ function getNextBirthday(birthDate: Date, now: Date) {
 
 export default function AgeCalculator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [birthInput, setBirthInput] = useState('');
   const [now, setNow] = useState(() => new Date());
 
@@ -105,13 +127,15 @@ export default function AgeCalculator() {
 
   const dayOfWeek = useMemo(() => {
     if (!birthDate) return null;
-    return DAYS_RU[birthDate.getDay()];
-  }, [birthDate]);
+    return isEn ? DAYS_EN[birthDate.getDay()] : DAYS_RU[birthDate.getDay()];
+  }, [birthDate, isEn]);
 
   const formattedBirth = useMemo(() => {
     if (!birthDate) return '';
-    return `${birthDate.getDate()} ${MONTHS_RU[birthDate.getMonth()]} ${birthDate.getFullYear()} г.`;
-  }, [birthDate]);
+    return isEn
+      ? `${(isEn ? MONTHS_EN : MONTHS_RU)[birthDate.getMonth()]} ${birthDate.getDate()}, ${birthDate.getFullYear()}`
+      : `${birthDate.getDate()} ${MONTHS_RU[birthDate.getMonth()]} ${birthDate.getFullYear()} г.`;
+  }, [birthDate, isEn]);
 
   const accentColor = theme.palette.primary.main;
 
@@ -129,7 +153,7 @@ export default function AgeCalculator() {
         <TextField
           fullWidth
           type="date"
-          label="Дата рождения"
+          label={isEn ? 'Date of birth' : 'Дата рождения'}
           value={birthInput}
           onChange={(e) => setBirthInput(e.target.value)}
           slotProps={{
@@ -143,7 +167,7 @@ export default function AgeCalculator() {
         />
         {birthInput && !birthDate && (
           <Typography variant="caption" color="error" sx={{ mt: 1, display: 'block' }}>
-            Некорректная дата или дата в будущем
+            {isEn ? 'Invalid date or date is in the future' : 'Некорректная дата или дата в будущем'}
           </Typography>
         )}
       </Paper>
@@ -162,14 +186,14 @@ export default function AgeCalculator() {
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-              Ваш возраст
+              {isEn ? 'Your age' : 'Ваш возраст'}
             </Typography>
             <Typography variant="h3" sx={{ fontWeight: 700, color: accentColor }}>
-              {pluralize(age.years, 'год', 'года', 'лет')}
+              {isEn ? pluralizeEn(age.years, 'year', 'years') : pluralizeRu(age.years, 'год', 'года', 'лет')}
             </Typography>
             <Typography variant="h6" color="text.secondary" sx={{ mt: 0.5 }}>
-              {pluralize(age.months, 'месяц', 'месяца', 'месяцев')}{' и '}
-              {pluralize(age.days, 'день', 'дня', 'дней')}
+              {isEn ? pluralizeEn(age.months, 'month', 'months') : pluralizeRu(age.months, 'месяц', 'месяца', 'месяцев')}{isEn ? ' and ' : ' и '}
+              {isEn ? pluralizeEn(age.days, 'day', 'days') : pluralizeRu(age.days, 'день', 'дня', 'дней')}
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 2, flexWrap: 'wrap' }}>
               <Chip
@@ -195,28 +219,28 @@ export default function AgeCalculator() {
             }}
           >
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-              Прожито
+              {isEn ? 'Lived' : 'Прожито'}
             </Typography>
             <Grid container spacing={2}>
               {[
                 {
-                  label: 'Дней',
-                  value: stats.totalDays.toLocaleString('ru-RU'),
+                  label: isEn ? 'Days' : 'Дней',
+                  value: stats.totalDays.toLocaleString(isEn ? 'en-US' : 'ru-RU'),
                   color: '#2e7d32'
                 },
                 {
-                  label: 'Недель',
-                  value: stats.totalWeeks.toLocaleString('ru-RU'),
+                  label: isEn ? 'Weeks' : 'Недель',
+                  value: stats.totalWeeks.toLocaleString(isEn ? 'en-US' : 'ru-RU'),
                   color: '#1976d2'
                 },
                 {
-                  label: 'Месяцев',
-                  value: stats.totalMonths.toLocaleString('ru-RU'),
+                  label: isEn ? 'Months' : 'Месяцев',
+                  value: stats.totalMonths.toLocaleString(isEn ? 'en-US' : 'ru-RU'),
                   color: '#7b1fa2'
                 },
                 {
-                  label: 'Часов',
-                  value: stats.totalHours.toLocaleString('ru-RU'),
+                  label: isEn ? 'Hours' : 'Часов',
+                  value: stats.totalHours.toLocaleString(isEn ? 'en-US' : 'ru-RU'),
                   color: '#f57c00'
                 },
               ].map((item) => (
@@ -256,23 +280,25 @@ export default function AgeCalculator() {
             }}
           >
             <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-              До дня рождения
+              {isEn ? 'Until birthday' : 'До дня рождения'}
             </Typography>
             {nextBday.totalDays === 0 ? (
               <Typography variant="h5" sx={{ fontWeight: 700, color: '#e91e63' }}>
-                С днём рождения!
+                {isEn ? 'Happy birthday!' : 'С днём рождения!'}
               </Typography>
             ) : (
               <>
                 <Typography variant="h4" sx={{ fontWeight: 700, color: '#e91e63' }}>
-                  {pluralize(nextBday.totalDays, 'день', 'дня', 'дней')}
+                  {isEn ? pluralizeEn(nextBday.totalDays, 'day', 'days') : pluralizeRu(nextBday.totalDays, 'день', 'дня', 'дней')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                  {nextBday.months > 0 && `${pluralize(nextBday.months, 'месяц', 'месяца', 'месяцев')} и `}
-                  {pluralize(nextBday.days, 'день', 'дня', 'дней')}
+                  {isEn
+                    ? (nextBday.months > 0 ? `${pluralizeEn(nextBday.months, 'month', 'months')} and ` : '') + pluralizeEn(nextBday.days, 'day', 'days')
+                    : (nextBday.months > 0 ? `${pluralizeRu(nextBday.months, 'месяц', 'месяца', 'месяцев')} и ` : '') + pluralizeRu(nextBday.days, 'день', 'дня', 'дней')
+                  }
                 </Typography>
                 <Chip
-                  label={`Вам исполнится ${age.years + 1} ${age.years + 1 === 1 ? 'год' : (age.years + 1 >= 2 && age.years + 1 <= 4) || (age.years + 1 >= 22 && age.years + 1 <= 24) ? 'года' : 'лет'}`}
+                  label={isEn ? `You will turn ${age.years + 1}` : `Вам исполнится ${age.years + 1} ${age.years + 1 === 1 ? 'год' : (age.years + 1 >= 2 && age.years + 1 <= 4) || (age.years + 1 >= 22 && age.years + 1 <= 24) ? 'года' : 'лет'}`}
                   sx={{
                     mt: 1.5,
                     fontWeight: 500,

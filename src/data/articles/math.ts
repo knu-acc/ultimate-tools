@@ -39,7 +39,38 @@ export const mathArticles: Article[] = [
 
 Инструмент автоматически определяет тип уравнения и применяет соответствующий метод решения. Для квадратных уравнений вычисляется дискриминант и проверяется наличие действительных корней.
 
-Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Построитель графиков](/tools/graph-plotter), [Калькулятор пропорций](/tools/proportion-calc)`
+Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Построитель графиков](/tools/graph-plotter), [Калькулятор пропорций](/tools/proportion-calc)`,
+    titleEn: 'How to Solve Equations Online: A Complete Guide',
+    descriptionEn: 'A detailed guide to using the online equation solver for linear, quadratic, and systems of equations.',
+    contentEn: `## How to Solve Equations Online
+
+The equation solver allows you to quickly find the roots of linear, quadratic, and cubic equations. The tool supports step-by-step solution display.
+
+### Supported Equation Types
+
+- **Linear equations** of the form ax + b = 0
+- **Quadratic equations** of the form ax² + bx + c = 0
+- **Cubic equations** and higher-degree equations
+- **Systems of linear equations** with two and three unknowns
+
+### How to Use
+
+1. Enter the equation in the input field
+2. Specify the variable to solve for
+3. Click the "Solve" button
+4. Get a step-by-step solution with explanations
+
+### Usage Examples
+
+| Equation Type | Example | Result |
+|---|---|---|
+| Linear | 2x + 5 = 11 | x = 3 |
+| Quadratic | x² - 5x + 6 = 0 | x = 2, x = 3 |
+| System | x + y = 5, x - y = 1 | x = 3, y = 2 |
+
+The tool automatically detects the equation type and applies the appropriate solving method. For quadratic equations, it calculates the discriminant and checks for real roots.
+
+See also: [Fraction Calculator](/tools/fraction-calc), [Graph Plotter](/tools/graph-plotter), [Proportion Calculator](/tools/proportion-calc)`
   },
   {
     slug: 'equation-solver-tips',
@@ -82,7 +113,42 @@ export const mathArticles: Article[] = [
 
 Наш инструмент показывает каждый шаг решения — используйте это для обучения и понимания алгоритмов.
 
-Смотрите также: [Калькулятор матриц](/tools/matrix-calc), [Статистика](/tools/statistics-calc), [Построитель графиков](/tools/graph-plotter)`
+Смотрите также: [Калькулятор матриц](/tools/matrix-calc), [Статистика](/tools/statistics-calc), [Построитель графиков](/tools/graph-plotter)`,
+    titleEn: '7 Tips for Solving Equations Effectively',
+    descriptionEn: 'Practical tips for solving equations of varying complexity using the online tool.',
+    contentEn: `## Tips for Solving Equations Effectively
+
+The right approach to solving equations saves time and reduces the chance of errors. Use these recommendations to improve accuracy.
+
+### 1. Always Simplify Before Solving
+
+Combine like terms and expand brackets before entering the equation into the calculator. This reduces the chance of input errors.
+
+### 2. Verify Your Answer by Substitution
+
+After finding the roots, substitute them back into the original equation. If both sides are equal, the solution is correct.
+
+### 3. Watch for Domain Restrictions
+
+The domain of permissible values is important for fractional and irrational equations. Don't forget to check whether the denominator equals zero.
+
+### 4. Use the Graphical Method
+
+Plot the function graph to visually determine the number of roots and their approximate values.
+
+### 5. Break Down Complex Equations
+
+A complex equation can often be broken into several simpler ones using variable substitution or factorization.
+
+### 6. Watch the Signs
+
+The most common mistake is incorrectly moving terms across the equals sign. Remember: when moving a term, the sign changes to its opposite.
+
+### 7. Use Step-by-Step Solutions
+
+Our tool shows every step of the solution — use this for learning and understanding the algorithms.
+
+See also: [Matrix Calculator](/tools/matrix-calc), [Statistics](/tools/statistics-calc), [Graph Plotter](/tools/graph-plotter)`
   },
   {
     slug: 'equation-solver-use-cases',
@@ -121,7 +187,38 @@ export const mathArticles: Article[] = [
 
 Расчёт количества материалов, определение пропорций смесей и вычисление площадей сложных фигур — всё это сводится к решению уравнений.
 
-Смотрите также: [Калькулятор пропорций](/tools/proportion-calc), [Статистика](/tools/statistics-calc), [Калькулятор дробей](/tools/fraction-calc)`
+Смотрите также: [Калькулятор пропорций](/tools/proportion-calc), [Статистика](/tools/statistics-calc), [Калькулятор дробей](/tools/fraction-calc)`,
+    titleEn: 'Where Equation Solving Is Used: Practical Examples',
+    descriptionEn: 'Real-world scenarios for using the equation solver in education, work, and everyday life.',
+    contentEn: `## Practical Applications of Equation Solving
+
+Equations surround us everywhere — from budget calculations to engineering tasks. Let's look at specific scenarios.
+
+### Financial Calculations
+
+Linear equations help calculate how many months it will take to save up a needed amount with fixed monthly contributions. For example, if you save 15,000 rubles per month and need to accumulate 180,000 rubles, the equation 15000x = 180000 gives the answer: 12 months.
+
+### Physics and Engineering
+
+- Calculating the trajectory of a moving body (quadratic equations)
+- Determining the equilibrium point of forces (systems of equations)
+- Computing parameters of electrical circuits (Ohm's law)
+
+### Education
+
+Students use the solver to check homework and prepare for exams. The step-by-step solution helps understand the methodology.
+
+### Business Analytics
+
+- Determining the break-even point: revenue = expenses
+- Calculating the optimal product price
+- Forecasting demand based on mathematical models
+
+### Construction and Renovation
+
+Calculating the amount of materials, determining mixture proportions, and computing areas of complex shapes — all of this comes down to solving equations.
+
+See also: [Proportion Calculator](/tools/proportion-calc), [Statistics](/tools/statistics-calc), [Fraction Calculator](/tools/fraction-calc)`
   },
 
   // === matrix-calc (Калькулятор матриц) ===
@@ -164,7 +261,40 @@ export const mathArticles: Article[] = [
 
 Результаты отображаются с пошаговыми промежуточными вычислениями, что помогает проверить правильность и понять алгоритм.
 
-Смотрите также: [Решатель уравнений](/tools/equation-solver), [Статистика](/tools/statistics-calc), [Калькулятор дробей](/tools/fraction-calc)`
+Смотрите также: [Решатель уравнений](/tools/equation-solver), [Статистика](/tools/statistics-calc), [Калькулятор дробей](/tools/fraction-calc)`,
+    titleEn: 'Matrix Calculator Guide: All Operations',
+    descriptionEn: 'A complete guide to matrix operations: addition, multiplication, transposition, and finding the determinant.',
+    contentEn: `## Matrix Calculator: Complete Guide
+
+The matrix calculator supports all basic linear algebra operations. Work with matrices up to 10x10.
+
+### Supported Operations
+
+- **Addition and subtraction** of matrices of the same size
+- **Multiplication** of a matrix by a scalar and matrix by matrix
+- **Transposition** — swapping rows and columns
+- **Determinant** — calculation for square matrices
+- **Inverse matrix** — if the determinant is non-zero
+- **Matrix rank** — using Gaussian elimination
+
+### How to Enter a Matrix
+
+1. Specify the matrix dimensions (rows x columns)
+2. Fill in the cells with numerical values
+3. Use a period as the decimal separator for fractional numbers
+4. Select the desired operation from the list
+
+### Matrix Multiplication Rules
+
+To multiply matrix A(m×n) by matrix B(p×q), n must equal p. The result will be a matrix of size m×q.
+
+### Matrix Determinant
+
+The determinant is calculated only for square matrices. For 2×2 matrices, the formula ad - bc is used. For larger matrices, expansion along a row or column is applied.
+
+Results are displayed with step-by-step intermediate calculations, which helps verify correctness and understand the algorithm.
+
+See also: [Equation Solver](/tools/equation-solver), [Statistics](/tools/statistics-calc), [Fraction Calculator](/tools/fraction-calc)`
   },
   {
     slug: 'matrix-calc-tips',
@@ -205,7 +335,40 @@ export const mathArticles: Article[] = [
 
 Метод Гаусса подходит для нахождения определителя, обратной матрицы, ранга и решения систем уравнений. Освойте его в первую очередь.
 
-Смотрите также: [Решатель уравнений](/tools/equation-solver), [Калькулятор дробей](/tools/fraction-calc), [НОД и НОК](/tools/gcd-lcm)`
+Смотрите также: [Решатель уравнений](/tools/equation-solver), [Калькулятор дробей](/tools/fraction-calc), [НОД и НОК](/tools/gcd-lcm)`,
+    titleEn: 'Matrix Tips for Students',
+    descriptionEn: 'Useful tips and techniques for working effectively with matrices in academic problems.',
+    contentEn: `## Tips for Working with Matrices
+
+Matrix calculations require attention and understanding of the rules. These tips will help you avoid common mistakes.
+
+### Check the Dimensions
+
+Before multiplication, make sure the number of columns in the first matrix equals the number of rows in the second. This is the most common cause of errors.
+
+### Use Determinant Properties
+
+- The determinant of a triangular matrix equals the product of diagonal elements
+- Swapping rows changes the sign of the determinant
+- If a row consists of zeros, the determinant is zero
+
+### Simplify Before Calculating
+
+If a matrix has a row or column with many zeros, expand the determinant along that row or column.
+
+### Verify the Inverse Matrix
+
+Multiply the original matrix by the found inverse. If the result is the identity matrix, the calculations are correct.
+
+### Transposition Is Your Friend
+
+Sometimes transposing a matrix before an operation simplifies the calculations. Remember that (AB)^T = B^T A^T.
+
+### Gaussian Elimination — A Universal Tool
+
+Gaussian elimination works for finding the determinant, inverse matrix, rank, and solving systems of equations. Master it first.
+
+See also: [Equation Solver](/tools/equation-solver), [Fraction Calculator](/tools/fraction-calc), [GCD and LCM](/tools/gcd-lcm)`
   },
   {
     slug: 'matrix-calc-use-cases',
@@ -246,7 +409,40 @@ export const mathArticles: Article[] = [
 
 Матрицы — фундамент современных вычислений, и умение работать с ними открывает двери во множество профессий.
 
-Смотрите также: [Статистика](/tools/statistics-calc), [Решатель уравнений](/tools/equation-solver), [Построитель графиков](/tools/graph-plotter)`
+Смотрите также: [Статистика](/tools/statistics-calc), [Решатель уравнений](/tools/equation-solver), [Построитель графиков](/tools/graph-plotter)`,
+    titleEn: 'Applications of Matrices: From Computer Graphics to Economics',
+    descriptionEn: 'Practical scenarios for using matrix calculations in various fields.',
+    contentEn: `## Where Matrices Are Used
+
+Matrices are one of the most important tools in applied mathematics. They are used across a wide range of fields.
+
+### Computer Graphics
+
+All transformations in 3D graphics are performed using matrices: rotation, scaling, and translation of objects. Every frame in a video game is the result of thousands of matrix multiplications.
+
+### Machine Learning
+
+Neural networks are based on matrix operations. Neuron weights are stored in matrices, and the training process is a series of matrix multiplications and transformations.
+
+### Economic Modeling
+
+- Leontief's input-output model is described by a matrix equation
+- Markowitz's portfolio theory uses covariance matrices
+- Transportation problems are solved using linear programming methods
+
+### Cryptography
+
+The Hill cipher uses matrix multiplication for text encryption. The inverse matrix is used for decryption.
+
+### Engineering and Physics
+
+- Stress calculations in structures (stress tensors)
+- Electrical circuit analysis
+- Quantum mechanics (operators as matrices)
+
+Matrices are the foundation of modern computing, and knowing how to work with them opens doors to many professions.
+
+See also: [Statistics](/tools/statistics-calc), [Equation Solver](/tools/equation-solver), [Graph Plotter](/tools/graph-plotter)`
   },
 
   // === statistics-calc (Статистика) ===
@@ -290,7 +486,41 @@ export const mathArticles: Article[] = [
 
 Калькулятор автоматически сортирует данные, определяет выбросы и предоставляет полную сводку по всем показателям.
 
-Смотрите также: [Построитель графиков](/tools/graph-plotter), [Решатель уравнений](/tools/equation-solver), [Калькулятор пропорций](/tools/proportion-calc)`
+Смотрите также: [Построитель графиков](/tools/graph-plotter), [Решатель уравнений](/tools/equation-solver), [Калькулятор пропорций](/tools/proportion-calc)`,
+    titleEn: 'Statistics Calculator Guide',
+    descriptionEn: 'How to use the statistics calculator for data analysis: mean, median, variance, and other measures.',
+    contentEn: `## Statistics Calculator: Guide
+
+The statistics calculator computes all major descriptive statistics measures for your dataset.
+
+### Available Measures
+
+- **Arithmetic mean** — the sum of all values divided by their count
+- **Median** — the value that divides the sorted series in half
+- **Mode** — the most frequently occurring value
+- **Variance** — a measure of data spread relative to the mean
+- **Standard deviation** — the square root of the variance
+- **Range** — the difference between the maximum and minimum values
+
+### How to Enter Data
+
+1. Enter numbers separated by commas or spaces
+2. Both integers and decimal numbers are supported
+3. For large datasets, you can paste from a spreadsheet
+4. Click "Calculate" to get results
+
+### Interpreting Results
+
+| Measure | What It Means |
+|---|---|
+| Low variance | Data is clustered close to the mean |
+| High variance | Data is widely spread |
+| Mean ≈ Median | Distribution is close to symmetric |
+| Mean ≠ Median | There is distribution asymmetry |
+
+The calculator automatically sorts the data, identifies outliers, and provides a complete summary of all measures.
+
+See also: [Graph Plotter](/tools/graph-plotter), [Equation Solver](/tools/equation-solver), [Proportion Calculator](/tools/proportion-calc)`
   },
   {
     slug: 'statistics-calc-tips',
@@ -331,7 +561,40 @@ export const mathArticles: Article[] = [
 
 Многие статистические тесты предполагают нормальное распределение. Убедитесь, что ваши данные соответствуют этому допущению.
 
-Смотрите также: [Построитель графиков](/tools/graph-plotter), [Калькулятор матриц](/tools/matrix-calc), [Решатель уравнений](/tools/equation-solver)`
+Смотрите также: [Построитель графиков](/tools/graph-plotter), [Калькулятор матриц](/tools/matrix-calc), [Решатель уравнений](/tools/equation-solver)`,
+    titleEn: 'Tips for Statistical Data Analysis',
+    descriptionEn: 'Practical recommendations for correctly choosing and interpreting statistical measures.',
+    contentEn: `## Tips for Statistical Analysis
+
+Correct interpretation of statistical measures is just as important as calculating them. Follow these recommendations.
+
+### Choose the Right Measure of Central Tendency
+
+- **Mean** is suitable for symmetric distributions without outliers
+- **Median** is resistant to outliers and better describes asymmetric data
+- **Mode** is useful for categorical data
+
+### Don't Ignore Outliers
+
+Outliers may be measurement errors or important anomalies. Always investigate their nature before excluding them from analysis.
+
+### Sample Size Matters
+
+For reliable statistical conclusions, you need a sufficient sample. Small samples (fewer than 30 observations) may produce unstable results.
+
+### Visualize Your Data
+
+Numerical measures don't tell the full story. Build a histogram or scatter plot for a better understanding of data structure.
+
+### Distinguish Correlation from Causation
+
+Two measures may be correlated, but this doesn't mean one causes the other.
+
+### Check for Normal Distribution
+
+Many statistical tests assume a normal distribution. Make sure your data meets this assumption.
+
+See also: [Graph Plotter](/tools/graph-plotter), [Matrix Calculator](/tools/matrix-calc), [Equation Solver](/tools/equation-solver)`
   },
   {
     slug: 'statistics-calc-use-cases',
@@ -372,7 +635,40 @@ export const mathArticles: Article[] = [
 
 Отслеживание расходов по категориям, вычисление средних ежемесячных трат и определение тенденций помогает лучше управлять бюджетом.
 
-Смотрите также: [Построитель графиков](/tools/graph-plotter), [Калькулятор пропорций](/tools/proportion-calc), [Решатель уравнений](/tools/equation-solver)`
+Смотрите также: [Построитель графиков](/tools/graph-plotter), [Калькулятор пропорций](/tools/proportion-calc), [Решатель уравнений](/tools/equation-solver)`,
+    titleEn: 'Statistics in Real Life',
+    descriptionEn: 'Examples of using statistical calculations in business, science, and everyday life.',
+    contentEn: `## Statistics in Real Life
+
+Statistical methods are used everywhere — from sales analysis to medical research.
+
+### Marketing and Sales
+
+Analyzing average receipts, median customer income, and standard deviation of daily sales — all of this helps make informed business decisions.
+
+### Quality Control
+
+In manufacturing, statistics is used for product quality control. If the standard deviation of part dimensions exceeds the tolerance, the process needs adjustment.
+
+### Education
+
+- Analyzing student performance
+- Evaluating test question difficulty
+- Comparing results across different groups
+
+### Medicine and Health
+
+Clinical drug trials, epidemiological studies, and treatment effectiveness analysis — all of this is based on statistical methods.
+
+### Sports
+
+Sports analytics uses statistics to evaluate player performance, predict match outcomes, and optimize training programs.
+
+### Personal Finance
+
+Tracking expenses by category, calculating average monthly spending, and identifying trends helps manage your budget better.
+
+See also: [Graph Plotter](/tools/graph-plotter), [Proportion Calculator](/tools/proportion-calc), [Equation Solver](/tools/equation-solver)`
   },
 
   // === factorial-calc (Факториал и Комбинаторика) ===
@@ -416,7 +712,41 @@ export const mathArticles: Article[] = [
 
 Факториал быстро растёт: 20! уже превышает 2 квинтиллиона. Калькулятор поддерживает вычисления до 170!, после чего число выходит за пределы стандартного представления.
 
-Смотрите также: [Проверка простых чисел](/tools/prime-checker), [НОД и НОК](/tools/gcd-lcm), [Статистика](/tools/statistics-calc)`
+Смотрите также: [Проверка простых чисел](/tools/prime-checker), [НОД и НОК](/tools/gcd-lcm), [Статистика](/tools/statistics-calc)`,
+    titleEn: 'Factorials and Combinatorics Calculator Guide',
+    descriptionEn: 'How to calculate factorials, permutations, combinations, and arrangements using the online calculator.',
+    contentEn: `## Factorials and Combinatorics Calculator
+
+A tool for computing factorials, permutations, combinations, and arrangements. Supports working with large numbers.
+
+### Basic Operations
+
+- **Factorial (n!)** — the product of all natural numbers from 1 to n
+- **Permutations (P)** — the number of ways to arrange n elements in a row
+- **Combinations (C)** — the number of ways to choose k elements from n without regard to order
+- **Arrangements (A)** — the number of ways to choose k elements from n with regard to order
+
+### Formulas
+
+| Operation | Formula |
+|---|---|
+| Factorial | n! = 1 × 2 × 3 × ... × n |
+| Combinations | C(n,k) = n! / (k! × (n-k)!) |
+| Arrangements | A(n,k) = n! / (n-k)! |
+| Permutations | P(n) = n! |
+
+### How to Use
+
+1. Select the type of calculation from the list
+2. Enter the values of n and k (if required)
+3. Click "Calculate"
+4. Get the result with intermediate calculations
+
+### Limitations
+
+Factorials grow rapidly: 20! already exceeds 2 quintillion. The calculator supports computations up to 170!, after which the number exceeds the standard representation limit.
+
+See also: [Prime Number Checker](/tools/prime-checker), [GCD and LCM](/tools/gcd-lcm), [Statistics](/tools/statistics-calc)`
   },
   {
     slug: 'factorial-calc-tips',
@@ -458,7 +788,41 @@ export const mathArticles: Article[] = [
 
 C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что отбросить 8 из 10. Это упрощает вычисления при больших k.
 
-Смотрите также: [Проверка простых чисел](/tools/prime-checker), [Статистика](/tools/statistics-calc), [Решатель уравнений](/tools/equation-solver)`
+Смотрите также: [Проверка простых чисел](/tools/prime-checker), [Статистика](/tools/statistics-calc), [Решатель уравнений](/tools/equation-solver)`,
+    titleEn: 'Tips for Solving Combinatorics Problems',
+    descriptionEn: 'How to correctly identify the type of combinatorics problem and choose the right formula.',
+    contentEn: `## Tips for Solving Combinatorics Problems
+
+The main difficulty in combinatorics is determining which formula to apply. These tips will help you figure it out.
+
+### Ask Two Key Questions
+
+1. **Does order matter?** If yes — it's arrangements or permutations. If no — combinations.
+2. **Are all elements used?** If yes — permutations. If selecting a subset — combinations or arrangements.
+
+### Remember Simple Examples
+
+- How many ways to arrange 5 books on a shelf? → Permutations: P(5) = 120
+- How many ways to choose 3 books from 10? → Combinations: C(10,3) = 120
+- How many three-digit codes from digits 1-9? → Arrangements: A(9,3) = 504
+
+### Use the Multiplication Principle
+
+If a problem consists of several independent stages, multiply the number of options at each stage.
+
+### Check the Answer with Common Sense
+
+The result cannot be greater than the total number of all possible permutations. If C(n,k) > P(n), there's an error somewhere.
+
+### Don't Confuse With and Without Repetition
+
+Arrangements with repetition (n^k) and without repetition (A(n,k)) use different formulas. Determine whether repeated selection is allowed.
+
+### Use the Symmetry Property of Combinations
+
+C(n,k) = C(n, n-k). Choosing 2 from 10 is the same as discarding 8 from 10. This simplifies calculations for large k.
+
+See also: [Prime Number Checker](/tools/prime-checker), [Statistics](/tools/statistics-calc), [Equation Solver](/tools/equation-solver)`
   },
   {
     slug: 'factorial-calc-use-cases',
@@ -500,7 +864,41 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Комбинаторика помогает оценить масштаб задачи и понять, возможно ли перебрать все варианты или нужен оптимизационный подход.
 
-Смотрите также: [Статистика](/tools/statistics-calc), [Проверка простых чисел](/tools/prime-checker), [НОД и НОК](/tools/gcd-lcm)`
+Смотрите также: [Статистика](/tools/statistics-calc), [Проверка простых чисел](/tools/prime-checker), [НОД и НОК](/tools/gcd-lcm)`,
+    titleEn: 'Combinatorics in Life: From Lotteries to Passwords',
+    descriptionEn: 'Practical examples of applying combinatorics calculations in everyday situations.',
+    contentEn: `## Combinatorics in Everyday Life
+
+Combinatorics formulas help estimate the number of possible options in a variety of situations.
+
+### Password Security
+
+A password of 8 characters (lowercase + uppercase letters + digits) has 62^8 ≈ 218 trillion combinations. Adding special characters increases this number significantly.
+
+### Lotteries and Gambling
+
+The probability of guessing 6 numbers out of 45 is 1/C(45,6) = 1/8,145,060. This helps understand how slim the chances of winning are.
+
+### Scheduling
+
+- How many ways to distribute 5 subjects across 5 days? → 120 options
+- How many ways to choose 3 duty officers from 20 people? → 1140 options
+
+### Genetics
+
+The number of possible gene combinations is determined by combinatorics formulas. This explains genetic diversity.
+
+### Sports Tournaments
+
+The number of matches in a round-robin tournament for n teams is calculated as C(n,2). For 16 teams, that's 120 matches.
+
+### Cooking
+
+If a menu has 4 appetizers, 6 main courses, and 3 desserts, the number of unique three-course meals is 4 × 6 × 3 = 72 options.
+
+Combinatorics helps estimate the scale of a problem and understand whether it's possible to enumerate all options or whether an optimization approach is needed.
+
+See also: [Statistics](/tools/statistics-calc), [Prime Number Checker](/tools/prime-checker), [GCD and LCM](/tools/gcd-lcm)`
   },
 
   // === roman-numerals (Римские числа) ===
@@ -548,7 +946,45 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 - 1999 → MCMXCIX
 - 3888 → MMMDCCCLXXXVIII (самое длинное число до 3999)
 
-Смотрите также: [Проверка простых чисел](/tools/prime-checker), [Калькулятор дробей](/tools/fraction-calc), [НОД и НОК](/tools/gcd-lcm)`
+Смотрите также: [Проверка простых чисел](/tools/prime-checker), [Калькулятор дробей](/tools/fraction-calc), [НОД и НОК](/tools/gcd-lcm)`,
+    titleEn: 'Roman Numeral Converter Guide',
+    descriptionEn: 'How to convert numbers between Arabic and Roman numeral systems using the online converter.',
+    contentEn: `## Roman Numeral Converter
+
+The tool allows you to convert numbers between Arabic and Roman numeral systems. The supported range is from 1 to 3999.
+
+### Basic Roman Numeral Symbols
+
+| Roman | Arabic |
+|---|---|
+| I | 1 |
+| V | 5 |
+| X | 10 |
+| L | 50 |
+| C | 100 |
+| D | 500 |
+| M | 1000 |
+
+### Writing Rules
+
+1. Symbols are written from largest to smallest, left to right
+2. The same symbol can be repeated no more than 3 times in a row
+3. If a smaller symbol precedes a larger one, it is subtracted (IV = 4, IX = 9)
+4. Subtraction applies only to I, X, and C
+
+### How to Use the Converter
+
+- To convert to Roman: enter an Arabic number from 1 to 3999
+- To convert to Arabic: enter a Roman number (e.g., MCMXCIV)
+- The result is displayed instantly as you type
+
+### Conversion Examples
+
+- 2024 → MMXXIV
+- 1999 → MCMXCIX
+- 3888 → MMMDCCCLXXXVIII (the longest number up to 3999)
+
+See also: [Prime Number Checker](/tools/prime-checker), [Fraction Calculator](/tools/fraction-calc), [GCD and LCM](/tools/gcd-lcm)`
   },
   {
     slug: 'roman-numerals-tips',
@@ -590,7 +1026,41 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Несколько известных дат в римских числах помогут закрепить навык: MCMLXIX (1969, высадка на Луну), MMXXVI (2026, текущий год).
 
-Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Калькулятор дробей](/tools/fraction-calc), [Проверка простых чисел](/tools/prime-checker)`
+Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Калькулятор дробей](/tools/fraction-calc), [Проверка простых чисел](/tools/prime-checker)`,
+    titleEn: 'Tips for Memorizing Roman Numerals',
+    descriptionEn: 'Mnemonic techniques and tricks for quickly reading and writing Roman numerals.',
+    contentEn: `## How to Quickly Memorize Roman Numerals
+
+Roman numeration seems complex, but a few techniques will help you master it in minutes.
+
+### Mnemonic Rule
+
+Remember a phrase for the main symbols in descending order: **M**y **D**ear **C**at **L**oves **X**tra **V**itamins **I**mmensely. That's MDCLXVI = 1000, 500, 100, 50, 10, 5, 1.
+
+### Subtraction Rule — Only 6 Cases
+
+Memorize just six subtraction combinations:
+- IV = 4, IX = 9
+- XL = 40, XC = 90
+- CD = 400, CM = 900
+
+### Read the Number in Parts
+
+Break a long number into groups by place value: MCMXCIV = M + CM + XC + IV = 1000 + 900 + 90 + 4 = 1994.
+
+### Check for Correctness
+
+If a number contains IIII, VV, LL, DD — the notation is incorrect. Symbols V, L, and D are never repeated.
+
+### Use a Clock with Roman Numerals
+
+Practice telling time on clocks with Roman numerals. Note: many clocks show 4 as IIII rather than IV — this is a historical tradition.
+
+### Remember Key Years
+
+A few famous dates in Roman numerals help reinforce the skill: MCMLXIX (1969, Moon landing), MMXXVI (2026, current year).
+
+See also: [GCD and LCM](/tools/gcd-lcm), [Fraction Calculator](/tools/fraction-calc), [Prime Number Checker](/tools/prime-checker)`
   },
   {
     slug: 'roman-numerals-use-cases',
@@ -635,7 +1105,44 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Ступени гармонии и аккорды обозначаются римскими цифрами в теории музыки (I, IV, V — основные функции).
 
-Смотрите также: [Проверка простых чисел](/tools/prime-checker), [Калькулятор дробей](/tools/fraction-calc), [Факториал и Комбинаторика](/tools/factorial-calc)`
+Смотрите также: [Проверка простых чисел](/tools/prime-checker), [Калькулятор дробей](/tools/fraction-calc), [Факториал и Комбинаторика](/tools/factorial-calc)`,
+    titleEn: 'Where Roman Numerals Are Used Today',
+    descriptionEn: 'Modern uses of Roman numeration: from clocks to cinema.',
+    contentEn: `## Roman Numerals in the Modern World
+
+Despite being over two thousand years old, Roman numeration is still actively used today.
+
+### Chapter and Section Numbering
+
+In books, academic papers, and legal documents, chapters and sections are often numbered with Roman numerals. This creates a visual separation of numbering levels.
+
+### Clocks and Dials
+
+Classic wall and wrist watches traditionally use Roman numerals. This gives the design elegance and a sense of prestige.
+
+### Cinema and Television
+
+- The production year in film credits is indicated in Roman numerals
+- Franchise installment numbers: Star Wars Episode IV, Rocky III
+- TV series season numbers
+
+### Sports
+
+The Super Bowl in American football is numbered with Roman numerals (Super Bowl LVIII). The Olympic Games also use this numbering.
+
+### Monarchs and Popes
+
+The names of monarchs and popes traditionally include Roman numerals: Elizabeth II, Peter I, Pope Francis I.
+
+### Architecture and Monuments
+
+On building facades, monuments, and memorial plaques, dates are often engraved in Roman numerals. This adds a sense of solemnity to inscriptions.
+
+### Music
+
+Scale degrees and chords are denoted with Roman numerals in music theory (I, IV, V — basic functions).
+
+See also: [Prime Number Checker](/tools/prime-checker), [Fraction Calculator](/tools/fraction-calc), [Factorials and Combinatorics](/tools/factorial-calc)`
   },
 
   // === fraction-calc (Калькулятор дробей) ===
@@ -682,7 +1189,44 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Калькулятор показывает каждый шаг решения и автоматически сокращает результат до несократимого вида.
 
-Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Решатель уравнений](/tools/equation-solver), [Калькулятор пропорций](/tools/proportion-calc)`
+Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Решатель уравнений](/tools/equation-solver), [Калькулятор пропорций](/tools/proportion-calc)`,
+    titleEn: 'Fraction Calculator Guide',
+    descriptionEn: 'How to perform arithmetic operations with common and decimal fractions online.',
+    contentEn: `## Fraction Calculator: Complete Guide
+
+The fraction calculator performs all arithmetic operations with common, mixed, and decimal fractions.
+
+### Supported Operations
+
+- **Addition** and **subtraction** of fractions with different denominators
+- **Multiplication** and **division** of fractions
+- **Simplification** of fractions to lowest terms
+- **Conversion** between common and decimal fractions
+- **Comparison** of two fractions
+
+### How to Enter a Fraction
+
+1. For a common fraction: enter the numerator and denominator
+2. For a mixed number: specify the whole part, numerator, and denominator
+3. For a decimal fraction: enter the number with a period
+
+### Fraction Addition Algorithm
+
+1. Find the common denominator (LCM of the denominators)
+2. Convert fractions to the common denominator
+3. Add the numerators
+4. Simplify the result
+
+### Example
+
+Adding 2/3 + 3/4:
+- LCM(3, 4) = 12
+- 2/3 = 8/12, 3/4 = 9/12
+- 8/12 + 9/12 = 17/12 = 1 5/12
+
+The calculator shows each step of the solution and automatically simplifies the result to lowest terms.
+
+See also: [GCD and LCM](/tools/gcd-lcm), [Equation Solver](/tools/equation-solver), [Proportion Calculator](/tools/proportion-calc)`
   },
   {
     slug: 'fraction-calc-tips',
@@ -725,7 +1269,42 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Знаменатель дроби не может быть равен нулю. В алгебраических выражениях всегда проверяйте это условие.
 
-Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Калькулятор пропорций](/tools/proportion-calc), [Решатель уравнений](/tools/equation-solver)`
+Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Калькулятор пропорций](/tools/proportion-calc), [Решатель уравнений](/tools/equation-solver)`,
+    titleEn: 'Tips for Working with Fractions Without Mistakes',
+    descriptionEn: 'Common mistakes when working with fractions and how to avoid them.',
+    contentEn: `## How to Avoid Mistakes When Working with Fractions
+
+Fractions are one of the topics where the most mistakes are made. Follow these tips for accurate calculations.
+
+### Don't Add the Denominators
+
+The most common mistake: 1/2 + 1/3 ≠ 2/5. Correct approach: find a common denominator and convert both fractions to it.
+
+### Remember the Division Rule
+
+Dividing by a fraction means multiplying by the reciprocal. a/b ÷ c/d = a/b × d/c. Don't forget to flip the divisor specifically.
+
+### Simplify Before Calculating
+
+When multiplying fractions, first cross-cancel. This simplifies the calculations and keeps the numbers smaller.
+
+### Convert Mixed Numbers
+
+Before performing operations, convert mixed numbers to improper fractions. You can convert back after the calculations.
+
+### Check the Sign of the Result
+
+For multiplication and division: same signs give positive, different signs give negative. Count the number of negative factors.
+
+### Use Decimal Representation for Verification
+
+Convert fractions to decimals and verify the result with an approximate calculation. If 2/3 ≈ 0.67 and 1/4 = 0.25, then the sum ≈ 0.92.
+
+### Don't Forget Domain Restrictions
+
+The denominator of a fraction cannot equal zero. In algebraic expressions, always check this condition.
+
+See also: [GCD and LCM](/tools/gcd-lcm), [Proportion Calculator](/tools/proportion-calc), [Equation Solver](/tools/equation-solver)`
   },
   {
     slug: 'fraction-calc-use-cases',
@@ -770,7 +1349,44 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Понимание дробей — это базовый навык, необходимый каждому для решения бытовых задач и профессиональной деятельности.
 
-Смотрите также: [Калькулятор пропорций](/tools/proportion-calc), [НОД и НОК](/tools/gcd-lcm), [Статистика](/tools/statistics-calc)`
+Смотрите также: [Калькулятор пропорций](/tools/proportion-calc), [НОД и НОК](/tools/gcd-lcm), [Статистика](/tools/statistics-calc)`,
+    titleEn: 'Fractions in Everyday Life: Practical Examples',
+    descriptionEn: 'How fractions are used in cooking, construction, music, and other areas.',
+    contentEn: `## Fractions All Around Us
+
+Fractions appear in everyday life much more often than you might think. Here are the main areas where they're used.
+
+### Cooking
+
+Recipes often contain fractional amounts: 3/4 cup of flour, 1/2 teaspoon of salt. When changing the number of servings, you need to recalculate the fractions.
+
+### Construction and Renovation
+
+- Marking and measurements (5 3/8 meters)
+- Calculating material consumption for fractional areas
+- Dividing space into equal parts
+
+### Music
+
+Note durations are expressed as fractions: whole, half (1/2), quarter (1/4), eighth (1/8). Time signatures are also fractions: 3/4, 6/8.
+
+### Finance
+
+- Stock shares and interest rates
+- Tax calculation (1/5 of the amount = 20%)
+- Distributing profits among partners
+
+### Time
+
+We constantly work with fractions of time: quarter of an hour (1/4), half an hour (1/2), three quarters of an hour (3/4).
+
+### Sewing and Crafts
+
+Patterns contain fractional measurements. Seam allowances are expressed in fractions of a centimeter.
+
+Understanding fractions is a basic skill that everyone needs for everyday tasks and professional work.
+
+See also: [Proportion Calculator](/tools/proportion-calc), [GCD and LCM](/tools/gcd-lcm), [Statistics](/tools/statistics-calc)`
   },
 
   // === graph-plotter (Построитель графиков) ===
@@ -816,7 +1432,43 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Построитель графиков незаменим для изучения свойств функций и визуального анализа математических зависимостей.
 
-Смотрите также: [Решатель уравнений](/tools/equation-solver), [Статистика](/tools/statistics-calc), [Калькулятор пропорций](/tools/proportion-calc)`
+Смотрите также: [Решатель уравнений](/tools/equation-solver), [Статистика](/tools/statistics-calc), [Калькулятор пропорций](/tools/proportion-calc)`,
+    titleEn: 'Function Graph Plotter Guide',
+    descriptionEn: 'How to plot mathematical function graphs online: linear, quadratic, and trigonometric.',
+    contentEn: `## Function Graph Plotter
+
+A tool for visualizing mathematical functions on a coordinate plane. Supports plotting multiple graphs simultaneously.
+
+### Supported Function Types
+
+- **Linear**: y = kx + b
+- **Quadratic**: y = ax² + bx + c
+- **Cubic**: y = ax³ + bx² + cx + d
+- **Trigonometric**: sin(x), cos(x), tan(x)
+- **Exponential**: y = a^x, y = e^x
+- **Logarithmic**: y = log(x), y = ln(x)
+
+### How to Plot a Graph
+
+1. Enter the function formula in the input field
+2. Use standard notation: x for the variable, ^ for exponentiation
+3. Adjust the axis scale as needed
+4. Add additional functions for comparison
+
+### Display Settings
+
+- Adjusting X and Y axis ranges
+- Toggling the grid on and off
+- Choosing colors for each graph
+- Displaying intersection points with axes
+
+### Graph Analysis
+
+The tool automatically identifies key points: function zeros, extrema, and inflection points. Hover over the graph to see the coordinates of any point.
+
+The graph plotter is indispensable for studying function properties and visual analysis of mathematical relationships.
+
+See also: [Equation Solver](/tools/equation-solver), [Statistics](/tools/statistics-calc), [Proportion Calculator](/tools/proportion-calc)`
   },
   {
     slug: 'graph-plotter-tips',
@@ -861,7 +1513,44 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Подставьте x = 0, x = 1, x = -1 в формулу и убедитесь, что график проходит через полученные точки.
 
-Смотрите также: [Решатель уравнений](/tools/equation-solver), [Статистика](/tools/statistics-calc), [Калькулятор матриц](/tools/matrix-calc)`
+Смотрите также: [Решатель уравнений](/tools/equation-solver), [Статистика](/tools/statistics-calc), [Калькулятор матриц](/tools/matrix-calc)`,
+    titleEn: 'Tips for Effective Graph Plotting',
+    descriptionEn: 'How to properly set the scale, choose the function type, and analyze graphs.',
+    contentEn: `## Tips for Plotting Graphs
+
+A well-constructed graph is a powerful analysis tool. Follow these recommendations.
+
+### Choose the Right Scale
+
+Too large a scale hides details; too small a scale distorts the overall shape. Start with a range of [-10, 10] and adjust as needed.
+
+### Use Multiple Graphs
+
+To solve the equation f(x) = g(x), plot both graphs on the same plane. The intersection points are the solutions.
+
+### Pay Attention to the Domain
+
+Not all functions are defined for all x. For example, ln(x) exists only for x > 0, and tan(x) has discontinuities.
+
+### Look for Symmetry
+
+- Even functions are symmetric about the Y-axis
+- Odd functions are symmetric about the origin
+- This helps verify the correctness of the plot
+
+### Use the Derivative
+
+If the function is increasing, its derivative is positive. Points where the derivative equals zero are extrema or inflection points.
+
+### Compare with a Reference
+
+When studying transformations, plot the base function (e.g., y = x²) and its modification side by side. This makes it easier to see the effect of parameters.
+
+### Check Key Points
+
+Substitute x = 0, x = 1, x = -1 into the formula and make sure the graph passes through the resulting points.
+
+See also: [Equation Solver](/tools/equation-solver), [Statistics](/tools/statistics-calc), [Matrix Calculator](/tools/matrix-calc)`
   },
   {
     slug: 'graph-plotter-use-cases',
@@ -907,7 +1596,45 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Умение строить и интерпретировать графики — ключевой навык для специалистов во всех технических и экономических областях.
 
-Смотрите также: [Статистика](/tools/statistics-calc), [Решатель уравнений](/tools/equation-solver), [Калькулятор матриц](/tools/matrix-calc)`
+Смотрите также: [Статистика](/tools/statistics-calc), [Решатель уравнений](/tools/equation-solver), [Калькулятор матриц](/tools/matrix-calc)`,
+    titleEn: 'Function Graphs: Where and Why They Are Needed',
+    descriptionEn: 'Practical applications of function visualization in science, economics, and engineering.',
+    contentEn: `## Applications of Function Graphs
+
+Graphs are a universal tool for visualizing relationships, used in virtually every field of knowledge.
+
+### Physics
+
+Graphs help visualize laws of motion, oscillations, and wave processes. The relationship between distance and time, speed and acceleration — all of these are clearly represented graphically.
+
+### Economics and Business
+
+- Supply and demand curves
+- Break-even charts
+- Sales dynamics and forecasting
+- Utility functions
+
+### Biology and Medicine
+
+Population growth curves (logistic function), drug pharmacokinetics (substance concentration in blood over time), and epidemiological models.
+
+### Engineering
+
+- Amplitude-frequency characteristics
+- Stress and strain graphs
+- Transient processes in electrical circuits
+
+### Education
+
+Graphs are indispensable for studying mathematics. Visual representation of functions helps intuitively understand their properties.
+
+### Data Analysis
+
+Regression analysis — plotting the graph that best approximates experimental data. This is the foundation of predictive analytics.
+
+The ability to plot and interpret graphs is a key skill for professionals in all technical and economic fields.
+
+See also: [Statistics](/tools/statistics-calc), [Equation Solver](/tools/equation-solver), [Matrix Calculator](/tools/matrix-calc)`
   },
 
   // === gcd-lcm (НОД и НОК) ===
@@ -956,7 +1683,46 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Калькулятор также показывает разложение каждого числа на простые множители, что помогает понять природу НОД и НОК.
 
-Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Проверка простых чисел](/tools/prime-checker), [Факториал и Комбинаторика](/tools/factorial-calc)`
+Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Проверка простых чисел](/tools/prime-checker), [Факториал и Комбинаторика](/tools/factorial-calc)`,
+    titleEn: 'GCD and LCM Calculator Guide',
+    descriptionEn: 'How to find the greatest common divisor and least common multiple using the online calculator.',
+    contentEn: `## GCD and LCM Calculator
+
+A tool that calculates the greatest common divisor (GCD) and least common multiple (LCM) for two or more numbers.
+
+### What Are GCD and LCM
+
+- **GCD** — the largest number that divides all given numbers without a remainder
+- **LCM** — the smallest number that is divisible by all given numbers without a remainder
+
+### Calculation Methods
+
+**Euclidean Algorithm** for GCD:
+1. Divide the larger number by the smaller
+2. If the remainder is zero — the smaller number is the GCD
+3. Otherwise, replace the larger number with the smaller, and the smaller with the remainder
+4. Repeat until the remainder equals zero
+
+**GCD and LCM Relationship:**
+LCM(a, b) = (a × b) / GCD(a, b)
+
+### How to Use
+
+1. Enter two or more numbers separated by commas
+2. Click "Calculate"
+3. Get the GCD and LCM with a step-by-step solution
+
+### Examples
+
+| Numbers | GCD | LCM |
+|---|---|---|
+| 12 and 18 | 6 | 36 |
+| 24 and 36 | 12 | 72 |
+| 15, 25, and 35 | 5 | 525 |
+
+The calculator also shows the prime factorization of each number, which helps understand the nature of the GCD and LCM.
+
+See also: [Fraction Calculator](/tools/fraction-calc), [Prime Number Checker](/tools/prime-checker), [Factorials and Combinatorics](/tools/factorial-calc)`
   },
   {
     slug: 'gcd-lcm-tips',
@@ -1003,7 +1769,46 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 НОД(a, b, c) = НОД(НОД(a, b), c). Вычисляйте последовательно для пар — это проще, чем работать сразу с тремя числами.
 
-Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Проверка простых чисел](/tools/prime-checker), [Римские числа](/tools/roman-numerals)`
+Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Проверка простых чисел](/tools/prime-checker), [Римские числа](/tools/roman-numerals)`,
+    titleEn: 'Tips for Finding GCD and LCM Quickly',
+    descriptionEn: 'Techniques for quickly calculating GCD and LCM mentally without a calculator.',
+    contentEn: `## Quick GCD and LCM Calculation
+
+These techniques will help you find GCD and LCM even without a calculator.
+
+### Start with Small Divisors
+
+Check divisibility sequentially: by 2, by 3, by 5, by 7. For most problems, this is sufficient.
+
+### Divisibility Rules
+
+- By 2: the last digit is even
+- By 3: the sum of digits is divisible by 3
+- By 5: ends in 0 or 5
+- By 9: the sum of digits is divisible by 9
+- By 4: the last two digits are divisible by 4
+
+### Use Prime Factorization
+
+Factor both numbers into primes. The GCD is the product of common factors; the LCM is the product of all factors at their highest powers.
+
+### GCD of Coprime Numbers
+
+If two numbers are coprime (share no common divisors other than 1), their GCD = 1 and their LCM = their product.
+
+### LCM for Finding Common Denominators
+
+When adding fractions, the common denominator is the LCM of the denominators. Don't just take the product — the LCM is often smaller.
+
+### Verify the Result
+
+The GCD cannot be larger than the smaller of the numbers. The LCM cannot be smaller than the larger of the numbers. Use these constraints for verification.
+
+### Property for Three Numbers
+
+GCD(a, b, c) = GCD(GCD(a, b), c). Calculate sequentially for pairs — it's simpler than working with three numbers at once.
+
+See also: [Fraction Calculator](/tools/fraction-calc), [Prime Number Checker](/tools/prime-checker), [Roman Numerals](/tools/roman-numerals)`
   },
   {
     slug: 'gcd-lcm-use-cases',
@@ -1046,7 +1851,42 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Автобусы отправляются каждые 15 и 20 минут. НОК(15, 20) = 60 — они совпадут каждый час.
 
-Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Проверка простых чисел](/tools/prime-checker), [Калькулятор пропорций](/tools/proportion-calc)`
+Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Проверка простых чисел](/tools/prime-checker), [Калькулятор пропорций](/tools/proportion-calc)`,
+    titleEn: 'GCD and LCM: Practical Applications',
+    descriptionEn: 'Real-world problems that require calculating the greatest common divisor and least common multiple.',
+    contentEn: `## Practical Applications of GCD and LCM
+
+GCD and LCM are not just abstract concepts. They solve specific practical problems.
+
+### Tile Laying
+
+What is the largest square tile that can be laid on a floor measuring 360 × 480 cm without cutting? Answer: GCD(360, 480) = 120 cm.
+
+### Event Synchronization
+
+Two traffic lights switch at intervals of 40 and 60 seconds. After how many seconds will they coincide again? Answer: LCM(40, 60) = 120 seconds.
+
+### Working with Fractions
+
+When adding fractions with different denominators, the LCM of the denominators gives the lowest common denominator. This makes calculations simpler.
+
+### Distributing Items
+
+You need to divide 48 apples and 36 oranges equally into the maximum number of baskets. GCD(48, 36) = 12 baskets, with 4 apples and 3 oranges each.
+
+### Music and Rhythm
+
+Polyrhythms in music are described using LCM. Two rhythms with periods of 3 and 4 beats will coincide after LCM(3, 4) = 12 beats.
+
+### Gears and Mechanisms
+
+Two gears with 24 and 36 teeth. After how many rotations of the small gear will they return to their starting position? LCM(24, 36) / 24 = 3 rotations.
+
+### Scheduling and Planning
+
+Buses depart every 15 and 20 minutes. LCM(15, 20) = 60 — they will coincide every hour.
+
+See also: [Fraction Calculator](/tools/fraction-calc), [Prime Number Checker](/tools/prime-checker), [Proportion Calculator](/tools/proportion-calc)`
   },
 
   // === prime-checker (Проверка простых чисел) ===
@@ -1089,7 +1929,40 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Любое составное число можно единственным образом представить как произведение простых множителей. Например: 360 = 2³ × 3² × 5.
 
-Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Факториал и Комбинаторика](/tools/factorial-calc), [Римские числа](/tools/roman-numerals)`
+Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Факториал и Комбинаторика](/tools/factorial-calc), [Римские числа](/tools/roman-numerals)`,
+    titleEn: 'Prime Number Checker Guide',
+    descriptionEn: 'How to check whether a number is prime and find all prime numbers within a given range.',
+    contentEn: `## Prime Number Checker
+
+The tool determines whether a number is prime, performs factorization, and finds prime numbers within a range.
+
+### What Is a Prime Number
+
+A prime number is a natural number greater than 1 that is divisible only by 1 and itself. The first prime numbers are: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29.
+
+### Tool Features
+
+- **Primality check** — determining whether a number is prime
+- **Factorization** — breaking a number into prime factors
+- **Sieve of Eratosthenes** — finding all prime numbers up to a given number
+- **Nearest primes** — finding prime numbers near a given number
+
+### How to Use
+
+1. Enter a number or range in the input field
+2. Choose the operation: check, factorization, or range search
+3. Click "Check"
+4. Get the result with an explanation
+
+### Checking Algorithm
+
+To check primality, it is sufficient to test divisibility by all prime numbers up to the square root of the number being checked. If none divides it evenly, the number is prime.
+
+### Factorization
+
+Any composite number can be uniquely represented as a product of prime factors. For example: 360 = 2³ × 3² × 5.
+
+See also: [GCD and LCM](/tools/gcd-lcm), [Factorials and Combinatorics](/tools/factorial-calc), [Roman Numerals](/tools/roman-numerals)`
   },
   {
     slug: 'prime-checker-tips',
@@ -1132,7 +2005,42 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Два числа могут быть взаимно простыми (НОД = 1), даже если каждое из них составное. Например, 8 и 15 взаимно просты.
 
-Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Факториал и Комбинаторика](/tools/factorial-calc), [Калькулятор дробей](/tools/fraction-calc)`
+Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Факториал и Комбинаторика](/tools/factorial-calc), [Калькулятор дробей](/tools/fraction-calc)`,
+    titleEn: 'Tips for Identifying Prime Numbers',
+    descriptionEn: 'Quick methods for checking primality and useful properties of prime numbers.',
+    contentEn: `## Tips for Working with Prime Numbers
+
+Quickly determining whether a number is prime is a useful skill. These techniques will help.
+
+### Eliminate Even Numbers
+
+All even numbers except 2 are composite. This immediately eliminates half of all numbers.
+
+### Check Divisibility by Small Primes
+
+For numbers up to 100, it's enough to check divisibility by 2, 3, 5, and 7. If the number is not divisible by any of them, it's prime.
+
+### Use the Square Root Rule
+
+Only check divisors up to the square root of the number. For the number 97, it's enough to check divisors up to 9 (since 10² = 100 > 97).
+
+### Memorize Prime Numbers up to 100
+
+There are only 25: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97. Memorize at least the first 15.
+
+### The 6k ± 1 Rule
+
+All prime numbers except 2 and 3 have the form 6k - 1 or 6k + 1. This means prime numbers are found adjacent to multiples of 6.
+
+### Mersenne Numbers
+
+Numbers of the form 2^n - 1 are often prime (when n is prime). This is used to search for record-breaking large prime numbers.
+
+### Don't Confuse with Coprime Numbers
+
+Two numbers can be coprime (GCD = 1) even if each of them is composite. For example, 8 and 15 are coprime.
+
+See also: [GCD and LCM](/tools/gcd-lcm), [Factorials and Combinatorics](/tools/factorial-calc), [Fraction Calculator](/tools/fraction-calc)`
   },
   {
     slug: 'prime-checker-use-cases',
@@ -1173,7 +2081,40 @@ C(n,k) = C(n, n-k). Выбрать 2 из 10 — то же самое, что о
 
 Простые числа — один из фундаментальных объектов математики, их свойства продолжают открываться и находить новые применения.
 
-Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Факториал и Комбинаторика](/tools/factorial-calc), [Калькулятор матриц](/tools/matrix-calc)`
+Смотрите также: [НОД и НОК](/tools/gcd-lcm), [Факториал и Комбинаторика](/tools/factorial-calc), [Калькулятор матриц](/tools/matrix-calc)`,
+    titleEn: 'Prime Numbers: From Cryptography to Nature',
+    descriptionEn: 'Amazing applications of prime numbers in cryptography, computer science, and nature.',
+    contentEn: `## Prime Numbers in the Real World
+
+Prime numbers are the foundation of modern information security and one of the most fascinating topics in mathematics.
+
+### Cryptography and Security
+
+The RSA algorithm, which protects internet transactions, is based on the difficulty of factoring the product of two large prime numbers. Your bank transfers are protected by prime numbers.
+
+### Hash Tables in Programming
+
+Prime numbers are used as hash table sizes to minimize collisions. This speeds up data searches in databases and programs.
+
+### Cicadas and Evolution
+
+Periodical cicadas emerge every 13 or 17 years — both are prime numbers. This protects them from synchronizing with predator life cycles.
+
+### Barcodes and Checksums
+
+Check digit verification systems (ISBN, barcodes) use arithmetic with prime numbers to detect errors.
+
+### Random Number Generation
+
+Pseudorandom number generators often use large prime numbers in their formulas to ensure long sequence periods.
+
+### Quantum Computing
+
+Shor's algorithm on a quantum computer can quickly factor large numbers. This is a potential threat to RSA encryption and a stimulus for developing post-quantum cryptography.
+
+Prime numbers are one of the fundamental objects of mathematics, and their properties continue to be discovered and find new applications.
+
+See also: [GCD and LCM](/tools/gcd-lcm), [Factorials and Combinatorics](/tools/factorial-calc), [Matrix Calculator](/tools/matrix-calc)`
   },
 
   // === proportion-calc (Калькулятор пропорций) ===

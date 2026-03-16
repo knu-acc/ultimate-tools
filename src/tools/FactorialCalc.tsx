@@ -15,6 +15,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface TabPanelProps {
   children: React.ReactNode;
@@ -37,14 +38,16 @@ function factorialBig(n: number): bigint {
   return result;
 }
 
-function formatBigInt(val: bigint): string {
+function formatBigInt(val: bigint, isEn: boolean): string {
   const str = val.toString();
   if (str.length <= 20) return str;
-  return str.slice(0, 10) + '...' + str.slice(-10) + ` (${str.length} цифр)`;
+  return str.slice(0, 10) + '...' + str.slice(-10) + ` (${str.length} ${isEn ? 'digits' : 'цифр'})`;
 }
 
 export default function FactorialCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [tab, setTab] = useState(0);
 
   const [factN, setFactN] = useState('');
@@ -81,11 +84,11 @@ export default function FactorialCalc() {
     const steps = [
       `P(${n}, ${r}) = ${n}! / (${n} - ${r})!`,
       `= ${n}! / ${n - r}!`,
-      `= ${formatBigInt(nFact)} / ${formatBigInt(nrFact)}`,
-      `= ${formatBigInt(result)}`,
+      `= ${formatBigInt(nFact, isEn)} / ${formatBigInt(nrFact, isEn)}`,
+      `= ${formatBigInt(result, isEn)}`,
     ];
     return { value: result, steps };
-  }, [permN, permR]);
+  }, [permN, permR, isEn]);
 
   const combResult = useMemo(() => {
     const n = parseInt(combN);
@@ -98,11 +101,11 @@ export default function FactorialCalc() {
     const steps = [
       `C(${n}, ${r}) = ${n}! / (${r}! \u00d7 (${n} - ${r})!)`,
       `= ${n}! / (${r}! \u00d7 ${n - r}!)`,
-      `= ${formatBigInt(nFact)} / (${formatBigInt(rFact)} \u00d7 ${formatBigInt(nrFact)})`,
-      `= ${formatBigInt(result)}`,
+      `= ${formatBigInt(nFact, isEn)} / (${formatBigInt(rFact, isEn)} \u00d7 ${formatBigInt(nrFact, isEn)})`,
+      `= ${formatBigInt(result, isEn)}`,
     ];
     return { value: result, steps };
-  }, [combN, combR]);
+  }, [combN, combR, isEn]);
 
   const commonValues = [
     { n: 0, val: '1' },
@@ -132,7 +135,7 @@ export default function FactorialCalc() {
       }}
     >
       <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, color: 'text.secondary' }}>
-        Пошаговое решение
+        {isEn ? 'Step-by-step solution' : 'Пошаговое решение'}
       </Typography>
       {steps.map((step, idx) => (
         <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
@@ -177,9 +180,9 @@ export default function FactorialCalc() {
             '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' }
           }}
         >
-          <Tab label="Факториал (n!)" />
-          <Tab label="Перестановки P(n,r)" />
-          <Tab label="Сочетания C(n,r)" />
+          <Tab label={isEn ? "Factorial (n!)" : "Факториал (n!)"} />
+          <Tab label={isEn ? "Permutations P(n,r)" : "Перестановки P(n,r)"} />
+          <Tab label={isEn ? "Combinations C(n,r)" : "Сочетания C(n,r)"} />
         </Tabs>
         <Divider />
 
@@ -227,7 +230,7 @@ export default function FactorialCalc() {
                     wordBreak: 'break-all'
                   }}
                 >
-                  {formatBigInt(factResult.value)}
+                  {formatBigInt(factResult.value, isEn)}
                 </Typography>
               </Paper>
               {factResult.steps.length > 0 && <StepDisplay steps={factResult.steps} />}
@@ -294,7 +297,7 @@ export default function FactorialCalc() {
                     wordBreak: 'break-all'
                   }}
                 >
-                  {formatBigInt(permResult.value)}
+                  {formatBigInt(permResult.value, isEn)}
                 </Typography>
               </Paper>
               <StepDisplay steps={permResult.steps} />
@@ -361,7 +364,7 @@ export default function FactorialCalc() {
                     wordBreak: 'break-all'
                   }}
                 >
-                  {formatBigInt(combResult.value)}
+                  {formatBigInt(combResult.value, isEn)}
                 </Typography>
               </Paper>
               <StepDisplay steps={combResult.steps} />
@@ -380,7 +383,7 @@ export default function FactorialCalc() {
         }}
       >
         <Typography variant="h6" sx={{ mb: 2 }}>
-          Таблица факториалов
+          {isEn ? 'Factorial table' : 'Таблица факториалов'}
         </Typography>
         <Box
           component="table"

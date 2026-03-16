@@ -13,11 +13,14 @@ import {
   alpha
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const TIP_PRESETS = [5, 10, 15, 20, 25];
 
 export default function TipCalculator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
@@ -66,7 +69,7 @@ export default function TipCalculator() {
   }, [billAmount, tipPercent, people]);
 
   const fmt = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   interface StatCardProps {
     label: string;
@@ -112,11 +115,11 @@ export default function TipCalculator() {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label={`Сумма счёта (${sym})`}
+              label={isEn ? `Bill amount (${sym})` : `Сумма счёта (${sym})`}
               type="number"
               value={billAmount}
               onChange={(e) => setBillAmount(e.target.value)}
-              placeholder="Например: 2500"
+              placeholder={isEn ? 'e.g.: 2500' : 'Например: 2500'}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -131,7 +134,7 @@ export default function TipCalculator() {
 
           <Grid size={{ xs: 12 }}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-              Процент чаевых
+              {isEn ? 'Tip percentage' : 'Процент чаевых'}
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 1.5 }}>
               {TIP_PRESETS.map((preset) => (
@@ -152,12 +155,12 @@ export default function TipCalculator() {
             </Box>
             <TextField
               fullWidth
-              label="Свой процент"
+              label={isEn ? 'Custom percentage' : 'Свой процент'}
               type="number"
               size="small"
               value={customTip}
               onChange={(e) => handleCustomTipChange(e.target.value)}
-              placeholder="Введите свой %"
+              placeholder={isEn ? 'Enter your %' : 'Введите свой %'}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -173,7 +176,7 @@ export default function TipCalculator() {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label="Количество гостей"
+              label={isEn ? 'Number of guests' : 'Количество гостей'}
               type="number"
               value={people}
               onChange={(e) => setPeople(e.target.value)}
@@ -189,27 +192,27 @@ export default function TipCalculator() {
             <Divider sx={{ my: 2 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Результат
+              {isEn ? 'Result' : 'Результат'}
             </Typography>
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Чаевые"
+                  label={isEn ? 'Tip' : 'Чаевые'}
                   value={`${fmt(results.tipAmount)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Итого со счётом"
+                  label={isEn ? 'Total with bill' : 'Итого со счётом'}
                   value={`${fmt(results.total)} ${sym}`}
                   color="#1565c0"
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="На каждого"
+                  label={isEn ? 'Per person' : 'На каждого'}
                   value={`${fmt(results.perPerson)} ${sym}`}
                   color="#2e7d32"
                 />
@@ -227,11 +230,11 @@ export default function TipCalculator() {
                 }}
               >
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1, fontWeight: 600 }}>
-                  Разбивка на {results.people} чел.
+                  {isEn ? `Split for ${results.people} people` : `Разбивка на ${results.people} чел.`}
                 </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                   <Typography variant="body2" color="text.secondary">
-                    Счёт на каждого:
+                    {isEn ? 'Bill per person:' : 'Счёт на каждого:'}
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
                     {fmt(parseFloat(billAmount) / results.people)} {sym}
@@ -239,7 +242,7 @@ export default function TipCalculator() {
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
                   <Typography variant="body2" color="text.secondary">
-                    Чаевые на каждого:
+                    {isEn ? 'Tip per person:' : 'Чаевые на каждого:'}
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 600, color: theme.palette.primary.main }}>
                     {fmt(results.tipPerPerson)} {sym}
@@ -248,7 +251,7 @@ export default function TipCalculator() {
                 <Divider sx={{ my: 1 }} />
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    Итого на каждого:
+                    {isEn ? 'Total per person:' : 'Итого на каждого:'}
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 700, color: '#2e7d32' }}>
                     {fmt(results.perPerson)} {sym}

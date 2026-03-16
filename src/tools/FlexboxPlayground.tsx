@@ -11,6 +11,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 const ITEM_COLORS = ['#1976d2', '#388e3c', '#f57c00', '#7b1fa2', '#c62828'];
@@ -28,6 +29,8 @@ interface ItemProps {
 
 export default function FlexboxPlayground() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [flexDirection, setFlexDirection] = useState<string>('row');
   const [justifyContent, setJustifyContent] = useState<string>('flex-start');
   const [alignItems, setAlignItems] = useState<string>('stretch');
@@ -96,7 +99,7 @@ export default function FlexboxPlayground() {
       >
         {/* Container Controls */}
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 700, color: 'text.primary' }}>
-          Свойства контейнера
+          {isEn ? 'Container properties' : 'Свойства контейнера'}
         </Typography>
 
         {renderChipRow('flex-direction', FLEX_DIRECTIONS, flexDirection, setFlexDirection)}
@@ -127,7 +130,7 @@ export default function FlexboxPlayground() {
 
         {/* Preview */}
         <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 700, color: 'text.primary' }}>
-          Предварительный просмотр
+          {isEn ? 'Preview' : 'Предварительный просмотр'}
         </Typography>
         <Paper
           elevation={0}
@@ -175,8 +178,8 @@ export default function FlexboxPlayground() {
 
         {/* Individual item controls */}
         <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 700, color: 'text.primary' }}>
-          Свойства элемента
-          {selectedItem !== null ? ` #${selectedItem + 1}` : ' (выберите элемент)'}
+          {isEn ? 'Item properties' : 'Свойства элемента'}
+          {selectedItem !== null ? ` #${selectedItem + 1}` : isEn ? ' (select an item)' : ' (выберите элемент)'}
         </Typography>
 
         {selectedItem !== null ? (
@@ -234,14 +237,14 @@ export default function FlexboxPlayground() {
           </Box>
         ) : (
           <Typography variant="body2" sx={{ color: 'text.disabled', mb: 2.5 }}>
-            Нажмите на элемент в области предварительного просмотра, чтобы настроить его свойства
+            {isEn ? 'Click on an item in the preview area to configure its properties' : 'Нажмите на элемент в области предварительного просмотра, чтобы настроить его свойства'}
           </Typography>
         )}
 
         {/* Generated CSS */}
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>
-            Сгенерированный CSS
+            {isEn ? 'Generated CSS' : 'Сгенерированный CSS'}
           </Typography>
           <CopyButton text={generateCss()} />
         </Box>

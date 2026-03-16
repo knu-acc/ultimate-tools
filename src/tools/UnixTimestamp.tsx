@@ -13,9 +13,10 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
-function formatRelative(date: Date, now: Date): string {
+function formatRelative(date: Date, now: Date, isEn: boolean): string {
   const diffMs = now.getTime() - date.getTime();
   const future = diffMs < 0;
   const abs = Math.abs(diffMs);
@@ -25,6 +26,18 @@ function formatRelative(date: Date, now: Date): string {
   const days = Math.floor(hours / 24);
   const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
+
+  if (isEn) {
+    const pluralEn = (n: number, word: string) => n === 1 ? `${n} ${word}` : `${n} ${word}s`;
+    let text: string;
+    if (seconds < 60) text = pluralEn(seconds, 'second');
+    else if (minutes < 60) text = pluralEn(minutes, 'minute');
+    else if (hours < 24) text = pluralEn(hours, 'hour');
+    else if (days < 30) text = pluralEn(days, 'day');
+    else if (months < 12) text = pluralEn(months, 'month');
+    else text = pluralEn(years, 'year');
+    return future ? `in ${text}` : `${text} ago`;
+  }
 
   const pluralize = (n: number, one: string, few: string, many: string) => {
     const mod10 = n % 10;
@@ -48,6 +61,8 @@ function formatRelative(date: Date, now: Date): string {
 
 export default function UnixTimestamp() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [now, setNow] = useState(() => Math.floor(Date.now() / 1000));
   const [tsInput, setTsInput] = useState('');
   const [dateInput, setDateInput] = useState('');
@@ -69,7 +84,7 @@ export default function UnixTimestamp() {
     return {
       date,
       iso: date.toISOString(),
-      locale: date.toLocaleString('ru-RU', {
+      locale: date.toLocaleString(isEn ? 'en-US' : 'ru-RU', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
@@ -79,7 +94,7 @@ export default function UnixTimestamp() {
         second: '2-digit'
       }),
       utc: date.toUTCString(),
-      relative: formatRelative(date, new Date())
+      relative: formatRelative(date, new Date(), isEn)
     };
   }, [tsInput, now]);
 
@@ -110,7 +125,7 @@ export default function UnixTimestamp() {
         }}
       >
         <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-          Текущая метка времени Unix
+          {isEn ? 'Current Unix timestamp' : 'Текущая метка времени Unix'}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
           <Typography
@@ -126,16 +141,16 @@ export default function UnixTimestamp() {
           <CopyButton text={String(now)} />
         </Box>
         <Typography variant="caption" color="text.secondary">
-          {new Date(now * 1000).toLocaleString('ru-RU')}
+          {new Date(now * 1000).toLocaleString(isEn ? 'en-US' : 'ru-RU')}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 1.5, flexWrap: 'wrap' }}>
           <Chip
-            label="Секунды"
+            label={isEn ? 'Seconds' : 'Секунды'}
             size="small"
             sx={{ backgroundColor: alpha(accentColor, 0.1), color: accentColor, fontWeight: 500 }}
           />
           <Chip
-            label={`Мс: ${now * 1000}`}
+            label={isEn ? `Ms: ${now * 1000}` : `Мс: ${now * 1000}`}
             size="small"
             variant="outlined"
             sx={{
@@ -156,7 +171,7 @@ export default function UnixTimestamp() {
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Метка времени в дату
+          {isEn ? 'Timestamp to date' : 'Метка времени в дату'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
           <TextField
@@ -171,13 +186,13 @@ export default function UnixTimestamp() {
             onClick={() => setTsInput(String(now))}
             sx={{ whiteSpace: 'nowrap', minWidth: 'auto', px: 2, borderRadius: 2 }}
           >
-            Сейчас
+            {isEn ? 'Now' : 'Сейчас'}
           </Button>
         </Box>
 
         {tsInput && !tsResult && (
           <Typography variant="caption" color="error">
-            Некорректная метка времени
+            {isEn ? 'Invalid timestamp' : 'Некорректная метка времени'}
           </Typography>
         )}
 
@@ -185,9 +200,9 @@ export default function UnixTimestamp() {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
             {[
               { label: 'ISO 8601', value: tsResult.iso, field: 'tsIso' },
-              { label: 'Локальный формат', value: tsResult.locale, field: 'tsLocale' },
+              { label: isEn ? 'Local format' : 'Локальный формат', value: tsResult.locale, field: 'tsLocale' },
               { label: 'UTC', value: tsResult.utc, field: 'tsUtc' },
-              { label: 'Относительно', value: tsResult.relative, field: 'tsRel' },
+              { label: isEn ? 'Relative' : 'Относительно', value: tsResult.relative, field: 'tsRel' },
             ].map((item) => (
               <Paper
                 key={item.field}
@@ -234,14 +249,14 @@ export default function UnixTimestamp() {
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
-          Дата в метку времени
+          {isEn ? 'Date to timestamp' : 'Дата в метку времени'}
         </Typography>
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 12, sm: 7 }}>
             <TextField
               fullWidth
               type="date"
-              label="Дата"
+              label={isEn ? 'Date' : 'Дата'}
               value={dateInput}
               onChange={(e) => setDateInput(e.target.value)}
               slotProps={{ inputLabel: { shrink: true } }}
@@ -251,7 +266,7 @@ export default function UnixTimestamp() {
             <TextField
               fullWidth
               type="time"
-              label="Время"
+              label={isEn ? 'Time' : 'Время'}
               value={timeInput}
               onChange={(e) => setTimeInput(e.target.value)}
               slotProps={{
@@ -271,12 +286,12 @@ export default function UnixTimestamp() {
           }}
           sx={{ mb: 2, borderRadius: 2 }}
         >
-          Текущая дата и время
+          {isEn ? 'Current date and time' : 'Текущая дата и время'}
         </Button>
 
         {dateInput && !dateResult && (
           <Typography variant="caption" color="error" sx={{ display: 'block', mb: 1 }}>
-            Некорректная дата
+            {isEn ? 'Invalid date' : 'Некорректная дата'}
           </Typography>
         )}
 
@@ -294,7 +309,7 @@ export default function UnixTimestamp() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
-                  Секунды
+                  {isEn ? 'Seconds' : 'Секунды'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
                   <Typography variant="h6" sx={{ fontWeight: 700, color: '#2e7d32', fontFamily: 'monospace' }}>
@@ -316,7 +331,7 @@ export default function UnixTimestamp() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
-                  Миллисекунды
+                  {isEn ? 'Milliseconds' : 'Миллисекунды'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
                   <Typography variant="h6" sx={{ fontWeight: 700, color: '#1976d2', fontFamily: 'monospace' }}>

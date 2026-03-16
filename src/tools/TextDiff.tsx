@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import {
   Box, Typography, TextField, Paper, Grid, Chip, alpha, useTheme
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface DiffLine {
   type: 'added' | 'removed' | 'same';
@@ -53,6 +54,8 @@ function computeDiff(text1: string, text2: string): DiffLine[] {
 
 export default function TextDiff() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
 
@@ -103,7 +106,7 @@ export default function TextDiff() {
               rows={10}
               value={text1}
               onChange={(e) => setText1(e.target.value)}
-              placeholder="Оригинальный текст..."
+              placeholder={isEn ? "Original text..." : "Оригинальный текст..."}
               sx={{
                 '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' }
               }}
@@ -116,7 +119,7 @@ export default function TextDiff() {
               rows={10}
               value={text2}
               onChange={(e) => setText2(e.target.value)}
-              placeholder="Изменённый текст..."
+              placeholder={isEn ? "Modified text..." : "Изменённый текст..."}
               sx={{
                 '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.85rem' }
               }}
@@ -129,17 +132,17 @@ export default function TextDiff() {
         <>
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             <Chip
-              label={`+${stats.added} добавлено`}
+              label={`+${stats.added} ${isEn ? 'added' : 'добавлено'}`}
               size="small"
               sx={{ bgcolor: alpha('#4caf50', 0.12), color: '#2e7d32', fontWeight: 600 }}
             />
             <Chip
-              label={`-${stats.removed} удалено`}
+              label={`-${stats.removed} ${isEn ? 'removed' : 'удалено'}`}
               size="small"
               sx={{ bgcolor: alpha('#f44336', 0.12), color: '#c62828', fontWeight: 600 }}
             />
             <Chip
-              label={`${stats.same} без изменений`}
+              label={`${stats.same} ${isEn ? 'unchanged' : 'без изменений'}`}
               size="small"
             />
           </Box>
@@ -198,7 +201,7 @@ export default function TextDiff() {
           sx={{ p: 3, textAlign: 'center', borderRadius: 3, bgcolor: alpha('#4caf50', 0.06) }}
         >
           <Typography color="success.main" fontWeight={600}>
-            Тексты идентичны!
+            {isEn ? 'Texts are identical!' : 'Тексты идентичны!'}
           </Typography>
         </Paper>
       )}

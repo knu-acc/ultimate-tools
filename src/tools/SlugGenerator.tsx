@@ -11,6 +11,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 const CYRILLIC_MAP: Record<string, string> = {
   'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
@@ -26,12 +27,6 @@ const CYRILLIC_MAP: Record<string, string> = {
 };
 
 type Separator = '-' | '_' | '.';
-
-const SEPARATORS: { value: Separator; label: string }[] = [
-  { value: '-', label: 'Дефис (-)' },
-  { value: '_', label: 'Нижнее подч. (_)' },
-  { value: '.', label: 'Точка (.)' },
-];
 
 function transliterate(text: string): string {
   return text
@@ -52,8 +47,16 @@ function generateSlug(text: string, separator: Separator): string {
 
 export default function SlugGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [separator, setSeparator] = useState<Separator>('-');
+
+  const separators: { value: Separator; label: string }[] = [
+    { value: '-', label: isEn ? 'Hyphen (-)' : 'Дефис (-)' },
+    { value: '_', label: isEn ? 'Underscore (_)' : 'Нижнее подч. (_)' },
+    { value: '.', label: isEn ? 'Dot (.)' : 'Точка (.)' },
+  ];
 
   const slug = useMemo(() => generateSlug(input, separator), [input, separator]);
 
@@ -73,7 +76,7 @@ export default function SlugGenerator() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Текст для генерации слага..."
+          placeholder={isEn ? 'Text to generate slug...' : 'Текст для генерации слага...'}
           multiline
           minRows={2}
           maxRows={4}
@@ -82,7 +85,7 @@ export default function SlugGenerator() {
 
         <Box sx={{ mb: 2 }}>
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-            {SEPARATORS.map((sep) => {
+            {separators.map((sep) => {
               const active = separator === sep.value;
               return (
                 <Chip
@@ -138,7 +141,7 @@ export default function SlugGenerator() {
             </>
           ) : (
             <Typography sx={{ color: 'text.disabled', fontStyle: 'italic' }}>
-              Слаг появится здесь автоматически
+              {isEn ? 'Slug will appear here automatically' : 'Слаг появится здесь автоматически'}
             </Typography>
           )}
         </Paper>
@@ -146,7 +149,7 @@ export default function SlugGenerator() {
         {slug && (
           <Box sx={{ display: 'flex', gap: 1.5, mb: 1, flexWrap: 'wrap' }}>
             <Chip
-              label={`${slug.length} символов`}
+              label={isEn ? `${slug.length} characters` : `${slug.length} символов`}
               size="small"
               variant="outlined"
               sx={{ fontWeight: 500, fontSize: '0.8rem' }}
@@ -175,7 +178,7 @@ export default function SlugGenerator() {
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1.5 }}>
-            Предпросмотр URL
+            {isEn ? 'URL Preview' : 'Предпросмотр URL'}
           </Typography>
           <Box
             sx={{
@@ -219,7 +222,7 @@ export default function SlugGenerator() {
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1 }}>
-            Транслитерация кириллицы
+            {isEn ? 'Cyrillic transliteration' : 'Транслитерация кириллицы'}
           </Typography>
           <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap' }}>
             {input

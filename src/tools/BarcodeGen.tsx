@@ -5,6 +5,7 @@ import {
   Box, Typography, Paper, Grid, Button, Chip, TextField, alpha, useTheme, Slider
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type BarcodeType = 'code128' | 'code39' | 'ean13' | 'ean8' | 'upca';
 
@@ -327,6 +328,8 @@ function drawBarcode(
 
 export default function BarcodeGen() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [text, setText] = useState('Hello123');
   const [barcodeType, setBarcodeType] = useState<BarcodeType>('code128');
@@ -336,25 +339,25 @@ export default function BarcodeGen() {
   const [error, setError] = useState('');
 
   const validateInput = useCallback((val: string, type: BarcodeType): string => {
-    if (!val.trim()) return 'Введите данные для кодирования';
+    if (!val.trim()) return isEn ? 'Enter data to encode' : 'Введите данные для кодирования';
     if (type === 'ean13') {
       const digits = val.replace(/\D/g, '');
-      if (digits.length < 12) return 'EAN-13 требует минимум 12 цифр';
+      if (digits.length < 12) return isEn ? 'EAN-13 requires at least 12 digits' : 'EAN-13 требует минимум 12 цифр';
     }
     if (type === 'ean8') {
       const digits = val.replace(/\D/g, '');
-      if (digits.length < 7) return 'EAN-8 требует минимум 7 цифр';
+      if (digits.length < 7) return isEn ? 'EAN-8 requires at least 7 digits' : 'EAN-8 требует минимум 7 цифр';
     }
     if (type === 'upca') {
       const digits = val.replace(/\D/g, '');
-      if (digits.length < 11) return 'UPC-A требует минимум 11 цифр';
+      if (digits.length < 11) return isEn ? 'UPC-A requires at least 11 digits' : 'UPC-A требует минимум 11 цифр';
     }
     if (type === 'code39') {
       const valid = /^[0-9A-Z\-. $/+%]+$/i.test(val);
-      if (!valid) return 'Code39 поддерживает: 0-9, A-Z, -, ., пробел, $, /, +, %';
+      if (!valid) return isEn ? 'Code39 supports: 0-9, A-Z, -, ., space, $, /, +, %' : 'Code39 поддерживает: 0-9, A-Z, -, ., пробел, $, /, +, %';
     }
     return '';
-  }, []);
+  }, [isEn]);
 
   const render = useCallback(() => {
     const canvas = canvasRef.current;
@@ -421,13 +424,13 @@ export default function BarcodeGen() {
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Данные
+            {isEn ? 'Data' : 'Данные'}
           </Typography>
           <TextField
             fullWidth
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Введите текст или число..."
+            placeholder={isEn ? 'Enter text or number...' : 'Введите текст или число...'}
             error={!!error}
             helperText={error || undefined}
             sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
@@ -435,7 +438,7 @@ export default function BarcodeGen() {
 
           {/* Barcode type */}
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Тип штрих-кода
+            {isEn ? 'Barcode type' : 'Тип штрих-кода'}
           </Typography>
           <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
             {typeOptions.map(opt => (
@@ -457,7 +460,7 @@ export default function BarcodeGen() {
 
           {/* Bar width */}
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Ширина линий: x{barWidth}
+            {isEn ? `Line width: x${barWidth}` : `Ширина линий: x${barWidth}`}
           </Typography>
           <Slider
             value={barWidth}
@@ -471,7 +474,7 @@ export default function BarcodeGen() {
 
           {/* Height */}
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Высота: {barcodeHeight}px
+            {isEn ? `Height: ${barcodeHeight}px` : `Высота: ${barcodeHeight}px`}
           </Typography>
           <Slider
             value={barcodeHeight}
@@ -485,7 +488,7 @@ export default function BarcodeGen() {
           {/* Show text toggle */}
           <Box sx={{ mb: 2 }}>
             <Chip
-              label={showText ? 'Текст под штрих-кодом: Вкл' : 'Текст под штрих-кодом: Выкл'}
+              label={isEn ? (showText ? 'Text below barcode: On' : 'Text below barcode: Off') : (showText ? 'Текст под штрих-кодом: Вкл' : 'Текст под штрих-кодом: Выкл')}
               onClick={() => setShowText(!showText)}
               sx={{
                 fontWeight: 600,
@@ -507,12 +510,12 @@ export default function BarcodeGen() {
             disabled={!!error}
             sx={{ borderRadius: 6, py: 1.2 }}
           >
-            Скачать PNG
+            {isEn ? 'Download PNG' : 'Скачать PNG'}
           </Button>
 
           {(barcodeType === 'ean13' || barcodeType === 'ean8' || barcodeType === 'upca') && !error && (
             <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-              Контрольная цифра рассчитывается автоматически
+              {isEn ? 'Check digit is calculated automatically' : 'Контрольная цифра рассчитывается автоматически'}
             </Typography>
           )}
         </Grid>
@@ -549,7 +552,7 @@ export default function BarcodeGen() {
               />
             </Box>
             <Typography variant="caption" color="text.secondary" sx={{ mt: 2 }}>
-              {typeOptions.find(t => t.value === barcodeType)?.label} | Множитель: x{barWidth} | Высота: {barcodeHeight}px
+              {typeOptions.find(t => t.value === barcodeType)?.label} | {isEn ? 'Multiplier' : 'Множитель'}: x{barWidth} | {isEn ? 'Height' : 'Высота'}: {barcodeHeight}px
             </Typography>
           </Paper>
         </Grid>

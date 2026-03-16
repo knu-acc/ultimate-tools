@@ -18,10 +18,11 @@ import CropIcon from '@mui/icons-material/Crop';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImageIcon from '@mui/icons-material/Image';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
-function formatFileSize(bytes: number): string {
-  if (bytes === 0) return '0 Б';
-  const units = ['Б', 'КБ', 'МБ', 'ГБ'];
+function formatFileSize(bytes: number, isEn: boolean = false): string {
+  if (bytes === 0) return isEn ? '0 B' : '0 Б';
+  const units = isEn ? ['B', 'KB', 'MB', 'GB'] : ['Б', 'КБ', 'МБ', 'ГБ'];
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${units[i]}`;
 }
@@ -35,6 +36,8 @@ interface CropRect {
 
 export default function ImageCrop() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [originalUrl, setOriginalUrl] = useState<string>('');
   const [croppedUrl, setCroppedUrl] = useState<string>('');
@@ -316,10 +319,10 @@ export default function ImageCrop() {
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
           <Typography variant="h6" sx={{ mb: 1 }}>
-            Перетащите изображение сюда
+            {isEn ? 'Drop an image here' : 'Перетащите изображение сюда'}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            или нажмите для выбора файла
+            {isEn ? 'or click to select a file' : 'или нажмите для выбора файла'}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
             <Chip label="JPEG" size="small" variant="outlined" />
@@ -334,7 +337,7 @@ export default function ImageCrop() {
           {/* Controls */}
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-              <CropIcon /> Параметры обрезки
+              <CropIcon /> {isEn ? 'Crop parameters' : 'Параметры обрезки'}
             </Typography>
 
             <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -364,7 +367,7 @@ export default function ImageCrop() {
                 <TextField
                   fullWidth
                   size="small"
-                  label="Ширина"
+                  label={isEn ? "Width" : "Ширина"}
                   type="number"
                   value={Math.round(cropRect.w) || ''}
                   onChange={(e) => handleCropInputChange('w', e.target.value)}
@@ -375,7 +378,7 @@ export default function ImageCrop() {
                 <TextField
                   fullWidth
                   size="small"
-                  label="Высота"
+                  label={isEn ? "Height" : "Высота"}
                   type="number"
                   value={Math.round(cropRect.h) || ''}
                   onChange={(e) => handleCropInputChange('h', e.target.value)}
@@ -385,7 +388,7 @@ export default function ImageCrop() {
             </Grid>
 
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              Нарисуйте область обрезки мышью на изображении или введите координаты вручную
+              {isEn ? 'Draw a crop area on the image with your mouse or enter coordinates manually' : 'Нарисуйте область обрезки мышью на изображении или введите координаты вручную'}
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
@@ -395,7 +398,7 @@ export default function ImageCrop() {
                 onClick={performCrop}
                 disabled={cropRect.w <= 0 || cropRect.h <= 0}
               >
-                Обрезать
+                {isEn ? 'Crop' : 'Обрезать'}
               </Button>
               <Button
                 variant="contained"
@@ -403,14 +406,14 @@ export default function ImageCrop() {
                 onClick={downloadCropped}
                 disabled={!croppedUrl}
               >
-                Скачать
+                {isEn ? 'Download' : 'Скачать'}
               </Button>
               <Button
                 variant="outlined"
                 startIcon={<RestartAltIcon />}
                 onClick={resetCrop}
               >
-                Сбросить
+                {isEn ? 'Reset' : 'Сбросить'}
               </Button>
               <Button variant="outlined" onClick={clearImage} color="error" sx={{ minWidth: 48 }}>
                 <DeleteIcon />
@@ -425,12 +428,12 @@ export default function ImageCrop() {
                 elevation={0}
                 sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
-                <Typography variant="caption" color="text.secondary">Оригинал</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Original' : 'Оригинал'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
                   {originalWidth} x {originalHeight}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {formatFileSize(originalFile.size)}
+                  {formatFileSize(originalFile.size, isEn)}
                 </Typography>
               </Paper>
             </Grid>
@@ -439,12 +442,12 @@ export default function ImageCrop() {
                 elevation={0}
                 sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
-                <Typography variant="caption" color="text.secondary">Область обрезки</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Crop area' : 'Область обрезки'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
                   {Math.round(cropRect.w)} x {Math.round(cropRect.h)}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  Позиция: {Math.round(cropRect.x)}, {Math.round(cropRect.y)}
+                  {isEn ? 'Position' : 'Позиция'}: {Math.round(cropRect.x)}, {Math.round(cropRect.y)}
                 </Typography>
               </Paper>
             </Grid>
@@ -458,12 +461,12 @@ export default function ImageCrop() {
                   background: croppedUrl ? alpha(theme.palette.success.main, 0.06) : undefined
                 }}
               >
-                <Typography variant="caption" color="text.secondary">Результат</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Result' : 'Результат'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: croppedUrl ? 'success.main' : 'text.disabled' }}>
-                  {croppedUrl ? formatFileSize(croppedSize) : '—'}
+                  {croppedUrl ? formatFileSize(croppedSize, isEn) : '—'}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {croppedUrl ? 'Готово к скачиванию' : 'Ожидание обрезки'}
+                  {croppedUrl ? (isEn ? 'Ready to download' : 'Готово к скачиванию') : (isEn ? 'Waiting for crop' : 'Ожидание обрезки')}
                 </Typography>
               </Paper>
             </Grid>
@@ -472,7 +475,7 @@ export default function ImageCrop() {
           {/* Crop Canvas */}
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-              <CropIcon /> Выберите область
+              <CropIcon /> {isEn ? 'Select area' : 'Выберите область'}
             </Typography>
             <Box
               ref={containerRef}
@@ -499,7 +502,7 @@ export default function ImageCrop() {
           {croppedUrl && (
             <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
               <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-                <ImageIcon /> Результат обрезки
+                <ImageIcon /> {isEn ? 'Crop result' : 'Результат обрезки'}
               </Typography>
               <Box
                 sx={{

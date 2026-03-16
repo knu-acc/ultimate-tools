@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { Casino } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function RandomNumber() {
   const theme = useTheme();
@@ -15,6 +16,8 @@ export default function RandomNumber() {
   const [results, setResults] = useState<number[]>([]);
   const [history, setHistory] = useState<number[][]>([]);
   const [unique, setUnique] = useState(false);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const generate = () => {
     const minNum = parseInt(min) || 0;
@@ -46,8 +49,8 @@ export default function RandomNumber() {
     { label: '1-100', min: '1', max: '100' },
     { label: '1-1000', min: '1', max: '1000' },
     { label: '0-1', min: '0', max: '1' },
-    { label: '1-6 (кубик)', min: '1', max: '6' },
-    { label: '1-52 (карты)', min: '1', max: '52' },
+    { label: isEn ? '1-6 (dice)' : '1-6 (кубик)', min: '1', max: '6' },
+    { label: isEn ? '1-52 (cards)' : '1-52 (карты)', min: '1', max: '52' },
   ];
 
   return (
@@ -61,7 +64,7 @@ export default function RandomNumber() {
                 type="number"
                 value={min}
                 onChange={(e) => setMin(e.target.value)}
-                placeholder="Минимум"
+                placeholder={isEn ? 'Minimum' : 'Минимум'}
               />
             </Grid>
             <Grid size={6}>
@@ -70,7 +73,7 @@ export default function RandomNumber() {
                 type="number"
                 value={max}
                 onChange={(e) => setMax(e.target.value)}
-                placeholder="Максимум"
+                placeholder={isEn ? 'Maximum' : 'Максимум'}
               />
             </Grid>
           </Grid>
@@ -80,13 +83,13 @@ export default function RandomNumber() {
             type="number"
             value={count}
             onChange={(e) => setCount(e.target.value)}
-            placeholder="Количество"
+            placeholder={isEn ? 'Count' : 'Количество'}
             inputProps={{ min: 1, max: 1000 }}
             sx={{ mt: 2, mb: 2 }}
           />
 
           <Chip
-            label={unique ? 'Уникальные числа' : 'С повторами'}
+            label={unique ? (isEn ? 'Unique numbers' : 'Уникальные числа') : (isEn ? 'With duplicates' : 'С повторами')}
             onClick={() => setUnique(!unique)}
             variant={unique ? 'filled' : 'outlined'}
             color={unique ? 'primary' : 'default'}
@@ -116,7 +119,7 @@ export default function RandomNumber() {
             onClick={generate}
             sx={{ borderRadius: 3, py: 1.2, textTransform: 'none', fontWeight: 600 }}
           >
-            Генерировать
+            {isEn ? 'Generate' : 'Генерировать'}
           </Button>
         </Grid>
 
@@ -162,15 +165,15 @@ export default function RandomNumber() {
                 >
                   <Grid container spacing={1}>
                     <Grid size={4}>
-                      <Typography variant="caption" color="text.secondary">Мин</Typography>
+                      <Typography variant="caption" color="text.secondary">{isEn ? 'Min' : 'Мин'}</Typography>
                       <Typography variant="body1" fontWeight={600}>{Math.min(...results)}</Typography>
                     </Grid>
                     <Grid size={4}>
-                      <Typography variant="caption" color="text.secondary">Макс</Typography>
+                      <Typography variant="caption" color="text.secondary">{isEn ? 'Max' : 'Макс'}</Typography>
                       <Typography variant="body1" fontWeight={600}>{Math.max(...results)}</Typography>
                     </Grid>
                     <Grid size={4}>
-                      <Typography variant="caption" color="text.secondary">Среднее</Typography>
+                      <Typography variant="caption" color="text.secondary">{isEn ? 'Average' : 'Среднее'}</Typography>
                       <Typography variant="body1" fontWeight={600}>
                         {(results.reduce((a, b) => a + b, 0) / results.length).toFixed(1)}
                       </Typography>
@@ -190,7 +193,7 @@ export default function RandomNumber() {
             >
               <Casino sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
-                Нажмите «Генерировать» для получения случайных чисел
+                {isEn ? 'Click "Generate" to get random numbers' : 'Нажмите «Генерировать» для получения случайных чисел'}
               </Typography>
             </Paper>
           )}
@@ -198,7 +201,7 @@ export default function RandomNumber() {
           {history.length > 1 && (
             <Box sx={{ mt: 3 }}>
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                История
+                {isEn ? 'History' : 'История'}
               </Typography>
               {history.slice(1, 6).map((nums, i) => (
                 <Typography key={i} variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace', mb: 0.5 }}>

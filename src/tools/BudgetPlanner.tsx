@@ -11,11 +11,12 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface IncomeSource { id: number; name: string; amount: string; }
 interface ExpenseCategory { id: number; name: string; amount: string; emoji: string; color: string; }
 
-const DEFAULT_EXPENSES: Array<Omit<ExpenseCategory, 'id'>> = [
+const DEFAULT_EXPENSES_RU: Array<Omit<ExpenseCategory, 'id'>> = [
   { name: 'Жильё',        emoji: '🏠', amount: '', color: '#1565c0' },
   { name: 'Еда',          emoji: '🍔', amount: '', color: '#2e7d32' },
   { name: 'Транспорт',    emoji: '🚗', amount: '', color: '#ef6c00' },
@@ -25,6 +26,16 @@ const DEFAULT_EXPENSES: Array<Omit<ExpenseCategory, 'id'>> = [
   { name: 'Прочее',       emoji: '📦', amount: '', color: '#546e7a' },
 ];
 
+const DEFAULT_EXPENSES_EN: Array<Omit<ExpenseCategory, 'id'>> = [
+  { name: 'Housing',        emoji: '🏠', amount: '', color: '#1565c0' },
+  { name: 'Food',           emoji: '🍔', amount: '', color: '#2e7d32' },
+  { name: 'Transport',      emoji: '🚗', amount: '', color: '#ef6c00' },
+  { name: 'Entertainment',  emoji: '🎮', amount: '', color: '#7b1fa2' },
+  { name: 'Health',         emoji: '💊', amount: '', color: '#c62828' },
+  { name: 'Clothing',       emoji: '👕', amount: '', color: '#00838f' },
+  { name: 'Other',          emoji: '📦', amount: '', color: '#546e7a' },
+];
+
 const EXTRA_COLORS = ['#ad1457', '#4527a0', '#1b5e20', '#4a148c', '#006064'];
 
 let nextId = 100;
@@ -32,24 +43,28 @@ let nextId = 100;
 export default function BudgetPlanner() {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
 
+  const DEFAULT_EXPENSES = isEn ? DEFAULT_EXPENSES_EN : DEFAULT_EXPENSES_RU;
+
   const [incomes, setIncomes] = useState<IncomeSource[]>([
-    { id: 1, name: 'Зарплата', amount: '' },
+    { id: 1, name: isEn ? 'Salary' : 'Зарплата', amount: '' },
   ]);
   const [expenses, setExpenses] = useState<ExpenseCategory[]>(
     DEFAULT_EXPENSES.map((e, i) => ({ ...e, id: i + 10 }))
   );
 
-  const addIncome = () => setIncomes(p => [...p, { id: nextId++, name: 'Источник', amount: '' }]);
+  const addIncome = () => setIncomes(p => [...p, { id: nextId++, name: isEn ? 'Source' : 'Источник', amount: '' }]);
   const removeIncome = (id: number) => setIncomes(p => p.filter(i => i.id !== id));
   const updateIncome = (id: number, field: 'name' | 'amount', value: string) =>
     setIncomes(p => p.map(i => i.id === id ? { ...i, [field]: value } : i));
 
   const addExpense = () => {
     const color = EXTRA_COLORS[expenses.length % EXTRA_COLORS.length];
-    setExpenses(p => [...p, { id: nextId++, name: 'Категория', emoji: '📌', amount: '', color }]);
+    setExpenses(p => [...p, { id: nextId++, name: isEn ? 'Category' : 'Категория', emoji: '📌', amount: '', color }]);
   };
   const removeExpense = (id: number) => setExpenses(p => p.filter(e => e.id !== id));
   const updateExpense = (id: number, field: 'name' | 'amount', value: string) =>
@@ -73,19 +88,19 @@ export default function BudgetPlanner() {
     return { totalIncome, totalExpenses, balance, savingsRate, breakdown, hasData: totalIncome > 0 || totalExpenses > 0 };
   }, [incomes, expenses]);
 
-  const fmt = (n: number) => n.toLocaleString('ru-RU', { maximumFractionDigits: 0 });
+  const fmt = (n: number) => n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 0 });
 
   const summaryCards = [
-    { label: 'Доходы', value: results.totalIncome, icon: <TrendingUpIcon />, color: '#2e7d32' },
-    { label: 'Расходы', value: results.totalExpenses, icon: <TrendingDownIcon />, color: '#c62828' },
-    { label: 'Баланс', value: results.balance, icon: <AccountBalanceWalletIcon />, color: results.balance >= 0 ? '#1565c0' : '#c62828' },
+    { label: isEn ? 'Income' : 'Доходы', value: results.totalIncome, icon: <TrendingUpIcon />, color: '#2e7d32' },
+    { label: isEn ? 'Expenses' : 'Расходы', value: results.totalExpenses, icon: <TrendingDownIcon />, color: '#c62828' },
+    { label: isEn ? 'Balance' : 'Баланс', value: results.balance, icon: <AccountBalanceWalletIcon />, color: results.balance >= 0 ? '#1565c0' : '#c62828' },
   ];
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Header with currency */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h6" fontWeight={600}>Планировщик бюджета</Typography>
+        <Typography variant="h6" fontWeight={600}>{isEn ? 'Budget Planner' : 'Планировщик бюджета'}</Typography>
         <CurrencySelector value={currency} onChange={setCurrency} />
       </Box>
 
@@ -112,7 +127,7 @@ export default function BudgetPlanner() {
                 fontWeight={700}
                 sx={{ color: card.color, fontFamily: 'monospace', fontSize: { xs: '0.8rem', sm: '0.875rem' } }}
               >
-                {card.value < 0 ? '-' : card.value > 0 && card.label === 'Баланс' ? '+' : ''}
+                {card.value < 0 ? '-' : card.value > 0 && (card.label === 'Баланс' || card.label === 'Balance') ? '+' : ''}
                 {fmt(Math.abs(card.value))} {sym}
               </Typography>
             </Paper>
@@ -125,7 +140,7 @@ export default function BudgetPlanner() {
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box sx={{ fontSize: '1.1rem' }}>💰</Box>
-            <Typography variant="subtitle2" fontWeight={600}>Доходы</Typography>
+            <Typography variant="subtitle2" fontWeight={600}>{isEn ? 'Income' : 'Доходы'}</Typography>
             {results.totalIncome > 0 && (
               <Chip label={`${fmt(results.totalIncome)} ${sym}`} size="small"
                 sx={{ bgcolor: alpha('#2e7d32', 0.1), color: '#2e7d32', fontWeight: 600 }} />
@@ -133,7 +148,7 @@ export default function BudgetPlanner() {
           </Box>
           <Button size="small" startIcon={<AddIcon />} onClick={addIncome} variant="outlined"
             sx={{ borderRadius: 6, textTransform: 'none' }}>
-            Добавить
+            {isEn ? 'Add' : 'Добавить'}
           </Button>
         </Box>
 
@@ -186,7 +201,7 @@ export default function BudgetPlanner() {
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box sx={{ fontSize: '1.1rem' }}>💸</Box>
-            <Typography variant="subtitle2" fontWeight={600}>Расходы</Typography>
+            <Typography variant="subtitle2" fontWeight={600}>{isEn ? 'Expenses' : 'Расходы'}</Typography>
             {results.totalExpenses > 0 && (
               <Chip label={`${fmt(results.totalExpenses)} ${sym}`} size="small"
                 sx={{ bgcolor: alpha('#c62828', 0.1), color: '#c62828', fontWeight: 600 }} />
@@ -194,7 +209,7 @@ export default function BudgetPlanner() {
           </Box>
           <Button size="small" startIcon={<AddIcon />} onClick={addExpense} variant="outlined"
             sx={{ borderRadius: 6, textTransform: 'none' }}>
-            Категория
+            {isEn ? 'Category' : 'Категория'}
           </Button>
         </Box>
 
@@ -267,7 +282,7 @@ export default function BudgetPlanner() {
           {results.breakdown.length > 0 && (
             <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 1.5 }}>
-                Распределение расходов
+                {isEn ? 'Expense Distribution' : 'Распределение расходов'}
               </Typography>
               <Box sx={{ display: 'flex', height: 20, borderRadius: 10, overflow: 'hidden', mb: 2 }}>
                 {results.breakdown.map(item => (
@@ -300,7 +315,7 @@ export default function BudgetPlanner() {
           {results.totalIncome > 0 && (
             <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-                <Typography variant="subtitle2" fontWeight={600}>Норма сбережений</Typography>
+                <Typography variant="subtitle2" fontWeight={600}>{isEn ? 'Savings Rate' : 'Норма сбережений'}</Typography>
                 <Chip
                   label={`${results.savingsRate.toFixed(1)}%`}
                   size="small"
@@ -320,7 +335,7 @@ export default function BudgetPlanner() {
                 }} />
               </Box>
               <Typography variant="caption" color="text.secondary" sx={{ mt: 0.75, display: 'block' }}>
-                Рекомендуется откладывать 20%+ от дохода
+                {isEn ? 'It is recommended to save 20%+ of income' : 'Рекомендуется откладывать 20%+ от дохода'}
               </Typography>
             </Paper>
           )}
@@ -328,15 +343,15 @@ export default function BudgetPlanner() {
           {/* 50/30/20 rule */}
           {results.totalIncome > 0 && (
             <Paper elevation={0} sx={{ p: { xs: 2, sm: 2.5 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transition: 'background-color 0.2s ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
-              <Typography variant="subtitle2" fontWeight={600} gutterBottom>Правило 50/30/20</Typography>
+              <Typography variant="subtitle2" fontWeight={600} gutterBottom>{isEn ? '50/30/20 Rule' : 'Правило 50/30/20'}</Typography>
               <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
-                Рекомендуемое распределение от вашего дохода {fmt(results.totalIncome)} {sym}
+                {isEn ? `Recommended allocation of your income ${fmt(results.totalIncome)} ${sym}` : `Рекомендуемое распределение от вашего дохода ${fmt(results.totalIncome)} ${sym}`}
               </Typography>
               <Grid container spacing={1.5}>
                 {[
-                  { label: 'Необходимое', pct: 50, amount: results.totalIncome * 0.5, color: '#1565c0', desc: 'Жильё, еда, транспорт' },
-                  { label: 'Желания', pct: 30, amount: results.totalIncome * 0.3, color: '#ef6c00', desc: 'Хобби, рестораны' },
-                  { label: 'Сбережения', pct: 20, amount: results.totalIncome * 0.2, color: '#2e7d32', desc: 'Накопления, инвестиции' },
+                  { label: isEn ? 'Needs' : 'Необходимое', pct: 50, amount: results.totalIncome * 0.5, color: '#1565c0', desc: isEn ? 'Housing, food, transport' : 'Жильё, еда, транспорт' },
+                  { label: isEn ? 'Wants' : 'Желания', pct: 30, amount: results.totalIncome * 0.3, color: '#ef6c00', desc: isEn ? 'Hobbies, restaurants' : 'Хобби, рестораны' },
+                  { label: isEn ? 'Savings' : 'Сбережения', pct: 20, amount: results.totalIncome * 0.2, color: '#2e7d32', desc: isEn ? 'Savings, investments' : 'Накопления, инвестиции' },
                 ].map(rule => (
                   <Grid key={rule.label} size={{ xs: 12, sm: 4 }}>
                     <Box sx={{

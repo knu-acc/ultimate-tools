@@ -14,6 +14,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 // Compact MD5 implementation (Web Crypto API does not support MD5)
 function md5(input: string): string {
@@ -164,6 +165,8 @@ interface HashResult {
 
 export default function HashGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [hashes, setHashes] = useState<HashResult[]>([]);
   const [uppercase, setUppercase] = useState(false);
@@ -229,7 +232,7 @@ export default function HashGenerator() {
           value={input}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="Текст для хеширования..."
+          placeholder={isEn ? "Text to hash..." : "Текст для хеширования..."}
           sx={{
             mb: 2,
             '& .MuiInputBase-root': { fontFamily: 'monospace', fontSize: '0.875rem' }
@@ -243,7 +246,7 @@ export default function HashGenerator() {
             disabled={!input.trim() || loading}
             sx={{ px: 3, borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
           >
-            {loading ? 'Генерация...' : 'Сгенерировать хеши'}
+            {loading ? (isEn ? 'Generating...' : 'Генерация...') : (isEn ? 'Generate hashes' : 'Сгенерировать хеши')}
           </Button>
           <FormControlLabel
             control={
@@ -255,7 +258,7 @@ export default function HashGenerator() {
             }
             label={
               <Typography variant="body2" color="text.secondary">
-                Верхний регистр
+                {isEn ? 'Uppercase' : 'Верхний регистр'}
               </Typography>
             }
           />
@@ -293,7 +296,7 @@ export default function HashGenerator() {
                           fontWeight: 500
                         }}
                       >
-                        {hash.bits} бит
+                        {hash.bits} {isEn ? 'bit' : 'бит'}
                       </Typography>
                     </Box>
                     <CopyButton text={formatHash(hash.value)} />

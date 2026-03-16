@@ -13,6 +13,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type AreaUnit =
   | 'squareMeters'
@@ -26,7 +27,7 @@ type AreaUnit =
   | 'squareInches'
   | 'sotka';
 
-const unitLabels: Record<AreaUnit, string> = {
+const unitLabelsRu: Record<AreaUnit, string> = {
   squareMeters: 'Квадратные метры',
   squareKilometers: 'Квадратные километры',
   squareFeet: 'Квадратные футы',
@@ -39,7 +40,20 @@ const unitLabels: Record<AreaUnit, string> = {
   sotka: 'Сотки'
 };
 
-const unitShort: Record<AreaUnit, string> = {
+const unitLabelsEn: Record<AreaUnit, string> = {
+  squareMeters: 'Square meters',
+  squareKilometers: 'Square kilometers',
+  squareFeet: 'Square feet',
+  squareYards: 'Square yards',
+  acres: 'Acres',
+  hectares: 'Hectares',
+  squareMiles: 'Square miles',
+  squareCentimeters: 'Square centimeters',
+  squareInches: 'Square inches',
+  sotka: 'Sotka (100 m²)'
+};
+
+const unitShortRu: Record<AreaUnit, string> = {
   squareMeters: 'м²',
   squareKilometers: 'км²',
   squareFeet: 'ft²',
@@ -50,6 +64,19 @@ const unitShort: Record<AreaUnit, string> = {
   squareCentimeters: 'см²',
   squareInches: 'in²',
   sotka: 'сот.'
+};
+
+const unitShortEn: Record<AreaUnit, string> = {
+  squareMeters: 'm²',
+  squareKilometers: 'km²',
+  squareFeet: 'ft²',
+  squareYards: 'yd²',
+  acres: 'ac',
+  hectares: 'ha',
+  squareMiles: 'mi²',
+  squareCentimeters: 'cm²',
+  squareInches: 'in²',
+  sotka: 'sotka'
 };
 
 const toSquareMeters: Record<AreaUnit, number> = {
@@ -83,7 +110,7 @@ function formatNumber(n: number): string {
   return parseFloat(n.toFixed(8)).toString();
 }
 
-const commonConversions = [
+const commonConversionsRu = [
   { from: '1 га', to: '10 000 м²' },
   { from: '1 сотка', to: '100 м²' },
   { from: '1 км²', to: '100 га' },
@@ -94,8 +121,24 @@ const commonConversions = [
   { from: '1 га', to: '2.471 акра' },
 ];
 
+const commonConversionsEn = [
+  { from: '1 ha', to: '10,000 m²' },
+  { from: '1 sotka', to: '100 m²' },
+  { from: '1 km²', to: '100 ha' },
+  { from: '1 acre', to: '4,047 m²' },
+  { from: '1 mi²', to: '2.59 km²' },
+  { from: '1 m²', to: '10.76 ft²' },
+  { from: '1 yd²', to: '0.8361 m²' },
+  { from: '1 ha', to: '2.471 acres' },
+];
+
 export default function AreaConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const unitLabels = isEn ? unitLabelsEn : unitLabelsRu;
+  const unitShort = isEn ? unitShortEn : unitShortRu;
+  const commonConversions = isEn ? commonConversionsEn : commonConversionsRu;
   const [input, setInput] = useState('1');
   const [sourceUnit, setSourceUnit] = useState<AreaUnit>('squareMeters');
 
@@ -198,7 +241,7 @@ export default function AreaConverter() {
 
       <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Справочник
+          {isEn ? 'Reference' : 'Справочник'}
         </Typography>
         <Grid container spacing={1.5}>
           {commonConversions.map((item, idx) => (

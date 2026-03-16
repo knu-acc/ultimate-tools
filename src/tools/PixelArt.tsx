@@ -15,6 +15,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 import EditIcon from '@mui/icons-material/Edit';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import FormatColorFillIcon from '@mui/icons-material/FormatColorFill';
@@ -42,6 +43,8 @@ function createEmptyGrid(size: number): string[][] {
 
 export default function PixelArt() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [gridSize, setGridSize] = useState<GridSize>(16);
   const [grid, setGrid] = useState<string[][]>(() => createEmptyGrid(16));
@@ -245,7 +248,7 @@ export default function PixelArt() {
             sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-              Инструменты
+              {isEn ? 'Tools' : 'Инструменты'}
             </Typography>
             <ToggleButtonGroup
               value={tool}
@@ -256,29 +259,29 @@ export default function PixelArt() {
               sx={{ mb: 2 }}
             >
               <ToggleButton value="draw">
-                <Tooltip title="Рисовать">
+                <Tooltip title={isEn ? 'Draw' : 'Рисовать'}>
                   <EditIcon />
                 </Tooltip>
               </ToggleButton>
               <ToggleButton value="erase">
-                <Tooltip title="Стереть">
+                <Tooltip title={isEn ? 'Erase' : 'Стереть'}>
                   <AutoFixHighIcon />
                 </Tooltip>
               </ToggleButton>
               <ToggleButton value="fill">
-                <Tooltip title="Заливка">
+                <Tooltip title={isEn ? 'Fill' : 'Заливка'}>
                   <FormatColorFillIcon />
                 </Tooltip>
               </ToggleButton>
               <ToggleButton value="pick">
-                <Tooltip title="Пипетка">
+                <Tooltip title={isEn ? 'Eyedropper' : 'Пипетка'}>
                   <ColorizeIcon />
                 </Tooltip>
               </ToggleButton>
             </ToggleButtonGroup>
 
             <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
-              Цвет
+              {isEn ? 'Color' : 'Цвет'}
             </Typography>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
               <Box
@@ -324,7 +327,7 @@ export default function PixelArt() {
             </Box>
 
             <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
-              Размер сетки
+              {isEn ? 'Grid size' : 'Размер сетки'}
             </Typography>
             <ToggleButtonGroup
               value={gridSize}
@@ -348,7 +351,7 @@ export default function PixelArt() {
                 onClick={() => setShowGrid((v) => !v)}
                 fullWidth
               >
-                {showGrid ? 'Скрыть сетку' : 'Показать сетку'}
+                {showGrid ? (isEn ? 'Hide grid' : 'Скрыть сетку') : (isEn ? 'Show grid' : 'Показать сетку')}
               </Button>
               <Button
                 variant="outlined"
@@ -357,7 +360,7 @@ export default function PixelArt() {
                 disabled={history.length === 0}
                 fullWidth
               >
-                Отменить ({history.length})
+                {isEn ? 'Undo' : 'Отменить'} ({history.length})
               </Button>
               <Button
                 variant="outlined"
@@ -366,7 +369,7 @@ export default function PixelArt() {
                 onClick={handleClear}
                 fullWidth
               >
-                Очистить
+                {isEn ? 'Clear' : 'Очистить'}
               </Button>
               <Button
                 variant="contained"
@@ -374,7 +377,7 @@ export default function PixelArt() {
                 onClick={handleDownload}
                 fullWidth
               >
-                Скачать PNG
+                {isEn ? 'Download PNG' : 'Скачать PNG'}
               </Button>
             </Box>
           </Paper>

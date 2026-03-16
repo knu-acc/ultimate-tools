@@ -22,9 +22,12 @@ import {
   alpha
 } from '@mui/material';
 import CurrencySelector, { getCurrency } from '@/src/components/CurrencySelector';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function LoanCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const [currency, setCurrency] = useState('RUB');
   const sym = getCurrency(currency).symbol;
@@ -92,7 +95,7 @@ export default function LoanCalc() {
   }, [amount, rate, term, termUnit]);
 
   const fmt = (n: number) =>
-    n.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const handleReset = () => {
     setAmount('');
@@ -139,11 +142,11 @@ export default function LoanCalc() {
           <Grid size={{ xs: 12 }}>
             <TextField
               fullWidth
-              label={`Сумма займа (${sym})`}
+              label={isEn ? `Loan amount (${sym})` : `Сумма займа (${sym})`}
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="Например: 500000"
+              placeholder={isEn ? "e.g.: 500000" : "Например: 500000"}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -159,11 +162,11 @@ export default function LoanCalc() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              label="Процентная ставка (годовая)"
+              label={isEn ? "Interest rate (annual)" : "Процентная ставка (годовая)"}
               type="number"
               value={rate}
               onChange={(e) => setRate(e.target.value)}
-              placeholder="Например: 15"
+              placeholder={isEn ? "e.g.: 15" : "Например: 15"}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -180,11 +183,11 @@ export default function LoanCalc() {
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
               <TextField
                 fullWidth
-                label={termUnit === 'years' ? 'Срок (лет)' : 'Срок (месяцев)'}
+                label={termUnit === 'years' ? (isEn ? 'Term (years)' : 'Срок (лет)') : (isEn ? 'Term (months)' : 'Срок (месяцев)')}
                 type="number"
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
-                placeholder={termUnit === 'years' ? 'Например: 3' : 'Например: 36'}
+                placeholder={termUnit === 'years' ? (isEn ? 'e.g.: 3' : 'Например: 3') : (isEn ? 'e.g.: 36' : 'Например: 36')}
               />
               <ToggleButtonGroup
                 value={termUnit}
@@ -194,10 +197,10 @@ export default function LoanCalc() {
                 sx={{ mt: 0.5, flexShrink: 0 }}
               >
                 <ToggleButton value="years" sx={{ textTransform: 'none', px: 1.5 }}>
-                  Лет
+                  {isEn ? 'Years' : 'Лет'}
                 </ToggleButton>
                 <ToggleButton value="months" sx={{ textTransform: 'none', px: 1.5 }}>
-                  Мес
+                  {isEn ? 'Mo' : 'Мес'}
                 </ToggleButton>
               </ToggleButtonGroup>
             </Box>
@@ -210,7 +213,7 @@ export default function LoanCalc() {
               size="small"
               sx={{ textTransform: 'none' }}
             >
-              Сбросить
+              {isEn ? 'Reset' : 'Сбросить'}
             </Button>
           </Grid>
         </Grid>
@@ -220,29 +223,29 @@ export default function LoanCalc() {
             <Divider sx={{ my: 2 }} />
 
             <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Результаты расчёта
+              {isEn ? 'Calculation results' : 'Результаты расчёта'}
             </Typography>
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Ежемесячный платёж"
+                  label={isEn ? "Monthly payment" : "Ежемесячный платёж"}
                   value={`${fmt(results.monthlyPayment)} ${sym}`}
                   color={theme.palette.primary.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Общая сумма выплат"
+                  label={isEn ? "Total payments" : "Общая сумма выплат"}
                   value={`${fmt(results.totalPayment)} ${sym}`}
-                  color="#1565c0"
+                  color={theme.palette.info.main}
                 />
               </Grid>
               <Grid size={{ xs: 12, sm: 4 }}>
                 <StatCard
-                  label="Переплата (проценты)"
+                  label={isEn ? 'Overpayment (interest)' : 'Переплата (проценты)'}
                   value={`${fmt(results.totalInterest)} ${sym}`}
-                  color="#c62828"
+                  color={theme.palette.error.main}
                 />
               </Grid>
             </Grid>
@@ -282,7 +285,7 @@ export default function LoanCalc() {
                 component={Paper}
                 elevation={0}
                 sx={{
-                  borderRadius: 3,
+                  borderRadius: theme.shape?.medium ?? 12,
                   maxHeight: 400
                 }}
               >
@@ -311,10 +314,10 @@ export default function LoanCalc() {
                       <TableRow key={row.month} hover>
                         <TableCell>{row.month}</TableCell>
                         <TableCell align="right">{fmt(row.payment)}</TableCell>
-                        <TableCell align="right" sx={{ color: '#2e7d32' }}>
+                        <TableCell align="right" sx={{ color: theme.palette.success.main }}>
                           {fmt(row.principalPart)}
                         </TableCell>
-                        <TableCell align="right" sx={{ color: '#c62828' }}>
+                        <TableCell align="right" sx={{ color: theme.palette.error.main }}>
                           {fmt(row.interestPart)}
                         </TableCell>
                         <TableCell align="right">{fmt(row.balance)}</TableCell>

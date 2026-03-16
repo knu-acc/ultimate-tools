@@ -10,6 +10,7 @@ import {
   ContentCopy, DeleteSweep, CheckCircle, AutoFixHigh,
   RestartAlt, FormatClear,
 } from '@mui/icons-material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 // ============================================================
 // Операции форматирования
@@ -18,7 +19,9 @@ import {
 interface Operation {
   id: string;
   label: string;
+  labelEn: string;
   description: string;
+  descriptionEn: string;
   fn: (text: string) => string;
 }
 
@@ -26,25 +29,33 @@ const operations: Operation[] = [
   {
     id: 'trim-lines',
     label: 'Убрать пробелы по краям строк',
+    labelEn: 'Trim line whitespace',
     description: 'Удаляет начальные и конечные пробелы в каждой строке',
+    descriptionEn: 'Removes leading and trailing spaces from each line',
     fn: (text) => text.split('\n').map(l => l.trim()).join('\n'),
   },
   {
     id: 'remove-extra-spaces',
     label: 'Убрать лишние пробелы',
+    labelEn: 'Remove extra spaces',
     description: 'Сжимает несколько пробелов подряд в один',
+    descriptionEn: 'Compresses multiple consecutive spaces into one',
     fn: (text) => text.replace(/[ \t]+/g, ' '),
   },
   {
     id: 'remove-empty-lines',
     label: 'Удалить пустые строки',
+    labelEn: 'Remove empty lines',
     description: 'Убирает строки, содержащие только пробелы или полностью пустые',
+    descriptionEn: 'Removes lines that are empty or contain only whitespace',
     fn: (text) => text.split('\n').filter(l => l.trim().length > 0).join('\n'),
   },
   {
     id: 'remove-duplicate-lines',
     label: 'Удалить дубликаты строк',
+    labelEn: 'Remove duplicate lines',
     description: 'Оставляет только уникальные строки (первые вхождения)',
+    descriptionEn: 'Keeps only unique lines (first occurrences)',
     fn: (text) => {
       const seen = new Set<string>();
       return text.split('\n').filter(l => {
@@ -58,97 +69,129 @@ const operations: Operation[] = [
   {
     id: 'tabs-to-spaces',
     label: 'Табы → пробелы',
+    labelEn: 'Tabs → spaces',
     description: 'Заменяет символы табуляции на пробелы (2 пробела)',
+    descriptionEn: 'Replaces tab characters with spaces (2 spaces)',
     fn: (text) => text.replace(/\t/g, '  '),
   },
   {
     id: 'spaces-to-tabs',
     label: 'Пробелы → табы',
+    labelEn: 'Spaces → tabs',
     description: 'Заменяет двойные пробелы на символы табуляции',
+    descriptionEn: 'Replaces double spaces with tab characters',
     fn: (text) => text.replace(/  /g, '\t'),
   },
   {
     id: 'join-lines',
     label: 'Объединить в одну строку',
+    labelEn: 'Join into one line',
     description: 'Удаляет все переносы строк — текст становится одной строкой',
+    descriptionEn: 'Removes all line breaks — text becomes one line',
     fn: (text) => text.replace(/\n+/g, ' ').trim(),
   },
   {
     id: 'one-sentence-per-line',
     label: 'Каждое предложение на новой строке',
+    labelEn: 'One sentence per line',
     description: 'Разбивает текст по предложениям (. ! ?)',
+    descriptionEn: 'Splits text by sentences (. ! ?)',
     fn: (text) => text.replace(/([.!?])\s+/g, '$1\n').trim(),
   },
   {
     id: 'remove-punctuation',
     label: 'Удалить знаки пунктуации',
+    labelEn: 'Remove punctuation',
     description: 'Убирает точки, запятые, тире и прочие знаки',
+    descriptionEn: 'Removes periods, commas, dashes and other marks',
     fn: (text) => text.replace(/[.,!?;:'"()\-–—[\]{}/\\|@#$%^&*+=~`<>]/g, ''),
   },
   {
     id: 'remove-numbers',
     label: 'Удалить цифры',
+    labelEn: 'Remove digits',
     description: 'Удаляет все цифры из текста',
+    descriptionEn: 'Removes all digits from text',
     fn: (text) => text.replace(/\d/g, ''),
   },
   {
     id: 'remove-special-chars',
     label: 'Удалить спецсимволы',
+    labelEn: 'Remove special chars',
     description: 'Оставляет только буквы, цифры и пробелы',
+    descriptionEn: 'Keeps only letters, digits and spaces',
     fn: (text) => text.replace(/[^a-zA-Zа-яёА-ЯЁ0-9\s\n]/g, ''),
   },
   {
     id: 'normalize-unicode',
     label: 'Нормализовать Unicode (NFKC)',
+    labelEn: 'Normalize Unicode (NFKC)',
     description: 'Приводит Unicode-символы к нормальной форме',
+    descriptionEn: 'Normalizes Unicode characters to canonical form',
     fn: (text) => text.normalize('NFKC'),
   },
   {
     id: 'lowercase',
     label: 'Строчные буквы',
+    labelEn: 'Lowercase',
     description: 'Преобразует весь текст в нижний регистр',
+    descriptionEn: 'Converts all text to lowercase',
     fn: (text) => text.toLowerCase(),
   },
   {
     id: 'uppercase',
     label: 'ЗАГЛАВНЫЕ БУКВЫ',
+    labelEn: 'UPPERCASE',
     description: 'Преобразует весь текст в верхний регистр',
+    descriptionEn: 'Converts all text to uppercase',
     fn: (text) => text.toUpperCase(),
   },
   {
     id: 'capitalize',
     label: 'Первая буква заглавная',
+    labelEn: 'Capitalize first letter',
     description: 'Делает заглавной первую букву каждого предложения',
+    descriptionEn: 'Capitalizes the first letter of each sentence',
     fn: (text) => text.replace(/(^|[.!?]\s+)([a-zа-яё])/g, (_, sep, ch) => sep + ch.toUpperCase()),
   },
   {
     id: 'add-line-numbers',
     label: 'Пронумеровать строки',
+    labelEn: 'Number lines',
     description: 'Добавляет порядковый номер в начало каждой строки',
+    descriptionEn: 'Adds a sequential number at the beginning of each line',
     fn: (text) => text.split('\n').map((l, i) => `${i + 1}. ${l}`).join('\n'),
   },
   {
     id: 'sort-lines-asc',
     label: 'Сортировать строки (А→Я)',
+    labelEn: 'Sort lines (A→Z)',
     description: 'Сортирует строки по алфавиту',
+    descriptionEn: 'Sorts lines alphabetically',
     fn: (text) => text.split('\n').sort((a, b) => a.localeCompare(b, 'ru')).join('\n'),
   },
   {
     id: 'sort-lines-desc',
     label: 'Сортировать строки (Я→А)',
+    labelEn: 'Sort lines (Z→A)',
     description: 'Сортирует строки по алфавиту в обратном порядке',
+    descriptionEn: 'Sorts lines alphabetically in reverse order',
     fn: (text) => text.split('\n').sort((a, b) => b.localeCompare(a, 'ru')).join('\n'),
   },
   {
     id: 'reverse-lines',
     label: 'Перевернуть порядок строк',
+    labelEn: 'Reverse line order',
     description: 'Меняет порядок строк на обратный',
+    descriptionEn: 'Reverses the order of lines',
     fn: (text) => text.split('\n').reverse().join('\n'),
   },
   {
     id: 'shuffle-lines',
     label: 'Перемешать строки',
+    labelEn: 'Shuffle lines',
     description: 'Случайно перемешивает строки текста',
+    descriptionEn: 'Randomly shuffles lines of text',
     fn: (text) => {
       const lines = text.split('\n');
       for (let i = lines.length - 1; i > 0; i--) {
@@ -164,18 +207,22 @@ const operations: Operation[] = [
 const operationGroups = [
   {
     label: 'Пробелы и переносы',
+    labelEn: 'Spaces & line breaks',
     ids: ['trim-lines', 'remove-extra-spaces', 'remove-empty-lines', 'tabs-to-spaces', 'spaces-to-tabs', 'join-lines', 'one-sentence-per-line'],
   },
   {
     label: 'Дубликаты и символы',
+    labelEn: 'Duplicates & characters',
     ids: ['remove-duplicate-lines', 'remove-punctuation', 'remove-numbers', 'remove-special-chars', 'normalize-unicode'],
   },
   {
     label: 'Регистр',
+    labelEn: 'Case',
     ids: ['lowercase', 'uppercase', 'capitalize'],
   },
   {
     label: 'Порядок строк',
+    labelEn: 'Line order',
     ids: ['add-line-numbers', 'sort-lines-asc', 'sort-lines-desc', 'reverse-lines', 'shuffle-lines'],
   },
 ];
@@ -184,22 +231,30 @@ const operationGroups = [
 const presets = [
   {
     label: 'Очистка текста',
+    labelEn: 'Clean text',
     description: 'Убрать лишние пробелы, пустые строки и пронормализовать',
+    descriptionEn: 'Remove extra spaces, empty lines and normalize',
     ops: ['trim-lines', 'remove-extra-spaces', 'remove-empty-lines', 'normalize-unicode'],
   },
   {
     label: 'Список строк',
+    labelEn: 'Line list',
     description: 'Убрать пустые строки, дубликаты, отсортировать',
+    descriptionEn: 'Remove empty lines, duplicates, sort',
     ops: ['trim-lines', 'remove-empty-lines', 'remove-duplicate-lines', 'sort-lines-asc'],
   },
   {
     label: 'Код / Данные',
+    labelEn: 'Code / Data',
     description: 'Нормализовать отступы, убрать пустые строки',
+    descriptionEn: 'Normalize indentation, remove empty lines',
     ops: ['trim-lines', 'tabs-to-spaces', 'remove-empty-lines'],
   },
   {
     label: 'Минимизировать',
+    labelEn: 'Minimize',
     description: 'Объединить всё в одну строку без лишних пробелов',
+    descriptionEn: 'Join everything into one line without extra spaces',
     ops: ['trim-lines', 'remove-extra-spaces', 'join-lines'],
   },
 ];
@@ -210,6 +265,8 @@ const presets = [
 
 export default function TextFormatterTool() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [selectedOps, setSelectedOps] = useState<string[]>([
@@ -275,13 +332,13 @@ export default function TextFormatterTool() {
       {/* Пресеты */}
       <Box sx={{ mb: 2 }}>
         <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block', fontWeight: 500 }}>
-          Быстрые пресеты:
+          {isEn ? 'Quick presets:' : 'Быстрые пресеты:'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {presets.map(preset => (
-            <Tooltip key={preset.label} title={preset.description}>
+            <Tooltip key={preset.label} title={isEn ? preset.descriptionEn : preset.description}>
               <Chip
-                label={preset.label}
+                label={isEn ? preset.labelEn : preset.label}
                 onClick={() => handlePreset(preset.ops)}
                 variant="outlined"
                 sx={{ cursor: 'pointer' }}
@@ -295,16 +352,16 @@ export default function TextFormatterTool() {
         {/* Левая: ввод */}
         <Grid size={{ xs: 12, md: 6 }}>
           <Box sx={{ mb: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="body2" fontWeight={500}>Исходный текст</Typography>
+            <Typography variant="body2" fontWeight={500}>{isEn ? 'Source text' : 'Исходный текст'}</Typography>
             <Typography variant="caption" color="text.secondary">
-              {inputStats.lines} стр · {inputStats.words} сл · {inputStats.chars} симв
+              {isEn ? `${inputStats.lines} lines · ${inputStats.words} words · ${inputStats.chars} chars` : `${inputStats.lines} стр · ${inputStats.words} сл · ${inputStats.chars} симв`}
             </Typography>
           </Box>
           <TextField
             multiline
             rows={12}
             fullWidth
-            placeholder="Вставьте текст для обработки..."
+            placeholder={isEn ? "Paste text to process..." : "Вставьте текст для обработки..."}
             value={input}
             onChange={e => handleInputChange(e.target.value)}
             sx={{
@@ -316,16 +373,16 @@ export default function TextFormatterTool() {
         {/* Правая: вывод */}
         <Grid size={{ xs: 12, md: 6 }}>
           <Box sx={{ mb: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="body2" fontWeight={500}>Результат</Typography>
+            <Typography variant="body2" fontWeight={500}>{isEn ? 'Result' : 'Результат'}</Typography>
             <Typography variant="caption" color="text.secondary">
-              {output ? `${outputStats.lines} стр · ${outputStats.words} сл · ${outputStats.chars} симв` : '—'}
+              {output ? (isEn ? `${outputStats.lines} lines · ${outputStats.words} words · ${outputStats.chars} chars` : `${outputStats.lines} стр · ${outputStats.words} сл · ${outputStats.chars} симв`) : '—'}
             </Typography>
           </Box>
           <TextField
             multiline
             rows={12}
             fullWidth
-            placeholder="Результат появится здесь..."
+            placeholder={isEn ? "Result will appear here..." : "Результат появится здесь..."}
             value={output}
             slotProps={{ input: { readOnly: true } }}
             sx={{
@@ -341,7 +398,7 @@ export default function TextFormatterTool() {
           {inputStats.chars !== outputStats.chars && (
             <Chip
               size="small"
-              label={`Символов: ${inputStats.chars} → ${outputStats.chars} (${outputStats.chars - inputStats.chars > 0 ? '+' : ''}${outputStats.chars - inputStats.chars})`}
+              label={`${isEn ? 'Chars' : 'Символов'}: ${inputStats.chars} → ${outputStats.chars} (${outputStats.chars - inputStats.chars > 0 ? '+' : ''}${outputStats.chars - inputStats.chars})`}
               color={outputStats.chars < inputStats.chars ? 'success' : 'default'}
               variant="outlined"
             />
@@ -349,7 +406,7 @@ export default function TextFormatterTool() {
           {inputStats.lines !== outputStats.lines && (
             <Chip
               size="small"
-              label={`Строк: ${inputStats.lines} → ${outputStats.lines}`}
+              label={`${isEn ? 'Lines' : 'Строк'}: ${inputStats.lines} → ${outputStats.lines}`}
               color={outputStats.lines < inputStats.lines ? 'success' : 'default'}
               variant="outlined"
             />
@@ -395,7 +452,7 @@ export default function TextFormatterTool() {
               onChange={e => setLivePreview(e.target.checked)}
             />
           }
-          label={<Typography variant="caption">Авто-превью</Typography>}
+          label={<Typography variant="caption">{isEn ? 'Auto-preview' : 'Авто-превью'}</Typography>}
           sx={{ ml: 'auto' }}
         />
       </Box>

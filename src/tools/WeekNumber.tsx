@@ -15,11 +15,17 @@ import {
 } from '@mui/material';
 import TodayIcon from '@mui/icons-material/Today';
 import SearchIcon from '@mui/icons-material/Search';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
-const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-const MONTHS_GEN = [
+const WEEKDAYS_RU = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+const WEEKDAYS_EN = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const MONTHS_GEN_RU = [
   'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
   'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
+];
+const MONTHS_GEN_EN = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
 function padTwo(n: number): string {
@@ -73,6 +79,10 @@ function getFirstDayOfWeek(year: number, month: number): number {
 
 export default function WeekNumber() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const WEEKDAYS = isEn ? WEEKDAYS_EN : WEEKDAYS_RU;
+  const MONTHS_GEN = isEn ? MONTHS_GEN_EN : MONTHS_GEN_RU;
   const [dateStr, setDateStr] = useState(todayString());
   const [reverseWeek, setReverseWeek] = useState('');
   const [reverseYear, setReverseYear] = useState(String(new Date().getFullYear()));
@@ -141,13 +151,13 @@ export default function WeekNumber() {
       >
         {/* Date input */}
         <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 2 }}>
-          Номер недели по дате
+          {isEn ? 'Week number by date' : 'Номер недели по дате'}
         </Typography>
 
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 8, sm: 6 }}>
             <TextField
-              label="Дата"
+              label={isEn ? 'Date' : 'Дата'}
               type="date"
               value={dateStr}
               onChange={(e) => setDateStr(e.target.value)}
@@ -164,7 +174,7 @@ export default function WeekNumber() {
               startIcon={<TodayIcon />}
               sx={{ height: '100%' }}
             >
-              Сегодня
+              {isEn ? 'Today' : 'Сегодня'}
             </Button>
           </Grid>
         </Grid>
@@ -188,7 +198,7 @@ export default function WeekNumber() {
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
-                    ISO неделя
+                    {isEn ? 'ISO week' : 'ISO неделя'}
                   </Typography>
                   <Typography
                     sx={{
@@ -216,7 +226,7 @@ export default function WeekNumber() {
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
-                    День года
+                    {isEn ? 'Day of year' : 'День года'}
                   </Typography>
                   <Typography
                     sx={{
@@ -243,7 +253,7 @@ export default function WeekNumber() {
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
-                    Осталось дней
+                    {isEn ? 'Days remaining' : 'Осталось дней'}
                   </Typography>
                   <Typography
                     sx={{
@@ -270,7 +280,7 @@ export default function WeekNumber() {
                   }}
                 >
                   <Typography variant="caption" color="text.secondary">
-                    Всего дней
+                    {isEn ? 'Total days' : 'Всего дней'}
                   </Typography>
                   <Typography
                     sx={{
@@ -296,7 +306,7 @@ export default function WeekNumber() {
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  Прогресс года
+                  {isEn ? 'Year progress' : 'Прогресс года'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace' }}>
                   {yearProgress.toFixed(1)}%
@@ -316,10 +326,10 @@ export default function WeekNumber() {
               />
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
                 <Typography variant="caption" color="text.secondary">
-                  1 января
+                  {isEn ? 'January 1' : '1 января'}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  31 декабря
+                  {isEn ? 'December 31' : '31 декабря'}
                 </Typography>
               </Box>
             </Paper>
@@ -334,7 +344,7 @@ export default function WeekNumber() {
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5, textAlign: 'center' }}>
-                {date.getDate()} {MONTHS_GEN[calMonth]} {calYear} — Неделя {weekNumber}
+                {isEn ? `${MONTHS_GEN[calMonth]} ${date.getDate()}, ${calYear} — Week ${weekNumber}` : `${date.getDate()} ${MONTHS_GEN[calMonth]} ${calYear} — Неделя ${weekNumber}`}
               </Typography>
 
               {/* Weekday headers */}
@@ -396,13 +406,13 @@ export default function WeekNumber() {
 
         {/* Reverse lookup */}
         <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 2, mt: 1 }}>
-          Обратный поиск: неделя → даты
+          {isEn ? 'Reverse lookup: week \u2192 dates' : 'Обратный поиск: неделя → даты'}
         </Typography>
 
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 5, sm: 4 }}>
             <TextField
-              label="Номер недели"
+              label={isEn ? 'Week number' : 'Номер недели'}
               type="number"
               value={reverseWeek}
               onChange={(e) => setReverseWeek(e.target.value)}
@@ -413,7 +423,7 @@ export default function WeekNumber() {
           </Grid>
           <Grid size={{ xs: 5, sm: 4 }}>
             <TextField
-              label="Год"
+              label={isEn ? 'Year' : 'Год'}
               type="number"
               value={reverseYear}
               onChange={(e) => setReverseYear(e.target.value)}
@@ -438,7 +448,7 @@ export default function WeekNumber() {
                 }
               }}
             >
-              Найти
+              {isEn ? 'Find' : 'Найти'}
             </Button>
           </Grid>
         </Grid>
@@ -453,17 +463,17 @@ export default function WeekNumber() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-              Неделя {reverseWeekNum} / {reverseYearNum}
+              {isEn ? `Week ${reverseWeekNum} / ${reverseYearNum}` : `Неделя ${reverseWeekNum} / ${reverseYearNum}`}
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
               <Chip
-                label={`Начало: ${reverseRange.start.getUTCDate()} ${MONTHS_GEN[reverseRange.start.getUTCMonth()]} ${reverseRange.start.getUTCFullYear()}`}
+                label={isEn ? `Start: ${MONTHS_GEN[reverseRange.start.getUTCMonth()]} ${reverseRange.start.getUTCDate()}, ${reverseRange.start.getUTCFullYear()}` : `Начало: ${reverseRange.start.getUTCDate()} ${MONTHS_GEN[reverseRange.start.getUTCMonth()]} ${reverseRange.start.getUTCFullYear()}`}
                 size="small"
                 color="info"
                 variant="outlined"
               />
               <Chip
-                label={`Конец: ${reverseRange.end.getUTCDate()} ${MONTHS_GEN[reverseRange.end.getUTCMonth()]} ${reverseRange.end.getUTCFullYear()}`}
+                label={isEn ? `End: ${MONTHS_GEN[reverseRange.end.getUTCMonth()]} ${reverseRange.end.getUTCDate()}, ${reverseRange.end.getUTCFullYear()}` : `Конец: ${reverseRange.end.getUTCDate()} ${MONTHS_GEN[reverseRange.end.getUTCMonth()]} ${reverseRange.end.getUTCFullYear()}`}
                 size="small"
                 color="info"
                 variant="outlined"

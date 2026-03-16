@@ -13,10 +13,13 @@ import {
 } from '@mui/material';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 export default function OgPreview() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -73,7 +76,7 @@ export default function OgPreview() {
                 <Box component="span" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                   {titleWarning && <WarningAmberIcon sx={{ fontSize: 14, color: 'warning.main' }} />}
                   <span style={{ color: titleWarning ? theme.palette.warning.main : undefined }}>
-                    {title.length}/60 символов {titleWarning ? '- рекомендуется не более 60' : ''}
+                    {title.length}/60 {isEn ? 'characters' : 'символов'} {titleWarning ? (isEn ? '- recommended max 60' : '- рекомендуется не более 60') : ''}
                   </span>
                 </Box>
               }
@@ -92,7 +95,7 @@ export default function OgPreview() {
                 <Box component="span" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                   {descWarning && <WarningAmberIcon sx={{ fontSize: 14, color: 'warning.main' }} />}
                   <span style={{ color: descWarning ? theme.palette.warning.main : undefined }}>
-                    {description.length}/155 символов {descWarning ? '- рекомендуется не более 155' : ''}
+                    {description.length}/155 {isEn ? 'characters' : 'символов'} {descWarning ? (isEn ? '- recommended max 155' : '- рекомендуется не более 155') : ''}
                   </span>
                 </Box>
               }
@@ -194,7 +197,7 @@ export default function OgPreview() {
                 }}
               >
                 <Typography variant="body2" color="text.secondary">
-                  Нет изображения
+                  {isEn ? 'No image' : 'Нет изображения'}
                 </Typography>
               </Box>
             )}
@@ -214,7 +217,7 @@ export default function OgPreview() {
                   whiteSpace: 'nowrap'
                 }}
               >
-                {title || 'Заголовок страницы'}
+                {title || (isEn ? 'Page title' : 'Заголовок страницы')}
               </Typography>
               <Typography
                 variant="caption"
@@ -226,7 +229,7 @@ export default function OgPreview() {
                   overflow: 'hidden'
                 }}
               >
-                {description || 'Описание страницы'}
+                {description || (isEn ? 'Page description' : 'Описание страницы')}
               </Typography>
             </Box>
           </Paper>
@@ -274,13 +277,13 @@ export default function OgPreview() {
                     }}
                   >
                     <Typography variant="body2" color="text.secondary">
-                      Нет изображения
+                      {isEn ? 'No image' : 'Нет изображения'}
                     </Typography>
                   </Box>
                 )}
                 <Box sx={{ p: 1.5 }}>
                   <Typography variant="body2" fontWeight={600}>
-                    {title || 'Заголовок'}
+                    {title || (isEn ? 'Title' : 'Заголовок')}
                   </Typography>
                   <Typography
                     variant="caption"
@@ -292,7 +295,7 @@ export default function OgPreview() {
                       overflow: 'hidden'
                     }}
                   >
-                    {description || 'Описание'}
+                    {description || (isEn ? 'Description' : 'Описание')}
                   </Typography>
                   <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
                     {displayDomain}
@@ -330,13 +333,13 @@ export default function OgPreview() {
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">
-                      Нет
+                      {isEn ? 'None' : 'Нет'}
                     </Typography>
                   </Box>
                 )}
                 <Box sx={{ p: 1.5, overflow: 'hidden' }}>
                   <Typography variant="body2" fontWeight={600} noWrap>
-                    {title || 'Заголовок'}
+                    {title || (isEn ? 'Title' : 'Заголовок')}
                   </Typography>
                   <Typography
                     variant="caption"
@@ -348,7 +351,7 @@ export default function OgPreview() {
                       overflow: 'hidden'
                     }}
                   >
-                    {description || 'Описание'}
+                    {description || (isEn ? 'Description' : 'Описание')}
                   </Typography>
                   <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
                     {displayDomain}
@@ -400,13 +403,13 @@ export default function OgPreview() {
                 }}
               >
                 <Typography variant="body2" color="text.secondary">
-                  Нет изображения
+                  {isEn ? 'No image' : 'Нет изображения'}
                 </Typography>
               </Box>
             )}
             <Box sx={{ p: 1.5, bgcolor: alpha(theme.palette.text.primary, 0.02) }}>
               <Typography variant="body2" fontWeight={600}>
-                {title || 'Заголовок страницы'}
+                {title || (isEn ? 'Page title' : 'Заголовок страницы')}
               </Typography>
               <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.25 }}>
                 {displayDomain}
@@ -429,7 +432,7 @@ export default function OgPreview() {
       >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
           <Typography variant="subtitle2" fontWeight={600}>
-            Мета-теги HTML
+            {isEn ? 'HTML Meta Tags' : 'Мета-теги HTML'}
           </Typography>
           <CopyButton text={metaTags} />
         </Box>

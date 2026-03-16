@@ -16,6 +16,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CompareIcon from '@mui/icons-material/Compare';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface FilterState {
   brightness: number;
@@ -39,34 +40,36 @@ const DEFAULT_FILTERS: FilterState = {
 
 interface FilterSliderDef {
   key: keyof FilterState;
-  label: string;
+  labelRu: string;
+  labelEn: string;
   min: number;
   max: number;
   unit: string;
 }
 
 const FILTER_SLIDERS: FilterSliderDef[] = [
-  { key: 'brightness', label: 'Яркость', min: 0, max: 200, unit: '%' },
-  { key: 'contrast', label: 'Контраст', min: 0, max: 200, unit: '%' },
-  { key: 'saturate', label: 'Насыщенность', min: 0, max: 200, unit: '%' },
-  { key: 'blur', label: 'Размытие', min: 0, max: 20, unit: 'px' },
-  { key: 'grayscale', label: 'Оттенки серого', min: 0, max: 100, unit: '%' },
-  { key: 'sepia', label: 'Сепия', min: 0, max: 100, unit: '%' },
-  { key: 'hueRotate', label: 'Поворот оттенка', min: 0, max: 360, unit: '°' },
+  { key: 'brightness', labelRu: 'Яркость', labelEn: 'Brightness', min: 0, max: 200, unit: '%' },
+  { key: 'contrast', labelRu: 'Контраст', labelEn: 'Contrast', min: 0, max: 200, unit: '%' },
+  { key: 'saturate', labelRu: 'Насыщенность', labelEn: 'Saturation', min: 0, max: 200, unit: '%' },
+  { key: 'blur', labelRu: 'Размытие', labelEn: 'Blur', min: 0, max: 20, unit: 'px' },
+  { key: 'grayscale', labelRu: 'Оттенки серого', labelEn: 'Grayscale', min: 0, max: 100, unit: '%' },
+  { key: 'sepia', labelRu: 'Сепия', labelEn: 'Sepia', min: 0, max: 100, unit: '%' },
+  { key: 'hueRotate', labelRu: 'Поворот оттенка', labelEn: 'Hue Rotate', min: 0, max: 360, unit: '°' },
 ];
 
 interface Preset {
-  label: string;
+  labelRu: string;
+  labelEn: string;
   filters: FilterState;
 }
 
 const PRESETS: Preset[] = [
-  { label: 'Оригинал', filters: { ...DEFAULT_FILTERS } },
-  { label: 'Ч/Б', filters: { ...DEFAULT_FILTERS, grayscale: 100 } },
-  { label: 'Сепия', filters: { ...DEFAULT_FILTERS, sepia: 80 } },
-  { label: 'Яркий', filters: { ...DEFAULT_FILTERS, brightness: 130, contrast: 130, saturate: 150 } },
-  { label: 'Тёплый', filters: { ...DEFAULT_FILTERS, sepia: 30, saturate: 130, brightness: 110 } },
-  { label: 'Холодный', filters: { ...DEFAULT_FILTERS, saturate: 80, brightness: 110, hueRotate: 190 } },
+  { labelRu: 'Оригинал', labelEn: 'Original', filters: { ...DEFAULT_FILTERS } },
+  { labelRu: 'Ч/Б', labelEn: 'B&W', filters: { ...DEFAULT_FILTERS, grayscale: 100 } },
+  { labelRu: 'Сепия', labelEn: 'Sepia', filters: { ...DEFAULT_FILTERS, sepia: 80 } },
+  { labelRu: 'Яркий', labelEn: 'Vivid', filters: { ...DEFAULT_FILTERS, brightness: 130, contrast: 130, saturate: 150 } },
+  { labelRu: 'Тёплый', labelEn: 'Warm', filters: { ...DEFAULT_FILTERS, sepia: 30, saturate: 130, brightness: 110 } },
+  { labelRu: 'Холодный', labelEn: 'Cool', filters: { ...DEFAULT_FILTERS, saturate: 80, brightness: 110, hueRotate: 190 } },
 ];
 
 function buildFilterString(f: FilterState): string {
@@ -75,6 +78,8 @@ function buildFilterString(f: FilterState): string {
 
 export default function ImageFilters() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [originalUrl, setOriginalUrl] = useState('');
   const [fileName, setFileName] = useState('');
@@ -177,10 +182,10 @@ export default function ImageFilters() {
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
           <Typography variant="h6" sx={{ mb: 1 }}>
-            Перетащите изображение сюда
+            {isEn ? 'Drag and drop an image here' : 'Перетащите изображение сюда'}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            или нажмите для выбора файла
+            {isEn ? 'or click to select a file' : 'или нажмите для выбора файла'}
           </Typography>
         </Paper>
       )}
@@ -193,13 +198,13 @@ export default function ImageFilters() {
             sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
-              Пресеты
+              {isEn ? 'Presets' : 'Пресеты'}
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
               {PRESETS.map((preset) => (
                 <Chip
-                  key={preset.label}
-                  label={preset.label}
+                  key={preset.labelRu}
+                  label={isEn ? preset.labelEn : preset.labelRu}
                   onClick={() => setFilters({ ...preset.filters })}
                   variant="outlined"
                   sx={{ cursor: 'pointer' }}
@@ -214,13 +219,13 @@ export default function ImageFilters() {
             sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
-              Настройки фильтров
+              {isEn ? 'Filter Settings' : 'Настройки фильтров'}
             </Typography>
             <Grid container spacing={2}>
               {FILTER_SLIDERS.map((s) => (
                 <Grid key={s.key} size={{ xs: 12, sm: 6 }}>
                   <Typography variant="caption" color="text.secondary">
-                    {s.label}: {filters[s.key]}{s.unit}
+                    {isEn ? s.labelEn : s.labelRu}: {filters[s.key]}{s.unit}
                   </Typography>
                   <Slider
                     value={filters[s.key]}
@@ -238,13 +243,13 @@ export default function ImageFilters() {
           {/* Actions */}
           <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
             <Button variant="contained" startIcon={<DownloadIcon />} onClick={downloadFiltered}>
-              Скачать результат
+              {isEn ? 'Download Result' : 'Скачать результат'}
             </Button>
             <Button
               variant="outlined"
               onClick={() => setFilters({ ...DEFAULT_FILTERS })}
             >
-              Сбросить
+              {isEn ? 'Reset' : 'Сбросить'}
             </Button>
             <Button variant="outlined" color="error" onClick={clearImage} sx={{ minWidth: 48 }}>
               <DeleteIcon />
@@ -261,7 +266,7 @@ export default function ImageFilters() {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                   <CompareIcon fontSize="small" color="action" />
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    Оригинал
+                    {isEn ? 'Original' : 'Оригинал'}
                   </Typography>
                 </Box>
                 <Box
@@ -286,7 +291,7 @@ export default function ImageFilters() {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                   <CompareIcon fontSize="small" color="primary" />
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    Результат
+                    {isEn ? 'Result' : 'Результат'}
                   </Typography>
                 </Box>
                 <Box

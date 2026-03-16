@@ -13,6 +13,7 @@ import {
 import CasinoIcon from '@mui/icons-material/Casino';
 import SearchIcon from '@mui/icons-material/Search';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 const ouiDatabase: Record<string, string> = {
@@ -282,6 +283,8 @@ function generateRandomMac(): string {
 
 export default function MacLookup() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [result, setResult] = useState<{ manufacturer: string; oui: string; formatted: string } | null>(null);
   const [error, setError] = useState('');
@@ -295,7 +298,7 @@ export default function MacLookup() {
 
   const handleLookup = useCallback(() => {
     if (!isValidMac(input)) {
-      setError('Неверный формат MAC-адреса. Ожидается: XX:XX:XX:XX:XX:XX');
+      setError(isEn ? 'Invalid MAC address format. Expected: XX:XX:XX:XX:XX:XX' : 'Неверный формат MAC-адреса. Ожидается: XX:XX:XX:XX:XX:XX');
       setResult(null);
       return;
     }
@@ -304,10 +307,10 @@ export default function MacLookup() {
       setResult({ ...found, formatted: input.toUpperCase() });
       setError('');
     } else {
-      setResult({ manufacturer: 'Неизвестный производитель', oui: input.toUpperCase().slice(0, 8), formatted: input.toUpperCase() });
+      setResult({ manufacturer: isEn ? 'Unknown manufacturer' : 'Неизвестный производитель', oui: input.toUpperCase().slice(0, 8), formatted: input.toUpperCase() });
       setError('');
     }
-  }, [input]);
+  }, [input, isEn]);
 
   const handleRandom = () => {
     const mac = generateRandomMac();
@@ -317,7 +320,7 @@ export default function MacLookup() {
     if (found) {
       setResult({ ...found, formatted: mac });
     } else {
-      setResult({ manufacturer: 'Неизвестный производитель', oui: mac.slice(0, 8), formatted: mac });
+      setResult({ manufacturer: isEn ? 'Unknown manufacturer' : 'Неизвестный производитель', oui: mac.slice(0, 8), formatted: mac });
     }
   };
 
@@ -332,14 +335,14 @@ export default function MacLookup() {
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
-          Введите MAC-адрес для определения производителя устройства
+          {isEn ? 'Enter a MAC address to identify the device manufacturer' : 'Введите MAC-адрес для определения производителя устройства'}
         </Typography>
 
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
           <TextField
             fullWidth
             size="small"
-            placeholder="MAC-адрес (00:1A:2B:3C:4D:5E)"
+            placeholder={isEn ? 'MAC address (00:1A:2B:3C:4D:5E)' : 'MAC-адрес (00:1A:2B:3C:4D:5E)'}
             value={input}
             onChange={(e) => handleInputChange(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleLookup()}
@@ -355,7 +358,7 @@ export default function MacLookup() {
             startIcon={<SearchIcon />}
             sx={{ minWidth: 120, borderRadius: 2 }}
           >
-            Найти
+            {isEn ? 'Search' : 'Найти'}
           </Button>
         </Box>
 
@@ -365,7 +368,7 @@ export default function MacLookup() {
           startIcon={<CasinoIcon />}
           sx={{ mb: 2, borderRadius: 2 }}
         >
-          Случайный MAC
+          {isEn ? 'Random MAC' : 'Случайный MAC'}
         </Button>
 
         {result && (
@@ -380,7 +383,7 @@ export default function MacLookup() {
             <Grid container spacing={2}>
               <Grid size={{ xs: 12 }}>
                 <Typography variant="body2" sx={{ color: 'text.secondary', mb: 0.5 }}>
-                  Производитель
+                  {isEn ? 'Manufacturer' : 'Производитель'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
@@ -392,7 +395,7 @@ export default function MacLookup() {
 
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography variant="body2" sx={{ color: 'text.secondary', mb: 0.5 }}>
-                  OUI-префикс
+                  {isEn ? 'OUI Prefix' : 'OUI-префикс'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Typography sx={{ fontFamily: 'monospace', fontWeight: 500 }}>
@@ -404,7 +407,7 @@ export default function MacLookup() {
 
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography variant="body2" sx={{ color: 'text.secondary', mb: 0.5 }}>
-                  Форматированный MAC
+                  {isEn ? 'Formatted MAC' : 'Форматированный MAC'}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Typography sx={{ fontFamily: 'monospace', fontWeight: 500 }}>

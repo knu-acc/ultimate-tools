@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import { Search, History, Close } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface CharInfo {
@@ -16,33 +17,40 @@ interface CharInfo {
   name: string;
 }
 
-const CATEGORIES: Record<string, { label: string; ranges: [number, number][] }> = {
+const CATEGORIES: Record<string, { label: string; labelEn: string; ranges: [number, number][] }> = {
   arrows: {
     label: 'Стрелки',
+    labelEn: 'Arrows',
     ranges: [[0x2190, 0x21FF]]
   },
   math: {
     label: 'Математика',
+    labelEn: 'Math',
     ranges: [[0x2200, 0x22FF]]
   },
   currency: {
     label: 'Валюты',
+    labelEn: 'Currency',
     ranges: [[0x0024, 0x0024], [0x00A2, 0x00A5], [0x20A0, 0x20CF]]
   },
   emoji: {
     label: 'Эмодзи',
+    labelEn: 'Emoji',
     ranges: [[0x1F600, 0x1F64F]]
   },
   boxDrawing: {
     label: 'Рисование рамок',
+    labelEn: 'Box Drawing',
     ranges: [[0x2500, 0x257F]]
   },
   greek: {
     label: 'Греческий',
+    labelEn: 'Greek',
     ranges: [[0x0391, 0x03C9]]
   },
   cyrillic: {
     label: 'Кириллица',
+    labelEn: 'Cyrillic',
     ranges: [[0x0410, 0x044F]]
   }
 };
@@ -105,6 +113,8 @@ function getCategoryChars(ranges: [number, number][]): CharInfo[] {
 
 export default function UnicodeLookup() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [searchText, setSearchText] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('arrows');
   const [selectedChar, setSelectedChar] = useState<CharInfo | null>(null);
@@ -195,7 +205,7 @@ export default function UnicodeLookup() {
         fullWidth
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
-        placeholder="Введите символ, U+0041 или код..."
+        placeholder={isEn ? 'Enter a character, U+0041 or code...' : 'Введите символ, U+0041 или код...'}
         sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
         slotProps={{
           input: {
@@ -208,7 +218,7 @@ export default function UnicodeLookup() {
       {searchResults && (
         <Box sx={{ mb: 2 }}>
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-            Результаты поиска
+            {isEn ? 'Search results' : 'Результаты поиска'}
           </Typography>
           {searchResults.map((info, i) => (
             <Paper
@@ -230,7 +240,7 @@ export default function UnicodeLookup() {
                 <Grid size={{ xs: 10, sm: 11 }}>
                   <Grid container spacing={1}>
                     <Grid size={{ xs: 6, sm: 3 }}>
-                      <Typography variant="caption" color="text.secondary">Код</Typography>
+                      <Typography variant="caption" color="text.secondary">{isEn ? 'Code' : 'Код'}</Typography>
                       <Typography variant="body2" fontWeight={600}>{info.hex}</Typography>
                     </Grid>
                     <Grid size={{ xs: 6, sm: 3 }}>
@@ -255,13 +265,13 @@ export default function UnicodeLookup() {
 
       {/* Category browser */}
       <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-        Категории
+        {isEn ? 'Categories' : 'Категории'}
       </Typography>
       <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
         {Object.entries(CATEGORIES).map(([key, cat]) => (
           <Chip
             key={key}
-            label={cat.label}
+            label={isEn ? cat.labelEn : cat.label}
             onClick={() => setSelectedCategory(key)}
             sx={{
               fontWeight: 600,
@@ -322,7 +332,7 @@ export default function UnicodeLookup() {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
             <History sx={{ fontSize: 18, color: theme.palette.text.secondary }} />
             <Typography variant="subtitle2" fontWeight={600}>
-              Недавно просмотренные
+              {isEn ? 'Recently viewed' : 'Недавно просмотренные'}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -356,7 +366,7 @@ export default function UnicodeLookup() {
         {selectedChar && (
           <>
             <DialogTitle sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              Информация о символе
+              {isEn ? 'Character info' : 'Информация о символе'}
               <IconButton size="small" onClick={() => setDetailOpen(false)}>
                 <Close fontSize="small" />
               </IconButton>
@@ -367,17 +377,17 @@ export default function UnicodeLookup() {
                   {selectedChar.char}
                 </Typography>
                 <Box sx={{ mt: 1 }}>
-                  <CopyButton text={selectedChar.char} tooltip="Копировать символ" />
+                  <CopyButton text={selectedChar.char} tooltip={isEn ? 'Copy character' : 'Копировать символ'} />
                 </Box>
               </Box>
 
               {[
-                { label: 'Код Unicode', value: selectedChar.hex, key: 'hex' },
-                { label: 'Десятичный', value: String(selectedChar.codePoint), key: 'dec' },
-                { label: 'UTF-8 байты', value: getUtf8Bytes(selectedChar.char), key: 'utf8' },
-                { label: 'HTML-сущность', value: getHtmlEntity(selectedChar.codePoint), key: 'html' },
+                { label: isEn ? 'Unicode code' : 'Код Unicode', value: selectedChar.hex, key: 'hex' },
+                { label: isEn ? 'Decimal' : 'Десятичный', value: String(selectedChar.codePoint), key: 'dec' },
+                { label: isEn ? 'UTF-8 bytes' : 'UTF-8 байты', value: getUtf8Bytes(selectedChar.char), key: 'utf8' },
+                { label: isEn ? 'HTML entity' : 'HTML-сущность', value: getHtmlEntity(selectedChar.codePoint), key: 'html' },
                 { label: 'CSS-escape', value: getCssEscape(selectedChar.codePoint), key: 'css' },
-                { label: 'Имя', value: selectedChar.name, key: 'name' },
+                { label: isEn ? 'Name' : 'Имя', value: selectedChar.name, key: 'name' },
               ].map(row => (
                 <Box
                   key={row.key}

@@ -9,13 +9,15 @@ import React, {
   ReactNode,
   useMemo,
 } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Locale,
   DEFAULT_LOCALE,
   loadMessages,
   getMsg,
-  getLocaleFromStorage,
   setLocaleToStorage,
+  getLocaleFromPathname,
+  localizedHref,
 } from './index';
 
 type Messages = Record<string, unknown>;
@@ -25,6 +27,8 @@ interface LanguageContextType {
   setLocale: (locale: Locale) => void;
   t: (key: string, vars?: Record<string, string | number>) => string;
   ready: boolean;
+  /** Build a locale-prefixed href */
+  lHref: (path: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType>({
@@ -32,40 +36,58 @@ const LanguageContext = createContext<LanguageContextType>({
   setLocale: () => {},
   t: (key) => key,
   ready: false,
+  lHref: (path) => path,
 });
 
 export const useLanguage = () => useContext(LanguageContext);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Derive locale from URL path
+  const urlLocale = getLocaleFromPathname(pathname);
+  const [locale, setLocaleState] = useState<Locale>(urlLocale);
   const [messages, setMessages] = useState<Messages>({});
   const [ready, setReady] = useState(false);
 
+  // Sync locale when URL changes
   useEffect(() => {
-    const stored = getLocaleFromStorage();
-    setLocaleState(stored);
-    loadMessages(stored).then((msgs) => {
+    setLocaleState(urlLocale);
+    setLocaleToStorage(urlLocale);
+    loadMessages(urlLocale).then((msgs) => {
       setMessages(msgs);
       setReady(true);
     });
-  }, []);
+  }, [urlLocale]);
+
+  // Update html lang attribute
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = locale;
+    }
+  }, [locale]);
 
   const setLocale = useCallback((newLocale: Locale) => {
-    setLocaleState(newLocale);
     setLocaleToStorage(newLocale);
-    loadMessages(newLocale).then((msgs) => {
-      setMessages(msgs);
-    });
-  }, []);
+    // Navigate to the same page with new locale prefix
+    const newPath = localizedHref(pathname, newLocale);
+    router.push(newPath);
+  }, [pathname, router]);
 
   const t = useCallback(
     (key: string, vars?: Record<string, string | number>) => getMsg(messages, key, vars),
     [messages],
   );
 
+  const lHref = useCallback(
+    (path: string) => localizedHref(path, locale),
+    [locale],
+  );
+
   const value = useMemo(
-    () => ({ locale, setLocale, t, ready }),
-    [locale, setLocale, t, ready],
+    () => ({ locale, setLocale, t, ready, lHref }),
+    [locale, setLocale, t, ready, lHref],
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

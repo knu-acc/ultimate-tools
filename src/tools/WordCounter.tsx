@@ -14,9 +14,12 @@ import {
   InputAdornment,
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function WordCounter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [text, setText] = useState('');
 
   const stats = useMemo(() => {
@@ -51,13 +54,14 @@ export default function WordCounter() {
 
   const handleClear = useCallback(() => setText(''), []);
 
+  const localeStr = isEn ? 'en-US' : 'ru-RU';
   const statCards = [
-    { label: 'Символы', value: stats.chars.toLocaleString('ru-RU'), color: theme.palette.primary.main },
-    { label: 'Слова', value: stats.words.toLocaleString('ru-RU'), color: theme.palette.secondary.main },
-    { label: 'Предложения', value: stats.sentences.toLocaleString('ru-RU'), color: theme.palette.info.main },
-    { label: 'Абзацы', value: stats.paragraphs.toLocaleString('ru-RU'), color: theme.palette.success.main },
-    { label: 'Чтение', value: stats.readingTime < 1 ? '< 1 мин' : `${stats.readingTime} мин`, color: theme.palette.warning.main },
-    { label: 'Речь', value: stats.speakingTime < 1 ? '< 1 мин' : `${stats.speakingTime} мин`, color: theme.palette.error.main },
+    { label: isEn ? 'Characters' : 'Символы', value: stats.chars.toLocaleString(localeStr), color: theme.palette.primary.main },
+    { label: isEn ? 'Words' : 'Слова', value: stats.words.toLocaleString(localeStr), color: theme.palette.secondary.main },
+    { label: isEn ? 'Sentences' : 'Предложения', value: stats.sentences.toLocaleString(localeStr), color: theme.palette.info.main },
+    { label: isEn ? 'Paragraphs' : 'Абзацы', value: stats.paragraphs.toLocaleString(localeStr), color: theme.palette.success.main },
+    { label: isEn ? 'Reading' : 'Чтение', value: stats.readingTime < 1 ? (isEn ? '< 1 min' : '< 1 мин') : `${stats.readingTime} ${isEn ? 'min' : 'мин'}`, color: theme.palette.warning.main },
+    { label: isEn ? 'Speaking' : 'Речь', value: stats.speakingTime < 1 ? (isEn ? '< 1 min' : '< 1 мин') : `${stats.speakingTime} ${isEn ? 'min' : 'мин'}`, color: theme.palette.error.main },
   ];
 
   return (
@@ -78,7 +82,7 @@ export default function WordCounter() {
           fullWidth
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Вставьте или введите текст..."
+          placeholder={isEn ? 'Paste or type text...' : 'Вставьте или введите текст...'}
           variant="outlined"
           slotProps={{
             input: {
@@ -91,7 +95,7 @@ export default function WordCounter() {
                     onClick={handleClear}
                     sx={{ textTransform: 'none', fontWeight: 600 }}
                   >
-                    Очистить
+                    {isEn ? 'Clear' : 'Очистить'}
                   </Button>
                 </InputAdornment>
               ) : undefined
@@ -139,7 +143,7 @@ export default function WordCounter() {
       {stats.topWords.length > 0 && (
         <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
           <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600, mb: 2 }}>
-            Частые слова
+            {isEn ? 'Frequent words' : 'Частые слова'}
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {stats.topWords.map(([word, count], index) => (

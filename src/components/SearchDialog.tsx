@@ -10,6 +10,7 @@ import Fuse from 'fuse.js';
 import { useRouter } from 'next/navigation';
 import { tools, toolGroups, Tool } from '@/src/data/tools';
 import DynamicIcon from './DynamicIcon';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface Props {
   open: boolean;
@@ -19,6 +20,7 @@ interface Props {
 export default function SearchDialog({ open, onClose }: Props) {
   const theme = useTheme();
   const router = useRouter();
+  const { lHref, locale, t } = useLanguage();
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -50,9 +52,9 @@ export default function SearchDialog({ open, onClose }: Props) {
   }, []);
 
   const handleSelect = useCallback((tool: Tool) => {
-    router.push(`/tools/${tool.slug}`);
+    router.push(lHref(`/tools/${tool.slug}`));
     onClose();
-  }, [router, onClose]);
+  }, [router, onClose, lHref]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, results.length - 1)); }
@@ -66,13 +68,13 @@ export default function SearchDialog({ open, onClose }: Props) {
       onClose={onClose}
       maxWidth="sm"
       fullWidth
-      PaperProps={{ sx: { borderRadius: 7, maxHeight: '70vh' } }}
+      PaperProps={{ sx: { borderRadius: `${theme.shape?.large ?? 16}px`, maxHeight: '70vh' } }}
     >
       <Box sx={{ p: 2, pb: 0 }}>
         <TextField
           autoFocus
           fullWidth
-          placeholder="Поиск инструментов..."
+          placeholder={t('nav.searchPlaceholder')}
           value={query}
           onChange={e => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -84,7 +86,7 @@ export default function SearchDialog({ open, onClose }: Props) {
           variant="outlined"
           sx={{
             '& .MuiOutlinedInput-root': {
-              borderRadius: 7,
+              borderRadius: `${theme.shape?.medium ?? 12}px`,
               bgcolor: alpha(theme.palette.primary.main, 0.04),
               '& fieldset': { border: 'none' },
             },
@@ -101,7 +103,7 @@ export default function SearchDialog({ open, onClose }: Props) {
                   selected={index === selectedIndex}
                   onClick={() => handleSelect(tool)}
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: theme.shape?.small ?? 8,
                     mb: 0.5,
                     py: 1,
                     '&.Mui-selected': { bgcolor: alpha(theme.palette.primary.main, 0.08) },
@@ -112,7 +114,7 @@ export default function SearchDialog({ open, onClose }: Props) {
                       sx={{
                         width: 36,
                         height: 36,
-                        borderRadius: 2,
+                        borderRadius: theme.shape?.small ?? 8,
                         bgcolor: alpha(group?.color || theme.palette.primary.main, 0.1),
                         display: 'flex',
                         alignItems: 'center',
@@ -123,13 +125,13 @@ export default function SearchDialog({ open, onClose }: Props) {
                     </Box>
                   </ListItemIcon>
                   <ListItemText
-                    primary={tool.name}
-                    secondary={tool.description}
+                    primary={locale === 'en' ? ((tool as any).nameEn || tool.name) : tool.name}
+                    secondary={locale === 'en' ? ((tool as any).descriptionEn || tool.description) : tool.description}
                     primaryTypographyProps={{ fontWeight: 500, fontSize: 14 }}
                     secondaryTypographyProps={{ fontSize: 12, noWrap: true }}
                   />
                   <Chip
-                    label={group?.name}
+                    label={locale === 'en' ? ((group as any)?.nameEn || group?.name) : group?.name}
                     size="small"
                     sx={{ fontSize: 11, height: 22, bgcolor: alpha(group?.color || '#666', 0.08), border: 'none' }}
                   />
@@ -140,7 +142,7 @@ export default function SearchDialog({ open, onClose }: Props) {
           {results.length === 0 && query && (
             <Box sx={{ textAlign: 'center', py: 4 }}>
               <Typography variant="body2" color="text.secondary">
-                Ничего не найдено по запросу «{query}»
+                {locale === 'en' ? `Nothing found for "${query}"` : `Ничего не найдено по запросу «${query}»`}
               </Typography>
             </Box>
           )}

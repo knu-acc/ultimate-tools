@@ -14,21 +14,24 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface SpeedUnit {
   key: string;
   label: string;
+  labelEn: string;
   short: string;
+  shortEn: string;
   toMs: number;
 }
 
 const units: SpeedUnit[] = [
-  { key: 'kmh', label: 'Километры в час', short: 'км/ч', toMs: 1 / 3.6 },
-  { key: 'ms', label: 'Метры в секунду', short: 'м/с', toMs: 1 },
-  { key: 'mph', label: 'Мили в час', short: 'миль/ч', toMs: 0.44704 },
-  { key: 'knots', label: 'Узлы', short: 'уз', toMs: 0.514444 },
-  { key: 'fts', label: 'Футы в секунду', short: 'фт/с', toMs: 0.3048 },
-  { key: 'mach', label: 'Махи', short: 'Мах', toMs: 343 },
+  { key: 'kmh', label: 'Километры в час', labelEn: 'Kilometers per hour', short: 'км/ч', shortEn: 'km/h', toMs: 1 / 3.6 },
+  { key: 'ms', label: 'Метры в секунду', labelEn: 'Meters per second', short: 'м/с', shortEn: 'm/s', toMs: 1 },
+  { key: 'mph', label: 'Мили в час', labelEn: 'Miles per hour', short: 'миль/ч', shortEn: 'mph', toMs: 0.44704 },
+  { key: 'knots', label: 'Узлы', labelEn: 'Knots', short: 'уз', shortEn: 'kn', toMs: 0.514444 },
+  { key: 'fts', label: 'Футы в секунду', labelEn: 'Feet per second', short: 'фт/с', shortEn: 'ft/s', toMs: 0.3048 },
+  { key: 'mach', label: 'Махи', labelEn: 'Mach', short: 'Мах', shortEn: 'Mach', toMs: 343 },
 ];
 
 const barColors = ['#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#f44336', '#00bcd4'];
@@ -43,6 +46,8 @@ function formatNumber(value: number): string {
 
 export default function SpeedConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [inputValue, setInputValue] = useState('100');
   const [fromUnit, setFromUnit] = useState('kmh');
 
@@ -55,8 +60,8 @@ export default function SpeedConverter() {
     const converted = isValid ? (numericValue * sourceUnit.toMs) / target.toMs : 0;
     return {
       key: target.key,
-      label: target.label,
-      short: target.short,
+      label: isEn ? target.labelEn : target.label,
+      short: isEn ? target.shortEn : target.short,
       value: converted,
       formatted: isValid ? formatNumber(converted) : '—'
     };
@@ -94,7 +99,7 @@ export default function SpeedConverter() {
               input: {
                 endAdornment: (
                   <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
-                    {sourceUnit.short}
+                    {isEn ? sourceUnit.shortEn : sourceUnit.short}
                   </Typography>
                 )
               }
@@ -107,7 +112,7 @@ export default function SpeedConverter() {
           >
             {units.map((u) => (
               <MenuItem key={u.key} value={u.key}>
-                {u.label} ({u.short})
+                {isEn ? u.labelEn : u.label} ({isEn ? u.shortEn : u.short})
               </MenuItem>
             ))}
           </Select>
@@ -154,7 +159,7 @@ export default function SpeedConverter() {
           {numericValue > 0 && (
             <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
               <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-                Сравнение
+                {isEn ? 'Comparison' : 'Сравнение'}
               </Typography>
               {allResults.map((r, idx) => {
                 const percent = maxValue > 0 ? (r.value / maxValue) * 100 : 0;

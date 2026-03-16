@@ -12,6 +12,7 @@ import {
   Chip,
   useTheme } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 type UnitKey =
@@ -60,9 +61,22 @@ function formatValue(num: number): string {
 
 export default function DataConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('1');
   const [unit, setUnit] = useState<UnitKey>('gb');
   const [mode, setMode] = useState<'decimal' | 'binary'>('decimal');
+  const unitLabelsEn: Record<UnitKey, string> = {
+    bit: 'Bits', byte: 'Bytes', kb: 'Kilobytes', mb: 'Megabytes', gb: 'Gigabytes',
+    tb: 'Terabytes', pb: 'Petabytes', kib: 'Kibibytes', mib: 'Mebibytes', gib: 'Gibibytes'
+  };
+  const unitShortEn: Record<UnitKey, string> = {
+    bit: 'bit', byte: 'B', kb: 'KB', mb: 'MB', gb: 'GB',
+    tb: 'TB', pb: 'PB', kib: 'KiB', mib: 'MiB', gib: 'GiB'
+  };
+  const getLabel = (k: UnitKey) => isEn ? unitLabelsEn[k] : UNITS[k].label;
+  const getShort = (k: UnitKey) => isEn ? unitShortEn[k] : UNITS[k].shortLabel;
+
   const numericInput = parseFloat(input) || 0;
   const bits = UNITS[unit].toBits(numericInput);
   const displayKeys = mode === 'decimal' ? DECIMAL_KEYS : BINARY_KEYS;
@@ -71,8 +85,8 @@ export default function DataConverter() {
     .filter((k) => k !== unit)
     .map((k) => ({
       key: k,
-      label: UNITS[k].label,
-      shortLabel: UNITS[k].shortLabel,
+      label: getLabel(k),
+      shortLabel: getShort(k),
       value: formatValue(UNITS[k].fromBits(bits))
     }));
 
@@ -90,7 +104,7 @@ export default function DataConverter() {
         {/* Mode toggle */}
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
           <Chip
-            label="Десятичная (×1000)"
+            label={isEn ? 'Decimal (×1000)' : 'Десятичная (×1000)'}
             variant={mode === 'decimal' ? 'filled' : 'outlined'}
             color={mode === 'decimal' ? 'primary' : 'default'}
             onClick={() => {
@@ -100,7 +114,7 @@ export default function DataConverter() {
             sx={{ fontWeight: 600, borderRadius: 3, px: 1 }}
           />
           <Chip
-            label="Двоичная (×1024)"
+            label={isEn ? 'Binary (×1024)' : 'Двоичная (×1024)'}
             variant={mode === 'binary' ? 'filled' : 'outlined'}
             color={mode === 'binary' ? 'primary' : 'default'}
             onClick={() => {
@@ -114,7 +128,7 @@ export default function DataConverter() {
         {/* Input row */}
         <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap' }}>
           <TextField
-            label="Значение"
+            label={isEn ? 'Value' : 'Значение'}
             value={input}
             onChange={(e) => {
               const v = e.target.value;
@@ -135,7 +149,7 @@ export default function DataConverter() {
           >
             {(mode === 'decimal' ? DECIMAL_KEYS : BINARY_KEYS).map((k) => (
               <MenuItem key={k} value={k}>
-                {UNITS[k].label} ({UNITS[k].shortLabel})
+                {getLabel(k)} ({getShort(k)})
               </MenuItem>
             ))}
           </Select>
@@ -144,7 +158,7 @@ export default function DataConverter() {
         {/* Info chip */}
         {numericInput !== 0 && (
           <Chip
-            label={`${formatValue(numericInput)} ${UNITS[unit].shortLabel} = ${formatValue(bits)} бит`}
+            label={`${formatValue(numericInput)} ${getShort(unit)} = ${formatValue(bits)} ${isEn ? 'bits' : 'бит'}`}
             variant="outlined"
             color="info"
             sx={{ mb: 2, fontFamily: 'monospace', borderRadius: 3 }}
@@ -153,7 +167,7 @@ export default function DataConverter() {
 
         {/* Result cards */}
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
-          Результаты конвертации
+          {isEn ? 'Conversion Results' : 'Результаты конвертации'}
         </Typography>
         <Grid container spacing={2}>
           {results.map((r) => (
@@ -198,7 +212,7 @@ export default function DataConverter() {
         {/* Empty state */}
         {numericInput === 0 && (
           <Typography variant="body2" sx={{ mt: 2, color: 'text.secondary', textAlign: 'center' }}>
-            Введите значение для конвертации
+            {isEn ? 'Enter a value to convert' : 'Введите значение для конвертации'}
           </Typography>
         )}
       </Paper>

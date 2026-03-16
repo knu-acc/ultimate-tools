@@ -13,22 +13,25 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface WeightUnit {
   key: string;
   label: string;
+  labelEn: string;
   short: string;
+  shortEn: string;
   toGrams: number;
 }
 
 const units: WeightUnit[] = [
-  { key: 'kg', label: 'Килограммы', short: 'кг', toGrams: 1000 },
-  { key: 'g', label: 'Граммы', short: 'г', toGrams: 1 },
-  { key: 'mg', label: 'Миллиграммы', short: 'мг', toGrams: 0.001 },
-  { key: 'ton', label: 'Тонны', short: 'т', toGrams: 1_000_000 },
-  { key: 'lb', label: 'Фунты', short: 'фнт', toGrams: 453.59237 },
-  { key: 'oz', label: 'Унции', short: 'унц', toGrams: 28.349523125 },
-  { key: 'st', label: 'Стоуны', short: 'стн', toGrams: 6350.29318 },
+  { key: 'kg', label: 'Килограммы', labelEn: 'Kilograms', short: 'кг', shortEn: 'kg', toGrams: 1000 },
+  { key: 'g', label: 'Граммы', labelEn: 'Grams', short: 'г', shortEn: 'g', toGrams: 1 },
+  { key: 'mg', label: 'Миллиграммы', labelEn: 'Milligrams', short: 'мг', shortEn: 'mg', toGrams: 0.001 },
+  { key: 'ton', label: 'Тонны', labelEn: 'Tonnes', short: 'т', shortEn: 't', toGrams: 1_000_000 },
+  { key: 'lb', label: 'Фунты', labelEn: 'Pounds', short: 'фнт', shortEn: 'lb', toGrams: 453.59237 },
+  { key: 'oz', label: 'Унции', labelEn: 'Ounces', short: 'унц', shortEn: 'oz', toGrams: 28.349523125 },
+  { key: 'st', label: 'Стоуны', labelEn: 'Stones', short: 'стн', shortEn: 'st', toGrams: 6350.29318 },
 ];
 
 function formatNumber(value: number): string {
@@ -41,6 +44,8 @@ function formatNumber(value: number): string {
 
 export default function WeightConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [inputValue, setInputValue] = useState('1');
   const [fromUnit, setFromUnit] = useState('kg');
 
@@ -55,8 +60,8 @@ export default function WeightConverter() {
       const converted = isValid ? (numericValue * sourceUnit.toGrams) / target.toGrams : 0;
       return {
         key: target.key,
-        label: target.label,
-        short: target.short,
+        label: isEn ? target.labelEn : target.label,
+        short: isEn ? target.shortEn : target.short,
         formatted: isValid ? formatNumber(converted) : '—'
       };
     });
@@ -90,7 +95,7 @@ export default function WeightConverter() {
               input: {
                 endAdornment: (
                   <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
-                    {sourceUnit.short}
+                    {isEn ? sourceUnit.shortEn : sourceUnit.short}
                   </Typography>
                 )
               }
@@ -103,7 +108,7 @@ export default function WeightConverter() {
           >
             {units.map((u) => (
               <MenuItem key={u.key} value={u.key}>
-                {u.label} ({u.short})
+                {isEn ? u.labelEn : u.label} ({isEn ? u.shortEn : u.short})
               </MenuItem>
             ))}
           </Select>

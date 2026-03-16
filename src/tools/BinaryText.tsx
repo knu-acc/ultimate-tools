@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import SwapVert from '@mui/icons-material/SwapVert';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 type Mode = 'text-to-binary' | 'binary-to-text';
@@ -36,7 +37,7 @@ function binaryToText(binary: string): string {
   const groups = cleaned.split(/\s+/).filter(Boolean);
   const bytes: number[] = [];
   for (const g of groups) {
-    if (!/^[01]+$/.test(g)) return '[Ошибка: некорректный двоичный код]';
+    if (!/^[01]+$/.test(g)) return '[Error: invalid binary code / Ошибка: некорректный двоичный код]';
     if (g.length > 8) {
       for (let i = 0; i < g.length; i += 8) {
         const chunk = g.slice(i, i + 8);
@@ -95,6 +96,8 @@ function binaryToBytes(binary: string): number[] {
 
 export default function BinaryText() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<Mode>('text-to-binary');
 
@@ -128,10 +131,10 @@ export default function BinaryText() {
   };
 
   const representations = [
-    { key: 'binary', label: 'Двоичное (Binary)', value: isTextMode ? binary : input },
-    { key: 'hex', label: 'Шестнадцатеричное (Hex)', value: hexOutput },
-    { key: 'octal', label: 'Восьмеричное (Octal)', value: octalOutput },
-    { key: 'decimal', label: 'Десятичное (Decimal)', value: decimalOutput },
+    { key: 'binary', label: isEn ? 'Binary' : 'Двоичное (Binary)', value: isTextMode ? binary : input },
+    { key: 'hex', label: isEn ? 'Hexadecimal (Hex)' : 'Шестнадцатеричное (Hex)', value: hexOutput },
+    { key: 'octal', label: isEn ? 'Octal' : 'Восьмеричное (Octal)', value: octalOutput },
+    { key: 'decimal', label: isEn ? 'Decimal' : 'Десятичное (Decimal)', value: decimalOutput },
   ];
 
   const hasInput = input.trim().length > 0;
@@ -152,14 +155,14 @@ export default function BinaryText() {
         {/* Mode toggle */}
         <Box sx={{ display: 'flex', gap: 1, mb: 2, alignItems: 'center', flexWrap: 'wrap' }}>
           <Chip
-            label="Текст → Двоичный"
+            label={isEn ? 'Text → Binary' : 'Текст → Двоичный'}
             variant={isTextMode ? 'filled' : 'outlined'}
             color={isTextMode ? 'primary' : 'default'}
             onClick={() => { setMode('text-to-binary'); setInput(''); }}
             sx={{ fontWeight: 600, borderRadius: 2, px: 1 }}
           />
           <Chip
-            label="Двоичный → Текст"
+            label={isEn ? 'Binary → Text' : 'Двоичный → Текст'}
             variant={!isTextMode ? 'filled' : 'outlined'}
             color={!isTextMode ? 'primary' : 'default'}
             onClick={() => { setMode('binary-to-text'); setInput(''); }}
@@ -176,7 +179,7 @@ export default function BinaryText() {
             minRows={4}
             maxRows={10}
             fullWidth
-            placeholder={isTextMode ? 'Привет, мир!' : '01010000 01110010 01101001'}
+            placeholder={isTextMode ? (isEn ? 'Hello, world!' : 'Привет, мир!') : '01010000 01110010 01101001'}
             sx={{
               '& .MuiInputBase-root': {
                 fontFamily: 'monospace',
@@ -208,7 +211,7 @@ export default function BinaryText() {
               }}
             >
               <SwapVert sx={{ fontSize: 16 }} />
-              Поменять
+              {isEn ? 'Swap' : 'Поменять'}
             </Box>
           )}
         </Box>

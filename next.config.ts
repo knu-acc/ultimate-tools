@@ -20,6 +20,16 @@ const nextConfig: NextConfig = {
         destination: '/tools/barcode-gen',
         permanent: true,
       },
+      {
+        source: '/:locale(ru|en)/tools/qr-generator',
+        destination: '/:locale/tools/qr-code-gen',
+        permanent: true,
+      },
+      {
+        source: '/:locale(ru|en)/tools/barcode-generator',
+        destination: '/:locale/tools/barcode-gen',
+        permanent: true,
+      },
     ];
   },
   async headers() {

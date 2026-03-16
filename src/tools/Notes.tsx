@@ -20,6 +20,7 @@ import {
 import Add from '@mui/icons-material/Add';
 import Delete from '@mui/icons-material/Delete';
 import StickyNote2 from '@mui/icons-material/StickyNote2';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface Note {
   id: string;
@@ -68,6 +69,18 @@ function getWordCount(text: string): number {
 
 export default function Notes() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const formatDateI18n = (ts: number): string => {
+    return new Date(ts).toLocaleString(isEn ? 'en-US' : 'ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
   const [notes, setNotes] = useState<Note[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -93,7 +106,7 @@ export default function Notes() {
   const handleAdd = useCallback(() => {
     const newNote: Note = {
       id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      title: 'Новая заметка',
+      title: isEn ? 'New note' : 'Новая заметка',
       content: '',
       updatedAt: Date.now()
     };
@@ -165,7 +178,7 @@ export default function Notes() {
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <StickyNote2 sx={{ color: theme.palette.primary.main, fontSize: 20 }} />
                 <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                  Заметки ({notes.length})
+                  {isEn ? 'Notes' : 'Заметки'} ({notes.length})
                 </Typography>
               </Box>
               <Button
@@ -181,7 +194,7 @@ export default function Notes() {
                   '&:hover': { boxShadow: 'none' }
                 }}
               >
-                Создать
+                {isEn ? 'Create' : 'Создать'}
               </Button>
             </Box>
             <Divider />
@@ -202,10 +215,10 @@ export default function Notes() {
                     }}
                   />
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Нет заметок
+                    {isEn ? 'No notes' : 'Нет заметок'}
                   </Typography>
                   <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-                    Нажмите «Создать» чтобы добавить
+                    {isEn ? 'Click "Create" to add one' : 'Нажмите «Создать» чтобы добавить'}
                   </Typography>
                 </Box>
               )}
@@ -246,8 +259,8 @@ export default function Notes() {
                     }}
                   >
                     <ListItemText
-                      primary={note.title || 'Без названия'}
-                      secondary={formatDate(note.updatedAt)}
+                      primary={note.title || (isEn ? 'Untitled' : 'Без названия')}
+                      secondary={formatDateI18n(note.updatedAt)}
                       primaryTypographyProps={{
                         noWrap: true,
                         fontWeight: note.id === activeId ? 600 : 400,
@@ -289,7 +302,7 @@ export default function Notes() {
                     fullWidth
                     value={activeNote.title}
                     onChange={(e) => handleTitleChange(e.target.value)}
-                    placeholder="Название заметки..."
+                    placeholder={isEn ? 'Note title...' : 'Название заметки...'}
                     variant="standard"
                     slotProps={{
                       input: {
@@ -311,7 +324,7 @@ export default function Notes() {
                     fullWidth
                     value={activeNote.content}
                     onChange={(e) => handleContentChange(e.target.value)}
-                    placeholder="Начните вводить текст заметки..."
+                    placeholder={isEn ? 'Start typing your note...' : 'Начните вводить текст заметки...'}
                     variant="outlined"
                     sx={{
                       flex: 1,
@@ -345,14 +358,14 @@ export default function Notes() {
                 >
                   <Box sx={{ display: 'flex', gap: 2 }}>
                     <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                      Символов: {activeNote.content.length.toLocaleString('ru-RU')}
+                      {isEn ? 'Characters' : 'Символов'}: {activeNote.content.length.toLocaleString(isEn ? 'en-US' : 'ru-RU')}
                     </Typography>
                     <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                      Слов: {getWordCount(activeNote.content).toLocaleString('ru-RU')}
+                      {isEn ? 'Words' : 'Слов'}: {getWordCount(activeNote.content).toLocaleString(isEn ? 'en-US' : 'ru-RU')}
                     </Typography>
                   </Box>
                   <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-                    Изменено: {formatDate(activeNote.updatedAt)}
+                    {isEn ? 'Modified' : 'Изменено'}: {formatDateI18n(activeNote.updatedAt)}
                   </Typography>
                 </Box>
               </>
@@ -374,7 +387,7 @@ export default function Notes() {
                   }}
                 />
                 <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                  Выберите заметку или создайте новую
+                  {isEn ? 'Select a note or create a new one' : 'Выберите заметку или создайте новую'}
                 </Typography>
               </Box>
             )}

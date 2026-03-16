@@ -13,6 +13,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type VolumeUnit =
   | 'liters'
@@ -26,7 +27,7 @@ type VolumeUnit =
   | 'cubicMeters'
   | 'cubicCentimeters';
 
-const unitLabels: Record<VolumeUnit, string> = {
+const unitLabelsRu: Record<VolumeUnit, string> = {
   liters: 'Литры',
   milliliters: 'Миллилитры',
   gallons: 'Галлоны US',
@@ -39,7 +40,20 @@ const unitLabels: Record<VolumeUnit, string> = {
   cubicCentimeters: 'Кубические сантиметры'
 };
 
-const unitShort: Record<VolumeUnit, string> = {
+const unitLabelsEn: Record<VolumeUnit, string> = {
+  liters: 'Liters',
+  milliliters: 'Milliliters',
+  gallons: 'Gallons US',
+  quarts: 'Quarts',
+  pints: 'Pints',
+  cups: 'Cups',
+  tablespoons: 'Tablespoons',
+  teaspoons: 'Teaspoons',
+  cubicMeters: 'Cubic meters',
+  cubicCentimeters: 'Cubic centimeters'
+};
+
+const unitShortRu: Record<VolumeUnit, string> = {
   liters: 'л',
   milliliters: 'мл',
   gallons: 'gal',
@@ -50,6 +64,19 @@ const unitShort: Record<VolumeUnit, string> = {
   teaspoons: 'tsp',
   cubicMeters: 'м³',
   cubicCentimeters: 'см³'
+};
+
+const unitShortEn: Record<VolumeUnit, string> = {
+  liters: 'L',
+  milliliters: 'mL',
+  gallons: 'gal',
+  quarts: 'qt',
+  pints: 'pt',
+  cups: 'cup',
+  tablespoons: 'tbsp',
+  teaspoons: 'tsp',
+  cubicMeters: 'm³',
+  cubicCentimeters: 'cm³'
 };
 
 const toLiters: Record<VolumeUnit, number> = {
@@ -96,6 +123,10 @@ const commonConversions = [
 
 export default function VolumeConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+  const unitLabels = isEn ? unitLabelsEn : unitLabelsRu;
+  const unitShort = isEn ? unitShortEn : unitShortRu;
   const [input, setInput] = useState('1');
   const [sourceUnit, setSourceUnit] = useState<VolumeUnit>('liters');
 
@@ -198,7 +229,7 @@ export default function VolumeConverter() {
 
       <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Справочник
+          {isEn ? 'Reference' : 'Справочник'}
         </Typography>
         <Grid container spacing={1.5}>
           {commonConversions.map((item, idx) => (

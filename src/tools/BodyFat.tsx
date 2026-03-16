@@ -13,6 +13,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Gender = 'male' | 'female';
 
@@ -23,24 +24,34 @@ interface Category {
   color: string;
 }
 
-const MALE_CATEGORIES: Category[] = [
-  { label: 'Необходимый жир', min: 0, max: 6, color: '#1565c0' },
-  { label: 'Атлеты', min: 6, max: 14, color: '#2e7d32' },
-  { label: 'Фитнес', min: 14, max: 18, color: '#558b2f' },
-  { label: 'Средний уровень', min: 18, max: 25, color: '#f9a825' },
-  { label: 'Избыточный жир', min: 25, max: 100, color: '#c62828' },
+interface CategoryI18n {
+  labelRu: string;
+  labelEn: string;
+  min: number;
+  max: number;
+  color: string;
+}
+
+const MALE_CATEGORIES: CategoryI18n[] = [
+  { labelRu: 'Необходимый жир', labelEn: 'Essential fat', min: 0, max: 6, color: '#1565c0' },
+  { labelRu: 'Атлеты', labelEn: 'Athletes', min: 6, max: 14, color: '#2e7d32' },
+  { labelRu: 'Фитнес', labelEn: 'Fitness', min: 14, max: 18, color: '#558b2f' },
+  { labelRu: 'Средний уровень', labelEn: 'Average', min: 18, max: 25, color: '#f9a825' },
+  { labelRu: 'Избыточный жир', labelEn: 'Excess fat', min: 25, max: 100, color: '#c62828' },
 ];
 
-const FEMALE_CATEGORIES: Category[] = [
-  { label: 'Необходимый жир', min: 0, max: 14, color: '#1565c0' },
-  { label: 'Атлеты', min: 14, max: 21, color: '#2e7d32' },
-  { label: 'Фитнес', min: 21, max: 25, color: '#558b2f' },
-  { label: 'Средний уровень', min: 25, max: 32, color: '#f9a825' },
-  { label: 'Избыточный жир', min: 32, max: 100, color: '#c62828' },
+const FEMALE_CATEGORIES: CategoryI18n[] = [
+  { labelRu: 'Необходимый жир', labelEn: 'Essential fat', min: 0, max: 14, color: '#1565c0' },
+  { labelRu: 'Атлеты', labelEn: 'Athletes', min: 14, max: 21, color: '#2e7d32' },
+  { labelRu: 'Фитнес', labelEn: 'Fitness', min: 21, max: 25, color: '#558b2f' },
+  { labelRu: 'Средний уровень', labelEn: 'Average', min: 25, max: 32, color: '#f9a825' },
+  { labelRu: 'Избыточный жир', labelEn: 'Excess fat', min: 32, max: 100, color: '#c62828' },
 ];
 
 export default function BodyFat() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [gender, setGender] = useState<Gender>('male');
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
@@ -72,10 +83,10 @@ export default function BodyFat() {
 
       bodyFatPct = 86.010 * Math.log10(diff) - 70.041 * Math.log10(h) + 36.76;
       formulaSteps = [
-        `Талия - Шея = ${wa} - ${n} = ${diff.toFixed(1)} см`,
+        isEn ? `Waist - Neck = ${wa} - ${n} = ${diff.toFixed(1)} cm` : `Талия - Шея = ${wa} - ${n} = ${diff.toFixed(1)} см`,
         `86.010 × log10(${diff.toFixed(1)}) = ${(86.010 * Math.log10(diff)).toFixed(2)}`,
         `70.041 × log10(${h}) = ${(70.041 * Math.log10(h)).toFixed(2)}`,
-        `Результат: ${(86.010 * Math.log10(diff)).toFixed(2)} - ${(70.041 * Math.log10(h)).toFixed(2)} + 36.76 = ${bodyFatPct.toFixed(1)}%`,
+        `${isEn ? 'Result' : 'Результат'}: ${(86.010 * Math.log10(diff)).toFixed(2)} - ${(70.041 * Math.log10(h)).toFixed(2)} + 36.76 = ${bodyFatPct.toFixed(1)}%`,
       ];
     } else {
       const hi = parseFloat(hip);
@@ -87,10 +98,10 @@ export default function BodyFat() {
 
       bodyFatPct = 163.205 * Math.log10(sum) - 97.684 * Math.log10(h) - 78.387;
       formulaSteps = [
-        `Талия + Бёдра - Шея = ${wa} + ${hi} - ${n} = ${sum.toFixed(1)} см`,
+        isEn ? `Waist + Hips - Neck = ${wa} + ${hi} - ${n} = ${sum.toFixed(1)} cm` : `Талия + Бёдра - Шея = ${wa} + ${hi} - ${n} = ${sum.toFixed(1)} см`,
         `163.205 × log10(${sum.toFixed(1)}) = ${(163.205 * Math.log10(sum)).toFixed(2)}`,
         `97.684 × log10(${h}) = ${(97.684 * Math.log10(h)).toFixed(2)}`,
-        `Результат: ${(163.205 * Math.log10(sum)).toFixed(2)} - ${(97.684 * Math.log10(h)).toFixed(2)} - 78.387 = ${bodyFatPct.toFixed(1)}%`,
+        `${isEn ? 'Result' : 'Результат'}: ${(163.205 * Math.log10(sum)).toFixed(2)} - ${(97.684 * Math.log10(h)).toFixed(2)} - 78.387 = ${bodyFatPct.toFixed(1)}%`,
       ];
     }
 
@@ -106,7 +117,7 @@ export default function BodyFat() {
   }, [gender, weight, height, neck, waist, hip]);
 
   const formatNum = (n: number) =>
-    n.toLocaleString('ru-RU', { maximumFractionDigits: 1 });
+    n.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 1 });
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
@@ -143,8 +154,8 @@ export default function BodyFat() {
               }
             }}
           >
-            <ToggleButton value="male">Мужчина</ToggleButton>
-            <ToggleButton value="female">Женщина</ToggleButton>
+            <ToggleButton value="male">{isEn ? 'Male' : 'Мужчина'}</ToggleButton>
+            <ToggleButton value="female">{isEn ? 'Female' : 'Женщина'}</ToggleButton>
           </ToggleButtonGroup>
         </Box>
 
@@ -152,7 +163,7 @@ export default function BodyFat() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Вес, кг"
+              placeholder={isEn ? 'Weight, kg' : 'Вес, кг'}
               type="number"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
@@ -164,7 +175,7 @@ export default function BodyFat() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Рост, см"
+              placeholder={isEn ? 'Height, cm' : 'Рост, см'}
               type="number"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
@@ -176,7 +187,7 @@ export default function BodyFat() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Обхват шеи, см"
+              placeholder={isEn ? 'Neck circumference, cm' : 'Обхват шеи, см'}
               type="number"
               value={neck}
               onChange={(e) => setNeck(e.target.value)}
@@ -188,7 +199,7 @@ export default function BodyFat() {
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
               fullWidth
-              placeholder="Обхват талии, см"
+              placeholder={isEn ? 'Waist circumference, cm' : 'Обхват талии, см'}
               type="number"
               value={waist}
               onChange={(e) => setWaist(e.target.value)}
@@ -201,7 +212,7 @@ export default function BodyFat() {
             <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
-                placeholder="Обхват бёдер, см"
+                placeholder={isEn ? 'Hip circumference, cm' : 'Обхват бёдер, см'}
                 type="number"
                 value={hip}
                 onChange={(e) => setHip(e.target.value)}
@@ -229,13 +240,13 @@ export default function BodyFat() {
             }}
           >
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-              Процент жира в организме
+              {isEn ? 'Body fat percentage' : 'Процент жира в организме'}
             </Typography>
             <Typography variant="h3" sx={{ fontWeight: 700, color: results.category.color, mb: 1 }}>
               {formatNum(results.bodyFatPct)}%
             </Typography>
             <Chip
-              label={results.category.label}
+              label={isEn ? results.category.labelEn : results.category.labelRu}
               sx={{
                 fontWeight: 600,
                 color: '#fff',
@@ -258,10 +269,10 @@ export default function BodyFat() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
-                  Жировая масса
+                  {isEn ? 'Fat mass' : 'Жировая масса'}
                 </Typography>
                 <Typography variant="h5" sx={{ fontWeight: 700, color: '#ef6c00' }}>
-                  {formatNum(results.fatMass)} кг
+                  {formatNum(results.fatMass)} {isEn ? 'kg' : 'кг'}
                 </Typography>
               </Paper>
             </Grid>
@@ -276,10 +287,10 @@ export default function BodyFat() {
                 }}
               >
                 <Typography variant="caption" color="text.secondary">
-                  Сухая масса тела
+                  {isEn ? 'Lean body mass' : 'Сухая масса тела'}
                 </Typography>
                 <Typography variant="h5" sx={{ fontWeight: 700, color: '#2e7d32' }}>
-                  {formatNum(results.leanMass)} кг
+                  {formatNum(results.leanMass)} {isEn ? 'kg' : 'кг'}
                 </Typography>
               </Paper>
             </Grid>
@@ -295,7 +306,7 @@ export default function BodyFat() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
-              Состав тела
+              {isEn ? 'Body composition' : 'Состав тела'}
             </Typography>
             <Box
               sx={{
@@ -317,7 +328,7 @@ export default function BodyFat() {
                 }}
               >
                 <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.65rem' }}>
-                  Жир {formatNum(results.bodyFatPct)}%
+                  {isEn ? 'Fat' : 'Жир'} {formatNum(results.bodyFatPct)}%
                 </Typography>
               </Box>
               <Box
@@ -330,7 +341,7 @@ export default function BodyFat() {
                 }}
               >
                 <Typography variant="caption" sx={{ color: '#fff', fontWeight: 700, fontSize: '0.65rem' }}>
-                  Сухая масса {formatNum(100 - results.bodyFatPct)}%
+                  {isEn ? 'Lean mass' : 'Сухая масса'} {formatNum(100 - results.bodyFatPct)}%
                 </Typography>
               </Box>
             </Box>
@@ -346,14 +357,14 @@ export default function BodyFat() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
-              Категории ({gender === 'male' ? 'мужчины' : 'женщины'})
+              {isEn ? `Categories (${gender === 'male' ? 'male' : 'female'})` : `Категории (${gender === 'male' ? 'мужчины' : 'женщины'})`}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              {results.categories.map((cat) => {
-                const isActive = results.category.label === cat.label;
+              {results.categories.map((cat: CategoryI18n) => {
+                const isActive = results.category.labelRu === cat.labelRu;
                 return (
                   <Box
-                    key={cat.label}
+                    key={cat.labelRu}
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
@@ -381,7 +392,7 @@ export default function BodyFat() {
                         color: isActive ? cat.color : 'text.secondary'
                       }}
                     >
-                      {cat.label}
+                      {isEn ? cat.labelEn : cat.labelRu}
                     </Typography>
                     <Typography variant="caption" color="text.disabled" sx={{ fontFamily: 'monospace' }}>
                       {cat.min}–{cat.max < 100 ? cat.max : `${cat.min}+`}%
@@ -402,7 +413,7 @@ export default function BodyFat() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
-              Расчёт
+              {isEn ? 'Calculation' : 'Расчёт'}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               {results.formulaSteps.map((step, i) => (

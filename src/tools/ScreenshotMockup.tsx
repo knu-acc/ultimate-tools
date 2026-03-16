@@ -19,11 +19,14 @@ import DownloadIcon from '@mui/icons-material/Download';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DevicesIcon from '@mui/icons-material/Devices';
 import ColorPickerInput from '@/src/components/ColorPickerInput';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type DeviceFrame = 'browser' | 'iphone' | 'macbook' | 'ipad';
 
 export default function ScreenshotMockup() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [dragging, setDragging] = useState(false);
   const [device, setDevice] = useState<DeviceFrame>('browser');
@@ -250,7 +253,7 @@ export default function ScreenshotMockup() {
   }, []);
 
   const devices: { value: DeviceFrame; label: string }[] = [
-    { value: 'browser', label: 'Браузер' },
+    { value: 'browser', label: isEn ? 'Browser' : 'Браузер' },
     { value: 'iphone', label: 'iPhone' },
     { value: 'macbook', label: 'MacBook' },
     { value: 'ipad', label: 'iPad' },
@@ -291,10 +294,10 @@ export default function ScreenshotMockup() {
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
           <Typography variant="h6" sx={{ mb: 1 }}>
-            Перетащите скриншот сюда
+            {isEn ? 'Drag and drop a screenshot here' : 'Перетащите скриншот сюда'}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            или нажмите для выбора файла
+            {isEn ? 'or click to select a file' : 'или нажмите для выбора файла'}
           </Typography>
         </Paper>
       )}
@@ -303,7 +306,7 @@ export default function ScreenshotMockup() {
         <>
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-              <DevicesIcon /> Настройки мокапа
+              <DevicesIcon /> {isEn ? 'Mockup settings' : 'Настройки мокапа'}
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
@@ -321,7 +324,7 @@ export default function ScreenshotMockup() {
             <Grid container spacing={3}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
-                  Отступ: {padding}px
+                  {isEn ? 'Padding' : 'Отступ'}: {padding}px
                 </Typography>
                 <Slider
                   value={padding}
@@ -339,23 +342,23 @@ export default function ScreenshotMockup() {
                       onChange={(e) => setShadow(e.target.checked)}
                     />
                   }
-                  label="Тень"
+                  label={isEn ? 'Shadow' : 'Тень'}
                 />
               </Grid>
             </Grid>
 
             <Grid container spacing={2} sx={{ mt: 1 }}>
               <Grid size={{ xs: 6 }}>
-                <Typography variant="caption" color="text.secondary">Цвет фона (начало)</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Background color (start)' : 'Цвет фона (начало)'}</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                  <ColorPickerInput value={bgColor} onChange={setBgColor} label="Цвет фона" size="small" />
+                  <ColorPickerInput value={bgColor} onChange={setBgColor} label={isEn ? 'Background color' : 'Цвет фона'} size="small" />
                   <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{bgColor}</Typography>
                 </Box>
               </Grid>
               <Grid size={{ xs: 6 }}>
-                <Typography variant="caption" color="text.secondary">Цвет фона (конец)</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Background color (end)' : 'Цвет фона (конец)'}</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                  <ColorPickerInput value={bgGradient} onChange={setBgGradient} label="Цвет фона (конец)" size="small" />
+                  <ColorPickerInput value={bgGradient} onChange={setBgGradient} label={isEn ? 'Background color (end)' : 'Цвет фона (конец)'} size="small" />
                   <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{bgGradient}</Typography>
                 </Box>
               </Grid>
@@ -367,7 +370,7 @@ export default function ScreenshotMockup() {
                 startIcon={<DownloadIcon />}
                 onClick={handleDownload}
               >
-                Скачать PNG
+                {isEn ? 'Download PNG' : 'Скачать PNG'}
               </Button>
               <Button variant="outlined" onClick={clearImage} color="error" sx={{ minWidth: 48 }}>
                 <DeleteIcon />
@@ -378,7 +381,7 @@ export default function ScreenshotMockup() {
           {/* Preview */}
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-              Предпросмотр
+              {isEn ? 'Preview' : 'Предпросмотр'}
             </Typography>
             <Box
               sx={{

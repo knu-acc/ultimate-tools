@@ -8,6 +8,7 @@ import {
 import { Download } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
 import ColorPickerInput from '@/src/components/ColorPickerInput';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 import { generateQR } from './qrcore';
@@ -23,6 +24,8 @@ export default function QrGenerator() {
   const [size, setSize] = useState(256);
   const [fgColor, setFgColor] = useState('#000000');
   const [bgColor, setBgColor] = useState('#FFFFFF');
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   useEffect(() => {
     if (!text.trim() || !canvasRef.current) return;
@@ -82,12 +85,12 @@ export default function QrGenerator() {
               rows={3}
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Введите текст или URL..."
+              placeholder={isEn ? 'Enter text or URL...' : 'Введите текст или URL...'}
               sx={{ mb: 2 }}
             />
 
             <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
-              Размер: {size}px
+              {isEn ? 'Size' : 'Размер'}: {size}px
             </Typography>
             <Slider
               value={size}
@@ -100,23 +103,25 @@ export default function QrGenerator() {
 
             <Grid container spacing={2}>
               <Grid size={6}>
-                <Typography variant="caption" color="text.secondary">Цвет QR</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'QR color' : 'Цвет QR'}</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                  <ColorPickerInput value={fgColor} onChange={setFgColor} label="Цвет QR" size="small" />
+                  <ColorPickerInput value={fgColor} onChange={setFgColor} label={isEn ? 'QR color' : 'Цвет QR'} size="small" />
                   <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{fgColor}</Typography>
                 </Box>
               </Grid>
               <Grid size={6}>
-                <Typography variant="caption" color="text.secondary">Цвет фона</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Background color' : 'Цвет фона'}</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                  <ColorPickerInput value={bgColor} onChange={setBgColor} label="Цвет фона" size="small" />
+                  <ColorPickerInput value={bgColor} onChange={setBgColor} label={isEn ? 'Background color' : 'Цвет фона'} size="small" />
                   <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>{bgColor}</Typography>
                 </Box>
               </Grid>
             </Grid>
 
             <Typography variant="caption" color="text.secondary" sx={{ mt: 2, display: 'block' }}>
-              Генератор создаёт полноценные сканируемые QR-коды стандарта ISO 18004.
+              {isEn
+                ? 'The generator creates fully scannable QR codes compliant with ISO 18004.'
+                : 'Генератор создаёт полноценные сканируемые QR-коды стандарта ISO 18004.'}
             </Typography>
           </Paper>
         </Grid>
@@ -149,7 +154,7 @@ export default function QrGenerator() {
                 onClick={handleDownload}
                 sx={{ borderRadius: 5 }}
               >
-                Скачать PNG
+                {isEn ? 'Download PNG' : 'Скачать PNG'}
               </Button>
               <CopyButton text={text} />
             </Box>

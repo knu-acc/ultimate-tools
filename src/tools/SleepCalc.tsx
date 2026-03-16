@@ -11,6 +11,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Mode = 'bedtime' | 'wakeup';
 
@@ -36,13 +37,6 @@ function addMinutes(hours: number, minutes: number, add: number): { h: number; m
   return { h: Math.floor(total / 60), m: total % 60 };
 }
 
-function formatDuration(minutes: number): string {
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  if (m === 0) return `${h} ч`;
-  return `${h} ч ${m} мин`;
-}
-
 function getColor(durationMin: number): string {
   const hours = durationMin / 60;
   if (hours >= 7.5 && hours <= 9) return '#2e7d32';
@@ -50,26 +44,42 @@ function getColor(durationMin: number): string {
   return '#d32f2f';
 }
 
-function getTag(durationMin: number): string {
-  const hours = durationMin / 60;
-  if (hours >= 7.5 && hours <= 9) return 'Рекомендуется';
-  if (hours >= 6 && hours < 7.5) return 'Допустимо';
-  return 'Недостаточно';
-}
-
-const TIPS = [
-  'Ложитесь и вставайте в одно и то же время каждый день, даже в выходные.',
-  'Избегайте кофеина за 6 часов до сна и тяжёлой еды за 2–3 часа.',
-  'Выключите экраны (телефон, ТВ, ноутбук) за 30–60 минут до сна.',
-  'Поддерживайте температуру в спальне 18–20 °C и проветривайте комнату.',
-  'Физическая активность днём улучшает качество сна, но не тренируйтесь перед сном.',
-  'Короткий дневной сон (до 20 мин) полезен, но длинный нарушает ночной режим.',
-];
-
 export default function SleepCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [mode, setMode] = useState<Mode>('bedtime');
   const [time, setTime] = useState('');
+
+  function formatDuration(minutes: number): string {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    if (m === 0) return isEn ? `${h} h` : `${h} ч`;
+    return isEn ? `${h} h ${m} min` : `${h} ч ${m} мин`;
+  }
+
+  function getTag(durationMin: number): string {
+    const hours = durationMin / 60;
+    if (hours >= 7.5 && hours <= 9) return isEn ? 'Recommended' : 'Рекомендуется';
+    if (hours >= 6 && hours < 7.5) return isEn ? 'Acceptable' : 'Допустимо';
+    return isEn ? 'Insufficient' : 'Недостаточно';
+  }
+
+  const tips = isEn ? [
+    'Go to bed and wake up at the same time every day, even on weekends.',
+    'Avoid caffeine 6 hours before bed and heavy meals 2-3 hours before.',
+    'Turn off screens (phone, TV, laptop) 30-60 minutes before bed.',
+    'Keep your bedroom temperature at 64-68 °F (18-20 °C) and ventilate the room.',
+    'Physical activity during the day improves sleep quality, but don\'t exercise before bed.',
+    'A short nap (up to 20 min) is beneficial, but a long one disrupts nighttime sleep.',
+  ] : [
+    'Ложитесь и вставайте в одно и то же время каждый день, даже в выходные.',
+    'Избегайте кофеина за 6 часов до сна и тяжёлой еды за 2–3 часа.',
+    'Выключите экраны (телефон, ТВ, ноутбук) за 30–60 минут до сна.',
+    'Поддерживайте температуру в спальне 18–20 °C и проветривайте комнату.',
+    'Физическая активность днём улучшает качество сна, но не тренируйтесь перед сном.',
+    'Короткий дневной сон (до 20 мин) полезен, но длинный нарушает ночной режим.',
+  ];
 
   const options = useMemo((): SleepOption[] => {
     if (!time) return [];
@@ -81,7 +91,7 @@ export default function SleepCalc() {
     const results: SleepOption[] = [];
 
     if (mode === 'bedtime') {
-      // Given bedtime, calculate wake-up times (4–6 cycles)
+      // Given bedtime, calculate wake-up times (4-6 cycles)
       for (let cycles = 6; cycles >= 4; cycles--) {
         const sleepMin = cycles * CYCLE_MINUTES;
         const totalMin = sleepMin + FALL_ASLEEP_MINUTES;
@@ -90,13 +100,13 @@ export default function SleepCalc() {
           time: padTime(wake.h, wake.m),
           cycles,
           duration: sleepMin,
-          label: `Подъём в ${padTime(wake.h, wake.m)}`,
+          label: isEn ? `Wake up at ${padTime(wake.h, wake.m)}` : `Подъём в ${padTime(wake.h, wake.m)}`,
           color: getColor(sleepMin),
           tag: getTag(sleepMin)
         });
       }
     } else {
-      // Given wake-up time, calculate bedtimes (4–6 cycles)
+      // Given wake-up time, calculate bedtimes (4-6 cycles)
       for (let cycles = 6; cycles >= 4; cycles--) {
         const sleepMin = cycles * CYCLE_MINUTES;
         const totalMin = sleepMin + FALL_ASLEEP_MINUTES;
@@ -105,7 +115,7 @@ export default function SleepCalc() {
           time: padTime(bed.h, bed.m),
           cycles,
           duration: sleepMin,
-          label: `Лечь в ${padTime(bed.h, bed.m)}`,
+          label: isEn ? `Go to bed at ${padTime(bed.h, bed.m)}` : `Лечь в ${padTime(bed.h, bed.m)}`,
           color: getColor(sleepMin),
           tag: getTag(sleepMin)
         });
@@ -113,7 +123,14 @@ export default function SleepCalc() {
     }
 
     return results;
-  }, [time, mode]);
+  }, [time, mode, isEn]);
+
+  const pluralizeCycles = (cycles: number): string => {
+    if (isEn) {
+      return cycles === 1 ? 'cycle' : 'cycles';
+    }
+    return cycles === 6 ? 'циклов' : cycles === 5 ? 'циклов' : 'цикла';
+  };
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
@@ -129,8 +146,8 @@ export default function SleepCalc() {
       >
         <Box sx={{ display: 'flex', gap: 1.5, mb: 2.5, flexWrap: 'wrap' }}>
           {([
-            { key: 'bedtime' as Mode, label: 'Я знаю время отхода ко сну' },
-            { key: 'wakeup' as Mode, label: 'Я знаю время подъёма' },
+            { key: 'bedtime' as Mode, label: isEn ? 'I know my bedtime' : 'Я знаю время отхода ко сну' },
+            { key: 'wakeup' as Mode, label: isEn ? 'I know my wake-up time' : 'Я знаю время подъёма' },
           ]).map((opt) => {
             const isActive = mode === opt.key;
             return (
@@ -171,7 +188,7 @@ export default function SleepCalc() {
         <TextField
           fullWidth
           type="time"
-          placeholder={mode === 'bedtime' ? 'Время отхода ко сну' : 'Время подъёма'}
+          placeholder={mode === 'bedtime' ? (isEn ? 'Bedtime' : 'Время отхода ко сну') : (isEn ? 'Wake-up time' : 'Время подъёма')}
           value={time}
           onChange={(e) => setTime(e.target.value)}
           slotProps={{
@@ -180,7 +197,7 @@ export default function SleepCalc() {
         />
 
         <Typography variant="caption" color="text.disabled" sx={{ mt: 1, display: 'block' }}>
-          Учитывается ~14 минут на засыпание. Цикл сна — 90 минут.
+          {isEn ? '~14 minutes to fall asleep are accounted for. Sleep cycle is 90 minutes.' : 'Учитывается ~14 минут на засыпание. Цикл сна — 90 минут.'}
         </Typography>
       </Paper>
 
@@ -196,8 +213,8 @@ export default function SleepCalc() {
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
             {mode === 'bedtime'
-              ? 'Оптимальное время подъёма'
-              : 'Оптимальное время отхода ко сну'}
+              ? (isEn ? 'Optimal wake-up time' : 'Оптимальное время подъёма')
+              : (isEn ? 'Optimal bedtime' : 'Оптимальное время отхода ко сну')}
           </Typography>
 
           <Grid container spacing={2}>
@@ -235,10 +252,10 @@ export default function SleepCalc() {
                     }}
                   />
                   <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
-                    {opt.cycles} {opt.cycles === 6 ? 'циклов' : opt.cycles === 5 ? 'циклов' : 'цикла'}
+                    {opt.cycles} {pluralizeCycles(opt.cycles)}
                   </Typography>
                   <Typography variant="caption" color="text.disabled">
-                    {formatDuration(opt.duration)} сна
+                    {formatDuration(opt.duration)} {isEn ? 'of sleep' : 'сна'}
                   </Typography>
                 </Paper>
               </Grid>
@@ -258,13 +275,13 @@ export default function SleepCalc() {
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1.5 }}>
-            Цветовая шкала
+            {isEn ? 'Color scale' : 'Цветовая шкала'}
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             {[
-              { color: '#2e7d32', label: 'Рекомендуется', desc: '7.5–9 часов (5–6 циклов)' },
-              { color: '#f57c00', label: 'Допустимо', desc: '6 часов (4 цикла)' },
-              { color: '#d32f2f', label: 'Недостаточно', desc: 'менее 6 часов' },
+              { color: '#2e7d32', label: isEn ? 'Recommended' : 'Рекомендуется', desc: isEn ? '7.5-9 hours (5-6 cycles)' : '7.5–9 часов (5–6 циклов)' },
+              { color: '#f57c00', label: isEn ? 'Acceptable' : 'Допустимо', desc: isEn ? '6 hours (4 cycles)' : '6 часов (4 цикла)' },
+              { color: '#d32f2f', label: isEn ? 'Insufficient' : 'Недостаточно', desc: isEn ? 'less than 6 hours' : 'менее 6 часов' },
             ].map((item) => (
               <Box key={item.label} sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                 <Box
@@ -300,10 +317,10 @@ export default function SleepCalc() {
         }}
       >
         <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
-          Советы по гигиене сна
+          {isEn ? 'Sleep hygiene tips' : 'Советы по гигиене сна'}
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-          {TIPS.map((tip, i) => (
+          {tips.map((tip, i) => (
             <Box key={i} sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start' }}>
               <Box
                 sx={{

@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface Todo {
   id: number;
@@ -56,6 +57,8 @@ export default function TodoList() {
   const [input, setInput] = useState('');
   const [filter, setFilter] = useState<FilterType>('all');
   const [loaded, setLoaded] = useState(false);
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -111,10 +114,10 @@ export default function TodoList() {
   const activeCount = todos.filter((t) => !t.completed).length;
   const completedCount = totalCount - activeCount;
 
-  const filters: { key: FilterType; label: string }[] = [
-    { key: 'all', label: 'Все' },
-    { key: 'active', label: 'Активные' },
-    { key: 'completed', label: 'Завершённые' },
+  const filters: { key: FilterType; label: string; labelEn: string }[] = [
+    { key: 'all', label: 'Все', labelEn: 'All' },
+    { key: 'active', label: 'Активные', labelEn: 'Active' },
+    { key: 'completed', label: 'Завершённые', labelEn: 'Completed' },
   ];
 
   return (
@@ -124,7 +127,7 @@ export default function TodoList() {
           <Box sx={{ display: 'flex', gap: 1.5, mb: 2 }}>
             <TextField
               fullWidth
-              placeholder="Добавить новую задачу..."
+              placeholder={isEn ? 'Add a new task...' : 'Добавить новую задачу...'}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -147,7 +150,7 @@ export default function TodoList() {
                 textTransform: 'none'
               }}
             >
-              Добавить
+              {isEn ? 'Add' : 'Добавить'}
             </Button>
           </Box>
 
@@ -156,7 +159,7 @@ export default function TodoList() {
             {filters.map((f) => (
               <Chip
                 key={f.key}
-                label={f.label}
+                label={isEn ? f.labelEn : f.label}
                 variant={filter === f.key ? 'filled' : 'outlined'}
                 color={filter === f.key ? 'primary' : 'default'}
                 clickable
@@ -179,13 +182,13 @@ export default function TodoList() {
             }}
           >
             <Typography variant="body2" color="text.secondary">
-              Всего: <strong>{totalCount}</strong>
+              {isEn ? 'Total' : 'Всего'}: <strong>{totalCount}</strong>
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Активных: <strong>{activeCount}</strong>
+              {isEn ? 'Active' : 'Активных'}: <strong>{activeCount}</strong>
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Завершённых: <strong>{completedCount}</strong>
+              {isEn ? 'Completed' : 'Завершённых'}: <strong>{completedCount}</strong>
             </Typography>
           </Box>
 
@@ -196,10 +199,10 @@ export default function TodoList() {
             <Box sx={{ textAlign: 'center', py: 6 }}>
               <Typography variant="body1" color="text.secondary">
                 {totalCount === 0
-                  ? 'Список задач пуст. Добавьте первую задачу!'
+                  ? (isEn ? 'Task list is empty. Add your first task!' : 'Список задач пуст. Добавьте первую задачу!')
                   : filter === 'active'
-                    ? 'Нет активных задач'
-                    : 'Нет завершённых задач'}
+                    ? (isEn ? 'No active tasks' : 'Нет активных задач')
+                    : (isEn ? 'No completed tasks' : 'Нет завершённых задач')}
               </Typography>
             </Box>
           ) : (
@@ -275,7 +278,7 @@ export default function TodoList() {
                     textTransform: 'none'
                   }}
                 >
-                  Очистить завершённые ({completedCount})
+                  {isEn ? `Clear completed (${completedCount})` : `Очистить завершённые (${completedCount})`}
                 </Button>
               </Box>
             </>

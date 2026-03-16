@@ -65,3 +65,17 @@ export function setLocaleToStorage(locale: Locale): void {
   // Also set cookie for SSR
   document.cookie = `locale=${locale};path=/;max-age=31536000;samesite=lax`;
 }
+
+/** Build a locale-prefixed href, e.g. localizedHref('/tools/x', 'en') → '/en/tools/x' */
+export function localizedHref(path: string, locale: Locale): string {
+  // Strip existing locale prefix if present
+  const stripped = path.replace(/^\/(ru|en)(\/|$)/, '/');
+  const clean = stripped === '' ? '/' : stripped;
+  return `/${locale}${clean === '/' ? '' : clean}`;
+}
+
+/** Extract locale from a pathname, e.g. '/en/tools/x' → 'en' */
+export function getLocaleFromPathname(pathname: string): Locale {
+  const match = pathname.match(/^\/(ru|en)(\/|$)/);
+  return (match?.[1] as Locale) || DEFAULT_LOCALE;
+}

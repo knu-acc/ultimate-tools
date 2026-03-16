@@ -14,6 +14,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 const LOREM_WORDS = [
@@ -80,6 +81,8 @@ export default function LoremGenerator() {
   const [wordsPerParagraph, setWordsPerParagraph] = useState(50);
   const [startWithLorem, setStartWithLorem] = useState(true);
   const [output, setOutput] = useState('');
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
 
   const stats = useMemo(() => {
     if (!output) return { words: 0, chars: 0, charsNoSpace: 0, paragraphs: 0 };
@@ -113,7 +116,7 @@ export default function LoremGenerator() {
       <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
         <TextField
           fullWidth
-          placeholder="Абзацы"
+          placeholder={isEn ? 'Paragraphs' : 'Абзацы'}
           type="number"
           value={paragraphCount}
           onChange={(e) => {
@@ -127,7 +130,7 @@ export default function LoremGenerator() {
         />
 
         <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-          Слов в абзаце: <strong>{wordsPerParagraph}</strong>
+          {isEn ? 'Words per paragraph' : 'Слов в абзаце'}: <strong>{wordsPerParagraph}</strong>
         </Typography>
         <Slider
           value={wordsPerParagraph}
@@ -155,7 +158,7 @@ export default function LoremGenerator() {
           }
           label={
             <Typography variant="body2">
-              Начинать с &quot;Lorem ipsum dolor sit amet...&quot;
+              {isEn ? 'Start with "Lorem ipsum dolor sit amet..."' : 'Начинать с "Lorem ipsum dolor sit amet..."'}
             </Typography>
           }
           sx={{ mb: 2, display: 'block' }}
@@ -167,7 +170,7 @@ export default function LoremGenerator() {
           fullWidth
           sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 3 }}
         >
-          Сгенерировать
+          {isEn ? 'Generate' : 'Сгенерировать'}
         </Button>
       </Paper>
 
@@ -185,14 +188,14 @@ export default function LoremGenerator() {
           >
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
               {[
-                { label: 'Абзацы', value: stats.paragraphs },
-                { label: 'Слова', value: stats.words },
-                { label: 'Символы', value: stats.chars },
-                { label: 'Без пробелов', value: stats.charsNoSpace },
+                { label: isEn ? 'Paragraphs' : 'Абзацы', value: stats.paragraphs },
+                { label: isEn ? 'Words' : 'Слова', value: stats.words },
+                { label: isEn ? 'Characters' : 'Символы', value: stats.chars },
+                { label: isEn ? 'No spaces' : 'Без пробелов', value: stats.charsNoSpace },
               ].map((item) => (
                 <Box key={item.label} sx={{ textAlign: 'center', minWidth: 80 }}>
                   <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
-                    {item.value.toLocaleString('ru-RU')}
+                    {item.value.toLocaleString(isEn ? 'en-US' : 'ru-RU')}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
                     {item.label}

@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { Refresh, Lock, LockOpen } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 function hslToHex(h: number, s: number, l: number): string {
   s /= 100;
@@ -69,6 +70,8 @@ function generatePalette(count: number = 5): string[] {
 
 export default function ColorPalette() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [colors, setColors] = useState<string[]>(generatePalette(5));
   const [locked, setLocked] = useState<boolean[]>(Array(5).fill(false));
   const regenerate = useCallback(() => {
@@ -137,7 +140,7 @@ export default function ColorPalette() {
           onClick={regenerate}
           sx={{ borderRadius: 3, px: 4, textTransform: 'none', fontWeight: 600 }}
         >
-          Генерировать (Пробел)
+          {isEn ? 'Generate (Space)' : 'Генерировать (Пробел)'}
         </Button>
         <CopyButton text={colors.join(', ')} />
       </Box>
@@ -188,7 +191,7 @@ export default function ColorPalette() {
         }}
       >
         <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-          CSS переменные
+          {isEn ? 'CSS Variables' : 'CSS переменные'}
         </Typography>
         <Box
           component="pre"

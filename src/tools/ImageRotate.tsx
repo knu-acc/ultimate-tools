@@ -21,16 +21,19 @@ import FlipIcon from '@mui/icons-material/Flip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ImageIcon from '@mui/icons-material/Image';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
-function formatFileSize(bytes: number): string {
-  if (bytes === 0) return '0 Б';
-  const units = ['Б', 'КБ', 'МБ', 'ГБ'];
+function formatFileSize(bytes: number, isEn: boolean): string {
+  if (bytes === 0) return isEn ? '0 B' : '0 Б';
+  const units = isEn ? ['B', 'KB', 'MB', 'GB'] : ['Б', 'КБ', 'МБ', 'ГБ'];
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${units[i]}`;
 }
 
 export default function ImageRotate() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [originalUrl, setOriginalUrl] = useState<string>('');
   const [resultUrl, setResultUrl] = useState<string>('');
@@ -201,10 +204,10 @@ export default function ImageRotate() {
         >
           <CloudUploadIcon sx={{ fontSize: 64, color: 'text.secondary', mb: 2, opacity: 0.6 }} />
           <Typography variant="h6" sx={{ mb: 1 }}>
-            Перетащите изображение сюда
+            {isEn ? 'Drag and drop an image here' : 'Перетащите изображение сюда'}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            или нажмите для выбора файла
+            {isEn ? 'or click to select a file' : 'или нажмите для выбора файла'}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
             <Chip label="JPEG" size="small" variant="outlined" />
@@ -220,20 +223,20 @@ export default function ImageRotate() {
           {/* Controls */}
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-              <RotateRightIcon /> Поворот и отражение
+              <RotateRightIcon /> {isEn ? 'Rotation and Flip' : 'Поворот и отражение'}
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
               <Chip
                 icon={<RotateLeftIcon />}
-                label="90° влево"
+                label={isEn ? '90° left' : '90° влево'}
                 variant="outlined"
                 onClick={() => rotateBy(-90)}
                 sx={{ cursor: 'pointer' }}
               />
               <Chip
                 icon={<RotateRightIcon />}
-                label="90° вправо"
+                label={isEn ? '90° right' : '90° вправо'}
                 variant="outlined"
                 onClick={() => rotateBy(90)}
                 sx={{ cursor: 'pointer' }}
@@ -256,7 +259,7 @@ export default function ImageRotate() {
             <Grid container spacing={2} alignItems="center" sx={{ mb: 2 }}>
               <Grid size={{ xs: 12, md: 8 }}>
                 <Typography variant="body2" sx={{ fontWeight: 500, mb: 1, color: 'text.secondary' }}>
-                  Произвольный угол: {rotation}°
+                  {isEn ? `Custom angle: ${rotation}°` : `Произвольный угол: ${rotation}°`}
                 </Typography>
                 <Slider
                   value={rotation}
@@ -272,7 +275,7 @@ export default function ImageRotate() {
                 <TextField
                   fullWidth
                   size="small"
-                  label="Градусы"
+                  label={isEn ? 'Degrees' : 'Градусы'}
                   type="number"
                   value={rotation}
                   onChange={(e) => {
@@ -288,7 +291,7 @@ export default function ImageRotate() {
             <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
               <Chip
                 icon={<FlipIcon />}
-                label="По горизонтали"
+                label={isEn ? 'Horizontal' : 'По горизонтали'}
                 variant={flipH ? 'filled' : 'outlined'}
                 color={flipH ? 'primary' : 'default'}
                 onClick={() => setFlipH(!flipH)}
@@ -296,7 +299,7 @@ export default function ImageRotate() {
               />
               <Chip
                 icon={<FlipIcon sx={{ transform: 'rotate(90deg)' }} />}
-                label="По вертикали"
+                label={isEn ? 'Vertical' : 'По вертикали'}
                 variant={flipV ? 'filled' : 'outlined'}
                 color={flipV ? 'primary' : 'default'}
                 onClick={() => setFlipV(!flipV)}
@@ -312,14 +315,14 @@ export default function ImageRotate() {
                 onClick={downloadResult}
                 disabled={!resultUrl}
               >
-                Скачать
+                {isEn ? 'Download' : 'Скачать'}
               </Button>
               <Button
                 variant="outlined"
                 startIcon={<RestartAltIcon />}
                 onClick={resetTransform}
               >
-                Сбросить
+                {isEn ? 'Reset' : 'Сбросить'}
               </Button>
               <Button variant="outlined" onClick={clearImage} color="error" sx={{ minWidth: 48 }}>
                 <DeleteIcon />
@@ -334,12 +337,12 @@ export default function ImageRotate() {
                 elevation={0}
                 sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
-                <Typography variant="caption" color="text.secondary">Оригинал</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Original' : 'Оригинал'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
                   {originalWidth} x {originalHeight}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {formatFileSize(originalFile.size)}
+                  {formatFileSize(originalFile.size, isEn)}
                 </Typography>
               </Paper>
             </Grid>
@@ -348,12 +351,18 @@ export default function ImageRotate() {
                 elevation={0}
                 sx={{ p: 2, textAlign: 'center', borderRadius: 3, transition: 'background-color 200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
-                <Typography variant="caption" color="text.secondary">Трансформация</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Transform' : 'Трансформация'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
                   {rotation}°
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {flipH && flipV ? 'Отражение: H + V' : flipH ? 'Отражение: H' : flipV ? 'Отражение: V' : 'Без отражения'}
+                  {flipH && flipV
+                    ? (isEn ? 'Flip: H + V' : 'Отражение: H + V')
+                    : flipH
+                    ? (isEn ? 'Flip: H' : 'Отражение: H')
+                    : flipV
+                    ? (isEn ? 'Flip: V' : 'Отражение: V')
+                    : (isEn ? 'No flip' : 'Без отражения')}
                 </Typography>
               </Paper>
             </Grid>
@@ -367,12 +376,12 @@ export default function ImageRotate() {
                   background: resultUrl ? alpha(theme.palette.success.main, 0.06) : undefined
                 }}
               >
-                <Typography variant="caption" color="text.secondary">Результат</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Result' : 'Результат'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: resultUrl ? 'success.main' : 'text.disabled' }}>
-                  {resultUrl ? formatFileSize(resultSize) : '—'}
+                  {resultUrl ? formatFileSize(resultSize, isEn) : '—'}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  Готово к скачиванию
+                  {isEn ? 'Ready to download' : 'Готово к скачиванию'}
                 </Typography>
               </Paper>
             </Grid>
@@ -381,7 +390,7 @@ export default function ImageRotate() {
           {/* Preview */}
           <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-              <ImageIcon /> Предпросмотр
+              <ImageIcon /> {isEn ? 'Preview' : 'Предпросмотр'}
             </Typography>
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, md: 6 }}>
@@ -389,7 +398,7 @@ export default function ImageRotate() {
                   variant="body2"
                   sx={{ mb: 1, fontWeight: 500, color: 'text.secondary', textAlign: 'center' }}
                 >
-                  Оригинал
+                  {isEn ? 'Original' : 'Оригинал'}
                 </Typography>
                 <Box
                   sx={{
@@ -417,7 +426,7 @@ export default function ImageRotate() {
                   variant="body2"
                   sx={{ mb: 1, fontWeight: 500, color: 'text.secondary', textAlign: 'center' }}
                 >
-                  Результат
+                  {isEn ? 'Result' : 'Результат'}
                 </Typography>
                 <Box
                   sx={{
@@ -441,7 +450,7 @@ export default function ImageRotate() {
                     <Box sx={{ p: 4, textAlign: 'center' }}>
                       <ImageIcon sx={{ fontSize: 48, color: 'text.disabled', mb: 1 }} />
                       <Typography variant="body2" color="text.secondary">
-                        Обработка...
+                        {isEn ? 'Processing...' : 'Обработка...'}
                       </Typography>
                     </Box>
                   )}

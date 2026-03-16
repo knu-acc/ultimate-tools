@@ -5,9 +5,12 @@ import {
   Box, Typography, Paper, TextField, Grid, alpha, useTheme
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function FuelConverter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [liters100, setLiters100] = useState('8');
 
   const val = parseFloat(liters100) || 0;
@@ -16,10 +19,10 @@ export default function FuelConverter() {
   const kmPerL = val > 0 ? 100 / val : 0;
 
   const results = val > 0 ? [
-    { label: 'Мили на галлон (US)', value: mpg.toFixed(2), unit: 'MPG', color: theme.palette.primary.main },
-    { label: 'Мили на галлон (UK)', value: mpgUK.toFixed(2), unit: 'MPG', color: theme.palette.success.main },
-    { label: 'Километров на литр', value: kmPerL.toFixed(2), unit: 'км/л', color: theme.palette.warning.main },
-    { label: 'Литров на 100 км', value: val.toFixed(2), unit: 'л/100км', color: theme.palette.error.main },
+    { label: isEn ? 'Miles per gallon (US)' : 'Мили на галлон (US)', value: mpg.toFixed(2), unit: 'MPG', color: theme.palette.primary.main },
+    { label: isEn ? 'Miles per gallon (UK)' : 'Мили на галлон (UK)', value: mpgUK.toFixed(2), unit: 'MPG', color: theme.palette.success.main },
+    { label: isEn ? 'Kilometers per liter' : 'Километров на литр', value: kmPerL.toFixed(2), unit: isEn ? 'km/L' : 'км/л', color: theme.palette.warning.main },
+    { label: isEn ? 'Liters per 100 km' : 'Литров на 100 км', value: val.toFixed(2), unit: isEn ? 'L/100km' : 'л/100км', color: theme.palette.error.main },
   ] : [];
 
   return (
@@ -47,7 +50,7 @@ export default function FuelConverter() {
             input: {
               endAdornment: (
                 <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', whiteSpace: 'nowrap' }}>
-                  л/100км
+                  {isEn ? 'L/100km' : 'л/100км'}
                 </Typography>
               )
             }
@@ -94,7 +97,7 @@ export default function FuelConverter() {
 
       <Paper elevation={0} sx={{ p: 2, borderRadius: 3 }}>
         <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>
-          1 US gal = 3.785 л · 1 UK gal = 4.546 л · MPG = 235.215 / (л/100км)
+          {isEn ? '1 US gal = 3.785 L · 1 UK gal = 4.546 L · MPG = 235.215 / (L/100km)' : '1 US gal = 3.785 л · 1 UK gal = 4.546 л · MPG = 235.215 / (л/100км)'}
         </Typography>
       </Paper>
     </Box>

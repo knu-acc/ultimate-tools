@@ -13,6 +13,7 @@ import {
   alpha
 } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type PaperCategory = 'all' | 'iso-a' | 'iso-b' | 'us';
 
@@ -73,6 +74,15 @@ function mmToInches(mm: number): string {
 
 export default function PaperSize() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
+
+  const CATEGORY_LABELS_I18N: Record<PaperCategory, string> = {
+    all: isEn ? 'All' : 'Все',
+    'iso-a': isEn ? 'A Series (ISO)' : 'Серия A (ISO)',
+    'iso-b': isEn ? 'B Series (ISO)' : 'Серия B (ISO)',
+    us: isEn ? 'US Sizes' : 'Американские'
+  };
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<PaperCategory>('all');
   const [landscape, setLandscape] = useState(false);
@@ -107,7 +117,7 @@ export default function PaperSize() {
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
             <TextField
-              placeholder="Поиск по названию"
+              placeholder={isEn ? 'Search by name' : 'Поиск по названию'}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               size="small"
@@ -119,7 +129,7 @@ export default function PaperSize() {
               {(Object.keys(CATEGORY_LABELS) as PaperCategory[]).map((cat) => (
                 <Chip
                   key={cat}
-                  label={CATEGORY_LABELS[cat]}
+                  label={CATEGORY_LABELS_I18N[cat]}
                   onClick={() => setCategory(cat)}
                   variant={category === cat ? 'filled' : 'outlined'}
                   color={category === cat ? 'primary' : 'default'}
@@ -131,13 +141,13 @@ export default function PaperSize() {
           </Grid>
           <Grid size={{ xs: 12, sm: 3 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Typography variant="body2">Портрет</Typography>
+              <Typography variant="body2">{isEn ? 'Portrait' : 'Портрет'}</Typography>
               <Switch
                 checked={landscape}
                 onChange={(e) => setLandscape(e.target.checked)}
                 size="small"
               />
-              <Typography variant="body2">Альбом</Typography>
+              <Typography variant="body2">{isEn ? 'Landscape' : 'Альбом'}</Typography>
             </Box>
           </Grid>
         </Grid>
@@ -150,7 +160,7 @@ export default function PaperSize() {
           sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
         >
           <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
-            Визуальное сравнение (нажмите на строку для выбора)
+            {isEn ? 'Visual comparison (click a row to select)' : 'Визуальное сравнение (нажмите на строку для выбора)'}
           </Typography>
           <Box
             sx={{
@@ -205,7 +215,7 @@ export default function PaperSize() {
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <Box component="tr" sx={{ borderBottom: `2px solid ${theme.palette.divider}` }}>
-                {['Формат', 'мм', 'дюймы', 'Серия'].map((h) => (
+                {(isEn ? ['Format', 'mm', 'inches', 'Series'] : ['Формат', 'мм', 'дюймы', 'Серия']).map((h) => (
                   <Box component="th" key={h} sx={{ py: 1, px: 1.5, textAlign: 'left' }}>
                     <Typography variant="caption" sx={{ fontWeight: 600 }}>{h}</Typography>
                   </Box>
@@ -251,7 +261,7 @@ export default function PaperSize() {
                     </Box>
                     <Box component="td" sx={{ py: 1.2, px: 1.5 }}>
                       <Chip
-                        label={CATEGORY_LABELS[s.category]}
+                        label={CATEGORY_LABELS_I18N[s.category]}
                         size="small"
                         variant="outlined"
                       />

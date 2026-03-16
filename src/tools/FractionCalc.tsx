@@ -15,6 +15,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 function gcd(a: number, b: number): number {
   a = Math.abs(a);
@@ -161,6 +162,8 @@ function FractionDisplay({
 
 export default function FractionCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [num1, setNum1] = useState('');
   const [den1, setDen1] = useState('');
   const [num2, setNum2] = useState('');
@@ -319,7 +322,7 @@ export default function FractionCalc() {
             }
             label={
               <Typography variant="caption" color="text.secondary">
-                {'\u0421\u043c\u0435\u0448\u0430\u043d\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e'}
+                {isEn ? 'Mixed number' : '\u0421\u043c\u0435\u0448\u0430\u043d\u043d\u043e\u0435 \u0447\u0438\u0441\u043b\u043e'}
               </Typography>
             }
             sx={{ m: 0 }}
@@ -343,7 +346,7 @@ export default function FractionCalc() {
               <Grid size={{ xs: 12, sm: 4 }}>
                 <Box sx={{ textAlign: 'center' }}>
                   <Typography variant="caption" color="text.secondary">
-                    {'\u0418\u0441\u0445\u043e\u0434\u043d\u0430\u044f'}
+                    {isEn ? 'Original' : '\u0418\u0441\u0445\u043e\u0434\u043d\u0430\u044f'}
                   </Typography>
                   <Box sx={{ mt: 0.5 }}>
                     <FractionDisplay num={result.original.num} den={result.original.den} large />
@@ -363,8 +366,8 @@ export default function FractionCalc() {
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
                     <Typography variant="caption" color="text.secondary">
                       {showMixed && result.mixed
-                        ? '\u0421\u043c\u0435\u0448\u0430\u043d\u043d\u043e\u0435'
-                        : '\u0421\u043e\u043a\u0440\u0430\u0449\u0451\u043d\u043d\u0430\u044f'}
+                        ? (isEn ? 'Mixed' : '\u0421\u043c\u0435\u0448\u0430\u043d\u043d\u043e\u0435')
+                        : (isEn ? 'Simplified' : '\u0421\u043e\u043a\u0440\u0430\u0449\u0451\u043d\u043d\u0430\u044f')}
                     </Typography>
                     <CopyButton text={resultText} size="small" />
                   </Box>
@@ -387,12 +390,12 @@ export default function FractionCalc() {
                 <Box sx={{ textAlign: 'center' }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}>
                     <Typography variant="caption" color="text.secondary">
-                      {'\u0414\u0435\u0441\u044f\u0442\u0438\u0447\u043d\u0430\u044f'}
+                      {isEn ? 'Decimal' : '\u0414\u0435\u0441\u044f\u0442\u0438\u0447\u043d\u0430\u044f'}
                     </Typography>
                     <CopyButton
                       text={
                         Number.isFinite(result.decimal)
-                          ? result.decimal.toLocaleString('ru-RU', { maximumFractionDigits: 8 })
+                          ? result.decimal.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 8 })
                           : ''
                       }
                       size="small"
@@ -408,7 +411,7 @@ export default function FractionCalc() {
                     }}
                   >
                     {Number.isFinite(result.decimal)
-                      ? result.decimal.toLocaleString('ru-RU', { maximumFractionDigits: 8 })
+                      ? result.decimal.toLocaleString(isEn ? 'en-US' : 'ru-RU', { maximumFractionDigits: 8 })
                       : '\u2014'}
                   </Typography>
                 </Box>

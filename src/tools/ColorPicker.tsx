@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface HSL {
@@ -122,6 +123,8 @@ function getAnalogous(h: number): [number, number] {
 
 export default function ColorPicker() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [hex, setHex] = useState('#4A90D9');
   const [rgb, setRgb] = useState<RGB>({ r: 74, g: 144, b: 217 });
   const [hsl, setHsl] = useState<HSL>({ h: 211, s: 66, l: 57 });
@@ -404,9 +407,9 @@ export default function ColorPicker() {
   ];
 
   const relatedColors = [
-    { label: 'Комплементарный', hex: rgbToHex(compRgb.r, compRgb.g, compRgb.b), rgb: compRgb },
-    { label: 'Аналогичный 1', hex: rgbToHex(ana1Rgb.r, ana1Rgb.g, ana1Rgb.b), rgb: ana1Rgb },
-    { label: 'Аналогичный 2', hex: rgbToHex(ana2Rgb.r, ana2Rgb.g, ana2Rgb.b), rgb: ana2Rgb },
+    { label: isEn ? 'Complementary' : 'Комплементарный', hex: rgbToHex(compRgb.r, compRgb.g, compRgb.b), rgb: compRgb },
+    { label: isEn ? 'Analogous 1' : 'Аналогичный 1', hex: rgbToHex(ana1Rgb.r, ana1Rgb.g, ana1Rgb.b), rgb: ana1Rgb },
+    { label: isEn ? 'Analogous 2' : 'Аналогичный 2', hex: rgbToHex(ana2Rgb.r, ana2Rgb.g, ana2Rgb.b), rgb: ana2Rgb },
   ];
 
   return (
@@ -457,48 +460,31 @@ export default function ColorPicker() {
               </Box>
             </Box>
 
-            {/* Preview swatch */}
+            {/* Preview swatch + hex input */}
             <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
               <Box
                 sx={{
-                  width: 64,
-                  height: 64,
+                  width: 56,
+                  height: 56,
                   borderRadius: 2,
                   backgroundColor: hex,
                   border: `2px solid ${theme.palette.divider}`,
-                  flexShrink: 0
+                  flexShrink: 0,
                 }}
               />
-              <Box sx={{ flex: 1 }}>
-                <TextField
-                  size="small"
-                  placeholder="HEX"
-                  value={hex}
-                  onChange={(e) => updateFromHex(e.target.value)}
-                  fullWidth
-                  slotProps={{
-                    input: {
-                      sx: { fontFamily: 'monospace', fontWeight: 600 }
-                    }
-                  }}
-                />
-              </Box>
-              <Box>
-                <input
-                  type="color"
-                  value={hex.length === 7 ? hex : '#000000'}
-                  onChange={(e) => updateFromHex(e.target.value)}
-                  style={{
-                    width: 48,
-                    height: 48,
-                    border: 'none',
-                    cursor: 'pointer',
-                    borderRadius: 8,
-                    padding: 0,
-                    backgroundColor: 'transparent'
-                  }}
-                />
-              </Box>
+              <TextField
+                size="small"
+                placeholder="HEX"
+                value={hex}
+                onChange={(e) => updateFromHex(e.target.value)}
+                fullWidth
+                slotProps={{
+                  input: {
+                    sx: { fontFamily: 'monospace', fontWeight: 600 }
+                  }
+                }}
+              />
+              <CopyButton text={hex} />
             </Box>
           </Paper>
         </Grid>
@@ -585,7 +571,7 @@ export default function ColorPicker() {
         sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-          Форматы
+          {isEn ? 'Formats' : 'Форматы'}
         </Typography>
         <Grid container spacing={2}>
           {formats.map((fmt) => (
@@ -616,7 +602,7 @@ export default function ColorPicker() {
         sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-          Связанные цвета
+          {isEn ? 'Related Colors' : 'Связанные цвета'}
         </Typography>
         <Grid container spacing={2}>
           {relatedColors.map((rc) => (
@@ -666,7 +652,7 @@ export default function ColorPicker() {
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-              Последние цвета
+              {isEn ? 'Recent Colors' : 'Последние цвета'}
             </Typography>
             <IconButton size="small" onClick={() => setRecentColors([])}>
               <DeleteIcon fontSize="small" />

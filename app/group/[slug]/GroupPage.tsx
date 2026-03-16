@@ -10,6 +10,7 @@ import DynamicIcon from '@/src/components/DynamicIcon';
 import Link from 'next/link';
 import { getGroupBySlug, getToolsByGroup, toolGroups } from '@/src/data/tools';
 import ToolCard from '@/src/components/ToolCard';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 // Расширенный SEO-контент для каждой категории
 const groupSeoContent: Record<string, {
@@ -292,30 +293,307 @@ const groupSeoContent: Record<string, {
   },
 };
 
+const groupSeoContentEn: Record<string, { h1: string; intro: string; features: string[]; useCases: string }> = {
+  converters: {
+    h1: 'Free Online Unit Converters',
+    intro: 'A collection of free online converters for instant unit conversion. Temperature, length, weight, volume, speed, energy, pressure and more — all in one place. Converters work right in your browser: no apps to download or registration required. Results appear instantly with high precision.',
+    features: [
+      'Temperature converters: Celsius, Fahrenheit, Kelvin',
+      'Length converters: meters, feet, inches, miles',
+      'Weight converters: kg, pounds, ounces, tons',
+      'Volume converters: liters, gallons, cubic meters',
+      'Speed converters: km/h, m/s, mph',
+      'Data converters: bytes, KB, MB, GB, TB',
+      'Color converter: HEX, RGB, CMYK, HSL',
+      'GPS coordinate converter: DD, DMS, DDM',
+    ],
+    useCases: 'Unit converters are indispensable for students solving problems, engineers designing systems, developers building international services, and travelers. Especially useful when working with foreign documents, recipes, and technical documentation.',
+  },
+  calculators: {
+    h1: 'Free Online Calculators',
+    intro: 'Professional online calculators for financial, scientific and everyday calculations. Mortgage, loans, taxes, salary, percentages, discounts — all calculated instantly right in your browser. Use ready-made formulas without risk of manual calculation errors.',
+    features: [
+      'Mortgage and loan calculator with schedule',
+      'Percentage, discount and markup calculator',
+      'Tax calculator (income tax, VAT)',
+      'Salary calculator (net/gross)',
+      'Scientific calculator with history',
+      'Compound interest calculator',
+      'Tip calculator and bill splitter',
+    ],
+    useCases: 'Online calculators are used by students, accountants, financial professionals, entrepreneurs and everyday users. They allow you to quickly verify calculations, compare options and make informed decisions.',
+  },
+  text: {
+    h1: 'Free Online Text Tools',
+    intro: 'A complete set of free online tools for working with text. Formatting, cleaning, word counting, case conversion, text comparison, line sorting and more. All tools work in the browser — paste text and get results instantly.',
+    features: [
+      'Word, character and reading time counter',
+      'Case converter: UPPER, lower, Title, camelCase',
+      'Text formatter and cleaner',
+      'Duplicate line remover',
+      'Text line sorter',
+      'Text comparison (diff)',
+      'Cyrillic transliteration',
+      'Find and replace with regex support',
+    ],
+    useCases: 'Text tools are essential for SEO specialists, copywriters, editors, developers and students. They save time on routine text operations that are hard to do manually.',
+  },
+  images: {
+    h1: 'Free Online Image Editors',
+    intro: 'Free online tools for image processing right in your browser. Compression, resizing, cropping, filters, background removal — without Photoshop and without installing software. Your photos are processed locally and never sent to a server.',
+    features: [
+      'Image compression: WebP, JPEG, PNG',
+      'Resize with aspect ratio preservation',
+      'Photo cropping with custom ratios',
+      'Rotation and mirroring',
+      'Filters: brightness, contrast, sharpness',
+      'Background removal (transparent PNG)',
+      'Favicon generator (ICO, PNG, SVG)',
+      'Pixel art editor',
+    ],
+    useCases: 'Online editors are used by bloggers, social media managers, designers, developers and anyone working with visual content. Perfect for quick photo editing without heavy software.',
+  },
+  generators: {
+    h1: 'Online Generators — Passwords, QR, UUID, Data',
+    intro: 'A collection of free online generators: strong passwords, QR codes, barcodes, UUIDs, color palettes, Lorem Ipsum, random numbers and more. Generation happens instantly right in your browser without limits.',
+    features: [
+      'Customizable password generator',
+      'QR code generator (URL, Wi-Fi, vCard)',
+      'UUID v4 and GUID generator',
+      'Hash generator: MD5, SHA-256, SHA-512',
+      'Color palette generator',
+      'Lorem Ipsum text generator',
+      'Random number generator',
+      'Test data generator (JSON/CSV)',
+    ],
+    useCases: 'Generators are essential for developers, testers, designers and marketers. Used for creating test data, generating identifiers, and producing visual materials.',
+  },
+  developers: {
+    h1: 'Free Online Developer Tools',
+    intro: 'Professional online tools for developers: formatters, validators, decoders, testers and references. JSON, CSS, JavaScript, SQL, HTML, regex, JWT, YAML, XML — all available right in your browser. No extensions or registration needed.',
+    features: [
+      'JSON Formatter, minifier and validator',
+      'Regex tester with match highlighting',
+      'JWT Decoder and validator',
+      'CSS/JS/HTML/SQL formatters',
+      'YAML ↔ JSON converter',
+      'Code Diff Checker',
+      'CSS Flexbox and Grid Playground',
+      'HTTP status codes reference',
+    ],
+    useCases: 'Developer tools are used daily by frontend and backend developers, DevOps engineers, QA testers and technical managers.',
+  },
+  math: {
+    h1: 'Free Online Math Calculators',
+    intro: 'Mathematical online calculators for solving equations, working with matrices, statistical analysis and graph plotting. Accurate results using proven algorithms. Works in the browser without specialized software.',
+    features: [
+      'Linear and quadratic equation solver',
+      'Matrix calculator (determinant, inverse)',
+      'Statistics: mean, median, variance',
+      'Factorial and combinatorics',
+      'Function graph plotter',
+      'Fraction and proportion calculator',
+      'GCD and LCM',
+      'Prime number checker',
+    ],
+    useCases: 'Math tools are used by students, teachers, engineers and researchers for solving problems, verifying calculations and studying mathematics.',
+  },
+  health: {
+    h1: 'Free Online Health & Fitness Calculators',
+    intro: 'Free online calculators for health and fitness: BMI, calorie needs, ideal weight, heart rate zones, sleep calculator and water intake. Calculations based on scientifically proven formulas for health monitoring.',
+    features: [
+      'BMI calculator (Body Mass Index)',
+      'Calorie needs: BMR/TDEE',
+      'Ideal weight by multiple formulas',
+      'Training heart rate zones',
+      'Sleep calculator by phases',
+      'Daily water intake',
+      'Body fat percentage',
+      'Pregnancy calculator',
+    ],
+    useCases: 'Health calculators are used by health-conscious individuals, athletes, fitness trainers and doctors. Results are for informational purposes and do not replace professional medical advice.',
+  },
+  finance: {
+    h1: 'Free Online Financial Calculators',
+    intro: 'Free financial online calculators for budget planning, investments, loans and deposits. All calculations use standard financial formulas right in your browser — no data transmission.',
+    features: [
+      'Personal budget planner',
+      'Investment ROI calculator',
+      'Inflation calculator',
+      'Retirement calculator',
+      'Deposit calculator',
+      'Loan and mortgage calculators',
+      'Compound interest calculator',
+    ],
+    useCases: 'Financial calculators are essential for planning large purchases, comparing bank offers and analyzing investment decisions.',
+  },
+  security: {
+    h1: 'Online Data & Security Tools',
+    intro: 'Free online tools for data and security: hash generators, validators, password checkers. All operations are performed locally in your browser — your data never leaves your device.',
+    features: [
+      'Password strength checker',
+      'Email address validator',
+      'URL and IP address validator',
+      'Phone number validator',
+      'Test data generator (JSON/CSV)',
+      'Checksum calculator',
+    ],
+    useCases: 'Security tools are used by developers, system administrators, IT professionals and anyone who values data protection.',
+  },
+  entertainment: {
+    h1: 'Free Online Randomizers & Entertainment',
+    intro: 'Fun online tools for random selection and entertainment: wheel spinner, dice roller, coin flip, decision maker. For games, team events and making tough decisions.',
+    features: [
+      'Wheel spinner with custom options',
+      'Virtual dice D4-D20',
+      'Coin flip',
+      'Random picker from list',
+      'Decision helper',
+      'Random team generator',
+      'Event countdown timer',
+    ],
+    useCases: 'Randomizers are used for parties, family games, contests, team drafts and any situation requiring an unbiased random choice.',
+  },
+  media: {
+    h1: 'Online Audio Tools — Metronome, Noise, Tones',
+    intro: 'Free online tools for working with audio using the browser Web Audio API: metronome, tone generator, white noise. For musicians, audiophiles and anyone working with sound.',
+    features: [
+      'Online metronome (20-300 BPM)',
+      'Tone generator (20 Hz — 20 kHz)',
+      'White, pink and brown noise',
+      'Video aspect ratio calculator',
+    ],
+    useCases: 'Audio tools are used by musicians, music teachers, audiophiles and developers. They replace specialized software for simple tasks.',
+  },
+  encoding: {
+    h1: 'Online Encoding & Decoding — Base64, URL, HTML',
+    intro: 'Free online tools for encoding and decoding data: Base64, URL, HTML, Morse code, binary, Unicode. Instant processing in the browser without data transmission.',
+    features: [
+      'Base64 encoding and decoding',
+      'URL encoding/decoding (percent-encoding)',
+      'HTML entity escaping',
+      'Morse code',
+      'Text to binary code',
+      'Unicode character reference',
+    ],
+    useCases: 'Encoding tools are used by developers for debugging, working with APIs and data transmission. Also useful for learning about encoding formats.',
+  },
+  qrbarcode: {
+    h1: 'Online QR Code & Barcode Generators',
+    intro: 'Free online QR code and barcode generators of professional quality. Create codes for URLs, Wi-Fi, vCards, EAN-13, UPC, Code128 without registration or watermarks. Download in PNG and SVG.',
+    features: [
+      'QR codes for URL, text, Wi-Fi, vCard',
+      'Barcodes: EAN-13, UPC-A, Code128',
+      'Color and size customization',
+      'PNG and SVG download',
+      'High resolution for printing',
+    ],
+    useCases: 'QR and barcodes are used by marketers, business owners, developers and anyone creating printed materials, packaging or advertising campaigns.',
+  },
+  color: {
+    h1: 'Free Online Color Tools',
+    intro: 'Professional online tools for working with color: color picker, color wheel, palettes, gradients, WCAG contrast checker, Tailwind and Material Design references. For designers and developers.',
+    features: [
+      'Color wheel with harmonic schemes',
+      'WCAG AA/AAA contrast checker',
+      'Color mixing and blending',
+      'Palette extraction from images',
+      'Tailwind CSS color reference',
+      'Material Design color reference',
+    ],
+    useCases: 'Color tools are used by web designers, UX specialists, developers and marketers when creating interfaces, branding and visual content.',
+  },
+  seo: {
+    h1: 'Online SEO Tools for Website Optimization',
+    intro: 'Free SEO tools for optimizing your website for Google and other search engines: meta tag generator, Open Graph preview, robots.txt and sitemap.xml generators, heading and keyword density analysis.',
+    features: [
+      'Meta tag title and description generator',
+      'Open Graph Preview for social media',
+      'robots.txt generator',
+      'XML Sitemap generator',
+      'H1-H6 heading structure checker',
+      'Keyword density analysis',
+    ],
+    useCases: 'SEO tools are used by webmasters, SEO specialists, copywriters and website owners to improve search engine visibility and increase organic traffic.',
+  },
+  network: {
+    h1: 'Online Network Tools — IP, MAC, Ports',
+    intro: 'Professional online tools for network administrators: IP calculator, CIDR subnet calculator, MAC Lookup, port reference, User-Agent parser. No command line needed, right in your browser.',
+    features: [
+      'IP calculator: subnets, masks, CIDR',
+      'IPv4 subnet calculator',
+      'MAC Address Lookup',
+      'TCP/UDP port reference',
+      'User-Agent Parser',
+    ],
+    useCases: 'Network tools are used by system administrators, network engineers and DevOps specialists when configuring network infrastructure.',
+  },
+  units: {
+    h1: 'Online Unit & Size References',
+    intro: 'Free online references for units and sizes: shoe and clothing sizes EU/US/UK, screen resolutions, paper formats, cooking measures. Convenient for international shopping and travel.',
+    features: [
+      'Shoe size chart: EU, US, UK, JP',
+      'Clothing size chart: EU, US, UK',
+      'Screen resolution and PPI reference',
+      'Paper formats: A4, Letter, Legal',
+      'Cooking measurement converter',
+    ],
+    useCases: 'Unit references are essential when shopping at foreign stores, in international trade and when working with international documents.',
+  },
+  productivity: {
+    h1: 'Free Online Productivity Tools',
+    intro: 'Free online productivity tools: Pomodoro timer, todo list, notes, typing speed test, reading time calculator. Work in the browser and save data locally.',
+    features: [
+      'Pomodoro Timer (25/5 min)',
+      'Todo list with localStorage',
+      'Online notepad',
+      'Reading time calculator',
+      'Typing speed test (WPM)',
+    ],
+    useCases: 'Productivity tools are used by freelancers, students, managers and anyone who wants to better manage their time and tasks.',
+  },
+  datetime: {
+    h1: 'Online Date & Time Tools',
+    intro: 'Precise online tools for working with dates and time: world clock, timezone converter, date difference, Unix timestamp, calendar with holidays. With daylight saving time support and international standards.',
+    features: [
+      'Real-time world clock',
+      'UTC/GMT timezone converter',
+      'Date difference calculator',
+      'Unix Timestamp converter',
+      'Timer and stopwatch',
+      'Age calculator',
+      'Online calendar with holidays',
+    ],
+    useCases: 'Date and time tools are used by travelers, remote teams, developers and anyone working across different time zones.',
+  },
+};
+
 export default function GroupPage({ slug }: { slug: string }) {
   const theme = useTheme();
+  const { locale, t, lHref } = useLanguage();
+  const isEn = locale === 'en';
   const group = getGroupBySlug(slug);
 
   if (!group) {
     return (
       <Container maxWidth="lg" sx={{ py: 6, textAlign: 'center' }}>
-        <Typography variant="h4">Категория не найдена</Typography>
+        <Typography variant="h4">{isEn ? 'Category not found' : 'Категория не найдена'}</Typography>
       </Container>
     );
   }
 
   const groupTools = getToolsByGroup(group.id);
   const relatedGroups = toolGroups.filter(g => g.id !== group.id).slice(0, 6);
-  const seoContent = groupSeoContent[group.id];
+  const seoContent = isEn ? groupSeoContentEn[group.id] : groupSeoContent[group.id];
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Breadcrumbs */}
       <Breadcrumbs separator={<NavigateNext fontSize="small" />} sx={{ mb: 3 }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none' }}>
-          <Home sx={{ mr: 0.5, fontSize: 18 }} /> Главная
+        <Link href={lHref('/')} style={{ display: 'flex', alignItems: 'center', color: 'inherit', textDecoration: 'none' }}>
+          <Home sx={{ mr: 0.5, fontSize: 18 }} /> {t('toolPage.breadcrumb.home')}
         </Link>
-        <Typography color="text.primary" fontWeight={500}>{group.name}</Typography>
+        <Typography color="text.primary" fontWeight={500}>{isEn ? ((group as any).nameEn || group.name) : group.name}</Typography>
       </Breadcrumbs>
 
       {/* Header — SEO-оптимизированный H1 */}
@@ -325,7 +603,7 @@ export default function GroupPage({ slug }: { slug: string }) {
             sx={{
               width: 56,
               height: 56,
-              borderRadius: 3,
+              borderRadius: theme.shape?.medium ?? 12,
               bgcolor: alpha(group.color, 0.12),
               display: 'flex',
               alignItems: 'center',
@@ -337,10 +615,10 @@ export default function GroupPage({ slug }: { slug: string }) {
           </Box>
           <Box>
             <Typography variant="h3" component="h1" fontWeight={700} sx={{ lineHeight: 1.2 }}>
-              {seoContent?.h1 || group.name}
+              {isEn ? ((group as any).nameEn || group.name) : (seoContent?.h1 || group.name)}
             </Typography>
             <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
-              {group.description} — {groupTools.length} инструментов
+              {isEn ? ((group as any).descriptionEn || group.description) : group.description} — {groupTools.length} {isEn ? 'tools' : 'инструментов'}
             </Typography>
           </Box>
         </Box>
@@ -361,21 +639,23 @@ export default function GroupPage({ slug }: { slug: string }) {
           elevation={0}
           sx={{
             p: { xs: 3, md: 4 },
-            borderRadius: 3,
+            borderRadius: theme.shape?.medium ?? 12,
             bgcolor: theme.palette.surfaceContainerLow,
             border: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
             mb: 4,
           }}
         >
           <Typography variant="h5" component="h2" fontWeight={600} gutterBottom>
-            {group.name} — бесплатные онлайн-инструменты
+            {isEn
+              ? `${(group as any).nameEn || group.name} — free online tools`
+              : `${group.name} — бесплатные онлайн-инструменты`}
           </Typography>
           <Typography variant="body2" color="text.secondary" paragraph>
             {seoContent.intro}
           </Typography>
 
           <Typography variant="h6" component="h3" fontWeight={600} gutterBottom sx={{ mt: 2 }}>
-            Что входит в категорию «{group.name}»
+            {isEn ? `What's included in "${(group as any).nameEn || group.name}"` : `Что входит в категорию «${group.name}»`}
           </Typography>
           <List dense disablePadding>
             {seoContent.features.map((feat, i) => (
@@ -392,11 +672,12 @@ export default function GroupPage({ slug }: { slug: string }) {
           </List>
 
           <Typography variant="h6" component="h3" fontWeight={600} gutterBottom sx={{ mt: 2 }}>
-            Кому подходят эти инструменты
+            {isEn ? 'Who are these tools for' : 'Кому подходят эти инструменты'}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {seoContent.useCases}{' '}
-            Все инструменты работают прямо в браузере без регистрации и установки — данные обрабатываются локально.
+            {isEn
+              ? 'All tools work right in your browser without registration or installation — data is processed locally.'
+              : `${seoContent.useCases} Все инструменты работают прямо в браузере без регистрации и установки — данные обрабатываются локально.`}
           </Typography>
         </Paper>
       )}
@@ -404,15 +685,15 @@ export default function GroupPage({ slug }: { slug: string }) {
       {/* Related Groups */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="h5" component="h2" fontWeight={600} sx={{ mb: 2 }}>
-          Другие категории инструментов
+          {isEn ? 'Other tool categories' : 'Другие категории инструментов'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {relatedGroups.map(g => (
             <Chip
               key={g.id}
-              label={`${g.name} (${getToolsByGroup(g.id).length})`}
+              label={`${isEn ? ((g as any).nameEn || g.name) : g.name} (${getToolsByGroup(g.id).length})`}
               component={Link}
-              href={`/group/${g.slug}`}
+              href={lHref(`/group/${g.slug}`)}
               clickable
               variant="outlined"
               sx={{ borderColor: alpha(g.color, 0.4) }}
@@ -428,15 +709,15 @@ export default function GroupPage({ slug }: { slug: string }) {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
-            name: seoContent?.h1 || group.name,
-            description: group.description,
-            url: `https://ulti-tools.com/group/${group.slug}`,
-            inLanguage: 'ru',
+            name: isEn ? ((group as any).nameEn || group.name) : (seoContent?.h1 || group.name),
+            description: isEn ? ((group as any).descriptionEn || group.description) : group.description,
+            url: `https://ulti-tools.com/${locale}/group/${group.slug}`,
+            inLanguage: locale,
             numberOfItems: groupTools.length,
             hasPart: groupTools.slice(0, 10).map(t => ({
               '@type': 'SoftwareApplication',
-              name: (t as any).seoTitle || t.name,
-              url: `https://ulti-tools.com/tools/${t.slug}`,
+              name: isEn ? ((t as any).nameEn || t.name) : ((t as any).seoTitle || t.name),
+              url: `https://ulti-tools.com/${locale}/tools/${t.slug}`,
               applicationCategory: 'UtilitiesApplication',
               offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
             })),
@@ -452,8 +733,8 @@ export default function GroupPage({ slug }: { slug: string }) {
             '@context': 'https://schema.org',
             '@type': 'BreadcrumbList',
             itemListElement: [
-              { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://ulti-tools.com' },
-              { '@type': 'ListItem', position: 2, name: group.name, item: `https://ulti-tools.com/group/${group.slug}` },
+              { '@type': 'ListItem', position: 1, name: isEn ? 'Home' : 'Главная', item: `https://ulti-tools.com/${locale}` },
+              { '@type': 'ListItem', position: 2, name: isEn ? ((group as any).nameEn || group.name) : group.name, item: `https://ulti-tools.com/${locale}/group/${group.slug}` },
             ],
           }),
         }}

@@ -16,6 +16,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FormatIndentIncreaseIcon from '@mui/icons-material/FormatIndentIncrease';
 import CompressIcon from '@mui/icons-material/Compress';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 function formatXml(xml: string, indentStr: string): string {
@@ -146,9 +147,9 @@ function minifyXml(xml: string): string {
     .trim();
 }
 
-function validateXml(xml: string): { valid: boolean; error?: string; line?: number } {
+function validateXml(xml: string, isEn: boolean): { valid: boolean; error?: string; line?: number } {
   const trimmed = xml.trim();
-  if (!trimmed) return { valid: false, error: 'XML пуст' };
+  if (!trimmed) return { valid: false, error: isEn ? 'XML is empty' : 'XML пуст' };
 
   // Simple validation: check for matching tags
   const tagStack: string[] = [];
@@ -165,12 +166,12 @@ function validateXml(xml: string): { valid: boolean; error?: string; line?: numb
     if (fullMatch.startsWith('</')) {
       if (tagStack.length === 0) {
         const line = trimmed.substring(0, match.index).split('\n').length;
-        return { valid: false, error: `Неожиданный закрывающий тег </${tagName}>`, line };
+        return { valid: false, error: isEn ? `Unexpected closing tag </${tagName}>` : `Неожиданный закрывающий тег </${tagName}>`, line };
       }
       const expected = tagStack.pop();
       if (expected !== tagName) {
         const line = trimmed.substring(0, match.index).split('\n').length;
-        return { valid: false, error: `Ожидался </${expected}>, получен </${tagName}>`, line };
+        return { valid: false, error: isEn ? `Expected </${expected}>, got </${tagName}>` : `Ожидался </${expected}>, получен </${tagName}>`, line };
       }
     } else {
       tagStack.push(tagName);
@@ -178,7 +179,7 @@ function validateXml(xml: string): { valid: boolean; error?: string; line?: numb
   }
 
   if (tagStack.length > 0) {
-    return { valid: false, error: `Незакрытый тег: <${tagStack[tagStack.length - 1]}>` };
+    return { valid: false, error: isEn ? `Unclosed tag: <${tagStack[tagStack.length - 1]}>` : `Незакрытый тег: <${tagStack[tagStack.length - 1]}>` };
   }
 
   return { valid: true };
@@ -188,6 +189,8 @@ type IndentOption = '2' | '4' | 'tab';
 
 export default function XmlFormatter() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [indentOption, setIndentOption] = useState<IndentOption>('2');
@@ -205,9 +208,9 @@ export default function XmlFormatter() {
 
   const handleFormat = () => {
     if (!input.trim()) return;
-    const validation = validateXml(input);
+    const validation = validateXml(input, isEn);
     if (!validation.valid) {
-      setError(validation.error || 'Ошибка XML');
+      setError(validation.error || (isEn ? 'XML error' : 'Ошибка XML'));
       setErrorLine(validation.line);
       setOutput('');
       return;
@@ -253,9 +256,9 @@ export default function XmlFormatter() {
   }, [input, output]);
 
   const indentOptions: { value: IndentOption; label: string }[] = [
-    { value: '2', label: '2 пробела' },
-    { value: '4', label: '4 пробела' },
-    { value: 'tab', label: 'Табуляция' },
+    { value: '2', label: isEn ? '2 spaces' : '2 пробела' },
+    { value: '4', label: isEn ? '4 spaces' : '4 пробела' },
+    { value: 'tab', label: isEn ? 'Tab' : 'Табуляция' },
   ];
 
   return (
@@ -274,7 +277,7 @@ export default function XmlFormatter() {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder='<root><item id="1"><name>Пример</name></item></root>'
+          placeholder={isEn ? '<root><item id="1"><name>Example</name></item></root>' : '<root><item id="1"><name>Пример</name></item></root>'}
           sx={{
             mb: 2,
             '& .MuiInputBase-root': {
@@ -289,7 +292,7 @@ export default function XmlFormatter() {
         {/* Indent options */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, flexWrap: 'wrap' }}>
           <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mr: 1 }}>
-            Отступ:
+            {isEn ? 'Indent:' : 'Отступ:'}
           </Typography>
           {indentOptions.map((opt) => (
             <Chip
@@ -313,7 +316,7 @@ export default function XmlFormatter() {
             disabled={!input}
             sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
           >
-            Форматировать
+            {isEn ? 'Format' : 'Форматировать'}
           </Button>
           <Button
             variant="contained"
@@ -322,9 +325,9 @@ export default function XmlFormatter() {
             disabled={!input}
             sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
           >
-            Минифицировать
+            {isEn ? 'Minify' : 'Минифицировать'}
           </Button>
-          <CopyButton text={output} tooltip="Копировать" />
+          <CopyButton text={output} tooltip={isEn ? 'Copy' : 'Копировать'} />
           <Button
             variant="outlined"
             startIcon={<DeleteOutlineIcon />}
@@ -332,7 +335,7 @@ export default function XmlFormatter() {
             color="inherit"
             sx={{ textTransform: 'none', borderRadius: 2 }}
           >
-            Очистить
+            {isEn ? 'Clear' : 'Очистить'}
           </Button>
         </Box>
 
@@ -344,7 +347,7 @@ export default function XmlFormatter() {
             </Typography>
             {errorLine && (
               <Typography variant="caption" sx={{ color: 'error.dark' }}>
-                Строка: {errorLine}
+                {isEn ? 'Line' : 'Строка'}: {errorLine}
               </Typography>
             )}
           </Alert>
@@ -378,26 +381,26 @@ export default function XmlFormatter() {
               <Box sx={{ display: 'flex', gap: 1, mt: 1.5, flexWrap: 'wrap' }}>
                 <Chip
                   size="small"
-                  label={`${stats.outputLines} строк`}
+                  label={`${stats.outputLines} ${isEn ? 'lines' : 'строк'}`}
                   variant="outlined"
                   sx={{ fontSize: '0.75rem' }}
                 />
                 <Chip
                   size="small"
-                  label={`${stats.outputBytes.toLocaleString()} байт`}
+                  label={`${stats.outputBytes.toLocaleString()} ${isEn ? 'bytes' : 'байт'}`}
                   variant="outlined"
                   sx={{ fontSize: '0.75rem' }}
                 />
                 <Chip
                   size="small"
-                  label={`${stats.tagCount} тегов`}
+                  label={`${stats.tagCount} ${isEn ? 'tags' : 'тегов'}`}
                   variant="outlined"
                   sx={{ fontSize: '0.75rem' }}
                 />
                 {stats.inputBytes !== stats.outputBytes && (
                   <Chip
                     size="small"
-                    label={`${stats.inputBytes > stats.outputBytes ? '-' : '+'}${Math.abs(stats.outputBytes - stats.inputBytes)} байт`}
+                    label={`${stats.inputBytes > stats.outputBytes ? '-' : '+'}${Math.abs(stats.outputBytes - stats.inputBytes)} ${isEn ? 'bytes' : 'байт'}`}
                     variant="outlined"
                     color={stats.inputBytes > stats.outputBytes ? 'success' : 'default'}
                     sx={{ fontSize: '0.75rem' }}

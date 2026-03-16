@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { Error as ErrorIcon } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 function base64UrlDecode(str: string): string {
@@ -34,7 +35,7 @@ interface JwtParts {
 function decodeJwt(token: string): JwtParts {
   const parts = token.trim().split('.');
   if (parts.length !== 3) {
-    return { header: null, payload: null, signature: '', valid: false, error: 'JWT должен содержать 3 части, разделённые точками' };
+    return { header: null, payload: null, signature: '', valid: false, error: 'JWT must contain 3 parts separated by dots / JWT должен содержать 3 части, разделённые точками' };
   }
 
   try {
@@ -42,13 +43,13 @@ function decodeJwt(token: string): JwtParts {
     const payload = JSON.parse(base64UrlDecode(parts[1]));
     return { header, payload, signature: parts[2], valid: true };
   } catch (e) {
-    return { header: null, payload: null, signature: '', valid: false, error: 'Невозможно декодировать JWT' };
+    return { header: null, payload: null, signature: '', valid: false, error: 'Unable to decode JWT / Невозможно декодировать JWT' };
   }
 }
 
-function formatTimestamp(ts: number): string {
+function formatTimestamp(ts: number, isEn: boolean = false): string {
   try {
-    return new Date(ts * 1000).toLocaleString('ru-RU', {
+    return new Date(ts * 1000).toLocaleString(isEn ? 'en-US' : 'ru-RU', {
       day: '2-digit', month: '2-digit', year: 'numeric',
       hour: '2-digit', minute: '2-digit', second: '2-digit'
     });
@@ -59,6 +60,8 @@ function formatTimestamp(ts: number): string {
 
 export default function JwtDecoder() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [token, setToken] = useState('');
 
   const decoded = useMemo(() => {
@@ -84,7 +87,7 @@ export default function JwtDecoder() {
           rows={4}
           value={token}
           onChange={(e) => setToken(e.target.value)}
-          placeholder="Вставьте JWT токен (eyJhbGci...)"
+          placeholder={isEn ? "Paste JWT token (eyJhbGci...)" : "Вставьте JWT токен (eyJhbGci...)"}
           sx={{
             mb: 2,
             '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.8rem', borderRadius: 2 }
@@ -114,7 +117,7 @@ export default function JwtDecoder() {
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
                 <Chip label="HEADER" size="small" sx={{ bgcolor: alpha('#E74C3C', 0.15), fontWeight: 700, fontSize: '0.7rem' }} />
-                <Typography variant="caption" color="text.secondary">Алгоритм и тип</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Algorithm and type' : 'Алгоритм и тип'}</Typography>
               </Box>
               <Box
                 component="pre"
@@ -139,9 +142,9 @@ export default function JwtDecoder() {
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
                 <Chip label="PAYLOAD" size="small" sx={{ bgcolor: alpha('#6750A4', 0.15), fontWeight: 700, fontSize: '0.7rem' }} />
-                <Typography variant="caption" color="text.secondary">Данные</Typography>
+                <Typography variant="caption" color="text.secondary">{isEn ? 'Data' : 'Данные'}</Typography>
                 {isExpired && (
-                  <Chip label="Истёк" size="small" color="error" sx={{ fontSize: '0.65rem', height: 20 }} />
+                  <Chip label={isEn ? 'Expired' : 'Истёк'} size="small" color="error" sx={{ fontSize: '0.65rem', height: 20 }} />
                 )}
               </Box>
               <Box
@@ -166,7 +169,7 @@ export default function JwtDecoder() {
               sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
             >
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>
-                Расшифрованные поля
+                {isEn ? 'Decoded claims' : 'Расшифрованные поля'}
               </Typography>
               <Grid container spacing={1}>
                 {decoded.payload && Object.entries(decoded.payload).map(([key, value]) => (
@@ -177,7 +180,7 @@ export default function JwtDecoder() {
                       </Typography>
                       <Typography variant="caption" sx={{ fontFamily: 'monospace', wordBreak: 'break-all' }}>
                         {timeFields.includes(key) && typeof value === 'number'
-                          ? formatTimestamp(value)
+                          ? formatTimestamp(value, isEn)
                           : String(value)
                         }
                       </Typography>
@@ -201,7 +204,7 @@ export default function JwtDecoder() {
                 {decoded.signature}
               </Typography>
               <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                ⚠️ Подпись не может быть проверена без секретного ключа
+                {isEn ? 'Signature cannot be verified without the secret key' : 'Подпись не может быть проверена без секретного ключа'}
               </Typography>
             </Paper>
           </Grid>

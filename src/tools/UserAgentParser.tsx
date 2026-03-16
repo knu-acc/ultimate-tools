@@ -11,6 +11,7 @@ import {
   Button,
   useTheme,
   alpha } from '@mui/material';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 interface ParsedUA {
   browser: string;
@@ -202,18 +203,35 @@ const commonUserAgents = [
 
 export default function UserAgentParser() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [userAgent, setUserAgent] = useState(
     typeof navigator !== 'undefined' ? navigator.userAgent : ''
   );
 
   const parsed = parseUserAgent(userAgent);
 
+  // Map Russian values from parser to English when needed
+  const translateValue = (val: string) => {
+    if (!isEn) return val;
+    const map: Record<string, string> = {
+      'Неизвестно': 'Unknown',
+      'Десктоп': 'Desktop',
+      'Планшет': 'Tablet',
+      'Мобильный': 'Mobile',
+      'Бот': 'Bot',
+      'Не определена': 'Not detected',
+      'Яндекс Браузер': 'Yandex Browser',
+    };
+    return map[val] || val;
+  };
+
   const infoCards = [
-    { label: 'Браузер', value: parsed.browser, sub: parsed.browserVersion },
-    { label: 'Операционная система', value: parsed.os, sub: parsed.osVersion },
-    { label: 'Тип устройства', value: parsed.deviceType, sub: '' },
-    { label: 'Движок', value: parsed.engine, sub: parsed.engineVersion },
-    { label: 'Архитектура', value: parsed.architecture || 'Не определена', sub: '' },
+    { label: isEn ? 'Browser' : 'Браузер', value: translateValue(parsed.browser), sub: parsed.browserVersion },
+    { label: isEn ? 'Operating system' : 'Операционная система', value: translateValue(parsed.os), sub: parsed.osVersion },
+    { label: isEn ? 'Device type' : 'Тип устройства', value: translateValue(parsed.deviceType), sub: '' },
+    { label: isEn ? 'Engine' : 'Движок', value: translateValue(parsed.engine), sub: parsed.engineVersion },
+    { label: isEn ? 'Architecture' : 'Архитектура', value: translateValue(parsed.architecture || 'Не определена'), sub: '' },
   ];
 
   return (
@@ -236,7 +254,7 @@ export default function UserAgentParser() {
           maxRows={4}
           value={userAgent}
           onChange={(e) => setUserAgent(e.target.value)}
-          placeholder="Вставьте строку User-Agent..."
+          placeholder={isEn ? 'Paste a User-Agent string...' : 'Вставьте строку User-Agent...'}
           slotProps={{ htmlInput: { style: { fontFamily: 'monospace', fontSize: '0.85rem' } } }}
           sx={{ mb: 2 }}
         />
@@ -249,7 +267,7 @@ export default function UserAgentParser() {
             }
             sx={{ borderRadius: 2, textTransform: 'none' }}
           >
-            Мой браузер
+            {isEn ? 'My browser' : 'Мой браузер'}
           </Button>
           <Button
             variant="outlined"
@@ -257,7 +275,7 @@ export default function UserAgentParser() {
             onClick={() => setUserAgent('')}
             sx={{ borderRadius: 2, textTransform: 'none' }}
           >
-            Очистить
+            {isEn ? 'Clear' : 'Очистить'}
           </Button>
         </Box>
       </Paper>
@@ -272,7 +290,7 @@ export default function UserAgentParser() {
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Популярные User-Agent строки
+          {isEn ? 'Popular User-Agent strings' : 'Популярные User-Agent строки'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {commonUserAgents.map((item) => (

@@ -16,6 +16,8 @@ import {
 } from '@mui/material';
 import PercentIcon from '@mui/icons-material/Percent';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
+
 
 interface TabPanelProps {
   children: React.ReactNode;
@@ -30,6 +32,8 @@ function TabPanel({ children, value, index }: TabPanelProps) {
 
 export default function PercentageCalc() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [tab, setTab] = useState(0);
 
   // Mode 1: What is X% of Y
@@ -79,8 +83,9 @@ export default function PercentageCalc() {
   }, [addSub_pct, addSub_val]);
 
   const formatNum = (n: number) => {
-    if (Number.isInteger(n)) return n.toLocaleString('ru-RU');
-    return n.toLocaleString('ru-RU', { maximumFractionDigits: 6 });
+    const loc = isEn ? 'en-US' : 'ru-RU';
+    if (Number.isInteger(n)) return n.toLocaleString(loc);
+    return n.toLocaleString(loc, { maximumFractionDigits: 6 });
   };
 
   const ResultDisplay = ({ label, value }: { label: string; value: string }) => (
@@ -125,10 +130,10 @@ export default function PercentageCalc() {
             '& .MuiTab-root': { textTransform: 'none', fontWeight: 500, minWidth: 'auto' }
           }}
         >
-          <Tab label="X% от Y" />
-          <Tab label="X это сколько % от Y" />
-          <Tab label="Изменение в %" />
-          <Tab label="Прибавить / вычесть %" />
+          <Tab label={isEn ? 'X% of Y' : 'X% от Y'} />
+          <Tab label={isEn ? 'X is what % of Y' : 'X это сколько % от Y'} />
+          <Tab label={isEn ? 'Change in %' : 'Изменение в %'} />
+          <Tab label={isEn ? 'Add / subtract %' : 'Прибавить / вычесть %'} />
         </Tabs>
 
         <Divider />
@@ -139,7 +144,7 @@ export default function PercentageCalc() {
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Процент (X)"
+                label={isEn ? 'Percent (X)' : 'Процент (X)'}
                 type="number"
                 value={pctOf_x}
                 onChange={(e) => setPctOf_x(e.target.value)}
@@ -150,13 +155,13 @@ export default function PercentageCalc() {
             </Grid>
             <Grid size={{ xs: 2 }} sx={{ textAlign: 'center' }}>
               <Typography variant="h6" color="text.secondary">
-                от
+                {isEn ? 'of' : 'от'}
               </Typography>
             </Grid>
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Число (Y)"
+                label={isEn ? 'Number (Y)' : 'Число (Y)'}
                 type="number"
                 value={pctOf_y}
                 onChange={(e) => setPctOf_y(e.target.value)}
@@ -164,7 +169,7 @@ export default function PercentageCalc() {
             </Grid>
           </Grid>
           {result1 !== null && (
-            <ResultDisplay label={`${pctOf_x}% от ${pctOf_y}`} value={formatNum(result1)} />
+            <ResultDisplay label={isEn ? `${pctOf_x}% of ${pctOf_y}` : `${pctOf_x}% от ${pctOf_y}`} value={formatNum(result1)} />
           )}
         </TabPanel>
 
@@ -174,7 +179,7 @@ export default function PercentageCalc() {
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Число (X)"
+                label={isEn ? 'Number (X)' : 'Число (X)'}
                 type="number"
                 value={whatPct_x}
                 onChange={(e) => setWhatPct_x(e.target.value)}
@@ -182,13 +187,13 @@ export default function PercentageCalc() {
             </Grid>
             <Grid size={{ xs: 2 }} sx={{ textAlign: 'center' }}>
               <Typography variant="h6" color="text.secondary">
-                от
+                {isEn ? 'of' : 'от'}
               </Typography>
             </Grid>
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Число (Y)"
+                label={isEn ? 'Number (Y)' : 'Число (Y)'}
                 type="number"
                 value={whatPct_y}
                 onChange={(e) => setWhatPct_y(e.target.value)}
@@ -196,7 +201,7 @@ export default function PercentageCalc() {
             </Grid>
           </Grid>
           {result2 !== null && (
-            <ResultDisplay label={`${whatPct_x} это`} value={`${formatNum(result2)}%`} />
+            <ResultDisplay label={isEn ? `${whatPct_x} is` : `${whatPct_x} это`} value={`${formatNum(result2)}%`} />
           )}
         </TabPanel>
 
@@ -206,7 +211,7 @@ export default function PercentageCalc() {
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Исходное (X)"
+                label={isEn ? 'Original (X)' : 'Исходное (X)'}
                 type="number"
                 value={change_x}
                 onChange={(e) => setChange_x(e.target.value)}
@@ -220,7 +225,7 @@ export default function PercentageCalc() {
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Новое (Y)"
+                label={isEn ? 'New (Y)' : 'Новое (Y)'}
                 type="number"
                 value={change_y}
                 onChange={(e) => setChange_y(e.target.value)}
@@ -229,14 +234,14 @@ export default function PercentageCalc() {
           </Grid>
           {result3 !== null && (
             <ResultDisplay
-              label="Изменение"
+              label={isEn ? 'Change' : 'Изменение'}
               value={`${result3 >= 0 ? '+' : ''}${formatNum(result3)}%`}
             />
           )}
           {result3 !== null && (
             <Box sx={{ mt: 1.5, textAlign: 'center' }}>
               <Chip
-                label={result3 > 0 ? 'Увеличение' : result3 < 0 ? 'Уменьшение' : 'Без изменений'}
+                label={result3 > 0 ? (isEn ? 'Increase' : 'Увеличение') : result3 < 0 ? (isEn ? 'Decrease' : 'Уменьшение') : (isEn ? 'No change' : 'Без изменений')}
                 color={result3 > 0 ? 'success' : result3 < 0 ? 'error' : 'default'}
                 variant="outlined"
               />
@@ -250,7 +255,7 @@ export default function PercentageCalc() {
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Процент"
+                label={isEn ? 'Percent' : 'Процент'}
                 type="number"
                 value={addSub_pct}
                 onChange={(e) => setAddSub_pct(e.target.value)}
@@ -261,13 +266,13 @@ export default function PercentageCalc() {
             </Grid>
             <Grid size={{ xs: 2 }} sx={{ textAlign: 'center' }}>
               <Typography variant="h6" color="text.secondary">
-                к
+                {isEn ? 'to' : 'к'}
               </Typography>
             </Grid>
             <Grid size={{ xs: 5 }}>
               <TextField
                 fullWidth
-                label="Число"
+                label={isEn ? 'Number' : 'Число'}
                 type="number"
                 value={addSub_val}
                 onChange={(e) => setAddSub_val(e.target.value)}

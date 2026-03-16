@@ -14,6 +14,7 @@ import {
   alpha
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 
 interface CronState {
@@ -205,6 +206,8 @@ function describeCron(cron: CronState): string {
 
 export default function CronGenerator() {
   const theme = useTheme();
+  const { locale } = useLanguage();
+  const isEn = locale === 'en';
   const [cron, setCron] = useState<CronState>({
     minute: '0',
     hour: '*',
@@ -238,7 +241,7 @@ export default function CronGenerator() {
       >
         {/* Presets */}
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Шаблоны
+          {isEn ? 'Templates' : 'Шаблоны'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
           {presets.map((preset) => (
@@ -261,14 +264,14 @@ export default function CronGenerator() {
 
         {/* Dropdowns */}
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
-          Настройка
+          {isEn ? 'Configuration' : 'Настройка'}
         </Typography>
         <Grid container spacing={2} sx={{ mb: 2 }}>
           <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
             <TextField
               select
               fullWidth
-              label="Минута"
+              label={isEn ? 'Minute' : 'Минута'}
               value={cron.minute}
               onChange={(e) => updateField('minute', e.target.value)}
               size="small"
@@ -285,7 +288,7 @@ export default function CronGenerator() {
             <TextField
               select
               fullWidth
-              label="Час"
+              label={isEn ? 'Hour' : 'Час'}
               value={cron.hour}
               onChange={(e) => updateField('hour', e.target.value)}
               size="small"
@@ -302,7 +305,7 @@ export default function CronGenerator() {
             <TextField
               select
               fullWidth
-              label="День месяца"
+              label={isEn ? 'Day of month' : 'День месяца'}
               value={cron.dayOfMonth}
               onChange={(e) => updateField('dayOfMonth', e.target.value)}
               size="small"
@@ -319,7 +322,7 @@ export default function CronGenerator() {
             <TextField
               select
               fullWidth
-              label="Месяц"
+              label={isEn ? 'Month' : 'Месяц'}
               value={cron.month}
               onChange={(e) => updateField('month', e.target.value)}
               size="small"
@@ -336,7 +339,7 @@ export default function CronGenerator() {
             <TextField
               select
               fullWidth
-              label="День недели"
+              label={isEn ? 'Day of week' : 'День недели'}
               value={cron.dayOfWeek}
               onChange={(e) => updateField('dayOfWeek', e.target.value)}
               size="small"
@@ -365,7 +368,7 @@ export default function CronGenerator() {
           }}
         >
           <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
-            Cron-выражение
+            {isEn ? 'Cron Expression' : 'Cron-выражение'}
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5 }}>
             <Typography
@@ -394,11 +397,11 @@ export default function CronGenerator() {
           }}
         >
           {[
-            { label: 'Минута', value: cron.minute },
-            { label: 'Час', value: cron.hour },
-            { label: 'День', value: cron.dayOfMonth },
-            { label: 'Месяц', value: cron.month },
-            { label: 'День нед.', value: cron.dayOfWeek },
+            { label: isEn ? 'Minute' : 'Минута', value: cron.minute },
+            { label: isEn ? 'Hour' : 'Час', value: cron.hour },
+            { label: isEn ? 'Day' : 'День', value: cron.dayOfMonth },
+            { label: isEn ? 'Month' : 'Месяц', value: cron.month },
+            { label: isEn ? 'Weekday' : 'День нед.', value: cron.dayOfWeek },
           ].map((item) => (
             <Chip
               key={item.label}
@@ -421,7 +424,7 @@ export default function CronGenerator() {
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 0.5 }}>
-            Описание
+            {isEn ? 'Description' : 'Описание'}
           </Typography>
           <Typography variant="body1" sx={{ fontWeight: 500 }}>
             {description}
@@ -481,7 +484,7 @@ export default function CronGenerator() {
               }}
               sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3, whiteSpace: 'nowrap' }}
             >
-              Применить
+              {isEn ? 'Apply' : 'Применить'}
             </Button>
           </Box>
         </Box>

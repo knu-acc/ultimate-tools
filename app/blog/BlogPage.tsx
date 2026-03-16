@@ -9,18 +9,27 @@ import { Search, Schedule, ArrowForward } from '@mui/icons-material';
 import Link from 'next/link';
 import { articles } from '@/src/data/articles';
 import { getToolBySlug } from '@/src/data/tools';
+import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function BlogPage() {
   const theme = useTheme();
+  const { locale, t, lHref } = useLanguage();
+  const isEn = locale === 'en';
   const [search, setSearch] = useState('');
 
-  const filtered = articles.filter(a =>
-    a.title.toLowerCase().includes(search.toLowerCase()) ||
-    a.description.toLowerCase().includes(search.toLowerCase()) ||
-    a.keywords.some(k => k.toLowerCase().includes(search.toLowerCase()))
-  );
+  const filtered = articles.filter(a => {
+    const title = (isEn ? a.titleEn || a.title : a.title).toLowerCase();
+    const desc = (isEn ? a.descriptionEn || a.description : a.description).toLowerCase();
+    const q = search.toLowerCase();
+    return title.includes(q) || desc.includes(q) ||
+      a.keywords.some(k => k.toLowerCase().includes(q));
+  });
 
-  const typeLabels: Record<string, string> = {
+  const typeLabels: Record<string, string> = isEn ? {
+    guide: 'Guide',
+    tips: 'Tips',
+    'use-cases': 'Use Cases',
+  } : {
     guide: 'Руководство',
     tips: 'Советы',
     'use-cases': 'Кейсы',
@@ -35,15 +44,15 @@ export default function BlogPage() {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h3" component="h1" fontWeight={700} sx={{ mb: 1 }}>
-        Блог
+        {t('blog.title')}
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        Статьи, руководства и советы по использованию онлайн-инструментов
+        {t('blog.subtitle')}
       </Typography>
 
       <TextField
         fullWidth
-        placeholder="Поиск статей..."
+        placeholder={isEn ? 'Search articles...' : 'Поиск статей...'}
         value={search}
         onChange={e => setSearch(e.target.value)}
         InputProps={{
@@ -74,7 +83,7 @@ export default function BlogPage() {
                   },
                 }}
               >
-                <CardActionArea component={Link} href={`/blog/${article.slug}`} sx={{ height: '100%' }}>
+                <CardActionArea component={Link} href={lHref(`/blog/${article.slug}`)} sx={{ height: '100%' }}>
                   <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                     <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
                       <Chip
@@ -89,7 +98,7 @@ export default function BlogPage() {
                         }}
                       />
                       {tool && (
-                        <Chip label={tool.name} size="small" variant="outlined" sx={{ fontSize: 11, height: 24 }} />
+                        <Chip label={isEn ? ((tool as any).nameEn || tool.name) : tool.name} size="small" variant="outlined" sx={{ fontSize: 11, height: 24 }} />
                       )}
                     </Box>
 
@@ -99,7 +108,7 @@ export default function BlogPage() {
                       WebkitBoxOrient: 'vertical',
                       overflow: 'hidden',
                     }}>
-                      {article.title}
+                      {isEn ? (article.titleEn || article.title) : article.title}
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary" sx={{
@@ -109,13 +118,13 @@ export default function BlogPage() {
                       overflow: 'hidden',
                       fontSize: 13,
                     }}>
-                      {article.description}
+                      {isEn ? (article.descriptionEn || article.description) : article.description}
                     </Typography>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 'auto' }}>
                       <Schedule sx={{ fontSize: 14, color: 'text.secondary' }} />
                       <Typography variant="caption" color="text.secondary">
-                        {article.readTime} мин чтения • {article.date}
+                        {article.readTime} {isEn ? 'min read' : 'мин чтения'} • {article.date}
                       </Typography>
                     </Box>
                   </CardContent>
@@ -129,7 +138,7 @@ export default function BlogPage() {
       {filtered.length === 0 && (
         <Box sx={{ textAlign: 'center', py: 8 }}>
           <Typography variant="h6" color="text.secondary">
-            Статьи не найдены
+            {isEn ? 'No articles found' : 'Статьи не найдены'}
           </Typography>
         </Box>
       )}
