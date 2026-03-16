@@ -21,7 +21,7 @@ export default function LanguageSwitcher() {
     <Box
       sx={{
         display: 'flex',
-        borderRadius: `${theme.shape?.full ?? 9999}px`,
+        borderRadius: 999,
         border: `1px solid ${theme.palette.outline ?? alpha(theme.palette.text.primary, 0.2)}`,
         overflow: 'hidden',
       }}

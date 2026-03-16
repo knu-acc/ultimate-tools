@@ -2,6 +2,9 @@
 
 import { createTheme, alpha } from '@mui/material/styles';
 import type { Theme } from '@mui/material/styles';
+import { outlinedInputClasses } from '@mui/material/OutlinedInput';
+import { switchClasses } from '@mui/material/Switch';
+import { accordionClasses } from '@mui/material/Accordion';
 
 // MD3 Motion tokens
 const md3Motion = {
@@ -27,15 +30,15 @@ const md3Motion = {
   },
 };
 
-// MD3 Shape scale
+// Shape scale — 2 sizes: small (10px) and large (18px)
 const md3Shape = {
   none: 0,
-  extraSmall: 4,
-  small: 8,
-  medium: 12,
-  large: 16,
-  extraLarge: 28,
-  full: 9999,
+  extraSmall: 10,
+  small: 10,
+  medium: 18,
+  large: 18,
+  extraLarge: 18,
+  full: 999,
 };
 
 // MD3 Elevation (tonal + shadow)
@@ -225,7 +228,7 @@ const commonComponents = {
           // MD3: border stays 1px on hover, only color changes; 2px only on focus
           '& fieldset': { borderWidth: 1 },
           '&:hover fieldset': { borderWidth: 1 },
-          '&.Mui-focused fieldset': { borderWidth: 2 },
+          [`&.${outlinedInputClasses.focused} fieldset`]: { borderWidth: 2 },
         },
         '& .MuiFilledInput-root': {
           borderRadius: `${md3Shape.extraSmall}px ${md3Shape.extraSmall}px 0 0`,
@@ -303,8 +306,8 @@ const commonComponents = {
       root: { padding: 8 },
       switchBase: {
         padding: 11,
-        '&.Mui-checked': {
-          '& + .MuiSwitch-track': { opacity: 1 },
+        [`&.${switchClasses.checked}`]: {
+          [`& + .${switchClasses.track}`]: { opacity: 1 },
         },
       },
       track: {
@@ -394,7 +397,7 @@ const commonComponents = {
   MuiMenu: {
     styleOverrides: {
       paper: {
-        borderRadius: md3Shape.extraSmall,
+        borderRadius: md3Shape.medium,
       },
     },
   },
@@ -408,7 +411,7 @@ const commonComponents = {
   MuiAutocomplete: {
     styleOverrides: {
       paper: {
-        borderRadius: md3Shape.extraSmall,
+        borderRadius: md3Shape.medium,
       },
       listbox: {
         padding: '4px 0',
@@ -448,7 +451,7 @@ const commonComponents = {
         transitionProperty: 'border-color',
         transitionDuration: md3Motion.duration.short4,
         transitionTimingFunction: md3Motion.easing.standard,
-        '&.Mui-expanded': {
+        [`&.${accordionClasses.expanded}`]: {
           margin: '8px 0',
         },
       },
@@ -531,7 +534,7 @@ const typography = {
 const baseLightTheme = createTheme({
   typography,
   shape: {
-    borderRadius: md3Shape.extraSmall,
+    borderRadius: 1, // multiplier=1: sx `borderRadius: N` = N px directly
     ...md3Shape,
   },
   shadows: [
@@ -630,7 +633,7 @@ export const lightTheme = {
 const baseDarkTheme = createTheme({
   typography,
   shape: {
-    borderRadius: md3Shape.extraSmall,
+    borderRadius: 1, // multiplier=1: sx `borderRadius: N` = N px directly
     ...md3Shape,
   },
   shadows: [

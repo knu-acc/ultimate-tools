@@ -98,7 +98,7 @@ export default function DataConverter() {
           p: 3,
           mb: 2,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 4
+          borderRadius: 18
         }}
       >
         {/* Mode toggle */}
@@ -111,7 +111,7 @@ export default function DataConverter() {
               setMode('decimal');
               if (UNITS[unit].binary) setUnit('byte');
             }}
-            sx={{ fontWeight: 600, borderRadius: 3, px: 1 }}
+            sx={{ fontWeight: 600, borderRadius: 18, px: 1 }}
           />
           <Chip
             label={isEn ? 'Binary (×1024)' : 'Двоичная (×1024)'}
@@ -121,7 +121,7 @@ export default function DataConverter() {
               setMode('binary');
               if (!UNITS[unit].binary && unit !== 'bit' && unit !== 'byte') setUnit('byte');
             }}
-            sx={{ fontWeight: 600, borderRadius: 3, px: 1 }}
+            sx={{ fontWeight: 600, borderRadius: 18, px: 1 }}
           />
         </Box>
 
@@ -161,7 +161,7 @@ export default function DataConverter() {
             label={`${formatValue(numericInput)} ${getShort(unit)} = ${formatValue(bits)} ${isEn ? 'bits' : 'бит'}`}
             variant="outlined"
             color="info"
-            sx={{ mb: 2, fontFamily: 'monospace', borderRadius: 3 }}
+            sx={{ mb: 2, fontFamily: 'monospace', borderRadius: 18 }}
           />
         )}
 
@@ -176,7 +176,7 @@ export default function DataConverter() {
                 elevation={0}
                 sx={{
                   p: 2,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 0.5,

@@ -157,7 +157,7 @@ export default function SvgEditor() {
       {/* Quick insert buttons */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
           {SVG_TEMPLATES.map((t) => (
@@ -180,7 +180,7 @@ export default function SvgEditor() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, height: '100%' }}
+            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, height: '100%' }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -230,14 +230,14 @@ export default function SvgEditor() {
         <Grid size={{ xs: 12, md: 6 }}>
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, height: '100%' }}
+            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, height: '100%' }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
               {isEn ? 'Preview' : 'Предпросмотр'}
             </Typography>
             <Box
               sx={{
-                borderRadius: 2,
+                borderRadius: 10,
                 p: 2,
                 minHeight: 300,
                 display: 'flex',

@@ -114,7 +114,7 @@ export default function Header() {
               sx={{
                 width: 32,
                 height: 32,
-                borderRadius: `${theme.shape?.small ?? 8}px`,
+                borderRadius: 10,
                 bgcolor: theme.palette.primary.main,
                 display: 'flex',
                 alignItems: 'center',
@@ -188,7 +188,7 @@ export default function Header() {
                 gap: 1,
                 px: 2,
                 height: 44,
-                borderRadius: `${theme.shape?.full ?? 9999}px`,
+                borderRadius: 999,
                 bgcolor: theme.palette.surfaceContainerHigh,
                 cursor: 'pointer',
                 minWidth: { sm: 180, md: 240 },
@@ -262,7 +262,7 @@ export default function Header() {
               component={Link}
               href={lHref('/')}
               onClick={() => setDrawerOpen(false)}
-              sx={{ borderRadius: `${theme.shape?.full ?? 9999}px`, py: 1 }}
+              sx={{ borderRadius: 999, py: 1 }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}><Home sx={{ fontSize: 22 }} /></ListItemIcon>
               <ListItemText primary={t('nav.drawer.home')} primaryTypographyProps={{ fontWeight: 500, fontSize: '0.875rem' }} />
@@ -282,7 +282,7 @@ export default function Header() {
                   href={lHref(`/group/${group.slug}`)}
                   onClick={() => setDrawerOpen(false)}
                   sx={{
-                    borderRadius: `${theme.shape?.full ?? 9999}px`,
+                    borderRadius: 999,
                     py: 0.75,
                     // MD3 state layer: 8% group color on hover
                     '&:hover': { bgcolor: alpha(group.color, 0.08) },
@@ -316,7 +316,7 @@ export default function Header() {
               component={Link}
               href={lHref('/blog')}
               onClick={() => setDrawerOpen(false)}
-              sx={{ borderRadius: `${theme.shape?.full ?? 9999}px`, py: 1 }}
+              sx={{ borderRadius: 999, py: 1 }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}><Article sx={{ fontSize: 22 }} /></ListItemIcon>
               <ListItemText primary={t('nav.blog')} primaryTypographyProps={{ fontWeight: 500, fontSize: '0.875rem' }} />

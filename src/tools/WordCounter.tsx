@@ -71,7 +71,7 @@ export default function WordCounter() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -103,7 +103,7 @@ export default function WordCounter() {
           }}
           sx={{
             '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
+              borderRadius: 10,
               fontSize: '1rem',
               lineHeight: 1.7
             }
@@ -119,7 +119,7 @@ export default function WordCounter() {
               sx={{
                 p: 2,
                 textAlign: 'center',
-                borderRadius: 3,
+                borderRadius: 18,
                 backgroundColor: alpha(card.color, 0.06)
               }}
             >
@@ -141,7 +141,7 @@ export default function WordCounter() {
       </Grid>
 
       {stats.topWords.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+        <Paper elevation={0} sx={{ p: 3, borderRadius: 18 }}>
           <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600, mb: 2 }}>
             {isEn ? 'Frequent words' : 'Частые слова'}
           </Typography>
@@ -152,7 +152,7 @@ export default function WordCounter() {
                 label={`${word} (${count})`}
                 size="medium"
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: 10,
                   fontWeight: 600,
                   backgroundColor: alpha(theme.palette.primary.main, 0.08 + (10 - index) * 0.015),
                   color: theme.palette.primary.dark

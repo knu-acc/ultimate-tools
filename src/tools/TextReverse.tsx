@@ -122,7 +122,7 @@ export default function TextReverse() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -147,7 +147,7 @@ export default function TextReverse() {
               sx={{
                 fontWeight: 600,
                 fontSize: '0.85rem',
-                borderRadius: 2,
+                borderRadius: 10,
                 px: 1
               }}
             />

@@ -169,7 +169,7 @@ export default function ImageFilters() {
             textAlign: 'center',
             cursor: 'pointer',
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 18,
             backgroundColor: dragging
               ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
@@ -195,7 +195,7 @@ export default function ImageFilters() {
           {/* Presets */}
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
               {isEn ? 'Presets' : 'Пресеты'}
@@ -216,7 +216,7 @@ export default function ImageFilters() {
           {/* Sliders */}
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
               {isEn ? 'Filter Settings' : 'Настройки фильтров'}
@@ -261,7 +261,7 @@ export default function ImageFilters() {
             <Grid size={{ xs: 12, md: 6 }}>
               <Paper
                 elevation={0}
-                sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
+                sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                   <CompareIcon fontSize="small" color="action" />
@@ -277,7 +277,7 @@ export default function ImageFilters() {
                     width: '100%',
                     maxHeight: 400,
                     objectFit: 'contain',
-                    borderRadius: 2,
+                    borderRadius: 10,
                     display: 'block'
                   }}
                 />
@@ -286,7 +286,7 @@ export default function ImageFilters() {
             <Grid size={{ xs: 12, md: 6 }}>
               <Paper
                 elevation={0}
-                sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
+                sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                   <CompareIcon fontSize="small" color="primary" />
@@ -301,7 +301,7 @@ export default function ImageFilters() {
                     width: '100%',
                     maxHeight: 400,
                     objectFit: 'contain',
-                    borderRadius: 2,
+                    borderRadius: 10,
                     display: 'block'
                   }}
                 />

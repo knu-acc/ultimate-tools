@@ -122,7 +122,7 @@ export default function HomePage() {
               alignItems: 'center',
               px: 3,
               height: 56,
-              borderRadius: `${theme.shape?.extraLarge ?? 28}px`,
+              borderRadius: 18,
               maxWidth: 520,
               mx: 'auto',
               cursor: 'pointer',
@@ -236,7 +236,7 @@ export default function HomePage() {
                   sx={{
                     // Colored tint background per group!
                     bgcolor: alpha(group.color, isDark ? 0.08 : 0.06),
-                    borderRadius: `${theme.shape?.medium ?? 12}px`,
+                    borderRadius: 18,
                     transitionProperty: 'background-color, box-shadow, transform',
                     transitionDuration: dur,
                     transitionTimingFunction: easing,
@@ -252,7 +252,7 @@ export default function HomePage() {
                       sx={{
                         width: 48,
                         height: 48,
-                        borderRadius: `${theme.shape?.medium ?? 12}px`,
+                        borderRadius: 18,
                         bgcolor: alpha(group.color, isDark ? 0.2 : 0.15),
                         display: 'flex',
                         alignItems: 'center',
@@ -305,7 +305,7 @@ export default function HomePage() {
                   <Box sx={{
                     width: 36,
                     height: 36,
-                    borderRadius: `${theme.shape?.small ?? 8}px`,
+                    borderRadius: 10,
                     bgcolor: alpha(group.color, isDark ? 0.15 : 0.1),
                     display: 'flex',
                     alignItems: 'center',
@@ -323,7 +323,7 @@ export default function HomePage() {
                   href={lHref(`/group/${group.slug}`)}
                   endIcon={<ArrowForward sx={{ fontSize: '18px !important' }} />}
                   sx={{
-                    borderRadius: 9999,
+                    borderRadius: 999,
                     px: 2.5,
                     py: 0.75,
                     fontWeight: 500,
@@ -355,7 +355,7 @@ export default function HomePage() {
           sx={{
             p: { xs: 3, md: 4 },
             bgcolor: isDark ? theme.palette.surfaceContainerLow : alpha(theme.palette.primaryContainer, 0.3),
-            borderRadius: `${theme.shape?.extraLarge ?? 28}px`,
+            borderRadius: 18,
             border: `1px solid ${alpha(theme.palette.primary.main, 0.08)}`,
           }}
         >

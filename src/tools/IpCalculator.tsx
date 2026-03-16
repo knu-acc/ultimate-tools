@@ -122,7 +122,7 @@ export default function IpCalculator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -144,7 +144,7 @@ export default function IpCalculator() {
             size="small"
             value={cidr}
             onChange={(e) => setCidr(Number(e.target.value))}
-            sx={{ flex: 1, minWidth: 120, borderRadius: 2 }}
+            sx={{ flex: 1, minWidth: 120, borderRadius: 10 }}
           >
             {Array.from({ length: 33 }, (_, i) => (
               <MenuItem key={i} value={i}>
@@ -158,7 +158,7 @@ export default function IpCalculator() {
               setIp('192.168.1.100');
               setCidr(24);
             }}
-            sx={{ borderRadius: 2, textTransform: 'none' }}
+            sx={{ borderRadius: 10, textTransform: 'none' }}
           >
             {isEn ? 'Reset' : 'Сбросить'}
           </Button>
@@ -175,7 +175,7 @@ export default function IpCalculator() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     textAlign: 'center',
                     transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {
@@ -206,7 +206,7 @@ export default function IpCalculator() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3
+              borderRadius: 18
             }}
           >
             <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>

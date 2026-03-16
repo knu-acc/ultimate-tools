@@ -268,7 +268,7 @@ export default function GithubReadme() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -276,16 +276,16 @@ export default function GithubReadme() {
           {isEn ? 'Templates' : 'Шаблоны'}
         </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-          <Button size="small" variant="outlined" onClick={() => applyPreset('basic')} sx={{ borderRadius: 2 }}>
+          <Button size="small" variant="outlined" onClick={() => applyPreset('basic')} sx={{ borderRadius: 10 }}>
             {isEn ? 'Basic' : 'Базовый'}
           </Button>
-          <Button size="small" variant="outlined" onClick={() => applyPreset('detailed')} sx={{ borderRadius: 2 }}>
+          <Button size="small" variant="outlined" onClick={() => applyPreset('detailed')} sx={{ borderRadius: 10 }}>
             {isEn ? 'Detailed' : 'Подробный'}
           </Button>
-          <Button size="small" variant="outlined" onClick={() => applyPreset('api')} sx={{ borderRadius: 2 }}>
+          <Button size="small" variant="outlined" onClick={() => applyPreset('api')} sx={{ borderRadius: 10 }}>
             API
           </Button>
-          <Button size="small" variant="outlined" onClick={() => applyPreset('library')} sx={{ borderRadius: 2 }}>
+          <Button size="small" variant="outlined" onClick={() => applyPreset('library')} sx={{ borderRadius: 10 }}>
             {isEn ? 'Library' : 'Библиотека'}
           </Button>
         </Box>
@@ -298,7 +298,7 @@ export default function GithubReadme() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.surfaceContainerLow
             }}
           >
@@ -459,7 +459,7 @@ export default function GithubReadme() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.surfaceContainerLow
             }}
           >
@@ -472,7 +472,7 @@ export default function GithubReadme() {
             <Box
               sx={{
                 p: 2,
-                borderRadius: 2,
+                borderRadius: 10,
                 backgroundColor: alpha(theme.palette.background.default, 0.5),
                 maxHeight: 600,
                 overflow: 'auto'

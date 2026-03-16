@@ -71,7 +71,7 @@ export default function MetaTagGenerator() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -128,7 +128,7 @@ export default function MetaTagGenerator() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               mb: 2,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -151,7 +151,7 @@ export default function MetaTagGenerator() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -167,7 +167,7 @@ export default function MetaTagGenerator() {
               elevation={0}
               sx={{
                 p: 2,
-                borderRadius: 2,
+                borderRadius: 10,
                 bgcolor: '#1e1e1e',
                 maxHeight: 400,
                 overflow: 'auto'

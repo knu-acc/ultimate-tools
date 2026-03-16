@@ -331,7 +331,7 @@ export default function MacLookup() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
@@ -356,7 +356,7 @@ export default function MacLookup() {
             variant="contained"
             onClick={handleLookup}
             startIcon={<SearchIcon />}
-            sx={{ minWidth: 120, borderRadius: 2 }}
+            sx={{ minWidth: 120, borderRadius: 10 }}
           >
             {isEn ? 'Search' : 'Найти'}
           </Button>
@@ -366,7 +366,7 @@ export default function MacLookup() {
           variant="outlined"
           onClick={handleRandom}
           startIcon={<CasinoIcon />}
-          sx={{ mb: 2, borderRadius: 2 }}
+          sx={{ mb: 2, borderRadius: 10 }}
         >
           {isEn ? 'Random MAC' : 'Случайный MAC'}
         </Button>
@@ -376,7 +376,7 @@ export default function MacLookup() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.surfaceContainerLow
             }}
           >

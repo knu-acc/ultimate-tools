@@ -125,7 +125,7 @@ export default function PrimeChecker() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -173,7 +173,7 @@ export default function PrimeChecker() {
               p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha(
                 result.prime ? theme.palette.success.main : theme.palette.error.main,
                 0.06,
@@ -197,7 +197,7 @@ export default function PrimeChecker() {
               sx={{
                 p: { xs: 2, sm: 3 },
                 mb: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 background: theme.palette.surfaceContainerLow
               }}
             >
@@ -209,7 +209,7 @@ export default function PrimeChecker() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: theme.palette.surfaceContainerLow
                 }}
               >
@@ -247,7 +247,7 @@ export default function PrimeChecker() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.surfaceContainerLow
             }}
           >
@@ -287,7 +287,7 @@ export default function PrimeChecker() {
                 sx={{
                   p: { xs: 2, sm: 3 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.primary.main, 0.04),
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.primary.main, 0.08) }
@@ -315,7 +315,7 @@ export default function PrimeChecker() {
                 sx={{
                   p: { xs: 2, sm: 3 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.success.main, 0.04),
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.success.main, 0.08) }

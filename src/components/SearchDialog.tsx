@@ -5,6 +5,7 @@ import {
   Dialog, DialogContent, TextField, List, ListItem, ListItemButton,
   ListItemIcon, ListItemText, Typography, Box, Chip, alpha, useTheme, InputAdornment,
 } from '@mui/material';
+import { listItemButtonClasses } from '@mui/material/ListItemButton';
 import { Search as SearchIcon } from '@mui/icons-material';
 import Fuse from 'fuse.js';
 import { useRouter } from 'next/navigation';
@@ -68,7 +69,7 @@ export default function SearchDialog({ open, onClose }: Props) {
       onClose={onClose}
       maxWidth="sm"
       fullWidth
-      PaperProps={{ sx: { borderRadius: `${theme.shape?.large ?? 16}px`, maxHeight: '70vh' } }}
+      PaperProps={{ sx: { borderRadius: 18, maxHeight: '70vh' } }}
     >
       <Box sx={{ p: 2, pb: 0 }}>
         <TextField
@@ -86,7 +87,7 @@ export default function SearchDialog({ open, onClose }: Props) {
           variant="outlined"
           sx={{
             '& .MuiOutlinedInput-root': {
-              borderRadius: `${theme.shape?.medium ?? 12}px`,
+              borderRadius: 18,
               bgcolor: alpha(theme.palette.primary.main, 0.04),
               '& fieldset': { border: 'none' },
             },
@@ -103,10 +104,10 @@ export default function SearchDialog({ open, onClose }: Props) {
                   selected={index === selectedIndex}
                   onClick={() => handleSelect(tool)}
                   sx={{
-                    borderRadius: theme.shape?.small ?? 8,
+                    borderRadius: 10,
                     mb: 0.5,
                     py: 1,
-                    '&.Mui-selected': { bgcolor: alpha(theme.palette.primary.main, 0.08) },
+                    [`&.${listItemButtonClasses.selected}`]: { bgcolor: alpha(theme.palette.primary.main, 0.08) },
                   }}
                 >
                   <ListItemIcon sx={{ minWidth: 44 }}>
@@ -114,7 +115,7 @@ export default function SearchDialog({ open, onClose }: Props) {
                       sx={{
                         width: 36,
                         height: 36,
-                        borderRadius: theme.shape?.small ?? 8,
+                        borderRadius: 10,
                         bgcolor: alpha(group?.color || theme.palette.primary.main, 0.1),
                         display: 'flex',
                         alignItems: 'center',

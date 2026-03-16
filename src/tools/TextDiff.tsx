@@ -94,7 +94,7 @@ export default function TextDiff() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -151,7 +151,7 @@ export default function TextDiff() {
           <Paper
             elevation={0}
             sx={{
-              borderRadius: 3,
+              borderRadius: 18,
               overflow: 'hidden',
               maxHeight: 400,
               overflowY: 'auto'
@@ -198,7 +198,7 @@ export default function TextDiff() {
       {diff.length === 0 && text1 && text2 && (
         <Paper
           elevation={0}
-          sx={{ p: 3, textAlign: 'center', borderRadius: 3, bgcolor: alpha('#4caf50', 0.06) }}
+          sx={{ p: 3, textAlign: 'center', borderRadius: 18, bgcolor: alpha('#4caf50', 0.06) }}
         >
           <Typography color="success.main" fontWeight={600}>
             {isEn ? 'Texts are identical!' : 'Тексты идентичны!'}

@@ -76,8 +76,7 @@ export default function HomePage() {
               px: 2,
               // MD3 Search Bar height = 56dp
               height: 56,
-              // MD3 Search Bar border-radius = 28dp (extraLarge = half of 56dp)
-              borderRadius: 7, // 7 * theme.shape.borderRadius(4) = 28px = extraLarge
+              borderRadius: 18,
               maxWidth: 480,
               mx: 'auto',
               cursor: 'pointer',
@@ -245,7 +244,7 @@ export default function HomePage() {
                   href={`/group/${group.slug}`}
                   endIcon={<ArrowForward />}
                   size="small"
-                  sx={{ borderRadius: 9999 }}
+                  sx={{ borderRadius: 999 }}
                 >
                   Все {groupTools.length}
                 </Button>
@@ -261,18 +260,12 @@ export default function HomePage() {
           );
         })}
 
-        {/*
-          SEO Block
-          MD3 Shape: extraLarge = 28dp
-          borderRadius: 7 = 7 * 4 = 28px = extraLarge ✓
-        */}
         <Paper
           elevation={0}
           sx={{
             p: { xs: 3, md: 4 },
             bgcolor: theme.palette.surfaceContainerLow,
-            // MD3 extraLarge shape token = 28dp
-            borderRadius: 7,
+            borderRadius: 18,
           }}
         >
           <Typography variant="h6" component="h2" fontWeight={500} gutterBottom>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
   Box, Typography, Paper, TextField, Grid, Button, Slider, useTheme, alpha
 } from '@mui/material';
@@ -17,6 +17,9 @@ export default function FaviconGenerator() {
   const [textColor, setTextColor] = useState('#FFFFFF');
   const [fontSize, setFontSize] = useState(60);
   const [borderRadius, setBorderRadius] = useState(20);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   const drawFavicon = useCallback((size: number): string => {
     if (typeof document === 'undefined') return '';
     const canvas = document.createElement('canvas');
@@ -55,7 +58,7 @@ export default function FaviconGenerator() {
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 5 }}>
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}>
             <TextField fullWidth value={text} onChange={e => setText(e.target.value.slice(0, 3))} placeholder="U" label={isEn ? "Text (1-3)" : "Текст (1-3)"} size="small" sx={{ mb: 2 }} />
 
             <Grid container spacing={1} sx={{ mb: 2 }}>
@@ -82,9 +85,9 @@ export default function FaviconGenerator() {
         </Grid>
 
         <Grid size={{ xs: 12, md: 7 }}>
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, textAlign: 'center', mb: 2 }}>
-            <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', alignItems: 'end', flexWrap: 'wrap', mb: 2 }}>
-              {[16, 32, 64, 128].map(size => (
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, textAlign: 'center', mb: 2 }}>
+            <Box sx={{ display: 'flex', gap: 3, justifyContent: 'center', alignItems: 'end', flexWrap: 'wrap', mb: 2, minHeight: 128 }}>
+              {mounted && [16, 32, 64, 128].map(size => (
                 <Box key={size} sx={{ textAlign: 'center' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={drawFavicon(size)} alt={`${size}px`} width={size} height={size} style={{ imageRendering: size <= 32 ? 'pixelated' : 'auto' }} />
@@ -102,7 +105,7 @@ export default function FaviconGenerator() {
                   startIcon={<Download />}
                   onClick={() => download(size)}
                   sx={{
-                    borderRadius: 5,
+                    borderRadius: 18,
                     transitionProperty: 'background-color', transitionDuration: '200ms',
                     '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) }
                   }}

@@ -143,7 +143,7 @@ export default function MarkdownPreview() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -203,7 +203,7 @@ export default function MarkdownPreview() {
               elevation={0}
               sx={{
                 p: 2.5,
-                borderRadius: 3,
+                borderRadius: 18,
                 minHeight: 440,
                 maxHeight: 440,
                 overflow: 'auto',

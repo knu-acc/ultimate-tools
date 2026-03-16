@@ -96,7 +96,7 @@ export default function RandomColor() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
@@ -131,7 +131,7 @@ export default function RandomColor() {
             fullWidth
             startIcon={<Palette />}
             onClick={generate}
-            sx={{ borderRadius: 5, py: 1.2, mb: 2 }}
+            sx={{ borderRadius: 18, py: 1.2, mb: 2 }}
           >
             {isEn ? 'Generate color' : 'Генерировать цвет'}
           </Button>
@@ -140,7 +140,7 @@ export default function RandomColor() {
             <Paper
               elevation={0}
               sx={{
-                borderRadius: 3,
+                borderRadius: 18,
                 overflow: 'hidden'
               }}
             >
@@ -195,7 +195,7 @@ export default function RandomColor() {
           {!current && (
             <Paper
               elevation={0}
-              sx={{ p: 4, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
+              sx={{ p: 4, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
             >
               <Palette sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">
@@ -213,7 +213,7 @@ export default function RandomColor() {
           {history.length === 0 ? (
             <Paper
               elevation={0}
-              sx={{ p: 3, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
+              sx={{ p: 3, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
             >
               <Typography variant="body2" color="text.secondary">
                 {isEn ? 'History is empty' : 'История пока пуста'}
@@ -227,7 +227,7 @@ export default function RandomColor() {
                     key={i}
                     elevation={0}
                     sx={{
-                      borderRadius: 2,
+                      borderRadius: 10,
                       overflow: 'hidden',
                       cursor: 'pointer',
                       width: 80,
@@ -250,7 +250,7 @@ export default function RandomColor() {
                 size="small"
                 startIcon={<Delete />}
                 onClick={() => setHistory([])}
-                sx={{ mt: 1.5, borderRadius: 4 }}
+                sx={{ mt: 1.5, borderRadius: 18 }}
               >
                 {isEn ? 'Clear history' : 'Очистить историю'}
               </Button>

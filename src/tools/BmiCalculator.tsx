@@ -74,7 +74,7 @@ export default function BmiCalculator() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
@@ -116,7 +116,7 @@ export default function BmiCalculator() {
               p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha(category.color, 0.05)
             }}
           >
@@ -144,7 +144,7 @@ export default function BmiCalculator() {
             </Typography>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               {isEn ? 'BMI Scale' : 'Шкала ИМТ'}
             </Typography>
@@ -154,7 +154,7 @@ export default function BmiCalculator() {
               <Box
                 sx={{
                   height: 20,
-                  borderRadius: 10,
+                  borderRadius: 999,
                   background: 'linear-gradient(to right, #1976d2 0%, #2e7d32 24%, #2e7d32 43%, #f57c00 57%, #d32f2f 72%, #b71c1c 86%, #880e4f 100%)'
                 }}
               />
@@ -207,7 +207,7 @@ export default function BmiCalculator() {
             </Box>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               {isEn ? 'BMI Categories' : 'Категории ИМТ'}
             </Typography>
@@ -249,12 +249,12 @@ export default function BmiCalculator() {
                       value={isActive ? barValue : 0}
                       sx={{
                         height: isActive ? 8 : 4,
-                        borderRadius: 4,
+                        borderRadius: 18,
                         backgroundColor: alpha(cat.color, 0.1),
                         transition: 'height 0.3s ease',
                         '& .MuiLinearProgress-bar': {
                           backgroundColor: cat.color,
-                          borderRadius: 4
+                          borderRadius: 18
                         }
                       }}
                     />
@@ -269,7 +269,7 @@ export default function BmiCalculator() {
               elevation={0}
               sx={{
                 p: { xs: 2, sm: 3 },
-                borderRadius: 3,
+                borderRadius: 18,
                 background: alpha('#2e7d32', 0.04)
               }}
             >
@@ -283,7 +283,7 @@ export default function BmiCalculator() {
                     sx={{
                       p: 2,
                       textAlign: 'center',
-                      borderRadius: 3,
+                      borderRadius: 18,
                       background: alpha('#2e7d32', 0.05)
                     }}
                   >
@@ -301,7 +301,7 @@ export default function BmiCalculator() {
                     sx={{
                       p: 2,
                       textAlign: 'center',
-                      borderRadius: 3,
+                      borderRadius: 18,
                       background: alpha('#2e7d32', 0.05)
                     }}
                   >

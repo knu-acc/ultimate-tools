@@ -139,7 +139,7 @@ export default function CompoundInterest() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        borderRadius: 3,
+        borderRadius: 18,
         background: alpha(color, 0.06),
         transition: 'background 150ms ease',
         '&:hover': { background: alpha(color, 0.10) }
@@ -164,7 +164,7 @@ export default function CompoundInterest() {
         sx={{
           p: 3,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Grid container spacing={2}>
@@ -319,10 +319,10 @@ export default function CompoundInterest() {
               sx={{
                 mt: 2,
                 p: 2,
-                borderRadius: 3
+                borderRadius: 18
               }}
             >
-              <Box sx={{ display: 'flex', height: 28, borderRadius: 3, overflow: 'hidden' }}>
+              <Box sx={{ display: 'flex', height: 28, borderRadius: 18, overflow: 'hidden' }}>
                 <Box
                   sx={{
                     width: `${(results.totalContributions / results.finalAmount) * 100}%`,
@@ -378,7 +378,7 @@ export default function CompoundInterest() {
                       elevation={0}
                       sx={{
                         p: 1.5,
-                        borderRadius: 3,
+                        borderRadius: 18,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',

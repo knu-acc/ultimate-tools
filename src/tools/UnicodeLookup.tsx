@@ -206,7 +206,7 @@ export default function UnicodeLookup() {
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         placeholder={isEn ? 'Enter a character, U+0041 or code...' : 'Введите символ, U+0041 или код...'}
-        sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
+        sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 18 } }}
         slotProps={{
           input: {
             startAdornment: <Search sx={{ color: theme.palette.text.secondary, mr: 1 }} />
@@ -227,7 +227,7 @@ export default function UnicodeLookup() {
               sx={{
                 p: 2,
                 mb: 1,
-                borderRadius: 3,
+                borderRadius: 18,
                 cursor: 'pointer',
                 '&:hover': { bgcolor: theme.palette.surfaceContainerLow }
               }}
@@ -290,7 +290,7 @@ export default function UnicodeLookup() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           mb: 2,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',

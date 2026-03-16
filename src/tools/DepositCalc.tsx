@@ -169,7 +169,7 @@ export default function DepositCalc() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        borderRadius: 3,
+        borderRadius: 18,
         background: alpha(color, 0.06),
         transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
         '&:hover': { background: alpha(color, 0.1) }
@@ -194,7 +194,7 @@ export default function DepositCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           bgcolor: theme.palette.surfaceContainerLow,
-          borderRadius: 3,
+          borderRadius: 18,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
@@ -349,7 +349,7 @@ export default function DepositCalc() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: alpha('#2e7d32', 0.04)
                   }}
                 >
@@ -380,7 +380,7 @@ export default function DepositCalc() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: alpha('#1565c0', 0.04)
                   }}
                 >
@@ -424,14 +424,14 @@ export default function DepositCalc() {
               sx={{
                 mt: 2,
                 p: { xs: 1.5, sm: 2 },
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow
               }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
                 {isEn ? 'Final amount breakdown' : 'Структура итоговой суммы'}
               </Typography>
-              <Box sx={{ display: 'flex', height: 28, borderRadius: 2, overflow: 'hidden' }}>
+              <Box sx={{ display: 'flex', height: 28, borderRadius: 10, overflow: 'hidden' }}>
                 <Box
                   sx={{
                     width: `${(parseFloat(deposit) / results.finalWithCap) * 100}%`,
@@ -495,7 +495,7 @@ export default function DepositCalc() {
                       elevation={0}
                       sx={{
                         p: 1.5,
-                        borderRadius: 2,
+                        borderRadius: 10,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',

@@ -202,7 +202,7 @@ export default function TimerComponent() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ borderRadius: 3, overflow: 'hidden' }}>
+      <Paper elevation={0} sx={{ borderRadius: 18, overflow: 'hidden' }}>
         <Tabs
           value={tab}
           onChange={(_, v) => setTab(v)}
@@ -252,7 +252,7 @@ export default function TimerComponent() {
                     sx={{
                       mt: 2,
                       height: 6,
-                      borderRadius: 3,
+                      borderRadius: 18,
                       backgroundColor: theme.palette.surfaceContainerHigh,
                       overflow: 'hidden'
                     }}
@@ -262,7 +262,7 @@ export default function TimerComponent() {
                         height: '100%',
                         width: `${timerProgress}%`,
                         backgroundColor: 'primary.main',
-                        borderRadius: 3,
+                        borderRadius: 18,
                         transition: 'width 100ms linear'
                       }}
                     />
@@ -434,7 +434,7 @@ export default function TimerComponent() {
                 <Paper
                   elevation={0}
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 18,
                     overflow: 'hidden'
                   }}
                 >

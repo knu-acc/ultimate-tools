@@ -73,7 +73,7 @@ export default function QrGenerator() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -131,7 +131,7 @@ export default function QrGenerator() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -143,7 +143,7 @@ export default function QrGenerator() {
               style={{
                 maxWidth: '100%',
                 height: 'auto',
-                borderRadius: 8
+                borderRadius: 18
               }}
             />
 
@@ -152,7 +152,7 @@ export default function QrGenerator() {
                 variant="contained"
                 startIcon={<Download />}
                 onClick={handleDownload}
-                sx={{ borderRadius: 5 }}
+                sx={{ borderRadius: 18 }}
               >
                 {isEn ? 'Download PNG' : 'Скачать PNG'}
               </Button>

@@ -111,7 +111,7 @@ export default function StatisticsCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -145,7 +145,7 @@ export default function StatisticsCalc() {
           sx={{
             p: 2.5,
             textAlign: 'center',
-            borderRadius: 3,
+            borderRadius: 18,
             background: alpha(theme.palette.error.main, 0.06)
           }}
         >
@@ -160,7 +160,7 @@ export default function StatisticsCalc() {
           elevation={0}
           sx={{
             p: { xs: 2, sm: 3 },
-            borderRadius: 3,
+            borderRadius: 18,
             background: theme.palette.surfaceContainerLow
           }}
         >
@@ -174,7 +174,7 @@ export default function StatisticsCalc() {
                     sx={{
                       p: 2,
                       textAlign: 'center',
-                      borderRadius: 3,
+                      borderRadius: 18,
                       background: alpha(item.color, 0.04),
                       transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                       '&:hover': {
@@ -209,7 +209,7 @@ export default function StatisticsCalc() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.secondary.dark, 0.04),
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {

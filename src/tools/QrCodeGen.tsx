@@ -241,7 +241,7 @@ export default function QrCodeGen() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -253,7 +253,7 @@ export default function QrCodeGen() {
               style={{
                 maxWidth: '100%',
                 height: 'auto',
-                borderRadius: 8
+                borderRadius: 18
               }}
             />
 
@@ -262,7 +262,7 @@ export default function QrCodeGen() {
                 variant="contained"
                 startIcon={<Download />}
                 onClick={handleDownload}
-                sx={{ borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
+                sx={{ borderRadius: 18, textTransform: 'none', fontWeight: 600 }}
               >
                 {isEn ? 'Download PNG' : 'Скачать PNG'}
               </Button>

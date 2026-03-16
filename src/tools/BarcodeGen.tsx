@@ -433,7 +433,7 @@ export default function BarcodeGen() {
             placeholder={isEn ? 'Enter text or number...' : 'Введите текст или число...'}
             error={!!error}
             helperText={error || undefined}
-            sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
+            sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 18 } }}
           />
 
           {/* Barcode type */}
@@ -508,7 +508,7 @@ export default function BarcodeGen() {
             startIcon={<Download />}
             onClick={handleDownload}
             disabled={!!error}
-            sx={{ borderRadius: 6, py: 1.2 }}
+            sx={{ borderRadius: 18, py: 1.2 }}
           >
             {isEn ? 'Download PNG' : 'Скачать PNG'}
           </Button>
@@ -525,7 +525,7 @@ export default function BarcodeGen() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
               display: 'flex',
@@ -539,7 +539,7 @@ export default function BarcodeGen() {
               sx={{
                 bgcolor: '#ffffff',
                 p: 2,
-                borderRadius: 2,
+                borderRadius: 10,
                 display: 'inline-block'
               }}
             >

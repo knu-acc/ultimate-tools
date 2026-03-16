@@ -98,7 +98,7 @@ export default function TextSort() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
         <TextField
           fullWidth
           multiline
@@ -117,7 +117,7 @@ export default function TextSort() {
         />
       </Paper>
 
-      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: 3, mb: 2, borderRadius: 18 }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
           {SORT_OPTIONS.map((option) => {
             const isActive = mode === option.key;
@@ -151,7 +151,7 @@ export default function TextSort() {
           sx={{
             p: 2,
             mb: 2,
-            borderRadius: 3,
+            borderRadius: 18,
             display: 'flex',
             alignItems: 'center',
             gap: 2
@@ -174,7 +174,7 @@ export default function TextSort() {
       )}
 
       {sorted.length > 0 && (
-        <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+        <Paper elevation={0} sx={{ p: 3, borderRadius: 18 }}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
             <CopyButton text={outputText} />
           </Box>

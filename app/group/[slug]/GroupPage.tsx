@@ -603,7 +603,7 @@ export default function GroupPage({ slug }: { slug: string }) {
             sx={{
               width: 56,
               height: 56,
-              borderRadius: theme.shape?.medium ?? 12,
+              borderRadius: 18,
               bgcolor: alpha(group.color, 0.12),
               display: 'flex',
               alignItems: 'center',
@@ -639,7 +639,7 @@ export default function GroupPage({ slug }: { slug: string }) {
           elevation={0}
           sx={{
             p: { xs: 3, md: 4 },
-            borderRadius: theme.shape?.medium ?? 12,
+            borderRadius: 18,
             bgcolor: theme.palette.surfaceContainerLow,
             border: `1px solid ${alpha(theme.palette.divider, 0.5)}`,
             mb: 4,

@@ -24,13 +24,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${group.name} — бесплатные онлайн-инструменты | Ultimate Tools`,
       description,
+      images: [{ url: 'https://ulti-tools.com/opengraph-image', width: 1200, height: 630 }],
       siteName: 'Ultimate Tools',
       locale: 'ru_RU',
       type: 'website',
       url: `https://ulti-tools.com/group/${slug}`,
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title,
       description,
     },

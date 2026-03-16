@@ -173,7 +173,7 @@ export default function JsonFormatter() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -192,14 +192,14 @@ export default function JsonFormatter() {
               lineHeight: 1.6
             },
             '& .MuiOutlinedInput-root': {
-              borderRadius: 2
+              borderRadius: 10
             }
           }}
         />
 
         {/* Action buttons */}
         <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap', justifyContent: 'center', mb: 2.5 }}>
-          <ButtonGroup variant="contained" sx={{ borderRadius: 2, overflow: 'hidden' }}>
+          <ButtonGroup variant="contained" sx={{ borderRadius: 10, overflow: 'hidden' }}>
             <Button
               startIcon={<DataObjectIcon />}
               onClick={formatJson}
@@ -232,7 +232,7 @@ export default function JsonFormatter() {
               startIcon={<DeleteOutlineIcon />}
               onClick={clear}
               color="inherit"
-              sx={{ textTransform: 'none', borderRadius: 2 }}
+              sx={{ textTransform: 'none', borderRadius: 10 }}
             >
               {isEn ? 'Clear' : 'Очистить'}
             </Button>
@@ -241,7 +241,7 @@ export default function JsonFormatter() {
 
         {/* Error display */}
         {error && (
-          <Alert severity="error" sx={{ mb: 2.5, borderRadius: 2 }}>
+          <Alert severity="error" sx={{ mb: 2.5, borderRadius: 10 }}>
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
               {isEn ? 'JSON parsing error' : 'Ошибка парсинга JSON'}
             </Typography>
@@ -263,7 +263,7 @@ export default function JsonFormatter() {
 
         {/* Validation success */}
         {lastAction === 'validate' && !error && !output && (
-          <Alert severity="success" sx={{ mb: 2.5, borderRadius: 2 }}>
+          <Alert severity="success" sx={{ mb: 2.5, borderRadius: 10 }}>
             {isEn ? 'JSON is valid!' : 'JSON валиден!'}
           </Alert>
         )}
@@ -274,7 +274,7 @@ export default function JsonFormatter() {
             <Paper
               elevation={0}
               sx={{
-                borderRadius: 2,
+                borderRadius: 10,
                 overflow: 'auto',
                 maxHeight: 450,
                 background: theme.palette.mode === 'dark'

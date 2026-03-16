@@ -221,7 +221,7 @@ export default function HashGenerator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -244,7 +244,7 @@ export default function HashGenerator() {
             variant="contained"
             onClick={generateHashes}
             disabled={!input.trim() || loading}
-            sx={{ px: 3, borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
+            sx={{ px: 3, borderRadius: 18, textTransform: 'none', fontWeight: 600 }}
           >
             {loading ? (isEn ? 'Generating...' : 'Генерация...') : (isEn ? 'Generate hashes' : 'Сгенерировать хеши')}
           </Button>
@@ -272,7 +272,7 @@ export default function HashGenerator() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: alpha(theme.palette.text.primary, 0.03),
                     transition: 'background 200ms ease',
                     '&:hover': {

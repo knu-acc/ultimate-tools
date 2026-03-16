@@ -58,7 +58,7 @@ export function CopyButton({ text, size = 'small', tooltip = 'Копироват
           bgcolor: copied
             ? alpha(theme.palette.success.main, 0.12)
             : theme.palette.surfaceContainerHigh,
-          borderRadius: 2,
+          borderRadius: 10,
           transitionProperty: 'background-color',
           transitionDuration: '200ms',
           transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)',
@@ -118,7 +118,7 @@ export function ShareButton({ text, title, url }: ShareButtonProps) {
           bgcolor: shared
             ? alpha(theme.palette.success.main, 0.12)
             : theme.palette.surfaceContainerHigh,
-          borderRadius: 2,
+          borderRadius: 10,
           transitionProperty: 'background-color',
           transitionDuration: '200ms',
           transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)',

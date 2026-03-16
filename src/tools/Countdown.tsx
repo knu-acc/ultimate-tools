@@ -12,9 +12,10 @@ export default function Countdown() {
   const isEn = locale === 'en';
   const [targetDate, setTargetDate] = useState('');
   const [targetName, setTargetName] = useState('');
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(0);
 
   useEffect(() => {
+    setNow(Date.now()); // Sync immediately on mount
     const interval = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(interval);
   }, []);
@@ -38,13 +39,13 @@ export default function Countdown() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
       '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
     }}>
-      <Paper elevation={0} sx={{ p: 3, borderRadius: 3, mb: 2 }}>
+      <Paper elevation={0} sx={{ p: 3, borderRadius: 18, mb: 2 }}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField fullWidth value={targetName} onChange={e => setTargetName(e.target.value)} placeholder={isEn ? 'New Year, Birthday...' : 'Новый год, День рождения...'} size="small" />
@@ -69,7 +70,7 @@ export default function Countdown() {
               { label: isEn ? 'Seconds' : 'Секунд', value: seconds, color: theme.palette.error.main },
             ].map(item => (
               <Grid size={{ xs: 6, sm: 3 }} key={item.label}>
-                <Paper elevation={0} sx={{ p: 3, borderRadius: 3, bgcolor: alpha(item.color, 0.08), textAlign: 'center' }}>
+                <Paper elevation={0} sx={{ p: 3, borderRadius: 18, bgcolor: alpha(item.color, 0.08), textAlign: 'center' }}>
                   <Typography variant="h2" fontWeight={700} sx={{ color: item.color, fontFamily: 'monospace' }}>
                     {item.value.toString().padStart(2, '0')}
                   </Typography>
@@ -79,7 +80,7 @@ export default function Countdown() {
             ))}
           </Grid>
 
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>{isEn ? 'Also equals:' : 'Также это:'}</Typography>
             <Typography variant="body2" color="text.secondary">
               {totalHours.toLocaleString(isEn ? 'en-US' : 'ru-RU')} {isEn ? 'hours' : 'часов'} • {totalMinutes.toLocaleString(isEn ? 'en-US' : 'ru-RU')} {isEn ? 'minutes' : 'минут'} • {totalSeconds.toLocaleString(isEn ? 'en-US' : 'ru-RU')} {isEn ? 'seconds' : 'секунд'}

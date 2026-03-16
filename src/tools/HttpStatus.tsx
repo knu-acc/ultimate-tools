@@ -65,7 +65,7 @@ export default function HttpStatus() {
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
       >
         <TextField
           fullWidth
@@ -73,7 +73,7 @@ export default function HttpStatus() {
           onChange={e => setSearch(e.target.value)}
           placeholder={isEn ? "Search by code or description..." : "Поиск по коду или описанию..."}
           size="small"
-          sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+          sx={{ mb: 2, '& .MuiOutlinedInput-root': { borderRadius: 10 } }}
         />
 
         <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
@@ -89,7 +89,7 @@ export default function HttpStatus() {
           const cat = CATEGORIES[info.category];
           return (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={code}>
-              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }, transitionProperty: 'background-color', transitionDuration: '200ms' }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius: 10, '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }, transitionProperty: 'background-color', transitionDuration: '200ms' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
                   <Chip label={code} size="small" sx={{ fontWeight: 700, bgcolor: alpha(cat.color, 0.12), color: cat.color, fontFamily: 'monospace' }} />
                   <Typography variant="body2" fontWeight={600}>{info.text}</Typography>

@@ -14,6 +14,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { toggleButtonClasses } from '@mui/material/ToggleButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Gender = 'male' | 'female';
@@ -197,7 +198,7 @@ export default function ClothingSize() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -209,11 +210,11 @@ export default function ClothingSize() {
           sx={{
             mb: 2.5,
             '& .MuiToggleButton-root': {
-              borderRadius: 3,
+              borderRadius: 18,
               px: 3,
               textTransform: 'none',
               fontWeight: 500,
-              '&.Mui-selected': {
+              [`&.${toggleButtonClasses.selected}`]: {
                 background: theme.palette.surfaceContainerHigh,
                 color: theme.palette.primary.main,
                 fontWeight: 600,
@@ -240,7 +241,7 @@ export default function ClothingSize() {
               variant={category === cat ? 'filled' : 'outlined'}
               color={category === cat ? 'primary' : 'default'}
               onClick={() => handleCategoryChange(cat)}
-              sx={{ borderRadius: 2, cursor: 'pointer' }}
+              sx={{ borderRadius: 10, cursor: 'pointer' }}
             />
           ))}
         </Box>
@@ -255,7 +256,7 @@ export default function ClothingSize() {
                 setSizeSystem(e.target.value as SizeSystem);
                 setSelectedSize('');
               }}
-              sx={{ borderRadius: 2 }}
+              sx={{ borderRadius: 10 }}
             >
               {(Object.keys(sizeSystemLabels) as SizeSystem[]).map((sys) => (
                 <MenuItem key={sys} value={sys}>
@@ -271,7 +272,7 @@ export default function ClothingSize() {
               value={selectedSize}
               onChange={(e) => setSelectedSize(e.target.value)}
               displayEmpty
-              sx={{ borderRadius: 2 }}
+              sx={{ borderRadius: 10 }}
             >
               <MenuItem value="">{isEn ? 'Select size' : 'Выберите размер'}</MenuItem>
               {availableSizes.map((size) => (
@@ -294,7 +295,7 @@ export default function ClothingSize() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: sys === sizeSystem ? theme.palette.surfaceContainerHigh : 'transparent',
                     textAlign: 'center',
                     transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -327,7 +328,7 @@ export default function ClothingSize() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3
+              borderRadius: 18
             }}
           >
             <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -345,7 +346,7 @@ export default function ClothingSize() {
                     <Box
                       sx={{
                         p: 2,
-                        borderRadius: 3,
+                        borderRadius: 18,
                         background: theme.palette.surfaceContainerLow,
                         textAlign: 'center'
                       }}
@@ -369,7 +370,7 @@ export default function ClothingSize() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>

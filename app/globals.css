@@ -9,6 +9,16 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* CSS custom properties set by inline <script> in layout.tsx BEFORE React hydrates.
+     These provide instant correct background/text colors to prevent theme flash. */
+  --ut-bg: #FEF7FF;
+  --ut-text: #1D1B20;
+}
+
+/* Apply theme colors immediately via CSS custom properties (before MUI loads) */
+body {
+  background-color: var(--ut-bg) !important;
+  color: var(--ut-text) !important;
 }
 
 /* body font is set by MUI CssBaseline from theme.typography.fontFamily */
@@ -31,7 +41,7 @@ html {
   color: #ffffff;
   font-weight: 500;
   font-size: 0.875rem;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 10px 10px;
   text-decoration: none;
   letter-spacing: 0.1px;
   transition: top 150ms cubic-bezier(0.2, 0, 0, 1);
@@ -58,7 +68,7 @@ textarea:focus-visible,
 [tabindex]:focus-visible {
   outline: 3px solid #6750A4;
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 /* Remove focus ring from mouse clicks — only show for keyboard */

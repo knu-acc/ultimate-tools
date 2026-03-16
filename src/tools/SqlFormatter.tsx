@@ -138,7 +138,7 @@ export default function SqlFormatter() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -157,7 +157,7 @@ export default function SqlFormatter() {
               lineHeight: 1.6
             },
             '& .MuiOutlinedInput-root': {
-              borderRadius: 2
+              borderRadius: 10
             }
           }}
         />
@@ -168,7 +168,7 @@ export default function SqlFormatter() {
             variant="contained"
             onClick={handleFormat}
             disabled={!input.trim()}
-            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10, px: 3 }}
           >
             {isEn ? 'Format' : 'Форматировать'}
           </Button>
@@ -176,7 +176,7 @@ export default function SqlFormatter() {
             variant="contained"
             onClick={handleMinify}
             disabled={!input.trim()}
-            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10, px: 3 }}
           >
             {isEn ? 'Minify' : 'Минифицировать'}
           </Button>
@@ -184,7 +184,7 @@ export default function SqlFormatter() {
             variant="outlined"
             onClick={clear}
             color="inherit"
-            sx={{ textTransform: 'none', borderRadius: 2, px: 3 }}
+            sx={{ textTransform: 'none', borderRadius: 10, px: 3 }}
           >
             {isEn ? 'Clear' : 'Очистить'}
           </Button>
@@ -230,7 +230,7 @@ export default function SqlFormatter() {
                     : alpha(theme.palette.grey[50], 1)
                 },
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2
+                  borderRadius: 10
                 }
               }}
             />

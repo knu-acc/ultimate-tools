@@ -87,7 +87,7 @@ export default function GcdLcm() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
         <TextField
           fullWidth
           value={input}
@@ -112,7 +112,7 @@ export default function GcdLcm() {
                 sx={{
                   p: { xs: 2, sm: 3 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.primary.main, 0.04),
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
@@ -153,7 +153,7 @@ export default function GcdLcm() {
                 sx={{
                   p: { xs: 2, sm: 3 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.success.main, 0.04),
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
@@ -190,7 +190,7 @@ export default function GcdLcm() {
             </Grid>
           </Grid>
 
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               {isEn ? 'Euclidean algorithm (step by step)' : 'Алгоритм Евклида (пошагово)'}
             </Typography>
@@ -256,7 +256,7 @@ export default function GcdLcm() {
                 sx={{
                   p: 2,
                   mt: 2,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.info.main, 0.04)
                 }}
               >

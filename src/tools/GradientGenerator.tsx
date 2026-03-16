@@ -58,7 +58,7 @@ export default function GradientGenerator() {
         sx={{
           width: '100%',
           height: { xs: 150, md: 200 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: gradientCSS,
           mb: 2,
           display: 'flex',
@@ -155,11 +155,11 @@ export default function GradientGenerator() {
 
           <Box sx={{ display: 'flex', gap: 1 }}>
             {colors.length < 5 && (
-              <Button size="small" startIcon={<Add />} onClick={addColor} sx={{ borderRadius: 3 }}>
+              <Button size="small" startIcon={<Add />} onClick={addColor} sx={{ borderRadius: 18 }}>
                 {isEn ? 'Add color' : 'Добавить цвет'}
               </Button>
             )}
-            <Button size="small" startIcon={<Refresh />} onClick={randomize} sx={{ borderRadius: 3 }}>
+            <Button size="small" startIcon={<Refresh />} onClick={randomize} sx={{ borderRadius: 18 }}>
               Случайный
             </Button>
           </Box>
@@ -174,7 +174,7 @@ export default function GradientGenerator() {
                   onClick={() => setColors([...preset.colors])}
                   sx={{
                     height: 56,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: `linear-gradient(135deg, ${preset.colors.join(', ')})`,
                     cursor: 'pointer',
                     display: 'flex',
@@ -196,7 +196,7 @@ export default function GradientGenerator() {
             elevation={0}
             sx={{
               p: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
             }}

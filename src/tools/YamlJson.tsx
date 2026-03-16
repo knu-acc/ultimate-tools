@@ -368,12 +368,12 @@ export default function YamlJson() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
         {error && (
-          <Alert severity="error" sx={{ mb: 2, borderRadius: 2 }}>
+          <Alert severity="error" sx={{ mb: 2, borderRadius: 10 }}>
             <Typography variant="body2" sx={{ fontWeight: 600 }}>
               {error.message}
             </Typography>
@@ -406,7 +406,7 @@ export default function YamlJson() {
                   fontSize: '0.85rem',
                   lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 }
+                '& .MuiOutlinedInput-root': { borderRadius: 10 }
               }}
             />
           </Grid>
@@ -428,7 +428,7 @@ export default function YamlJson() {
                 onClick={yamlToJson}
                 disabled={!yaml}
                 endIcon={<ArrowForwardIcon />}
-                sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, minWidth: 140 }}
+                sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10, minWidth: 140 }}
               >
                 YAML → JSON
               </Button>
@@ -437,7 +437,7 @@ export default function YamlJson() {
                 onClick={jsonToYaml}
                 disabled={!json}
                 startIcon={<ArrowBackIcon />}
-                sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, minWidth: 140 }}
+                sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10, minWidth: 140 }}
               >
                 JSON → YAML
               </Button>
@@ -446,7 +446,7 @@ export default function YamlJson() {
                 startIcon={<DeleteOutlineIcon />}
                 onClick={clear}
                 color="inherit"
-                sx={{ textTransform: 'none', borderRadius: 2, mt: 1 }}
+                sx={{ textTransform: 'none', borderRadius: 10, mt: 1 }}
               >
                 {isEn ? 'Clear' : 'Очистить'}
               </Button>
@@ -473,7 +473,7 @@ export default function YamlJson() {
                   fontSize: '0.85rem',
                   lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 }
+                '& .MuiOutlinedInput-root': { borderRadius: 10 }
               }}
             />
           </Grid>

@@ -157,7 +157,7 @@ export default function RetirementCalc() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        borderRadius: 3,
+        borderRadius: 18,
         background: alpha(color, 0.06),
         transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
         '&:hover': { background: alpha(color, 0.1) }
@@ -182,7 +182,7 @@ export default function RetirementCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           bgcolor: theme.palette.surfaceContainerLow,
-          borderRadius: 3,
+          borderRadius: 18,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
         }}
@@ -354,7 +354,7 @@ export default function RetirementCalc() {
                       elevation={0}
                       sx={{
                         p: 2,
-                        borderRadius: 3,
+                        borderRadius: 18,
                         background: alpha(results.yearsLast >= 30 ? '#2e7d32' : '#c62828', 0.06)
                       }}
                     >
@@ -377,7 +377,7 @@ export default function RetirementCalc() {
                       elevation={0}
                       sx={{
                         p: 2,
-                        borderRadius: 3,
+                        borderRadius: 18,
                         background: alpha(results.shortfall <= 0 ? '#2e7d32' : '#c62828', 0.06)
                       }}
                     >
@@ -445,7 +445,7 @@ export default function RetirementCalc() {
                       elevation={0}
                       sx={{
                         p: 1.5,
-                        borderRadius: 2,
+                        borderRadius: 10,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',

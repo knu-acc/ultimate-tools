@@ -226,7 +226,7 @@ export default function AvatarGenerator() {
               value={seed}
               onChange={(e) => setSeed(e.target.value)}
               placeholder={isEn ? 'Text (seed)...' : 'Текст (seed)...'}
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 18 } }}
               slotProps={{
                 input: {
                   endAdornment: (
@@ -288,7 +288,7 @@ export default function AvatarGenerator() {
             size="large"
             startIcon={<Download />}
             onClick={handleDownload}
-            sx={{ borderRadius: 3, py: 1.2, textTransform: 'none', fontWeight: 600 }}
+            sx={{ borderRadius: 18, py: 1.2, textTransform: 'none', fontWeight: 600 }}
           >
             {isEn ? 'Download PNG' : 'Скачать PNG'}
           </Button>
@@ -299,7 +299,7 @@ export default function AvatarGenerator() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
               display: 'flex',
@@ -313,7 +313,7 @@ export default function AvatarGenerator() {
               style={{
                 maxWidth: '100%',
                 height: 'auto',
-                borderRadius: 12,
+                borderRadius: 18,
                 background: !bgWhite
                   ? `repeating-conic-gradient(${alpha(theme.palette.text.primary, 0.08)} 0% 25%, transparent 0% 50%) 50% / 16px 16px`
                   : undefined

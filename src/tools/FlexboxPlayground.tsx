@@ -93,7 +93,7 @@ export default function FlexboxPlayground() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -137,7 +137,7 @@ export default function FlexboxPlayground() {
           sx={{
             p: 2,
             border: `2px dashed ${theme.palette.divider}`,
-            borderRadius: 2,
+            borderRadius: 10,
             minHeight: 200,
             mb: 2.5,
             display: 'flex',
@@ -252,7 +252,7 @@ export default function FlexboxPlayground() {
           elevation={0}
           sx={{
             p: 2,
-            borderRadius: 2,
+            borderRadius: 10,
             bgcolor: theme.palette.mode === 'dark'
               ? alpha(theme.palette.common.black, 0.3)
               : alpha(theme.palette.grey[50], 1)

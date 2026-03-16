@@ -8,12 +8,15 @@ import React, {
   useCallback,
   ReactNode,
   useMemo,
+  useRef,
 } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   Locale,
+  LOCALES,
   DEFAULT_LOCALE,
   loadMessages,
+  seedMessages,
   getMsg,
   setLocaleToStorage,
   getLocaleFromPathname,
@@ -41,17 +44,44 @@ const LanguageContext = createContext<LanguageContextType>({
 
 export const useLanguage = () => useContext(LanguageContext);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
+interface LanguageProviderProps {
+  children: ReactNode;
+  /** Pre-loaded messages from server component — eliminates translation flash */
+  initialMessages?: Messages;
+  /** Locale resolved on the server from URL params */
+  initialLocale?: Locale;
+  /** All locale messages map for instant locale switching (no async load) */
+  allMessages?: Partial<Record<string, Messages>>;
+}
+
+export function LanguageProvider({ children, initialMessages, initialLocale, allMessages }: LanguageProviderProps) {
   const pathname = usePathname();
   const router = useRouter();
 
   // Derive locale from URL path
   const urlLocale = getLocaleFromPathname(pathname);
-  const [locale, setLocaleState] = useState<Locale>(urlLocale);
-  const [messages, setMessages] = useState<Messages>({});
-  const [ready, setReady] = useState(false);
+  const effectiveLocale = initialLocale || urlLocale;
 
-  // Sync locale when URL changes
+  // Pre-seed the message cache with ALL provided messages
+  // This makes loadMessages() return synchronously for any locale
+  const seeded = useRef(false);
+  if (!seeded.current) {
+    if (allMessages) {
+      for (const loc of LOCALES) {
+        if (allMessages[loc]) seedMessages(loc, allMessages[loc]);
+      }
+    } else if (initialMessages && initialLocale) {
+      seedMessages(initialLocale, initialMessages);
+    }
+    seeded.current = true;
+  }
+
+  // When initialMessages are provided (from SSR), start ready immediately — no flash
+  const [locale, setLocaleState] = useState<Locale>(effectiveLocale);
+  const [messages, setMessages] = useState<Messages>(initialMessages || {});
+  const [ready, setReady] = useState(!!initialMessages);
+
+  // Sync locale when URL changes (handles client-side navigation)
   useEffect(() => {
     setLocaleState(urlLocale);
     setLocaleToStorage(urlLocale);
@@ -70,7 +100,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleToStorage(newLocale);
-    // Navigate to the same page with new locale prefix
     const newPath = localizedHref(pathname, newLocale);
     router.push(newPath);
   }, [pathname, router]);

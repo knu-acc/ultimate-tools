@@ -83,7 +83,7 @@ export default function TipCalculator() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        borderRadius: 3,
+        borderRadius: 18,
         background: alpha(color, 0.06),
         transition: 'background 150ms ease',
         '&:hover': { background: alpha(color, 0.10) }
@@ -108,7 +108,7 @@ export default function TipCalculator() {
         sx={{
           p: 3,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Grid container spacing={2}>
@@ -225,7 +225,7 @@ export default function TipCalculator() {
                 sx={{
                   mt: 2,
                   p: 2,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha('#6a1b9a', 0.04)
                 }}
               >

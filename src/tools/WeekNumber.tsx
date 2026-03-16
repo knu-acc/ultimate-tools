@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -102,12 +102,15 @@ export default function WeekNumber() {
   const reverseValid = reverseWeekNum >= 1 && reverseWeekNum <= 53 && reverseYearNum >= 1900 && reverseYearNum <= 2100;
   const reverseRange = reverseValid ? getWeekDateRange(reverseWeekNum, reverseYearNum) : null;
 
+  // Use mounted state to avoid hydration mismatch from new Date()
+  const [today, setToday] = useState(() => new Date(2024, 0, 1));
+  useEffect(() => { setToday(new Date()); }, []);
+
   // Mini calendar data
-  const calMonth = isValidDate ? date.getMonth() : new Date().getMonth();
-  const calYear = isValidDate ? date.getFullYear() : new Date().getFullYear();
+  const calMonth = isValidDate ? date.getMonth() : today.getMonth();
+  const calYear = isValidDate ? date.getFullYear() : today.getFullYear();
   const daysInMonth = getDaysInMonth(calYear, calMonth);
   const firstDay = getFirstDayOfWeek(calYear, calMonth);
-  const today = new Date();
 
   // Determine which days are in the selected week
   const weekStart = isValidDate ? (() => {
@@ -145,7 +148,7 @@ export default function WeekNumber() {
       <Paper
         elevation={0}
         sx={{
-          borderRadius: 3,
+          borderRadius: 18,
           p: { xs: 2, sm: 3 }
         }}
       >
@@ -187,7 +190,7 @@ export default function WeekNumber() {
                 <Paper
                   elevation={0}
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 18,
                     p: 2,
                     textAlign: 'center',
                     backgroundColor: theme.palette.surfaceContainerLow,
@@ -216,7 +219,7 @@ export default function WeekNumber() {
                 <Paper
                   elevation={0}
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 18,
                     p: 2,
                     textAlign: 'center',
                     transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -243,7 +246,7 @@ export default function WeekNumber() {
                 <Paper
                   elevation={0}
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 18,
                     p: 2,
                     textAlign: 'center',
                     transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -270,7 +273,7 @@ export default function WeekNumber() {
                 <Paper
                   elevation={0}
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 18,
                     p: 2,
                     textAlign: 'center',
                     transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -299,7 +302,7 @@ export default function WeekNumber() {
             <Paper
               elevation={0}
               sx={{
-                borderRadius: 3,
+                borderRadius: 18,
                 p: 2,
                 mb: 2
               }}
@@ -317,10 +320,10 @@ export default function WeekNumber() {
                 value={yearProgress}
                 sx={{
                   height: 10,
-                  borderRadius: 5,
+                  borderRadius: 18,
                   backgroundColor: alpha(theme.palette.primary.main, 0.1),
                   '& .MuiLinearProgress-bar': {
-                    borderRadius: 5
+                    borderRadius: 18
                   }
                 }}
               />
@@ -338,7 +341,7 @@ export default function WeekNumber() {
             <Paper
               elevation={0}
               sx={{
-                borderRadius: 3,
+                borderRadius: 18,
                 p: 2,
                 mb: 2
               }}
@@ -457,7 +460,7 @@ export default function WeekNumber() {
           <Paper
             elevation={0}
             sx={{
-              borderRadius: 3,
+              borderRadius: 18,
               p: 2,
               backgroundColor: alpha(theme.palette.info.main, 0.04)
             }}

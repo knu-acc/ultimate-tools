@@ -112,7 +112,7 @@ export default function PaperSize() {
       {/* Controls */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
@@ -157,7 +157,7 @@ export default function PaperSize() {
       {selectedEntries.length > 0 && (
         <Paper
           elevation={0}
-          sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+          sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
         >
           <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
             {isEn ? 'Visual comparison (click a row to select)' : 'Визуальное сравнение (нажмите на строку для выбора)'}
@@ -209,7 +209,7 @@ export default function PaperSize() {
       {/* Table */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}
       >
         <Box sx={{ overflowX: 'auto' }}>
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>

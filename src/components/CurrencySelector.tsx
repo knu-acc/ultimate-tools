@@ -1,6 +1,8 @@
 'use client';
 
 import { Select, MenuItem, Box, Typography, useTheme } from '@mui/material';
+import { inputBaseClasses } from '@mui/material/InputBase';
+import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 
 export interface Currency {
   code: string;
@@ -54,8 +56,8 @@ export default function CurrencySelector({ value, onChange, size = 'small' }: Pr
         bgcolor: theme.palette.surfaceContainerHigh,
         '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
         '&:hover .MuiOutlinedInput-notchedOutline': { border: 'none' },
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': { border: 'none' },
-        borderRadius: 2,
+        [`&.${inputBaseClasses.focused} .${outlinedInputClasses.notchedOutline}`]: { border: 'none' },
+        borderRadius: 10,
         fontWeight: 500,
         minWidth: 110,
       }}

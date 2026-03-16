@@ -255,7 +255,7 @@ export default function FractionCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow,
         }}
       >
@@ -288,7 +288,7 @@ export default function FractionCalc() {
                   fontWeight: 700,
                   fontSize: '1.2rem',
                   textTransform: 'none',
-                  borderRadius: 2,
+                  borderRadius: 10,
                   ...(op !== o.value && {
                     color: 'text.secondary',
                     backgroundColor: theme.palette.surfaceContainerHigh,
@@ -338,7 +338,7 @@ export default function FractionCalc() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.surfaceContainerLow,
             }}
           >
@@ -359,7 +359,7 @@ export default function FractionCalc() {
                   sx={{
                     textAlign: 'center',
                     p: 1.5,
-                    borderRadius: 2,
+                    borderRadius: 10,
                     backgroundColor: alpha(theme.palette.primary.main, 0.06),
                   }}
                 >
@@ -425,7 +425,7 @@ export default function FractionCalc() {
               elevation={0}
               sx={{
                 p: { xs: 1.5, sm: 2 },
-                borderRadius: 3,
+                borderRadius: 18,
                 background: theme.palette.surfaceContainerLow,
               }}
             >

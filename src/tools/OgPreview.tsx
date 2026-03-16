@@ -58,7 +58,7 @@ export default function OgPreview() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -164,7 +164,7 @@ export default function OgPreview() {
           <Paper
             elevation={0}
             sx={{
-              borderRadius: 3,
+              borderRadius: 18,
               overflow: 'hidden'
             }}
           >
@@ -243,7 +243,7 @@ export default function OgPreview() {
           <Paper
             elevation={0}
             sx={{
-              borderRadius: 3,
+              borderRadius: 18,
               overflow: 'hidden'
             }}
           >
@@ -370,7 +370,7 @@ export default function OgPreview() {
           <Paper
             elevation={0}
             sx={{
-              borderRadius: 3,
+              borderRadius: 18,
               overflow: 'hidden',
               maxWidth: 550
             }}
@@ -424,7 +424,7 @@ export default function OgPreview() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -440,7 +440,7 @@ export default function OgPreview() {
           elevation={0}
           sx={{
             p: 2,
-            borderRadius: 2,
+            borderRadius: 10,
             bgcolor: theme.palette.surfaceContainerLow
           }}
         >

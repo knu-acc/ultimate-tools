@@ -14,6 +14,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { toggleButtonClasses } from '@mui/material/ToggleButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type ActivityLevel = 'low' | 'medium' | 'high';
@@ -85,7 +86,7 @@ export default function WaterIntake() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -114,8 +115,8 @@ export default function WaterIntake() {
                 py: 1,
                 textTransform: 'none',
                 fontWeight: 600,
-                borderRadius: 2,
-                '&.Mui-selected': {
+                borderRadius: 10,
+                [`&.${toggleButtonClasses.selected}`]: {
                   background: theme.palette.surfaceContainerHigh,
                   color: theme.palette.primary.main,
                   '&:hover': {
@@ -149,8 +150,8 @@ export default function WaterIntake() {
                 py: 1,
                 textTransform: 'none',
                 fontWeight: 600,
-                borderRadius: 2,
-                '&.Mui-selected': {
+                borderRadius: 10,
+                [`&.${toggleButtonClasses.selected}`]: {
                   background: theme.palette.surfaceContainerHigh,
                   color: theme.palette.primary.main,
                   '&:hover': {
@@ -180,7 +181,7 @@ export default function WaterIntake() {
                 sx={{
                   p: { xs: 2, sm: 3 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha('#1976d2', 0.06)
                 }}
               >
@@ -201,7 +202,7 @@ export default function WaterIntake() {
                 sx={{
                   p: { xs: 2, sm: 3 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha('#2e7d32', 0.06)
                 }}
               >
@@ -224,7 +225,7 @@ export default function WaterIntake() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3
+              borderRadius: 18
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -250,7 +251,7 @@ export default function WaterIntake() {
               <Box
                 sx={{
                   height: 16,
-                  borderRadius: 8,
+                  borderRadius: 18,
                   backgroundColor: alpha(progressColor, 0.12),
                   overflow: 'hidden'
                 }}
@@ -259,7 +260,7 @@ export default function WaterIntake() {
                   sx={{
                     height: '100%',
                     width: `${progressPct}%`,
-                    borderRadius: 8,
+                    borderRadius: 18,
                     backgroundColor: progressColor,
                     transitionProperty: 'width, background-color', transitionDuration: '0.3s', transitionTimingFunction: 'ease'
                   }}
@@ -344,7 +345,7 @@ export default function WaterIntake() {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 600,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   px: 3
                 }}
               >
@@ -357,7 +358,7 @@ export default function WaterIntake() {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 600,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   px: 3
                 }}
               >
@@ -371,7 +372,7 @@ export default function WaterIntake() {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 600,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   px: 3
                 }}
               >
@@ -385,7 +386,7 @@ export default function WaterIntake() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha('#0288d1', 0.03)
             }}
           >

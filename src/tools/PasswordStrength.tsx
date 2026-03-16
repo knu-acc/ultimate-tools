@@ -166,7 +166,7 @@ export default function PasswordStrength() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: theme.shape?.medium ?? 12, bgcolor: theme.palette.surfaceContainerLow, transition: `background-color ${theme.md3?.motion.duration.short4 ?? '200ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`, '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transition: `background-color ${theme.md3?.motion.duration.short4 ?? '200ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`, '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
@@ -205,11 +205,11 @@ export default function PasswordStrength() {
               value={(strength.score + 1) * 20}
               sx={{
                 height: 10,
-                borderRadius: 5,
+                borderRadius: 18,
                 backgroundColor: alpha(strength.color, 0.15),
                 '& .MuiLinearProgress-bar': {
                   backgroundColor: strength.color,
-                  borderRadius: 5
+                  borderRadius: 18
                 }
               }}
             />
@@ -220,7 +220,7 @@ export default function PasswordStrength() {
       {password && (
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
                 {isEn ? 'Characters' : 'Символы'}
               </Typography>
@@ -244,11 +244,11 @@ export default function PasswordStrength() {
                         value={charAnalysis.total ? (item.count / charAnalysis.total) * 100 : 0}
                         sx={{
                           height: 6,
-                          borderRadius: 3,
+                          borderRadius: 18,
                           backgroundColor: alpha(item.color, 0.12),
                           '& .MuiLinearProgress-bar': {
                             backgroundColor: item.color,
-                            borderRadius: 3
+                            borderRadius: 18
                           }
                         }}
                       />
@@ -265,7 +265,7 @@ export default function PasswordStrength() {
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, height: '100%', borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: 'text.secondary' }}>
                 {isEn ? 'Criteria' : 'Критерии'}
               </Typography>
@@ -307,7 +307,7 @@ export default function PasswordStrength() {
                 elevation={0}
                 sx={{
                   p: { xs: 2, sm: 3 },
-                  borderRadius: 3,
+                  borderRadius: 18,
                   bgcolor: alpha(theme.palette.warning.main, 0.04),
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { bgcolor: alpha(theme.palette.warning.main, 0.07) }

@@ -77,7 +77,7 @@ export default function TemperatureConverter() {
         sx={{
           p: 3,
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -127,7 +127,7 @@ export default function TemperatureConverter() {
                 elevation={0}
                 sx={{
                   p: 2.5,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   display: 'flex',
                   alignItems: 'center',
                   gap: 2,
@@ -150,7 +150,7 @@ export default function TemperatureConverter() {
         </Grid>
       )}
 
-      <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: 2.5, borderRadius: 18 }}>
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
           {isEn ? 'Reference' : 'Справочник'}
         </Typography>

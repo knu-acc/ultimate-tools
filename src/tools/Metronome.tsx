@@ -169,7 +169,7 @@ export default function Metronome() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
@@ -217,7 +217,7 @@ export default function Metronome() {
           onClick={() => handleBpmChange(bpm - 1)}
           sx={{
             border: `1px solid ${alpha(theme.palette.divider, 0.2)}`,
-            borderRadius: 3,
+            borderRadius: 18,
             width: 44,
             height: 44
           }}
@@ -241,7 +241,7 @@ export default function Metronome() {
           onClick={() => handleBpmChange(bpm + 1)}
           sx={{
             border: `1px solid ${alpha(theme.palette.divider, 0.2)}`,
-            borderRadius: 3,
+            borderRadius: 18,
             width: 44,
             height: 44
           }}
@@ -270,7 +270,7 @@ export default function Metronome() {
             onClick={() => handleBpmChange(t)}
             variant={bpm === t ? 'filled' : 'outlined'}
             color={bpm === t ? 'primary' : 'default'}
-            sx={{ fontWeight: 600, borderRadius: 2 }}
+            sx={{ fontWeight: 600, borderRadius: 10 }}
           />
         ))}
       </Box>
@@ -287,7 +287,7 @@ export default function Metronome() {
             onClick={() => setTimeSignature(ts)}
             variant={timeSignature === ts ? 'filled' : 'outlined'}
             color={timeSignature === ts ? 'primary' : 'default'}
-            sx={{ fontWeight: 600, borderRadius: 2, minWidth: 56 }}
+            sx={{ fontWeight: 600, borderRadius: 10, minWidth: 56 }}
           />
         ))}
       </Box>
@@ -302,7 +302,7 @@ export default function Metronome() {
             startIcon={isPlaying ? <Stop /> : <PlayArrow />}
             onClick={togglePlay}
             sx={{
-              borderRadius: 3,
+              borderRadius: 18,
               py: 1.5,
               fontWeight: 700,
               fontSize: 16,
@@ -326,7 +326,7 @@ export default function Metronome() {
             size="large"
             onClick={handleTapTempo}
             sx={{
-              borderRadius: 3,
+              borderRadius: 18,
               py: 1.5,
               fontWeight: 700,
               fontSize: 16

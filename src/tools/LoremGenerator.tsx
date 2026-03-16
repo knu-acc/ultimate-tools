@@ -113,7 +113,7 @@ export default function LoremGenerator() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
         <TextField
           fullWidth
           placeholder={isEn ? 'Paragraphs' : 'Абзацы'}
@@ -168,7 +168,7 @@ export default function LoremGenerator() {
           variant="contained"
           onClick={handleGenerate}
           fullWidth
-          sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 3 }}
+          sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 18 }}
         >
           {isEn ? 'Generate' : 'Сгенерировать'}
         </Button>
@@ -182,7 +182,7 @@ export default function LoremGenerator() {
             sx={{
               p: 2,
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.surfaceContainerLow
             }}
           >
@@ -205,7 +205,7 @@ export default function LoremGenerator() {
             </Box>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: 3, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: 3, borderRadius: 18 }}>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
               <CopyButton text={output} />
             </Box>
@@ -214,7 +214,7 @@ export default function LoremGenerator() {
                 maxHeight: 400,
                 overflowY: 'auto',
                 p: 2,
-                borderRadius: 2,
+                borderRadius: 10,
                 backgroundColor: alpha(theme.palette.text.primary, 0.03)
               }}
             >

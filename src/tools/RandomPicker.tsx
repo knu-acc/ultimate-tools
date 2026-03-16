@@ -72,7 +72,7 @@ export default function RandomPicker() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
@@ -91,7 +91,7 @@ export default function RandomPicker() {
             disabled={animating}
             sx={{
               mb: 2,
-              '& .MuiOutlinedInput-root': { borderRadius: 3 }
+              '& .MuiOutlinedInput-root': { borderRadius: 18 }
             }}
           />
 
@@ -139,7 +139,7 @@ export default function RandomPicker() {
             startIcon={<Casino />}
             onClick={pick}
             disabled={animating || items.length === 0}
-            sx={{ borderRadius: 6, py: 1.2 }}
+            sx={{ borderRadius: 18, py: 1.2 }}
           >
             {animating
               ? (isEn ? 'Picking...' : 'Выбираю...')
@@ -161,7 +161,7 @@ export default function RandomPicker() {
               elevation={0}
               sx={{
                 p: 4,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerHigh,
                 textAlign: 'center',
                 mb: 2
@@ -190,7 +190,7 @@ export default function RandomPicker() {
               elevation={0}
               sx={{
                 p: 3,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: alpha(theme.palette.success.main, 0.08),
                 textAlign: 'center',
                 mb: 2
@@ -231,7 +231,7 @@ export default function RandomPicker() {
               elevation={0}
               sx={{
                 p: 4,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow,
                 textAlign: 'center'
               }}
@@ -258,7 +258,7 @@ export default function RandomPicker() {
                     mb: 0.75,
                     py: 0.5,
                     px: 1,
-                    borderRadius: 2,
+                    borderRadius: 10,
                     bgcolor: i === 0 ? alpha(theme.palette.success.main, 0.05) : 'transparent'
                   }}
                 >

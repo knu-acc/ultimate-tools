@@ -118,7 +118,7 @@ export default function ColorPickerInput({
           paper: {
             sx: {
               mt: 1,
-              borderRadius: 3,
+              borderRadius: 18,
               overflow: 'hidden',
               bgcolor: theme.palette.surfaceContainerHigh,
               border: `1px solid ${alpha(theme.palette.divider, 0.2)}`,
@@ -176,7 +176,7 @@ export default function ColorPickerInput({
               }}
               sx={{ flex: 1 }}
             />
-            <IconButton size="small" onClick={handleCopy} sx={{ borderRadius: 2 }}>
+            <IconButton size="small" onClick={handleCopy} sx={{ borderRadius: 10 }}>
               {copied ? <Check sx={{ fontSize: 18, color: 'success.main' }} /> : <ContentCopy sx={{ fontSize: 18 }} />}
             </IconButton>
           </Box>

@@ -104,7 +104,7 @@ export default function PregnancyCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -130,7 +130,7 @@ export default function PregnancyCalc() {
                 sx={{
                   p: 2.5,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(results.trimester.color, 0.05)
                 }}
               >
@@ -151,7 +151,7 @@ export default function PregnancyCalc() {
                 sx={{
                   p: 2.5,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha('#c62828', 0.05)
                 }}
               >
@@ -169,7 +169,7 @@ export default function PregnancyCalc() {
                 sx={{
                   p: 2.5,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha('#7b1fa2', 0.05)
                 }}
               >
@@ -189,7 +189,7 @@ export default function PregnancyCalc() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3
+              borderRadius: 18
             }}
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -212,7 +212,7 @@ export default function PregnancyCalc() {
               <Box
                 sx={{
                   height: 16,
-                  borderRadius: 8,
+                  borderRadius: 18,
                   backgroundColor: theme.palette.surfaceContainerHigh,
                   overflow: 'hidden'
                 }}
@@ -221,7 +221,7 @@ export default function PregnancyCalc() {
                   sx={{
                     height: '100%',
                     width: `${results.progressPct}%`,
-                    borderRadius: 8,
+                    borderRadius: 18,
                     background: `linear-gradient(to right, #1976d2, #2e7d32, #ef6c00)`,
                     transition: 'width 0.4s ease'
                   }}
@@ -244,7 +244,7 @@ export default function PregnancyCalc() {
                   <Box
                     sx={{
                       height: 8,
-                      borderRadius: 4,
+                      borderRadius: 18,
                       backgroundColor: alpha(t.color, 0.25),
                       mb: 0.5
                     }}
@@ -265,7 +265,7 @@ export default function PregnancyCalc() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3
+              borderRadius: 18
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -285,7 +285,7 @@ export default function PregnancyCalc() {
                       alignItems: 'center',
                       gap: 1.5,
                       p: 1.5,
-                      borderRadius: 2,
+                      borderRadius: 10,
                       backgroundColor: isCurrent ? alpha(trimester.color, 0.06) : 'transparent',
                       border: 'none'
                     }}

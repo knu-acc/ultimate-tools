@@ -82,7 +82,7 @@ export default function DiscountCalc() {
                 elevation={0}
                 sx={{
                   p: 3,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   bgcolor: alpha(theme.palette.success.main, 0.08),
                   textAlign: 'center'
                 }}
@@ -101,7 +101,7 @@ export default function DiscountCalc() {
                     elevation={0}
                     sx={{
                       p: 2,
-                      borderRadius: 3,
+                      borderRadius: 18,
                       bgcolor: alpha(theme.palette.error.main, 0.06),
                       textAlign: 'center',
                       transition: 'background 150ms ease',
@@ -119,7 +119,7 @@ export default function DiscountCalc() {
                     elevation={0}
                     sx={{
                       p: 2,
-                      borderRadius: 3,
+                      borderRadius: 18,
                       bgcolor: theme.palette.surfaceContainerLow,
                       textAlign: 'center',
                       transition: 'background 150ms ease',
@@ -137,9 +137,9 @@ export default function DiscountCalc() {
               {/* Visual bar */}
               <Paper
                 elevation={0}
-                sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
+                sx={{ p: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow }}
               >
-                <Box sx={{ display: 'flex', height: 24, borderRadius: 3, overflow: 'hidden' }}>
+                <Box sx={{ display: 'flex', height: 24, borderRadius: 18, overflow: 'hidden' }}>
                   <Box
                     sx={{
                       width: `${100 - discountNum}%`,
@@ -182,7 +182,7 @@ export default function DiscountCalc() {
               elevation={0}
               sx={{
                 p: 4,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow,
                 textAlign: 'center'
               }}

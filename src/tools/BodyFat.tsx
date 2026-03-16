@@ -13,6 +13,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { toggleButtonClasses } from '@mui/material/ToggleButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Gender = 'male' | 'female';
@@ -127,7 +128,7 @@ export default function BodyFat() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -143,8 +144,8 @@ export default function BodyFat() {
                 py: 1,
                 textTransform: 'none',
                 fontWeight: 600,
-                borderRadius: 2,
-                '&.Mui-selected': {
+                borderRadius: 10,
+                [`&.${toggleButtonClasses.selected}`]: {
                   background: theme.palette.surfaceContainerHigh,
                   color: theme.palette.primary.main,
                   '&:hover': {
@@ -235,7 +236,7 @@ export default function BodyFat() {
               p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha(results.category.color, 0.05)
             }}
           >
@@ -264,7 +265,7 @@ export default function BodyFat() {
                 sx={{
                   p: 2.5,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha('#ef6c00', 0.06)
                 }}
               >
@@ -282,7 +283,7 @@ export default function BodyFat() {
                 sx={{
                   p: 2.5,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha('#2e7d32', 0.06)
                 }}
               >
@@ -302,7 +303,7 @@ export default function BodyFat() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3
+              borderRadius: 18
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
@@ -312,7 +313,7 @@ export default function BodyFat() {
               sx={{
                 display: 'flex',
                 height: 32,
-                borderRadius: 16,
+                borderRadius: 999,
                 overflow: 'hidden',
                 mb: 1.5
               }}
@@ -353,7 +354,7 @@ export default function BodyFat() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3
+              borderRadius: 18
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
@@ -370,7 +371,7 @@ export default function BodyFat() {
                       alignItems: 'center',
                       gap: 1.5,
                       p: 1.5,
-                      borderRadius: 2,
+                      borderRadius: 10,
                       backgroundColor: isActive ? alpha(cat.color, 0.08) : 'transparent',
                       border: 'none'
                     }}
@@ -408,7 +409,7 @@ export default function BodyFat() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.surfaceContainerLow
             }}
           >

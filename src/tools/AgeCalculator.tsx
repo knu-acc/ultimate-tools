@@ -146,7 +146,7 @@ export default function AgeCalculator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -180,7 +180,7 @@ export default function AgeCalculator() {
             sx={{
               p: 3,
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               textAlign: 'center',
               background: alpha(accentColor, 0.04)
             }}
@@ -215,7 +215,7 @@ export default function AgeCalculator() {
             sx={{
               p: 3,
               mb: 2,
-              borderRadius: 3
+              borderRadius: 18
             }}
           >
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
@@ -250,7 +250,7 @@ export default function AgeCalculator() {
                     sx={{
                       p: 2,
                       textAlign: 'center',
-                      borderRadius: 3,
+                      borderRadius: 18,
                       background: alpha(item.color, 0.06),
                       transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                       '&:hover': {
@@ -275,7 +275,7 @@ export default function AgeCalculator() {
             elevation={0}
             sx={{
               p: 3,
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha('#e91e63', 0.04)
             }}
           >

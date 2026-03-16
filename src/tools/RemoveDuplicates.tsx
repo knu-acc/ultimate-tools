@@ -79,7 +79,7 @@ export default function RemoveDuplicates() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -134,7 +134,7 @@ export default function RemoveDuplicates() {
                 sx={{
                   textAlign: 'center',
                   p: 1.5,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.info.main, 0.06)
                 }}
               >
@@ -154,7 +154,7 @@ export default function RemoveDuplicates() {
                 sx={{
                   textAlign: 'center',
                   p: 1.5,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.success.main, 0.06)
                 }}
               >
@@ -174,7 +174,7 @@ export default function RemoveDuplicates() {
                 sx={{
                   textAlign: 'center',
                   p: 1.5,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.error.main, 0.06)
                 }}
               >

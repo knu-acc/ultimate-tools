@@ -143,7 +143,7 @@ export default function MatrixCalc() {
       elevation={0}
       sx={{
         p: { xs: 1.5, sm: 2 },
-        borderRadius: 3,
+        borderRadius: 18,
         background: theme.palette.surfaceContainerLow,
         transition: 'background 0.2s ease',
         '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -186,7 +186,7 @@ export default function MatrixCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -225,7 +225,7 @@ export default function MatrixCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -288,7 +288,7 @@ export default function MatrixCalc() {
           elevation={0}
           sx={{
             p: { xs: 2, sm: 3 },
-            borderRadius: 3,
+            borderRadius: 18,
             background: theme.palette.surfaceContainerLow
           }}
         >
@@ -330,7 +330,7 @@ export default function MatrixCalc() {
                     sx={{
                       p: 1.5,
                       textAlign: 'center',
-                      borderRadius: 2,
+                      borderRadius: 10,
                       background: theme.palette.surfaceContainerLow
                     }}
                   >

@@ -111,7 +111,7 @@ export default function InvestmentCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
@@ -186,7 +186,7 @@ export default function InvestmentCalc() {
               p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: alpha('#2e7d32', 0.04),
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { bgcolor: alpha('#2e7d32', 0.07) }
@@ -208,7 +208,7 @@ export default function InvestmentCalc() {
                 sx={{
                   p: { xs: 2, sm: 2.5 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   border: `1px solid ${alpha('#1565c0', 0.3)}`,
                   bgcolor: alpha('#1565c0', 0.05),
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -239,7 +239,7 @@ export default function InvestmentCalc() {
                 sx={{
                   p: { xs: 2, sm: 2.5 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   border: `1px solid ${alpha('#2e7d32', 0.3)}`,
                   bgcolor: alpha('#2e7d32', 0.05),
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -272,7 +272,7 @@ export default function InvestmentCalc() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
@@ -285,7 +285,7 @@ export default function InvestmentCalc() {
               sx={{
                 display: 'flex',
                 height: 36,
-                borderRadius: 18,
+                borderRadius: 999,
                 overflow: 'hidden',
                 mb: 1.5
               }}
@@ -326,7 +326,7 @@ export default function InvestmentCalc() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }

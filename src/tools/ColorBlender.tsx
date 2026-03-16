@@ -158,7 +158,7 @@ export default function ColorBlender() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -172,7 +172,7 @@ export default function ColorBlender() {
                 sx={{
                   width: 56,
                   height: 56,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   backgroundColor: color1,
                   border: `2px solid ${theme.palette.divider}`,
                   flexShrink: 0,
@@ -196,7 +196,7 @@ export default function ColorBlender() {
                 sx={{
                   width: 56,
                   height: 56,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   backgroundColor: color2,
                   border: `2px solid ${theme.palette.divider}`,
                   flexShrink: 0,
@@ -261,7 +261,7 @@ export default function ColorBlender() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -276,7 +276,7 @@ export default function ColorBlender() {
           sx={{
             width: '100%',
             height: 60,
-            borderRadius: 2,
+            borderRadius: 10,
             background: `linear-gradient(to right, ${blendedColors.join(', ')})`,
             mb: 2
           }}
@@ -333,7 +333,7 @@ export default function ColorBlender() {
           elevation={0}
           sx={{
             p: 2,
-            borderRadius: 2,
+            borderRadius: 10,
             bgcolor: theme.palette.surfaceContainerLow,
             display: 'flex',
             alignItems: 'flex-start',

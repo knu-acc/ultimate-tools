@@ -228,7 +228,7 @@ export default function MockdataGenerator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -291,7 +291,7 @@ export default function MockdataGenerator() {
           size="small"
           startIcon={<AddIcon />}
           onClick={addField}
-          sx={{ mt: 1, borderRadius: 3 }}
+          sx={{ mt: 1, borderRadius: 18 }}
         >
           {isEn ? 'Add field' : 'Добавить поле'}
         </Button>
@@ -302,7 +302,7 @@ export default function MockdataGenerator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -327,8 +327,8 @@ export default function MockdataGenerator() {
               size="small"
               fullWidth
             >
-              <ToggleButton value="json" sx={{ borderRadius: 2 }}>JSON</ToggleButton>
-              <ToggleButton value="csv" sx={{ borderRadius: 2 }}>CSV</ToggleButton>
+              <ToggleButton value="json" sx={{ borderRadius: 10 }}>JSON</ToggleButton>
+              <ToggleButton value="csv" sx={{ borderRadius: 10 }}>CSV</ToggleButton>
             </ToggleButtonGroup>
           </Grid>
           <Grid size={{ xs: 12, sm: 3 }}>
@@ -337,7 +337,7 @@ export default function MockdataGenerator() {
               variant="contained"
               startIcon={<PlayArrowIcon />}
               onClick={generate}
-              sx={{ borderRadius: 3, height: 40, textTransform: 'none', fontWeight: 600 }}
+              sx={{ borderRadius: 18, height: 40, textTransform: 'none', fontWeight: 600 }}
             >
               {isEn ? 'Generate' : 'Сгенерировать'}
             </Button>
@@ -350,7 +350,7 @@ export default function MockdataGenerator() {
           elevation={0}
           sx={{
             p: { xs: 2, sm: 3 },
-            borderRadius: 3,
+            borderRadius: 18,
             background: theme.palette.surfaceContainerLow
           }}
         >
@@ -374,7 +374,7 @@ export default function MockdataGenerator() {
             sx={{
               '& .MuiInputBase-root': {
                 backgroundColor: alpha(theme.palette.background.default, 0.5),
-                borderRadius: 3
+                borderRadius: 18
               }
             }}
           />

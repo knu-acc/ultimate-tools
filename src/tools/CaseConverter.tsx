@@ -128,7 +128,7 @@ export default function CaseConverter() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -154,7 +154,7 @@ export default function CaseConverter() {
                   textTransform: 'none',
                   flexDirection: 'column',
                   py: 1.5,
-                  borderRadius: 2
+                  borderRadius: 10
                 }}
               >
                 <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '0.8rem' }}>

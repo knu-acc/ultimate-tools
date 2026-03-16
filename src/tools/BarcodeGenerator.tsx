@@ -357,7 +357,7 @@ export default function BarcodeGenerator() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -399,7 +399,7 @@ export default function BarcodeGenerator() {
             />
 
             {error && (
-              <Alert severity="warning" sx={{ mb: 2, borderRadius: 2 }}>
+              <Alert severity="warning" sx={{ mb: 2, borderRadius: 10 }}>
                 {error}
               </Alert>
             )}
@@ -442,7 +442,7 @@ export default function BarcodeGenerator() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               textAlign: 'center',
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -451,7 +451,7 @@ export default function BarcodeGenerator() {
           >
             <Box
               sx={{
-                borderRadius: 2,
+                borderRadius: 10,
                 overflow: 'auto',
                 backgroundColor: '#fff',
                 border: '1px solid',
@@ -472,7 +472,7 @@ export default function BarcodeGenerator() {
                 startIcon={<DownloadIcon />}
                 onClick={handleDownload}
                 disabled={!text.trim() || !!error}
-                sx={{ borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
+                sx={{ borderRadius: 18, textTransform: 'none', fontWeight: 600 }}
               >
                 {isEn ? 'Download PNG' : 'Скачать PNG'}
               </Button>

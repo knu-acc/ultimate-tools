@@ -132,7 +132,7 @@ export default function HeadingChecker() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -167,7 +167,7 @@ export default function HeadingChecker() {
               elevation={0}
               sx={{
                 p: { xs: 2, sm: 3 },
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow,
                 transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -236,7 +236,7 @@ export default function HeadingChecker() {
                   sx={{
                     p: 1.5,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     backgroundColor: errorCount > 0 ? alpha(theme.palette.error.main, 0.06) : undefined
                   }}
                 >
@@ -252,7 +252,7 @@ export default function HeadingChecker() {
                   sx={{
                     p: 1.5,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     backgroundColor: warningCount > 0 ? alpha(theme.palette.warning.main, 0.06) : undefined
                   }}
                 >
@@ -268,7 +268,7 @@ export default function HeadingChecker() {
                   sx={{
                     p: 1.5,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     backgroundColor: successCount > 0 ? alpha(theme.palette.success.main, 0.06) : undefined
                   }}
                 >
@@ -286,7 +286,7 @@ export default function HeadingChecker() {
               sx={{
                 p: { xs: 2, sm: 3 },
                 mb: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow,
                 transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -320,7 +320,7 @@ export default function HeadingChecker() {
               elevation={0}
               sx={{
                 p: { xs: 2, sm: 3 },
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow,
                 transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -353,7 +353,7 @@ export default function HeadingChecker() {
           sx={{
             p: { xs: 2, sm: 3 },
             textAlign: 'center',
-            borderRadius: 3,
+            borderRadius: 18,
             bgcolor: theme.palette.surfaceContainerLow
           }}
         >

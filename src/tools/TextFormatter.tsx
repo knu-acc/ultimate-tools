@@ -365,7 +365,7 @@ export default function TextFormatterTool() {
             value={input}
             onChange={e => handleInputChange(e.target.value)}
             sx={{
-              '& .MuiOutlinedInput-root': { borderRadius: 2, fontFamily: 'monospace', fontSize: '0.8rem' },
+              '& .MuiOutlinedInput-root': { borderRadius: 10, fontFamily: 'monospace', fontSize: '0.8rem' },
             }}
           />
         </Grid>
@@ -386,7 +386,7 @@ export default function TextFormatterTool() {
             value={output}
             slotProps={{ input: { readOnly: true } }}
             sx={{
-              '& .MuiOutlinedInput-root': { borderRadius: 2, fontFamily: 'monospace', fontSize: '0.8rem' },
+              '& .MuiOutlinedInput-root': { borderRadius: 10, fontFamily: 'monospace', fontSize: '0.8rem' },
             }}
           />
         </Grid>
@@ -421,7 +421,7 @@ export default function TextFormatterTool() {
           onClick={handleProcess}
           disabled={!input || selectedOps.length === 0}
           startIcon={<AutoFixHigh />}
-          sx={{ borderRadius: 5 }}
+          sx={{ borderRadius: 18 }}
         >
           Применить
         </Button>
@@ -431,7 +431,7 @@ export default function TextFormatterTool() {
           disabled={!output}
           startIcon={copied ? <CheckCircle /> : <ContentCopy />}
           color={copied ? 'success' : 'primary'}
-          sx={{ borderRadius: 5 }}
+          sx={{ borderRadius: 18 }}
         >
           {copied ? 'Скопировано!' : 'Копировать'}
         </Button>
@@ -439,7 +439,7 @@ export default function TextFormatterTool() {
           variant="text"
           onClick={() => { setInput(''); setOutput(''); }}
           startIcon={<RestartAlt />}
-          sx={{ borderRadius: 5 }}
+          sx={{ borderRadius: 18 }}
           color="inherit"
         >
           Очистить
@@ -485,7 +485,7 @@ export default function TextFormatterTool() {
                     }}
                     color={isSelected ? 'primary' : 'default'}
                     variant={isSelected ? 'filled' : 'outlined'}
-                    sx={{ cursor: 'pointer', borderRadius: 2 }}
+                    sx={{ cursor: 'pointer', borderRadius: 10 }}
                     icon={isSelected ? <CheckCircle sx={{ fontSize: '16px !important' }} /> : undefined}
                   />
                 </Tooltip>
@@ -496,7 +496,7 @@ export default function TextFormatterTool() {
       ))}
 
       {selectedOps.length === 0 && (
-        <Alert severity="info" sx={{ borderRadius: 2 }}>
+        <Alert severity="info" sx={{ borderRadius: 10 }}>
           Выберите хотя бы одну операцию из списка выше
         </Alert>
       )}
@@ -507,7 +507,7 @@ export default function TextFormatterTool() {
           sx={{
             p: 2,
             mt: 1,
-            borderRadius: 2,
+            borderRadius: 10,
             bgcolor: alpha(theme.palette.primary.main, 0.04),
             border: `1px solid ${alpha(theme.palette.primary.main, 0.12)}`,
           }}

@@ -2,8 +2,19 @@ import type { Metadata } from 'next';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import MainContent from '@/src/components/MainContent';
-import { getStats, tools, toolGroups } from '@/src/data/tools';
-import { LOCALES } from '@/src/i18n/index';
+import { getStats } from '@/src/data/tools';
+import { LOCALES, Locale } from '@/src/i18n/index';
+import { LanguageProvider } from '@/src/i18n/LanguageContext';
+
+// Synchronous imports — these are bundled at build time, not fetched at runtime.
+// This eliminates the async loadMessages() call and prevents translation key flash.
+import messagesRu from '@/messages/ru.json';
+import messagesEn from '@/messages/en.json';
+
+const messagesMap: Record<string, Record<string, unknown>> = {
+  ru: messagesRu,
+  en: messagesEn,
+};
 
 const stats = getStats();
 
@@ -49,6 +60,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: isEn
         ? `Converters, calculators, generators, developer tools and more. ${stats.totalTools}+ utilities — all free, works in your browser.`
         : `Конвертеры, калькуляторы, генераторы, инструменты для разработчиков и многое другое. ${stats.totalTools}+ утилит — всё бесплатно, работает в браузере.`,
+      images: [{ url: `${BASE}/opengraph-image`, width: 1200, height: 630, alt: 'Ultimate Tools' }],
     },
     twitter: {
       card: 'summary_large_image',
@@ -72,18 +84,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'x-default': `${BASE}/ru`,
       },
     },
-    verification: { yandex: 'placeholder' },
+    verification: {},
   };
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
+  const safeLocale = (LOCALES.includes(locale as Locale) ? locale : 'ru') as Locale;
+  const messages = messagesMap[safeLocale] || messagesRu;
 
   return (
-    <>
+    <LanguageProvider initialLocale={safeLocale} initialMessages={messages} allMessages={messagesMap}>
       <Header />
       <MainContent>{children}</MainContent>
       <Footer />
-    </>
+    </LanguageProvider>
   );
 }

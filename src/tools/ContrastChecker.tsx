@@ -72,7 +72,7 @@ export default function ContrastChecker() {
           </Grid>
 
           {/* Contrast Ratio */}
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: alpha(ratingColor, 0.08), textAlign: 'center', mb: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: alpha(ratingColor, 0.08), textAlign: 'center', mb: 2 }}>
             <Typography variant="h2" fontWeight={700} sx={{ color: ratingColor }}>
               {ratio.toFixed(2)}:1
             </Typography>
@@ -84,7 +84,7 @@ export default function ContrastChecker() {
           {/* WCAG results */}
           <Grid container spacing={1}>
             <Grid size={6}>
-              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, textAlign: 'center', bgcolor: normalText.aa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius: 10, textAlign: 'center', bgcolor: normalText.aa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
                 <Typography variant="body2" fontWeight={600}>{isEn ? 'AA Normal' : 'AA Обычный'}</Typography>
                 <Typography variant="h6" fontWeight={700} sx={{ color: normalText.aa ? '#4CAF50' : '#f44336' }}>
                   {normalText.aa ? (isEn ? '✓ Pass' : '✓ Пройден') : (isEn ? '✗ Fail' : '✗ Не пройден')}
@@ -93,7 +93,7 @@ export default function ContrastChecker() {
               </Paper>
             </Grid>
             <Grid size={6}>
-              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, textAlign: 'center', bgcolor: normalText.aaa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius: 10, textAlign: 'center', bgcolor: normalText.aaa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
                 <Typography variant="body2" fontWeight={600}>{isEn ? 'AAA Normal' : 'AAA Обычный'}</Typography>
                 <Typography variant="h6" fontWeight={700} sx={{ color: normalText.aaa ? '#4CAF50' : '#f44336' }}>
                   {normalText.aaa ? (isEn ? '✓ Pass' : '✓ Пройден') : (isEn ? '✗ Fail' : '✗ Не пройден')}
@@ -102,7 +102,7 @@ export default function ContrastChecker() {
               </Paper>
             </Grid>
             <Grid size={6}>
-              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, textAlign: 'center', bgcolor: largeText.aa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius: 10, textAlign: 'center', bgcolor: largeText.aa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
                 <Typography variant="body2" fontWeight={600}>{isEn ? 'AA Large' : 'AA Крупный'}</Typography>
                 <Typography variant="h6" fontWeight={700} sx={{ color: largeText.aa ? '#4CAF50' : '#f44336' }}>
                   {largeText.aa ? (isEn ? '✓ Pass' : '✓ Пройден') : (isEn ? '✗ Fail' : '✗ Не пройден')}
@@ -111,7 +111,7 @@ export default function ContrastChecker() {
               </Paper>
             </Grid>
             <Grid size={6}>
-              <Paper elevation={0} sx={{ p: 2, borderRadius: 2, textAlign: 'center', bgcolor: largeText.aaa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
+              <Paper elevation={0} sx={{ p: 2, borderRadius: 10, textAlign: 'center', bgcolor: largeText.aaa ? alpha('#4CAF50', 0.08) : alpha('#f44336', 0.08) }}>
                 <Typography variant="body2" fontWeight={600}>{isEn ? 'AAA Large' : 'AAA Крупный'}</Typography>
                 <Typography variant="h6" fontWeight={700} sx={{ color: largeText.aaa ? '#4CAF50' : '#f44336' }}>
                   {largeText.aaa ? (isEn ? '✓ Pass' : '✓ Пройден') : (isEn ? '✗ Fail' : '✗ Не пройден')}
@@ -124,7 +124,7 @@ export default function ContrastChecker() {
 
         <Grid size={{ xs: 12, md: 7 }}>
           {/* Preview */}
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: bgColor, mb: 2 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: bgColor, mb: 2 }}>
             <Typography variant="h4" sx={{ color: fgColor, fontWeight: 700, mb: 1 }}>
               {isEn ? 'Page Heading' : 'Заголовок страницы'}
             </Typography>
@@ -136,7 +136,7 @@ export default function ContrastChecker() {
             </Typography>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: fgColor }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: fgColor }}>
             <Typography variant="h4" sx={{ color: bgColor, fontWeight: 700, mb: 1 }}>
               {isEn ? 'Inverted Variant' : 'Инвертированный вариант'}
             </Typography>

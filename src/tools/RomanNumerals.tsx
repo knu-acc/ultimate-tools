@@ -138,7 +138,7 @@ export default function RomanNumerals() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: theme.shape?.medium ?? 12, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
           <Chip
             label={modeLabel}
@@ -184,7 +184,7 @@ export default function RomanNumerals() {
             mb: 2,
             border: `1px solid ${modeColor}`,
             backgroundColor: alpha(modeColor, 0.04),
-            borderRadius: theme.shape?.medium ?? 12
+            borderRadius: 18
           }}
         >
           <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
@@ -208,7 +208,7 @@ export default function RomanNumerals() {
       )}
 
       {/* Reference Table */}
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: theme.shape?.medium ?? 12, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
           {isEn ? 'Reference table' : 'Справочная таблица'}
         </Typography>
@@ -220,7 +220,7 @@ export default function RomanNumerals() {
                 sx={{
                   p: 1,
                   textAlign: 'center',
-                  borderRadius: theme.shape?.small ?? 8,
+                  borderRadius: 10,
                   cursor: 'pointer',
                   transition: `all ${theme.md3?.motion.duration.short4 ?? '200ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`,
                   '&:hover': {
@@ -247,7 +247,7 @@ export default function RomanNumerals() {
 
       {/* History */}
       {history.length > 0 && (
-        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: theme.shape?.medium ?? 12, background: theme.palette.surfaceContainerLow }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
           <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
             {isEn ? 'Conversion history' : 'История конвертаций'}
           </Typography>

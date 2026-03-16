@@ -168,7 +168,7 @@ export default function ToneGenerator() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
@@ -180,7 +180,7 @@ export default function ToneGenerator() {
           textAlign: 'center',
           my: 3,
           p: 3,
-          borderRadius: 3,
+          borderRadius: 18,
           background: alpha(primaryColor, 0.06),
           border: `1px solid ${alpha(primaryColor, 0.15)}`
         }}
@@ -247,7 +247,7 @@ export default function ToneGenerator() {
             onClick={() => handleFrequencyChange(f.freq)}
             variant={frequency === f.freq ? 'filled' : 'outlined'}
             color={frequency === f.freq ? 'primary' : 'default'}
-            sx={{ fontWeight: 600, borderRadius: 2 }}
+            sx={{ fontWeight: 600, borderRadius: 10 }}
           />
         ))}
       </Box>
@@ -264,7 +264,7 @@ export default function ToneGenerator() {
             onClick={() => setWaveform(w.type)}
             variant={waveform === w.type ? 'filled' : 'outlined'}
             color={waveform === w.type ? 'primary' : 'default'}
-            sx={{ fontWeight: 600, borderRadius: 2, minWidth: 80 }}
+            sx={{ fontWeight: 600, borderRadius: 10, minWidth: 80 }}
           />
         ))}
       </Box>
@@ -291,7 +291,7 @@ export default function ToneGenerator() {
         startIcon={isPlaying ? <Stop /> : <PlayArrow />}
         onClick={togglePlay}
         sx={{
-          borderRadius: 3,
+          borderRadius: 18,
           py: 1.5,
           fontWeight: 700,
           fontSize: 16,

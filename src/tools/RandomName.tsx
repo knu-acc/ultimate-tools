@@ -200,7 +200,7 @@ export default function RandomName() {
             size="large"
             startIcon={<Casino />}
             onClick={handleGenerate}
-            sx={{ borderRadius: 3, py: 1.2, textTransform: 'none', fontWeight: 600 }}
+            sx={{ borderRadius: 18, py: 1.2, textTransform: 'none', fontWeight: 600 }}
           >
             {isEn ? 'Generate' : 'Сгенерировать'}
           </Button>
@@ -227,7 +227,7 @@ export default function RandomName() {
                     p: 1.5,
                     px: 2,
                     mb: 1,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) }
                   }}
                 >
@@ -246,7 +246,7 @@ export default function RandomName() {
               elevation={0}
               sx={{
                 p: 4,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow,
                 textAlign: 'center'
               }}

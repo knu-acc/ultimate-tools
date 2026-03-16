@@ -173,7 +173,7 @@ export default function HtmlFormatter() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -215,7 +215,7 @@ export default function HtmlFormatter() {
               lineHeight: 1.6
             },
             '& .MuiOutlinedInput-root': {
-              borderRadius: 2
+              borderRadius: 10
             }
           }}
         />
@@ -226,7 +226,7 @@ export default function HtmlFormatter() {
             variant="contained"
             onClick={handleBeautify}
             disabled={!input.trim()}
-            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10, px: 3 }}
           >
             {isEn ? 'Format' : 'Форматировать'}
           </Button>
@@ -234,7 +234,7 @@ export default function HtmlFormatter() {
             variant="contained"
             onClick={handleMinify}
             disabled={!input.trim()}
-            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3 }}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10, px: 3 }}
           >
             {isEn ? 'Minify' : 'Минифицировать'}
           </Button>
@@ -295,7 +295,7 @@ export default function HtmlFormatter() {
                     : alpha(theme.palette.grey[50], 1)
                 },
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2
+                  borderRadius: 10
                 }
               }}
             />

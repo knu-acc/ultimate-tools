@@ -79,7 +79,7 @@ export default function EnergyConverter() {
           p: 3,
           mb: 2,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
@@ -129,7 +129,7 @@ export default function EnergyConverter() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     display: 'flex',
                     alignItems: 'center',
                     gap: 1,
@@ -158,7 +158,7 @@ export default function EnergyConverter() {
           </Grid>
 
           {numericValue > 0 && (
-            <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3 }}>
+            <Paper elevation={0} sx={{ p: 2.5, borderRadius: 18 }}>
               <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
                 Сравнение
               </Typography>
@@ -193,10 +193,10 @@ export default function EnergyConverter() {
                       value={Math.min(percent, 100)}
                       sx={{
                         height: 10,
-                        borderRadius: 5,
+                        borderRadius: 18,
                         backgroundColor: alpha(color, 0.12),
                         '& .MuiLinearProgress-bar': {
-                          borderRadius: 5,
+                          borderRadius: 18,
                           backgroundColor: r.key === fromUnit ? theme.palette.primary.main : color
                         }
                       }}

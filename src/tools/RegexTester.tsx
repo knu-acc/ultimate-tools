@@ -83,7 +83,7 @@ export default function RegexTester() {
 
       for (const m of sortedMatches) {
         html += escapeHtml(testString.slice(lastIndex, m.index));
-        html += `<mark style="background-color: ${alpha(theme.palette.primary.main, 0.3)}; border-radius: 3px; padding: 1px 2px;">${escapeHtml(m.match)}</mark>`;
+        html += `<mark style="background-color: ${alpha(theme.palette.primary.main, 0.3)}; border-radius: 4px; padding: 1px 2px;">${escapeHtml(m.match)}</mark>`;
         lastIndex = m.index + m.match.length;
       }
       html += escapeHtml(testString.slice(lastIndex));
@@ -118,7 +118,7 @@ export default function RegexTester() {
       {/* Pattern Input */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <Typography variant="body1" sx={{ color: 'text.secondary', fontFamily: 'monospace', fontSize: '1.2rem' }}>
@@ -160,7 +160,7 @@ export default function RegexTester() {
       </Paper>
 
       {error && (
-        <Alert severity="error" sx={{ mb: 2, borderRadius: 3 }}>
+        <Alert severity="error" sx={{ mb: 2, borderRadius: 18 }}>
           {error}
         </Alert>
       )}
@@ -168,7 +168,7 @@ export default function RegexTester() {
       {/* Test String */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
       >
         <TextField
           fullWidth
@@ -185,7 +185,7 @@ export default function RegexTester() {
       {testString && pattern && !error && (
         <Paper
           elevation={0}
-          sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+          sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary' }}>
@@ -200,7 +200,7 @@ export default function RegexTester() {
           <Box
             sx={{
               p: 2,
-              borderRadius: 2,
+              borderRadius: 10,
               backgroundColor: alpha(theme.palette.background.default, 0.5),
               fontFamily: 'monospace',
               fontSize: '0.9rem',
@@ -217,7 +217,7 @@ export default function RegexTester() {
       {matches.length > 0 && (
         <Paper
           elevation={0}
-          sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+          sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
         >
           <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
             {isEn ? 'Matches' : 'Совпадения'}

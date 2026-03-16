@@ -147,7 +147,7 @@ export default function BinaryText() {
           p: { xs: 2, sm: 3 },
           mb: 2,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 3,
+          borderRadius: 18,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}
@@ -159,14 +159,14 @@ export default function BinaryText() {
             variant={isTextMode ? 'filled' : 'outlined'}
             color={isTextMode ? 'primary' : 'default'}
             onClick={() => { setMode('text-to-binary'); setInput(''); }}
-            sx={{ fontWeight: 600, borderRadius: 2, px: 1 }}
+            sx={{ fontWeight: 600, borderRadius: 10, px: 1 }}
           />
           <Chip
             label={isEn ? 'Binary → Text' : 'Двоичный → Текст'}
             variant={!isTextMode ? 'filled' : 'outlined'}
             color={!isTextMode ? 'primary' : 'default'}
             onClick={() => { setMode('binary-to-text'); setInput(''); }}
-            sx={{ fontWeight: 600, borderRadius: 2, px: 1 }}
+            sx={{ fontWeight: 600, borderRadius: 10, px: 1 }}
           />
         </Box>
 
@@ -196,7 +196,7 @@ export default function BinaryText() {
                 position: 'absolute',
                 right: 8,
                 bottom: 8,
-                borderRadius: 3,
+                borderRadius: 18,
                 border: `1px solid ${theme.palette.divider}`,
                 background: theme.palette.surfaceContainerLow,
                 cursor: 'pointer',
@@ -226,7 +226,7 @@ export default function BinaryText() {
               elevation={0}
               sx={{
                 p: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 background: alpha(theme.palette.text.primary, 0.03),
                 maxHeight: 200,
                 overflow: 'auto'
@@ -256,7 +256,7 @@ export default function BinaryText() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       borderColor: theme.palette.primary.main,

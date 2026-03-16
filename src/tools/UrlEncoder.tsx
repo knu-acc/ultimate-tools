@@ -112,7 +112,7 @@ export default function UrlEncoder() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -177,7 +177,7 @@ export default function UrlEncoder() {
             sx={{
               p: 2,
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha(theme.palette.error.main, 0.08)
             }}
           >
@@ -216,7 +216,7 @@ export default function UrlEncoder() {
             elevation={0}
             sx={{
               p: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha(theme.palette.text.primary, 0.03)
             }}
           >
@@ -240,7 +240,7 @@ export default function UrlEncoder() {
                   fontSize: '0.8rem',
                   wordBreak: 'break-all',
                   p: 1.5,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   background: alpha(theme.palette.secondary.main, 0.06)
                 }}
               >
@@ -261,7 +261,7 @@ export default function UrlEncoder() {
                   fontSize: '0.8rem',
                   wordBreak: 'break-all',
                   p: 1.5,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   background: theme.palette.surfaceContainerLow
                 }}
               >
@@ -276,7 +276,7 @@ export default function UrlEncoder() {
                 sx={{
                   mt: 2,
                   p: 1.5,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.warning.main, 0.08)
                 }}
               >

@@ -79,7 +79,7 @@ export default function JwtDecoder() {
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
       >
         <TextField
           fullWidth
@@ -90,14 +90,14 @@ export default function JwtDecoder() {
           placeholder={isEn ? "Paste JWT token (eyJhbGci...)" : "Вставьте JWT токен (eyJhbGci...)"}
           sx={{
             mb: 2,
-            '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.8rem', borderRadius: 2 }
+            '& .MuiOutlinedInput-root': { fontFamily: 'monospace', fontSize: '0.8rem', borderRadius: 10 }
           }}
         />
 
         {decoded && !decoded.valid && (
           <Paper
             elevation={0}
-            sx={{ p: 2, borderRadius: 2, bgcolor: alpha(theme.palette.error.main, 0.08) }}
+            sx={{ p: 2, borderRadius: 10, bgcolor: alpha(theme.palette.error.main, 0.08) }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <ErrorIcon sx={{ color: theme.palette.error.main }} />
@@ -113,7 +113,7 @@ export default function JwtDecoder() {
           <Grid size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, borderRadius: 2, bgcolor: alpha('#E74C3C', 0.06), height: '100%' }}
+              sx={{ p: 2, borderRadius: 10, bgcolor: alpha('#E74C3C', 0.06), height: '100%' }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
                 <Chip label="HEADER" size="small" sx={{ bgcolor: alpha('#E74C3C', 0.15), fontWeight: 700, fontSize: '0.7rem' }} />
@@ -138,7 +138,7 @@ export default function JwtDecoder() {
           <Grid size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, borderRadius: 2, bgcolor: alpha('#6750A4', 0.06), height: '100%' }}
+              sx={{ p: 2, borderRadius: 10, bgcolor: alpha('#6750A4', 0.06), height: '100%' }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
                 <Chip label="PAYLOAD" size="small" sx={{ bgcolor: alpha('#6750A4', 0.15), fontWeight: 700, fontSize: '0.7rem' }} />
@@ -166,7 +166,7 @@ export default function JwtDecoder() {
           <Grid size={12}>
             <Paper
               elevation={0}
-              sx={{ p: 2, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow }}
+              sx={{ p: 2, borderRadius: 10, bgcolor: theme.palette.surfaceContainerLow }}
             >
               <Typography variant="subtitle2" fontWeight={600} gutterBottom>
                 {isEn ? 'Decoded claims' : 'Расшифрованные поля'}
@@ -195,7 +195,7 @@ export default function JwtDecoder() {
           <Grid size={12}>
             <Paper
               elevation={0}
-              sx={{ p: 2, borderRadius: 2, bgcolor: alpha('#2E86C1', 0.06) }}
+              sx={{ p: 2, borderRadius: 10, bgcolor: alpha('#2E86C1', 0.06) }}
             >
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                 <Chip label="SIGNATURE" size="small" sx={{ bgcolor: alpha('#2E86C1', 0.15), fontWeight: 700, fontSize: '0.7rem' }} />

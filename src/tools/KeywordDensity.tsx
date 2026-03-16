@@ -147,7 +147,7 @@ export default function KeywordDensity() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -178,7 +178,7 @@ export default function KeywordDensity() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -271,7 +271,7 @@ export default function KeywordDensity() {
           elevation={0}
           sx={{
             p: { xs: 2, sm: 3 },
-            borderRadius: 3,
+            borderRadius: 18,
             bgcolor: theme.palette.surfaceContainerLow,
             transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
             '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -398,7 +398,7 @@ export default function KeywordDensity() {
                     <Box
                       sx={{
                         height: 8,
-                        borderRadius: 4,
+                        borderRadius: 18,
                         bgcolor: alpha(theme.palette.primary.main, 0.1),
                         overflow: 'hidden'
                       }}
@@ -407,7 +407,7 @@ export default function KeywordDensity() {
                         sx={{
                           height: '100%',
                           width: `${(item.count / maxCount) * 100}%`,
-                          borderRadius: 4,
+                          borderRadius: 18,
                           bgcolor: theme.palette.primary.main,
                           transition: 'width 0.3s ease'
                         }}

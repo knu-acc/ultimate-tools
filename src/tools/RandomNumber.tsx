@@ -117,7 +117,7 @@ export default function RandomNumber() {
             fullWidth
             startIcon={<Casino />}
             onClick={generate}
-            sx={{ borderRadius: 3, py: 1.2, textTransform: 'none', fontWeight: 600 }}
+            sx={{ borderRadius: 18, py: 1.2, textTransform: 'none', fontWeight: 600 }}
           >
             {isEn ? 'Generate' : 'Генерировать'}
           </Button>
@@ -130,7 +130,7 @@ export default function RandomNumber() {
                 elevation={0}
                 sx={{
                   p: { xs: 2, sm: 3 },
-                  borderRadius: 3,
+                  borderRadius: 18,
                   bgcolor: theme.palette.surfaceContainerLow,
                   textAlign: 'center',
                   mb: 2,
@@ -161,7 +161,7 @@ export default function RandomNumber() {
               {results.length > 1 && (
                 <Paper
                   elevation={0}
-                  sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
+                  sx={{ p: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow }}
                 >
                   <Grid container spacing={1}>
                     <Grid size={4}>
@@ -189,7 +189,7 @@ export default function RandomNumber() {
           ) : (
             <Paper
               elevation={0}
-              sx={{ p: 4, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
+              sx={{ p: 4, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
             >
               <Casino sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">

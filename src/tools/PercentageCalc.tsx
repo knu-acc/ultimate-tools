@@ -95,7 +95,7 @@ export default function PercentageCalc() {
         p: 2.5,
         mt: 2,
         textAlign: 'center',
-        borderRadius: 3,
+        borderRadius: 18,
         background: theme.palette.surfaceContainerLow
       }}
     >
@@ -287,7 +287,7 @@ export default function PercentageCalc() {
                   sx={{
                     p: 2.5,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: alpha(theme.palette.success.main, 0.06)
                   }}
                 >
@@ -308,7 +308,7 @@ export default function PercentageCalc() {
                   sx={{
                     p: 2.5,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: alpha(theme.palette.error.main, 0.06)
                   }}
                 >

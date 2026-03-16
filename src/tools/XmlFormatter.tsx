@@ -267,7 +267,7 @@ export default function XmlFormatter() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -285,7 +285,7 @@ export default function XmlFormatter() {
               fontSize: '0.85rem',
               lineHeight: 1.6
             },
-            '& .MuiOutlinedInput-root': { borderRadius: 2 }
+            '& .MuiOutlinedInput-root': { borderRadius: 10 }
           }}
         />
 
@@ -314,7 +314,7 @@ export default function XmlFormatter() {
             startIcon={<FormatIndentIncreaseIcon />}
             onClick={handleFormat}
             disabled={!input}
-            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10 }}
           >
             {isEn ? 'Format' : 'Форматировать'}
           </Button>
@@ -323,7 +323,7 @@ export default function XmlFormatter() {
             startIcon={<CompressIcon />}
             onClick={handleMinify}
             disabled={!input}
-            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10 }}
           >
             {isEn ? 'Minify' : 'Минифицировать'}
           </Button>
@@ -333,7 +333,7 @@ export default function XmlFormatter() {
             startIcon={<DeleteOutlineIcon />}
             onClick={clear}
             color="inherit"
-            sx={{ textTransform: 'none', borderRadius: 2 }}
+            sx={{ textTransform: 'none', borderRadius: 10 }}
           >
             {isEn ? 'Clear' : 'Очистить'}
           </Button>
@@ -341,7 +341,7 @@ export default function XmlFormatter() {
 
         {/* Error */}
         {error && (
-          <Alert severity="error" sx={{ mb: 2, borderRadius: 2 }}>
+          <Alert severity="error" sx={{ mb: 2, borderRadius: 10 }}>
             <Typography variant="body2" sx={{ fontWeight: 600 }}>
               {error}
             </Typography>
@@ -372,7 +372,7 @@ export default function XmlFormatter() {
                   fontSize: '0.85rem',
                   lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 }
+                '& .MuiOutlinedInput-root': { borderRadius: 10 }
               }}
             />
 

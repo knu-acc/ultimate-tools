@@ -112,7 +112,7 @@ export default function TypingSpeed() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           mb: 2,
           cursor: 'text',
@@ -133,7 +133,7 @@ export default function TypingSpeed() {
               bg = alpha(theme.palette.primary.main, 0.2);
             }
             return (
-              <span key={i} style={{ color, backgroundColor: bg, borderRadius: 2, padding: '1px 0' }}>
+              <span key={i} style={{ color, backgroundColor: bg, borderRadius: 10, padding: '1px 0' }}>
                 {char}
               </span>
             );
@@ -142,32 +142,32 @@ export default function TypingSpeed() {
       </Paper>
 
       {/* Progress bar */}
-      <Box sx={{ height: 4, borderRadius: 2, bgcolor: alpha(theme.palette.primary.main, 0.1), mb: 2, overflow: 'hidden' }}>
-        <Box sx={{ height: '100%', width: `${progress}%`, bgcolor: theme.palette.primary.main, transition: 'width 0.1s', borderRadius: 2 }} />
+      <Box sx={{ height: 4, borderRadius: 10, bgcolor: alpha(theme.palette.primary.main, 0.1), mb: 2, overflow: 'hidden' }}>
+        <Box sx={{ height: '100%', width: `${progress}%`, bgcolor: theme.palette.primary.main, transition: 'width 0.1s', borderRadius: 10 }} />
       </Box>
 
       {/* Stats */}
       <Grid container spacing={1.5} sx={{ mb: 2 }}>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <Typography variant="h4" fontWeight={700} color="primary">{wpm}</Typography>
             <Typography variant="caption" color="text.secondary">{isEn ? 'Words/min (WPM)' : 'Слов/мин (WPM)'}</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.success.main, 0.06), textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.success.main, 0.1) } }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 18, bgcolor: alpha(theme.palette.success.main, 0.06), textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.success.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.success.main }}>{accuracy}%</Typography>
             <Typography variant="caption" color="text.secondary">{isEn ? 'Accuracy' : 'Точность'}</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.warning.main, 0.06), textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.warning.main, 0.1) } }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 18, bgcolor: alpha(theme.palette.warning.main, 0.06), textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.warning.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.warning.main }}>{cpm}</Typography>
             <Typography variant="caption" color="text.secondary">{isEn ? 'Chars/min (CPM)' : 'Симв/мин (CPM)'}</Typography>
           </Paper>
         </Grid>
         <Grid size={{ xs: 6, sm: 3 }}>
-          <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: alpha(theme.palette.error.main, 0.06), textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.1) } }}>
+          <Paper elevation={0} sx={{ p: 2, borderRadius: 18, bgcolor: alpha(theme.palette.error.main, 0.06), textAlign: 'center', transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.error.main, 0.1) } }}>
             <Typography variant="h4" fontWeight={700} sx={{ color: theme.palette.error.main }}>{errors}</Typography>
             <Typography variant="caption" color="text.secondary">{isEn ? 'Errors' : 'Ошибки'}</Typography>
           </Paper>
@@ -175,7 +175,7 @@ export default function TypingSpeed() {
       </Grid>
 
       <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
-        <Button variant="outlined" startIcon={<Refresh />} onClick={reset} sx={{ borderRadius: 5 }}>
+        <Button variant="outlined" startIcon={<Refresh />} onClick={reset} sx={{ borderRadius: 18 }}>
           {isEn ? 'Restart (Esc)' : 'Заново (Esc)'}
         </Button>
       </Box>
@@ -187,7 +187,7 @@ export default function TypingSpeed() {
       )}
 
       {finished && (
-        <Paper elevation={0} sx={{ mt: 2, p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: alpha(theme.palette.success.main, 0.08), textAlign: 'center' }}>
+        <Paper elevation={0} sx={{ mt: 2, p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: alpha(theme.palette.success.main, 0.08), textAlign: 'center' }}>
           <Typography variant="h6" fontWeight={600} color="success.main">
             {isEn ? `Done! ${wpm} WPM with ${accuracy}% accuracy` : `Готово! ${wpm} WPM с точностью ${accuracy}%`}
           </Typography>

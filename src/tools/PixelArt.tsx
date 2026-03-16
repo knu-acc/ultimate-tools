@@ -245,7 +245,7 @@ export default function PixelArt() {
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
+            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
               {isEn ? 'Tools' : 'Инструменты'}
@@ -389,7 +389,7 @@ export default function PixelArt() {
             elevation={0}
             sx={{
               p: { xs: 1, sm: 2 },
-              borderRadius: 3,
+              borderRadius: 18,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -409,7 +409,7 @@ export default function PixelArt() {
                 height: 'auto',
                 cursor: tool === 'pick' ? 'crosshair' : 'pointer',
                 imageRendering: 'pixelated',
-                borderRadius: 8
+                borderRadius: 18
               }}
             />
           </Paper>

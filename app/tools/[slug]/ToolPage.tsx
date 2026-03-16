@@ -4,7 +4,9 @@ import React, { useEffect } from 'react';
 import {
   Container, Typography, Box, Grid, Breadcrumbs, Paper, Chip, alpha, useTheme, Button,
   Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListItemIcon, ListItemText,
+  CircularProgress,
 } from '@mui/material';
+import { accordionClasses } from '@mui/material/Accordion';
 import { Home, NavigateNext, Construction, ExpandMore, CheckCircleOutline } from '@mui/icons-material';
 import DynamicIcon from '@/src/components/DynamicIcon';
 import Link from 'next/link';
@@ -13,168 +15,174 @@ import ToolCard from '@/src/components/ToolCard';
 import { useRecentTools } from '@/src/hooks/useRecentTools';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
-// Import implemented tools
-import PasswordGeneratorTool from '@/src/tools/PasswordGenerator';
-import JsonFormatterTool from '@/src/tools/JsonFormatter';
-import WordCounterTool from '@/src/tools/WordCounter';
-import CaseConverterTool from '@/src/tools/CaseConverter';
-import Base64EncoderTool from '@/src/tools/Base64Encoder';
-import ColorConverterTool from '@/src/tools/ColorConverter';
-import UuidGeneratorTool from '@/src/tools/UuidGenerator';
-import PercentageCalcTool from '@/src/tools/PercentageCalc';
-import DateDifferenceTool from '@/src/tools/DateDifference';
-import RegexTesterTool from '@/src/tools/RegexTester';
-import PasswordStrengthTool from '@/src/tools/PasswordStrength';
-import NumberSystemTool from '@/src/tools/NumberSystem';
-import TimerTool from '@/src/tools/Timer';
-import ScientificCalcTool from '@/src/tools/ScientificCalc';
-import ImageCompressorTool from '@/src/tools/ImageCompressor';
-import TemperatureConverterTool from '@/src/tools/TemperatureConverter';
-import LengthConverterTool from '@/src/tools/LengthConverter';
-import WeightConverterTool from '@/src/tools/WeightConverter';
-import SpeedConverterTool from '@/src/tools/SpeedConverter';
-import BmiCalculatorTool from '@/src/tools/BmiCalculator';
-import LoremGeneratorTool from '@/src/tools/LoremGenerator';
-import MortgageCalcTool from '@/src/tools/MortgageCalc';
-import TipCalculatorTool from '@/src/tools/TipCalculator';
-import HashGeneratorTool from '@/src/tools/HashGenerator';
-import UrlEncoderTool from '@/src/tools/UrlEncoder';
-import MarkdownPreviewTool from '@/src/tools/MarkdownPreview';
-import DiscountCalcTool from '@/src/tools/DiscountCalc';
-import TextDiffTool from '@/src/tools/TextDiff';
-import RandomNumberTool from '@/src/tools/RandomNumber';
-import CoinFlipTool from '@/src/tools/CoinFlip';
-import DiceRollerTool from '@/src/tools/DiceRoller';
-import ColorPaletteTool from '@/src/tools/ColorPalette';
-import GradientGeneratorTool from '@/src/tools/GradientGenerator';
-import HtmlEncoderTool from '@/src/tools/HtmlEncoder';
-import JwtDecoderTool from '@/src/tools/JwtDecoder';
-import MetaTagGeneratorTool from '@/src/tools/MetaTagGenerator';
-import PomodoroTimerTool from '@/src/tools/PomodoroTimer';
-import TransliterationTool from '@/src/tools/Transliteration';
-import RemoveDuplicatesTool from '@/src/tools/RemoveDuplicates';
-import AgeCalculatorTool from '@/src/tools/AgeCalculator';
-import UnixTimestampTool from '@/src/tools/UnixTimestamp';
-import CssMinifierTool from '@/src/tools/CssMinifier';
-import TextReverseTool from '@/src/tools/TextReverse';
-import RomanNumeralsTool from '@/src/tools/RomanNumerals';
-import TextSortTool from '@/src/tools/TextSort';
-import SlugGeneratorTool from '@/src/tools/SlugGenerator';
-import CalorieCalcTool from '@/src/tools/CalorieCalc';
-import MorseCodeTool from '@/src/tools/MorseCode';
-import TypingSpeedTool from '@/src/tools/TypingSpeed';
-import ContrastCheckerTool from '@/src/tools/ContrastChecker';
-import SleepCalcTool from '@/src/tools/SleepCalc';
-import WaterIntakeTool from '@/src/tools/WaterIntake';
-import ReadingTimeTool from '@/src/tools/ReadingTime';
-import NotesTool from '@/src/tools/Notes';
-import EmailValidatorTool from '@/src/tools/EmailValidator';
-import PhoneValidatorTool from '@/src/tools/PhoneValidator';
-import TodoListTool from '@/src/tools/TodoList';
-import TextToSpeechTool from '@/src/tools/TextToSpeech';
-import TextReplaceTool from '@/src/tools/TextReplace';
-import StringExtractorTool from '@/src/tools/StringExtractor';
-import VolumeConverterTool from '@/src/tools/VolumeConverter';
-import AreaConverterTool from '@/src/tools/AreaConverter';
-import DataConverterTool from '@/src/tools/DataConverter';
-import BinaryTextTool from '@/src/tools/BinaryText';
-import MetronomeTool from '@/src/tools/Metronome';
-import ToneGeneratorTool from '@/src/tools/ToneGenerator';
-import CookingConverterTool from '@/src/tools/CookingConverter';
-import ShoeSizeTool from '@/src/tools/ShoeSize';
-import WheelSpinnerTool from '@/src/tools/WheelSpinner';
-import RandomPickerTool from '@/src/tools/RandomPicker';
-import PowerConverterTool from '@/src/tools/PowerConverter';
-import FuelConverterTool from '@/src/tools/FuelConverter';
-import SalaryCalcTool from '@/src/tools/SalaryCalc';
-import FaviconGeneratorTool from '@/src/tools/FaviconGenerator';
-import HttpStatusTool from '@/src/tools/HttpStatus';
-import DecisionMakerTool from '@/src/tools/DecisionMaker';
-import CountdownTool from '@/src/tools/Countdown';
-import EnergyConverterTool from '@/src/tools/EnergyConverter';
-import PressureConverterTool from '@/src/tools/PressureConverter';
-import AngleConverterTool from '@/src/tools/AngleConverter';
-import LoanCalcTool from '@/src/tools/LoanCalc';
-import TaxCalcTool from '@/src/tools/TaxCalc';
-import CompoundInterestTool from '@/src/tools/CompoundInterest';
-import ImageResizerTool from '@/src/tools/ImageResizer';
-import ImageCropTool from '@/src/tools/ImageCrop';
-import ImageRotateTool from '@/src/tools/ImageRotate';
-import JsBeautifierTool from '@/src/tools/JsBeautifier';
-import HtmlFormatterTool from '@/src/tools/HtmlFormatter';
-import CronGeneratorTool from '@/src/tools/CronGenerator';
-import EquationSolverTool from '@/src/tools/EquationSolver';
-import StatisticsCalcTool from '@/src/tools/StatisticsCalc';
-import GcdLcmTool from '@/src/tools/GcdLcm';
-import IdealWeightTool from '@/src/tools/IdealWeight';
-import SqlFormatterTool from '@/src/tools/SqlFormatter';
-import RandomColorTool from '@/src/tools/RandomColor';
-import UrlValidatorTool from '@/src/tools/UrlValidator';
-import ColorWheelTool from '@/src/tools/ColorWheel';
-import HeartRateZoneTool from '@/src/tools/HeartRateZone';
-import BodyFatTool from '@/src/tools/BodyFat';
-import PregnancyCalcTool from '@/src/tools/PregnancyCalc';
-import BudgetPlannerTool from '@/src/tools/BudgetPlanner';
-import InvestmentCalcTool from '@/src/tools/InvestmentCalc';
-import YamlJsonTool from '@/src/tools/YamlJson';
-import XmlFormatterTool from '@/src/tools/XmlFormatter';
-import DiffCheckerTool from '@/src/tools/DiffChecker';
-import FlexboxPlaygroundTool from '@/src/tools/FlexboxPlayground';
-import GridPlaygroundTool from '@/src/tools/GridPlayground';
-import MatrixCalcTool from '@/src/tools/MatrixCalc';
-import FactorialCalcTool from '@/src/tools/FactorialCalc';
-import FractionCalcTool from '@/src/tools/FractionCalc';
-import PrimeCheckerTool from '@/src/tools/PrimeChecker';
-import ProportionCalcTool from '@/src/tools/ProportionCalc';
-import ColorBlenderTool from '@/src/tools/ColorBlender';
-import OgPreviewTool from '@/src/tools/OgPreview';
-import RobotsGeneratorTool from '@/src/tools/RobotsGenerator';
-import SitemapGeneratorTool from '@/src/tools/SitemapGenerator';
-import KeywordDensityTool from '@/src/tools/KeywordDensity';
-import IpCalculatorTool from '@/src/tools/IpCalculator';
-import SubnetCalcTool from '@/src/tools/SubnetCalc';
-import PortListTool from '@/src/tools/PortList';
-import UserAgentParserTool from '@/src/tools/UserAgentParser';
-import ClothingSizeTool from '@/src/tools/ClothingSize';
-import TeamGeneratorTool from '@/src/tools/TeamGenerator';
-import RandomNameTool from '@/src/tools/RandomName';
-import AvatarGeneratorTool from '@/src/tools/AvatarGenerator';
-import UnicodeLookupTool from '@/src/tools/UnicodeLookup';
-import BarcodeGenTool from '@/src/tools/BarcodeGen';
-import ImageFiltersTool from '@/src/tools/ImageFilters';
-import NoiseGeneratorTool from '@/src/tools/NoiseGenerator';
-import VideoAspectTool from '@/src/tools/VideoAspect';
-import ScreenResolutionTool from '@/src/tools/ScreenResolution';
-import PaperSizeTool from '@/src/tools/PaperSize';
-import HeadingCheckerTool from '@/src/tools/HeadingChecker';
-import IpValidatorTool from '@/src/tools/IpValidator';
-import MimeTypesTool from '@/src/tools/MimeTypes';
-import CoordinateConverterTool from '@/src/tools/CoordinateConverter';
-import WorldClockTool from '@/src/tools/WorldClock';
-import TimezoneConverterTool from '@/src/tools/TimezoneConverter';
-import CalendarTool from '@/src/tools/Calendar';
-import WeekNumberTool from '@/src/tools/WeekNumber';
-import InflationCalcTool from '@/src/tools/InflationCalc';
-import RetirementCalcTool from '@/src/tools/RetirementCalc';
-import DepositCalcTool from '@/src/tools/DepositCalc';
-import JsonDataGenTool from '@/src/tools/JsonDataGen';
-import ChecksumCalcTool from '@/src/tools/ChecksumCalc';
-import ImageToBase64Tool from '@/src/tools/ImageToBase64';
-import PixelArtTool from '@/src/tools/PixelArt';
-import SvgEditorTool from '@/src/tools/SvgEditor';
-import ImageColorsTool from '@/src/tools/ImageColors';
-import ColorPickerTool from '@/src/tools/ColorPicker';
-import TailwindColorsTool from '@/src/tools/TailwindColors';
-import MaterialColorsTool from '@/src/tools/MaterialColors';
-import MacLookupTool from '@/src/tools/MacLookup';
-import GithubReadmeTool from '@/src/tools/GithubReadme';
-import GraphPlotterTool from '@/src/tools/GraphPlotter';
-import MockdataGeneratorTool from '@/src/tools/MockdataGenerator';
-import BgRemoverTool from '@/src/tools/BgRemover';
-import MemeGeneratorTool from '@/src/tools/MemeGenerator';
-import ScreenshotMockupTool from '@/src/tools/ScreenshotMockup';
-import QrCodeGenTool from '@/src/tools/QrCodeGen';
-import TextFormatterTool from '@/src/tools/TextFormatter';
+import dynamic from 'next/dynamic';
+
+// One-line loading spinner shared by all lazy tool chunks
+const ToolLoader = () => <CircularProgress size={32} sx={{ display: 'block', mx: 'auto', mt: 8 }} />;
+const dyn = (fn: () => Promise<{ default: React.ComponentType }>) => dynamic(fn, { loading: ToolLoader });
+
+// Lazy-loaded tool components — only the active tool's JS is fetched per visit
+const PasswordGeneratorTool = dyn(() => import('@/src/tools/PasswordGenerator'));
+const JsonFormatterTool = dyn(() => import('@/src/tools/JsonFormatter'));
+const WordCounterTool = dyn(() => import('@/src/tools/WordCounter'));
+const CaseConverterTool = dyn(() => import('@/src/tools/CaseConverter'));
+const Base64EncoderTool = dyn(() => import('@/src/tools/Base64Encoder'));
+const ColorConverterTool = dyn(() => import('@/src/tools/ColorConverter'));
+const UuidGeneratorTool = dyn(() => import('@/src/tools/UuidGenerator'));
+const PercentageCalcTool = dyn(() => import('@/src/tools/PercentageCalc'));
+const DateDifferenceTool = dyn(() => import('@/src/tools/DateDifference'));
+const RegexTesterTool = dyn(() => import('@/src/tools/RegexTester'));
+const PasswordStrengthTool = dyn(() => import('@/src/tools/PasswordStrength'));
+const NumberSystemTool = dyn(() => import('@/src/tools/NumberSystem'));
+const TimerTool = dyn(() => import('@/src/tools/Timer'));
+const ScientificCalcTool = dyn(() => import('@/src/tools/ScientificCalc'));
+const ImageCompressorTool = dyn(() => import('@/src/tools/ImageCompressor'));
+const TemperatureConverterTool = dyn(() => import('@/src/tools/TemperatureConverter'));
+const LengthConverterTool = dyn(() => import('@/src/tools/LengthConverter'));
+const WeightConverterTool = dyn(() => import('@/src/tools/WeightConverter'));
+const SpeedConverterTool = dyn(() => import('@/src/tools/SpeedConverter'));
+const BmiCalculatorTool = dyn(() => import('@/src/tools/BmiCalculator'));
+const LoremGeneratorTool = dyn(() => import('@/src/tools/LoremGenerator'));
+const MortgageCalcTool = dyn(() => import('@/src/tools/MortgageCalc'));
+const TipCalculatorTool = dyn(() => import('@/src/tools/TipCalculator'));
+const HashGeneratorTool = dyn(() => import('@/src/tools/HashGenerator'));
+const UrlEncoderTool = dyn(() => import('@/src/tools/UrlEncoder'));
+const MarkdownPreviewTool = dyn(() => import('@/src/tools/MarkdownPreview'));
+const DiscountCalcTool = dyn(() => import('@/src/tools/DiscountCalc'));
+const TextDiffTool = dyn(() => import('@/src/tools/TextDiff'));
+const RandomNumberTool = dyn(() => import('@/src/tools/RandomNumber'));
+const CoinFlipTool = dyn(() => import('@/src/tools/CoinFlip'));
+const DiceRollerTool = dyn(() => import('@/src/tools/DiceRoller'));
+const ColorPaletteTool = dyn(() => import('@/src/tools/ColorPalette'));
+const GradientGeneratorTool = dyn(() => import('@/src/tools/GradientGenerator'));
+const HtmlEncoderTool = dyn(() => import('@/src/tools/HtmlEncoder'));
+const JwtDecoderTool = dyn(() => import('@/src/tools/JwtDecoder'));
+const MetaTagGeneratorTool = dyn(() => import('@/src/tools/MetaTagGenerator'));
+const PomodoroTimerTool = dyn(() => import('@/src/tools/PomodoroTimer'));
+const TransliterationTool = dyn(() => import('@/src/tools/Transliteration'));
+const RemoveDuplicatesTool = dyn(() => import('@/src/tools/RemoveDuplicates'));
+const AgeCalculatorTool = dyn(() => import('@/src/tools/AgeCalculator'));
+const UnixTimestampTool = dyn(() => import('@/src/tools/UnixTimestamp'));
+const CssMinifierTool = dyn(() => import('@/src/tools/CssMinifier'));
+const TextReverseTool = dyn(() => import('@/src/tools/TextReverse'));
+const RomanNumeralsTool = dyn(() => import('@/src/tools/RomanNumerals'));
+const TextSortTool = dyn(() => import('@/src/tools/TextSort'));
+const SlugGeneratorTool = dyn(() => import('@/src/tools/SlugGenerator'));
+const CalorieCalcTool = dyn(() => import('@/src/tools/CalorieCalc'));
+const MorseCodeTool = dyn(() => import('@/src/tools/MorseCode'));
+const TypingSpeedTool = dyn(() => import('@/src/tools/TypingSpeed'));
+const ContrastCheckerTool = dyn(() => import('@/src/tools/ContrastChecker'));
+const SleepCalcTool = dyn(() => import('@/src/tools/SleepCalc'));
+const WaterIntakeTool = dyn(() => import('@/src/tools/WaterIntake'));
+const ReadingTimeTool = dyn(() => import('@/src/tools/ReadingTime'));
+const NotesTool = dyn(() => import('@/src/tools/Notes'));
+const EmailValidatorTool = dyn(() => import('@/src/tools/EmailValidator'));
+const PhoneValidatorTool = dyn(() => import('@/src/tools/PhoneValidator'));
+const TodoListTool = dyn(() => import('@/src/tools/TodoList'));
+const TextToSpeechTool = dyn(() => import('@/src/tools/TextToSpeech'));
+const TextReplaceTool = dyn(() => import('@/src/tools/TextReplace'));
+const StringExtractorTool = dyn(() => import('@/src/tools/StringExtractor'));
+const VolumeConverterTool = dyn(() => import('@/src/tools/VolumeConverter'));
+const AreaConverterTool = dyn(() => import('@/src/tools/AreaConverter'));
+const DataConverterTool = dyn(() => import('@/src/tools/DataConverter'));
+const BinaryTextTool = dyn(() => import('@/src/tools/BinaryText'));
+const MetronomeTool = dyn(() => import('@/src/tools/Metronome'));
+const ToneGeneratorTool = dyn(() => import('@/src/tools/ToneGenerator'));
+const CookingConverterTool = dyn(() => import('@/src/tools/CookingConverter'));
+const ShoeSizeTool = dyn(() => import('@/src/tools/ShoeSize'));
+const WheelSpinnerTool = dyn(() => import('@/src/tools/WheelSpinner'));
+const RandomPickerTool = dyn(() => import('@/src/tools/RandomPicker'));
+const PowerConverterTool = dyn(() => import('@/src/tools/PowerConverter'));
+const FuelConverterTool = dyn(() => import('@/src/tools/FuelConverter'));
+const SalaryCalcTool = dyn(() => import('@/src/tools/SalaryCalc'));
+const FaviconGeneratorTool = dyn(() => import('@/src/tools/FaviconGenerator'));
+const HttpStatusTool = dyn(() => import('@/src/tools/HttpStatus'));
+const DecisionMakerTool = dyn(() => import('@/src/tools/DecisionMaker'));
+const CountdownTool = dyn(() => import('@/src/tools/Countdown'));
+const EnergyConverterTool = dyn(() => import('@/src/tools/EnergyConverter'));
+const PressureConverterTool = dyn(() => import('@/src/tools/PressureConverter'));
+const AngleConverterTool = dyn(() => import('@/src/tools/AngleConverter'));
+const LoanCalcTool = dyn(() => import('@/src/tools/LoanCalc'));
+const TaxCalcTool = dyn(() => import('@/src/tools/TaxCalc'));
+const CompoundInterestTool = dyn(() => import('@/src/tools/CompoundInterest'));
+const ImageResizerTool = dyn(() => import('@/src/tools/ImageResizer'));
+const ImageCropTool = dyn(() => import('@/src/tools/ImageCrop'));
+const ImageRotateTool = dyn(() => import('@/src/tools/ImageRotate'));
+const JsBeautifierTool = dyn(() => import('@/src/tools/JsBeautifier'));
+const HtmlFormatterTool = dyn(() => import('@/src/tools/HtmlFormatter'));
+const CronGeneratorTool = dyn(() => import('@/src/tools/CronGenerator'));
+const EquationSolverTool = dyn(() => import('@/src/tools/EquationSolver'));
+const StatisticsCalcTool = dyn(() => import('@/src/tools/StatisticsCalc'));
+const GcdLcmTool = dyn(() => import('@/src/tools/GcdLcm'));
+const IdealWeightTool = dyn(() => import('@/src/tools/IdealWeight'));
+const SqlFormatterTool = dyn(() => import('@/src/tools/SqlFormatter'));
+const RandomColorTool = dyn(() => import('@/src/tools/RandomColor'));
+const UrlValidatorTool = dyn(() => import('@/src/tools/UrlValidator'));
+const ColorWheelTool = dyn(() => import('@/src/tools/ColorWheel'));
+const HeartRateZoneTool = dyn(() => import('@/src/tools/HeartRateZone'));
+const BodyFatTool = dyn(() => import('@/src/tools/BodyFat'));
+const PregnancyCalcTool = dyn(() => import('@/src/tools/PregnancyCalc'));
+const BudgetPlannerTool = dyn(() => import('@/src/tools/BudgetPlanner'));
+const InvestmentCalcTool = dyn(() => import('@/src/tools/InvestmentCalc'));
+const YamlJsonTool = dyn(() => import('@/src/tools/YamlJson'));
+const XmlFormatterTool = dyn(() => import('@/src/tools/XmlFormatter'));
+const DiffCheckerTool = dyn(() => import('@/src/tools/DiffChecker'));
+const FlexboxPlaygroundTool = dyn(() => import('@/src/tools/FlexboxPlayground'));
+const GridPlaygroundTool = dyn(() => import('@/src/tools/GridPlayground'));
+const MatrixCalcTool = dyn(() => import('@/src/tools/MatrixCalc'));
+const FactorialCalcTool = dyn(() => import('@/src/tools/FactorialCalc'));
+const FractionCalcTool = dyn(() => import('@/src/tools/FractionCalc'));
+const PrimeCheckerTool = dyn(() => import('@/src/tools/PrimeChecker'));
+const ProportionCalcTool = dyn(() => import('@/src/tools/ProportionCalc'));
+const ColorBlenderTool = dyn(() => import('@/src/tools/ColorBlender'));
+const OgPreviewTool = dyn(() => import('@/src/tools/OgPreview'));
+const RobotsGeneratorTool = dyn(() => import('@/src/tools/RobotsGenerator'));
+const SitemapGeneratorTool = dyn(() => import('@/src/tools/SitemapGenerator'));
+const KeywordDensityTool = dyn(() => import('@/src/tools/KeywordDensity'));
+const IpCalculatorTool = dyn(() => import('@/src/tools/IpCalculator'));
+const SubnetCalcTool = dyn(() => import('@/src/tools/SubnetCalc'));
+const PortListTool = dyn(() => import('@/src/tools/PortList'));
+const UserAgentParserTool = dyn(() => import('@/src/tools/UserAgentParser'));
+const ClothingSizeTool = dyn(() => import('@/src/tools/ClothingSize'));
+const TeamGeneratorTool = dyn(() => import('@/src/tools/TeamGenerator'));
+const RandomNameTool = dyn(() => import('@/src/tools/RandomName'));
+const AvatarGeneratorTool = dyn(() => import('@/src/tools/AvatarGenerator'));
+const UnicodeLookupTool = dyn(() => import('@/src/tools/UnicodeLookup'));
+const BarcodeGenTool = dyn(() => import('@/src/tools/BarcodeGen'));
+const ImageFiltersTool = dyn(() => import('@/src/tools/ImageFilters'));
+const NoiseGeneratorTool = dyn(() => import('@/src/tools/NoiseGenerator'));
+const VideoAspectTool = dyn(() => import('@/src/tools/VideoAspect'));
+const ScreenResolutionTool = dyn(() => import('@/src/tools/ScreenResolution'));
+const PaperSizeTool = dyn(() => import('@/src/tools/PaperSize'));
+const HeadingCheckerTool = dyn(() => import('@/src/tools/HeadingChecker'));
+const IpValidatorTool = dyn(() => import('@/src/tools/IpValidator'));
+const MimeTypesTool = dyn(() => import('@/src/tools/MimeTypes'));
+const CoordinateConverterTool = dyn(() => import('@/src/tools/CoordinateConverter'));
+const WorldClockTool = dyn(() => import('@/src/tools/WorldClock'));
+const TimezoneConverterTool = dyn(() => import('@/src/tools/TimezoneConverter'));
+const CalendarTool = dyn(() => import('@/src/tools/Calendar'));
+const WeekNumberTool = dyn(() => import('@/src/tools/WeekNumber'));
+const InflationCalcTool = dyn(() => import('@/src/tools/InflationCalc'));
+const RetirementCalcTool = dyn(() => import('@/src/tools/RetirementCalc'));
+const DepositCalcTool = dyn(() => import('@/src/tools/DepositCalc'));
+const JsonDataGenTool = dyn(() => import('@/src/tools/JsonDataGen'));
+const ChecksumCalcTool = dyn(() => import('@/src/tools/ChecksumCalc'));
+const ImageToBase64Tool = dyn(() => import('@/src/tools/ImageToBase64'));
+const PixelArtTool = dyn(() => import('@/src/tools/PixelArt'));
+const SvgEditorTool = dyn(() => import('@/src/tools/SvgEditor'));
+const ImageColorsTool = dyn(() => import('@/src/tools/ImageColors'));
+const ColorPickerTool = dyn(() => import('@/src/tools/ColorPicker'));
+const TailwindColorsTool = dyn(() => import('@/src/tools/TailwindColors'));
+const MaterialColorsTool = dyn(() => import('@/src/tools/MaterialColors'));
+const MacLookupTool = dyn(() => import('@/src/tools/MacLookup'));
+const GithubReadmeTool = dyn(() => import('@/src/tools/GithubReadme'));
+const GraphPlotterTool = dyn(() => import('@/src/tools/GraphPlotter'));
+const MockdataGeneratorTool = dyn(() => import('@/src/tools/MockdataGenerator'));
+const BgRemoverTool = dyn(() => import('@/src/tools/BgRemover'));
+const MemeGeneratorTool = dyn(() => import('@/src/tools/MemeGenerator'));
+const ScreenshotMockupTool = dyn(() => import('@/src/tools/ScreenshotMockup'));
+const QrCodeGenTool = dyn(() => import('@/src/tools/QrCodeGen'));
+const TextFormatterTool = dyn(() => import('@/src/tools/TextFormatter'));
 
 const toolComponents: Record<string, React.ComponentType> = {
   'password-generator': PasswordGeneratorTool,
@@ -1150,7 +1158,7 @@ export default function ToolPage({ slug }: { slug: string }) {
                   sx={{
                     width: 48,
                     height: 48,
-                    borderRadius: theme.shape?.medium ?? 12,
+                    borderRadius: 18,
                     bgcolor: alpha(group?.color ?? theme.palette.primary.main, 0.12),
                     display: 'flex',
                     alignItems: 'center',
@@ -1182,7 +1190,7 @@ export default function ToolPage({ slug }: { slug: string }) {
               elevation={1}
               sx={{
                 p: { xs: 2, md: 3 },
-                borderRadius: theme.shape?.medium ?? 12,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLowest,
                 minHeight: 300,
               }}
@@ -1205,7 +1213,7 @@ export default function ToolPage({ slug }: { slug: string }) {
             {/* SEO Content Block */}
             <Paper
               elevation={0}
-              sx={{ mt: 3, p: { xs: 2, md: 3 }, borderRadius: theme.shape?.medium ?? 12, bgcolor: theme.palette.surfaceContainerLow }}
+              sx={{ mt: 3, p: { xs: 2, md: 3 }, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow }}
             >
               {/* What is */}
               <Typography variant="h5" component="h2" fontWeight={600} gutterBottom>
@@ -1272,7 +1280,7 @@ export default function ToolPage({ slug }: { slug: string }) {
                     bgcolor: theme.palette.surfaceContainerLow,
                     mb: 1,
                     border: `1px solid ${alpha(theme.palette.divider, 0.25)}`,
-                    '&.Mui-expanded': {
+                    [`&.${accordionClasses.expanded}`]: {
                       borderColor: alpha(theme.palette.primary.main, 0.3),
                     },
                   }}

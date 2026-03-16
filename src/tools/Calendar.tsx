@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -97,15 +97,24 @@ export default function Calendar() {
   const MONTHS = isEn ? MONTHS_EN : MONTHS_RU;
   const MONTHS_SHORT = isEn ? MONTHS_SHORT_EN : MONTHS_SHORT_RU;
   const holidayName = (h: Holiday) => isEn ? h.nameEn : h.nameRu;
-  const today = new Date();
-  const [year, setYear] = useState(today.getFullYear());
-  const [month, setMonth] = useState(today.getMonth());
+  // Use stable initial values for SSR, then sync on mount to avoid hydration mismatch
+  const [today, setToday] = useState(() => new Date(2024, 0, 1));
+  const [year, setYear] = useState(2024);
+  const [month, setMonth] = useState(0);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [yearView, setYearView] = useState(false);
 
+  useEffect(() => {
+    const now = new Date();
+    setToday(now);
+    setYear(now.getFullYear());
+    setMonth(now.getMonth());
+  }, []);
+
   const goToToday = () => {
-    setYear(today.getFullYear());
-    setMonth(today.getMonth());
+    const now = new Date();
+    setYear(now.getFullYear());
+    setMonth(now.getMonth());
     setSelectedDate(null);
     setYearView(false);
   };
@@ -257,7 +266,7 @@ export default function Calendar() {
       <Paper
         elevation={0}
         sx={{
-          borderRadius: 3,
+          borderRadius: 18,
           p: 2,
           mt: 2,
           backgroundColor: theme.palette.surfaceContainerLow
@@ -288,7 +297,7 @@ export default function Calendar() {
       <Paper
         elevation={0}
         sx={{
-          borderRadius: 3,
+          borderRadius: 18,
           p: { xs: 2, sm: 3 }
         }}
       >
@@ -335,7 +344,7 @@ export default function Calendar() {
             <IconButton
               onClick={() => setYearView(!yearView)}
               sx={{
-                borderRadius: 2
+                borderRadius: 10
               }}
             >
               {yearView ? <CalendarViewMonthIcon /> : <GridViewIcon />}
@@ -369,7 +378,7 @@ export default function Calendar() {
                 <Paper
                   elevation={0}
                   sx={{
-                    borderRadius: 2,
+                    borderRadius: 10,
                     p: 1,
                     cursor: 'pointer',
                     backgroundColor: m === today.getMonth() && year === today.getFullYear()

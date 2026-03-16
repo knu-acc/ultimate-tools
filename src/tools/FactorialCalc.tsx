@@ -130,7 +130,7 @@ export default function FactorialCalc() {
       sx={{
         p: 2,
         mt: 2,
-        borderRadius: 3,
+        borderRadius: 18,
         background: alpha(theme.palette.info.main, 0.04)
       }}
     >
@@ -166,7 +166,7 @@ export default function FactorialCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -210,7 +210,7 @@ export default function FactorialCalc() {
                   p: 2.5,
                   mt: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: theme.palette.surfaceContainerLow,
                   position: 'relative'
                 }}
@@ -277,7 +277,7 @@ export default function FactorialCalc() {
                   p: 2.5,
                   mt: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: theme.palette.surfaceContainerLow,
                   position: 'relative'
                 }}
@@ -344,7 +344,7 @@ export default function FactorialCalc() {
                   p: 2.5,
                   mt: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: theme.palette.surfaceContainerLow,
                   position: 'relative'
                 }}
@@ -378,7 +378,7 @@ export default function FactorialCalc() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >

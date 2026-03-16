@@ -55,7 +55,7 @@ export default function DiceRoller() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
@@ -114,7 +114,7 @@ export default function DiceRoller() {
             startIcon={<Casino />}
             onClick={roll}
             disabled={rolling}
-            sx={{ borderRadius: 6, py: 1.2 }}
+            sx={{ borderRadius: 18, py: 1.2 }}
           >
             {rolling ? (isEn ? 'Rolling...' : 'Бросаю...') : (isEn ? 'Roll Dice' : 'Бросить кубики')}
           </Button>
@@ -131,7 +131,7 @@ export default function DiceRoller() {
                     sx={{
                       width: 64,
                       height: 64,
-                      borderRadius: 2,
+                      borderRadius: 10,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -156,7 +156,7 @@ export default function DiceRoller() {
                 elevation={0}
                 sx={{
                   p: 2,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   bgcolor: alpha(theme.palette.success.main, 0.08),
                   textAlign: 'center',
                   mb: 2
@@ -171,19 +171,19 @@ export default function DiceRoller() {
               {results.length > 1 && (
                 <Grid container spacing={1}>
                   <Grid size={4}>
-                    <Paper elevation={0} sx={{ p: 1.5, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>
+                    <Paper elevation={0} sx={{ p: 1.5, borderRadius: 10, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>
                       <Typography variant="caption" color="text.secondary">{isEn ? 'Min' : 'Мин'}</Typography>
                       <Typography variant="body1" fontWeight={600}>{Math.min(...results)}</Typography>
                     </Paper>
                   </Grid>
                   <Grid size={4}>
-                    <Paper elevation={0} sx={{ p: 1.5, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>
+                    <Paper elevation={0} sx={{ p: 1.5, borderRadius: 10, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>
                       <Typography variant="caption" color="text.secondary">{isEn ? 'Max' : 'Макс'}</Typography>
                       <Typography variant="body1" fontWeight={600}>{Math.max(...results)}</Typography>
                     </Paper>
                   </Grid>
                   <Grid size={4}>
-                    <Paper elevation={0} sx={{ p: 1.5, borderRadius: 2, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>
+                    <Paper elevation={0} sx={{ p: 1.5, borderRadius: 10, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>
                       <Typography variant="caption" color="text.secondary">{isEn ? 'Average' : 'Среднее'}</Typography>
                       <Typography variant="body1" fontWeight={600}>{(sum / results.length).toFixed(1)}</Typography>
                     </Paper>
@@ -194,7 +194,7 @@ export default function DiceRoller() {
           ) : (
             <Paper
               elevation={0}
-              sx={{ p: 4, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
+              sx={{ p: 4, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}
             >
               <Casino sx={{ fontSize: 48, color: theme.palette.text.secondary, mb: 1 }} />
               <Typography variant="body2" color="text.secondary">

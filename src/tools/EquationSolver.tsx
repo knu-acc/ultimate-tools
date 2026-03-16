@@ -155,7 +155,7 @@ export default function EquationSolver() {
       sx={{
         p: 2.5,
         mt: 2,
-        borderRadius: 3,
+        borderRadius: 18,
         background: alpha(theme.palette.info.main, 0.04)
       }}
     >
@@ -194,7 +194,7 @@ export default function EquationSolver() {
         p: 2.5,
         mt: 2,
         textAlign: 'center',
-        borderRadius: 3,
+        borderRadius: 18,
         background: theme.palette.surfaceContainerLow,
         position: 'relative'
       }}
@@ -215,7 +215,7 @@ export default function EquationSolver() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow,
           transition: 'background 0.2s ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -271,7 +271,7 @@ export default function EquationSolver() {
                 p: 2.5,
                 mt: 2,
                 textAlign: 'center',
-                borderRadius: 3,
+                borderRadius: 18,
                 background: alpha(theme.palette.error.main, 0.06)
               }}
             >
@@ -355,7 +355,7 @@ export default function EquationSolver() {
                 p: 2.5,
                 mt: 2,
                 textAlign: 'center',
-                borderRadius: 3,
+                borderRadius: 18,
                 background: alpha(theme.palette.error.main, 0.06)
               }}
             >

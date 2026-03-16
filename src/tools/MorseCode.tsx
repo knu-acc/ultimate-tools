@@ -123,7 +123,7 @@ export default function MorseCode() {
         sx={{
           mt: 2,
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }

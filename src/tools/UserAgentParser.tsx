@@ -242,7 +242,7 @@ export default function UserAgentParser() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -265,7 +265,7 @@ export default function UserAgentParser() {
             onClick={() =>
               setUserAgent(typeof navigator !== 'undefined' ? navigator.userAgent : '')
             }
-            sx={{ borderRadius: 2, textTransform: 'none' }}
+            sx={{ borderRadius: 10, textTransform: 'none' }}
           >
             {isEn ? 'My browser' : 'Мой браузер'}
           </Button>
@@ -273,7 +273,7 @@ export default function UserAgentParser() {
             variant="outlined"
             size="small"
             onClick={() => setUserAgent('')}
-            sx={{ borderRadius: 2, textTransform: 'none' }}
+            sx={{ borderRadius: 10, textTransform: 'none' }}
           >
             {isEn ? 'Clear' : 'Очистить'}
           </Button>
@@ -286,7 +286,7 @@ export default function UserAgentParser() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Typography variant="body2" sx={{ mb: 1.5, fontWeight: 600, color: 'text.secondary' }}>
@@ -301,7 +301,7 @@ export default function UserAgentParser() {
               variant="outlined"
               onClick={() => setUserAgent(item.ua)}
               sx={{
-                borderRadius: 2,
+                borderRadius: 10,
                 cursor: 'pointer',
                 '&:hover': {
                   backgroundColor: theme.palette.surfaceContainerHigh,
@@ -322,7 +322,7 @@ export default function UserAgentParser() {
                 elevation={0}
                 sx={{
                   p: 2.5,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
                     borderColor: theme.palette.primary.main,

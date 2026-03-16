@@ -138,7 +138,7 @@ export default function SitemapGenerator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -215,7 +215,7 @@ export default function SitemapGenerator() {
             startIcon={editingId !== null ? <EditIcon /> : <AddIcon />}
             onClick={addEntry}
             disabled={!loc.trim()}
-            sx={{ borderRadius: 4 }}
+            sx={{ borderRadius: 18 }}
           >
             {editingId !== null ? (isEn ? 'Save' : 'Сохранить') : (isEn ? 'Add' : 'Добавить')}
           </Button>
@@ -229,7 +229,7 @@ export default function SitemapGenerator() {
                 setChangefreq('weekly');
                 setPriority(0.5);
               }}
-              sx={{ borderRadius: 4 }}
+              sx={{ borderRadius: 18 }}
             >
               {isEn ? 'Cancel' : 'Отмена'}
             </Button>
@@ -243,7 +243,7 @@ export default function SitemapGenerator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -270,7 +270,7 @@ export default function SitemapGenerator() {
           startIcon={<AddIcon />}
           onClick={bulkAdd}
           disabled={!bulkText.trim()}
-          sx={{ borderRadius: 4 }}
+          sx={{ borderRadius: 18 }}
         >
           {isEn ? 'Add all' : 'Добавить все'}
         </Button>
@@ -283,7 +283,7 @@ export default function SitemapGenerator() {
           sx={{
             p: 3,
             mb: 2,
-            borderRadius: 3
+            borderRadius: 18
           }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -304,7 +304,7 @@ export default function SitemapGenerator() {
               sx={{
                 p: 1.5,
                 mb: 1,
-                borderRadius: 2,
+                borderRadius: 10,
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
@@ -352,7 +352,7 @@ export default function SitemapGenerator() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -376,7 +376,7 @@ export default function SitemapGenerator() {
           elevation={0}
           sx={{
             p: 2,
-            borderRadius: 2,
+            borderRadius: 10,
             bgcolor: theme.palette.surfaceContainerLow,
             maxHeight: 400,
             overflow: 'auto'

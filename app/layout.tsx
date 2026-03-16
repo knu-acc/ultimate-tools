@@ -14,6 +14,8 @@ const stats = getStats();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    // lang="ru" is the SSR default; the inline blocking script below overwrites it
+    // with the correct locale before React hydrates (suppressed hydration warning).
     <html lang="ru" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -54,6 +56,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               description: `Сайт с ${stats.totalTools}+ бесплатными онлайн-инструментами`,
               logo: { '@type': 'ImageObject', url: 'https://ulti-tools.com/favicon.ico' },
             }),
+          }}
+        />
+        {/* ── Blocking theme + locale detection ──
+             Runs synchronously BEFORE React hydrates to prevent:
+             1. Light→dark theme flash (FOUC)
+             2. Wrong lang attribute
+             Sets data-theme, CSS custom properties, and lang on <html> */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var d=document.documentElement,s=d.style;var m=localStorage.getItem('theme-mode');var dark=m==='dark'||(m!=='light'&&matchMedia('(prefers-color-scheme:dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');if(dark){s.setProperty('--ut-bg','#141218');s.setProperty('--ut-text','#E6E0E9');s.colorScheme='dark'}else{s.setProperty('--ut-bg','#FEF7FF');s.setProperty('--ut-text','#1D1B20');s.colorScheme='light'}var p=location.pathname.match(/^\\/(en|ru)/);if(p)d.lang=p[1]}catch(e){}})()`,
           }}
         />
       </head>

@@ -13,6 +13,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { toggleButtonClasses } from '@mui/material/ToggleButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type Gender = 'male' | 'female';
@@ -91,7 +92,7 @@ export default function CalorieCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -107,8 +108,8 @@ export default function CalorieCalc() {
                 py: 1,
                 textTransform: 'none',
                 fontWeight: 600,
-                borderRadius: 2,
-                '&.Mui-selected': {
+                borderRadius: 10,
+                [`&.${toggleButtonClasses.selected}`]: {
                   background: theme.palette.surfaceContainerHigh,
                   color: theme.palette.primary.main,
                   '&:hover': {
@@ -169,7 +170,7 @@ export default function CalorieCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -187,7 +188,7 @@ export default function CalorieCalc() {
                 sx={{
                   p: 2,
                   cursor: 'pointer',
-                  borderRadius: 2,
+                  borderRadius: 10,
                   border: `1.5px solid ${isActive ? theme.palette.primary.main : theme.palette.divider}`,
                   background: isActive
                     ? theme.palette.surfaceContainerLow
@@ -239,7 +240,7 @@ export default function CalorieCalc() {
                 sx={{
                   p: { xs: 2, sm: 3 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha('#1976d2', 0.05)
                 }}
               >
@@ -260,7 +261,7 @@ export default function CalorieCalc() {
                 sx={{
                   p: { xs: 2, sm: 3 },
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha('#2e7d32', 0.05)
                 }}
               >
@@ -283,7 +284,7 @@ export default function CalorieCalc() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.surfaceContainerLow
             }}
           >
@@ -302,7 +303,7 @@ export default function CalorieCalc() {
                     sx={{
                       p: 2,
                       textAlign: 'center',
-                      borderRadius: 2,
+                      borderRadius: 10,
                       background: alpha(m.color, 0.06)
                     }}
                   >
@@ -333,7 +334,7 @@ export default function CalorieCalc() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.surfaceContainerLow
             }}
           >
@@ -372,7 +373,7 @@ export default function CalorieCalc() {
                     <Box
                       sx={{
                         height: isActive ? 10 : 6,
-                        borderRadius: 5,
+                        borderRadius: 18,
                         backgroundColor: theme.palette.surfaceContainerHigh,
                         overflow: 'hidden',
                         transition: 'height 0.2s ease'
@@ -382,7 +383,7 @@ export default function CalorieCalc() {
                         sx={{
                           height: '100%',
                           width: `${barWidth}%`,
-                          borderRadius: 5,
+                          borderRadius: 18,
                           backgroundColor: isActive
                             ? theme.palette.primary.main
                             : alpha(theme.palette.primary.main, 0.3),
@@ -402,7 +403,7 @@ export default function CalorieCalc() {
             sx={{
               mt: 2,
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha(theme.palette.warning.main, 0.03)
             }}
           >
@@ -421,7 +422,7 @@ export default function CalorieCalc() {
                     sx={{
                       p: 2,
                       textAlign: 'center',
-                      borderRadius: 2,
+                      borderRadius: 10,
                       background: alpha(goal.color, 0.06)
                     }}
                   >

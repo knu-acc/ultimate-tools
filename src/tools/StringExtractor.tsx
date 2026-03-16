@@ -128,7 +128,7 @@ export default function StringExtractor() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -149,7 +149,7 @@ export default function StringExtractor() {
               variant={activeTypes.includes(opt.type) ? 'filled' : 'outlined'}
               color={activeTypes.includes(opt.type) ? getChipColor(opt.type) : 'default'}
               onClick={() => toggleType(opt.type)}
-              sx={{ borderRadius: 2 }}
+              sx={{ borderRadius: 10 }}
             />
           ))}
         </Box>
@@ -159,7 +159,7 @@ export default function StringExtractor() {
           <Box
             sx={{
               p: 1.5,
-              borderRadius: 2,
+              borderRadius: 10,
               background: alpha(
                 totalCount > 0 ? theme.palette.success.main : theme.palette.text.disabled,
                 0.1
@@ -184,7 +184,7 @@ export default function StringExtractor() {
               variant="text"
               size="small"
               onClick={handleClear}
-              sx={{ textTransform: 'none', borderRadius: 2 }}
+              sx={{ textTransform: 'none', borderRadius: 10 }}
             >
               {isEn ? 'Clear' : 'Очистить'}
             </Button>
@@ -198,7 +198,7 @@ export default function StringExtractor() {
             sx={{
               maxHeight: 350,
               overflow: 'auto',
-              borderRadius: 3,
+              borderRadius: 18,
               background: theme.palette.background.default
             }}
           >
@@ -250,7 +250,7 @@ export default function StringExtractor() {
             sx={{
               p: 4,
               textAlign: 'center',
-              borderRadius: 2,
+              borderRadius: 10,
               border: `1px dashed ${theme.palette.divider}`
             }}
           >

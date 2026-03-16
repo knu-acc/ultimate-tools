@@ -419,7 +419,7 @@ export default function ColorPicker() {
         <Grid size={{ xs: 12, md: 7 }}>
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+            sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
           >
             <Box sx={{ display: 'flex', gap: 1.5 }} onMouseUp={handleMouseUp}>
               {/* SV square */}
@@ -436,7 +436,7 @@ export default function ColorPicker() {
                     height: 'auto',
                     aspectRatio: '1',
                     cursor: 'crosshair',
-                    borderRadius: 8
+                    borderRadius: 18
                   }}
                 />
               </Box>
@@ -454,7 +454,7 @@ export default function ColorPicker() {
                     height: '100%',
                     aspectRatio: '32/300',
                     cursor: 'pointer',
-                    borderRadius: 8
+                    borderRadius: 18
                   }}
                 />
               </Box>
@@ -466,7 +466,7 @@ export default function ColorPicker() {
                 sx={{
                   width: 56,
                   height: 56,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   backgroundColor: hex,
                   border: `2px solid ${theme.palette.divider}`,
                   flexShrink: 0,
@@ -494,7 +494,7 @@ export default function ColorPicker() {
           {/* RGB sliders */}
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
           >
             <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
               RGB
@@ -568,7 +568,7 @@ export default function ColorPicker() {
       {/* Format outputs */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+        sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
           {isEn ? 'Formats' : 'Форматы'}
@@ -599,7 +599,7 @@ export default function ColorPicker() {
       {/* Related colors */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+        sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
       >
         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
           {isEn ? 'Related Colors' : 'Связанные цвета'}
@@ -614,7 +614,7 @@ export default function ColorPicker() {
                 }}
                 sx={{
                   p: 2,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   cursor: 'pointer',
                   transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                   '&:hover': {
@@ -648,7 +648,7 @@ export default function ColorPicker() {
       {recentColors.length > 0 && (
         <Paper
           elevation={0}
-          sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+          sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>

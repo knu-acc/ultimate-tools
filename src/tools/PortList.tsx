@@ -182,7 +182,7 @@ export default function PortList() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -208,7 +208,7 @@ export default function PortList() {
               variant={protocolFilter === pf ? 'filled' : 'outlined'}
               color={protocolFilter === pf ? 'primary' : 'default'}
               onClick={() => setProtocolFilter(pf)}
-              sx={{ borderRadius: 2, cursor: 'pointer' }}
+              sx={{ borderRadius: 10, cursor: 'pointer' }}
             />
           ))}
         </Box>
@@ -223,7 +223,7 @@ export default function PortList() {
             variant={categoryFilter === 'all' ? 'filled' : 'outlined'}
             color={categoryFilter === 'all' ? 'primary' : 'default'}
             onClick={() => setCategoryFilter('all')}
-            sx={{ borderRadius: 2, cursor: 'pointer' }}
+            sx={{ borderRadius: 10, cursor: 'pointer' }}
           />
           {(Object.keys(categoryLabels) as Category[]).map((cat) => (
             <Chip
@@ -233,7 +233,7 @@ export default function PortList() {
               variant={categoryFilter === cat ? 'filled' : 'outlined'}
               color={categoryFilter === cat ? 'primary' : 'default'}
               onClick={() => setCategoryFilter(cat)}
-              sx={{ borderRadius: 2, cursor: 'pointer' }}
+              sx={{ borderRadius: 10, cursor: 'pointer' }}
             />
           ))}
         </Box>
@@ -244,7 +244,7 @@ export default function PortList() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
@@ -317,7 +317,7 @@ export default function PortList() {
                       label={categoryLabels[p.category]}
                       size="small"
                       variant="outlined"
-                      sx={{ borderRadius: 2, fontSize: '0.75rem' }}
+                      sx={{ borderRadius: 10, fontSize: '0.75rem' }}
                     />
                   </td>
                 </tr>

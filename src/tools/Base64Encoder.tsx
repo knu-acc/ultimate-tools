@@ -122,7 +122,7 @@ export default function Base64Encoder() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -141,7 +141,7 @@ export default function Base64Encoder() {
             mb: 2,
             p: 3,
             border: `2px dashed ${dragOver ? theme.palette.primary.main : theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 18,
             textAlign: 'center',
             cursor: 'pointer',
             background: dragOver ? theme.palette.surfaceContainerHigh : 'transparent',
@@ -204,7 +204,7 @@ export default function Base64Encoder() {
 
         {/* Error */}
         {error && (
-          <Alert severity="error" sx={{ mb: 2, borderRadius: 2 }}>
+          <Alert severity="error" sx={{ mb: 2, borderRadius: 10 }}>
             {error}
           </Alert>
         )}

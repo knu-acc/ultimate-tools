@@ -306,7 +306,7 @@ export default function ImageCrop() {
             textAlign: 'center',
             cursor: 'pointer',
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 18,
             backgroundColor: dragging
               ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
@@ -335,7 +335,7 @@ export default function ImageCrop() {
       {originalFile && (
         <>
           {/* Controls */}
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CropIcon /> {isEn ? 'Crop parameters' : 'Параметры обрезки'}
             </Typography>
@@ -426,7 +426,7 @@ export default function ImageCrop() {
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, textAlign: 'center', borderRadius: 3, transitionProperty: 'background-color', transitionDuration: '200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
+                sx={{ p: 2, textAlign: 'center', borderRadius: 18, transitionProperty: 'background-color', transitionDuration: '200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
                 <Typography variant="caption" color="text.secondary">{isEn ? 'Original' : 'Оригинал'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -440,7 +440,7 @@ export default function ImageCrop() {
             <Grid size={{ xs: 12, sm: 4 }}>
               <Paper
                 elevation={0}
-                sx={{ p: 2, textAlign: 'center', borderRadius: 3, transitionProperty: 'background-color', transitionDuration: '200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
+                sx={{ p: 2, textAlign: 'center', borderRadius: 18, transitionProperty: 'background-color', transitionDuration: '200ms', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.04) } }}
               >
                 <Typography variant="caption" color="text.secondary">{isEn ? 'Crop area' : 'Область обрезки'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
@@ -457,7 +457,7 @@ export default function ImageCrop() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: croppedUrl ? alpha(theme.palette.success.main, 0.06) : undefined
                 }}
               >
@@ -473,14 +473,14 @@ export default function ImageCrop() {
           </Grid>
 
           {/* Crop Canvas */}
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <CropIcon /> {isEn ? 'Select area' : 'Выберите область'}
             </Typography>
             <Box
               ref={containerRef}
               sx={{
-                borderRadius: 2,
+                borderRadius: 10,
                 overflow: 'hidden',
                 backgroundColor: alpha(theme.palette.background.default, 0.5),
                 display: 'flex',
@@ -500,13 +500,13 @@ export default function ImageCrop() {
 
           {/* Cropped Preview */}
           {croppedUrl && (
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}>
               <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                 <ImageIcon /> {isEn ? 'Crop result' : 'Результат обрезки'}
               </Typography>
               <Box
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: 10,
                   overflow: 'hidden',
                   backgroundColor: alpha(theme.palette.background.default, 0.5),
                   display: 'flex',

@@ -187,7 +187,7 @@ export default function MemeGenerator() {
               textAlign: 'center',
               cursor: 'pointer',
               border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
-              borderRadius: 3,
+              borderRadius: 18,
               backgroundColor: dragging
                 ? theme.palette.surfaceContainerLow
                 : alpha(theme.palette.background.default, 0.5),
@@ -208,7 +208,7 @@ export default function MemeGenerator() {
             </Typography>
           </Paper>
 
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
               {isEn ? 'Or paste an image URL' : 'Или вставьте URL изображения'}
             </Typography>
@@ -230,7 +230,7 @@ export default function MemeGenerator() {
 
       {hasImage && (
         <>
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}>
             <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
               <TextFieldsIcon /> {isEn ? 'Meme Settings' : 'Настройки мема'}
             </Typography>
@@ -328,13 +328,13 @@ export default function MemeGenerator() {
           </Paper>
 
           {/* Preview */}
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}>
             <Typography variant="subtitle2" fontWeight={600} gutterBottom>
               {isEn ? 'Preview' : 'Предпросмотр'}
             </Typography>
             <Box
               sx={{
-                borderRadius: 2,
+                borderRadius: 10,
                 overflow: 'hidden',
                 display: 'flex',
                 justifyContent: 'center',

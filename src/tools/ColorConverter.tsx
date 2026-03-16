@@ -220,7 +220,7 @@ export default function ColorConverter() {
                 width: '100%',
                 maxWidth: 200,
                 height: 80,
-                borderRadius: `${theme.shape?.medium ?? 12}px`,
+                borderRadius: 18,
                 backgroundColor: hex,
                 border: `2px solid ${theme.palette.divider}`,
                 boxShadow: `0 4px 16px ${alpha(hex, 0.3)}`,
@@ -298,7 +298,7 @@ export default function ColorConverter() {
                 onClick={() => copyValue(cv.label, cv.value)}
                 sx={{
                   p: 1.5,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   cursor: 'pointer',
                   display: 'flex',
                   justifyContent: 'space-between',

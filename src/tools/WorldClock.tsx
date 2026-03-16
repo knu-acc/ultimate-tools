@@ -140,7 +140,7 @@ export default function WorldClock() {
             <Paper
               elevation={2}
               sx={{
-                borderRadius: 3,
+                borderRadius: 18,
                 mt: 1,
                 p: 1,
                 display: 'flex',
@@ -180,7 +180,7 @@ export default function WorldClock() {
                 <Paper
                   elevation={1}
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 18,
                     p: 2,
                     position: 'relative',
                     backgroundColor: isDay

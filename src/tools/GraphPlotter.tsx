@@ -343,7 +343,7 @@ export default function GraphPlotter() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -384,7 +384,7 @@ export default function GraphPlotter() {
           size="small"
           startIcon={<AddIcon />}
           onClick={addFunction}
-          sx={{ mt: 1, borderRadius: 2 }}
+          sx={{ mt: 1, borderRadius: 10 }}
         >
           {isEn ? 'Add function' : 'Добавить функцию'}
         </Button>
@@ -395,7 +395,7 @@ export default function GraphPlotter() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -443,13 +443,13 @@ export default function GraphPlotter() {
         </Grid>
 
         <Box sx={{ display: 'flex', gap: 1, mt: 1.5 }}>
-          <Button size="small" variant="outlined" startIcon={<ZoomInIcon />} onClick={() => zoom(0.5)} sx={{ borderRadius: 2 }}>
+          <Button size="small" variant="outlined" startIcon={<ZoomInIcon />} onClick={() => zoom(0.5)} sx={{ borderRadius: 10 }}>
             {isEn ? 'Zoom in' : 'Приблизить'}
           </Button>
-          <Button size="small" variant="outlined" startIcon={<ZoomOutIcon />} onClick={() => zoom(2)} sx={{ borderRadius: 2 }}>
+          <Button size="small" variant="outlined" startIcon={<ZoomOutIcon />} onClick={() => zoom(2)} sx={{ borderRadius: 10 }}>
             {isEn ? 'Zoom out' : 'Отдалить'}
           </Button>
-          <Button size="small" variant="outlined" startIcon={<RestartAltIcon />} onClick={resetView} sx={{ borderRadius: 2 }}>
+          <Button size="small" variant="outlined" startIcon={<RestartAltIcon />} onClick={resetView} sx={{ borderRadius: 10 }}>
             {isEn ? 'Reset' : 'Сброс'}
           </Button>
         </Box>
@@ -458,7 +458,7 @@ export default function GraphPlotter() {
       <Paper
         elevation={0}
         sx={{
-          borderRadius: 3,
+          borderRadius: 18,
           overflow: 'hidden'
         }}
       >

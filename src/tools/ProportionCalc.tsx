@@ -133,7 +133,7 @@ export default function ProportionCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -208,7 +208,7 @@ export default function ProportionCalc() {
                 p: 2.5,
                 mt: 2,
                 textAlign: 'center',
-                borderRadius: 3,
+                borderRadius: 18,
                 background: theme.palette.surfaceContainerLow,
                 position: 'relative'
               }}
@@ -232,7 +232,7 @@ export default function ProportionCalc() {
               sx={{
                 p: 2,
                 mt: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 background: alpha(theme.palette.info.main, 0.04)
               }}
             >
@@ -269,7 +269,7 @@ export default function ProportionCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -298,7 +298,7 @@ export default function ProportionCalc() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.warning.main, 0.06),
                   position: 'relative',
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -325,7 +325,7 @@ export default function ProportionCalc() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.secondary.main, 0.06),
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.secondary.main, 0.12) }
@@ -348,7 +348,7 @@ export default function ProportionCalc() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: alpha(theme.palette.warning.main, 0.06),
                   position: 'relative',
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
@@ -378,7 +378,7 @@ export default function ProportionCalc() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -438,7 +438,7 @@ export default function ProportionCalc() {
                 p: 2.5,
                 mt: 2,
                 textAlign: 'center',
-                borderRadius: 3,
+                borderRadius: 18,
                 background: theme.palette.surfaceContainerLow,
                 position: 'relative'
               }}
@@ -462,7 +462,7 @@ export default function ProportionCalc() {
               sx={{
                 p: 2,
                 mt: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 background: alpha(theme.palette.info.main, 0.04)
               }}
             >

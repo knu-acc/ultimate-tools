@@ -235,7 +235,7 @@ export default function CronGenerator() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -275,7 +275,7 @@ export default function CronGenerator() {
               value={cron.minute}
               onChange={(e) => updateField('minute', e.target.value)}
               size="small"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 10 } }}
             >
               {minuteOptions.map((opt) => (
                 <MenuItem key={opt.value} value={opt.value}>
@@ -292,7 +292,7 @@ export default function CronGenerator() {
               value={cron.hour}
               onChange={(e) => updateField('hour', e.target.value)}
               size="small"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 10 } }}
             >
               {hourOptions.map((opt) => (
                 <MenuItem key={opt.value} value={opt.value}>
@@ -309,7 +309,7 @@ export default function CronGenerator() {
               value={cron.dayOfMonth}
               onChange={(e) => updateField('dayOfMonth', e.target.value)}
               size="small"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 10 } }}
             >
               {dayOfMonthOptions.map((opt) => (
                 <MenuItem key={opt.value} value={opt.value}>
@@ -326,7 +326,7 @@ export default function CronGenerator() {
               value={cron.month}
               onChange={(e) => updateField('month', e.target.value)}
               size="small"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 10 } }}
             >
               {monthOptions.map((opt) => (
                 <MenuItem key={opt.value} value={opt.value}>
@@ -343,7 +343,7 @@ export default function CronGenerator() {
               value={cron.dayOfWeek}
               onChange={(e) => updateField('dayOfWeek', e.target.value)}
               size="small"
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 10 } }}
             >
               {dayOfWeekOptions.map((opt) => (
                 <MenuItem key={opt.value} value={opt.value}>
@@ -360,7 +360,7 @@ export default function CronGenerator() {
           sx={{
             p: 2.5,
             mb: 2.5,
-            borderRadius: 2,
+            borderRadius: 10,
             background: theme.palette.mode === 'dark'
               ? alpha(theme.palette.common.black, 0.3)
               : alpha(theme.palette.grey[50], 1),
@@ -419,7 +419,7 @@ export default function CronGenerator() {
           sx={{
             p: 2,
             border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-            borderRadius: 2,
+            borderRadius: 10,
             background: theme.palette.surfaceContainerLow
           }}
         >
@@ -444,7 +444,7 @@ export default function CronGenerator() {
                   fontSize: '0.9rem'
                 },
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 2
+                  borderRadius: 10
                 }
               }}
               onKeyDown={(e) => {
@@ -482,7 +482,7 @@ export default function CronGenerator() {
                   }
                 }
               }}
-              sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2, px: 3, whiteSpace: 'nowrap' }}
+              sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10, px: 3, whiteSpace: 'nowrap' }}
             >
               {isEn ? 'Apply' : 'Применить'}
             </Button>

@@ -110,7 +110,7 @@ export default function IdealWeight() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>
             <TextField
@@ -152,7 +152,7 @@ export default function IdealWeight() {
             sx={{
               p: { xs: 2, sm: 3 },
               mb: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               textAlign: 'center',
               background: theme.palette.surfaceContainerLow
             }}
@@ -174,7 +174,7 @@ export default function IdealWeight() {
           </Paper>
 
           {/* Визуальная шкала сравнения */}
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
             <Typography variant="body2" sx={{ mb: 2, fontWeight: 600, color: 'text.secondary' }}>
               {isEn ? 'Formula comparison' : 'Сравнение формул'}
             </Typography>
@@ -203,7 +203,7 @@ export default function IdealWeight() {
                           sx={{
                             position: 'relative',
                             height: 12,
-                            borderRadius: 6,
+                            borderRadius: 18,
                             backgroundColor: alpha(r.color, 0.1)
                           }}
                         >
@@ -214,7 +214,7 @@ export default function IdealWeight() {
                               top: 0,
                               height: '100%',
                               width: `${pos}%`,
-                              borderRadius: 6,
+                              borderRadius: 18,
                               backgroundColor: alpha(r.color, 0.6),
                               transition: 'width 0.4s ease'
                             }}
@@ -265,7 +265,7 @@ export default function IdealWeight() {
                     p: 2.5,
                     height: '100%',
                     borderLeft: `3px solid ${r.color}`,
-                    borderRadius: 3
+                    borderRadius: 18
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 0.5, color: r.color }}>

@@ -153,7 +153,7 @@ export default function WheelSpinner() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
@@ -172,7 +172,7 @@ export default function WheelSpinner() {
             disabled={spinning}
             sx={{
               mb: 2,
-              '& .MuiOutlinedInput-root': { borderRadius: 3 }
+              '& .MuiOutlinedInput-root': { borderRadius: 18 }
             }}
           />
 
@@ -187,7 +187,7 @@ export default function WheelSpinner() {
             startIcon={<Casino />}
             onClick={spin}
             disabled={spinning || items.length < 2}
-            sx={{ borderRadius: 6, py: 1.2 }}
+            sx={{ borderRadius: 18, py: 1.2 }}
           >
             {spinning ? (isEn ? 'Spinning...' : 'Кручу...') : (isEn ? 'Spin the wheel' : 'Крутить колесо')}
           </Button>
@@ -214,7 +214,7 @@ export default function WheelSpinner() {
               elevation={0}
               sx={{
                 p: 2.5,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: alpha(theme.palette.success.main, 0.08),
                 textAlign: 'center',
                 mb: 2
@@ -234,7 +234,7 @@ export default function WheelSpinner() {
               elevation={0}
               sx={{
                 p: 3,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow,
                 textAlign: 'center'
               }}

@@ -122,7 +122,7 @@ export default function ScreenResolution() {
       {/* Current screen */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
           <MonitorIcon color="primary" />
@@ -134,7 +134,7 @@ export default function ScreenResolution() {
           <Grid size={{ xs: 6, sm: 3 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, textAlign: 'center', borderRadius: 3, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
+              sx={{ p: 2, textAlign: 'center', borderRadius: 18, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
             >
               <Typography variant="caption" color="text.secondary">{isEn ? 'Resolution' : 'Разрешение'}</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -145,7 +145,7 @@ export default function ScreenResolution() {
           <Grid size={{ xs: 6, sm: 3 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, textAlign: 'center', borderRadius: 3, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
+              sx={{ p: 2, textAlign: 'center', borderRadius: 18, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
             >
               <Typography variant="caption" color="text.secondary">{isEn ? 'Physical' : 'Физическое'}</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -156,7 +156,7 @@ export default function ScreenResolution() {
           <Grid size={{ xs: 6, sm: 3 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, textAlign: 'center', borderRadius: 3, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
+              sx={{ p: 2, textAlign: 'center', borderRadius: 18, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
             >
               <Typography variant="caption" color="text.secondary">Pixel Ratio</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -167,7 +167,7 @@ export default function ScreenResolution() {
           <Grid size={{ xs: 6, sm: 3 }}>
             <Paper
               elevation={0}
-              sx={{ p: 2, textAlign: 'center', borderRadius: 3, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
+              sx={{ p: 2, textAlign: 'center', borderRadius: 18, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { background: alpha(theme.palette.primary.main, 0.04) } }}
             >
               <Typography variant="caption" color="text.secondary">{isEn ? 'Color depth' : 'Глубина цвета'}</Typography>
               <Typography variant="h6" sx={{ fontWeight: 700 }}>
@@ -181,7 +181,7 @@ export default function ScreenResolution() {
       {/* Search & filters */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>
@@ -215,7 +215,7 @@ export default function ScreenResolution() {
       {/* Table */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}
       >
         <Box sx={{ overflowX: 'auto' }}>
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>

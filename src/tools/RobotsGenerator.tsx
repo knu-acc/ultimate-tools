@@ -115,7 +115,7 @@ export default function RobotsGenerator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -162,7 +162,7 @@ export default function RobotsGenerator() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -214,7 +214,7 @@ export default function RobotsGenerator() {
               size="small"
               startIcon={<AddIcon />}
               onClick={addRule}
-              sx={{ mb: 2, borderRadius: 4 }}
+              sx={{ mb: 2, borderRadius: 18 }}
             >
               {isEn ? 'Add rule' : 'Добавить правило'}
             </Button>
@@ -246,7 +246,7 @@ export default function RobotsGenerator() {
             elevation={0}
             sx={{
               p: { xs: 2, sm: 3 },
-              borderRadius: 3,
+              borderRadius: 18,
               bgcolor: theme.palette.surfaceContainerLow,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
               '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -263,7 +263,7 @@ export default function RobotsGenerator() {
               elevation={0}
               sx={{
                 p: 2,
-                borderRadius: 2,
+                borderRadius: 10,
                 bgcolor: theme.palette.surfaceContainerLow,
                 minHeight: 200
               }}
@@ -287,7 +287,7 @@ export default function RobotsGenerator() {
                 size="small"
                 startIcon={<DownloadIcon />}
                 onClick={downloadFile}
-                sx={{ borderRadius: 4 }}
+                sx={{ borderRadius: 18 }}
               >
                 {isEn ? 'Download robots.txt' : 'Скачать robots.txt'}
               </Button>

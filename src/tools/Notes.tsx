@@ -17,6 +17,7 @@ import {
   alpha,
   Divider
 } from '@mui/material';
+import { listItemButtonClasses } from '@mui/material/ListItemButton';
 import Add from '@mui/icons-material/Add';
 import Delete from '@mui/icons-material/Delete';
 import StickyNote2 from '@mui/icons-material/StickyNote2';
@@ -159,7 +160,7 @@ export default function Notes() {
           <Paper
             elevation={0}
             sx={{
-              borderRadius: 3,
+              borderRadius: 18,
               overflow: 'hidden',
               height: { md: 600 },
               display: 'flex',
@@ -189,7 +190,7 @@ export default function Notes() {
                 sx={{
                   textTransform: 'none',
                   fontWeight: 600,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   boxShadow: 'none',
                   '&:hover': { boxShadow: 'none' }
                 }}
@@ -249,11 +250,11 @@ export default function Notes() {
                     sx={{
                       borderRadius: 0,
                       py: 1.5,
-                      '&.Mui-selected': {
+                      [`&.${listItemButtonClasses.selected}`]: {
                         backgroundColor: theme.palette.surfaceContainerHigh,
                         borderLeft: `3px solid ${theme.palette.primary.main}`
                       },
-                      '&.Mui-selected:hover': {
+                      [`&.${listItemButtonClasses.selected}:hover`]: {
                         backgroundColor: theme.palette.surfaceContainerHigh
                       }
                     }}
@@ -282,7 +283,7 @@ export default function Notes() {
           <Paper
             elevation={0}
             sx={{
-              borderRadius: 3,
+              borderRadius: 18,
               height: { md: 600 },
               display: 'flex',
               flexDirection: 'column',
@@ -329,7 +330,7 @@ export default function Notes() {
                     sx={{
                       flex: 1,
                       '& .MuiOutlinedInput-root': {
-                        borderRadius: 2,
+                        borderRadius: 10,
                         fontSize: '0.95rem',
                         lineHeight: 1.7,
                         height: '100%',

@@ -367,7 +367,7 @@ export default function ImageCompressor() {
           textAlign: 'center',
           cursor: 'pointer',
           border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
-          borderRadius: 3,
+          borderRadius: 18,
           backgroundColor: dragging
             ? theme.palette.surfaceContainerLow
             : alpha(theme.palette.background.default, 0.5),
@@ -402,7 +402,7 @@ export default function ImageCompressor() {
       {images.length > 0 && (
         <>
           {/* Settings */}
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}>
             <Grid container spacing={3}>
               {/* Compression */}
               <Grid size={{ xs: 12, md: 6 }}>
@@ -487,19 +487,19 @@ export default function ImageCompressor() {
           {/* Stats Bar */}
           <Grid container spacing={2} sx={{ mb: 2 }}>
             <Grid size={{ xs: 6, sm: 3 }}>
-              <Paper elevation={0} sx={{ p: 1.5, textAlign: 'center', borderRadius: 3 }}>
+              <Paper elevation={0} sx={{ p: 1.5, textAlign: 'center', borderRadius: 18 }}>
                 <Typography variant="caption" color="text.secondary">{isEn ? 'Files' : 'Файлов'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>{images.length}</Typography>
               </Paper>
             </Grid>
             <Grid size={{ xs: 6, sm: 3 }}>
-              <Paper elevation={0} sx={{ p: 1.5, textAlign: 'center', borderRadius: 3 }}>
+              <Paper elevation={0} sx={{ p: 1.5, textAlign: 'center', borderRadius: 18 }}>
                 <Typography variant="caption" color="text.secondary">{isEn ? 'Before' : 'До'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>{formatFileSize(totalOriginal, isEn)}</Typography>
               </Paper>
             </Grid>
             <Grid size={{ xs: 6, sm: 3 }}>
-              <Paper elevation={0} sx={{ p: 1.5, textAlign: 'center', borderRadius: 3 }}>
+              <Paper elevation={0} sx={{ p: 1.5, textAlign: 'center', borderRadius: 18 }}>
                 <Typography variant="caption" color="text.secondary">{isEn ? 'After' : 'После'}</Typography>
                 <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main' }}>
                   {formatFileSize(totalResult, isEn)}
@@ -512,7 +512,7 @@ export default function ImageCompressor() {
                 sx={{
                   p: 1.5,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   background: totalRatio > 0
                     ? alpha(theme.palette.success.main, 0.06)
                     : totalResult > 0 ? alpha(theme.palette.error.main, 0.06) : undefined,
@@ -578,7 +578,7 @@ export default function ImageCompressor() {
           </Box>
 
           {processingCount > 0 && (
-            <LinearProgress sx={{ mb: 2, borderRadius: 2 }} />
+            <LinearProgress sx={{ mb: 2, borderRadius: 10 }} />
           )}
 
           {/* Image list */}
@@ -596,7 +596,7 @@ export default function ImageCompressor() {
                   elevation={0}
                   sx={{
                     p: 1.5,
-                    borderRadius: 2.5,
+                    borderRadius: 10.5,
                     display: 'flex',
                     alignItems: 'center',
                     gap: 2,
@@ -609,7 +609,7 @@ export default function ImageCompressor() {
                     sx={{
                       width: 64,
                       height: 64,
-                      borderRadius: 2,
+                      borderRadius: 10,
                       overflow: 'hidden',
                       flexShrink: 0,
                       backgroundColor: alpha(theme.palette.background.default, 0.5),

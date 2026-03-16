@@ -174,7 +174,7 @@ export default function TimezoneConverter() {
       <Paper
         elevation={0}
         sx={{
-          borderRadius: 3,
+          borderRadius: 18,
           p: { xs: 2, sm: 3 },
           backgroundColor: theme.palette.surfaceContainerLow
         }}
@@ -242,7 +242,7 @@ export default function TimezoneConverter() {
             <IconButton
               onClick={swapWithFirst}
               sx={{
-                borderRadius: 2
+                borderRadius: 10
               }}
             >
               <SwapHorizIcon />
@@ -269,7 +269,7 @@ export default function TimezoneConverter() {
               key={pos}
               elevation={0}
               sx={{
-                borderRadius: 3,
+                borderRadius: 18,
                 p: 2,
                 mb: 2,
                 backgroundColor: theme.palette.surfaceContainerHigh,

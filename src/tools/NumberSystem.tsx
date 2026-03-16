@@ -198,7 +198,7 @@ export default function NumberSystem() {
                       alignItems: 'center',
                       gap: 2,
                       border: `1px solid ${isSource ? b.color : theme.palette.divider}`,
-                      borderRadius: 3,
+                      borderRadius: 18,
                       backgroundColor: isSource ? alpha(b.color, 0.04) : 'transparent',
                       transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                       '&:hover': {

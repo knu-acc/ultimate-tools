@@ -50,7 +50,7 @@ export default function CoinFlip() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       textAlign: 'center',
@@ -98,7 +98,7 @@ export default function CoinFlip() {
           size="large"
           onClick={flip}
           disabled={flipping}
-          sx={{ borderRadius: 6, px: 4 }}
+          sx={{ borderRadius: 18, px: 4 }}
         >
           {flipping ? (isEn ? 'Flipping...' : 'Подбрасываю...') : (isEn ? 'Flip' : 'Подбросить')}
         </Button>
@@ -107,7 +107,7 @@ export default function CoinFlip() {
             variant="outlined"
             onClick={reset}
             startIcon={<Refresh />}
-            sx={{ borderRadius: 6 }}
+            sx={{ borderRadius: 18 }}
           >
             {isEn ? 'Reset' : 'Сброс'}
           </Button>
@@ -121,7 +121,7 @@ export default function CoinFlip() {
               elevation={0}
               sx={{
                 p: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: alpha('#FFD700', 0.08)
               }}
             >
@@ -138,7 +138,7 @@ export default function CoinFlip() {
               elevation={0}
               sx={{
                 p: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow
               }}
             >
@@ -155,7 +155,7 @@ export default function CoinFlip() {
               elevation={0}
               sx={{
                 p: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: alpha('#C0C0C0', 0.12)
               }}
             >
@@ -172,7 +172,7 @@ export default function CoinFlip() {
 
       {total > 0 && (
         <Box sx={{ mt: 2, maxWidth: 500, mx: 'auto' }}>
-          <Box sx={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden' }}>
+          <Box sx={{ display: 'flex', height: 8, borderRadius: 18, overflow: 'hidden' }}>
             <Box sx={{ width: `${headsPercent}%`, bgcolor: '#FFD700', transition: 'width 0.3s' }} />
             <Box sx={{ width: `${tailsPercent}%`, bgcolor: '#C0C0C0', transition: 'width 0.3s' }} />
           </Box>

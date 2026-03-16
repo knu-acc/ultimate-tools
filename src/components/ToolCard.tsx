@@ -37,7 +37,7 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
         elevation={0}
         sx={{
           bgcolor: theme.palette.surfaceContainerLow,
-          borderRadius: `${theme.shape?.large ?? 16}px`,
+          borderRadius: 18,
           border: `1px solid ${theme.palette.outlineVariant ?? alpha(theme.palette.divider, 0.5)}`,
           transitionProperty: 'background-color, border-color',
           transitionDuration: motionDuration,
@@ -90,7 +90,7 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
             sx={{
               width: 40,
               height: 40,
-              borderRadius: `${theme.shape?.medium ?? 12}px`,
+              borderRadius: 18,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -121,7 +121,7 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
       sx={{
         height: '100%',
         bgcolor: theme.palette.surfaceContainerLow,
-        borderRadius: `${theme.shape?.large ?? 16}px`,
+        borderRadius: 18,
         border: `1px solid ${theme.palette.outlineVariant ?? alpha(theme.palette.divider, 0.5)}`,
         transitionProperty: 'background-color, border-color',
         transitionDuration: theme.md3?.motion.duration.medium1 ?? '250ms',
@@ -149,7 +149,7 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
             sx={{
               width: 48,
               height: 48,
-              borderRadius: `${theme.shape?.medium ?? 12}px`,
+              borderRadius: 18,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

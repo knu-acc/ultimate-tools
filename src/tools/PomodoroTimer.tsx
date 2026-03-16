@@ -190,7 +190,7 @@ export default function PomodoroTimer() {
           startIcon={isRunning ? <Pause /> : <PlayArrow />}
           onClick={() => setIsRunning(!isRunning)}
           sx={{
-            borderRadius: 7,
+            borderRadius: 18,
             px: 4,
             bgcolor: getPhaseColor(phase),
             '&:hover': { bgcolor: alpha(getPhaseColor(phase), 0.85) }
@@ -234,7 +234,7 @@ export default function PomodoroTimer() {
       {showSettings && (
         <Paper
           elevation={0}
-          sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, maxWidth: 400, mx: 'auto' }}
+          sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, maxWidth: 400, mx: 'auto' }}
         >
           <Typography variant="subtitle2" fontWeight={600} gutterBottom>{isEn ? 'Settings' : 'Настройки'}</Typography>
 

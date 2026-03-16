@@ -122,7 +122,7 @@ export default function TodoList() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}>
           {/* Input */}
           <Box sx={{ display: 'flex', gap: 1.5, mb: 2 }}>
             <TextField
@@ -134,7 +134,7 @@ export default function TodoList() {
               size="small"
               sx={{
                 '& .MuiOutlinedInput-root': {
-                  borderRadius: 3
+                  borderRadius: 18
                 }
               }}
             />
@@ -144,7 +144,7 @@ export default function TodoList() {
               disabled={!input.trim()}
               startIcon={<AddIcon />}
               sx={{
-                borderRadius: 3,
+                borderRadius: 18,
                 px: 3,
                 whiteSpace: 'nowrap',
                 textTransform: 'none'
@@ -164,7 +164,7 @@ export default function TodoList() {
                 color={filter === f.key ? 'primary' : 'default'}
                 clickable
                 onClick={() => setFilter(f.key)}
-                sx={{ borderRadius: 2 }}
+                sx={{ borderRadius: 10 }}
               />
             ))}
           </Box>
@@ -177,7 +177,7 @@ export default function TodoList() {
               mb: 2,
               px: 1.5,
               py: 1,
-              borderRadius: 2,
+              borderRadius: 10,
               backgroundColor: theme.palette.surfaceContainerLow
             }}
           >
@@ -217,7 +217,7 @@ export default function TodoList() {
                     gap: 0.5,
                     py: 0.5,
                     px: 1,
-                    borderRadius: 2,
+                    borderRadius: 10,
                     transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                     '&:hover': {
                       backgroundColor: alpha(theme.palette.action.hover, 0.5)
@@ -274,7 +274,7 @@ export default function TodoList() {
                   size="small"
                   onClick={clearCompleted}
                   sx={{
-                    borderRadius: 3,
+                    borderRadius: 18,
                     textTransform: 'none'
                   }}
                 >

@@ -15,6 +15,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { toggleButtonClasses } from '@mui/material/ToggleButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
 type SizeSystem = 'eu' | 'us_men' | 'us_women' | 'uk' | 'jp';
@@ -204,7 +205,7 @@ export default function ShoeSize() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -218,12 +219,12 @@ export default function ShoeSize() {
           sx={{
             mb: 2.5,
             '& .MuiToggleButton-root': {
-              borderRadius: 3,
+              borderRadius: 18,
               px: 3,
               textTransform: 'none',
               fontWeight: 500,
               transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
-              '&.Mui-selected': {
+              [`&.${toggleButtonClasses.selected}`]: {
                 background: theme.palette.surfaceContainerHigh,
                 color: theme.palette.primary.main,
                 fontWeight: 600,
@@ -259,7 +260,7 @@ export default function ShoeSize() {
             sx={{
               flex: 1,
               minWidth: 180,
-              borderRadius: 2
+              borderRadius: 10
             }}
           >
             {(Object.keys(systemLabels) as SizeSystem[]).map((sys) => (
@@ -285,7 +286,7 @@ export default function ShoeSize() {
                 elevation={0}
                 sx={{
                   p: 2,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   textAlign: 'center',
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': {
@@ -321,7 +322,7 @@ export default function ShoeSize() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Typography variant="body1" sx={{ mb: 2, fontWeight: 600 }}>

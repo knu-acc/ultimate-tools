@@ -60,7 +60,7 @@ export default function UuidGenerator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -99,14 +99,14 @@ export default function UuidGenerator() {
         </Grid>
 
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Button variant="contained" startIcon={<RefreshIcon />} onClick={generate} sx={{ px: 4, textTransform: 'none', fontWeight: 600, borderRadius: 3 }}>
+          <Button variant="contained" startIcon={<RefreshIcon />} onClick={generate} sx={{ px: 4, textTransform: 'none', fontWeight: 600, borderRadius: 18 }}>
             {isEn ? 'Generate' : 'Сгенерировать'}
           </Button>
         </Box>
       </Paper>
 
       {uuids.length > 0 && (
-        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
             <Chip label={`${uuids.length} UUID`} size="small" sx={{ fontWeight: 600 }} />
             <CopyButton text={uuids.map(formatUuid).join('\n')} />
@@ -120,7 +120,7 @@ export default function UuidGenerator() {
                   <CopyButton text={formatUuid(uuids[i])} />
                 }
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: 10,
                   mb: 0.5,
                   '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}

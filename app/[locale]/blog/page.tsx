@@ -19,8 +19,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: isEn ? 'Blog | Ultimate Tools' : 'Блог | Ultimate Tools',
       description: isEn ? 'Articles and guides on online tools' : 'Статьи и руководства по онлайн-инструментам',
+      images: [{ url: 'https://ulti-tools.com/opengraph-image', width: 1200, height: 630 }],
       siteName: 'Ultimate Tools',
       locale: isEn ? 'en_US' : 'ru_RU',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: isEn ? 'Blog | Ultimate Tools' : 'Блог | Ultimate Tools',
+      description: isEn ? 'Articles and guides on online tools' : 'Статьи и руководства по онлайн-инструментам',
     },
     alternates: {
       canonical: `${BASE}/${locale}/blog`,

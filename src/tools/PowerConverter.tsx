@@ -67,7 +67,7 @@ export default function PowerConverter() {
           p: 3,
           mb: 2,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
@@ -115,7 +115,7 @@ export default function PowerConverter() {
                 elevation={0}
                 sx={{
                   p: 2,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,

@@ -135,7 +135,7 @@ export default function ImageToBase64() {
 
       <Paper
         elevation={0}
-        sx={{ mb: 2, borderRadius: 3 }}
+        sx={{ mb: 2, borderRadius: 18 }}
       >
         <Tabs
           value={mode}
@@ -161,7 +161,7 @@ export default function ImageToBase64() {
                 textAlign: 'center',
                 cursor: 'pointer',
                 border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
-                borderRadius: 3,
+                borderRadius: 18,
                 backgroundColor: dragging
                   ? theme.palette.surfaceContainerLow
                   : alpha(theme.palette.background.default, 0.5),
@@ -192,7 +192,7 @@ export default function ImageToBase64() {
               {/* File info & preview */}
               <Paper
                 elevation={0}
-                sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+                sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                   <Typography variant="h6">{isEn ? 'File Information' : 'Информация о файле'}</Typography>
@@ -210,7 +210,7 @@ export default function ImageToBase64() {
                   <Grid size={{ xs: 12, sm: 4 }}>
                     <Box
                       sx={{
-                        borderRadius: 2,
+                        borderRadius: 10,
                         overflow: 'hidden',
                         display: 'flex',
                         alignItems: 'center',
@@ -254,7 +254,7 @@ export default function ImageToBase64() {
                 <Paper
                   key={fmt.key}
                   elevation={0}
-                  sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+                  sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
                     <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
@@ -286,7 +286,7 @@ export default function ImageToBase64() {
         <>
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
           >
             <Typography variant="subtitle2" sx={{ mb: 1.5, fontWeight: 600 }}>
               {isEn ? 'Paste a Base64 string or Data URI' : 'Вставьте строку Base64 или Data URI'}
@@ -314,14 +314,14 @@ export default function ImageToBase64() {
           {reversePreview && (
             <Paper
               elevation={0}
-              sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
+              sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}
             >
               <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
                 {isEn ? 'Image Preview' : 'Предпросмотр изображения'}
               </Typography>
               <Box
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: 10,
                   p: 2,
                   display: 'flex',
                   alignItems: 'center',

@@ -94,7 +94,7 @@ export default function ArticlePage({ slug }: { slug: string }) {
       if (trimmed.startsWith('```')) {
         if (inCode) {
           elements.push(
-            <Paper key={`code-${idx}`} elevation={0} sx={{ p: 2, my: 2, bgcolor: alpha(theme.palette.text.primary, 0.05), borderRadius: 2, fontFamily: 'monospace', fontSize: 13, overflow: 'auto' }}>
+            <Paper key={`code-${idx}`} elevation={0} sx={{ p: 2, my: 2, bgcolor: alpha(theme.palette.text.primary, 0.05), borderRadius: 10, fontFamily: 'monospace', fontSize: 13, overflow: 'auto' }}>
               <pre style={{ margin: 0 }}>{codeContent}</pre>
             </Paper>
           );
@@ -231,7 +231,7 @@ export default function ArticlePage({ slug }: { slug: string }) {
           elevation={0}
           sx={{
             p: 3,
-            borderRadius: 3,
+            borderRadius: 18,
             bgcolor: alpha(theme.palette.primary.main, 0.05),
             border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
             textAlign: 'center',

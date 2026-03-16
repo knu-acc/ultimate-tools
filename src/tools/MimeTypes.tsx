@@ -183,7 +183,7 @@ export default function MimeTypes() {
       {/* Search & filter */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
       >
         <Grid container spacing={2} alignItems="center">
           <Grid size={{ xs: 12, sm: 5 }}>
@@ -193,7 +193,7 @@ export default function MimeTypes() {
               size="small"
               fullWidth
               placeholder=".jpg, image/jpeg, PDF..."
-              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
+              sx={{ '& .MuiOutlinedInput-root': { borderRadius: 10 } }}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 7 }}>
@@ -222,7 +222,7 @@ export default function MimeTypes() {
       {/* Table */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, background: theme.palette.surfaceContainerLow }}
+        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, background: theme.palette.surfaceContainerLow }}
       >
         <Box sx={{ overflowX: 'auto' }}>
           <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>

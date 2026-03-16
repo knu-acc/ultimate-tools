@@ -23,6 +23,11 @@ type Messages = Record<string, unknown>;
 
 let cachedMessages: Partial<Record<Locale, Messages>> = {};
 
+/** Pre-seed cache with server-loaded messages to avoid async re-fetch on client */
+export function seedMessages(locale: Locale, messages: Messages): void {
+  cachedMessages[locale] = messages;
+}
+
 export async function loadMessages(locale: Locale): Promise<Messages> {
   if (cachedMessages[locale]) return cachedMessages[locale]!;
   try {

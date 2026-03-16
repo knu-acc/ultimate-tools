@@ -74,7 +74,7 @@ export default function HeartRateZone() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -116,7 +116,7 @@ export default function HeartRateZone() {
               p: { xs: 2, sm: 3 },
               mb: 2,
               textAlign: 'center',
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha('#c62828', 0.04)
             }}
           >
@@ -155,7 +155,7 @@ export default function HeartRateZone() {
                   elevation={0}
                   sx={{
                     p: 2.5,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: alpha(zone.color, 0.04),
                     borderLeft: `4px solid ${zone.color}`
                   }}
@@ -186,7 +186,7 @@ export default function HeartRateZone() {
                       <Box
                         sx={{
                           height: 10,
-                          borderRadius: 5,
+                          borderRadius: 18,
                           backgroundColor: alpha(zone.color, 0.12),
                           overflow: 'hidden'
                         }}
@@ -195,7 +195,7 @@ export default function HeartRateZone() {
                           sx={{
                             height: '100%',
                             width: `${widthPct}%`,
-                            borderRadius: 5,
+                            borderRadius: 18,
                             backgroundColor: zone.color,
                             transition: 'width 0.4s ease'
                           }}
@@ -220,7 +220,7 @@ export default function HeartRateZone() {
             sx={{
               p: { xs: 2, sm: 3 },
               mt: 2,
-              borderRadius: 3
+              borderRadius: 18
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.secondary', mb: 2 }}>
@@ -230,7 +230,7 @@ export default function HeartRateZone() {
               sx={{
                 display: 'flex',
                 height: 28,
-                borderRadius: 14,
+                borderRadius: 999,
                 overflow: 'hidden'
               }}
             >

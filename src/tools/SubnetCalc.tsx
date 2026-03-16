@@ -14,6 +14,7 @@ import {
   useTheme,
   alpha
 } from '@mui/material';
+import { toggleButtonClasses } from '@mui/material/ToggleButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
 function isValidCidrNotation(input: string): boolean {
@@ -214,7 +215,7 @@ export default function SubnetCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -234,11 +235,11 @@ export default function SubnetCalc() {
           sx={{
             mb: 2.5,
             '& .MuiToggleButton-root': {
-              borderRadius: 3,
+              borderRadius: 18,
               px: 2.5,
               textTransform: 'none',
               fontWeight: 500,
-              '&.Mui-selected': {
+              [`&.${toggleButtonClasses.selected}`]: {
                 background: theme.palette.surfaceContainerHigh,
                 color: theme.palette.primary.main,
                 fontWeight: 600,
@@ -317,7 +318,7 @@ export default function SubnetCalc() {
           variant="contained"
           onClick={handleCalculate}
           disabled={!validNetwork || network === ''}
-          sx={{ mt: 2, borderRadius: 2, textTransform: 'none' }}
+          sx={{ mt: 2, borderRadius: 10, textTransform: 'none' }}
         >
           {isEn ? 'Calculate' : 'Рассчитать'}
         </Button>
@@ -328,7 +329,7 @@ export default function SubnetCalc() {
           elevation={0}
           sx={{
             p: { xs: 2, sm: 3 },
-            borderRadius: 3
+            borderRadius: 18
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
@@ -336,7 +337,7 @@ export default function SubnetCalc() {
               {isEn ? `Result: ${results.length} subnets` : `Результат: ${results.length} подсетей`}
             </Typography>
             {mode === 'vlsm' && (
-              <Chip label="VLSM" size="small" color="primary" variant="outlined" sx={{ borderRadius: 2 }} />
+              <Chip label="VLSM" size="small" color="primary" variant="outlined" sx={{ borderRadius: 10 }} />
             )}
           </Box>
           <Box sx={{ overflowX: 'auto' }}>
@@ -399,7 +400,7 @@ export default function SubnetCalc() {
           elevation={0}
           sx={{
             p: { xs: 2, sm: 3 },
-            borderRadius: 3,
+            borderRadius: 18,
             textAlign: 'center'
           }}
         >

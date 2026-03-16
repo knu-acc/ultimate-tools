@@ -110,7 +110,7 @@ export default function ReadingTime() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -125,7 +125,7 @@ export default function ReadingTime() {
           variant="outlined"
           sx={{
             '& .MuiOutlinedInput-root': {
-              borderRadius: 2,
+              borderRadius: 10,
               fontSize: '1rem',
               lineHeight: 1.7
             }
@@ -141,7 +141,7 @@ export default function ReadingTime() {
               sx={{
                 p: 2,
                 textAlign: 'center',
-                borderRadius: 3,
+                borderRadius: 18,
                 backgroundColor: alpha(card.color, 0.06),
                 transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': { backgroundColor: alpha(card.color, 0.1) }
@@ -163,12 +163,12 @@ export default function ReadingTime() {
         ))}
       </Grid>
 
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5 }}>
           <Chip
             label={isEn ? `Avg word length: ${stats.avgWordLength.toFixed(1)} chars` : `Средняя длина слова: ${stats.avgWordLength.toFixed(1)} симв.`}
             sx={{
-              borderRadius: 2,
+              borderRadius: 10,
               fontWeight: 600,
               backgroundColor: theme.palette.surfaceContainerHigh,
               color: theme.palette.primary.dark,
@@ -177,7 +177,7 @@ export default function ReadingTime() {
           <Chip
             label={isEn ? `Characters without spaces: ${stats.charNoSpaces.toLocaleString('en-US')}` : `Символов без пробелов: ${stats.charNoSpaces.toLocaleString('ru-RU')}`}
             sx={{
-              borderRadius: 2,
+              borderRadius: 10,
               fontWeight: 600,
               backgroundColor: alpha(theme.palette.success.main, 0.08),
               color: theme.palette.success.dark,
@@ -186,7 +186,7 @@ export default function ReadingTime() {
           <Chip
             label={isEn ? `Words per sentence: ${stats.sentenceCount > 0 ? (stats.wordCount / stats.sentenceCount).toFixed(1) : '0'}` : `Слов в предложении: ${stats.sentenceCount > 0 ? (stats.wordCount / stats.sentenceCount).toFixed(1) : '0'}`}
             sx={{
-              borderRadius: 2,
+              borderRadius: 10,
               fontWeight: 600,
               backgroundColor: alpha(theme.palette.warning.main, 0.08),
               color: theme.palette.warning.dark,

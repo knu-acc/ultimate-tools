@@ -68,7 +68,7 @@ export default function SlugGenerator() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -115,7 +115,7 @@ export default function SlugGenerator() {
             display: 'flex',
             alignItems: 'center',
             gap: 1.5,
-            borderRadius: 3,
+            borderRadius: 18,
             background: slug
               ? alpha(theme.palette.primary.main, 0.04)
               : theme.palette.action.hover,
@@ -172,7 +172,7 @@ export default function SlugGenerator() {
           sx={{
             mt: 2,
             p: 2.5,
-            borderRadius: 3,
+            borderRadius: 18,
             background: theme.palette.surfaceContainerLow,
             '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
           }}
@@ -186,7 +186,7 @@ export default function SlugGenerator() {
               alignItems: 'center',
               gap: 1,
               p: 1.5,
-              borderRadius: 3,
+              borderRadius: 18,
               background: alpha(theme.palette.text.primary, 0.04)
             }}
           >
@@ -217,7 +217,7 @@ export default function SlugGenerator() {
           sx={{
             mt: 2,
             p: 2,
-            borderRadius: 3,
+            borderRadius: 18,
             background: theme.palette.surfaceContainerLow
           }}
         >

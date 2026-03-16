@@ -33,7 +33,7 @@ export default function FuelConverter() {
           p: 3,
           mb: 2,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <TextField
@@ -66,7 +66,7 @@ export default function FuelConverter() {
                 elevation={0}
                 sx={{
                   p: 2,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,
@@ -95,7 +95,7 @@ export default function FuelConverter() {
         </Grid>
       )}
 
-      <Paper elevation={0} sx={{ p: 2, borderRadius: 3 }}>
+      <Paper elevation={0} sx={{ p: 2, borderRadius: 18 }}>
         <Typography variant="body2" color="text.secondary" sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>
           {isEn ? '1 US gal = 3.785 L · 1 UK gal = 4.546 L · MPG = 235.215 / (L/100km)' : '1 US gal = 3.785 л · 1 UK gal = 4.546 л · MPG = 235.215 / (л/100км)'}
         </Typography>

@@ -135,7 +135,7 @@ export default function DateDifference() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -210,7 +210,7 @@ export default function DateDifference() {
       </Paper>
 
       {result && (
-        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}>
           <Box sx={{ mb: 2, textAlign: 'center' }}>
             <Chip
               label={result.readable}
@@ -229,7 +229,7 @@ export default function DateDifference() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     backgroundColor: theme.palette.surfaceContainerLow,
                     transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                     '&:hover': {

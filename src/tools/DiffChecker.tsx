@@ -123,7 +123,7 @@ export default function DiffChecker() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -142,7 +142,7 @@ export default function DiffChecker() {
                   fontSize: '0.85rem',
                   lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 }
+                '& .MuiOutlinedInput-root': { borderRadius: 10 }
               }}
             />
           </Grid>
@@ -160,7 +160,7 @@ export default function DiffChecker() {
                   fontSize: '0.85rem',
                   lineHeight: 1.6
                 },
-                '& .MuiOutlinedInput-root': { borderRadius: 2 }
+                '& .MuiOutlinedInput-root': { borderRadius: 10 }
               }}
             />
           </Grid>
@@ -173,7 +173,7 @@ export default function DiffChecker() {
             startIcon={<CompareArrowsIcon />}
             onClick={handleCompare}
             disabled={!original && !modified}
-            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
+            sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 10 }}
           >
             {isEn ? 'Compare' : 'Сравнить'}
           </Button>
@@ -182,7 +182,7 @@ export default function DiffChecker() {
             startIcon={<DeleteOutlineIcon />}
             onClick={clear}
             color="inherit"
-            sx={{ textTransform: 'none', borderRadius: 2 }}
+            sx={{ textTransform: 'none', borderRadius: 10 }}
           >
             {isEn ? 'Clear' : 'Очистить'}
           </Button>
@@ -225,7 +225,7 @@ export default function DiffChecker() {
           <Paper
             elevation={0}
             sx={{
-              borderRadius: 2,
+              borderRadius: 10,
               overflow: 'auto',
               maxHeight: 500
             }}

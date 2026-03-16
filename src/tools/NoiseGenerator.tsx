@@ -173,7 +173,7 @@ export default function NoiseGenerator() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
@@ -182,7 +182,7 @@ export default function NoiseGenerator() {
       {/* Noise type selector */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
           {isEn ? 'Noise Type' : 'Тип шума'}
@@ -198,7 +198,7 @@ export default function NoiseGenerator() {
                   textAlign: 'center',
                   cursor: isPlaying ? 'default' : 'pointer',
                   border: `2px solid ${noiseType === opt.type ? theme.palette.primary.main : theme.palette.divider}`,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   backgroundColor: noiseType === opt.type
                     ? theme.palette.surfaceContainerHigh
                     : 'transparent',
@@ -226,7 +226,7 @@ export default function NoiseGenerator() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           backgroundColor: alpha(theme.palette.background.default, 0.5)
         }}
       >
@@ -263,7 +263,7 @@ export default function NoiseGenerator() {
       {/* Controls */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid size={{ xs: 12, sm: 6 }}>
@@ -311,7 +311,7 @@ export default function NoiseGenerator() {
       {/* Info */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}
       >
         <Typography variant="caption" color="text.secondary">
           {isEn

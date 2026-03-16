@@ -88,7 +88,7 @@ export default function EmailValidator() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       {/* Tabs */}
-      <Paper elevation={0} sx={{ mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ mb: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow }}>
         <Tabs
           value={tab}
           onChange={(_, v) => setTab(v)}
@@ -109,7 +109,7 @@ export default function EmailValidator() {
       {/* Single Mode */}
       {tab === 0 && (
         <>
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <TextField
               fullWidth
               value={email}
@@ -143,7 +143,7 @@ export default function EmailValidator() {
 
           {/* Validation Checks */}
           {checks.length > 0 && (
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                 {isEn ? 'Validation results' : 'Результаты проверки'}
               </Typography>
@@ -156,7 +156,7 @@ export default function EmailValidator() {
                       alignItems: 'center',
                       gap: 1.5,
                       p: 1.5,
-                      borderRadius: 2,
+                      borderRadius: 10,
                       backgroundColor: check.passed
                         ? alpha(theme.palette.success.main, 0.06)
                         : alpha(theme.palette.error.main, 0.06),
@@ -186,7 +186,7 @@ export default function EmailValidator() {
       {/* Batch Mode */}
       {tab === 1 && (
         <>
-          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+          <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
             <TextField
               fullWidth
               multiline
@@ -203,7 +203,7 @@ export default function EmailValidator() {
             <Grid container spacing={2}>
               {/* Summary */}
               <Grid size={12}>
-                <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+                <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow }}>
                   <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                     {isEn ? 'Summary' : 'Итоги проверки'}
                   </Typography>
@@ -233,7 +233,7 @@ export default function EmailValidator() {
 
               {/* Results List */}
               <Grid size={12}>
-                <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+                <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow }}>
                   <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                     {isEn ? 'Detailed results' : 'Детальные результаты'}
                   </Typography>
@@ -246,7 +246,7 @@ export default function EmailValidator() {
                           alignItems: 'center',
                           gap: 1.5,
                           p: 1.5,
-                          borderRadius: 2,
+                          borderRadius: 10,
                           backgroundColor: result.valid
                             ? alpha(theme.palette.success.main, 0.05)
                             : alpha(theme.palette.error.main, 0.05),

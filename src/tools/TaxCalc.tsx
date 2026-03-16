@@ -124,7 +124,7 @@ export default function TaxCalc() {
       sx={{
         p: 2.5,
         textAlign: 'center',
-        borderRadius: 3,
+        borderRadius: 18,
         background: alpha(color, 0.06),
         transition: 'background 150ms ease',
         '&:hover': { background: alpha(color, 0.10) }
@@ -149,7 +149,7 @@ export default function TaxCalc() {
         sx={{
           p: 3,
           background: theme.palette.surfaceContainerLow,
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Grid container spacing={2}>
@@ -216,7 +216,7 @@ export default function TaxCalc() {
             elevation={0}
             sx={{
               p: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               background: deductionStandard ? alpha('#2e7d32', 0.04) : 'transparent'
             }}
           >
@@ -250,7 +250,7 @@ export default function TaxCalc() {
             elevation={0}
             sx={{
               p: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               background: deductionProperty ? alpha('#2e7d32', 0.04) : 'transparent'
             }}
           >
@@ -285,7 +285,7 @@ export default function TaxCalc() {
             elevation={0}
             sx={{
               p: 2,
-              borderRadius: 3,
+              borderRadius: 18,
               background: deductionEducation ? alpha('#2e7d32', 0.04) : 'transparent'
             }}
           >
@@ -409,7 +409,7 @@ export default function TaxCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: alpha('#e65100', 0.06),
                     transition: 'background 150ms ease',
                     '&:hover': { background: alpha('#e65100', 0.10) }
@@ -429,7 +429,7 @@ export default function TaxCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: theme.palette.surfaceContainerLow,
                     transition: 'background 150ms ease',
                     '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -449,7 +449,7 @@ export default function TaxCalc() {
                   sx={{
                     p: 2,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: alpha('#2e7d32', 0.06),
                     transition: 'background 150ms ease',
                     '&:hover': { background: alpha('#2e7d32', 0.10) }

@@ -119,7 +119,7 @@ export default function UnixTimestamp() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           textAlign: 'center',
           background: alpha(accentColor, 0.04)
         }}
@@ -167,7 +167,7 @@ export default function UnixTimestamp() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -184,7 +184,7 @@ export default function UnixTimestamp() {
           <Button
             variant="outlined"
             onClick={() => setTsInput(String(now))}
-            sx={{ whiteSpace: 'nowrap', minWidth: 'auto', px: 2, borderRadius: 2 }}
+            sx={{ whiteSpace: 'nowrap', minWidth: 'auto', px: 2, borderRadius: 10 }}
           >
             {isEn ? 'Now' : 'Сейчас'}
           </Button>
@@ -210,7 +210,7 @@ export default function UnixTimestamp() {
                 sx={{
                   p: 1.5,
                   px: 2,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   border: `1px solid ${alpha(accentColor, 0.15)}`,
                   background: alpha(accentColor, 0.02),
                   display: 'flex',
@@ -245,7 +245,7 @@ export default function UnixTimestamp() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3
+          borderRadius: 18
         }}
       >
         <Typography variant="body2" sx={{ mb: 2, fontWeight: 500, color: 'text.secondary' }}>
@@ -284,7 +284,7 @@ export default function UnixTimestamp() {
             setDateInput(d.toISOString().split('T')[0]);
             setTimeInput(d.toTimeString().slice(0, 8));
           }}
-          sx={{ mb: 2, borderRadius: 2 }}
+          sx={{ mb: 2, borderRadius: 10 }}
         >
           {isEn ? 'Current date and time' : 'Текущая дата и время'}
         </Button>
@@ -303,7 +303,7 @@ export default function UnixTimestamp() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   border: `1px solid ${alpha('#2e7d32', 0.2)}`,
                   background: alpha('#2e7d32', 0.04)
                 }}
@@ -325,7 +325,7 @@ export default function UnixTimestamp() {
                 sx={{
                   p: 2,
                   textAlign: 'center',
-                  borderRadius: 3,
+                  borderRadius: 18,
                   border: `1px solid ${alpha('#1976d2', 0.2)}`,
                   background: alpha('#1976d2', 0.04)
                 }}

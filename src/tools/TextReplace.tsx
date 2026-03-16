@@ -153,7 +153,7 @@ export default function TextReplace() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -196,7 +196,7 @@ export default function TextReplace() {
             variant={caseSensitive ? 'filled' : 'outlined'}
             color={caseSensitive ? 'primary' : 'default'}
             onClick={() => setCaseSensitive(!caseSensitive)}
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: 10 }}
           />
           <Chip
             label={isEn ? 'Whole word' : 'Слово целиком'}
@@ -206,7 +206,7 @@ export default function TextReplace() {
               setWholeWord(!wholeWord);
               if (!wholeWord) setRegexMode(false);
             }}
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: 10 }}
           />
           <FormControlLabel
             control={
@@ -233,7 +233,7 @@ export default function TextReplace() {
             sx={{
               mb: 2,
               p: 1.5,
-              borderRadius: 2,
+              borderRadius: 10,
               background: alpha(
                 matches.length > 0 ? theme.palette.success.main : theme.palette.warning.main,
                 0.1
@@ -253,7 +253,7 @@ export default function TextReplace() {
             variant="outlined"
             onClick={handleReplaceFirst}
             disabled={!search || !input || matches.length === 0}
-            sx={{ textTransform: 'none', borderRadius: 2 }}
+            sx={{ textTransform: 'none', borderRadius: 10 }}
           >
             {isEn ? 'Replace first' : 'Заменить первое'}
           </Button>
@@ -261,14 +261,14 @@ export default function TextReplace() {
             variant="contained"
             onClick={handleReplaceAll}
             disabled={!search || !input || matches.length === 0}
-            sx={{ textTransform: 'none', borderRadius: 2 }}
+            sx={{ textTransform: 'none', borderRadius: 10 }}
           >
             {isEn ? 'Replace all' : 'Заменить все'}
           </Button>
           <Button
             variant="text"
             onClick={handleClear}
-            sx={{ textTransform: 'none', borderRadius: 2, ml: 'auto' }}
+            sx={{ textTransform: 'none', borderRadius: 10, ml: 'auto' }}
           >
             {isEn ? 'Clear' : 'Очистить'}
           </Button>
@@ -282,7 +282,7 @@ export default function TextReplace() {
                 p: 2,
                 maxHeight: 250,
                 overflow: 'auto',
-                borderRadius: 3,
+                borderRadius: 18,
                 fontFamily: 'monospace',
                 fontSize: '0.875rem',
                 lineHeight: 1.7,

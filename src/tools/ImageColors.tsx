@@ -172,7 +172,7 @@ export default function ImageColors() {
             textAlign: 'center',
             cursor: 'pointer',
             border: `2px dashed ${dragging ? theme.palette.primary.main : theme.palette.divider}`,
-            borderRadius: 3,
+            borderRadius: 18,
             backgroundColor: dragging
               ? theme.palette.surfaceContainerLow
               : alpha(theme.palette.background.default, 0.5),
@@ -205,7 +205,7 @@ export default function ImageColors() {
                 elevation={0}
                 sx={{
                   p: { xs: 2, sm: 3 },
-                  borderRadius: 3,
+                  borderRadius: 18,
                   bgcolor: theme.palette.surfaceContainerLow,
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -227,7 +227,7 @@ export default function ImageColors() {
                 </Box>
                 <Box
                   sx={{
-                    borderRadius: 2,
+                    borderRadius: 10,
                     overflow: 'hidden',
                     display: 'flex',
                     alignItems: 'center',
@@ -250,7 +250,7 @@ export default function ImageColors() {
                       mt: 2,
                       display: 'flex',
                       height: 40,
-                      borderRadius: 2,
+                      borderRadius: 10,
                       overflow: 'hidden'
                     }}
                   >
@@ -274,7 +274,7 @@ export default function ImageColors() {
                 elevation={0}
                 sx={{
                   p: { xs: 2, sm: 3 },
-                  borderRadius: 3,
+                  borderRadius: 18,
                   bgcolor: theme.palette.surfaceContainerLow,
                   transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                   '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
@@ -292,7 +292,7 @@ export default function ImageColors() {
                         elevation={0}
                         sx={{
                           p: 1.5,
-                          borderRadius: 2,
+                          borderRadius: 10,
                           transitionProperty: 'background-color', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                           '&:hover': {
                             borderColor: theme.palette.primary.main,
@@ -339,7 +339,7 @@ export default function ImageColors() {
               sx={{
                 p: { xs: 2, sm: 3 },
                 mt: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow,
                 transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease',
                 '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }

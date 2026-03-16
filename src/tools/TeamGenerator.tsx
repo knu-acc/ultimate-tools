@@ -128,7 +128,7 @@ export default function TeamGenerator() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
@@ -147,7 +147,7 @@ export default function TeamGenerator() {
             disabled={animating}
             sx={{
               mb: 2,
-              '& .MuiOutlinedInput-root': { borderRadius: 3 }
+              '& .MuiOutlinedInput-root': { borderRadius: 18 }
             }}
           />
 
@@ -221,7 +221,7 @@ export default function TeamGenerator() {
             startIcon={<Shuffle />}
             onClick={handleSplit}
             disabled={animating || participants.length < 2}
-            sx={{ borderRadius: 6, py: 1.2, mb: 1 }}
+            sx={{ borderRadius: 18, py: 1.2, mb: 1 }}
           >
             {animating ? 'Перемешиваю...' : 'Разделить'}
           </Button>
@@ -259,7 +259,7 @@ export default function TeamGenerator() {
                         elevation={0}
                         sx={{
                           p: 2,
-                          borderRadius: 3,
+                          borderRadius: 18,
                           bgcolor: alpha(color.main, 0.05),
                           transition: animating ? 'none' : 'all 0.3s ease'
                         }}
@@ -310,7 +310,7 @@ export default function TeamGenerator() {
               elevation={0}
               sx={{
                 p: 4,
-                borderRadius: 3,
+                borderRadius: 18,
                 bgcolor: theme.palette.surfaceContainerLow,
                 textAlign: 'center'
               }}
@@ -341,7 +341,7 @@ export default function TeamGenerator() {
                   sx={{
                     p: 1.5,
                     mb: 1,
-                    borderRadius: 2,
+                    borderRadius: 10,
                     bgcolor: i === 0 ? alpha(theme.palette.success.main, 0.03) : 'transparent',
                     cursor: 'pointer',
                     '&:hover': { bgcolor: theme.palette.surfaceContainerLow }

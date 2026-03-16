@@ -38,11 +38,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: `${groupName} — Free Online Tools | Ultimate Tools`,
       description,
+      images: [{ url: 'https://ulti-tools.com/opengraph-image', width: 1200, height: 630 }],
       siteName: 'Ultimate Tools',
       locale: isEn ? 'en_US' : 'ru_RU',
       type: 'website',
       url: `${BASE}/${locale}/group/${slug}`,
     },
+    twitter: { card: 'summary_large_image', title: `${groupName} — Free Online Tools | Ultimate Tools`, description },
     alternates: {
       canonical: `${BASE}/${locale}/group/${slug}`,
       languages: {

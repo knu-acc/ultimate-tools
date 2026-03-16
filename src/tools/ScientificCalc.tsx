@@ -142,7 +142,7 @@ export default function ScientificCalc() {
   }, [display, errorText]);
 
   const btnBase = {
-    borderRadius: 2.5,
+    borderRadius: 10.5,
     minWidth: 0,
     fontFamily: '"JetBrains Mono", "Fira Code", monospace',
     fontSize: '1.15rem',
@@ -269,7 +269,7 @@ export default function ScientificCalc() {
       <Paper
         elevation={0}
         sx={{
-          borderRadius: 3,
+          borderRadius: 18,
           overflow: 'hidden'
         }}
       >
@@ -444,7 +444,7 @@ export default function ScientificCalc() {
                     sx={{
                       px: 2,
                       py: 1.5,
-                      borderRadius: 2,
+                      borderRadius: 10,
                       cursor: 'pointer',
                       backgroundColor: theme.palette.surfaceContainerLow,
                       border: `1px solid ${alpha(theme.palette.divider, 0.5)}`,

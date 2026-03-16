@@ -35,12 +35,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     openGraph: {
       title: `${title} | Ultimate Tools`,
       description,
+      images: [{ url: 'https://ulti-tools.com/opengraph-image', width: 1200, height: 630 }],
       url: `${BASE}/${locale}/tools/${slug}`,
       type: 'website',
       locale: isEn ? 'en_US' : 'ru_RU',
       siteName: 'Ultimate Tools',
     },
-    twitter: { card: 'summary', title: `${title} | Ultimate Tools`, description },
+    twitter: { card: 'summary_large_image', title: `${title} | Ultimate Tools`, description },
     alternates: {
       canonical: `${BASE}/${locale}/tools/${slug}`,
       languages: {

@@ -140,7 +140,7 @@ export default function SleepCalc() {
         sx={{
           p: { xs: 2, sm: 3 },
           mb: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           background: theme.palette.surfaceContainerLow
         }}
       >
@@ -159,7 +159,7 @@ export default function SleepCalc() {
                   px: 2.5,
                   py: 1.5,
                   cursor: 'pointer',
-                  borderRadius: 2,
+                  borderRadius: 10,
                   border: `1.5px solid ${isActive ? theme.palette.primary.main : theme.palette.divider}`,
                   background: isActive
                     ? theme.palette.surfaceContainerHigh
@@ -208,7 +208,7 @@ export default function SleepCalc() {
           sx={{
             p: { xs: 2, sm: 3 },
             mb: 2,
-            borderRadius: 3
+            borderRadius: 18
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 2 }}>
@@ -225,7 +225,7 @@ export default function SleepCalc() {
                   sx={{
                     p: 2.5,
                     textAlign: 'center',
-                    borderRadius: 3,
+                    borderRadius: 18,
                     background: alpha(opt.color, 0.05),
                     transitionProperty: 'transform, box-shadow', transitionDuration: '150ms', transitionTimingFunction: 'ease',
                     '&:hover': {
@@ -271,7 +271,7 @@ export default function SleepCalc() {
           sx={{
             p: { xs: 2, sm: 3 },
             mb: 2,
-            borderRadius: 3
+            borderRadius: 18
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: 500, color: 'text.secondary', mb: 1.5 }}>
@@ -312,7 +312,7 @@ export default function SleepCalc() {
         elevation={0}
         sx={{
           p: { xs: 2, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 18,
           background: alpha('#7b1fa2', 0.03)
         }}
       >

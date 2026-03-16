@@ -145,7 +145,7 @@ export default function VideoAspect() {
       maxWidth: 800,
       mx: 'auto',
       mb: 2,
-      borderRadius: 3,
+      borderRadius: 18,
       bgcolor: theme.palette.surfaceContainerLow,
       p: { xs: 2, sm: 3 },
       transition: 'background 0.2s ease',
@@ -154,7 +154,7 @@ export default function VideoAspect() {
       {/* Input */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
       >
         <Grid container spacing={3} alignItems="center">
           <Grid size={{ xs: 12, sm: 4 }}>
@@ -206,7 +206,7 @@ export default function VideoAspect() {
             sx={{
               p: 3,
               textAlign: 'center',
-              borderRadius: 3,
+              borderRadius: 18,
               height: '100%',
               display: 'flex',
               flexDirection: 'column',
@@ -232,7 +232,7 @@ export default function VideoAspect() {
             elevation={0}
             sx={{
               p: 3,
-              borderRadius: 3,
+              borderRadius: 18,
               height: '100%',
               display: 'flex',
               alignItems: 'center',
@@ -244,7 +244,7 @@ export default function VideoAspect() {
                 width: previewW,
                 height: previewH,
                 border: `2px solid ${theme.palette.primary.main}`,
-                borderRadius: 2,
+                borderRadius: 10,
                 backgroundColor: theme.palette.surfaceContainerHigh,
                 display: 'flex',
                 alignItems: 'center',
@@ -263,7 +263,7 @@ export default function VideoAspect() {
       {/* Presets */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 1.5 }}>
           {isEn ? 'Aspect ratios' : 'Пропорции'}
@@ -285,7 +285,7 @@ export default function VideoAspect() {
       {/* Resolution table */}
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3 }}
+        sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18 }}
       >
         <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
           {isEn ? 'Common resolutions' : 'Распространённые разрешения'}

@@ -89,7 +89,7 @@ export default function ColorPalette() {
       <Box
         sx={{
           display: 'flex',
-          borderRadius: 3,
+          borderRadius: 18,
           overflow: 'hidden',
           height: { xs: 200, md: 280 },
           mb: 2
@@ -138,7 +138,7 @@ export default function ColorPalette() {
           variant="contained"
           startIcon={<Refresh />}
           onClick={regenerate}
-          sx={{ borderRadius: 3, px: 4, textTransform: 'none', fontWeight: 600 }}
+          sx={{ borderRadius: 18, px: 4, textTransform: 'none', fontWeight: 600 }}
         >
           {isEn ? 'Generate (Space)' : 'Генерировать (Пробел)'}
         </Button>
@@ -155,7 +155,7 @@ export default function ColorPalette() {
                 elevation={0}
                 sx={{
                   p: 2,
-                  borderRadius: 3,
+                  borderRadius: 18,
                   bgcolor: theme.palette.surfaceContainerLow,
                   '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
                 }}
@@ -185,7 +185,7 @@ export default function ColorPalette() {
         sx={{
           mt: 3,
           p: 2,
-          borderRadius: 3,
+          borderRadius: 18,
           bgcolor: theme.palette.surfaceContainerLow,
           '&:hover': { background: alpha(theme.palette.primary.main, 0.04) }
         }}

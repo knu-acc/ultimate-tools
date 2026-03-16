@@ -94,7 +94,7 @@ export default function PasswordGenerator() {
           alignItems: 'center',
           justifyContent: 'center',
           gap: 1.5,
-          borderRadius: theme.shape?.medium ?? 12,
+          borderRadius: 18,
           background: password
             ? theme.palette.surfaceContainerLow
             : theme.palette.action.hover,
@@ -142,11 +142,11 @@ export default function PasswordGenerator() {
             value={strength.value}
             sx={{
               height: 10,
-              borderRadius: theme.shape?.full ?? 9999,
+              borderRadius: 999,
               backgroundColor: alpha(theme.palette.text.primary, 0.08),
               transition: 'none',
               '& .MuiLinearProgress-bar': {
-                borderRadius: theme.shape?.full ?? 9999,
+                borderRadius: 999,
                 backgroundColor: theme.palette[strength.paletteKey].main,
                 transition: `width ${theme.md3?.motion.duration.medium4 ?? '400ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}, background-color ${theme.md3?.motion.duration.medium4 ?? '400ms'} ${theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)'}`,
               },
@@ -220,7 +220,7 @@ export default function PasswordGenerator() {
           startIcon={<RefreshIcon />}
           onClick={generate}
           disabled={activeCharsets.length === 0}
-          sx={{ px: 4, borderRadius: 3, textTransform: 'none', fontWeight: 600 }}
+          sx={{ px: 4, borderRadius: 18, textTransform: 'none', fontWeight: 600 }}
         >
           Сгенерировать
         </Button>
@@ -234,7 +234,7 @@ export default function PasswordGenerator() {
           sx={{
             mt: 2,
             p: 2,
-            borderRadius: 3,
+            borderRadius: 18,
             background: theme.palette.surfaceContainerLow
           }}
         >
@@ -251,7 +251,7 @@ export default function PasswordGenerator() {
                   justifyContent: 'space-between',
                   px: 1.5,
                   py: 0.5,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   '&:hover': {
                     background: alpha(theme.palette.primary.main, 0.04)
                   }

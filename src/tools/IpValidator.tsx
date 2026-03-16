@@ -223,7 +223,7 @@ export default function IpValidator() {
           {/* Single IP */}
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}
           >
             <TextField
               value={singleIp}
@@ -246,7 +246,7 @@ export default function IpValidator() {
                   elevation={0}
                   sx={{
                     p: 2,
-                    borderRadius: 3,
+                    borderRadius: 18,
                     backgroundColor: singleResult.valid
                       ? alpha(theme.palette.success.main, 0.06)
                       : alpha(theme.palette.error.main, 0.06)
@@ -278,19 +278,19 @@ export default function IpValidator() {
               {singleResult.valid && (
                 <>
                   <Grid size={{ xs: 6, sm: 3 }}>
-                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
                       <Typography variant="caption" color="text.secondary">{isEn ? 'Version' : 'Версия'}</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>{singleResult.version}</Typography>
                     </Paper>
                   </Grid>
                   <Grid size={{ xs: 6, sm: 3 }}>
-                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
                       <Typography variant="caption" color="text.secondary">{isEn ? 'Class' : 'Класс'}</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>{isEn ? singleResult.class.en : singleResult.class.ru}</Typography>
                     </Paper>
                   </Grid>
                   <Grid size={{ xs: 12, sm: 6 }}>
-                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+                    <Paper elevation={0} sx={{ p: 2, textAlign: 'center', borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
                       <Typography variant="caption" color="text.secondary">{isEn ? 'Type' : 'Тип'}</Typography>
                       <Typography variant="h6" sx={{ fontWeight: 700 }}>{isEn ? singleResult.type.en : singleResult.type.ru}</Typography>
                     </Paper>
@@ -298,7 +298,7 @@ export default function IpValidator() {
 
                   {/* Binary */}
                   <Grid size={{ xs: 12 }}>
-                    <Paper elevation={0} sx={{ p: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+                    <Paper elevation={0} sx={{ p: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                         <Typography variant="body2" sx={{ fontWeight: 600 }}>{isEn ? 'Binary representation' : 'Двоичное представление'}</Typography>
                         <CopyButton text={singleResult.binary} />
@@ -310,7 +310,7 @@ export default function IpValidator() {
                           wordBreak: 'break-all',
                           p: 1.5,
                           backgroundColor: alpha(theme.palette.background.default, 0.5),
-                          borderRadius: 2
+                          borderRadius: 10
                         }}
                       >
                         {singleResult.binary}
@@ -327,7 +327,7 @@ export default function IpValidator() {
           {/* Batch mode */}
           <Paper
             elevation={0}
-            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}
+            sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}
           >
             <TextField
               multiline
@@ -349,7 +349,7 @@ export default function IpValidator() {
           {batchResults.length > 0 && (
             <Paper
               elevation={0}
-              sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}
+              sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow }}
             >
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
                 {isEn

@@ -228,7 +228,7 @@ export default function PhoneValidator() {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>
       {/* Input */}
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mb: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <TextField
           fullWidth
           value={phone}
@@ -277,7 +277,7 @@ export default function PhoneValidator() {
         <Grid container spacing={2}>
           {/* Formatted Versions */}
           <Grid size={12}>
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                 {isEn ? 'Formatted versions' : 'Форматированные версии'}
               </Typography>
@@ -294,7 +294,7 @@ export default function PhoneValidator() {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       p: 1.5,
-                      borderRadius: 2,
+                      borderRadius: 10,
                       backgroundColor: theme.palette.surfaceContainerLow,
                       border: `1px solid ${theme.palette.surfaceContainerHigh}`
                     }}
@@ -313,7 +313,7 @@ export default function PhoneValidator() {
 
           {/* Details */}
           <Grid size={12}>
-            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow }}>
+            <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow }}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                 {isEn ? 'Details' : 'Информация'}
               </Typography>
@@ -329,7 +329,7 @@ export default function PhoneValidator() {
       )}
 
       {/* Common Country Codes */}
-      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 3, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
+      <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, mt: 2, borderRadius: 18, bgcolor: theme.palette.surfaceContainerLow, transitionProperty: 'background-color', transitionDuration: '200ms', transitionTimingFunction: 'ease', '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.04) } }}>
         <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
           {isEn ? 'Country codes reference' : 'Справочник кодов стран'}
         </Typography>
@@ -342,7 +342,7 @@ export default function PhoneValidator() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   p: 1.5,
-                  borderRadius: 2,
+                  borderRadius: 10,
                   backgroundColor: alpha(theme.palette.text.primary, 0.03),
                   cursor: 'pointer',
                   transitionProperty: 'background-color', transitionDuration: '150ms',

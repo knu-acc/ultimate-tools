@@ -192,7 +192,7 @@ export default function TextToSpeech() {
   if (!supported) {
     return (
       <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, textAlign: 'center', borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, sm: 3 }, textAlign: 'center', borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
           <Typography variant="h6" color="error" gutterBottom>
             {isEn ? 'Speech synthesis is not supported' : 'Синтез речи не поддерживается'}
           </Typography>
@@ -208,7 +208,7 @@ export default function TextToSpeech() {
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
-      <Paper elevation={0} sx={{ borderRadius: 3, background: theme.palette.surfaceContainerLow }}>
+      <Paper elevation={0} sx={{ borderRadius: 18, background: theme.palette.surfaceContainerLow }}>
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
           {/* Text Input */}
           <TextField
@@ -222,7 +222,7 @@ export default function TextToSpeech() {
             disabled={isPlaying || isPaused}
             sx={{
               mb: 2,
-              '& .MuiOutlinedInput-root': { borderRadius: 3 }
+              '& .MuiOutlinedInput-root': { borderRadius: 18 }
             }}
           />
 
@@ -233,7 +233,7 @@ export default function TextToSpeech() {
               sx={{
                 p: 2,
                 mb: 2,
-                borderRadius: 3,
+                borderRadius: 18,
                 border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
                 backgroundColor: theme.palette.surfaceContainerLow,
                 maxHeight: 200,
@@ -264,7 +264,7 @@ export default function TextToSpeech() {
                 startIcon={<PlayArrowIcon />}
                 onClick={play}
                 disabled={!text.trim()}
-                sx={{ px: 4, borderRadius: 3, textTransform: 'none' }}
+                sx={{ px: 4, borderRadius: 18, textTransform: 'none' }}
               >
                 {isPaused ? (isEn ? 'Resume' : 'Продолжить') : (isEn ? 'Play' : 'Воспроизвести')}
               </Button>
@@ -274,7 +274,7 @@ export default function TextToSpeech() {
                 size="large"
                 startIcon={<PauseIcon />}
                 onClick={pause}
-                sx={{ px: 4, borderRadius: 3, textTransform: 'none' }}
+                sx={{ px: 4, borderRadius: 18, textTransform: 'none' }}
               >
                 {isEn ? 'Pause' : 'Пауза'}
               </Button>
@@ -284,7 +284,7 @@ export default function TextToSpeech() {
               disabled={!isPlaying && !isPaused}
               color="error"
               sx={{
-                borderRadius: 3,
+                borderRadius: 18,
                 width: 48,
                 height: 48
               }}
@@ -301,7 +301,7 @@ export default function TextToSpeech() {
               value={selectedVoice}
               onChange={(e) => setSelectedVoice(e.target.value)}
               disabled={isPlaying || isPaused}
-              sx={{ borderRadius: 3 }}
+              sx={{ borderRadius: 18 }}
               displayEmpty
             >
               {voices.length === 0 ? (
@@ -373,7 +373,7 @@ export default function TextToSpeech() {
               mt: 3,
               px: 1.5,
               py: 1,
-              borderRadius: 2,
+              borderRadius: 10,
               backgroundColor: theme.palette.surfaceContainerLow,
               display: 'flex',
               justifyContent: 'space-between',
