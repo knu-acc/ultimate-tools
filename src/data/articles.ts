@@ -2008,3 +2008,12 @@ export function getArticleBySlug(slug: string): Article | undefined {
 export function getArticlesByTool(toolSlug: string): Article[] {
   return articles.filter(a => a.toolSlug === toolSlug);
 }
+
+// ── Lightweight metadata for client-side listing pages ──
+// BlogPage only needs title/description/slug/type/date/readTime for the card grid.
+// Stripping `content` and `contentEn` saves ~1.4 MB from the client JS bundle.
+export type ArticleMeta = Omit<Article, 'content' | 'contentEn'>;
+
+export const articlesMeta: ArticleMeta[] = articles.map(
+  ({ content, contentEn, ...meta }) => meta
+);

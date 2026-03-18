@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   Container, Typography, Box, Grid, Breadcrumbs, Paper, Chip, alpha, useTheme, Button,
   Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListItemIcon, ListItemText,
@@ -1128,11 +1128,23 @@ export default function ToolPage({ slug }: { slug: string }) {
   }
 
   const group = toolGroups.find(g => g.id === tool.groupId);
-  const relatedTools = getToolsByGroup(tool.groupId).filter(t => t.id !== tool.id).slice(0, 4);
   const ToolComponent = toolComponents[tool.slug];
   const seoTitle = (tool as any).seoTitle || tool.name;
-  const seoContent = isEn ? getToolSeoContentEn(tool, group?.name || '') : getToolSeoContent(tool, group?.name || '');
-  const faqItems = isEn ? getToolFAQEn(tool) : getToolFAQ(tool);
+
+  // Memoize expensive computations — getToolsByGroup scans all tools,
+  // SEO content/FAQ generators create new objects on every call.
+  const relatedTools = useMemo(
+    () => getToolsByGroup(tool.groupId).filter(t => t.id !== tool.id).slice(0, 4),
+    [tool.groupId, tool.id]
+  );
+  const seoContent = useMemo(
+    () => isEn ? getToolSeoContentEn(tool, group?.name || '') : getToolSeoContent(tool, group?.name || ''),
+    [tool.id, isEn, group?.name]
+  );
+  const faqItems = useMemo(
+    () => isEn ? getToolFAQEn(tool) : getToolFAQ(tool),
+    [tool.id, isEn]
+  );
 
   return (
     <>

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Container, Typography, Box, Grid, Breadcrumbs, Chip, alpha, useTheme, Paper,
   List, ListItem, ListItemIcon, ListItemText,
@@ -582,9 +582,15 @@ export default function GroupPage({ slug }: { slug: string }) {
     );
   }
 
-  const groupTools = getToolsByGroup(group.id);
-  const relatedGroups = toolGroups.filter(g => g.id !== group.id).slice(0, 6);
+  const groupTools = useMemo(() => getToolsByGroup(group.id), [group.id]);
+  const relatedGroups = useMemo(() => toolGroups.filter(g => g.id !== group.id).slice(0, 6), [group.id]);
   const seoContent = isEn ? groupSeoContentEn[group.id] : groupSeoContent[group.id];
+
+  // Pre-compute tool counts for related groups to avoid N×getToolsByGroup in render
+  const relatedGroupCounts = useMemo(
+    () => new Map(relatedGroups.map(g => [g.id, getToolsByGroup(g.id).length])),
+    [relatedGroups]
+  );
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -691,7 +697,7 @@ export default function GroupPage({ slug }: { slug: string }) {
           {relatedGroups.map(g => (
             <Chip
               key={g.id}
-              label={`${isEn ? ((g as any).nameEn || g.name) : g.name} (${getToolsByGroup(g.id).length})`}
+              label={`${isEn ? ((g as any).nameEn || g.name) : g.name} (${relatedGroupCounts.get(g.id) ?? 0})`}
               component={Link}
               href={lHref(`/group/${g.slug}`)}
               clickable

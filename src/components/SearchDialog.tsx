@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef, memo } from 'react';
 import {
   Dialog, DialogContent, TextField, List, ListItem, ListItemButton,
   ListItemIcon, ListItemText, Typography, Box, Chip, alpha, useTheme, InputAdornment,
@@ -18,29 +18,51 @@ interface Props {
   onClose: () => void;
 }
 
-export default function SearchDialog({ open, onClose }: Props) {
+// Module-level singleton — Fuse index is built once, reused across renders & mounts
+let fuseInstance: Fuse<Tool> | null = null;
+function getFuse(): Fuse<Tool> {
+  if (!fuseInstance) {
+    fuseInstance = new Fuse(tools, {
+      keys: [{ name: 'name', weight: 2 }, { name: 'description', weight: 1 }, { name: 'keywords', weight: 1.5 }],
+      threshold: 0.3,
+      includeScore: true,
+    });
+  }
+  return fuseInstance;
+}
+
+const defaultResults = tools.slice(0, 12);
+
+export default memo(function SearchDialog({ open, onClose }: Props) {
   const theme = useTheme();
   const router = useRouter();
   const { lHref, locale, t } = useLanguage();
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const fuse = useMemo(
-    () => new Fuse(tools, {
-      keys: [{ name: 'name', weight: 2 }, { name: 'description', weight: 1 }, { name: 'keywords', weight: 1.5 }],
-      threshold: 0.3,
-      includeScore: true,
-    }),
-    []
-  );
+  // Debounce search input — Fuse.search on 200+ items per keystroke is wasteful
+  const handleQueryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setQuery(val);
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => setDebouncedQuery(val), 150);
+  }, []);
 
   const results = useMemo(() => {
-    if (!query.trim()) return tools.slice(0, 12);
-    return fuse.search(query).slice(0, 15).map(r => r.item);
-  }, [query, fuse]);
+    if (!debouncedQuery.trim()) return defaultResults;
+    return getFuse().search(debouncedQuery).slice(0, 15).map(r => r.item);
+  }, [debouncedQuery]);
 
-  useEffect(() => { setSelectedIndex(0); }, [query]);
-  useEffect(() => { if (!open) { setQuery(''); setSelectedIndex(0); } }, [open]);
+  useEffect(() => { setSelectedIndex(0); }, [debouncedQuery]);
+  useEffect(() => {
+    if (!open) {
+      setQuery('');
+      setDebouncedQuery('');
+      setSelectedIndex(0);
+    }
+  }, [open]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -57,11 +79,11 @@ export default function SearchDialog({ open, onClose }: Props) {
     onClose();
   }, [router, onClose, lHref]);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, results.length - 1)); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setSelectedIndex(i => Math.max(i - 1, 0)); }
     else if (e.key === 'Enter' && results[selectedIndex]) { handleSelect(results[selectedIndex]); }
-  };
+  }, [results, selectedIndex, handleSelect]);
 
   return (
     <Dialog
@@ -77,7 +99,7 @@ export default function SearchDialog({ open, onClose }: Props) {
           fullWidth
           placeholder={t('nav.searchPlaceholder')}
           value={query}
-          onChange={e => setQuery(e.target.value)}
+          onChange={handleQueryChange}
           onKeyDown={handleKeyDown}
           slotProps={{
             input: {
@@ -151,4 +173,4 @@ export default function SearchDialog({ open, onClose }: Props) {
       </DialogContent>
     </Dialog>
   );
-}
+});

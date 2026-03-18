@@ -1,20 +1,55 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
+import type { Theme } from '@mui/material/styles';
 import {
   Container, Typography, Box, Breadcrumbs, Paper, Chip, Button, Divider, alpha, useTheme,
 } from '@mui/material';
 import { Home, NavigateNext, Schedule, ArrowForward } from '@mui/icons-material';
 import Link from 'next/link';
-import { getArticleBySlug, getArticlesByTool } from '@/src/data/articles';
-import { getToolBySlug } from '@/src/data/tools';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
-export default function ArticlePage({ slug }: { slug: string }) {
+// Article data is passed from server component — NOT imported here.
+// This prevents the ~1.6 MB articles module from being bundled into client JS.
+interface ArticleData {
+  slug: string;
+  title: string;
+  titleEn?: string;
+  description: string;
+  descriptionEn?: string;
+  toolSlug: string;
+  type: 'guide' | 'tips' | 'use-cases';
+  keywords: string[];
+  date: string;
+  readTime: number;
+  content: string;
+  contentEn?: string;
+}
+
+interface RelatedArticle {
+  slug: string;
+  title: string;
+  titleEn?: string;
+}
+
+interface ToolInfo {
+  slug: string;
+  name: string;
+  nameEn?: string;
+  description: string;
+  descriptionEn?: string;
+}
+
+interface Props {
+  article: ArticleData | null;
+  relatedArticles: RelatedArticle[];
+  tool: ToolInfo | null;
+}
+
+export default function ArticlePage({ article, relatedArticles, tool }: Props) {
   const theme = useTheme();
   const { locale, t, lHref } = useLanguage();
   const isEn = locale === 'en';
-  const article = getArticleBySlug(slug);
 
   if (!article) {
     return (
@@ -25,13 +60,11 @@ export default function ArticlePage({ slug }: { slug: string }) {
     );
   }
 
-  const tool = getToolBySlug(article.toolSlug);
-  const relatedArticles = getArticlesByTool(article.toolSlug).filter(a => a.slug !== article.slug);
   const articleTitle = isEn ? (article.titleEn || article.title) : article.title;
   const articleDesc = isEn ? (article.descriptionEn || article.description) : article.description;
   const articleContent = isEn ? (article.contentEn || article.content) : article.content;
-  const toolName = tool ? (isEn ? ((tool as any).nameEn || tool.name) : tool.name) : '';
-  const toolDesc = tool ? (isEn ? ((tool as any).descriptionEn || tool.description) : tool.description) : '';
+  const toolName = tool ? (isEn ? (tool.nameEn || tool.name) : tool.name) : '';
+  const toolDesc = tool ? (isEn ? (tool.descriptionEn || tool.description) : tool.description) : '';
 
   const typeLabels: Record<string, string> = isEn ? {
     guide: 'Guide',
@@ -43,134 +76,8 @@ export default function ArticlePage({ slug }: { slug: string }) {
     'use-cases': 'Кейсы',
   };
 
-  // Simple markdown-like rendering
-  const renderContent = (content: string) => {
-    const lines = content.split('\n');
-    const elements: React.ReactNode[] = [];
-    let inTable = false;
-    let tableRows: string[][] = [];
-    let inCode = false;
-    let codeContent = '';
-
-    const flushTable = () => {
-      if (tableRows.length > 0) {
-        elements.push(
-          <Box key={`table-${elements.length}`} sx={{ overflowX: 'auto', my: 2 }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr>
-                  {tableRows[0].map((cell, i) => (
-                    <th key={i} style={{
-                      padding: '8px 12px', borderBottom: `2px solid ${theme.palette.divider}`,
-                      textAlign: 'left', fontWeight: 600, fontSize: 14,
-                    }}>{cell}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {tableRows.slice(2).map((row, ri) => (
-                  <tr key={ri}>
-                    {row.map((cell, ci) => (
-                      <td key={ci} style={{
-                        padding: '8px 12px', borderBottom: `1px solid ${theme.palette.divider}`,
-                        fontSize: 14,
-                      }}>{cell}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Box>
-        );
-        tableRows = [];
-      }
-      inTable = false;
-    };
-
-    lines.forEach((line, idx) => {
-      const trimmed = line.trim();
-
-      // Code blocks
-      if (trimmed.startsWith('```')) {
-        if (inCode) {
-          elements.push(
-            <Paper key={`code-${idx}`} elevation={0} sx={{ p: 2, my: 2, bgcolor: alpha(theme.palette.text.primary, 0.05), borderRadius: 10, fontFamily: 'monospace', fontSize: 13, overflow: 'auto' }}>
-              <pre style={{ margin: 0 }}>{codeContent}</pre>
-            </Paper>
-          );
-          codeContent = '';
-          inCode = false;
-        } else {
-          inCode = true;
-        }
-        return;
-      }
-
-      if (inCode) {
-        codeContent += (codeContent ? '\n' : '') + line;
-        return;
-      }
-
-      // Tables
-      if (trimmed.startsWith('|')) {
-        if (!inTable) inTable = true;
-        const cells = trimmed.split('|').filter(Boolean).map(c => c.trim());
-        tableRows.push(cells);
-        return;
-      } else if (inTable) {
-        flushTable();
-      }
-
-      // Headers
-      if (trimmed.startsWith('## ')) {
-        elements.push(<Typography key={idx} variant="h5" component="h2" fontWeight={600} sx={{ mt: 4, mb: 2 }}>{trimmed.slice(3)}</Typography>);
-      } else if (trimmed.startsWith('### ')) {
-        elements.push(<Typography key={idx} variant="h6" component="h3" fontWeight={600} sx={{ mt: 3, mb: 1 }}>{trimmed.slice(4)}</Typography>);
-      } else if (trimmed.startsWith('- **')) {
-        const match = trimmed.match(/- \*\*(.+?)\*\*\s*[—–-]\s*(.*)/);
-        if (match) {
-          elements.push(
-            <Box key={idx} sx={{ display: 'flex', gap: 1, mb: 1, ml: 2 }}>
-              <Typography variant="body2" component="span">•</Typography>
-              <Typography variant="body2"><strong>{match[1]}</strong> — {match[2]}</Typography>
-            </Box>
-          );
-        }
-      } else if (trimmed.startsWith('- ')) {
-        elements.push(
-          <Box key={idx} sx={{ display: 'flex', gap: 1, mb: 0.5, ml: 2 }}>
-            <Typography variant="body2" component="span">•</Typography>
-            <Typography variant="body2">{trimmed.slice(2)}</Typography>
-          </Box>
-        );
-      } else if (/^\d+\.\s/.test(trimmed)) {
-        const num = trimmed.match(/^(\d+)\.\s(.*)/);
-        if (num) {
-          elements.push(
-            <Box key={idx} sx={{ display: 'flex', gap: 1, mb: 0.5, ml: 2 }}>
-              <Typography variant="body2" component="span" sx={{ fontWeight: 600, minWidth: 20 }}>{num[1]}.</Typography>
-              <Typography variant="body2">{num[2]}</Typography>
-            </Box>
-          );
-        }
-      } else if (trimmed.length > 0) {
-        // Handle links in text
-        const withLinks = trimmed.replace(
-          /\[([^\]]+)\]\(([^)]+)\)/g,
-          '<a href="$2" style="color: ' + theme.palette.primary.main + '; text-decoration: underline;">$1</a>'
-        );
-        elements.push(
-          <Typography key={idx} variant="body1" color="text.secondary" sx={{ mb: 1.5, lineHeight: 1.7 }}
-            dangerouslySetInnerHTML={{ __html: withLinks }}
-          />
-        );
-      }
-    });
-
-    if (inTable) flushTable();
-
-    return elements;
-  };
+  // Memoize content rendering — it's pure computation on the article string
+  const renderedContent = useMemo(() => renderContent(articleContent, theme), [articleContent, theme]);
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -222,7 +129,7 @@ export default function ArticlePage({ slug }: { slug: string }) {
 
       {/* Article Content */}
       <Box sx={{ mb: 6 }}>
-        {renderContent(articleContent)}
+        {renderedContent}
       </Box>
 
       {/* Tool CTA */}
@@ -295,4 +202,129 @@ export default function ArticlePage({ slug }: { slug: string }) {
       />
     </Container>
   );
+}
+
+// ── Markdown-like content renderer (extracted as pure function) ──
+function renderContent(content: string, theme: Theme): React.ReactNode[] {
+  const lines = content.split('\n');
+  const elements: React.ReactNode[] = [];
+  let inTable = false;
+  let tableRows: string[][] = [];
+  let inCode = false;
+  let codeContent = '';
+
+  const flushTable = () => {
+    if (tableRows.length > 0) {
+      elements.push(
+        <Box key={`table-${elements.length}`} sx={{ overflowX: 'auto', my: 2 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                {tableRows[0].map((cell, i) => (
+                  <th key={i} style={{
+                    padding: '8px 12px', borderBottom: `2px solid ${theme.palette.divider}`,
+                    textAlign: 'left', fontWeight: 600, fontSize: 14,
+                  }}>{cell}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {tableRows.slice(2).map((row, ri) => (
+                <tr key={ri}>
+                  {row.map((cell, ci) => (
+                    <td key={ci} style={{
+                      padding: '8px 12px', borderBottom: `1px solid ${theme.palette.divider}`,
+                      fontSize: 14,
+                    }}>{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Box>
+      );
+      tableRows = [];
+    }
+    inTable = false;
+  };
+
+  lines.forEach((line, idx) => {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('```')) {
+      if (inCode) {
+        elements.push(
+          <Paper key={`code-${idx}`} elevation={0} sx={{ p: 2, my: 2, bgcolor: alpha(theme.palette.text.primary, 0.05), borderRadius: 10, fontFamily: 'monospace', fontSize: 13, overflow: 'auto' }}>
+            <pre style={{ margin: 0 }}>{codeContent}</pre>
+          </Paper>
+        );
+        codeContent = '';
+        inCode = false;
+      } else {
+        inCode = true;
+      }
+      return;
+    }
+
+    if (inCode) {
+      codeContent += (codeContent ? '\n' : '') + line;
+      return;
+    }
+
+    if (trimmed.startsWith('|')) {
+      if (!inTable) inTable = true;
+      const cells = trimmed.split('|').filter(Boolean).map(c => c.trim());
+      tableRows.push(cells);
+      return;
+    } else if (inTable) {
+      flushTable();
+    }
+
+    if (trimmed.startsWith('## ')) {
+      elements.push(<Typography key={idx} variant="h5" component="h2" fontWeight={600} sx={{ mt: 4, mb: 2 }}>{trimmed.slice(3)}</Typography>);
+    } else if (trimmed.startsWith('### ')) {
+      elements.push(<Typography key={idx} variant="h6" component="h3" fontWeight={600} sx={{ mt: 3, mb: 1 }}>{trimmed.slice(4)}</Typography>);
+    } else if (trimmed.startsWith('- **')) {
+      const match = trimmed.match(/- \*\*(.+?)\*\*\s*[—–-]\s*(.*)/);
+      if (match) {
+        elements.push(
+          <Box key={idx} sx={{ display: 'flex', gap: 1, mb: 1, ml: 2 }}>
+            <Typography variant="body2" component="span">•</Typography>
+            <Typography variant="body2"><strong>{match[1]}</strong> — {match[2]}</Typography>
+          </Box>
+        );
+      }
+    } else if (trimmed.startsWith('- ')) {
+      elements.push(
+        <Box key={idx} sx={{ display: 'flex', gap: 1, mb: 0.5, ml: 2 }}>
+          <Typography variant="body2" component="span">•</Typography>
+          <Typography variant="body2">{trimmed.slice(2)}</Typography>
+        </Box>
+      );
+    } else if (/^\d+\.\s/.test(trimmed)) {
+      const num = trimmed.match(/^(\d+)\.\s(.*)/);
+      if (num) {
+        elements.push(
+          <Box key={idx} sx={{ display: 'flex', gap: 1, mb: 0.5, ml: 2 }}>
+            <Typography variant="body2" component="span" sx={{ fontWeight: 600, minWidth: 20 }}>{num[1]}.</Typography>
+            <Typography variant="body2">{num[2]}</Typography>
+          </Box>
+        );
+      }
+    } else if (trimmed.length > 0) {
+      const withLinks = trimmed.replace(
+        /\[([^\]]+)\]\(([^)]+)\)/g,
+        '<a href="$2" style="color: ' + theme.palette.primary.main + '; text-decoration: underline;">$1</a>'
+      );
+      elements.push(
+        <Typography key={idx} variant="body1" color="text.secondary" sx={{ mb: 1.5, lineHeight: 1.7 }}
+          dangerouslySetInnerHTML={{ __html: withLinks }}
+        />
+      );
+    }
+  });
+
+  if (inTable) flushTable();
+
+  return elements;
 }

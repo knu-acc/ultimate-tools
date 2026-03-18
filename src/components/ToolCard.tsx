@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { memo } from 'react';
 import { Card, CardActionArea, CardContent, Typography, Box, alpha, useTheme } from '@mui/material';
 import Link from 'next/link';
 import { Tool, toolGroups } from '@/src/data/tools';
@@ -13,7 +13,9 @@ interface Props {
   variant?: 'default' | 'compact' | 'horizontal';
 }
 
-export default function ToolCard({ tool, showGroup = false, variant = 'default' }: Props) {
+// memo: ~50+ ToolCards on homepage; prevents re-render when parent state changes
+// (search dialog open/close, theme toggle) but tool/locale haven't changed.
+export default memo(function ToolCard({ tool, showGroup = false, variant = 'default' }: Props) {
   const theme = useTheme();
   const { lHref, locale } = useLanguage();
   const group = toolGroups.find(g => g.id === tool.groupId);
@@ -189,4 +191,4 @@ export default function ToolCard({ tool, showGroup = false, variant = 'default' 
       </CardActionArea>
     </Card>
   );
-}
+});

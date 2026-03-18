@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import {
   AppBar, Toolbar, Typography, IconButton, Box, Drawer,
   List, ListItem, ListItemButton, ListItemIcon, ListItemText,
@@ -61,13 +61,21 @@ export default function Header() {
     }
   }, [drawerOpen, currentGroupSlug]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     if (mode === 'light') setMode('dark');
     else if (mode === 'dark') setMode('system');
     else setMode('light');
-  };
+  }, [mode, setMode]);
 
-  const themeIcon = mode === 'light' ? <LightMode /> : mode === 'dark' ? <DarkMode /> : <SettingsBrightness />;
+  const openDrawer = useCallback(() => setDrawerOpen(true), []);
+  const closeDrawer = useCallback(() => setDrawerOpen(false), []);
+  const openSearch = useCallback(() => setSearchOpen(true), []);
+  const closeSearch = useCallback(() => setSearchOpen(false), []);
+
+  const themeIcon = useMemo(
+    () => mode === 'light' ? <LightMode /> : mode === 'dark' ? <DarkMode /> : <SettingsBrightness />,
+    [mode]
+  );
 
   return (
     <>
@@ -98,7 +106,7 @@ export default function Header() {
         <Toolbar sx={{ gap: 1, minHeight: 64, height: 64 }}>
           {isMobile && (
             <IconButton
-              onClick={() => setDrawerOpen(true)}
+              onClick={openDrawer}
               edge="start"
               size="large"
               aria-label="Открыть меню навигации"
@@ -169,7 +177,7 @@ export default function Header() {
           {/* Mobile: round icon button; Desktop: full search bar */}
           {isMobile ? (
             <IconButton
-              onClick={() => setSearchOpen(true)}
+              onClick={openSearch}
               aria-label={t('nav.search')}
               size="large"
             >
@@ -177,11 +185,11 @@ export default function Header() {
             </IconButton>
           ) : (
             <Box
-              onClick={() => setSearchOpen(true)}
+              onClick={openSearch}
               role="button"
               tabIndex={0}
               aria-label={t('nav.search')}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSearchOpen(true); } }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSearch(); } }}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -240,7 +248,7 @@ export default function Header() {
         id="mobile-navigation-drawer"
         anchor="left"
         open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
+        onClose={closeDrawer}
         PaperProps={{
           component: 'nav',
           'aria-label': 'Мобильная навигация',
@@ -253,7 +261,7 @@ export default function Header() {
       >
         <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant="subtitle1" fontWeight={600}>{t('nav.categories')}</Typography>
-          <IconButton onClick={() => setDrawerOpen(false)} size="small" aria-label="Закрыть меню"><Close /></IconButton>
+          <IconButton onClick={closeDrawer} size="small" aria-label="Закрыть меню"><Close /></IconButton>
         </Box>
         <Divider />
         <List ref={listRef} sx={{ px: 1.5, py: 1 }}>
@@ -261,7 +269,7 @@ export default function Header() {
             <ListItemButton
               component={Link}
               href={lHref('/')}
-              onClick={() => setDrawerOpen(false)}
+              onClick={closeDrawer}
               sx={{ borderRadius: 999, py: 1 }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}><Home sx={{ fontSize: 22 }} /></ListItemIcon>
@@ -280,7 +288,7 @@ export default function Header() {
                 <ListItemButton
                   component={Link}
                   href={lHref(`/group/${group.slug}`)}
-                  onClick={() => setDrawerOpen(false)}
+                  onClick={closeDrawer}
                   sx={{
                     borderRadius: 999,
                     py: 0.75,
@@ -315,7 +323,7 @@ export default function Header() {
             <ListItemButton
               component={Link}
               href={lHref('/blog')}
-              onClick={() => setDrawerOpen(false)}
+              onClick={closeDrawer}
               sx={{ borderRadius: 999, py: 1 }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}><Article sx={{ fontSize: 22 }} /></ListItemIcon>
@@ -325,7 +333,7 @@ export default function Header() {
         </List>
       </Drawer>
 
-      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SearchDialog open={searchOpen} onClose={closeSearch} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import {
   Container, Typography, Box, Grid, Card, CardActionArea, CardContent,
   Button, Chip, alpha, useTheme, Paper,
@@ -8,21 +8,28 @@ import {
 import { Search as SearchIcon, ArrowForward, History, AutoAwesome } from '@mui/icons-material';
 import DynamicIcon from '@/src/components/DynamicIcon';
 import Link from 'next/link';
-import { tools, toolGroups, getFeaturedTools, getStats, getToolsByGroup, getToolBySlug } from '@/src/data/tools';
+import { toolGroups, getFeaturedTools, getStats, getToolsByGroup, getToolBySlug } from '@/src/data/tools';
 import ToolCard from '@/src/components/ToolCard';
 import SearchDialog from '@/src/components/SearchDialog';
 import { useRecentTools } from '@/src/hooks/useRecentTools';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
+// Module-level constants — computed once, never re-created
+const stats = getStats();
+const featuredTools = getFeaturedTools();
+
 export default function HomePage() {
   const theme = useTheme();
-  const stats = getStats();
-  const featuredTools = getFeaturedTools();
   const [searchOpen, setSearchOpen] = useState(false);
   const { recentSlugs } = useRecentTools();
-  const recentTools = recentSlugs.map(s => getToolBySlug(s)).filter(Boolean) as NonNullable<ReturnType<typeof getToolBySlug>>[];
   const { t, lHref, locale } = useLanguage();
   const isDark = theme.palette.mode === 'dark';
+
+  // Memoize derived data — recentTools only recomputes when slugs change
+  const recentTools = useMemo(
+    () => recentSlugs.map(s => getToolBySlug(s)).filter(Boolean) as NonNullable<ReturnType<typeof getToolBySlug>>[],
+    [recentSlugs]
+  );
 
   const quickTags = locale === 'en' ? [
     { name: 'Password Generator', slug: 'password-generator' },
@@ -375,7 +382,7 @@ export default function HomePage() {
         </Paper>
       </Container>
 
-      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SearchDialog open={searchOpen} onClose={useCallback(() => setSearchOpen(false), [])} />
 
       <script
         type="application/ld+json"

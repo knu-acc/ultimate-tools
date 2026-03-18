@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import {
   Container, Typography, Box, Grid, Card, CardActionArea, CardContent,
   Chip, TextField, InputAdornment, alpha, useTheme,
 } from '@mui/material';
 import { Search, Schedule, ArrowForward } from '@mui/icons-material';
 import Link from 'next/link';
-import { articles } from '@/src/data/articles';
+import { articlesMeta } from '@/src/data/articles';
 import { getToolBySlug } from '@/src/data/tools';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
@@ -16,14 +16,25 @@ export default function BlogPage() {
   const { locale, t, lHref } = useLanguage();
   const isEn = locale === 'en';
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const filtered = articles.filter(a => {
-    const title = (isEn ? a.titleEn || a.title : a.title).toLowerCase();
-    const desc = (isEn ? a.descriptionEn || a.description : a.description).toLowerCase();
-    const q = search.toLowerCase();
-    return title.includes(q) || desc.includes(q) ||
-      a.keywords.some(k => k.toLowerCase().includes(q));
-  });
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => setDebouncedSearch(e.target.value), 200);
+  }, []);
+
+  const filtered = useMemo(() => {
+    const q = debouncedSearch.toLowerCase();
+    if (!q) return articlesMeta;
+    return articlesMeta.filter(a => {
+      const title = (isEn ? a.titleEn || a.title : a.title).toLowerCase();
+      const desc = (isEn ? a.descriptionEn || a.description : a.description).toLowerCase();
+      return title.includes(q) || desc.includes(q) ||
+        a.keywords.some(k => k.toLowerCase().includes(q));
+    });
+  }, [debouncedSearch, isEn]);
 
   const typeLabels: Record<string, string> = isEn ? {
     guide: 'Guide',
@@ -54,7 +65,7 @@ export default function BlogPage() {
         fullWidth
         placeholder={isEn ? 'Search articles...' : 'Поиск статей...'}
         value={search}
-        onChange={e => setSearch(e.target.value)}
+        onChange={handleSearchChange}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -75,10 +86,10 @@ export default function BlogPage() {
                 sx={{
                   height: '100%',
                   border: `1px solid ${theme.palette.divider}`,
-                  transitionProperty: 'background-color', transitionDuration: '250ms',
+                  transitionProperty: 'background-color, border-color, box-shadow',
+                  transitionDuration: '250ms',
                   '&:hover': {
                     borderColor: typeColors[article.type],
-                    transform: 'translateY(-2px)',
                     boxShadow: `0 4px 20px ${alpha(typeColors[article.type], 0.15)}`,
                   },
                 }}

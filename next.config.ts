@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
+  // Transform barrel imports into direct file imports — avoids parsing the
+  // entire 2000+ icon barrel and improves build + cold-start performance.
+  experimental: {
+    optimizePackageImports: ['@mui/icons-material', '@mui/material', 'react-colorful'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],

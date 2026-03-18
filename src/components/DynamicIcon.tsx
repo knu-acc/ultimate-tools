@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { memo } from 'react';
 import {
   Image, CurrencyExchange, ColorLens, Transform, Thermostat, Straighten,
   FitnessCenter, LocalDrink, Speed, SquareFoot, ElectricBolt,
@@ -82,8 +82,11 @@ interface DynamicIconProps extends SvgIconProps {
   name: string;
 }
 
-export default function DynamicIcon({ name, ...props }: DynamicIconProps) {
+// memo prevents re-renders when parent re-renders but icon name/props haven't changed.
+// On the homepage alone, ~50+ DynamicIcon instances are rendered; without memo each
+// theme toggle or state change re-renders all of them unnecessarily.
+export default memo(function DynamicIcon({ name, ...props }: DynamicIconProps) {
   const IconComponent = iconMap[name];
   if (!IconComponent) return <Build {...props} />;
   return <IconComponent {...props} />;
-}
+});

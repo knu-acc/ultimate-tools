@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import ArticlePage from './ArticlePage';
-import { articles, getArticleBySlug } from '@/src/data/articles';
+import { articles, getArticleBySlug, getArticlesByTool } from '@/src/data/articles';
+import { getToolBySlug } from '@/src/data/tools';
 
 export async function generateStaticParams() {
   return articles.map(a => ({ slug: a.slug }));
@@ -32,5 +33,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  return <ArticlePage slug={slug} />;
+  // Resolve data on the server — ArticlePage no longer imports the 1.6MB articles module
+  const article = getArticleBySlug(slug) ?? null;
+  const relatedArticles = article
+    ? getArticlesByTool(article.toolSlug)
+        .filter(a => a.slug !== article.slug)
+        .map(({ slug, title, titleEn }) => ({ slug, title, titleEn }))
+    : [];
+  const rawTool = article ? getToolBySlug(article.toolSlug) : null;
+  const tool = rawTool ? {
+    slug: rawTool.slug,
+    name: rawTool.name,
+    nameEn: (rawTool as any).nameEn,
+    description: rawTool.description,
+    descriptionEn: (rawTool as any).descriptionEn,
+  } : null;
+
+  return <ArticlePage article={article} relatedArticles={relatedArticles} tool={tool} />;
 }
