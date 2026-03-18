@@ -98,7 +98,9 @@ export default function NoiseGenerator() {
     audioCtxRef.current = ctx;
 
     const gain = ctx.createGain();
-    gain.gain.value = volume / 100;
+    // Fade in over 1.5 s — eliminates the harsh click on start
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(volume / 100, ctx.currentTime + 1.5);
     gain.connect(ctx.destination);
     gainRef.current = gain;
 
@@ -122,9 +124,10 @@ export default function NoiseGenerator() {
           output[i] = (b0Ref.current + b1Ref.current + b2Ref.current + b3Ref.current + b4Ref.current + b5Ref.current + b6Ref.current + white * 0.5362) * 0.11;
           b6Ref.current = white * 0.115926;
         } else {
-          output[i] = (lastOutRef.current + (0.02 * white)) / 1.02;
-          lastOutRef.current = output[i];
-          output[i] *= 3.5;
+          // Brown noise: integrate then hard-clamp to prevent clipping
+          const brown = (lastOutRef.current + (0.02 * white)) / 1.02;
+          lastOutRef.current = brown;
+          output[i] = Math.max(-1, Math.min(1, brown * 3.5));
         }
       }
     };

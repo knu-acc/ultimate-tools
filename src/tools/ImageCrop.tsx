@@ -161,7 +161,8 @@ export default function ImageCrop() {
     return () => window.removeEventListener('resize', handleResize);
   }, [setupCanvas, drawCropOverlay, cropRect]);
 
-  const getCanvasCoords = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+  // Pointer events: handles mouse, touch and stylus uniformly
+  const getPointerCoords = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = cropCanvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
@@ -170,18 +171,22 @@ export default function ImageCrop() {
     return { x, y };
   }, [displayScale]);
 
-  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
-    const coords = getCanvasCoords(e);
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    // Capture pointer so move/up fire even if finger leaves canvas
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    const coords = getPointerCoords(e);
     setIsDraggingCrop(true);
     setDragStart(coords);
     setCropRect({ x: coords.x, y: coords.y, w: 0, h: 0 });
     setCroppedUrl('');
     setCroppedSize(0);
-  }, [getCanvasCoords]);
+  }, [getPointerCoords]);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+  const handlePointerMove = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!isDraggingCrop) return;
-    const coords = getCanvasCoords(e);
+    e.preventDefault();
+    const coords = getPointerCoords(e);
     const img = imageRef.current;
     if (!img) return;
 
@@ -193,9 +198,9 @@ export default function ImageCrop() {
     const newRect = { x, y, w, h };
     setCropRect(newRect);
     drawCropOverlay(newRect);
-  }, [isDraggingCrop, dragStart, getCanvasCoords, drawCropOverlay]);
+  }, [isDraggingCrop, dragStart, getPointerCoords, drawCropOverlay]);
 
-  const handleMouseUp = useCallback(() => {
+  const handlePointerUp = useCallback(() => {
     setIsDraggingCrop(false);
   }, []);
 
@@ -489,11 +494,11 @@ export default function ImageCrop() {
             >
               <canvas
                 ref={cropCanvasRef}
-                style={{ cursor: 'crosshair', maxWidth: '100%', display: 'block' }}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
+                style={{ cursor: 'crosshair', maxWidth: '100%', display: 'block', touchAction: 'none' }}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerLeave={handlePointerUp}
               />
             </Box>
           </Paper>

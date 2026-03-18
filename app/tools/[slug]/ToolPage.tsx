@@ -183,6 +183,7 @@ const MemeGeneratorTool = dyn(() => import('@/src/tools/MemeGenerator'));
 const ScreenshotMockupTool = dyn(() => import('@/src/tools/ScreenshotMockup'));
 const QrCodeGenTool = dyn(() => import('@/src/tools/QrCodeGen'));
 const TextFormatterTool = dyn(() => import('@/src/tools/TextFormatter'));
+const SpeakerDryerTool = dyn(() => import('@/src/tools/SpeakerDryer'));
 
 const toolComponents: Record<string, React.ComponentType> = {
   'password-generator': PasswordGeneratorTool,
@@ -251,6 +252,7 @@ const toolComponents: Record<string, React.ComponentType> = {
   'binary-text': BinaryTextTool,
   'metronome': MetronomeTool,
   'tone-generator': ToneGeneratorTool,
+  'speaker-dryer': SpeakerDryerTool,
   'cooking-converter': CookingConverterTool,
   'shoe-size': ShoeSizeTool,
   'wheel-spinner': WheelSpinnerTool,

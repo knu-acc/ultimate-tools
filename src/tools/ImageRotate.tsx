@@ -47,6 +47,12 @@ export default function ImageRotate() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
+  // Track result URL in a ref to break the circular dependency:
+  // applyTransform → setResultUrl → re-creates applyTransform → triggers effect → infinite loop
+  const resultUrlRef = useRef('');
+  // RAF throttle refs — batch rapid slider moves into a single frame
+  const pendingTransformRef = useRef<{ rotation: number; flipH: boolean; flipV: boolean } | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   const applyTransform = useCallback((img: HTMLImageElement, deg: number, fh: boolean, fv: boolean) => {
     const canvas = canvasRef.current;
@@ -67,30 +73,39 @@ export default function ImageRotate() {
 
     ctx.clearRect(0, 0, newWidth, newHeight);
     ctx.save();
-
     ctx.translate(newWidth / 2, newHeight / 2);
     ctx.rotate(radians);
     ctx.scale(fh ? -1 : 1, fv ? -1 : 1);
     ctx.drawImage(img, -img.width / 2, -img.height / 2);
-
     ctx.restore();
 
     canvas.toBlob((blob) => {
-      if (blob) {
-        if (resultUrl) URL.revokeObjectURL(resultUrl);
-        setResultUrl(URL.createObjectURL(blob));
-        setResultSize(blob.size);
-      }
+      if (!blob) return;
+      // Revoke via ref — no state dependency, so this callback is stable
+      if (resultUrlRef.current) URL.revokeObjectURL(resultUrlRef.current);
+      const newUrl = URL.createObjectURL(blob);
+      resultUrlRef.current = newUrl;
+      setResultUrl(newUrl);
+      setResultSize(blob.size);
     }, 'image/png');
-  }, [resultUrl]);
+  }, []); // stable — no deps, reads resultUrlRef instead of state
 
+  // RAF-throttled effect: batches rapid slider drags into one frame per rAF tick
   useEffect(() => {
-    if (imageRef.current) {
-      applyTransform(imageRef.current, rotation, flipH, flipV);
-    }
+    if (!imageRef.current) return;
+    pendingTransformRef.current = { rotation, flipH, flipV };
+    if (rafRef.current !== null) return; // already scheduled, will pick up latest values
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      const p = pendingTransformRef.current;
+      if (p && imageRef.current) applyTransform(imageRef.current, p.rotation, p.flipH, p.flipV);
+      pendingTransformRef.current = null;
+    });
   }, [rotation, flipH, flipV, applyTransform]);
 
   const processImage = useCallback((file: File) => {
+    if (rafRef.current !== null) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
+    if (resultUrlRef.current) { URL.revokeObjectURL(resultUrlRef.current); resultUrlRef.current = ''; }
     setOriginalFile(file);
     setRotation(0);
     setFlipH(false);
@@ -148,8 +163,9 @@ export default function ImageRotate() {
   }, [resultUrl, originalFile, rotation, flipH, flipV]);
 
   const clearImage = useCallback(() => {
+    if (rafRef.current !== null) { cancelAnimationFrame(rafRef.current); rafRef.current = null; }
     if (originalUrl) URL.revokeObjectURL(originalUrl);
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrlRef.current) { URL.revokeObjectURL(resultUrlRef.current); resultUrlRef.current = ''; }
     setOriginalFile(null);
     setOriginalUrl('');
     setResultUrl('');
@@ -160,7 +176,7 @@ export default function ImageRotate() {
     setFlipH(false);
     setFlipV(false);
     imageRef.current = null;
-  }, [originalUrl, resultUrl]);
+  }, [originalUrl]); // removed resultUrl dep — tracked via ref now
 
   const resetTransform = useCallback(() => {
     setRotation(0);

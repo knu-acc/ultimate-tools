@@ -59,12 +59,13 @@ export default function Metronome() {
     osc.connect(gain);
     gain.connect(ctx.destination);
 
-    osc.frequency.value = isAccent ? 1000 : 700;
-    gain.gain.value = isAccent ? 0.6 : 0.3;
-
+    osc.frequency.value = isAccent ? 1000 : 800;
+    // Schedule gain AT the note's future time — fixes silent non-accent beats
+    const targetGain = isAccent ? 0.7 : 0.5;
+    gain.gain.setValueAtTime(targetGain, time);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.08);
     osc.start(time);
-    gain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
-    osc.stop(time + 0.05);
+    osc.stop(time + 0.1);
   }, [getAudioContext]);
 
   const scheduler = useCallback(() => {

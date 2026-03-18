@@ -423,7 +423,7 @@ export default function TextFormatterTool() {
           startIcon={<AutoFixHigh />}
           sx={{ borderRadius: 18 }}
         >
-          Применить
+          {isEn ? 'Apply' : 'Применить'}
         </Button>
         <Button
           variant="outlined"
@@ -433,7 +433,7 @@ export default function TextFormatterTool() {
           color={copied ? 'success' : 'primary'}
           sx={{ borderRadius: 18 }}
         >
-          {copied ? 'Скопировано!' : 'Копировать'}
+          {copied ? (isEn ? 'Copied!' : 'Скопировано!') : (isEn ? 'Copy' : 'Копировать')}
         </Button>
         <Button
           variant="text"
@@ -442,7 +442,7 @@ export default function TextFormatterTool() {
           sx={{ borderRadius: 18 }}
           color="inherit"
         >
-          Очистить
+          {isEn ? 'Clear' : 'Очистить'}
         </Button>
         <FormControlLabel
           control={
@@ -461,22 +461,24 @@ export default function TextFormatterTool() {
 
       {/* Операции */}
       <Typography variant="body2" fontWeight={600} sx={{ mb: 1.5 }}>
-        Операции ({selectedOps.length} выбрано — применяются по порядку)
+        {isEn
+          ? `Operations (${selectedOps.length} selected — applied in order)`
+          : `Операции (${selectedOps.length} выбрано — применяются по порядку)`}
       </Typography>
 
       {operationGroups.map(group => (
         <Box key={group.label} sx={{ mb: 2 }}>
           <Typography variant="caption" color="text.secondary" sx={{ mb: 1, display: 'block', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
-            {group.label}
+            {isEn ? group.labelEn : group.label}
           </Typography>
           <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap' }}>
             {group.ids.map(id => {
               const op = operations.find(o => o.id === id)!;
               const isSelected = selectedOps.includes(id);
               return (
-                <Tooltip key={id} title={op.description} placement="top">
+                <Tooltip key={id} title={isEn ? op.descriptionEn : op.description} placement="top">
                   <Chip
-                    label={op.label}
+                    label={isEn ? op.labelEn : op.label}
                     onClick={() => {
                       const newOps = isSelected
                         ? selectedOps.filter(o => o !== id)
@@ -497,7 +499,7 @@ export default function TextFormatterTool() {
 
       {selectedOps.length === 0 && (
         <Alert severity="info" sx={{ borderRadius: 10 }}>
-          Выберите хотя бы одну операцию из списка выше
+          {isEn ? 'Select at least one operation from the list above' : 'Выберите хотя бы одну операцию из списка выше'}
         </Alert>
       )}
 
@@ -513,10 +515,13 @@ export default function TextFormatterTool() {
           }}
         >
           <Typography variant="caption" color="text.secondary" fontWeight={500}>
-            Порядок применения: {' '}
+            {isEn ? 'Apply order: ' : 'Порядок применения: '}
           </Typography>
           <Typography variant="caption" color="primary.main">
-            {selectedOps.map(id => operations.find(o => o.id === id)?.label).join(' → ')}
+            {selectedOps.map(id => {
+              const op = operations.find(o => o.id === id);
+              return isEn ? op?.labelEn : op?.label;
+            }).join(' → ')}
           </Typography>
         </Paper>
       )}
