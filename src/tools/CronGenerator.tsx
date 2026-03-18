@@ -27,111 +27,157 @@ interface CronState {
 
 interface Preset {
   label: string;
+  labelEn: string;
   cron: CronState;
   description: string;
+  descriptionEn: string;
 }
 
 const presets: Preset[] = [
   {
     label: 'Каждую минуту',
+    labelEn: 'Every minute',
     cron: { minute: '*', hour: '*', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждую минуту'
+    description: 'Выполняется каждую минуту',
+    descriptionEn: 'Runs every minute',
   },
   {
     label: 'Каждый час',
+    labelEn: 'Every hour',
     cron: { minute: '0', hour: '*', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется в начале каждого часа'
+    description: 'Выполняется в начале каждого часа',
+    descriptionEn: 'Runs at the start of every hour',
   },
   {
     label: 'Ежедневно (полночь)',
+    labelEn: 'Daily (midnight)',
     cron: { minute: '0', hour: '0', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждый день в полночь'
+    description: 'Выполняется каждый день в полночь',
+    descriptionEn: 'Runs every day at midnight',
   },
   {
     label: 'Ежедневно (9:00)',
+    labelEn: 'Daily (9:00)',
     cron: { minute: '0', hour: '9', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждый день в 9:00'
+    description: 'Выполняется каждый день в 9:00',
+    descriptionEn: 'Runs every day at 9:00 AM',
   },
   {
     label: 'Еженедельно (пн)',
+    labelEn: 'Weekly (Mon)',
     cron: { minute: '0', hour: '0', dayOfMonth: '*', month: '*', dayOfWeek: '1' },
-    description: 'Выполняется каждый понедельник в полночь'
+    description: 'Выполняется каждый понедельник в полночь',
+    descriptionEn: 'Runs every Monday at midnight',
   },
   {
     label: 'Ежемесячно',
+    labelEn: 'Monthly',
     cron: { minute: '0', hour: '0', dayOfMonth: '1', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется 1-го числа каждого месяца в полночь'
+    description: 'Выполняется 1-го числа каждого месяца в полночь',
+    descriptionEn: 'Runs on the 1st of every month at midnight',
   },
   {
     label: 'Каждые 5 минут',
+    labelEn: 'Every 5 minutes',
     cron: { minute: '*/5', hour: '*', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждые 5 минут'
+    description: 'Выполняется каждые 5 минут',
+    descriptionEn: 'Runs every 5 minutes',
   },
   {
     label: 'Каждые 30 минут',
+    labelEn: 'Every 30 minutes',
     cron: { minute: '*/30', hour: '*', dayOfMonth: '*', month: '*', dayOfWeek: '*' },
-    description: 'Выполняется каждые 30 минут'
+    description: 'Выполняется каждые 30 минут',
+    descriptionEn: 'Runs every 30 minutes',
   },
   {
     label: 'Будни (пн-пт, 9:00)',
+    labelEn: 'Weekdays (Mon-Fri, 9:00)',
     cron: { minute: '0', hour: '9', dayOfMonth: '*', month: '*', dayOfWeek: '1-5' },
-    description: 'Выполняется с понедельника по пятницу в 9:00'
+    description: 'Выполняется с понедельника по пятницу в 9:00',
+    descriptionEn: 'Runs Monday through Friday at 9:00 AM',
   },
   {
     label: 'Ежегодно',
+    labelEn: 'Yearly',
     cron: { minute: '0', hour: '0', dayOfMonth: '1', month: '1', dayOfWeek: '*' },
-    description: 'Выполняется 1 января в полночь'
+    description: 'Выполняется 1 января в полночь',
+    descriptionEn: 'Runs on January 1st at midnight',
   },
 ];
 
-const minuteOptions = [
-  { value: '*', label: 'Каждую (*)' },
-  { value: '*/5', label: 'Каждые 5 мин' },
-  { value: '*/10', label: 'Каждые 10 мин' },
-  { value: '*/15', label: 'Каждые 15 мин' },
-  { value: '*/30', label: 'Каждые 30 мин' },
-  ...Array.from({ length: 60 }, (_, i) => ({ value: String(i), label: String(i) })),
-];
-
-const hourOptions = [
-  { value: '*', label: 'Каждый (*)' },
-  { value: '*/2', label: 'Каждые 2 ч' },
-  { value: '*/4', label: 'Каждые 4 ч' },
-  { value: '*/6', label: 'Каждые 6 ч' },
-  { value: '*/12', label: 'Каждые 12 ч' },
-  ...Array.from({ length: 24 }, (_, i) => ({ value: String(i), label: `${i}:00` })),
-];
-
-const dayOfMonthOptions = [
-  { value: '*', label: 'Каждый (*)' },
-  { value: '*/2', label: 'Через день' },
-  ...Array.from({ length: 31 }, (_, i) => ({ value: String(i + 1), label: String(i + 1) })),
-];
-
-const monthNames = [
+const monthNamesRu = [
   'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
   'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
 ];
 
-const monthOptions = [
-  { value: '*', label: 'Каждый (*)' },
-  ...monthNames.map((name, i) => ({ value: String(i + 1), label: name })),
+const monthNamesEn = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
-const dayOfWeekNames = [
+const dayOfWeekNamesRu = [
   'Воскресенье', 'Понедельник', 'Вторник', 'Среда',
   'Четверг', 'Пятница', 'Суббота',
 ];
 
-const dayOfWeekOptions = [
-  { value: '*', label: 'Каждый (*)' },
-  { value: '1-5', label: 'Будни (пн-пт)' },
-  { value: '0,6', label: 'Выходные (сб-вс)' },
-  ...dayOfWeekNames.map((name, i) => ({ value: String(i), label: name })),
+const dayOfWeekNamesEn = [
+  'Sunday', 'Monday', 'Tuesday', 'Wednesday',
+  'Thursday', 'Friday', 'Saturday',
 ];
 
-function describeCron(cron: CronState): string {
+function getMinuteOptions(isEn: boolean) {
+  return [
+    { value: '*', label: isEn ? 'Every (*)' : 'Каждую (*)' },
+    { value: '*/5', label: isEn ? 'Every 5 min' : 'Каждые 5 мин' },
+    { value: '*/10', label: isEn ? 'Every 10 min' : 'Каждые 10 мин' },
+    { value: '*/15', label: isEn ? 'Every 15 min' : 'Каждые 15 мин' },
+    { value: '*/30', label: isEn ? 'Every 30 min' : 'Каждые 30 мин' },
+    ...Array.from({ length: 60 }, (_, i) => ({ value: String(i), label: String(i) })),
+  ];
+}
+
+function getHourOptions(isEn: boolean) {
+  return [
+    { value: '*', label: isEn ? 'Every (*)' : 'Каждый (*)' },
+    { value: '*/2', label: isEn ? 'Every 2 h' : 'Каждые 2 ч' },
+    { value: '*/4', label: isEn ? 'Every 4 h' : 'Каждые 4 ч' },
+    { value: '*/6', label: isEn ? 'Every 6 h' : 'Каждые 6 ч' },
+    { value: '*/12', label: isEn ? 'Every 12 h' : 'Каждые 12 ч' },
+    ...Array.from({ length: 24 }, (_, i) => ({ value: String(i), label: `${i}:00` })),
+  ];
+}
+
+function getDayOfMonthOptions(isEn: boolean) {
+  return [
+    { value: '*', label: isEn ? 'Every (*)' : 'Каждый (*)' },
+    { value: '*/2', label: isEn ? 'Every other day' : 'Через день' },
+    ...Array.from({ length: 31 }, (_, i) => ({ value: String(i + 1), label: String(i + 1) })),
+  ];
+}
+
+function getMonthOptions(isEn: boolean) {
+  const names = isEn ? monthNamesEn : monthNamesRu;
+  return [
+    { value: '*', label: isEn ? 'Every (*)' : 'Каждый (*)' },
+    ...names.map((name, i) => ({ value: String(i + 1), label: name })),
+  ];
+}
+
+function getDayOfWeekOptions(isEn: boolean) {
+  const names = isEn ? dayOfWeekNamesEn : dayOfWeekNamesRu;
+  return [
+    { value: '*', label: isEn ? 'Every (*)' : 'Каждый (*)' },
+    { value: '1-5', label: isEn ? 'Weekdays (Mon-Fri)' : 'Будни (пн-пт)' },
+    { value: '0,6', label: isEn ? 'Weekends (Sat-Sun)' : 'Выходные (сб-вс)' },
+    ...names.map((name, i) => ({ value: String(i), label: name })),
+  ];
+}
+
+function describeCron(cron: CronState, isEn: boolean): string {
   const { minute, hour, dayOfMonth, month, dayOfWeek } = cron;
+  const monthNames = isEn ? monthNamesEn : monthNamesRu;
+  const dayOfWeekNames = isEn ? dayOfWeekNamesEn : dayOfWeekNamesRu;
 
   // Check presets first
   for (const preset of presets) {
@@ -142,7 +188,7 @@ function describeCron(cron: CronState): string {
       preset.cron.month === month &&
       preset.cron.dayOfWeek === dayOfWeek
     ) {
-      return preset.description;
+      return isEn ? preset.descriptionEn : preset.description;
     }
   }
 
@@ -150,28 +196,28 @@ function describeCron(cron: CronState): string {
 
   // Minute description
   if (minute === '*') {
-    parts.push('каждую минуту');
+    parts.push(isEn ? 'every minute' : 'каждую минуту');
   } else if (minute.startsWith('*/')) {
-    parts.push(`каждые ${minute.slice(2)} мин.`);
+    parts.push(isEn ? `every ${minute.slice(2)} min` : `каждые ${minute.slice(2)} мин.`);
   } else {
-    parts.push(`в ${minute} мин.`);
+    parts.push(isEn ? `at minute ${minute}` : `в ${minute} мин.`);
   }
 
   // Hour description
   if (hour === '*') {
-    parts.push('каждый час');
+    parts.push(isEn ? 'every hour' : 'каждый час');
   } else if (hour.startsWith('*/')) {
-    parts.push(`каждые ${hour.slice(2)} ч.`);
+    parts.push(isEn ? `every ${hour.slice(2)} h` : `каждые ${hour.slice(2)} ч.`);
   } else {
-    parts.push(`в ${hour}:00`);
+    parts.push(isEn ? `at ${hour}:00` : `в ${hour}:00`);
   }
 
   // Day of month
   if (dayOfMonth !== '*') {
     if (dayOfMonth.startsWith('*/')) {
-      parts.push(`каждые ${dayOfMonth.slice(2)} дн.`);
+      parts.push(isEn ? `every ${dayOfMonth.slice(2)} days` : `каждые ${dayOfMonth.slice(2)} дн.`);
     } else {
-      parts.push(`${dayOfMonth}-го числа`);
+      parts.push(isEn ? `on day ${dayOfMonth}` : `${dayOfMonth}-го числа`);
     }
   }
 
@@ -179,24 +225,24 @@ function describeCron(cron: CronState): string {
   if (month !== '*') {
     const mIdx = parseInt(month) - 1;
     if (mIdx >= 0 && mIdx < 12) {
-      parts.push(`в ${monthNames[mIdx].toLowerCase()}`);
+      parts.push(isEn ? `in ${monthNames[mIdx]}` : `в ${monthNames[mIdx].toLowerCase()}`);
     } else {
-      parts.push(`месяц: ${month}`);
+      parts.push(isEn ? `month: ${month}` : `месяц: ${month}`);
     }
   }
 
   // Day of week
   if (dayOfWeek !== '*') {
     if (dayOfWeek === '1-5') {
-      parts.push('по будням (пн-пт)');
+      parts.push(isEn ? 'on weekdays (Mon-Fri)' : 'по будням (пн-пт)');
     } else if (dayOfWeek === '0,6') {
-      parts.push('по выходным (сб-вс)');
+      parts.push(isEn ? 'on weekends (Sat-Sun)' : 'по выходным (сб-вс)');
     } else {
       const dIdx = parseInt(dayOfWeek);
       if (dIdx >= 0 && dIdx < 7) {
-        parts.push(`по ${dayOfWeekNames[dIdx].toLowerCase()}м`);
+        parts.push(isEn ? `on ${dayOfWeekNames[dIdx]}` : `по ${dayOfWeekNames[dIdx].toLowerCase()}м`);
       } else {
-        parts.push(`день недели: ${dayOfWeek}`);
+        parts.push(isEn ? `day of week: ${dayOfWeek}` : `день недели: ${dayOfWeek}`);
       }
     }
   }
@@ -215,11 +261,17 @@ export default function CronGenerator() {
     month: '*',
     dayOfWeek: '*'
   });
+  const minuteOptions = useMemo(() => getMinuteOptions(isEn), [isEn]);
+  const hourOptions = useMemo(() => getHourOptions(isEn), [isEn]);
+  const dayOfMonthOptions = useMemo(() => getDayOfMonthOptions(isEn), [isEn]);
+  const monthOptions = useMemo(() => getMonthOptions(isEn), [isEn]);
+  const dayOfWeekOptions = useMemo(() => getDayOfWeekOptions(isEn), [isEn]);
+
   const cronExpression = useMemo(() => {
     return `${cron.minute} ${cron.hour} ${cron.dayOfMonth} ${cron.month} ${cron.dayOfWeek}`;
   }, [cron]);
 
-  const description = useMemo(() => describeCron(cron), [cron]);
+  const description = useMemo(() => describeCron(cron, isEn), [cron, isEn]);
 
   const updateField = (field: keyof CronState, value: string) => {
     setCron((prev) => ({ ...prev, [field]: value }));
@@ -247,7 +299,7 @@ export default function CronGenerator() {
           {presets.map((preset) => (
             <Chip
               key={preset.label}
-              label={preset.label}
+              label={isEn ? preset.labelEn : preset.label}
               onClick={() => applyPreset(preset)}
               variant="outlined"
               sx={{

@@ -32,42 +32,72 @@ interface FieldDef {
   max?: number;
 }
 
-const FIRST_NAMES = [
+const FIRST_NAMES_RU = [
   'Александр', 'Мария', 'Дмитрий', 'Анна', 'Сергей', 'Елена', 'Андрей', 'Ольга',
   'Иван', 'Наталья', 'Михаил', 'Екатерина', 'Алексей', 'Татьяна', 'Николай',
   'Светлана', 'Павел', 'Ирина', 'Владимир', 'Юлия', 'Артём', 'Валерия',
   'Максим', 'Полина', 'Роман', 'Дарья', 'Кирилл', 'Виктория', 'Евгений', 'Ксения',
 ];
+const FIRST_NAMES_EN = [
+  'James', 'Emma', 'Oliver', 'Sophia', 'William', 'Isabella', 'Benjamin', 'Mia',
+  'Lucas', 'Charlotte', 'Henry', 'Amelia', 'Alexander', 'Harper', 'Daniel',
+  'Evelyn', 'Matthew', 'Abigail', 'Joseph', 'Emily', 'David', 'Elizabeth',
+  'Samuel', 'Avery', 'John', 'Ella', 'Andrew', 'Grace', 'Ryan', 'Chloe',
+];
 
-const LAST_NAMES = [
+const LAST_NAMES_RU = [
   'Иванов', 'Смирнов', 'Кузнецов', 'Попов', 'Васильев', 'Петров', 'Соколов',
   'Михайлов', 'Новиков', 'Фёдоров', 'Морозов', 'Волков', 'Алексеев', 'Лебедев',
   'Семёнов', 'Егоров', 'Павлов', 'Козлов', 'Степанов', 'Николаев', 'Орлов',
   'Андреев', 'Макаров', 'Никитин', 'Захаров',
 ];
+const LAST_NAMES_EN = [
+  'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller',
+  'Davis', 'Rodriguez', 'Martinez', 'Anderson', 'Taylor', 'Thomas', 'Moore',
+  'Jackson', 'Martin', 'Lee', 'Thompson', 'White', 'Harris', 'Clark',
+  'Lewis', 'Robinson', 'Walker', 'Hall',
+];
 
-const CITIES = [
+const CITIES_RU = [
   'Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань',
   'Нижний Новгород', 'Челябинск', 'Самара', 'Омск', 'Ростов-на-Дону',
   'Уфа', 'Красноярск', 'Воронеж', 'Пермь', 'Волгоград',
   'Краснодар', 'Саратов', 'Тюмень', 'Тольятти', 'Ижевск',
 ];
+const CITIES_EN = [
+  'New York', 'London', 'Tokyo', 'Paris', 'Berlin', 'Sydney', 'Toronto',
+  'Singapore', 'Amsterdam', 'San Francisco', 'Chicago', 'Barcelona',
+  'Dubai', 'Seoul', 'Stockholm', 'Vienna', 'Munich', 'Zurich', 'Milan', 'Dublin',
+];
 
-const COUNTRIES = [
+const COUNTRIES_RU = [
   'Россия', 'США', 'Китай', 'Германия', 'Франция', 'Великобритания',
   'Япония', 'Канада', 'Бразилия', 'Австралия', 'Индия', 'Италия',
   'Испания', 'Южная Корея', 'Мексика', 'Нидерланды', 'Швейцария',
   'Турция', 'Швеция', 'Польша',
 ];
+const COUNTRIES_EN = [
+  'United States', 'United Kingdom', 'China', 'Germany', 'France', 'Japan',
+  'Canada', 'Brazil', 'Australia', 'India', 'Italy', 'Spain',
+  'South Korea', 'Mexico', 'Netherlands', 'Switzerland', 'Turkey',
+  'Sweden', 'Poland', 'Norway',
+];
 
-const COMPANIES = [
+const COMPANIES_RU = [
   'ТехноСофт', 'МедиаГрупп', 'АльфаСтрой', 'ДатаЛаб', 'ИнноТех',
   'ГлобалТрейд', 'СмартСервис', 'ВебСтудия', 'КлаудСистемс', 'ФинТек',
   'БизнесКонсалт', 'ЭкоПроект', 'ЛогистикПро', 'АйТиСолюшнс', 'МаркетПлюс',
   'ПроСтарт', 'ДиджиталВейв', 'СайберТек', 'НетВоркс', 'АналитикПро',
 ];
+const COMPANIES_EN = [
+  'TechCorp', 'MediaGroup', 'DataLab', 'InnoTech', 'GlobalTrade',
+  'SmartService', 'WebStudio', 'CloudSystems', 'FinTech', 'BizConsult',
+  'EcoProject', 'LogisticPro', 'ITSolutions', 'MarketPlus', 'ProStart',
+  'DigitalWave', 'CyberTech', 'NetWorks', 'AnalyticPro', 'NexGen',
+];
 
-const EMAIL_DOMAINS = ['mail.ru', 'yandex.ru', 'gmail.com', 'outlook.com', 'inbox.ru', 'bk.ru', 'list.ru', 'rambler.ru'];
+const EMAIL_DOMAINS_RU = ['mail.ru', 'yandex.ru', 'gmail.com', 'outlook.com', 'inbox.ru', 'bk.ru', 'list.ru', 'rambler.ru'];
+const EMAIL_DOMAINS_EN = ['gmail.com', 'outlook.com', 'yahoo.com', 'icloud.com', 'proton.me', 'fastmail.com', 'hotmail.com', 'aol.com'];
 
 const FIELD_TYPES: { value: FieldType; label: string }[] = [
   { value: 'firstName', label: 'Имя' },
@@ -108,9 +138,15 @@ function generateDate(): string {
   return d.toISOString().slice(0, 10);
 }
 
-function generateEmail(): string {
-  const fn = randomItem(FIRST_NAMES).toLowerCase();
-  const ln = randomItem(LAST_NAMES).toLowerCase();
+function generateEmail(isEn: boolean): string {
+  if (isEn) {
+    const fn = randomItem(FIRST_NAMES_EN).toLowerCase();
+    const ln = randomItem(LAST_NAMES_EN).toLowerCase();
+    const num = Math.floor(Math.random() * 100);
+    return `${fn}.${ln}${num}@${randomItem(EMAIL_DOMAINS_EN)}`;
+  }
+  const fn = randomItem(FIRST_NAMES_RU).toLowerCase();
+  const ln = randomItem(LAST_NAMES_RU).toLowerCase();
   const translitMap: Record<string, string> = {
     'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
     'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
@@ -120,14 +156,14 @@ function generateEmail(): string {
   };
   const translit = (s: string) => s.split('').map((c) => translitMap[c] || c).join('');
   const num = Math.floor(Math.random() * 100);
-  return `${translit(fn)}.${translit(ln)}${num}@${randomItem(EMAIL_DOMAINS)}`;
+  return `${translit(fn)}.${translit(ln)}${num}@${randomItem(EMAIL_DOMAINS_RU)}`;
 }
 
-function generateValue(field: FieldDef): string | number | boolean {
+function generateValue(field: FieldDef, isEn: boolean): string | number | boolean {
   switch (field.type) {
-    case 'firstName': return randomItem(FIRST_NAMES);
-    case 'lastName': return randomItem(LAST_NAMES);
-    case 'email': return generateEmail();
+    case 'firstName': return randomItem(isEn ? FIRST_NAMES_EN : FIRST_NAMES_RU);
+    case 'lastName': return randomItem(isEn ? LAST_NAMES_EN : LAST_NAMES_RU);
+    case 'email': return generateEmail(isEn);
     case 'phone': return generatePhone();
     case 'number': {
       const min = field.min ?? 0;
@@ -137,9 +173,9 @@ function generateValue(field: FieldDef): string | number | boolean {
     case 'boolean': return Math.random() > 0.5;
     case 'date': return generateDate();
     case 'uuid': return generateUUID();
-    case 'city': return randomItem(CITIES);
-    case 'country': return randomItem(COUNTRIES);
-    case 'company': return randomItem(COMPANIES);
+    case 'city': return randomItem(isEn ? CITIES_EN : CITIES_RU);
+    case 'country': return randomItem(isEn ? COUNTRIES_EN : COUNTRIES_RU);
+    case 'company': return randomItem(isEn ? COMPANIES_EN : COMPANIES_RU);
     default: return '';
   }
 }
@@ -210,7 +246,7 @@ export default function MockdataGenerator() {
     for (let i = 0; i < count; i++) {
       const row: Record<string, string | number | boolean> = {};
       fields.forEach((field) => {
-        row[field.name] = generateValue(field);
+        row[field.name] = generateValue(field, isEn);
       });
       data.push(row);
     }
@@ -219,7 +255,7 @@ export default function MockdataGenerator() {
     } else {
       setOutput(toCSV(data));
     }
-  }, [fields, count, format]);
+  }, [fields, count, format, isEn]);
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto', p: { xs: 2, sm: 3 } }}>

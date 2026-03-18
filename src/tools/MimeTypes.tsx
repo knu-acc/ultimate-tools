@@ -160,10 +160,12 @@ export default function MimeTypes() {
       if (category !== 'all' && m.category !== category) return false;
       if (search) {
         const q = search.toLowerCase();
+        const descEn = (MIME_DESCRIPTIONS_EN[m.description] || '').toLowerCase();
         return (
           m.ext.toLowerCase().includes(q) ||
           m.mime.toLowerCase().includes(q) ||
-          m.description.toLowerCase().includes(q)
+          m.description.toLowerCase().includes(q) ||
+          descEn.includes(q)
         );
       }
       return true;

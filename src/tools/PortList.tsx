@@ -152,11 +152,13 @@ export default function PortList() {
   const [categoryFilter, setCategoryFilter] = useState<Category | 'all'>('all');
 
   const filtered = ports.filter((p) => {
+    const descEn = (portDescEn[p.port] || '').toLowerCase();
     const matchesSearch =
       search === '' ||
       p.port.toString().includes(search) ||
       p.service.toLowerCase().includes(search.toLowerCase()) ||
-      p.description.toLowerCase().includes(search.toLowerCase());
+      p.description.toLowerCase().includes(search.toLowerCase()) ||
+      descEn.includes(search.toLowerCase());
 
     const matchesProtocol =
       protocolFilter === 'all' || p.protocol === protocolFilter || p.protocol === 'TCP/UDP';

@@ -1,17 +1,122 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import {
   Box, Typography, Button, LinearProgress, alpha, useTheme, Chip,
 } from '@mui/material';
 import { WaterDrop, PlayArrow, Stop } from '@mui/icons-material';
 import { useLanguage } from '@/src/i18n/LanguageContext';
 
-const DURATION = 30; // seconds
-const FREQ_START = 150;
-const FREQ_END = 165;
+const DURATION = 90; // seconds total
 const FADE_IN = 1.5;
 const FADE_OUT = 0.8;
+
+interface FrequencyPass {
+  label: string;
+  labelRu: string;
+  freqStart: number;
+  freqEnd: number;
+}
+
+const PASSES: FrequencyPass[] = [
+  { label: 'Low', labelRu: 'Низкие', freqStart: 150, freqEnd: 165 },
+  { label: 'Mid', labelRu: 'Средние', freqStart: 165, freqEnd: 200 },
+  { label: 'Mid-High', labelRu: 'Выше средних', freqStart: 200, freqEnd: 300 },
+  { label: 'High', labelRu: 'Высокие', freqStart: 300, freqEnd: 500 },
+];
+
+const PASS_DURATION = DURATION / PASSES.length; // 22.5s each
+
+function getPassIndex(elapsed: number): number {
+  return Math.min(PASSES.length - 1, Math.floor(elapsed / PASS_DURATION));
+}
+
+function getCurrentFreq(elapsed: number): number {
+  const idx = getPassIndex(elapsed);
+  const pass = PASSES[idx];
+  const passElapsed = elapsed - idx * PASS_DURATION;
+  const t = Math.min(1, passElapsed / PASS_DURATION);
+  return pass.freqStart + (pass.freqEnd - pass.freqStart) * t;
+}
+
+// Simple animated wave visualization
+function FrequencyWave({ frequency, isRunning, color }: { frequency: number; isRunning: boolean; color: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animRef = useRef<number>(0);
+  const phaseRef = useRef(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+
+    const w = rect.width;
+    const h = rect.height;
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+
+      if (!isRunning) {
+        // Draw flat line when idle
+        ctx.beginPath();
+        ctx.strokeStyle = alpha(color, 0.2);
+        ctx.lineWidth = 2;
+        ctx.moveTo(0, h / 2);
+        ctx.lineTo(w, h / 2);
+        ctx.stroke();
+        return;
+      }
+
+      // Map frequency to visual wavelength (more cycles for higher freq)
+      const cycles = 2 + (frequency - 150) / 50;
+      const speed = 0.04 + (frequency - 150) * 0.00005;
+      phaseRef.current += speed;
+
+      // Draw multiple layered waves
+      for (let layer = 0; layer < 3; layer++) {
+        const layerAlpha = 0.4 - layer * 0.12;
+        const amp = (h * 0.35) - layer * 6;
+        ctx.beginPath();
+        ctx.strokeStyle = alpha(color, layerAlpha);
+        ctx.lineWidth = 3 - layer * 0.8;
+
+        for (let x = 0; x <= w; x++) {
+          const t = x / w;
+          const y = h / 2 + Math.sin(t * Math.PI * 2 * cycles + phaseRef.current + layer * 0.8) * amp;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
+      animRef.current = requestAnimationFrame(draw);
+    };
+
+    if (isRunning) {
+      animRef.current = requestAnimationFrame(draw);
+    } else {
+      draw();
+    }
+
+    return () => {
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, [isRunning, frequency, color]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{ width: '100%', height: 80, display: 'block', borderRadius: 12 }}
+    />
+  );
+}
 
 export default function SpeakerDryer() {
   const theme = useTheme();
@@ -21,6 +126,8 @@ export default function SpeakerDryer() {
   const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState(0);
   const [timeLeft, setTimeLeft] = useState(DURATION);
+  const [currentPassIdx, setCurrentPassIdx] = useState(0);
+  const [currentFreq, setCurrentFreq] = useState(PASSES[0].freqStart);
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const oscRef = useRef<OscillatorNode | null>(null);
@@ -43,7 +150,7 @@ export default function SpeakerDryer() {
     }
 
     const cleanup = () => {
-      try { osc?.stop(); } catch {}
+      try { osc?.stop(); } catch { /* already stopped */ }
       osc?.disconnect();
       gain?.disconnect();
       if (ctx) { ctx.close().catch(() => {}); audioCtxRef.current = null; }
@@ -60,6 +167,8 @@ export default function SpeakerDryer() {
     setIsRunning(false);
     setProgress(0);
     setTimeLeft(DURATION);
+    setCurrentPassIdx(0);
+    setCurrentFreq(PASSES[0].freqStart);
   }, []);
 
   const start = useCallback(() => {
@@ -71,11 +180,17 @@ export default function SpeakerDryer() {
       const gain = ctx.createGain();
 
       osc.type = 'sine';
-      // Sweep 150 → 165 Hz over DURATION seconds — this range is effective for membrane vibration
-      osc.frequency.setValueAtTime(FREQ_START, ctx.currentTime);
-      osc.frequency.linearRampToValueAtTime(FREQ_END, ctx.currentTime + DURATION);
 
-      // Fade in to avoid click
+      // Schedule full multi-pass frequency sweep
+      let time = ctx.currentTime;
+      osc.frequency.setValueAtTime(PASSES[0].freqStart, time);
+      for (const pass of PASSES) {
+        osc.frequency.linearRampToValueAtTime(pass.freqStart, time);
+        osc.frequency.linearRampToValueAtTime(pass.freqEnd, time + PASS_DURATION);
+        time += PASS_DURATION;
+      }
+
+      // Fade in
       gain.gain.setValueAtTime(0, ctx.currentTime);
       gain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + FADE_IN);
 
@@ -89,15 +204,19 @@ export default function SpeakerDryer() {
       setIsRunning(true);
       setProgress(0);
       setTimeLeft(DURATION);
+      setCurrentPassIdx(0);
+      setCurrentFreq(PASSES[0].freqStart);
 
       intervalRef.current = setInterval(() => {
         const elapsed = (Date.now() - startTimeRef.current) / 1000;
         const p = Math.min(100, (elapsed / DURATION) * 100);
         setProgress(p);
         setTimeLeft(Math.max(0, Math.ceil(DURATION - elapsed)));
+        setCurrentPassIdx(getPassIndex(elapsed));
+        setCurrentFreq(Math.round(getCurrentFreq(elapsed)));
         if (elapsed >= DURATION) stopCleanup(true);
-      }, 200);
-    } catch {}
+      }, 100);
+    } catch { /* AudioContext not supported */ }
   }, [stopCleanup]);
 
   // Cleanup on unmount
@@ -106,6 +225,13 @@ export default function SpeakerDryer() {
   }, [stopCleanup]);
 
   const primaryColor = theme.palette.primary.main;
+  const currentPass = PASSES[currentPassIdx];
+
+  const passChips = useMemo(() => PASSES.map((p, i) => ({
+    label: `${isEn ? p.label : p.labelRu}: ${p.freqStart}–${p.freqEnd} Hz`,
+    active: isRunning && currentPassIdx === i,
+    done: isRunning && currentPassIdx > i,
+  })), [isEn, isRunning, currentPassIdx]);
 
   return (
     <Box
@@ -128,15 +254,42 @@ export default function SpeakerDryer() {
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {isEn
-            ? 'Vibrates speaker membranes with a 150–165 Hz sweep to push out moisture'
-            : 'Вибрирует мембрану динамика на 150–165 Гц для выталкивания влаги'}
+            ? 'Multi-pass frequency sweep (150–500 Hz) to push out moisture over 90 seconds'
+            : 'Многоэтапный sweep частот (150–500 Гц) для выталкивания влаги за 90 секунд'}
         </Typography>
       </Box>
 
-      {/* Frequency chip info */}
+      {/* Pass indicators */}
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mb: 3, flexWrap: 'wrap' }}>
-        <Chip label={`${FREQ_START}–${FREQ_END} Hz sweep`} size="small" variant="outlined" sx={{ fontWeight: 600 }} />
-        <Chip label={`${DURATION}s`} size="small" variant="outlined" sx={{ fontWeight: 600 }} />
+        {passChips.map((chip, i) => (
+          <Chip
+            key={i}
+            label={chip.label}
+            size="small"
+            variant={chip.active ? 'filled' : 'outlined'}
+            color={chip.active ? 'primary' : chip.done ? 'success' : 'default'}
+            sx={{
+              fontWeight: 600,
+              transition: 'all 0.3s ease',
+              ...(chip.active && {
+                boxShadow: `0 0 12px ${alpha(primaryColor, 0.4)}`,
+              }),
+            }}
+          />
+        ))}
+      </Box>
+
+      {/* Wave visualization */}
+      <Box
+        sx={{
+          mb: 3,
+          borderRadius: 14,
+          overflow: 'hidden',
+          background: alpha(primaryColor, 0.04),
+          border: `1px solid ${alpha(primaryColor, 0.1)}`,
+        }}
+      >
+        <FrequencyWave frequency={currentFreq} isRunning={isRunning} color={primaryColor} />
       </Box>
 
       {/* Progress display */}
@@ -152,17 +305,40 @@ export default function SpeakerDryer() {
       >
         {isRunning ? (
           <>
-            <Typography variant="h2" fontWeight={800} sx={{ color: primaryColor, mb: 1, fontVariantNumeric: 'tabular-nums' }}>
+            <Typography variant="h2" fontWeight={800} sx={{ color: primaryColor, mb: 0.5, fontVariantNumeric: 'tabular-nums' }}>
               {timeLeft}
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              {isEn ? 'Cleaning in progress…' : 'Очистка выполняется…'}
+
+            <Typography variant="body2" fontWeight={600} sx={{ color: primaryColor, mb: 0.5 }}>
+              {isEn
+                ? `Pass ${currentPassIdx + 1}/${PASSES.length} — ${currentPass.label} (${currentFreq} Hz)`
+                : `Этап ${currentPassIdx + 1}/${PASSES.length} — ${currentPass.labelRu} (${currentFreq} Гц)`}
             </Typography>
+
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              {isEn ? 'Cleaning in progress...' : 'Очистка выполняется...'}
+            </Typography>
+
+            {/* Overall progress */}
             <LinearProgress
               variant="determinate"
               value={progress}
-              sx={{ borderRadius: 4, height: 8, bgcolor: alpha(primaryColor, 0.12) }}
+              sx={{ borderRadius: 4, height: 8, bgcolor: alpha(primaryColor, 0.12), mb: 1 }}
             />
+            {/* Pass progress */}
+            <LinearProgress
+              variant="determinate"
+              value={Math.min(100, ((progress / 100 * DURATION - currentPassIdx * PASS_DURATION) / PASS_DURATION) * 100)}
+              sx={{
+                borderRadius: 4,
+                height: 4,
+                bgcolor: alpha(primaryColor, 0.08),
+                '& .MuiLinearProgress-bar': { bgcolor: alpha(primaryColor, 0.5) },
+              }}
+            />
+            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+              {isEn ? 'Pass progress' : 'Прогресс этапа'}
+            </Typography>
           </>
         ) : (
           <>
@@ -201,8 +377,8 @@ export default function SpeakerDryer() {
 
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', textAlign: 'center', mt: 2, px: 1 }}>
         {isEn
-          ? '⚠️ Set volume to maximum. Hold device face-down during cleaning.'
-          : '⚠️ Установите максимальную громкость. Держите устройство экраном вниз.'}
+          ? 'Set volume to maximum. Hold device face-down during cleaning.'
+          : 'Установите максимальную громкость. Держите устройство экраном вниз.'}
       </Typography>
     </Box>
   );
