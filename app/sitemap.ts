@@ -8,8 +8,11 @@ const LOCALES = ['ru', 'en'];
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();
   const entries: MetadataRoute.Sitemap = [];
+  const implementedTools = tools.filter(t => t.implemented);
 
   for (const locale of LOCALES) {
+    const localeAlternates = { ru: `${BASE_URL}/ru`, en: `${BASE_URL}/en`, 'x-default': `${BASE_URL}/ru` };
+
     // Home
     entries.push({
       url: `${BASE_URL}/${locale}`,
@@ -17,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily',
       priority: 1.0,
       alternates: {
-        languages: { ru: `${BASE_URL}/ru`, en: `${BASE_URL}/en` },
+        languages: localeAlternates,
       },
     });
 
@@ -28,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.8,
       alternates: {
-        languages: { ru: `${BASE_URL}/ru/blog`, en: `${BASE_URL}/en/blog` },
+        languages: { ru: `${BASE_URL}/ru/blog`, en: `${BASE_URL}/en/blog`, 'x-default': `${BASE_URL}/ru/blog` },
       },
     });
 
@@ -43,22 +46,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
           languages: {
             ru: `${BASE_URL}/ru/group/${g.slug}`,
             en: `${BASE_URL}/en/group/${g.slug}`,
+            'x-default': `${BASE_URL}/ru/group/${g.slug}`,
           },
         },
       });
     }
 
     // Tool pages
-    for (const t of tools) {
+    for (const t of implementedTools) {
       entries.push({
         url: `${BASE_URL}/${locale}/tools/${t.slug}`,
         lastModified: now,
         changeFrequency: 'monthly',
-        priority: (t as any).featured ? 1.0 : t.implemented ? 0.9 : 0.6,
+        priority: (t as any).featured ? 1.0 : 0.9,
         alternates: {
           languages: {
             ru: `${BASE_URL}/ru/tools/${t.slug}`,
             en: `${BASE_URL}/en/tools/${t.slug}`,
+            'x-default': `${BASE_URL}/ru/tools/${t.slug}`,
           },
         },
       });
@@ -75,6 +80,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           languages: {
             ru: `${BASE_URL}/ru/blog/${a.slug}`,
             en: `${BASE_URL}/en/blog/${a.slug}`,
+            'x-default': `${BASE_URL}/ru/blog/${a.slug}`,
           },
         },
       });

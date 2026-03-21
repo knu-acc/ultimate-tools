@@ -310,7 +310,7 @@ export default function TextFormatterTool() {
 
   const handleCopy = async () => {
     if (!output) return;
-    await navigator.clipboard.writeText(output);
+    try { await navigator.clipboard.writeText(output); } catch { return; }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

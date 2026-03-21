@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { tools, toolGroups, Tool } from '@/src/data/tools';
 import DynamicIcon from './DynamicIcon';
 import { useLanguage } from '@/src/i18n/LanguageContext';
+import { getToolName, getToolDescription, getGroupName } from '@/src/data/toolLocalization';
 
 interface Props {
   open: boolean;
@@ -41,6 +42,16 @@ export default memo(function SearchDialog({ open, onClose }: Props) {
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Force focus after dialog animation completes
+  useEffect(() => {
+    if (open) {
+      // autoFocus alone is unreliable with MUI Dialog transitions
+      const t = setTimeout(() => inputRef.current?.focus(), 50);
+      return () => clearTimeout(t);
+    }
+  }, [open]);
 
   // Debounce search input — Fuse.search on 200+ items per keystroke is wasteful
   const handleQueryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +108,7 @@ export default memo(function SearchDialog({ open, onClose }: Props) {
         <TextField
           autoFocus
           fullWidth
+          inputRef={inputRef}
           placeholder={t('nav.searchPlaceholder')}
           value={query}
           onChange={handleQueryChange}
@@ -148,13 +160,13 @@ export default memo(function SearchDialog({ open, onClose }: Props) {
                     </Box>
                   </ListItemIcon>
                   <ListItemText
-                    primary={locale === 'en' ? ((tool as any).nameEn || tool.name) : tool.name}
-                    secondary={locale === 'en' ? ((tool as any).descriptionEn || tool.description) : tool.description}
+                    primary={getToolName(tool, locale)}
+                    secondary={getToolDescription(tool, locale)}
                     primaryTypographyProps={{ fontWeight: 500, fontSize: 14 }}
                     secondaryTypographyProps={{ fontSize: 12, noWrap: true }}
                   />
                   <Chip
-                    label={locale === 'en' ? ((group as any)?.nameEn || group?.name) : group?.name}
+                    label={getGroupName(group, locale)}
                     size="small"
                     sx={{ fontSize: 11, height: 22, bgcolor: alpha(group?.color || '#666', 0.08), border: 'none' }}
                   />

@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import GroupPage from '@/app/group/[slug]/GroupPage';
 import { toolGroups, getToolsByGroup, getGroupBySlug } from '@/src/data/tools';
 import { LOCALES } from '@/src/i18n/index';
+import { buildKeywordSet, genericSiteKeywords } from '@/src/seo/keywords';
 
 export async function generateStaticParams() {
   const params: { locale: string; slug: string }[] = [];
@@ -35,6 +36,18 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title,
     description,
+    keywords: buildKeywordSet(
+      [
+        groupName,
+        `${groupName} ${isEn ? 'online' : 'онлайн'}`,
+        ...groupTools.slice(0, 6).flatMap(t => {
+          const n = isEn ? ((t as any).nameEn || t.name) : t.name;
+          return [n, `${n} ${isEn ? 'online' : 'онлайн'}`];
+        }),
+      ],
+      genericSiteKeywords(isEn),
+      15
+    ),
     openGraph: {
       title: `${groupName} — Free Online Tools | Ultimate Tools`,
       description,

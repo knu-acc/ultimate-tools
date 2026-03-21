@@ -5,6 +5,7 @@ import MainContent from '@/src/components/MainContent';
 import { getStats } from '@/src/data/tools';
 import { LOCALES, Locale } from '@/src/i18n/index';
 import { LanguageProvider } from '@/src/i18n/LanguageContext';
+import { genericSiteKeywords } from '@/src/seo/keywords';
 
 // Synchronous imports — these are bundled at build time, not fetched at runtime.
 // This eliminates the async loadMessages() call and prevents translation key flash.
@@ -31,6 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const isEn = locale === 'en';
   const BASE = 'https://ulti-tools.com';
+  const localePath = `${BASE}/${locale}`;
 
   return {
     title: {
@@ -42,9 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: isEn
       ? `${stats.totalTools}+ free online tools: unit converters, calculators, password generator, JSON formatter, word counter, QR codes and more. Work right in your browser without registration.`
       : `${stats.totalTools}+ бесплатных онлайн-инструментов: конвертеры единиц, калькуляторы, генератор паролей, JSON formatter, счётчик слов, QR-коды и многое другое. Работают прямо в браузере без регистрации.`,
-    keywords: isEn
-      ? ['free online tools', 'online calculator', 'unit converter online', 'password generator', 'JSON formatter', 'word counter', 'QR code generator', 'developer tools', 'free no registration']
-      : ['бесплатные онлайн инструменты', 'онлайн калькулятор', 'конвертер единиц онлайн', 'генератор паролей онлайн', 'JSON форматирование онлайн', 'счётчик слов онлайн', 'QR код генератор', 'инструменты для разработчиков', 'бесплатно без регистрации'],
+    keywords: genericSiteKeywords(isEn),
     applicationName: 'Ultimate Tools',
     authors: [{ name: 'Ultimate Tools', url: BASE }],
     creator: 'Ultimate Tools',
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       type: 'website',
       locale: isEn ? 'en_US' : 'ru_RU',
       siteName: 'Ultimate Tools',
-      url: `${BASE}/${locale}`,
+      url: localePath,
       title: isEn
         ? `Ultimate Tools — ${stats.totalTools}+ Free Online Tools`
         : `Ultimate Tools — ${stats.totalTools}+ бесплатных онлайн инструментов`,
@@ -77,13 +77,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
     },
     alternates: {
-      canonical: `${BASE}/${locale}`,
+      canonical: localePath,
       languages: {
         'ru': `${BASE}/ru`,
         'en': `${BASE}/en`,
         'x-default': `${BASE}/ru`,
       },
     },
+    category: isEn ? 'Utilities & Productivity' : 'Утилиты и продуктивность',
+    other: { 'og:locale:alternate': isEn ? 'ru_RU' : 'en_US' },
     verification: {},
   };
 }

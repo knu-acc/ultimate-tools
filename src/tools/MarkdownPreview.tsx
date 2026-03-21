@@ -7,6 +7,7 @@ import {
 import { FormatBold, FormatItalic, Code, FormatListBulleted, Title } from '@mui/icons-material';
 import { CopyButton } from '@/src/components/CopyButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
+import { sanitizeHtml } from '@/src/utils/htmlSanitiization';
 
 
 const defaultMdRu = `# Заголовок 1
@@ -29,7 +30,7 @@ const defaultMdRu = `# Заголовок 1
 
 \`\`\`
 function hello() {
-  console.log("Привет мир!");
+  return "Привет, мир!";
 }
 \`\`\`
 
@@ -63,7 +64,7 @@ This is **bold** text and *italic* text.
 
 \`\`\`
 function hello() {
-  console.log("Hello world!");
+  return "Hello, world!";
 }
 \`\`\`
 
@@ -210,7 +211,7 @@ export default function MarkdownPreview() {
                 bgcolor: alpha(theme.palette.background.paper, 0.5)
               }}
             >
-              <div dangerouslySetInnerHTML={{ __html: parseMarkdown(markdown) }} />
+              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(parseMarkdown(markdown)) }} />
             </Paper>
           </Grid>
         </Grid>

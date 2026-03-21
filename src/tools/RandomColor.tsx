@@ -234,7 +234,7 @@ export default function RandomColor() {
                       transition: 'transform 0.2s',
                       '&:hover': { transform: 'scale(1.05)' }
                     }}
-                    onClick={() => navigator.clipboard.writeText(color.hex)}
+                    onClick={() => navigator.clipboard.writeText(color.hex).catch(() => {})}
                   >
                     <Box sx={{ height: 50, bgcolor: color.hex }} />
                     <Box sx={{ p: 0.5, bgcolor: theme.palette.surfaceContainerLow, textAlign: 'center' }}>

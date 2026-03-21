@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import ArticlePage from '@/app/blog/[slug]/ArticlePage';
 import { articles, getArticleBySlug, getArticlesByTool } from '@/src/data/articles';
-import { getToolBySlug } from '@/src/data/tools';
+import { getToolBySlug, toolGroups } from '@/src/data/tools';
 import { LOCALES } from '@/src/i18n/index';
+import { buildKeywordSet, genericSiteKeywords } from '@/src/seo/keywords';
 
 export async function generateStaticParams() {
   const params: { locale: string; slug: string }[] = [];
@@ -27,7 +28,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title,
     description,
-    keywords: article.keywords,
+    keywords: buildKeywordSet(
+      [
+        ...(article.keywords || []),
+        title,
+        `${title} ${isEn ? 'guide' : 'гайд'}`,
+        isEn ? 'how to use online tools' : 'как пользоваться онлайн инструментами',
+        isEn ? 'practical tutorial' : 'практическое руководство',
+      ],
+      genericSiteKeywords(isEn),
+      15
+    ),
     openGraph: {
       title,
       description,
@@ -52,6 +63,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       },
     },
     robots: { index: true, follow: true },
+    other: {
+      'article:published_time': article.date,
+      'og:locale:alternate': isEn ? 'ru_RU' : 'en_US',
+    },
   };
 }
 
@@ -65,12 +80,16 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         .map(({ slug, title, titleEn }) => ({ slug, title, titleEn }))
     : [];
   const rawTool = article ? getToolBySlug(article.toolSlug) : null;
+  const rawGroup = rawTool ? toolGroups.find(g => g.id === rawTool.groupId) : null;
   const tool = rawTool ? {
     slug: rawTool.slug,
     name: rawTool.name,
     nameEn: (rawTool as any).nameEn,
     description: rawTool.description,
     descriptionEn: (rawTool as any).descriptionEn,
+    groupSlug: rawGroup?.slug,
+    groupName: rawGroup?.name,
+    groupNameEn: (rawGroup as any)?.nameEn,
   } : null;
 
   return <ArticlePage article={article} relatedArticles={relatedArticles} tool={tool} />;

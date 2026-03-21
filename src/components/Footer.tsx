@@ -5,6 +5,7 @@ import { Box, Container, Typography, Grid, Link as MuiLink, Divider, useTheme } 
 import Link from 'next/link';
 import { toolGroups } from '@/src/data/tools';
 import { useLanguage } from '@/src/i18n/LanguageContext';
+import { getGroupName } from '@/src/data/toolLocalization';
 
 export default function Footer() {
   const theme = useTheme();
@@ -46,7 +47,7 @@ export default function Footer() {
                 variant="body2"
                 sx={{ mb: 0.5 }}
               >
-                {locale === 'en' ? ((group as any).nameEn || group.name) : group.name}
+                {getGroupName(group, locale)}
               </MuiLink>
             ))}
           </Grid>
@@ -66,7 +67,7 @@ export default function Footer() {
                 variant="body2"
                 sx={{ mb: 0.5 }}
               >
-                {locale === 'en' ? ((group as any).nameEn || group.name) : group.name}
+                {getGroupName(group, locale)}
               </MuiLink>
             ))}
           </Grid>

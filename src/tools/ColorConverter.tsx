@@ -171,7 +171,7 @@ export default function ColorConverter() {
   };
 
   const copyValue = async (label: string, value: string) => {
-    await navigator.clipboard.writeText(value);
+    try { await navigator.clipboard.writeText(value); } catch { return; }
     setCopied(label);
     setTimeout(() => setCopied(''), 2000);
   };

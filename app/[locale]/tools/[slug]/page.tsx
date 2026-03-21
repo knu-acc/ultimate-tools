@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import ToolPage from '@/app/tools/[slug]/ToolPage';
 import { tools, getToolBySlug, toolGroups } from '@/src/data/tools';
 import { LOCALES } from '@/src/i18n/index';
+import { buildKeywordSet, genericSiteKeywords } from '@/src/seo/keywords';
 
 export async function generateStaticParams() {
   const params: { locale: string; slug: string }[] = [];
@@ -32,6 +33,21 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title,
     description,
+    keywords: buildKeywordSet(
+      [
+        ...(tool.keywords || []),
+        isEn ? ((tool as any).nameEn || tool.name) : tool.name,
+        `${isEn ? ((tool as any).nameEn || tool.name) : tool.name} ${isEn ? 'online' : 'онлайн'}`,
+        `${slug} ${isEn ? 'tool' : 'инструмент'}`,
+        isEn ? 'online tool' : 'онлайн инструмент',
+        isEn ? 'free web app' : 'бесплатный веб инструмент',
+        isEn ? ((tool as any).descriptionEn || tool.description) : tool.description,
+        isEn ? ((group as any)?.nameEn || group?.name || '') : (group?.name || ''),
+        'Ultimate Tools',
+      ],
+      genericSiteKeywords(isEn),
+      15
+    ),
     openGraph: {
       title: `${title} | Ultimate Tools`,
       description,
@@ -50,7 +66,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'x-default': `${BASE}/ru/tools/${slug}`,
       },
     },
-    robots: { index: true, follow: true },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+    },
+    other: {
+      'og:locale:alternate': isEn ? 'ru_RU' : 'en_US',
+    },
   };
 }
 

@@ -19,6 +19,7 @@ import CompressIcon from '@mui/icons-material/Compress';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { CopyButton } from '@/src/components/CopyButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
+import { sanitizeHtml } from '@/src/utils/htmlSanitiization';
 
 
 interface JsonError {
@@ -317,7 +318,7 @@ export default function JsonFormatter() {
                 <Box sx={{ p: 1.5, flex: 1, overflow: 'auto' }}>
                   <Box
                     component="pre"
-                    dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(highlightedHtml) }}
                     sx={{
                       fontFamily: '"JetBrains Mono", "Fira Code", "Consolas", monospace',
                       fontSize: '0.78rem',

@@ -163,7 +163,9 @@ See also: [Percentage Calculator](/tools/percentage-calc), [Discount Calculator]
   {
     slug: 'scientific-calc-use-cases',
     title: 'Где применяется научный калькулятор — примеры задач',
+    titleEn: 'Where a Scientific Calculator Helps — Example Problems',
     description: 'Реальные примеры использования научного калькулятора: от учебных задач до инженерных расчётов.',
+    descriptionEn: 'Real examples of using a scientific calculator: from homework to engineering.',
     toolSlug: 'scientific-calc',
     type: 'use-cases',
     keywords: ['применение', 'научный калькулятор', 'задачи', 'инженерные расчёты'],
@@ -203,6 +205,41 @@ See also: [Percentage Calculator](/tools/percentage-calc), [Discount Calculator]
 Онлайн-калькулятор доступен с любого устройства и не требует установки. Результаты можно легко копировать и вставлять в документы.
 
 Смотрите также: [Сложный процент](/tools/compound-interest), [Ипотечный калькулятор](/tools/mortgage-calc)
+    `.trim(),
+    contentEn: `
+## Who Needs a Scientific Calculator?
+
+A scientific calculator is essential for students, engineers, and scientists. Here are the main use cases.
+
+### Students
+
+- Solving trigonometric equations
+- Computing logarithms for algebra problems
+- Working with complex numbers in advanced math courses
+
+### Engineers
+
+- Computing angles and distances in construction
+- Electrical engineering (impedance, phase angles)
+- Converting coordinate systems
+
+### Physicists
+
+| Task | Formula | Calculator functions |
+|--------|---------|---------------------|
+| Projectile motion | y = v₀t·sin(α) - gt²/2 | sin, powers |
+| Oscillation period | T = 2π√(l/g) | π, √ |
+| Coulomb’s law | F = k·q₁q₂/r² | powers, division |
+
+### Finance Professionals
+
+A scientific calculator helps verify compound-interest formulas and statistical calculations when analyzing data.
+
+## Why Use the Online Version
+
+The online calculator is available on any device and needs no installation. You can easily copy results into documents.
+
+See also: [Compound Interest](/tools/compound-interest), [Mortgage Calculator](/tools/mortgage-calc)
     `.trim()
   },
 
@@ -210,7 +247,9 @@ See also: [Percentage Calculator](/tools/percentage-calc), [Discount Calculator]
   {
     slug: 'percentage-calc-guide',
     title: 'Калькулятор процентов — как считать проценты правильно',
+    titleEn: 'Percentage Calculator — How to Calculate Percentages Correctly',
     description: 'Полное руководство по вычислению процентов. Узнайте, как находить процент от числа, наценку, скидку и процентное соотношение.',
+    descriptionEn: 'Full guide to percentage math: percent of a number, markup, discount, and percent change.',
     toolSlug: 'percentage-calc',
     type: 'guide',
     keywords: ['калькулятор процентов', 'процент от числа', 'наценка', 'процентное соотношение'],
@@ -250,12 +289,49 @@ See also: [Percentage Calculator](/tools/percentage-calc), [Discount Calculator]
 - Скидка 50% и наценка 50% не возвращают исходную цену
 
 Смотрите также: [Калькулятор скидок](/tools/discount-calc), [Сложный процент](/tools/compound-interest)
+    `.trim(),
+    contentEn: `
+## How Does the Percentage Calculator Work?
+
+The percentage calculator covers the most common percentage problems for everyday life and work.
+
+## Main Calculation Types
+
+### Percent of a Number
+
+Formula: **Result = Number × Percent / 100**
+
+Example: 15% of 3000 = 3000 × 15 / 100 = 450
+
+### What Percent One Number Is of Another
+
+Formula: **Percent = (Part / Whole) × 100**
+
+Example: 450 of 3000 = (450 / 3000) × 100 = 15%
+
+### Percent Change
+
+| Type | Formula |
+|-----|---------|
+| Increase | New = Old × (1 + P/100) |
+| Decrease | New = Old × (1 - P/100) |
+| Change in % | ((New - Old) / Old) × 100 |
+
+## Common Mistakes
+
+- Confusing “percent of a number” with “percent more than”
+- Chained percentage changes do not add: 10% + 10% ≠ 20%
+- A 50% discount then a 50% markup does not return the original price
+
+See also: [Discount Calculator](/tools/discount-calc), [Compound Interest](/tools/compound-interest)
     `.trim()
   },
   {
     slug: 'percentage-calc-tips',
     title: 'Быстрый счёт процентов в уме — 5 приёмов',
+    titleEn: 'Mental Math for Percentages — 5 Tricks',
     description: 'Научитесь быстро считать проценты без калькулятора. Простые приёмы для устного счёта.',
+    descriptionEn: 'Estimate percentages quickly without a calculator using simple mental shortcuts.',
     toolSlug: 'percentage-calc',
     type: 'tips',
     keywords: ['счёт процентов', 'устный счёт', 'быстрые вычисления', 'лайфхаки'],
@@ -298,12 +374,52 @@ See also: [Percentage Calculator](/tools/percentage-calc), [Discount Calculator]
 Для точных финансовых расчётов (кредиты, налоги, инвестиции) всегда используйте калькулятор — ошибка на десятую долю процента может стоить дорого.
 
 Смотрите также: [Научный калькулятор](/tools/scientific-calc), [Калькулятор чаевых](/tools/tip-calc)
+    `.trim(),
+    contentEn: `
+## Quick Percentage Math in Your Head
+
+### 1. Swap factors
+
+10% of 50 = 50% of 10 = 5. Pick the order that is easier to compute.
+
+### 2. Divide by 10 to get 10%
+
+Move the decimal one place left:
+- 10% of 850 = 85
+- 10% of 1230 = 123
+
+### 3. Build from simple pieces
+
+Break tricky percents into easy ones:
+- 15% = 10% + 5%
+- 25% = divide by 4
+- 75% = 50% + 25%
+
+### 4. Rule of 72
+
+Estimate doubling time for an investment: **72 / annual rate ≈ years to double**.
+
+Example: at 8% per year, money doubles in about 72/8 = 9 years.
+
+### 5. Compare with a common base
+
+Compare two “percent of” values on the same base:
+- 30% of 200 vs 20% of 350
+- 60 vs 70 → the second is larger
+
+## When You Still Need a Calculator
+
+For exact finance (loans, taxes, investments), always use a calculator — a tenth of a percent can cost a lot.
+
+See also: [Scientific Calculator](/tools/scientific-calc), [Tip Calculator](/tools/tip-calc)
     `.trim()
   },
   {
     slug: 'percentage-calc-use-cases',
     title: 'Проценты в жизни — когда вам нужен калькулятор процентов',
+    titleEn: 'Percentages in Real Life — When You Need a Calculator',
     description: 'Реальные примеры использования процентов: скидки, налоги, кредиты, статистика и другие ситуации.',
+    descriptionEn: 'Examples: discounts, taxes, loans, stats, and other everyday percentage problems.',
     toolSlug: 'percentage-calc',
     type: 'use-cases',
     keywords: ['применение процентов', 'скидки', 'налоги', 'статистика', 'проценты в жизни'],
@@ -349,6 +465,47 @@ See also: [Percentage Calculator](/tools/percentage-calc), [Discount Calculator]
 Закрепите калькулятор процентов в закладках — он пригодится чаще, чем вы думаете.
 
 Смотрите также: [Калькулятор скидок](/tools/discount-calc), [Налоговый калькулятор](/tools/tax-calc)
+    `.trim(),
+    contentEn: `
+## Where a Percentage Calculator Helps
+
+### Shopping and discounts
+
+Stacked discounts are tricky. Know your real savings:
+- Price: 5000, 30% off then another 10% off
+- Total: 5000 × 0.7 × 0.9 = 3150 (37% off total, not 40%)
+
+### Loans and mortgages
+
+- Monthly payment estimates
+- Comparing effective interest rates
+- Total interest over the life of a loan
+
+### Salary and taxes
+
+| Situation | Formula |
+|----------|---------|
+| 13% income tax (example) | Salary × 0.13 |
+| Net after tax | Salary × 0.87 |
+| 15% raise | Salary × 1.15 |
+
+### Health and nutrition
+
+- Body fat percentage
+- Macro ratios (protein, fat, carbs)
+- Weight change in percent
+
+### Business and marketing
+
+- Website conversion (visitors → buyers)
+- Product margin
+- Sales growth vs the previous period
+
+## Tip
+
+Bookmark a percentage calculator — you will use it more than you expect.
+
+See also: [Discount Calculator](/tools/discount-calc), [Tax Calculator](/tools/tax-calc)
     `.trim()
   },
 
@@ -356,7 +513,9 @@ See also: [Percentage Calculator](/tools/percentage-calc), [Discount Calculator]
   {
     slug: 'mortgage-calc-guide',
     title: 'Ипотечный калькулятор — как рассчитать ипотеку',
+    titleEn: 'Mortgage Calculator — How to Estimate Your Mortgage',
     description: 'Руководство по расчёту ипотеки. Аннуитетные и дифференцированные платежи, первоначальный взнос, переплата.',
+    descriptionEn: 'Guide to mortgage math: annuity vs differentiated payments, down payment, and total interest.',
     toolSlug: 'mortgage-calc',
     type: 'guide',
     keywords: ['ипотечный калькулятор', 'расчёт ипотеки', 'аннуитетный платёж', 'первоначальный взнос'],
@@ -399,12 +558,52 @@ See also: [Percentage Calculator](/tools/percentage-calc), [Discount Calculator]
 Досрочные платежи могут сократить срок или уменьшить ежемесячный платёж. Рассчитайте оба варианта, чтобы выбрать оптимальный.
 
 Смотрите также: [Кредитный калькулятор](/tools/loan-calc), [Налоговый калькулятор](/tools/tax-calc)
+    `.trim(),
+    contentEn: `
+## How to Calculate a Mortgage
+
+A mortgage calculator estimates your monthly burden before you buy a home. A realistic estimate prevents unaffordable payments.
+
+## Key Inputs
+
+- **Home price** — total price of the apartment or house
+- **Down payment** — often 10% to 30%
+- **Interest rate** — annual bank rate
+- **Loan term** — 1 to 30 years
+
+## Payment Types
+
+### Annuity payment
+
+The same amount every month. Easier to budget, but total interest is usually higher.
+
+### Differentiated payment
+
+The payment decreases over time. Early payments are higher, but total interest is lower.
+
+| Aspect | Annuity | Differentiated |
+|----------|-------------|-------------------|
+| Payment size | Fixed | Decreasing |
+| Total interest | Higher | Lower |
+| Early burden | Lower | Higher |
+
+## What affects approval
+
+Banks check affordability: the monthly payment is often capped at 40–50% of income. Existing loans count too.
+
+## Early repayment
+
+Extra payments can shorten the term or lower the monthly payment. Compare both strategies to pick what fits you.
+
+See also: [Loan Calculator](/tools/loan-calc), [Tax Calculator](/tools/tax-calc)
     `.trim()
   },
   {
     slug: 'mortgage-calc-tips',
     title: '6 советов при оформлении ипотеки',
+    titleEn: '6 Tips When Taking Out a Mortgage',
     description: 'Практические советы для тех, кто планирует взять ипотеку. Как снизить переплату и выбрать лучшие условия.',
+    descriptionEn: 'Practical advice for mortgage borrowers: cut interest costs and pick better terms.',
     toolSlug: 'mortgage-calc',
     type: 'tips',
     keywords: ['ипотека советы', 'снижение переплаты', 'выбор банка', 'ипотечные программы'],

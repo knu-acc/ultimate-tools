@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: '404 — Page Not Found | Ultimate Tools',
+  description: 'Страница не найдена. Перейдите в каталог инструментов, категории или блог Ultimate Tools.',
+  keywords: ['404', 'page not found', 'страница не найдена', 'ultimate tools', 'онлайн инструменты', 'каталог утилит'],
   robots: { index: false },
 };
 

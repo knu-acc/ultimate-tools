@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import GroupPage from './GroupPage';
 import { toolGroups, getToolsByGroup, getGroupBySlug } from '@/src/data/tools';
+import { buildKeywordSet, genericSiteKeywords } from '@/src/seo/keywords';
 
 export async function generateStaticParams() {
   return toolGroups.map(g => ({ slug: g.slug }));
@@ -12,7 +13,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!group) return { title: 'Категория не найдена' };
   const groupTools = getToolsByGroup(group.id);
   const toolNames = groupTools.slice(0, 5).map(t => t.name).join(', ');
-  const allKeywords = [...new Set(groupTools.flatMap(t => t.keywords))].slice(0, 15);
+  const allKeywords = buildKeywordSet(
+    [
+      group.name,
+      `${group.name} онлайн`,
+      ...groupTools.slice(0, 6).flatMap(t => [t.name, `${t.name} онлайн`]),
+      ...groupTools.flatMap(t => t.keywords),
+    ],
+    genericSiteKeywords(false),
+    15
+  );
 
   const title = `${group.name} онлайн — ${groupTools.length} бесплатных инструментов`;
   const description = `${groupTools.length} бесплатных онлайн-инструментов: ${toolNames} и другие. ${group.description}. Без регистрации, работают в браузере.`;
@@ -36,9 +46,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description,
     },
     alternates: {
-      canonical: `https://ulti-tools.com/group/${slug}`,
+      canonical: `https://ulti-tools.com/ru/group/${slug}`,
+      languages: {
+        ru: `https://ulti-tools.com/ru/group/${slug}`,
+        en: `https://ulti-tools.com/en/group/${slug}`,
+        'x-default': `https://ulti-tools.com/ru/group/${slug}`,
+      },
     },
-    robots: { index: true, follow: true },
+    robots: { index: false, follow: true },
   };
 }
 

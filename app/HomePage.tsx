@@ -8,15 +8,17 @@ import {
 import { Search as SearchIcon, ArrowForward, History, AutoAwesome } from '@mui/icons-material';
 import DynamicIcon from '@/src/components/DynamicIcon';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { toolGroups, getFeaturedTools, getStats, getToolsByGroup, getToolBySlug } from '@/src/data/tools';
 import ToolCard from '@/src/components/ToolCard';
-import SearchDialog from '@/src/components/SearchDialog';
 import { useRecentTools } from '@/src/hooks/useRecentTools';
 import { useLanguage } from '@/src/i18n/LanguageContext';
+import { getToolName, getGroupName } from '@/src/data/toolLocalization';
 
 // Module-level constants — computed once, never re-created
 const stats = getStats();
 const featuredTools = getFeaturedTools();
+const SearchDialog = dynamic(() => import('@/src/components/SearchDialog'), { ssr: false });
 
 export default function HomePage() {
   const theme = useTheme();
@@ -30,6 +32,14 @@ export default function HomePage() {
     () => recentSlugs.map(s => getToolBySlug(s)).filter(Boolean) as NonNullable<ReturnType<typeof getToolBySlug>>[],
     [recentSlugs]
   );
+  const handleSearchClose = useCallback(() => setSearchOpen(false), []);
+  const groupToolsMap = useMemo(() => {
+    const map = new Map<string, ReturnType<typeof getToolsByGroup>>();
+    for (const group of toolGroups) {
+      map.set(group.id, getToolsByGroup(group.id));
+    }
+    return map;
+  }, []);
 
   const quickTags = locale === 'en' ? [
     { name: 'Password Generator', slug: 'password-generator' },
@@ -206,7 +216,7 @@ export default function HomePage() {
                 return (
                   <Chip
                     key={tool.slug}
-                    label={locale === 'en' ? ((tool as any).nameEn || tool.name) : tool.name}
+                    label={getToolName(tool, locale)}
                     component={Link}
                     href={lHref(`/tools/${tool.slug}`)}
                     clickable
@@ -234,8 +244,8 @@ export default function HomePage() {
         </Typography>
         <Grid container spacing={2} sx={{ mb: 6 }}>
           {toolGroups.map(group => {
-            const groupTools = getToolsByGroup(group.id);
-            const gName = locale === 'en' ? ((group as any).nameEn || group.name) : group.name;
+            const groupTools = groupToolsMap.get(group.id) || [];
+            const gName = getGroupName(group, locale);
             return (
               <Grid key={group.id} size={{ xs: 6, sm: 4, md: 3, lg: 2.4 }}>
                 <Card
@@ -302,8 +312,8 @@ export default function HomePage() {
             TOOLS BY CATEGORY — with colorful section headers
             ══════════════════════════════════════════════════════ */}
         {toolGroups.slice(0, 6).map(group => {
-          const groupTools = getToolsByGroup(group.id);
-          const gName = locale === 'en' ? ((group as any).nameEn || group.name) : group.name;
+          const groupTools = groupToolsMap.get(group.id) || [];
+          const gName = getGroupName(group, locale);
           return (
             <Box key={group.id} sx={{ mb: 6 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2.5 }}>
@@ -382,7 +392,7 @@ export default function HomePage() {
         </Paper>
       </Container>
 
-      <SearchDialog open={searchOpen} onClose={useCallback(() => setSearchOpen(false), [])} />
+      <SearchDialog open={searchOpen} onClose={handleSearchClose} />
 
       <script
         type="application/ld+json"
@@ -396,6 +406,24 @@ export default function HomePage() {
             applicationCategory: 'UtilitiesApplication',
             operatingSystem: 'Any',
             offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            name: locale === 'en' ? 'Featured online tools' : 'Популярные онлайн-инструменты',
+            itemListOrder: 'https://schema.org/ItemListOrderAscending',
+            numberOfItems: featuredTools.length,
+            itemListElement: featuredTools.slice(0, 12).map((tool, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              url: `https://ulti-tools.com/${locale}/tools/${tool.slug}`,
+              name: getToolName(tool, locale),
+            })),
           }),
         }}
       />

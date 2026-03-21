@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import {
   AppBar, Toolbar, Typography, IconButton, Box, Drawer,
   List, ListItem, ListItemButton, ListItemIcon, ListItemText,
-  useMediaQuery, useTheme, Button, Divider, alpha,
+  useTheme, Button, Divider, alpha,
 } from '@mui/material';
 import {
   Menu as MenuIcon, Search as SearchIcon, DarkMode, LightMode,
@@ -21,7 +21,6 @@ import { useLanguage } from '@/src/i18n/LanguageContext';
 
 export default function Header() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { mode, setMode } = useThemeMode();
   const { locale, t, lHref } = useLanguage();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -104,18 +103,17 @@ export default function Header() {
       >
         {/* MD3 Top App Bar: height = 64dp (uniform across all breakpoints) */}
         <Toolbar sx={{ gap: 1, minHeight: 64, height: 64 }}>
-          {isMobile && (
-            <IconButton
-              onClick={openDrawer}
-              edge="start"
-              size="large"
-              aria-label="Открыть меню навигации"
-              aria-expanded={drawerOpen}
-              aria-controls="mobile-navigation-drawer"
-            >
-              <MenuIcon />
-            </IconButton>
-          )}
+          <IconButton
+            onClick={openDrawer}
+            edge="start"
+            size="large"
+            aria-label="Открыть меню навигации"
+            aria-expanded={drawerOpen}
+            aria-controls="mobile-navigation-drawer"
+            sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
 
           <Link href={lHref('/')} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: 8 }}>
             <Box
@@ -135,37 +133,43 @@ export default function Header() {
               Ultimate Tools
             </Typography>
           </Link>
-
-          {!isMobile && (
-            <Box component="nav" aria-label="Разделы сайта" sx={{ display: 'flex', gap: 0.5, ml: 2 }}>
-              {[
-                { label: t('nav.converters'), href: lHref('/group/converters') },
-                { label: t('nav.calculators'), href: lHref('/group/calculators') },
-                { label: t('nav.generators'), href: lHref('/group/generators') },
-                { label: t('nav.dev'), href: lHref('/group/developers') },
-                { label: t('nav.blog'), href: lHref('/blog') },
-              ].map(item => (
-                <Button
-                  key={item.href}
-                  component={Link}
-                  href={item.href}
-                  color="inherit"
-                  size="small"
-                  sx={{
-                    px: 2,
-                    fontWeight: 400,
-                    fontSize: '0.875rem',
-                    // MD3 state layer: 8% primary on hover
-                    '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.08) },
-                  }}
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </Box>
-          )}
+          <Box component="nav" aria-label="Разделы сайта" sx={{ display: { xs: 'none', md: 'flex' }, gap: 0.5, ml: 2 }}>
+            {[
+              { label: t('nav.converters'), href: lHref('/group/converters') },
+              { label: t('nav.calculators'), href: lHref('/group/calculators') },
+              { label: t('nav.generators'), href: lHref('/group/generators') },
+              { label: t('nav.dev'), href: lHref('/group/developers') },
+              { label: t('nav.blog'), href: lHref('/blog') },
+            ].map(item => (
+              <Button
+                key={item.href}
+                component={Link}
+                href={item.href}
+                color="inherit"
+                size="small"
+                sx={{
+                  px: 2,
+                  fontWeight: 400,
+                  fontSize: '0.875rem',
+                  // MD3 state layer: 8% primary on hover
+                  '&:hover': { bgcolor: alpha(theme.palette.primary.main, 0.08) },
+                }}
+              >
+                {item.label}
+              </Button>
+            ))}
+          </Box>
 
           <Box sx={{ flexGrow: 1 }} />
+
+          <IconButton
+            onClick={openSearch}
+            aria-label={t('nav.search')}
+            size="large"
+            sx={{ display: { xs: 'inline-flex', md: 'none' } }}
+          >
+            <SearchIcon />
+          </IconButton>
 
           {/*
             MD3 Search Bar
@@ -174,55 +178,45 @@ export default function Header() {
             - Border-radius: 28dp (full rounded = half of height)
             - Container color: surfaceContainerHigh
           */}
-          {/* Mobile: round icon button; Desktop: full search bar */}
-          {isMobile ? (
-            <IconButton
-              onClick={openSearch}
-              aria-label={t('nav.search')}
-              size="large"
-            >
-              <SearchIcon />
-            </IconButton>
-          ) : (
-            <Box
-              onClick={openSearch}
-              role="button"
-              tabIndex={0}
-              aria-label={t('nav.search')}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSearch(); } }}
+          {/* Desktop: full search bar */}
+          <Box
+            onClick={openSearch}
+            role="button"
+            tabIndex={0}
+            aria-label={t('nav.search')}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSearch(); } }}
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              alignItems: 'center',
+              gap: 1,
+              px: 2,
+              height: 44,
+              borderRadius: 999,
+              bgcolor: theme.palette.surfaceContainerHigh,
+              cursor: 'pointer',
+              minWidth: { sm: 180, md: 240 },
+              transitionProperty: 'background-color',
+              transitionDuration: theme.md3?.motion.duration.short4 ?? '200ms',
+              transitionTimingFunction: theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)',
+              '&:hover': { bgcolor: theme.palette.surfaceContainerHighest },
+            }}
+          >
+            <SearchIcon sx={{ color: theme.palette.text.secondary, fontSize: 20 }} />
+            <Typography variant="body2" sx={{ color: theme.palette.text.secondary, flexGrow: 1 }}>
+              {t('nav.search')}
+            </Typography>
+            <Typography
+              variant="caption"
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                px: 2,
-                height: 44,
-                borderRadius: 999,
-                bgcolor: theme.palette.surfaceContainerHigh,
-                cursor: 'pointer',
-                minWidth: { sm: 180, md: 240 },
-                transitionProperty: 'background-color',
-                transitionDuration: theme.md3?.motion.duration.short4 ?? '200ms',
-                transitionTimingFunction: theme.md3?.motion.easing.standard ?? 'cubic-bezier(0.2, 0, 0, 1)',
-                '&:hover': { bgcolor: theme.palette.surfaceContainerHighest },
+                px: 0.75, py: 0.25, borderRadius: 1,
+                bgcolor: alpha(theme.palette.text.primary, 0.06),
+                display: { xs: 'none', md: 'block' },
+                fontFamily: 'monospace', fontSize: '0.6875rem',
               }}
             >
-              <SearchIcon sx={{ color: theme.palette.text.secondary, fontSize: 20 }} />
-              <Typography variant="body2" sx={{ color: theme.palette.text.secondary, flexGrow: 1 }}>
-                {t('nav.search')}
-              </Typography>
-              <Typography
-                variant="caption"
-                sx={{
-                  px: 0.75, py: 0.25, borderRadius: 1,
-                  bgcolor: alpha(theme.palette.text.primary, 0.06),
-                  display: { xs: 'none', md: 'block' },
-                  fontFamily: 'monospace', fontSize: '0.6875rem',
-                }}
-              >
-                {t('nav.searchShortcut')}
-              </Typography>
-            </Box>
-          )}
+              {t('nav.searchShortcut')}
+            </Typography>
+          </Box>
 
           <LanguageSwitcher />
 
@@ -253,8 +247,8 @@ export default function Header() {
           component: 'nav',
           'aria-label': 'Мобильная навигация',
           sx: {
-            // MD3 Navigation Drawer width = 360dp
-            width: 360,
+            // Keep drawer safe on very small mobile screens.
+            width: { xs: '85vw', sm: 360 },
             bgcolor: theme.palette.surfaceContainerLow,
           },
         }}

@@ -17,6 +17,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { CopyButton } from '@/src/components/CopyButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
+import { sanitizeHtml } from '@/src/utils/htmlSanitiization';
 
 const DEFAULT_SVG_RU = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
   <rect x="10" y="10" width="180" height="180" rx="20" fill="#4A90D9" stroke="#2C5F8A" stroke-width="3"/>
@@ -257,7 +258,7 @@ export default function SvgEditor() {
               {!error && svgCode.trim() && (
                 <Box
                   sx={{ maxWidth: '100%', maxHeight: 400, '& svg': { maxWidth: '100%', maxHeight: 400 } }}
-                  dangerouslySetInnerHTML={{ __html: svgCode }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(svgCode) }}
                 />
               )}
               {error && (

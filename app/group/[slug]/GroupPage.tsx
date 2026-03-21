@@ -583,13 +583,128 @@ export default function GroupPage({ slug }: { slug: string }) {
   }
 
   const groupTools = useMemo(() => getToolsByGroup(group.id), [group.id]);
-  const relatedGroups = useMemo(() => toolGroups.filter(g => g.id !== group.id).slice(0, 6), [group.id]);
+  const relatedGroups = useMemo(() => toolGroups.filter(g => g.id !== group.id), [group.id]);
   const seoContent = isEn ? groupSeoContentEn[group.id] : groupSeoContent[group.id];
 
   // Pre-compute tool counts for related groups to avoid N×getToolsByGroup in render
   const relatedGroupCounts = useMemo(
     () => new Map(relatedGroups.map(g => [g.id, getToolsByGroup(g.id).length])),
     [relatedGroups]
+  );
+  const implementedGroupTools = useMemo(() => groupTools.filter(t => t.implemented), [groupTools]);
+  const collectionPageJson = useMemo(
+    () => JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: isEn ? ((group as any).nameEn || group.name) : (seoContent?.h1 || group.name),
+      description: isEn ? ((group as any).descriptionEn || group.description) : group.description,
+      url: `https://ulti-tools.com/${locale}/group/${group.slug}`,
+      inLanguage: locale,
+      numberOfItems: groupTools.length,
+      hasPart: implementedGroupTools.slice(0, 24).map(t => ({
+        '@type': 'SoftwareApplication',
+        name: isEn ? ((t as any).nameEn || t.name) : ((t as any).seoTitle || t.name),
+        url: `https://ulti-tools.com/${locale}/tools/${t.slug}`,
+        applicationCategory: 'UtilitiesApplication',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      })),
+    }),
+    [isEn, group, seoContent, locale, groupTools.length, implementedGroupTools]
+  );
+  const groupToolsListJson = useMemo(
+    () => JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: isEn ? `${(group as any).nameEn || group.name} — tools` : `${group.name} — инструменты`,
+      numberOfItems: implementedGroupTools.length,
+      itemListElement: implementedGroupTools.slice(0, 80).map((t, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'SoftwareApplication',
+          name: isEn ? ((t as any).nameEn || t.name) : t.name,
+          url: `https://ulti-tools.com/${locale}/tools/${t.slug}`,
+          applicationCategory: 'UtilitiesApplication',
+        },
+      })),
+    }),
+    [isEn, group, implementedGroupTools, locale]
+  );
+  const relatedGroupsJson = useMemo(
+    () => relatedGroups.length > 0
+      ? JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: isEn ? 'More tool categories' : 'Другие категории инструментов',
+        numberOfItems: relatedGroups.length,
+        itemListElement: relatedGroups.map((g, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'CollectionPage',
+            name: isEn ? ((g as any).nameEn || g.name) : g.name,
+            url: `https://ulti-tools.com/${locale}/group/${g.slug}`,
+          },
+        })),
+      })
+      : '',
+    [relatedGroups, isEn, locale]
+  );
+  const breadcrumbJson = useMemo(
+    () => JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: isEn ? 'Home' : 'Главная', item: `https://ulti-tools.com/${locale}` },
+        { '@type': 'ListItem', position: 2, name: isEn ? ((group as any).nameEn || group.name) : group.name, item: `https://ulti-tools.com/${locale}/group/${group.slug}` },
+      ],
+    }),
+    [isEn, locale, group]
+  );
+  const groupFaqJson = useMemo(
+    () => JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: isEn
+            ? `What tools are included in ${(group as any).nameEn || group.name}?`
+            : `Какие инструменты есть в категории «${group.name}»?`,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: isEn
+              ? `${implementedGroupTools.length} tools are available in this category.`
+              : `В этой категории доступно ${implementedGroupTools.length} инструментов.`,
+          },
+        },
+        {
+          '@type': 'Question',
+          name: isEn
+            ? 'Are these tools free to use?'
+            : 'Эти инструменты бесплатные?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: isEn
+              ? 'Yes. Tools on Ultimate Tools are free and work in the browser without registration.'
+              : 'Да. Инструменты Ultimate Tools бесплатны и работают в браузере без регистрации.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: isEn
+            ? 'Is my data sent to a server?'
+            : 'Мои данные отправляются на сервер?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: isEn
+              ? 'No. Core processing is done locally in the browser for privacy and speed.'
+              : 'Нет. Базовая обработка выполняется локально в браузере для приватности и скорости.',
+          },
+        },
+      ],
+    }),
+    [isEn, group, implementedGroupTools.length]
   );
 
   return (
@@ -623,8 +738,8 @@ export default function GroupPage({ slug }: { slug: string }) {
             <Typography variant="h3" component="h1" fontWeight={700} sx={{ lineHeight: 1.2 }}>
               {isEn ? ((group as any).nameEn || group.name) : (seoContent?.h1 || group.name)}
             </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
-              {isEn ? ((group as any).descriptionEn || group.description) : group.description} — {groupTools.length} {isEn ? 'tools' : 'инструментов'}
+            <Typography variant="body1" fontWeight={500} sx={{ mt: 0.5 }}>
+              {isEn ? ((group as any).descriptionEn || group.description) : group.description} — <strong>{groupTools.length}</strong> {isEn ? 'tools' : 'инструментов'}
             </Typography>
           </Box>
         </Box>
@@ -712,37 +827,40 @@ export default function GroupPage({ slug }: { slug: string }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'CollectionPage',
-            name: isEn ? ((group as any).nameEn || group.name) : (seoContent?.h1 || group.name),
-            description: isEn ? ((group as any).descriptionEn || group.description) : group.description,
-            url: `https://ulti-tools.com/${locale}/group/${group.slug}`,
-            inLanguage: locale,
-            numberOfItems: groupTools.length,
-            hasPart: groupTools.slice(0, 10).map(t => ({
-              '@type': 'SoftwareApplication',
-              name: isEn ? ((t as any).nameEn || t.name) : ((t as any).seoTitle || t.name),
-              url: `https://ulti-tools.com/${locale}/tools/${t.slug}`,
-              applicationCategory: 'UtilitiesApplication',
-              offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-            })),
-          }),
+          __html: collectionPageJson,
         }}
       />
+
+      {/* JSON-LD: tool list for category (crawl / entity graph) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: groupToolsListJson,
+        }}
+      />
+
+      {/* JSON-LD: other categories hub */}
+      {relatedGroups.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: relatedGroupsJson,
+          }}
+        />
+      )}
 
       {/* JSON-LD: BreadcrumbList */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              { '@type': 'ListItem', position: 1, name: isEn ? 'Home' : 'Главная', item: `https://ulti-tools.com/${locale}` },
-              { '@type': 'ListItem', position: 2, name: isEn ? ((group as any).nameEn || group.name) : group.name, item: `https://ulti-tools.com/${locale}/group/${group.slug}` },
-            ],
-          }),
+          __html: breadcrumbJson,
+        }}
+      />
+      {/* JSON-LD: category FAQ for answer engines */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: groupFaqJson,
         }}
       />
     </Container>

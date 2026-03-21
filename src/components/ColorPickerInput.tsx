@@ -70,7 +70,7 @@ export default function ColorPickerInput({
   };
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(value);
+    try { await navigator.clipboard.writeText(value); } catch { return; }
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };

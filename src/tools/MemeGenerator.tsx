@@ -38,6 +38,7 @@ export default function MemeGenerator() {
   const [strokeEnabled, setStrokeEnabled] = useState(true);
   const [textPosition, setTextPosition] = useState<TextPosition>('top');
   const [dragging, setDragging] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
@@ -110,6 +111,7 @@ export default function MemeGenerator() {
     img.crossOrigin = 'anonymous';
     img.onload = () => {
       imageRef.current = img;
+      setImageLoaded(true);
       drawMeme();
     };
     img.src = src;
@@ -160,9 +162,10 @@ export default function MemeGenerator() {
     setTopText('');
     setBottomText('');
     imageRef.current = null;
+    setImageLoaded(false);
   }, [imageUrl, originalFile]);
 
-  const hasImage = !!imageRef.current;
+  const hasImage = imageLoaded;
 
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>

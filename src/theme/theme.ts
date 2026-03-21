@@ -354,9 +354,9 @@ const commonComponents = {
         width: 20,
         height: 20,
         '&:before': { boxShadow: 'none' },
-        '&:hover, &.Mui-focusVisible': (props: { theme: Theme }) => ({
-          boxShadow: `0 0 0 8px ${props.theme.palette.action.focus}`,
-        }),
+        '&:hover, &.MuiFocusVisible': {
+          boxShadow: `0 0 0 8px rgba(0,0,0,0.08)`,
+        },
       },
       track: { borderRadius: 2 },
       rail: { borderRadius: 2, opacity: 0.3 },

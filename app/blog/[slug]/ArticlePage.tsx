@@ -38,6 +38,9 @@ interface ToolInfo {
   nameEn?: string;
   description: string;
   descriptionEn?: string;
+  groupSlug?: string;
+  groupName?: string;
+  groupNameEn?: string;
 }
 
 interface Props {
@@ -78,6 +81,61 @@ export default function ArticlePage({ article, relatedArticles, tool }: Props) {
 
   // Memoize content rendering — it's pure computation on the article string
   const renderedContent = useMemo(() => renderContent(articleContent, theme), [articleContent, theme]);
+  const articleJson = useMemo(
+    () => JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: articleTitle,
+      description: articleDesc,
+      datePublished: article.date,
+      dateModified: article.date,
+      mainEntityOfPage: `https://ulti-tools.com/${locale}/blog/${article.slug}`,
+      url: `https://ulti-tools.com/${locale}/blog/${article.slug}`,
+      image: 'https://ulti-tools.com/opengraph-image',
+      inLanguage: locale,
+      author: { '@type': 'Organization', name: 'Ultimate Tools' },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Ultimate Tools',
+        logo: { '@type': 'ImageObject', url: 'https://ulti-tools.com/favicon.ico' },
+      },
+      articleSection: toolName,
+      about: toolName,
+    }),
+    [articleTitle, articleDesc, article.date, article.slug, locale, toolName]
+  );
+  const breadcrumbJson = useMemo(
+    () => JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: isEn ? 'Home' : 'Главная', item: `https://ulti-tools.com/${locale}` },
+        { '@type': 'ListItem', position: 2, name: isEn ? 'Blog' : 'Блог', item: `https://ulti-tools.com/${locale}/blog` },
+        { '@type': 'ListItem', position: 3, name: articleTitle, item: `https://ulti-tools.com/${locale}/blog/${article.slug}` },
+      ],
+    }),
+    [isEn, locale, articleTitle, article.slug]
+  );
+  const relatedArticlesJson = useMemo(
+    () => relatedArticles.length > 0
+      ? JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: isEn ? 'Related articles' : 'Связанные статьи',
+        numberOfItems: relatedArticles.length,
+        itemListElement: relatedArticles.map((a, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          item: {
+            '@type': 'Article',
+            name: isEn ? (a.titleEn || a.title) : a.title,
+            url: `https://ulti-tools.com/${locale}/blog/${a.slug}`,
+          },
+        })),
+      })
+      : '',
+    [relatedArticles, isEn, locale]
+  );
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
@@ -159,6 +217,13 @@ export default function ArticlePage({ article, relatedArticles, tool }: Props) {
           >
             {isEn ? 'Open tool' : 'Открыть инструмент'}
           </Button>
+          {tool.groupSlug && (
+            <Box sx={{ mt: 1.5 }}>
+              <Link href={lHref(`/group/${tool.groupSlug}`)} style={{ color: 'inherit' }}>
+                {isEn ? `More ${tool.groupNameEn || tool.groupName || 'tools'} tools` : `Ещё инструменты: ${tool.groupName || 'категория'}`}
+              </Link>
+            </Box>
+          )}
         </Paper>
       )}
 
@@ -188,18 +253,23 @@ export default function ArticlePage({ article, relatedArticles, tool }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Article',
-            headline: articleTitle,
-            description: articleDesc,
-            datePublished: article.date,
-            inLanguage: locale,
-            author: { '@type': 'Organization', name: 'Ultimate Tools' },
-            publisher: { '@type': 'Organization', name: 'Ultimate Tools' },
-          }),
+          __html: articleJson,
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: breadcrumbJson,
+        }}
+      />
+      {relatedArticles.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: relatedArticlesJson,
+          }}
+        />
+      )}
     </Container>
   );
 }

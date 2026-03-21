@@ -4,11 +4,9 @@ const LOCALES = ['ru', 'en'];
 const DEFAULT_LOCALE = 'ru';
 
 function getLocale(request: NextRequest): string {
-  // Check cookie
   const cookieLocale = request.cookies.get('locale')?.value;
   if (cookieLocale && LOCALES.includes(cookieLocale)) return cookieLocale;
 
-  // Check Accept-Language
   const acceptLang = request.headers.get('accept-language');
   if (acceptLang) {
     const preferred = acceptLang.split(',').map(l => l.split(';')[0].trim().slice(0, 2));
@@ -20,10 +18,9 @@ function getLocale(request: NextRequest): string {
   return DEFAULT_LOCALE;
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip static files, API, _next, manifest, etc.
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
@@ -36,7 +33,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check if pathname already has a locale
   const pathnameHasLocale = LOCALES.some(
     locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
@@ -45,7 +41,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Redirect to locale-prefixed URL
   const locale = getLocale(request);
   const newUrl = new URL(`/${locale}${pathname}`, request.url);
   newUrl.search = request.nextUrl.search;

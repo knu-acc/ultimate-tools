@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import ArticlePage from './ArticlePage';
 import { articles, getArticleBySlug, getArticlesByTool } from '@/src/data/articles';
-import { getToolBySlug } from '@/src/data/tools';
+import { getToolBySlug, toolGroups } from '@/src/data/tools';
+import { buildKeywordSet, genericSiteKeywords } from '@/src/seo/keywords';
 
 export async function generateStaticParams() {
   return articles.map(a => ({ slug: a.slug }));
@@ -14,7 +15,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: article.title,
     description: article.description,
-    keywords: article.keywords,
+    keywords: buildKeywordSet(
+      [
+        ...(article.keywords || []),
+        article.title,
+        `${article.title} гайд`,
+        'как пользоваться онлайн инструментами',
+        'практическое руководство',
+      ],
+      genericSiteKeywords(false),
+      15
+    ),
     openGraph: {
       title: article.title,
       description: article.description,
@@ -25,9 +36,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       url: `https://ulti-tools.com/blog/${slug}`,
     },
     alternates: {
-      canonical: `https://ulti-tools.com/blog/${slug}`,
+      canonical: `https://ulti-tools.com/ru/blog/${slug}`,
+      languages: {
+        ru: `https://ulti-tools.com/ru/blog/${slug}`,
+        en: `https://ulti-tools.com/en/blog/${slug}`,
+        'x-default': `https://ulti-tools.com/ru/blog/${slug}`,
+      },
     },
-    robots: { index: true, follow: true },
+    robots: { index: false, follow: true },
   };
 }
 
@@ -41,12 +57,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         .map(({ slug, title, titleEn }) => ({ slug, title, titleEn }))
     : [];
   const rawTool = article ? getToolBySlug(article.toolSlug) : null;
+  const rawGroup = rawTool ? toolGroups.find(g => g.id === rawTool.groupId) : null;
   const tool = rawTool ? {
     slug: rawTool.slug,
     name: rawTool.name,
     nameEn: (rawTool as any).nameEn,
     description: rawTool.description,
     descriptionEn: (rawTool as any).descriptionEn,
+    groupSlug: rawGroup?.slug,
+    groupName: rawGroup?.name,
+    groupNameEn: (rawGroup as any)?.nameEn,
   } : null;
 
   return <ArticlePage article={article} relatedArticles={relatedArticles} tool={tool} />;

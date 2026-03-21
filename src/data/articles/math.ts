@@ -2162,7 +2162,45 @@ See also: [GCD and LCM](/tools/gcd-lcm), [Factorials and Combinatorics](/tools/f
 
 Калькулятор поддерживает оба типа пропорциональности и автоматически подбирает правильную формулу.
 
-Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Решатель уравнений](/tools/equation-solver), [Статистика](/tools/statistics-calc)`
+Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Решатель уравнений](/tools/equation-solver), [Статистика](/tools/statistics-calc)`,
+    titleEn: 'Proportion Calculator Guide',
+    descriptionEn: 'How to solve proportions and find an unknown term using the online calculator.',
+    contentEn: `## Proportion Calculator
+
+A tool for solving proportions of the form a/b = c/d, where one value is unknown. Also supports percentage calculations and scaling.
+
+### What Is a Proportion
+
+A proportion is an equality of two ratios: a/b = c/d. The key property: the product of the extremes equals the product of the means (a × d = b × c).
+
+### How to Use
+
+1. Enter three known values of the proportion
+2. Leave one field empty — that is the unknown
+3. Click Calculate
+4. Get the answer with the solution formula
+
+### Problem Types
+
+| Problem type | Example |
+|---|---|
+| Find an unknown term | 3/5 = x/20, x = ? |
+| Percentage problems | 15% of 200 = ? |
+| Map scale | 1:50000, 3 cm = ? m |
+| Recipe scaling | For 4 servings — 200 g, for 6 — ? |
+
+### Checking a Proportion
+
+To verify a proportion, compute the product of the extremes and the product of the means. If they are equal, the proportion is correct.
+
+### Direct and Inverse Proportionality
+
+- **Direct**: increasing one quantity increases the other
+- **Inverse**: increasing one quantity decreases the other
+
+The calculator supports both kinds and picks the right formula automatically.
+
+See also: [Fraction Calculator](/tools/fraction-calc), [Equation Solver](/tools/equation-solver), [Statistics](/tools/statistics-calc)`
   },
   {
     slug: 'proportion-calc-tips',
@@ -2205,7 +2243,42 @@ See also: [GCD and LCM](/tools/gcd-lcm), [Factorials and Combinatorics](/tools/f
 
 В реальных задачах часто нужно округлять результат. Округляйте в большую сторону для запасов материалов и в меньшую для ограничений.
 
-Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Решатель уравнений](/tools/equation-solver), [НОД и НОК](/tools/gcd-lcm)`
+Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Решатель уравнений](/tools/equation-solver), [НОД и НОК](/tools/gcd-lcm)`,
+    titleEn: 'Tips for Solving Proportion Problems',
+    descriptionEn: 'How to set up and solve proportions across different problem types.',
+    contentEn: `## Tips for Working with Proportions
+
+Proportions are one of the most versatile tools in math. These tips help you solve problems quickly and accurately.
+
+### Identify the Type of Proportionality
+
+Ask: if one quantity increases, does the other increase or decrease? Direct — both increase together; inverse — one goes up as the other goes down.
+
+### Watch Your Units
+
+All values in the proportion must use the same units. Convert km to m or hours to minutes before you set up the proportion.
+
+### Use the Cross-Multiplication Method
+
+In a/b = c/d, an unknown x can be found with cross products. Memorize this as multiplying “on the diagonal.”
+
+### Check That the Answer Makes Sense
+
+If a recipe needs 200 g of flour for 4 servings, you need more for 8, not less. Always check that the direction of change matches the story.
+
+### Percent Problems Are Proportions Too
+
+“Find 35% of 800” is a proportion: 35/100 = x/800, so x = 280.
+
+### Chains of Proportions
+
+For linked quantities, build a chain — for example speed → time → distance — and solve step by step.
+
+### Rounding in Real Problems
+
+In practice you often round. Round up for material margins and down when there are hard limits.
+
+See also: [Fraction Calculator](/tools/fraction-calc), [Equation Solver](/tools/equation-solver), [GCD and LCM](/tools/gcd-lcm)`
   },
   {
     slug: 'proportion-calc-use-cases',
@@ -2250,6 +2323,43 @@ See also: [GCD and LCM](/tools/gcd-lcm), [Factorials and Combinatorics](/tools/f
 
 Расход топлива на 100 км позволяет рассчитать, сколько бензина нужно для поездки любой длины.
 
-Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Статистика](/tools/statistics-calc), [Решатель уравнений](/tools/equation-solver)`
+Смотрите также: [Калькулятор дробей](/tools/fraction-calc), [Статистика](/tools/statistics-calc), [Решатель уравнений](/tools/equation-solver)`,
+    titleEn: 'Proportions in Real Life: From Cooking to Maps',
+    descriptionEn: 'Practical examples of proportions at home, work, and school.',
+    contentEn: `## Proportions in Everyday Life
+
+Proportions are one of the most practical parts of math. We use them every day, often without thinking about it.
+
+### Cooking
+
+Scaling a recipe to another number of servings is a classic proportion. If you need 300 g of rice for 6 servings, for 4 servings: 300 × 4 / 6 = 200 g.
+
+### Maps and Scale
+
+On a 1:100 000 map, one centimeter on the map equals one kilometer in reality. Proportions convert between map distances and real distances.
+
+### Finance and Percentages
+
+- Discounts: an item at 5000 with 15% off → 5000 × 85/100 = 4250
+- Figuring out interest on a loan
+- Splitting a budget across categories
+
+### Construction and Renovation
+
+Paint, wallpaper, or tile for a room: if 1 liter covers 8 m², you need 3 liters for 24 m².
+
+### Photography and Design
+
+Scaling images while keeping aspect ratio. If the original is 1920×1080, halving the width to 960 gives height 540.
+
+### Medicine
+
+Children’s drug doses are often proportional to body weight. Solution concentrations are also set with proportions.
+
+### Travel
+
+Fuel use per 100 km lets you estimate fuel needed for any trip length.
+
+See also: [Fraction Calculator](/tools/fraction-calc), [Statistics](/tools/statistics-calc), [Equation Solver](/tools/equation-solver)`
   }
 ];

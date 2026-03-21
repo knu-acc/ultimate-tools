@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Tool, toolGroups } from '@/src/data/tools';
 import DynamicIcon from './DynamicIcon';
 import { useLanguage } from '@/src/i18n/LanguageContext';
+import { getToolName, getToolDescription, getGroupName } from '@/src/data/toolLocalization';
 
 interface Props {
   tool: Tool;
@@ -19,9 +20,9 @@ export default memo(function ToolCard({ tool, showGroup = false, variant = 'defa
   const theme = useTheme();
   const { lHref, locale } = useLanguage();
   const group = toolGroups.find(g => g.id === tool.groupId);
-  const toolName = locale === 'en' ? ((tool as any).nameEn || tool.name) : tool.name;
-  const toolDesc = locale === 'en' ? ((tool as any).descriptionEn || tool.description) : tool.description;
-  const groupName = group ? (locale === 'en' ? ((group as any).nameEn || group.name) : group.name) : '';
+  const toolName = getToolName(tool, locale);
+  const toolDesc = getToolDescription(tool, locale);
+  const groupName = group ? getGroupName(group, locale) : '';
 
   const groupColor = group?.color ?? theme.palette.primary.main;
   const motionDuration = theme.md3?.motion.duration.short4 ?? '200ms';

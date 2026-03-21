@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { CopyButton } from '@/src/components/CopyButton';
 import { useLanguage } from '@/src/i18n/LanguageContext';
+import { sanitizeHtml } from '@/src/utils/htmlSanitiization';
 
 
 interface MatchInfo {
@@ -208,7 +209,7 @@ export default function RegexTester() {
               wordBreak: 'break-all',
               lineHeight: 1.8
             }}
-            dangerouslySetInnerHTML={{ __html: highlighted }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(highlighted) }}
           />
         </Paper>
       )}

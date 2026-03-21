@@ -296,13 +296,12 @@ export default function ImageCompressor() {
         const mime = getMimeForFile(item.file, outputFormat);
         const ext = getExtension(mime);
         const baseName = item.file.name.replace(/\.[^.]+$/, '');
-        const suffix = scalePercent < 100 ? `_${scalePercent}pct` : '_optimized';
-        let fileName = `${baseName}${suffix}.${ext}`;
+        let fileName = `${baseName}.${ext}`;
 
         // Deduplicate filenames
         let counter = 1;
         while (usedNames.has(fileName)) {
-          fileName = `${baseName}${suffix}_${counter}.${ext}`;
+          fileName = `${baseName}_${counter}.${ext}`;
           counter++;
         }
         usedNames.add(fileName);

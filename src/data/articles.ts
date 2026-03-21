@@ -18,6 +18,7 @@ import { mediaArticles } from './articles/media';
 import { networkArticles } from './articles/network';
 import { unitArticles } from './articles/units';
 import { productivityArticles } from './articles/productivity';
+import { articleOverridesEn } from './articleOverridesEn';
 
 export interface Article {
   slug: string;
@@ -1997,9 +1998,12 @@ const _allArticles: Article[] = [
 ];
 
 // Deduplicate by slug (keep first occurrence)
-export const articles: Article[] = _allArticles.filter(
-  (a, i, arr) => arr.findIndex(b => b.slug === a.slug) === i
-);
+export const articles: Article[] = _allArticles
+  .filter((a, i, arr) => arr.findIndex(b => b.slug === a.slug) === i)
+  .map(a => ({
+    ...a,
+    ...(articleOverridesEn as Record<string, Partial<Article>>)[a.slug] ?? {},
+  }));
 
 export function getArticleBySlug(slug: string): Article | undefined {
   return articles.find(a => a.slug === slug);
